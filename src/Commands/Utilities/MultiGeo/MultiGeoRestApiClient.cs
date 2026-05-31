@@ -16,12 +16,16 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 	internal class MultiGeoRestApiClient
 	{
 		private const string TenantRenameApiVersion = "1.5.3";
+		private const string TenantRenameCancelApiVersion = "1.5.5";
 		private const string TenantRenameStatusV2ApiVersion = "1.5.18";
 		private const string TenantRenameJobsPath = "TenantRenameJobs";
 		private const string TenantRenameJobsPathToGetWarningMessages = "TenantRenameJobs/GetWarningMessages";
 		private const string TenantRenameJobsPathToGetStatus = "TenantRenameJobs/Get";
 		private const string TenantRenameJobsPathToGetStatusV2 = "TenantRenameJobs/GetV2";
 		private const string TenantRenameJobsPathToCancelAJob = "TenantRenameJobs/Cancel";
+		private const string AllowedDataLocationsApiVersion = "1.3.11";
+		private const string AllowedDataLocationsPath = "AllowedDataLocations";
+		private const int MaximumPagination = 10;
 		private static readonly TimeSpan CreateTenantRenameJobTimeout = TimeSpan.FromSeconds(300);
 		private static readonly JsonSerializerOptions SerializerOptions = new()
 		{
@@ -54,18 +58,60 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 		internal IEnumerable<string> GetTenantRenameWarningMessages()
 		{
-			return Get<List<string>>(TenantRenameJobsPathToGetWarningMessages);
+			return GetFeed<string>(TenantRenameJobsPathToGetWarningMessages, TenantRenameApiVersion);
+		}
+
+		internal IEnumerable<MultiGeoCompanyAllowedDataLocation> GetAllowedDataLocations()
+		{
+			return GetFeed<MultiGeoCompanyAllowedDataLocation>(AllowedDataLocationsPath, AllowedDataLocationsApiVersion);
 		}
 
 		internal void CancelTenantRenameJob()
 		{
-			Post<string>(TenantRenameJobsPathToCancelAJob, payload: null);
+			Post<string>(TenantRenameJobsPathToCancelAJob, payload: null, apiVersion: TenantRenameCancelApiVersion);
 		}
 
 		private T Get<T>(string path, string apiVersion = TenantRenameApiVersion)
 		{
 			var responseText = Send(() => CreateRequest(HttpMethod.Get, path, apiVersion), timeout: null, allowRetries: true);
 			return DeserializeResponse<T>(responseText);
+		}
+
+		private IEnumerable<T> GetFeed<T>(string path, string apiVersion)
+		{
+			var results = new List<T>();
+			var requestUri = CreateApiUri(path, apiVersion);
+			var pages = 0;
+
+			while (requestUri != null && pages < MaximumPagination)
+			{
+				var responseText = Send(() => CreateRequest(HttpMethod.Get, requestUri), timeout: null, allowRetries: true);
+				var collection = DeserializeFeed<T>(responseText);
+				if (collection.Value != null)
+				{
+					results.AddRange(collection.Value);
+				}
+
+				if (!string.IsNullOrWhiteSpace(collection.NextLink))
+				{
+					requestUri = new Uri(requestUri, collection.NextLink);
+					checked
+					{
+						pages++;
+					}
+				}
+				else
+				{
+					requestUri = null;
+				}
+			}
+
+			if (requestUri != null)
+			{
+				throw new InvalidOperationException("SharePoint Online REST request returned too many pages.");
+			}
+
+			return results;
 		}
 
 		private T Post<T>(string path, object payload, TimeSpan? timeout = null, string apiVersion = TenantRenameApiVersion)
@@ -77,7 +123,12 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 		private HttpRequestMessage CreateRequest(HttpMethod method, string path, string apiVersion, string jsonPayload = null)
 		{
-			var request = new HttpRequestMessage(method, CreateApiUri(path, apiVersion))
+			return CreateRequest(method, CreateApiUri(path, apiVersion), jsonPayload);
+		}
+
+		private HttpRequestMessage CreateRequest(HttpMethod method, Uri requestUri, string jsonPayload = null)
+		{
+			var request = new HttpRequestMessage(method, requestUri)
 			{
 				Version = new Version(2, 0)
 			};
@@ -170,6 +221,59 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			return JsonSerializer.Deserialize<T>(responseElement.GetRawText(), SerializerOptions);
 		}
 
+		private static ODataFeed<T> DeserializeFeed<T>(string responseText)
+		{
+			if (string.IsNullOrWhiteSpace(responseText))
+			{
+				return new ODataFeed<T>();
+			}
+
+			using var jsonDocument = JsonDocument.Parse(responseText);
+			var responseElement = jsonDocument.RootElement;
+			if (responseElement.ValueKind == JsonValueKind.Object && responseElement.TryGetProperty("d", out var dElement))
+			{
+				responseElement = dElement;
+			}
+
+			var feed = new ODataFeed<T>();
+			if (responseElement.ValueKind == JsonValueKind.Object)
+			{
+				if (responseElement.TryGetProperty("value", out var valueElement) || responseElement.TryGetProperty("results", out valueElement))
+				{
+					feed.Value = DeserializeFeedValue<T>(valueElement);
+				}
+
+				feed.NextLink = GetStringProperty(responseElement, "@odata.nextLink", "odata.nextLink", "nextLink", "__next");
+				return feed;
+			}
+
+			feed.Value = DeserializeFeedValue<T>(responseElement);
+			return feed;
+		}
+
+		private static T[] DeserializeFeedValue<T>(JsonElement valueElement)
+		{
+			if (valueElement.ValueKind != JsonValueKind.Array)
+			{
+				return Array.Empty<T>();
+			}
+
+			return JsonSerializer.Deserialize<T[]>(valueElement.GetRawText(), SerializerOptions) ?? Array.Empty<T>();
+		}
+
+		private static string GetStringProperty(JsonElement element, params string[] propertyNames)
+		{
+			foreach (var propertyName in propertyNames)
+			{
+				if (element.TryGetProperty(propertyName, out var propertyElement) && propertyElement.ValueKind == JsonValueKind.String)
+				{
+					return propertyElement.GetString();
+				}
+			}
+
+			return null;
+		}
+
 		private static JsonElement UnwrapODataResponse(JsonElement responseElement)
 		{
 			if (responseElement.ValueKind != JsonValueKind.Object)
@@ -239,6 +343,13 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			}
 
 			return false;
+		}
+
+		private sealed class ODataFeed<T>
+		{
+			public T[] Value { get; set; }
+
+			public string NextLink { get; set; }
 		}
 	}
 }
