@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Added properties `CoreOrganizationSharingLinkRecommendedExpirationInDays`, `CoreOrganizationSharingLinkMaxExpirationInDays`,`RestrictResourceAccountAccess`, `RestrictExternalSharingForAgents` to Set-pnptenant and Get-pnptenant cmdlet. [#5330](https://github.com/pnp/powershell/pull/5330)
+- Added properties OrganizationSharingLinkRecommendedExpirationInDays, OrganizationSharingLinkMaxExpirationInDays, OverrideTenantOrganizationSharingLinkExpirationPolicy to set-pnpsite, set-pnptenantsite cmdlets. [#5333](https://github.com/pnp/powershell/pull/5333)
 
 ### Contributors
 
