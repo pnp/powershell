@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added `Get-PnPMultiGeoCompanyAllowedDataLocation` cmdlet to retrieve SharePoint Online multi-geo allowed data locations. [#5336](https://github.com/pnp/powershell/pull/5336)
+- Added `Get-PnPGeoMoveCrossCompatibilityStatus` cmdlet to retrieve SharePoint Online multi-geo move compatibility statuses.
 
 ### Changed
 - Added properties `CoreOrganizationSharingLinkRecommendedExpirationInDays`, `CoreOrganizationSharingLinkMaxExpirationInDays`,`RestrictResourceAccountAccess`, `RestrictExternalSharingForAgents` to `Set-PnPTenant` and `Get-PnPTenant` cmdlet. [#5330](https://github.com/pnp/powershell/pull/5330)

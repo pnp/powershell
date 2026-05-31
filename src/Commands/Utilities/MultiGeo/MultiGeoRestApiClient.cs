@@ -23,6 +23,8 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string TenantRenameJobsPathToGetStatus = "TenantRenameJobs/Get";
 		private const string TenantRenameJobsPathToGetStatusV2 = "TenantRenameJobs/GetV2";
 		private const string TenantRenameJobsPathToCancelAJob = "TenantRenameJobs/Cancel";
+		private const string GeoMoveCompatibilityChecksApiVersion = "1.3.6";
+		private const string GeoMoveCompatibilityChecksPath = "GeoMoveCompatibilityChecks";
 		private const string AllowedDataLocationsApiVersion = "1.3.11";
 		private const string AllowedDataLocationsPath = "AllowedDataLocations";
 		private const int MaximumPagination = 10;
@@ -59,6 +61,11 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		internal IEnumerable<string> GetTenantRenameWarningMessages()
 		{
 			return GetFeed<string>(TenantRenameJobsPathToGetWarningMessages, TenantRenameApiVersion);
+		}
+
+		internal IEnumerable<GeoMoveTenantCompatibilityCheck> GetGeoMoveCompatibilityChecks()
+		{
+			return Get<GeoMoveCompatibilityChecks>(GeoMoveCompatibilityChecksPath, GeoMoveCompatibilityChecksApiVersion)?.GeoMoveTenantCompatibilityChecks ?? Array.Empty<GeoMoveTenantCompatibilityCheck>();
 		}
 
 		internal IEnumerable<MultiGeoCompanyAllowedDataLocation> GetAllowedDataLocations()
