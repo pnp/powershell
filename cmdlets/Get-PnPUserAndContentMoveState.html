@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Get-PnPUserAndContentMoveState | PnP PowerShell </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Get-PnPUserAndContentMoveState | PnP PowerShell ">
+      <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+      
+      <link rel="icon" href="../images/favicon-pnp.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pnp/powershell/blob/dev/documentation/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="PnP PowerShell">
+            PnP PowerShell
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="get-pnpuserandcontentmovestate">Get-PnPUserAndContentMoveState</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Returns the state of SharePoint Online user and OneDrive content move jobs.</p>
+<h2 id="syntax">SYNTAX</h2>
+<h3 id="movereport">MoveReport</h3>
+<pre><code class="lang-powershell">Get-PnPUserAndContentMoveState [-Limit &lt;UInt32&gt;] [-MoveStartTime &lt;DateTime&gt;] [-MoveEndTime &lt;DateTime&gt;] [-MoveState &lt;MoveState&gt;] [-MoveDirection &lt;MoveDirection&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="userprincipalname">UserPrincipalName</h3>
+<pre><code class="lang-powershell">Get-PnPUserAndContentMoveState -UserPrincipalName &lt;String&gt; [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="odbmoveid">OdbMoveId</h3>
+<pre><code class="lang-powershell">Get-PnPUserAndContentMoveState -OdbMoveId &lt;Guid&gt; [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Returns status information for SharePoint Online multi-geo user and OneDrive content move jobs. You can retrieve one move job by user principal name or OneDrive move ID, or retrieve a move report filtered by state, direction, time window, and limit.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Get-PnPUserAndContentMoveState -UserPrincipalName user@contoso.com
+</code></pre>
+<p>Returns the move state for the specified user.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPUserAndContentMoveState -OdbMoveId 8f6f8e3a-2c1f-4d5b-9a7e-6b3c2a1f0e9d
+</code></pre>
+<p>Returns the move state for the specified OneDrive move job ID.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPUserAndContentMoveState -MoveState All -MoveDirection All -Limit 100
+</code></pre>
+<p>Returns up to 100 user and content move jobs regardless of state or direction.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPUserAndContentMoveState -MoveStartTime (Get-Date).AddDays(-7) -MoveEndTime (Get-Date) -MoveState Failed -MoveDirection MoveOut -Verbose
+</code></pre>
+<p>Returns failed move-out jobs from the last seven days and includes additional diagnostic properties.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-userprincipalname">-UserPrincipalName</h3>
+<p>The user principal name of the user whose move state should be retrieved.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: UserPrincipalName
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-odbmoveid">-OdbMoveId</h3>
+<p>The OneDrive move job ID whose state should be retrieved.</p>
+<pre><code class="lang-yaml">Type: Guid
+Parameter Sets: OdbMoveId
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-limit">-Limit</h3>
+<p>Limits the number of move report entries returned. The value must be between 1 and 1000.</p>
+<pre><code class="lang-yaml">Type: UInt32
+Parameter Sets: MoveReport
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-movestarttime">-MoveStartTime</h3>
+<p>Filters move report entries to moves starting at or after the specified date and time. The value is converted to UTC before it is sent to SharePoint Online.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: MoveReport
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-moveendtime">-MoveEndTime</h3>
+<p>Filters move report entries to moves ending at or before the specified date and time. The value is converted to UTC before it is sent to SharePoint Online.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: MoveReport
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-movestate">-MoveState</h3>
+<p>Filters move report entries by move state. Valid values are <code>NotStarted</code>, <code>InProgress</code>, <code>Success</code>, <code>Failed</code>, <code>Stopped</code>, <code>Queued</code>, <code>NotSupported</code>, <code>Rescheduled</code>, and <code>All</code>.</p>
+<pre><code class="lang-yaml">Type: MoveState
+Parameter Sets: MoveReport
+
+Required: False
+Position: Named
+Default value: NotStarted
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-movedirection">-MoveDirection</h3>
+<p>Filters move report entries by move direction. Valid values are <code>MoveOut</code>, <code>MoveIn</code>, and <code>All</code>.</p>
+<pre><code class="lang-yaml">Type: MoveDirection
+Parameter Sets: MoveReport
+
+Required: False
+Position: Named
+Default value: MoveOut
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by specifying <code>-ReturnConnection</code> on <code>Connect-PnPOnline</code> or by executing <code>Get-PnPConnection</code>.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="outputs">OUTPUTS</h2>
+<h3 id="systemmanagementautomationpsobject">System.Management.Automation.PSObject</h3>
+<p>Returns objects with <code>UserPrincipalName</code>, <code>MoveJobId</code>, <code>SourceDataLocation</code>, <code>DestinationDataLocation</code>, <code>TimeStamp</code>, and <code>MoveState</code> properties. Validation-only move jobs return <code>ValidationState</code> instead of <code>TimeStamp</code> and <code>MoveState</code>. When <code>-Verbose</code> is specified, additional move job details are returned.</p>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

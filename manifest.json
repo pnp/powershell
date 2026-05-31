@@ -2857,6 +2857,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPGeoMoveCrossCompatibilityStatus.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPGeoMoveCrossCompatibilityStatus.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPGraphSubscription.md",
       "output": {
         ".html": {
@@ -3281,6 +3291,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPMicrosoft365Roadmap.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPMultiGeoCompanyAllowedDataLocation.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPMultiGeoCompanyAllowedDataLocation.html"
         }
       },
       "version": ""
@@ -4561,6 +4581,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPUser.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPUserAndContentMoveState.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPUserAndContentMoveState.html"
         }
       },
       "version": ""
@@ -10174,6 +10204,16 @@
       "output": {
         "resource": {
           "relative_path": "images/dotnetfoundation_v4_small.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/favicon-pnp.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/favicon-pnp.svg"
         }
       },
       "version": ""

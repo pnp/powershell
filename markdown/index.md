@@ -1,0 +1,52 @@
+---
+uid: pnp.powershell.home
+title: PnP PowerShell
+description: PnP PowerShell is a cross-platform PowerShell module for working with Microsoft 365 services.
+---
+
+# PnP PowerShell
+PnP PowerShell is a cross-platform PowerShell Module providing over 700 cmdlets that work with Microsoft 365 environments and products such as SharePoint Online, Microsoft Teams, Microsoft Planner, Microsoft Power Platform, Microsoft Entra, Microsoft Purview, Microsoft Search, and more. It runs on Windows, Linux and MacOS.
+
+> [!NOTE]
+> As of September 9<sup>th</sup>, 2024, as part of a focus on improving the security posture, the multi-tenant PnP Management Shell Entra ID app (with Client/ApplicationID: `31359c7f-bd7e-475c-86db-fdb8c937548e`) has been deleted. It impacts credentials(username + password), Interactive auth flow and Device login flow if it depended on the said multi-tenant app. 
+>
+> It has always been a recommended practice to register your own Entra ID Application with minimal permissions required for your scripts to use with PnP PowerShell. [This has become a mandatory step now](https://github.com/pnp/powershell/discussions/4249). The linked post has more details and it will guide you through how to do so and get your scripts back up & running with minimal code changes.
+
+## Getting up and running
+
+Starting to use PnP PowerShell consists out of 3 steps:
+
+1. [Installing the PnP.PowerShell module](xref:pnp.powershell.installation)
+   
+2. [Registering your own Entra ID Application](xref:pnp.powershell.registerapplication)
+   
+3. [Connecting and authenticating](xref:pnp.powershell.authentication)
+
+Once you're set up, check out the [cmdlets](xref:pnp.powershell.cmdlets) section to discover what you can do and how to use the cmdlets.
+
+Have a look at the [articles](xref:pnp.powershell.articles) section covering various topics how to get the most out of using PnP PowerShell.
+
+## I've found a bug, where do I need to log an issue or create a PR
+
+You can create an issue at https://github.com/pnp/powershell/issues, but please consider first if asking a question at https://github.com/pnp/powershell/discussions is more appropriate. We would like to focus the issues on actual bugs whereas PnP PowerShell related questions can be asked in the discussions section.
+
+As some of the code being PnP PowerShell is actually coming from other PnP repositories, we can move your issue over to that specific repository. You will be notified by email about that.
+
+Before you start to work on code change consider starting a discussion in the repository first. It could potentially save you a lot of time if someone is about to submit a change with exactly the same functionality. It will also allow you to discuss a possible change with the maintainers of the repository before you start to work on it.
+
+## Contributing to PnP PowerShell
+
+Follow the [getting started contributing](xref:pnp.powershell.gettingstartedcontributing) guidelines to help out. Sharing is caring!
+
+## Supportability and SLA
+
+This library is open-source and community provided library with active community providing support for it. This is not Microsoft provided module so there's no SLA or direct support for this open-source component from Microsoft. Please report any issues using the [issues list](https://github.com/pnp/powershell/issues).
+
+## .NET Foundation
+This project is supported by the [.NET Foundation](https://dotnetfoundation.org) and has adopted the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/code-of-conduct).
+
+
+![.NET Foundation](images/dotnetfoundation_v4_small.png ".NET Foundation")
+
+
+<img src="https://m365-visitor-stats.azurewebsites.net/pnp-powershell/readme" /> 

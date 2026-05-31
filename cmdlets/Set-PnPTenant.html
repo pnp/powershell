@@ -7,7 +7,7 @@
       <meta name="title" content="Set-PnPTenant | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
-      <link rel="icon" href="../https://c.s-microsoft.com/favicon.ico?v2">
+      <link rel="icon" href="../images/favicon-pnp.svg">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
       <meta name="docfx:navrel" content="../toc.html">
@@ -266,10 +266,7 @@
  [-RestrictResourceAccountAccess &lt;Boolean&gt;]
  [-EnforceRequestDigest &lt;Boolean&gt;]
  [-RestrictExternalSharingForAgents &lt;Boolean&gt;]
- [-AllowFileArchive &lt;Boolean&gt;]
- [-AllowFileArchiveOnNewSitesByDefault &lt;Boolean&gt;]
  [-DelayContentSecurityPolicyEnforcement &lt;Boolean&gt;]
- [-EnforceRequestDigest &lt;Boolean&gt;]
  [-EnableNotificationsSubscriptions &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
@@ -2767,76 +2764,12 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-enforcerequestdigest-1">-EnforceRequestDigest</h3>
-<p>This parameter controls whether SharePoint enforces request digest validation for client requests.</p>
-<p>The valid values are:</p>
-<ul>
-<li>False - a valid request digest is not required on SOAP API calls that perform a state-changing operation.</li>
-<li>True - A valid request digest is required on SOAP API calls that perform a state-changing operation.</li>
-</ul>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-restrictexternalsharingforagents">-RestrictExternalSharingForAgents</h3>
 <p>This parameter controls whether external sharing is restricted for agents.</p>
 <p>The valid values are:</p>
 <ul>
 <li>False (default) - Agents can share content externally according to existing sharing policies.</li>
 <li>True - External sharing for agents is restricted.</li>
-</ul>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-allowfilearchive-1">-AllowFileArchive</h3>
-<p>Controls whether file-level archiving is allowed at the tenant level. This setting can be overridden for specific sites by the site-level flag of the same name and has no effect unless Microsoft 365 Archive is enabled for your organization.</p>
-<p>The valid values are:</p>
-<ul>
-<li>False (default) - Blocks manual archiving for all files, regardless of the site-level setting. Admin-defined policies can still archive files automatically.</li>
-<li>True - Allows users to manually archive files on sites where file-level archiving is also enabled. Manual archiving is limited to internal users with write access to the file.</li>
-</ul>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-allowfilearchiveonnewsitesbydefault-1">-AllowFileArchiveOnNewSitesByDefault</h3>
-<p>This parameter controls whether file archiving is enabled by default.</p>
-<p>The valid values are:</p>
-<ul>
-<li>False (default) - File archiving is not enabled by default.</li>
-<li>True - File archiving is enabled by default where supported.</li>
-</ul>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-enablenotificationssubscriptions-1">-EnableNotificationsSubscriptions</h3>
-<p>This is an opt-in setting that enables or disables writing SharePoint News and Announcement notification data to a list (NewsNotificationList) in the My Site of every user. When enabled, SharePoint Online emits notification events to this list. Third-party solutions must create and manage webhook solutions to receive change notifications and then read the list to process new entries for triggering their own notifications for the user.</p>
-<p>The valid values are:</p>
-<ul>
-<li>False (default) - Disables writing SharePoint News and Announcement notification data to a list (NewsNotificationList) in the My Site of every user.</li>
-<li>True - Enables or disables writing SharePoint News and Announcement notification data to a list (NewsNotificationList) in the My Site of every user.</li>
 </ul>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)

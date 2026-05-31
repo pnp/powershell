@@ -7,7 +7,7 @@
       <meta name="title" content="Set-PnPSite | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
-      <link rel="icon" href="../https://c.s-microsoft.com/favicon.ico?v2">
+      <link rel="icon" href="../images/favicon-pnp.svg">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
       <meta name="docfx:navrel" content="../toc.html">
@@ -146,6 +146,9 @@
  [-HidePeoplePreviewingFiles &lt;Boolean&gt;]
  [-HidePeopleWhoHaveListsOpen &lt;Boolean&gt;]
  [-RestrictedAccessControl &lt;Boolean&gt;]
+ [-OverrideTenantOrganizationSharingLinkExpirationPolicy &lt;Boolean&gt;]
+ [-OrganizationSharingLinkRecommendedExpirationInDays &lt;int&gt;] 
+ [-OrganizationSharingLinkMaxExpirationInDays &lt;int&gt;]
  [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="set-lock-state">Set Lock State</h3>
@@ -820,6 +823,49 @@ Accept wildcard characters: False
 <p>This parameter allows you to remove the assigned Microsoft 365 group ID on a site, when the group is permanently deleted.</p>
 <pre><code class="lang-yaml">Type: Switch Parameter
 Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-overridetenantorganizationsharinglinkexpirationpolicy">-OverrideTenantOrganizationSharingLinkExpirationPolicy</h3>
+<p>Allows to set organization sharing link expiration policy for this SharePoint site, which will override the tenant-level policy when set to true. When this is set to true, you can configure the organization sharing link expiration policy for this site collection using the OrganizationSharingLinkRecommendedExpirationInDays and OrganizationSharingLinkMaxExpirationInDays parameters.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-organizationsharinglinkrecommendedexpirationindays">-OrganizationSharingLinkRecommendedExpirationInDays</h3>
+<p>This parameter specifies the recommended number of days before organization sharing links expire in the SharePoint site. Users can still choose a different expiration period if permitted by policy, but this value is presented as the recommended default.</p>
+<p>The valid values :</p>
+<ul>
+<li>Can be from 7 to 730 days and must be less than or equal to the maximum expiration value set by OrganizationSharingLinkMaxExpirationInDays.</li>
+<li>When set to 0 (default), the default value will be OrganizationSharingLinkMaxExpirationInDays.</li>
+</ul>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-organizationsharinglinkmaxexpirationindays">-OrganizationSharingLinkMaxExpirationInDays</h3>
+<p>This parameter specifies the maximum number of days that organization sharing links can remain active before they expire for the SharePoint site.</p>
+<p>The valid values :</p>
+<ul>
+<li>can be from 7 to 730 days.</li>
+<li><code>0</code> (default) - No maximum expiration limit is enforced.</li>
+</ul>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
 
 Required: False
 Position: Named

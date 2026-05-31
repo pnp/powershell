@@ -7,7 +7,7 @@
       <meta name="title" content="Building the documentation site locally | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
-      <link rel="icon" href="../https://c.s-microsoft.com/favicon.ico?v2">
+      <link rel="icon" href="../images/favicon-pnp.svg">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
       <meta name="docfx:navrel" content="../toc.html">
@@ -225,6 +225,8 @@ rm -rf &quot;$root&quot;
 <li>The Cmdlets link opens the cmdlets index and shows cmdlet pages in the table of contents.</li>
 <li>Search opens without JavaScript errors.</li>
 <li>The theme selector in the top navigation can switch between Light, Dark and Auto.</li>
+<li>The favicon loads from <code>images/favicon-pnp.svg</code> on the home page, article pages, and cmdlet pages.</li>
+<li>The Copy markdown button copies the Markdown source for the home page, an article page, and a cmdlet page.</li>
 <li>The browser developer tools do not show 404 responses for <code>public/docfx.min.css</code>, <code>public/docfx.min.js</code>, <code>public/main.css</code> or <code>public/main.js</code>.</li>
 </ol>
 <p>DocFX 2.77 and newer emit the vendor assets as minified files. With the modern template, the site should load its built-in assets from the <code>public</code> folder and the PnP branding overrides from <code>public/main.css</code> and <code>public/main.js</code>. If these files return 404 responses, the template stack is not being applied correctly and the site can appear broken or unstyled.</p>
