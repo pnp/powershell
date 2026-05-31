@@ -226,6 +226,8 @@ At minimum, verify the following:
 1. The Cmdlets link opens the cmdlets index and shows cmdlet pages in the table of contents.
 1. Search opens without JavaScript errors.
 1. The theme selector in the top navigation can switch between Light, Dark and Auto.
+1. The favicon loads from `images/favicon-pnp.svg` on the home page, article pages, and cmdlet pages.
+1. The Copy markdown button copies the Markdown source for the home page, an article page, and a cmdlet page.
 1. The browser developer tools do not show 404 responses for `public/docfx.min.css`, `public/docfx.min.js`, `public/main.css` or `public/main.js`.
 
 DocFX 2.77 and newer emit the vendor assets as minified files. With the modern template, the site should load its built-in assets from the `public` folder and the PnP branding overrides from `public/main.css` and `public/main.js`. If these files return 404 responses, the template stack is not being applied correctly and the site can appear broken or unstyled.

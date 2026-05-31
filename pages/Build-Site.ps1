@@ -6,10 +6,12 @@ param(
 
 $SourceRoot = (Resolve-Path $SourceRoot).Path
 $PagesPath = Join-Path $SourceRoot "pages"
+$ArticlesPath = Join-Path $PagesPath "articles"
 $DocumentationPath = Join-Path $SourceRoot "documentation"
 $CmdletsPath = Join-Path $PagesPath "cmdlets"
 $DocFxConfigPath = Join-Path $PagesPath "docfx.json"
 $SitePath = Join-Path $PagesPath "_site"
+$MarkdownOutputPath = Join-Path $SitePath "markdown"
 $CmdletIndexPath = Join-Path $CmdletsPath "index.md"
 $AliasTemplatePath = Join-Path $CmdletsPath "alias.template"
 
@@ -33,6 +35,39 @@ function Clear-GeneratedCmdletPages {
 	if (Test-Path $CmdletsPath) {
 		Get-ChildItem -Path $CmdletsPath -File | Where-Object { $_.Name -notin @("index.md", "alias.template") } | Remove-Item -Force
 	}
+}
+
+function Copy-MarkdownFiles {
+	param(
+		[string]$SourcePath,
+		[string]$DestinationPath
+	)
+
+	if (!(Test-Path $SourcePath)) {
+		return
+	}
+
+	Get-ChildItem -Path $SourcePath -Filter "*.md" -File -Recurse | ForEach-Object {
+		$relativePath = [System.IO.Path]::GetRelativePath($SourcePath, $_.FullName)
+		$destinationFilePath = Join-Path $DestinationPath $relativePath
+		$destinationFolderPath = Split-Path -Parent $destinationFilePath
+		New-Item -Path $destinationFolderPath -ItemType Directory -Force | Out-Null
+		Copy-Item -Path $_.FullName -Destination $destinationFilePath -Force
+	}
+}
+
+function Copy-MarkdownSourceFiles {
+	Write-Host "Copying markdown source files to generated site"
+
+	Remove-Item -Path $MarkdownOutputPath -Recurse -Force -ErrorAction SilentlyContinue
+	New-Item -Path $MarkdownOutputPath -ItemType Directory -Force | Out-Null
+
+	Get-ChildItem -Path $PagesPath -Filter "*.md" -File | ForEach-Object {
+		Copy-Item -Path $_.FullName -Destination (Join-Path $MarkdownOutputPath $_.Name) -Force
+	}
+
+	Copy-MarkdownFiles -SourcePath $ArticlesPath -DestinationPath (Join-Path $MarkdownOutputPath "articles")
+	Copy-MarkdownFiles -SourcePath $CmdletsPath -DestinationPath (Join-Path $MarkdownOutputPath "cmdlets")
 }
 
 New-Item -Path $CmdletsPath -ItemType Directory -Force | Out-Null
@@ -237,6 +272,8 @@ try {
 	if ($LASTEXITCODE -ne 0) {
 		throw "DocFX build failed with exit code $LASTEXITCODE"
 	}
+
+	Copy-MarkdownSourceFiles
 
 	if (!$SkipPublish) {
 		if ([string]::IsNullOrWhiteSpace($PublishPath)) {
