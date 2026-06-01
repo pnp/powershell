@@ -1,11 +1,11 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPUserAndContentMoveState
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUserAndContentMoveState.html
 schema: 2.0.0
-tags: Available in the current Nightly Release only.
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUserAndContentMoveState.html
+applicable: SharePoint Online
+title: Get-PnPUserAndContentMoveState
+Module Name: PnP.PowerShell
+tags: Available in the current Nightly Release only.
 ---
  
 # Get-PnPUserAndContentMoveState
