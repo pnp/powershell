@@ -2,8 +2,10 @@ using Microsoft.SharePoint.Client;
 using PnP.Framework.Http;
 using PnP.PowerShell.Commands.Model;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -24,18 +26,71 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string TenantRenameJobsPathToGetStatus = "TenantRenameJobs/Get";
 		private const string TenantRenameJobsPathToGetStatusV2 = "TenantRenameJobs/GetV2";
 		private const string TenantRenameJobsPathToCancelAJob = "TenantRenameJobs/Cancel";
-		private const string GeoMoveCompatibilityChecksApiVersion = "1.3.6";
+		private const string GeoMoveCompatibilityChecksMinimumApiVersion = "1.3.6";
 		private const string GeoMoveCompatibilityChecksPath = "GeoMoveCompatibilityChecks";
 		private const string AllowedDataLocationsApiVersion = "1.3.11";
 		private const string AllowedDataLocationsPath = "AllowedDataLocations";
-		private const string UserMoveJobsApiVersion = "1.0";
-		private const string UserMoveJobsByMoveIdApiVersion = "1.2.2";
-		private const string UserMoveJobsReportApiVersion = "1.3.2";
+		private const string MultiGeoApiVersionsPath = "MultiGeoApiVersions";
+		private const string UserMoveJobsMinimumApiVersion = "1.0";
+		private const string UserMoveJobsByMoveIdMinimumApiVersion = "1.2.2";
+		private const string UserMoveJobsReportMinimumApiVersion = "1.3.2";
 		private const string UserMoveJobPathByUpn = "UserMoveJobs(upn='{0}')";
 		private const string UserMoveJobPathByMoveId = "UserMoveJobs/GetByMoveId(odbMoveId='{0}')";
 		private const string UserMoveJobsPathForMoveReport = "UserMoveJobs/GetMoveReport(moveState={0},moveDirection={1},startTime='{2:u}',endTime='{3:u}',limit='{4}')";
 		private const int MaximumPagination = 10;
+		private const int ApiVersionCacheValidTimeInHours = 1;
 		private static readonly TimeSpan CreateTenantRenameJobTimeout = TimeSpan.FromSeconds(300);
+		private static readonly string[] ClientSupportedApiVersions =
+		[
+			"1.6.0",
+			"1.5.20",
+			"1.5.19",
+			"1.5.18",
+			"1.5.17",
+			"1.5.16",
+			"1.5.15",
+			"1.5.14",
+			"1.5.13",
+			"1.5.12",
+			"1.5.11",
+			"1.5.10",
+			"1.5.9",
+			"1.5.8",
+			"1.5.7",
+			"1.5.6",
+			"1.5.5",
+			"1.5.4",
+			"1.5.3",
+			"1.5.2",
+			"1.5.1",
+			"1.5.0",
+			"1.4.7",
+			"1.4.6",
+			"1.4.5",
+			"1.4.4",
+			"1.4.3",
+			"1.4.2",
+			"1.4.1",
+			"1.4.0",
+			"1.3.11",
+			"1.3.10",
+			"1.3.9",
+			"1.3.8",
+			"1.3.7",
+			"1.3.6",
+			"1.3.5",
+			"1.3.4",
+			"1.3.3-beta",
+			"1.3.2",
+			"1.3.1",
+			"1.3.0",
+			"1.2.2",
+			"1.2.1-beta",
+			"1.2-beta",
+			"1.1",
+			"1.0"
+		];
+		private static readonly ConcurrentDictionary<string, CachedApiVersion> ApiVersionCache = new(StringComparer.OrdinalIgnoreCase);
 		private static readonly JsonSerializerOptions SerializerOptions = new()
 		{
 			PropertyNameCaseInsensitive = true
@@ -72,7 +127,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 		internal IEnumerable<GeoMoveTenantCompatibilityCheck> GetGeoMoveCompatibilityChecks()
 		{
-			return Get<GeoMoveCompatibilityChecks>(GeoMoveCompatibilityChecksPath, GeoMoveCompatibilityChecksApiVersion)?.GeoMoveTenantCompatibilityChecks ?? Array.Empty<GeoMoveTenantCompatibilityCheck>();
+			return GetFeed<GeoMoveTenantCompatibilityCheck>(GeoMoveCompatibilityChecksPath, GetCurrentApiVersion(GeoMoveCompatibilityChecksMinimumApiVersion));
 		}
 
 		internal IEnumerable<MultiGeoCompanyAllowedDataLocation> GetAllowedDataLocations()
@@ -82,20 +137,23 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 		internal UserAndContentMoveState GetUserAndContentMoveState(string userPrincipalName)
 		{
+			var apiVersion = GetCurrentApiVersion(UserMoveJobsMinimumApiVersion);
 			var path = string.Format(CultureInfo.InvariantCulture, UserMoveJobPathByUpn, ProcessSpecialChars(userPrincipalName));
-			return Get<UserAndContentMoveState>(path, UserMoveJobsApiVersion);
+			return Get<UserAndContentMoveState>(path, apiVersion);
 		}
 
 		internal UserAndContentMoveState GetUserAndContentMoveState(Guid odbMoveId)
 		{
+			var apiVersion = GetCurrentApiVersion(UserMoveJobsByMoveIdMinimumApiVersion);
 			var path = string.Format(CultureInfo.InvariantCulture, UserMoveJobPathByMoveId, odbMoveId);
-			return Get<UserAndContentMoveState>(path, UserMoveJobsByMoveIdApiVersion);
+			return Get<UserAndContentMoveState>(path, apiVersion);
 		}
 
 		internal IEnumerable<UserAndContentMoveState> GetUserAndContentMoveStates(MoveState moveState, MoveDirection moveDirection, DateTime startTime, DateTime endTime, uint limit)
 		{
+			var apiVersion = GetCurrentApiVersion(UserMoveJobsReportMinimumApiVersion);
 			var path = string.Format(CultureInfo.InvariantCulture, UserMoveJobsPathForMoveReport, (int)moveState, (int)moveDirection, startTime, endTime, limit);
-			return GetFeed<UserAndContentMoveState>(path, UserMoveJobsReportApiVersion);
+			return GetFeed<UserAndContentMoveState>(path, apiVersion);
 		}
 
 		internal void CancelTenantRenameJob()
@@ -106,6 +164,12 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private T Get<T>(string path, string apiVersion = TenantRenameApiVersion)
 		{
 			var responseText = Send(() => CreateRequest(HttpMethod.Get, path, apiVersion), timeout: null, allowRetries: true);
+			return DeserializeResponse<T>(responseText);
+		}
+
+		private T GetWithoutApiVersion<T>(string path)
+		{
+			var responseText = Send(() => CreateRequest(HttpMethod.Get, CreateApiUri(path)), timeout: null, allowRetries: true);
 			return DeserializeResponse<T>(responseText);
 		}
 
@@ -184,6 +248,66 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			var normalizedPath = path.TrimStart('/');
 			var separator = normalizedPath.Contains('?') ? "&" : "?";
 			return new Uri($"{adminContext.Url.TrimEnd('/')}/_api/{normalizedPath}{separator}api-version={apiVersion}");
+		}
+
+		private Uri CreateApiUri(string path)
+		{
+			var normalizedPath = path.TrimStart('/');
+			return new Uri($"{adminContext.Url.TrimEnd('/')}/_api/{normalizedPath}");
+		}
+
+		private string GetCurrentApiVersion(string minimumApiVersion)
+		{
+			var apiVersion = GetCurrentApiVersion();
+			if (!IsSupportedApiVersion(apiVersion, minimumApiVersion))
+			{
+				throw new NotSupportedException($"SharePoint Online MultiGeo API version {apiVersion} does not support this operation. Minimum required version is {minimumApiVersion}.");
+			}
+
+			return apiVersion;
+		}
+
+		private string GetCurrentApiVersion()
+		{
+			var cacheKey = adminContext.Url.TrimEnd('/');
+			if (ApiVersionCache.TryGetValue(cacheKey, out var cachedApiVersion) && cachedApiVersion.ExpiresOnUtc > DateTime.UtcNow)
+			{
+				return cachedApiVersion.Identity;
+			}
+
+			var supportedVersions = GetWithoutApiVersion<ApiVersions>(MultiGeoApiVersionsPath)?.SupportedVersions;
+			var currentApiVersion = GetLatestClientSupportedApiVersion(supportedVersions);
+			ApiVersionCache[cacheKey] = new CachedApiVersion
+			{
+				Identity = currentApiVersion,
+				ExpiresOnUtc = DateTime.UtcNow.AddHours(ApiVersionCacheValidTimeInHours)
+			};
+
+			return currentApiVersion;
+		}
+
+		private static string GetLatestClientSupportedApiVersion(IEnumerable<string> supportedVersions)
+		{
+			if (supportedVersions == null)
+			{
+				throw new InvalidOperationException("SharePoint Online REST API did not return any supported MultiGeo API versions.");
+			}
+
+			var supportedVersionSet = new HashSet<string>(supportedVersions, StringComparer.OrdinalIgnoreCase);
+			var apiVersion = ClientSupportedApiVersions.FirstOrDefault(supportedVersionSet.Contains);
+			if (apiVersion == null)
+			{
+				throw new InvalidOperationException("SharePoint Online REST API did not return a supported MultiGeo API version.");
+			}
+
+			return apiVersion;
+		}
+
+		private static bool IsSupportedApiVersion(string apiVersion, string minimumApiVersion)
+		{
+			var apiVersionIndex = Array.IndexOf(ClientSupportedApiVersions, apiVersion);
+			var minimumApiVersionIndex = Array.IndexOf(ClientSupportedApiVersions, minimumApiVersion);
+			return apiVersionIndex >= 0 && minimumApiVersionIndex >= 0 && apiVersionIndex <= minimumApiVersionIndex;
 		}
 
 		private string Send(Func<HttpRequestMessage> requestFactory, TimeSpan? timeout, bool allowRetries)
@@ -387,6 +511,18 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			public T[] Value { get; set; }
 
 			public string NextLink { get; set; }
+		}
+
+		private sealed class ApiVersions
+		{
+			public string[] SupportedVersions { get; set; }
+		}
+
+		private sealed class CachedApiVersion
+		{
+			public string Identity { get; set; }
+
+			public DateTime ExpiresOnUtc { get; set; }
 		}
 	}
 }

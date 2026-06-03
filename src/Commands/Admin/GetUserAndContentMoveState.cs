@@ -40,10 +40,10 @@ namespace PnP.PowerShell.Commands.Admin
 		public DateTime MoveEndTime { get; set; }
 
 		[Parameter(Mandatory = false, ParameterSetName = ParameterSetMoveReport)]
-		public MoveState MoveState { get; set; }
+		public MoveState MoveState { get; set; } = MoveState.All;
 
 		[Parameter(Mandatory = false, ParameterSetName = ParameterSetMoveReport)]
-		public MoveDirection MoveDirection { get; set; }
+		public MoveDirection MoveDirection { get; set; } = MoveDirection.All;
 
 		protected override void ExecuteCmdlet()
 		{

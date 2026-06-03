@@ -9,13 +9,26 @@ namespace PnP.PowerShell.Commands.Admin
 	[Cmdlet(VerbsCommon.Get, "PnPGeoMoveCrossCompatibilityStatus")]
 	[RequiredApiApplicationPermissions("sharepoint/Sites.FullControl.All")]
 	[RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl")]
-	[OutputType(typeof(GeoMoveTenantCompatibilityCheck))]
+	[OutputType(typeof(PSObject))]
 	public class GetGeoMoveCrossCompatibilityStatus : PnPSharePointOnlineAdminCmdlet
 	{
 		protected override void ExecuteCmdlet()
 		{
 			var multiGeoRestApiClient = new MultiGeoRestApiClient(AdminContext);
-			WriteObject(multiGeoRestApiClient.GetGeoMoveCompatibilityChecks(), true);
+			foreach (var compatibilityCheck in multiGeoRestApiClient.GetGeoMoveCompatibilityChecks())
+			{
+				WriteObject(ConvertToPSObject(compatibilityCheck));
+			}
+
+		}
+
+		private static PSObject ConvertToPSObject(GeoMoveTenantCompatibilityCheck compatibilityCheck)
+		{
+			var result = new PSObject();
+			result.Properties.Add(new PSNoteProperty("SourceDataLocation", compatibilityCheck.SourceDataLocation));
+			result.Properties.Add(new PSNoteProperty("DestinationDataLocation", compatibilityCheck.DestinationDataLocation));
+			result.Properties.Add(new PSNoteProperty("CompatibilityStatus", compatibilityCheck.GeoMoveTenantCompatibilityResult));
+			return result;
 		}
 	}
 }
