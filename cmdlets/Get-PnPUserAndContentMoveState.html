@@ -100,7 +100,7 @@
 <pre><code class="lang-powershell">Get-PnPUserAndContentMoveState -OdbMoveId &lt;Guid&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Returns status information for SharePoint Online multi-geo user and OneDrive content move jobs. You can retrieve one move job by user principal name or OneDrive move ID, or retrieve a move report filtered by state, direction, time window, and limit.</p>
+<p>Returns status information for SharePoint Online multi-geo user and OneDrive content move jobs. You can retrieve one move job by user principal name or OneDrive move ID, or retrieve a move report filtered by state, direction, time window, and limit. When no move state or direction is specified, all states and directions are returned.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPUserAndContentMoveState -UserPrincipalName user@contoso.com
@@ -181,7 +181,7 @@ Parameter Sets: MoveReport
 
 Required: False
 Position: Named
-Default value: NotStarted
+Default value: All
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
@@ -192,7 +192,7 @@ Parameter Sets: MoveReport
 
 Required: False
 Position: Named
-Default value: MoveOut
+Default value: All
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

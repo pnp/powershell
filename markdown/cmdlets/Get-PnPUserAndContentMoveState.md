@@ -1,9 +1,9 @@
 ---
-schema: 2.0.0
-Module Name: PnP.PowerShell
-applicable: SharePoint Online
 title: Get-PnPUserAndContentMoveState
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUserAndContentMoveState.html
+Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
 tags: Available in the current Nightly Release only.
 external help file: PnP.PowerShell.dll-Help.xml
 ---
@@ -34,7 +34,7 @@ Get-PnPUserAndContentMoveState -OdbMoveId <Guid> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Returns status information for SharePoint Online multi-geo user and OneDrive content move jobs. You can retrieve one move job by user principal name or OneDrive move ID, or retrieve a move report filtered by state, direction, time window, and limit.
+Returns status information for SharePoint Online multi-geo user and OneDrive content move jobs. You can retrieve one move job by user principal name or OneDrive move ID, or retrieve a move report filtered by state, direction, time window, and limit. When no move state or direction is specified, all states and directions are returned.
 
 ## EXAMPLES
 
@@ -151,7 +151,7 @@ Parameter Sets: MoveReport
 
 Required: False
 Position: Named
-Default value: NotStarted
+Default value: All
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -165,7 +165,7 @@ Parameter Sets: MoveReport
 
 Required: False
 Position: Named
-Default value: MoveOut
+Default value: All
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
