@@ -1,6 +1,7 @@
 const copyMarkdownButtonClass = "pnp-copy-markdown";
 const copyMarkdownGroupClass = "pnp-copy-markdown-group";
 const copyMarkdownMenuClass = "pnp-copy-markdown-menu";
+const markdownSourceCache = new Map();
 
 function getMarkdownSourceUrl() {
 	const normalizedPath = window.location.pathname.endsWith("/") ? `${window.location.pathname}index.html` : window.location.pathname;
@@ -29,10 +30,31 @@ function getMarkdownSourceUrl() {
 	return new URL(`${"../".repeat(relativeDepth)}${markdownSegments.join("/")}`, window.location.href);
 }
 
+async function getMarkdownSourceText(markdownSourceUrl) {
+	const cacheKey = markdownSourceUrl.href;
+
+	if (!markdownSourceCache.has(cacheKey)) {
+		markdownSourceCache.set(cacheKey, fetch(markdownSourceUrl, { cache: "no-store" }).then(response => {
+			if (!response.ok) {
+				throw new Error(`Unable to fetch markdown source: ${response.status}`);
+			}
+
+			return response.text();
+		}));
+	}
+
+	return markdownSourceCache.get(cacheKey);
+}
+
 async function writeTextToClipboard(text) {
 	if (navigator.clipboard?.writeText) {
-		await navigator.clipboard.writeText(text);
-		return;
+		try {
+			await navigator.clipboard.writeText(text);
+			return;
+		}
+		catch (error) {
+			console.warn("Clipboard API copy failed, falling back to textarea copy.", error);
+		}
 	}
 
 	const textArea = document.createElement("textarea");
@@ -43,8 +65,15 @@ async function writeTextToClipboard(text) {
 	textArea.style.opacity = "0";
 	document.body.appendChild(textArea);
 	textArea.select();
-	document.execCommand("copy");
-	document.body.removeChild(textArea);
+
+	try {
+		if (!document.execCommand("copy")) {
+			throw new Error("Unable to copy markdown source.");
+		}
+	}
+	finally {
+		document.body.removeChild(textArea);
+	}
 }
 
 function setCopyMarkdownButtonState(button, state) {
@@ -115,17 +144,11 @@ function setCopyMarkdownMenuOpen(buttonGroup, toggleButton, toggleIcon, menu, is
 	toggleIcon.className = `bi ${isOpen ? "bi-chevron-up" : "bi-chevron-down"}`;
 }
 
-async function copyMarkdown(markdownSourceUrl, button) {
+async function copyMarkdown(markdownSourceText, button) {
 	setCopyMarkdownButtonState(button, "copying");
 
 	try {
-		const response = await fetch(markdownSourceUrl, { cache: "no-store" });
-
-		if (!response.ok) {
-			throw new Error(`Unable to fetch markdown source: ${response.status}`);
-		}
-
-		await writeTextToClipboard(await response.text());
+		await writeTextToClipboard(markdownSourceText);
 		setCopyMarkdownButtonState(button, "copied");
 		window.setTimeout(() => setCopyMarkdownButtonState(button, "ready"), 1800);
 	}
@@ -136,11 +159,25 @@ async function copyMarkdown(markdownSourceUrl, button) {
 	}
 }
 
-function addCopyMarkdownButton() {
+async function addCopyMarkdownButton() {
 	const actionBar = document.querySelector(".content > .actionbar");
 	const markdownSourceUrl = getMarkdownSourceUrl();
 
 	if (!actionBar || !markdownSourceUrl || actionBar.querySelector(`.${copyMarkdownGroupClass}`)) {
+		return;
+	}
+
+	let markdownSourceText;
+
+	try {
+		markdownSourceText = await getMarkdownSourceText(markdownSourceUrl);
+	}
+	catch (error) {
+		console.warn("Markdown source is not available for this page.", error);
+		return;
+	}
+
+	if (!actionBar.isConnected || actionBar.querySelector(`.${copyMarkdownGroupClass}`)) {
 		return;
 	}
 
@@ -172,7 +209,7 @@ function addCopyMarkdownButton() {
 	viewMenuItem.rel = "noopener";
 
 	setCopyMarkdownButtonState(copyButton, "ready");
-	copyButton.addEventListener("click", () => copyMarkdown(markdownSourceUrl, copyButton));
+	copyButton.addEventListener("click", () => copyMarkdown(markdownSourceText, copyButton));
 	toggleButton.addEventListener("click", event => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -180,7 +217,7 @@ function addCopyMarkdownButton() {
 	});
 	copyMenuItem.addEventListener("click", () => {
 		setCopyMarkdownMenuOpen(buttonGroup, toggleButton, toggleIcon, menu, false);
-		copyMarkdown(markdownSourceUrl, copyButton);
+		copyMarkdown(markdownSourceText, copyButton);
 	});
 	viewMenuItem.addEventListener("click", () => setCopyMarkdownMenuOpen(buttonGroup, toggleButton, toggleIcon, menu, false));
 	menu.addEventListener("click", event => event.stopPropagation());

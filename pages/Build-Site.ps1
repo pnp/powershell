@@ -70,6 +70,23 @@ function Copy-MarkdownSourceFiles {
 	Copy-MarkdownFiles -SourcePath $CmdletsPath -DestinationPath (Join-Path $MarkdownOutputPath "cmdlets")
 }
 
+function Clear-PublishPath {
+	param(
+		[string]$Path
+	)
+
+	$resolvedPath = (Resolve-Path $Path).Path
+	$protectedPaths = @($SourceRoot, $PagesPath, $SitePath, [System.IO.Path]::GetPathRoot($resolvedPath))
+
+	if ($protectedPaths -contains $resolvedPath) {
+		throw "Refusing to clear protected publish path $resolvedPath"
+	}
+
+	Write-Host "Clearing existing published site at $resolvedPath"
+
+	Get-ChildItem -Path $resolvedPath -Force | Where-Object { $_.Name -ne ".git" } | Remove-Item -Recurse -Force
+}
+
 New-Item -Path $CmdletsPath -ItemType Directory -Force | Out-Null
 $cmdletIndexTemplateBytes = [System.IO.File]::ReadAllBytes($CmdletIndexPath)
 
@@ -285,6 +302,7 @@ try {
 
 		if (![string]::IsNullOrWhiteSpace($PublishPath)) {
 			Write-Host "Copying generated site to $PublishPath"
+			Clear-PublishPath -Path $PublishPath
 			Copy-Item -Path (Join-Path $SitePath "*") -Destination $PublishPath -Force -Recurse
 		}
 		else {
