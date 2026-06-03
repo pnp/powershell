@@ -40,6 +40,9 @@ async function getMarkdownSourceText(markdownSourceUrl) {
 			}
 
 			return response.text();
+		}).catch(error => {
+			markdownSourceCache.delete(cacheKey);
+			throw error;
 		}));
 	}
 

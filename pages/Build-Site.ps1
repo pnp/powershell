@@ -75,7 +75,12 @@ function Clear-PublishPath {
 		[string]$Path
 	)
 
-	$resolvedPath = (Resolve-Path $Path).Path
+	if ([string]::IsNullOrWhiteSpace($Path)) {
+		throw "Publish path cannot be empty"
+	}
+
+	$resolvedPath = [System.IO.Directory]::CreateDirectory($Path).FullName
+	$resolvedPath = (Resolve-Path -LiteralPath $resolvedPath).Path
 	$protectedPaths = @($SourceRoot, $PagesPath, $SitePath, [System.IO.Path]::GetPathRoot($resolvedPath))
 
 	if ($protectedPaths -contains $resolvedPath) {
