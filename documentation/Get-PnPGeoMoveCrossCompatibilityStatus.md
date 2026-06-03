@@ -51,8 +51,8 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### PnP.PowerShell.Commands.Model.GeoMoveTenantCompatibilityCheck
-Returns objects with `SourceDataLocation`, `DestinationDataLocation`, and `GeoMoveTenantCompatibilityResult` properties.
+### System.Management.Automation.PSObject
+Returns objects with `SourceDataLocation`, `DestinationDataLocation`, and `CompatibilityStatus` properties.
 
 ## RELATED LINKS
 
