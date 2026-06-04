@@ -1,11 +1,11 @@
 ---
-title: Get-PnPGeoMoveCrossCompatibilityStatus
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPGeoMoveCrossCompatibilityStatus.html
-Module Name: PnP.PowerShell
-schema: 2.0.0
-applicable: SharePoint Online
 tags: Available in the current Nightly Release only.
+title: Get-PnPGeoMoveCrossCompatibilityStatus
 external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPGeoMoveCrossCompatibilityStatus.html
+schema: 2.0.0
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
 ---
  
 # Get-PnPGeoMoveCrossCompatibilityStatus

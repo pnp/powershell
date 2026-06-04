@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
+tags: Available in the current Nightly Release only.
 title: Get-PnPTermSet
-schema: 2.0.0
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTermSet.html
+schema: 2.0.0
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
 ---
- # Get-PnPTermSet
+  # Get-PnPTermSet
 
 ## SYNOPSIS
 Returns a taxonomy term set
@@ -134,4 +135,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 

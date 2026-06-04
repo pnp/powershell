@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAuditing.html
-external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
 title: Get-PnPAuditing
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAuditing.html
+schema: 2.0.0
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
 ---
-  
+   
 # Get-PnPAuditing
 
 ## SYNOPSIS
@@ -50,5 +51,6 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 
 

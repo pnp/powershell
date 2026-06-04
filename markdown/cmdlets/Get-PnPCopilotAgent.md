@@ -1,14 +1,15 @@
 ---
-document type: cmdlet
+ms.date: 12/06/2024
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+tags: Available in the current Nightly Release only.
+Locale: en-US
 external help file: PnP.PowerShell.dll-Help.xml
 HelpUri: ''
-Locale: en-US
-Module Name: PnP.PowerShell
-ms.date: 12/06/2024
-PlatyPS schema version: 2024-05-01
 title: Get-PnPCopilotAgent
+document type: cmdlet
 ---
-
+ 
 # Get-PnPCopilotAgent
 
 ## SYNOPSIS
@@ -89,3 +90,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
