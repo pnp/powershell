@@ -21,8 +21,8 @@ namespace PnP.PowerShell.Commands.Utilities
             var sasUrl = GenerateSasUrl(httpClient, accessToken, baseUrl, environmentName);
             var blobUri = BuildBlobUri(sasUrl, packagePath);
             UploadPackageToBlob(blobUri, packagePath);
-            var importParametersResponse = GetImportParameters(httpClient, accessToken, baseUrl, environmentName, blobUri);
-            var importOperationsData = GetImportOperations(httpClient, accessToken, importParametersResponse.Location.ToString(), maxRetries, delayMs);
+            var importParametersLocation = GetImportParameters(httpClient, accessToken, baseUrl, environmentName, blobUri);
+            var importOperationsData = GetImportOperations(httpClient, accessToken, importParametersLocation.ToString(), maxRetries, delayMs);
             var propertiesElement = GetPropertiesElement(importOperationsData);
             ValidateProperties(propertiesElement);
             var resourcesObject = ParseResources(propertiesElement);
@@ -30,8 +30,8 @@ namespace PnP.PowerShell.Commands.Utilities
             var validatePackagePayload = CreateImportObject(propertiesElement, resourcesObject);
             var validateResponseData = ValidateImportPackage(httpClient, accessToken, baseUrl, environmentName, validatePackagePayload);
             var importPackagePayload = CreateImportObject(validateResponseData);
-            var importResult = ImportPackage(httpClient, accessToken, baseUrl, environmentName, importPackagePayload);
-            return WaitForImportCompletion(httpClient, accessToken, importResult.Location.ToString());
+            var importResultLocation = ImportPackage(httpClient, accessToken, baseUrl, environmentName, importPackagePayload);
+            return WaitForImportCompletion(httpClient, accessToken, importResultLocation.ToString());
         }
         public static string GenerateSasUrl(HttpClient httpClient, string accessToken, string baseUrl, string environmentName)
         {
@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static System.Net.Http.Headers.HttpResponseHeaders GetImportParameters(HttpClient httpClient, string accessToken, string baseUrl, string environmentName, UriBuilder blobUri)
+        public static Uri GetImportParameters(HttpClient httpClient, string accessToken, string baseUrl, string environmentName, UriBuilder blobUri)
         {
             var importPayload = new
             {
@@ -82,7 +82,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     value = blobUri.Uri.ToString()
                 }
             };
-            var response = RestHelper.PostGetResponseHeader<JsonElement>(
+            var responseLocation = RestHelper.PostGetResponseLocation<JsonElement>(
                 httpClient,
                 $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listImportParameters?api-version=2016-11-01",
                 accessToken,
@@ -91,7 +91,7 @@ namespace PnP.PowerShell.Commands.Utilities
             );
             Log.Debug("ImportFlowUtility", "Import parameters retrieved");
             System.Threading.Thread.Sleep(2500);
-            return response;
+            return responseLocation;
         }
 
         public static JsonElement GetImportOperations(HttpClient httpClient, string accessToken, string importOperationsUrl, int? maxRetries = null, int? delayMs = null)
@@ -224,9 +224,9 @@ namespace PnP.PowerShell.Commands.Utilities
             return resourcesObject;
         }
 
-        public static System.Net.Http.Headers.HttpResponseHeaders ImportPackage(HttpClient httpClient, string accessToken, string baseUrl, string environmentName, JsonObject importPackagePayload)
+        public static Uri ImportPackage(HttpClient httpClient, string accessToken, string baseUrl, string environmentName, JsonObject importPackagePayload)
         {
-            var importResult = RestHelper.PostGetResponseHeader<JsonElement>(
+            var importResultLocation = RestHelper.PostGetResponseLocation<JsonElement>(
                 httpClient,
                 $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/importPackage?api-version=2016-11-01",
                 accessToken,
@@ -234,7 +234,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 accept: "application/json"
             );
             Log.Debug("ImportFlowUtility", "Import package initiated");
-            return importResult;
+            return importResultLocation;
         }
 
         public static ImportFlowResult WaitForImportCompletion(HttpClient httpClient,string accessToken,string importPackageResponseUrl)

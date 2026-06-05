@@ -1,6 +1,8 @@
 ﻿# PnP PowerShell
 
-**PnP PowerShell** is a .NET 8 based PowerShell Module providing over 750 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Entra ID, and more.
+**PnP PowerShell** is a .NET 8 based PowerShell Module providing over 850 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Entra ID, and more.
+
+Starting with version 3.1.379-nightly, all releases, including the nightly releases, will be fully digitally signed and will therefore work on machines restricted with the AllSigned PowerShell execution policy set. Major thanks to the [.NET Foundation](https://dotnetfoundation.org) for providing us with the signing certificate to be able to do so.
 
 Last version | Last nightly version
 -------------|---------------------
@@ -8,7 +10,7 @@ Last version | Last nightly version
 
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/pnp/powershell/badge)](https://scorecard.dev/viewer/?uri=github.com/pnp/powershell)
 
-This module is a successor of the [PnP-PowerShell](https://github.com/pnp/pnp-powershell) module. The original cmdlets only work on Windows and Windows PowerShell and supports SharePoint On-Premises (2013, 2016 and 2019) and SharePoint Online. This version of the cmdlets is cross-platform (i.e it works on Windows, MacOS and Linux) but it will only support SharePoint Online. Going forward we will only be **actively maintaining the cross-platform PnP PowerShell** module.
+This module is a successor of the [PnP-PowerShell](https://github.com/pnp/pnp-powershell) module. The original cmdlets only work on Windows and Windows PowerShell and supports SharePoint On-Premises (2013, 2016 and 2019) and SharePoint Online. This version of the cmdlets is cross-platform (i.e it works on Windows, MacOS and Linux) but it will only support SharePoint Online. Only the cross-platform PnP PowerShell SharePoint Online module is still being updated, earlier versions are not.
 
 For more information about installing or upgrading to this module, please refer to [the documentation](https://pnp.github.io/powershell/articles/index.html).
 

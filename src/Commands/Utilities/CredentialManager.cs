@@ -2,6 +2,8 @@
 using Microsoft.Win32.SafeHandles;
 using PnP.Framework.Modernization.Cache;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
@@ -9,6 +11,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Security.Cryptography;
 using System.Text;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
@@ -17,6 +20,9 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class CredentialManager
     {
+        private const string LinuxManagedAppIdSchemaName = "pnp.powershell.managedappid";
+        private const string LinuxManagedAppIdSecretLabel = "PnP PowerShell managed App Id";
+        private const string LinuxManagedAppIdCacheDirectory = ".m365pnppowershell";
 
 
         public static bool AddCredential(string name, string username, SecureString password, bool overwrite)
@@ -54,27 +60,27 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 name = $"PnPPSAppId:{name}";
             }
-            if (HasSecretManagement())
-            {
-                var defaultVault = GetDefaultVault();
 
-                if (!string.IsNullOrEmpty(defaultVault))
-                {
-                    AddVaultAppId(defaultVault, name, appid);
-                }
+            var defaultVault = GetDefaultVaultIfAvailable();
+            if (!string.IsNullOrEmpty(defaultVault))
+            {
+                AddVaultAppId(defaultVault, name, appid);
+                return true;
             }
-            else
-            {
-                var secureAppId = new NetworkCredential(null, appid).SecurePassword;
-                if (OperatingSystem.IsWindows())
-                {
 
-                    WriteWindowsCredentialManagerEntry(name, null, secureAppId);
-                }
-                else if (OperatingSystem.IsMacOS())
-                {
-                    WriteMacOSKeyChainEntry(name, appid);
-                }
+            var secureAppId = new NetworkCredential(null, appid).SecurePassword;
+            if (OperatingSystem.IsWindows())
+            {
+
+                WriteWindowsCredentialManagerEntry(name, null, secureAppId);
+            }
+            else if (OperatingSystem.IsMacOS())
+            {
+                WriteMacOSKeyChainEntry(name, appid);
+            }
+            else if (OperatingSystem.IsLinux())
+            {
+                WriteLinuxAppIdEntry(name, appid);
             }
             return true;
         }
@@ -122,33 +128,31 @@ namespace PnP.PowerShell.Commands.Utilities
                 name = $"PnPPSAppId:{name}";
             }
             // check if Microsoft.PowerShell.SecretManagement is available
-            if (HasSecretManagement())
+            var defaultVault = GetDefaultVaultIfAvailable();
+            if (!string.IsNullOrEmpty(defaultVault))
             {
-                var defaultVault = GetDefaultVault();
+                return GetVaultAppId(defaultVault, name);
+            }
 
-                if (!string.IsNullOrEmpty(defaultVault))
+            if (OperatingSystem.IsWindows())
+            {
+                var cred = ReadWindowsCredentialManagerEntry(name);
+                if (cred != null)
                 {
-                    return GetVaultAppId(defaultVault, name);
+                    return SecureStringToString(cred.Password);
                 }
             }
-            else
+            if (OperatingSystem.IsMacOS())
             {
-                if (OperatingSystem.IsWindows())
+                var cred = ReadMacOSKeyChainEntry(name);
+                if (cred != null)
                 {
-                    var cred = ReadWindowsCredentialManagerEntry(name);
-                    if (cred != null)
-                    {
-                        return SecureStringToString(cred.Password);
-                    }
+                    return SecureStringToString(cred.Password).Trim('"');
                 }
-                if (OperatingSystem.IsMacOS())
-                {
-                    var cred = ReadMacOSKeyChainEntry(name);
-                    if (cred != null)
-                    {
-                        return SecureStringToString(cred.Password).Trim('"');
-                    }
-                }
+            }
+            if (OperatingSystem.IsLinux())
+            {
+                return ReadLinuxAppIdEntry(name);
             }
             return null;
         }
@@ -198,27 +202,26 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             bool success = false;
 
-            if (HasSecretManagement())
+            var defaultVault = GetDefaultVaultIfAvailable();
+            if (!string.IsNullOrEmpty(defaultVault))
             {
-                var defaultVault = GetDefaultVault();
-
-                if (!string.IsNullOrEmpty(defaultVault))
-                {
-                    RemoveVaultCredential(defaultVault, name);
-                    return true;
-                }
+                RemoveVaultCredential(defaultVault, name);
+                return true;
             }
-            else
+
+            if (OperatingSystem.IsWindows())
             {
-                if (OperatingSystem.IsWindows())
-                {
-                    success = DeleteWindowsCredentialManagerEntry(name);
-                }
-                if (OperatingSystem.IsMacOS())
-                {
-                    success = DeleteMacOSKeyChainEntry(name);
-                    return success;
-                }
+                success = DeleteWindowsCredentialManagerEntry(name);
+            }
+            if (OperatingSystem.IsMacOS())
+            {
+                success = DeleteMacOSKeyChainEntry(name);
+                return success;
+            }
+            if (OperatingSystem.IsLinux())
+            {
+                success = DeleteLinuxAppIdEntry(name);
+                return success;
             }
             return success;
         }
@@ -248,6 +251,16 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             return false;
         }
+
+        private static string GetDefaultVaultIfAvailable()
+        {
+            if (HasSecretManagement())
+            {
+                return GetDefaultVault();
+            }
+            return null;
+        }
+
         private static string GetDefaultVault()
         {
             var defaultVaultName = "";
@@ -512,6 +525,75 @@ namespace PnP.PowerShell.Commands.Utilities
             // var output = Shell.Bash(cmd);
             // var success = output.Count > 1 && !output[0].StartsWith("security:");
             // return success;
+        }
+
+        private static Storage CreateLinuxManagedAppIdStorage(string name)
+        {
+            var cacheDir = Path.Combine(MsalCacheHelper.UserRootDirectory, LinuxManagedAppIdCacheDirectory);
+            var cacheFileName = $"pnp.managedappid.{GetSha256Hash(name)}.cache";
+
+            var properties = new StorageCreationPropertiesBuilder(cacheFileName, cacheDir)
+                .WithLinuxKeyring(
+                    schemaName: LinuxManagedAppIdSchemaName,
+                    collection: MsalCacheHelper.LinuxKeyRingDefaultCollection,
+                    secretLabel: LinuxManagedAppIdSecretLabel,
+                    attribute1: new KeyValuePair<string, string>("Product", "PnPPowerShell"),
+                    attribute2: new KeyValuePair<string, string>("Name", name))
+                .Build();
+
+            return Storage.Create(properties);
+        }
+
+        private static void WriteLinuxAppIdEntry(string name, string appId)
+        {
+            try
+            {
+                var storage = CreateLinuxManagedAppIdStorage(name);
+                storage.VerifyPersistence();
+                storage.WriteData(Encoding.UTF8.GetBytes(appId));
+            }
+            catch (MsalCachePersistenceException ex)
+            {
+                throw new InvalidOperationException("Unable to store the managed App Id in Linux Secret Service. Ensure a Secret Service provider such as GNOME Keyring or KWallet is installed and unlocked, or configure a default vault through Microsoft.PowerShell.SecretManagement.", ex);
+            }
+        }
+
+        private static string ReadLinuxAppIdEntry(string name)
+        {
+            try
+            {
+                var data = CreateLinuxManagedAppIdStorage(name).ReadData();
+                return data == null || data.Length == 0 ? null : Encoding.UTF8.GetString(data);
+            }
+            catch (MsalCachePersistenceException)
+            {
+                return null;
+            }
+        }
+
+        private static bool DeleteLinuxAppIdEntry(string name)
+        {
+            try
+            {
+                var storage = CreateLinuxManagedAppIdStorage(name);
+                var data = storage.ReadData();
+                if (data == null || data.Length == 0)
+                {
+                    return false;
+                }
+
+                storage.Clear(false);
+                return true;
+            }
+            catch (MsalCachePersistenceException)
+            {
+                return false;
+            }
+        }
+
+        private static string GetSha256Hash(string value)
+        {
+            return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(value))).ToLowerInvariant();
         }
 
         public static string SecureStringToString(SecureString value)

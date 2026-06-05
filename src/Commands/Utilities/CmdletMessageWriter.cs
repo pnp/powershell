@@ -28,42 +28,66 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public void Start()
         {
-            while (!Finished || Queue.Count > 0)
+            while (!Finished || HasMessages)
             {
-                while (Queue.Count > 0)
+                if (!TryDequeue(out var message))
                 {
-                    var message = Queue.Dequeue();
-                    if (message.Formatted)
-                    {
-                        WriteFormattedMessage(Cmdlet, message);
-                    }
-                    else
-                    {
-                        switch (message.Type)
-                        {
-                            case MessageType.Message:
-                                {
-                                    Cmdlet.Host.UI.WriteLine(message.Text);
-                                    break;
-                                }
-                            case MessageType.Warning:
-                                {
-                                    Cmdlet.Host.UI.WriteWarningLine(message.Text);
-                                    break;
-                                }
-                            case MessageType.Verbose:
-                                {
-                                    Cmdlet.Host.UI.WriteVerboseLine(message.Text);
-                                    break;
-                                }
-                        }
+                    Thread.Sleep(100);
+                    continue;
+                }
 
+                if (message.Formatted)
+                {
+                    WriteFormattedMessage(Cmdlet, message);
+                }
+                else
+                {
+                    switch (message.Type)
+                    {
+                        case MessageType.Message:
+                            {
+                                Cmdlet.Host.UI.WriteLine(message.Text);
+                                break;
+                            }
+                        case MessageType.Warning:
+                            {
+                                Cmdlet.Host.UI.WriteWarningLine(message.Text);
+                                break;
+                            }
+                        case MessageType.Verbose:
+                            {
+                                Cmdlet.Host.UI.WriteVerboseLine(message.Text);
+                                break;
+                            }
                     }
-                    break;
                 }
             }
+        }
 
-            Thread.Sleep(100);
+        private bool HasMessages
+        {
+            get
+            {
+                lock (LockToken)
+                {
+                    return Queue.Count > 0;
+                }
+            }
+        }
+
+        private bool TryDequeue(out Message message)
+        {
+            lock (LockToken)
+            {
+                if (Queue.Count > 0)
+                {
+                    message = Queue.Dequeue();
+                    return true;
+                }
+
+                message = null;
+                return false;
+            }
         }
 
         public void LogWarning(string message, bool formatted = true)

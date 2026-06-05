@@ -78,10 +78,10 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                     creator = PackageCreatedBy,
                     sourceEnvironment = PackageSourceEnvironment
                 };
-                var responseHeader = PowerAppsUtility.GetResponseHeader(Connection.HttpClient, environmentName, AccessToken, appName, wrapper, objectDetails);
+                var responseLocation = PowerAppsUtility.GetResponseLocation(Connection.HttpClient, environmentName, AccessToken, appName, wrapper, objectDetails);
 
 
-                var packageLink = PowerAppsUtility.GetPackageLink(Connection.HttpClient, Convert.ToString(responseHeader.Location), AccessToken);
+                var packageLink = PowerAppsUtility.GetPackageLink(Connection.HttpClient, Convert.ToString(responseLocation), AccessToken);
                 var getFileByteArray = PowerAppsUtility.GetFileByteArray(Connection.HttpClient, packageLink, AccessToken);
                 var fileName = string.Empty;
                 if (ParameterSpecified(nameof(OutPath)))

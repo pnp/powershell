@@ -21,7 +21,8 @@ namespace PnP.PowerShell.Commands.Utilities
 
         private static List<string> Run(string filename, string arguments)
         {
-            var process = new Process()
+            var lines = new List<string>();
+            using var process = new Process()
             {
                 StartInfo = new ProcessStartInfo
                 {
@@ -33,7 +34,6 @@ namespace PnP.PowerShell.Commands.Utilities
                     RedirectStandardError = true
                 }
             };
-            var lines = new List<string>();
             process.Start();
             while (!process.StandardOutput.EndOfStream)
             {
