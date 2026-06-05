@@ -3,11 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model
 {
-    /// <summary>
-    /// Internal model for deserializing Graph API beta list permission responses.
-    /// List permissions use <c>grantedToV2</c> (singular) rather than <c>grantedToIdentities</c> (array).
-    /// </summary>
-    internal class EntraIDAppListPermissionInternal
+    internal class EntraIDAppDrivePermissionInternal
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }
@@ -15,15 +11,9 @@ namespace PnP.PowerShell.Commands.Model
         [JsonPropertyName("roles")]
         public string[] Roles { get; set; }
 
-        /// <summary>
-        /// Used in the beta list permissions API response (singular object)
-        /// </summary>
         [JsonPropertyName("grantedToV2")]
-        public ListPermissionGrantedToV2Internal GrantedToV2 { get; set; }
+        public DrivePermissionGrantedToV2Internal GrantedToV2 { get; set; }
 
-        /// <summary>
-        /// Fallback for APIs that still return the older grantedToIdentities array
-        /// </summary>
         [JsonPropertyName("grantedToIdentities")]
         public List<PermissionIdentityInternal> GrantedToIdentities { get; set; }
 
@@ -62,7 +52,7 @@ namespace PnP.PowerShell.Commands.Model
         }
     }
 
-    internal class ListPermissionGrantedToV2Internal
+    internal class DrivePermissionGrantedToV2Internal
     {
         [JsonPropertyName("application")]
         public AppIdentityInternal Application { get; set; }
