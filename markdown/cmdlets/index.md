@@ -12,907 +12,907 @@ PnP PowerShell exists out of 802 cmdlets which can help you in setting up, confi
 <sup>2</sup>: Cmdlet is an alias of another cmdlet, used to provide backwards compatibility.
 
 ## Add
-- [Add-PnPAdaptiveScopeProperty](Add-PnPAdaptiveScopeProperty.md) <sup>1</sup> <sup>2</sup>
-- [Add-PnPAlert](Add-PnPAlert.md) <sup>1</sup>
-- [Add-PnPApp](Add-PnPApp.md) <sup>1</sup>
-- [Add-PnPApplicationCustomizer](Add-PnPApplicationCustomizer.md) <sup>1</sup>
-- [Add-PnPAvailableSiteClassification](Add-PnPAvailableSiteClassification.md) <sup>1</sup>
-- [Add-PnPAzureADGroupMember](Add-PnPAzureADGroupMember.md) <sup>1</sup> <sup>2</sup>
-- [Add-PnPAzureADGroupOwner](Add-PnPAzureADGroupOwner.md) <sup>1</sup> <sup>2</sup>
-- [Add-PnPAzureADServicePrincipalAppRole](Add-PnPAzureADServicePrincipalAppRole.md) <sup>1</sup> <sup>2</sup>
-- [Add-PnPAzureADServicePrincipalAppRoleAssignment](Add-PnPAzureADServicePrincipalAppRoleAssignment.md) <sup>1</sup> <sup>2</sup>
-- [Add-PnPBrandCenterFont](Add-PnPBrandCenterFont.md) <sup>1</sup>
-- [Add-PnPBrandCenterFontPackage](Add-PnPBrandCenterFontPackage.md) <sup>1</sup>
-- [Add-PnPContentType](Add-PnPContentType.md) <sup>1</sup>
-- [Add-PnPContentTypesFromContentTypeHub](Add-PnPContentTypesFromContentTypeHub.md) <sup>1</sup>
-- [Add-PnPContentTypeToDocumentSet](Add-PnPContentTypeToDocumentSet.md) <sup>1</sup>
-- [Add-PnPContentTypeToList](Add-PnPContentTypeToList.md) <sup>1</sup>
-- [Add-PnPCustomAction](Add-PnPCustomAction.md) <sup>1</sup>
-- [Add-PnPDataRowsToSiteTemplate](Add-PnPDataRowsToSiteTemplate.md) <sup>1</sup>
-- [Add-PnPDocumentSet](Add-PnPDocumentSet.md) <sup>1</sup>
-- [Add-PnPEntraIDGroupMember](Add-PnPEntraIDGroupMember.md) <sup>1</sup>
-- [Add-PnPEntraIDGroupOwner](Add-PnPEntraIDGroupOwner.md) <sup>1</sup>
-- [Add-PnPEntraIDServicePrincipalAppRole](Add-PnPEntraIDServicePrincipalAppRole.md) <sup>1</sup>
-- [Add-PnPEntraIDServicePrincipalAppRoleAssignment](Add-PnPEntraIDServicePrincipalAppRoleAssignment.md) <sup>1</sup>
-- [Add-PnPEventReceiver](Add-PnPEventReceiver.md) <sup>1</sup>
-- [Add-PnPField](Add-PnPField.md) <sup>1</sup>
-- [Add-PnPFieldFromXml](Add-PnPFieldFromXml.md) <sup>1</sup>
-- [Add-PnPFieldToContentType](Add-PnPFieldToContentType.md) <sup>1</sup>
-- [Add-PnPFile](Add-PnPFile.md) <sup>1</sup>
-- [Add-PnPFileAnonymousSharingLink](Add-PnPFileAnonymousSharingLink.md) <sup>1</sup>
-- [Add-PnPFileOrganizationalSharingLink](Add-PnPFileOrganizationalSharingLink.md) <sup>1</sup>
-- [Add-PnPFileSensitivityLabel](Add-PnPFileSensitivityLabel.md) <sup>1</sup>
-- [Add-PnPFileSharingInvite](Add-PnPFileSharingInvite.md) <sup>1</sup>
-- [Add-PnPFileToSiteTemplate](Add-PnPFileToSiteTemplate.md) <sup>1</sup>
-- [Add-PnPFileUserSharingLink](Add-PnPFileUserSharingLink.md) <sup>1</sup>
-- [Add-PnPFlowOwner](Add-PnPFlowOwner.md) <sup>1</sup>
-- [Add-PnPFolder](Add-PnPFolder.md) <sup>1</sup>
-- [Add-PnPFolderAnonymousSharingLink](Add-PnPFolderAnonymousSharingLink.md) <sup>1</sup>
-- [Add-PnPFolderOrganizationalSharingLink](Add-PnPFolderOrganizationalSharingLink.md) <sup>1</sup>
-- [Add-PnPFolderSharingInvite](Add-PnPFolderSharingInvite.md) <sup>1</sup>
-- [Add-PnPFolderUserSharingLink](Add-PnPFolderUserSharingLink.md) <sup>1</sup>
-- [Add-PnPGroupMember](Add-PnPGroupMember.md) <sup>1</sup>
-- [Add-PnPHomeSite](Add-PnPHomeSite.md) <sup>1</sup>
-- [Add-PnPHtmlPublishingPageLayout](Add-PnPHtmlPublishingPageLayout.md) <sup>1</sup>
-- [Add-PnPHubSiteAssociation](Add-PnPHubSiteAssociation.md) <sup>1</sup>
-- [Add-PnPHubToHubAssociation](Add-PnPHubToHubAssociation.md) <sup>1</sup>
-- [Add-PnPIndexedProperty](Add-PnPIndexedProperty.md) <sup>1</sup>
-- [Add-PnPJavaScriptBlock](Add-PnPJavaScriptBlock.md) <sup>1</sup>
-- [Add-PnPJavaScriptLink](Add-PnPJavaScriptLink.md) <sup>1</sup>
-- [Add-PnPListDesign](Add-PnPListDesign.md) <sup>1</sup>
-- [Add-PnPListFoldersToSiteTemplate](Add-PnPListFoldersToSiteTemplate.md) <sup>1</sup>
-- [Add-PnPListItem](Add-PnPListItem.md) <sup>1</sup>
-- [Add-PnPListItemAttachment](Add-PnPListItemAttachment.md) <sup>1</sup>
-- [Add-PnPListItemComment](Add-PnPListItemComment.md) <sup>1</sup>
-- [Add-PnPMasterPage](Add-PnPMasterPage.md) <sup>1</sup>
-- [Add-PnPMicrosoft365GroupMember](Add-PnPMicrosoft365GroupMember.md) <sup>1</sup>
-- [Add-PnPMicrosoft365GroupOwner](Add-PnPMicrosoft365GroupOwner.md) <sup>1</sup>
-- [Add-PnPMicrosoft365GroupToSite](Add-PnPMicrosoft365GroupToSite.md) <sup>1</sup>
-- [Add-PnPNavigationNode](Add-PnPNavigationNode.md) <sup>1</sup>
-- [Add-PnPOrgAssetsLibrary](Add-PnPOrgAssetsLibrary.md) <sup>1</sup>
-- [Add-PnPOrgNewsSite](Add-PnPOrgNewsSite.md) <sup>1</sup>
-- [Add-PnPPage](Add-PnPPage.md) <sup>1</sup>
-- [Add-PnPPageImageWebPart](Add-PnPPageImageWebPart.md) <sup>1</sup>
-- [Add-PnPPageSection](Add-PnPPageSection.md) <sup>1</sup>
-- [Add-PnPPageTextPart](Add-PnPPageTextPart.md) <sup>1</sup>
-- [Add-PnPPageWebPart](Add-PnPPageWebPart.md) <sup>1</sup>
-- [Add-PnPPlannerBucket](Add-PnPPlannerBucket.md) <sup>1</sup>
-- [Add-PnPPlannerRoster](Add-PnPPlannerRoster.md) <sup>1</sup>
-- [Add-PnPPlannerRosterMember](Add-PnPPlannerRosterMember.md) <sup>1</sup>
-- [Add-PnPPlannerTask](Add-PnPPlannerTask.md) <sup>1</sup>
-- [Add-PnPPropertyBagValue](Add-PnPPropertyBagValue.md) <sup>1</sup> <sup>2</sup>
-- [Add-PnPPublishingImageRendition](Add-PnPPublishingImageRendition.md) <sup>1</sup>
-- [Add-PnPPublishingPage](Add-PnPPublishingPage.md) <sup>1</sup>
-- [Add-PnPPublishingPageLayout](Add-PnPPublishingPageLayout.md) <sup>1</sup>
-- [Add-PnPRoleDefinition](Add-PnPRoleDefinition.md) <sup>1</sup>
-- [Add-PnPSiteClassification](Add-PnPSiteClassification.md) <sup>1</sup> <sup>2</sup>
-- [Add-PnPSiteCollectionAdmin](Add-PnPSiteCollectionAdmin.md) <sup>1</sup>
-- [Add-PnPSiteCollectionAppCatalog](Add-PnPSiteCollectionAppCatalog.md) <sup>1</sup>
-- [Add-PnPSiteDesign](Add-PnPSiteDesign.md) <sup>1</sup>
-- [Add-PnPSiteDesignFromWeb](Add-PnPSiteDesignFromWeb.md) <sup>1</sup>
-- [Add-PnPSiteDesignTask](Add-PnPSiteDesignTask.md) <sup>1</sup>
-- [Add-PnPSiteScript](Add-PnPSiteScript.md) <sup>1</sup>
-- [Add-PnPSiteScriptPackage](Add-PnPSiteScriptPackage.md) <sup>1</sup>
-- [Add-PnPSiteTemplate](Add-PnPSiteTemplate.md) <sup>1</sup>
-- [Add-PnPStoredCredential](Add-PnPStoredCredential.md) <sup>1</sup>
-- [Add-PnPTaxonomyField](Add-PnPTaxonomyField.md) <sup>1</sup>
-- [Add-PnPTeamsChannel](Add-PnPTeamsChannel.md) <sup>1</sup>
-- [Add-PnpTeamsChannelUser](Add-PnpTeamsChannelUser.md) <sup>1</sup>
-- [Add-PnPTeamsTab](Add-PnPTeamsTab.md) <sup>1</sup>
-- [Add-PnPTeamsTeam](Add-PnPTeamsTeam.md) <sup>1</sup>
-- [Add-PnPTeamsUser](Add-PnPTeamsUser.md) <sup>1</sup>
-- [Add-PnPTenantCdnOrigin](Add-PnPTenantCdnOrigin.md) <sup>1</sup>
-- [Add-PnPTenantRestrictedSearchAllowedList](Add-PnPTenantRestrictedSearchAllowedList.md) <sup>1</sup>
-- [Add-PnPTenantSequence](Add-PnPTenantSequence.md) <sup>1</sup>
-- [Add-PnPTenantSequenceSite](Add-PnPTenantSequenceSite.md) <sup>1</sup>
-- [Add-PnPTenantSequenceSubSite](Add-PnPTenantSequenceSubSite.md) <sup>1</sup>
-- [Add-PnPTenantTheme](Add-PnPTenantTheme.md) <sup>1</sup>
-- [Add-PnPTermToTerm](Add-PnPTermToTerm.md) <sup>1</sup>
-- [Add-PnPView](Add-PnPView.md) <sup>1</sup>
-- [Add-PnPViewsFromXML](Add-PnPViewsFromXML.md) <sup>1</sup>
-- [Add-PnPVivaConnectionsDashboardACE](Add-PnPVivaConnectionsDashboardACE.md) <sup>1</sup>
-- [Add-PnPWebhookSubscription](Add-PnPWebhookSubscription.md) <sup>1</sup>
-- [Add-PnPWebPartToWebPartPage](Add-PnPWebPartToWebPartPage.md) <sup>1</sup>
-- [Add-PnPWebPartToWikiPage](Add-PnPWebPartToWikiPage.md) <sup>1</sup>
-- [Add-PnPWikiPage](Add-PnPWikiPage.md) <sup>1</sup>
+- [Add-PnPAdaptiveScopeProperty](Add-PnPAdaptiveScopeProperty.md) <sup>2</sup>
+- [Add-PnPAlert](Add-PnPAlert.md)
+- [Add-PnPApp](Add-PnPApp.md)
+- [Add-PnPApplicationCustomizer](Add-PnPApplicationCustomizer.md)
+- [Add-PnPAvailableSiteClassification](Add-PnPAvailableSiteClassification.md)
+- [Add-PnPAzureADGroupMember](Add-PnPAzureADGroupMember.md) <sup>2</sup>
+- [Add-PnPAzureADGroupOwner](Add-PnPAzureADGroupOwner.md) <sup>2</sup>
+- [Add-PnPAzureADServicePrincipalAppRole](Add-PnPAzureADServicePrincipalAppRole.md) <sup>2</sup>
+- [Add-PnPAzureADServicePrincipalAppRoleAssignment](Add-PnPAzureADServicePrincipalAppRoleAssignment.md) <sup>2</sup>
+- [Add-PnPBrandCenterFont](Add-PnPBrandCenterFont.md)
+- [Add-PnPBrandCenterFontPackage](Add-PnPBrandCenterFontPackage.md)
+- [Add-PnPContentType](Add-PnPContentType.md)
+- [Add-PnPContentTypesFromContentTypeHub](Add-PnPContentTypesFromContentTypeHub.md)
+- [Add-PnPContentTypeToDocumentSet](Add-PnPContentTypeToDocumentSet.md)
+- [Add-PnPContentTypeToList](Add-PnPContentTypeToList.md)
+- [Add-PnPCustomAction](Add-PnPCustomAction.md)
+- [Add-PnPDataRowsToSiteTemplate](Add-PnPDataRowsToSiteTemplate.md)
+- [Add-PnPDocumentSet](Add-PnPDocumentSet.md)
+- [Add-PnPEntraIDGroupMember](Add-PnPEntraIDGroupMember.md)
+- [Add-PnPEntraIDGroupOwner](Add-PnPEntraIDGroupOwner.md)
+- [Add-PnPEntraIDServicePrincipalAppRole](Add-PnPEntraIDServicePrincipalAppRole.md)
+- [Add-PnPEntraIDServicePrincipalAppRoleAssignment](Add-PnPEntraIDServicePrincipalAppRoleAssignment.md)
+- [Add-PnPEventReceiver](Add-PnPEventReceiver.md)
+- [Add-PnPField](Add-PnPField.md)
+- [Add-PnPFieldFromXml](Add-PnPFieldFromXml.md)
+- [Add-PnPFieldToContentType](Add-PnPFieldToContentType.md)
+- [Add-PnPFile](Add-PnPFile.md)
+- [Add-PnPFileAnonymousSharingLink](Add-PnPFileAnonymousSharingLink.md)
+- [Add-PnPFileOrganizationalSharingLink](Add-PnPFileOrganizationalSharingLink.md)
+- [Add-PnPFileSensitivityLabel](Add-PnPFileSensitivityLabel.md)
+- [Add-PnPFileSharingInvite](Add-PnPFileSharingInvite.md)
+- [Add-PnPFileToSiteTemplate](Add-PnPFileToSiteTemplate.md)
+- [Add-PnPFileUserSharingLink](Add-PnPFileUserSharingLink.md)
+- [Add-PnPFlowOwner](Add-PnPFlowOwner.md)
+- [Add-PnPFolder](Add-PnPFolder.md)
+- [Add-PnPFolderAnonymousSharingLink](Add-PnPFolderAnonymousSharingLink.md)
+- [Add-PnPFolderOrganizationalSharingLink](Add-PnPFolderOrganizationalSharingLink.md)
+- [Add-PnPFolderSharingInvite](Add-PnPFolderSharingInvite.md)
+- [Add-PnPFolderUserSharingLink](Add-PnPFolderUserSharingLink.md)
+- [Add-PnPGroupMember](Add-PnPGroupMember.md)
+- [Add-PnPHomeSite](Add-PnPHomeSite.md)
+- [Add-PnPHtmlPublishingPageLayout](Add-PnPHtmlPublishingPageLayout.md)
+- [Add-PnPHubSiteAssociation](Add-PnPHubSiteAssociation.md)
+- [Add-PnPHubToHubAssociation](Add-PnPHubToHubAssociation.md)
+- [Add-PnPIndexedProperty](Add-PnPIndexedProperty.md)
+- [Add-PnPJavaScriptBlock](Add-PnPJavaScriptBlock.md)
+- [Add-PnPJavaScriptLink](Add-PnPJavaScriptLink.md)
+- [Add-PnPListDesign](Add-PnPListDesign.md)
+- [Add-PnPListFoldersToSiteTemplate](Add-PnPListFoldersToSiteTemplate.md)
+- [Add-PnPListItem](Add-PnPListItem.md)
+- [Add-PnPListItemAttachment](Add-PnPListItemAttachment.md)
+- [Add-PnPListItemComment](Add-PnPListItemComment.md)
+- [Add-PnPMasterPage](Add-PnPMasterPage.md)
+- [Add-PnPMicrosoft365GroupMember](Add-PnPMicrosoft365GroupMember.md)
+- [Add-PnPMicrosoft365GroupOwner](Add-PnPMicrosoft365GroupOwner.md)
+- [Add-PnPMicrosoft365GroupToSite](Add-PnPMicrosoft365GroupToSite.md)
+- [Add-PnPNavigationNode](Add-PnPNavigationNode.md)
+- [Add-PnPOrgAssetsLibrary](Add-PnPOrgAssetsLibrary.md)
+- [Add-PnPOrgNewsSite](Add-PnPOrgNewsSite.md)
+- [Add-PnPPage](Add-PnPPage.md)
+- [Add-PnPPageImageWebPart](Add-PnPPageImageWebPart.md)
+- [Add-PnPPageSection](Add-PnPPageSection.md)
+- [Add-PnPPageTextPart](Add-PnPPageTextPart.md)
+- [Add-PnPPageWebPart](Add-PnPPageWebPart.md)
+- [Add-PnPPlannerBucket](Add-PnPPlannerBucket.md)
+- [Add-PnPPlannerRoster](Add-PnPPlannerRoster.md)
+- [Add-PnPPlannerRosterMember](Add-PnPPlannerRosterMember.md)
+- [Add-PnPPlannerTask](Add-PnPPlannerTask.md)
+- [Add-PnPPropertyBagValue](Add-PnPPropertyBagValue.md) <sup>2</sup>
+- [Add-PnPPublishingImageRendition](Add-PnPPublishingImageRendition.md)
+- [Add-PnPPublishingPage](Add-PnPPublishingPage.md)
+- [Add-PnPPublishingPageLayout](Add-PnPPublishingPageLayout.md)
+- [Add-PnPRoleDefinition](Add-PnPRoleDefinition.md)
+- [Add-PnPSiteClassification](Add-PnPSiteClassification.md) <sup>2</sup>
+- [Add-PnPSiteCollectionAdmin](Add-PnPSiteCollectionAdmin.md)
+- [Add-PnPSiteCollectionAppCatalog](Add-PnPSiteCollectionAppCatalog.md)
+- [Add-PnPSiteDesign](Add-PnPSiteDesign.md)
+- [Add-PnPSiteDesignFromWeb](Add-PnPSiteDesignFromWeb.md)
+- [Add-PnPSiteDesignTask](Add-PnPSiteDesignTask.md)
+- [Add-PnPSiteScript](Add-PnPSiteScript.md)
+- [Add-PnPSiteScriptPackage](Add-PnPSiteScriptPackage.md)
+- [Add-PnPSiteTemplate](Add-PnPSiteTemplate.md)
+- [Add-PnPStoredCredential](Add-PnPStoredCredential.md)
+- [Add-PnPTaxonomyField](Add-PnPTaxonomyField.md)
+- [Add-PnPTeamsChannel](Add-PnPTeamsChannel.md)
+- [Add-PnpTeamsChannelUser](Add-PnpTeamsChannelUser.md)
+- [Add-PnPTeamsTab](Add-PnPTeamsTab.md)
+- [Add-PnPTeamsTeam](Add-PnPTeamsTeam.md)
+- [Add-PnPTeamsUser](Add-PnPTeamsUser.md)
+- [Add-PnPTenantCdnOrigin](Add-PnPTenantCdnOrigin.md)
+- [Add-PnPTenantRestrictedSearchAllowedList](Add-PnPTenantRestrictedSearchAllowedList.md)
+- [Add-PnPTenantSequence](Add-PnPTenantSequence.md)
+- [Add-PnPTenantSequenceSite](Add-PnPTenantSequenceSite.md)
+- [Add-PnPTenantSequenceSubSite](Add-PnPTenantSequenceSubSite.md)
+- [Add-PnPTenantTheme](Add-PnPTenantTheme.md)
+- [Add-PnPTermToTerm](Add-PnPTermToTerm.md)
+- [Add-PnPView](Add-PnPView.md)
+- [Add-PnPViewsFromXML](Add-PnPViewsFromXML.md)
+- [Add-PnPVivaConnectionsDashboardACE](Add-PnPVivaConnectionsDashboardACE.md)
+- [Add-PnPWebhookSubscription](Add-PnPWebhookSubscription.md)
+- [Add-PnPWebPartToWebPartPage](Add-PnPWebPartToWebPartPage.md)
+- [Add-PnPWebPartToWikiPage](Add-PnPWebPartToWikiPage.md)
+- [Add-PnPWikiPage](Add-PnPWikiPage.md)
 ## Approve
-- [Approve-PnPTenantServicePrincipalPermissionRequest](Approve-PnPTenantServicePrincipalPermissionRequest.md) <sup>1</sup>
+- [Approve-PnPTenantServicePrincipalPermissionRequest](Approve-PnPTenantServicePrincipalPermissionRequest.md)
 ## Clear
-- [Clear-PnPAzureADGroupMember](Clear-PnPAzureADGroupMember.md) <sup>1</sup> <sup>2</sup>
-- [Clear-PnPAzureADGroupOwner](Clear-PnPAzureADGroupOwner.md) <sup>1</sup> <sup>2</sup>
-- [Clear-PnPDefaultColumnValues](Clear-PnPDefaultColumnValues.md) <sup>1</sup>
-- [Clear-PnPEntraIDGroupMember](Clear-PnPEntraIDGroupMember.md) <sup>1</sup>
-- [Clear-PnPEntraIDGroupOwner](Clear-PnPEntraIDGroupOwner.md) <sup>1</sup>
-- [Clear-PnPListItemAsRecord](Clear-PnPListItemAsRecord.md) <sup>1</sup>
-- [Clear-PnPMicrosoft365GroupMember](Clear-PnPMicrosoft365GroupMember.md) <sup>1</sup>
-- [Clear-PnPMicrosoft365GroupOwner](Clear-PnPMicrosoft365GroupOwner.md) <sup>1</sup>
-- [Clear-PnpRecycleBinItem](Clear-PnpRecycleBinItem.md) <sup>1</sup>
-- [Clear-PnPTenantAppCatalogUrl](Clear-PnPTenantAppCatalogUrl.md) <sup>1</sup>
-- [Clear-PnPTenantRecycleBinItem](Clear-PnPTenantRecycleBinItem.md) <sup>1</sup>
-- [Clear-PnPTraceLog](Clear-PnPTraceLog.md) <sup>1</sup>
+- [Clear-PnPAzureADGroupMember](Clear-PnPAzureADGroupMember.md) <sup>2</sup>
+- [Clear-PnPAzureADGroupOwner](Clear-PnPAzureADGroupOwner.md) <sup>2</sup>
+- [Clear-PnPDefaultColumnValues](Clear-PnPDefaultColumnValues.md)
+- [Clear-PnPEntraIDGroupMember](Clear-PnPEntraIDGroupMember.md)
+- [Clear-PnPEntraIDGroupOwner](Clear-PnPEntraIDGroupOwner.md)
+- [Clear-PnPListItemAsRecord](Clear-PnPListItemAsRecord.md)
+- [Clear-PnPMicrosoft365GroupMember](Clear-PnPMicrosoft365GroupMember.md)
+- [Clear-PnPMicrosoft365GroupOwner](Clear-PnPMicrosoft365GroupOwner.md)
+- [Clear-PnpRecycleBinItem](Clear-PnpRecycleBinItem.md)
+- [Clear-PnPTenantAppCatalogUrl](Clear-PnPTenantAppCatalogUrl.md)
+- [Clear-PnPTenantRecycleBinItem](Clear-PnPTenantRecycleBinItem.md)
+- [Clear-PnPTraceLog](Clear-PnPTraceLog.md)
 ## Connect
-- [Connect-PnPOnline](Connect-PnPOnline.md) <sup>1</sup>
+- [Connect-PnPOnline](Connect-PnPOnline.md)
 ## Convert
-- [Convert-PnPFile](Convert-PnPFile.md) <sup>1</sup>
-- [Convert-PnPFolderToSiteTemplate](Convert-PnPFolderToSiteTemplate.md) <sup>1</sup>
-- [Convert-PnPSiteTemplate](Convert-PnPSiteTemplate.md) <sup>1</sup>
-- [Convert-PnPSiteTemplateToMarkdown](Convert-PnPSiteTemplateToMarkdown.md) <sup>1</sup>
+- [Convert-PnPFile](Convert-PnPFile.md)
+- [Convert-PnPFolderToSiteTemplate](Convert-PnPFolderToSiteTemplate.md)
+- [Convert-PnPSiteTemplate](Convert-PnPSiteTemplate.md)
+- [Convert-PnPSiteTemplateToMarkdown](Convert-PnPSiteTemplateToMarkdown.md)
 ## ConvertTo
-- [ConvertTo-PnPPage](ConvertTo-PnPPage.md) <sup>1</sup>
+- [ConvertTo-PnPPage](ConvertTo-PnPPage.md)
 ## Copy
-- [Copy-PnPFile](Copy-PnPFile.md) <sup>1</sup>
-- [Copy-PnPFileMetadata](Copy-PnPFileMetadata.md) <sup>1</sup>
-- [Copy-PnPFolder](Copy-PnPFolder.md) <sup>1</sup>
-- [Copy-PnPItemProxy](Copy-PnPItemProxy.md) <sup>1</sup>
-- [Copy-PnPList](Copy-PnPList.md) <sup>1</sup>
-- [Copy-PnPPage](Copy-PnPPage.md) <sup>1</sup>
-- [Copy-PnPTeamsTeam](Copy-PnPTeamsTeam.md) <sup>1</sup>
+- [Copy-PnPFile](Copy-PnPFile.md)
+- [Copy-PnPFileMetadata](Copy-PnPFileMetadata.md)
+- [Copy-PnPFolder](Copy-PnPFolder.md)
+- [Copy-PnPItemProxy](Copy-PnPItemProxy.md)
+- [Copy-PnPList](Copy-PnPList.md)
+- [Copy-PnPPage](Copy-PnPPage.md)
+- [Copy-PnPTeamsTeam](Copy-PnPTeamsTeam.md)
 ## Deny
-- [Deny-PnPTenantServicePrincipalPermissionRequest](Deny-PnPTenantServicePrincipalPermissionRequest.md) <sup>1</sup>
+- [Deny-PnPTenantServicePrincipalPermissionRequest](Deny-PnPTenantServicePrincipalPermissionRequest.md)
 ## Disable
-- [Disable-PnPFeature](Disable-PnPFeature.md) <sup>1</sup>
-- [Disable-PnPFlow](Disable-PnPFlow.md) <sup>1</sup>
-- [Disable-PnPPageScheduling](Disable-PnPPageScheduling.md) <sup>1</sup>
-- [Disable-PnPPowerShellTelemetry](Disable-PnPPowerShellTelemetry.md) <sup>1</sup>
-- [Disable-PnPSharingForNonOwnersOfSite](Disable-PnPSharingForNonOwnersOfSite.md) <sup>1</sup>
-- [Disable-PnPSiteClassification](Disable-PnPSiteClassification.md) <sup>1</sup>
-- [Disable-PnPTenantServicePrincipal](Disable-PnPTenantServicePrincipal.md) <sup>1</sup>
+- [Disable-PnPFeature](Disable-PnPFeature.md)
+- [Disable-PnPFlow](Disable-PnPFlow.md)
+- [Disable-PnPPageScheduling](Disable-PnPPageScheduling.md)
+- [Disable-PnPPowerShellTelemetry](Disable-PnPPowerShellTelemetry.md)
+- [Disable-PnPSharingForNonOwnersOfSite](Disable-PnPSharingForNonOwnersOfSite.md)
+- [Disable-PnPSiteClassification](Disable-PnPSiteClassification.md)
+- [Disable-PnPTenantServicePrincipal](Disable-PnPTenantServicePrincipal.md)
 ## Disconnect
-- [Disconnect-PnPOnline](Disconnect-PnPOnline.md) <sup>1</sup>
+- [Disconnect-PnPOnline](Disconnect-PnPOnline.md)
 ## Enable
-- [Enable-PnPCommSite](Enable-PnPCommSite.md) <sup>1</sup>
-- [Enable-PnPFeature](Enable-PnPFeature.md) <sup>1</sup>
-- [Enable-PnPFlow](Enable-PnPFlow.md) <sup>1</sup>
-- [Enable-PnPPageScheduling](Enable-PnPPageScheduling.md) <sup>1</sup>
-- [Enable-PnPPowerShellTelemetry](Enable-PnPPowerShellTelemetry.md) <sup>1</sup>
-- [Enable-PnPPriviledgedIdentityManagement](Enable-PnPPriviledgedIdentityManagement.md) <sup>1</sup> <sup>2</sup>
-- [Enable-PnPPrivilegedIdentityManagement](Enable-PnPPrivilegedIdentityManagement.md) <sup>1</sup>
-- [Enable-PnPSiteClassification](Enable-PnPSiteClassification.md) <sup>1</sup>
-- [Enable-PnPTenantServicePrincipal](Enable-PnPTenantServicePrincipal.md) <sup>1</sup>
+- [Enable-PnPCommSite](Enable-PnPCommSite.md)
+- [Enable-PnPFeature](Enable-PnPFeature.md)
+- [Enable-PnPFlow](Enable-PnPFlow.md)
+- [Enable-PnPPageScheduling](Enable-PnPPageScheduling.md)
+- [Enable-PnPPowerShellTelemetry](Enable-PnPPowerShellTelemetry.md)
+- [Enable-PnPPriviledgedIdentityManagement](Enable-PnPPriviledgedIdentityManagement.md) <sup>2</sup>
+- [Enable-PnPPrivilegedIdentityManagement](Enable-PnPPrivilegedIdentityManagement.md)
+- [Enable-PnPSiteClassification](Enable-PnPSiteClassification.md)
+- [Enable-PnPTenantServicePrincipal](Enable-PnPTenantServicePrincipal.md)
 ## Export
-- [Export-PnPFlow](Export-PnPFlow.md) <sup>1</sup>
-- [Export-PnPListToSiteTemplate](Export-PnPListToSiteTemplate.md) <sup>1</sup>
-- [Export-PnPPage](Export-PnPPage.md) <sup>1</sup>
-- [Export-PnPPageMapping](Export-PnPPageMapping.md) <sup>1</sup>
-- [Export-PnPPowerApp](Export-PnPPowerApp.md) <sup>1</sup>
-- [Export-PnPTaxonomy](Export-PnPTaxonomy.md) <sup>1</sup>
-- [Export-PnPTermGroupToXml](Export-PnPTermGroupToXml.md) <sup>1</sup>
-- [Export-PnPUserInfo](Export-PnPUserInfo.md) <sup>1</sup>
-- [Export-PnPUserProfile](Export-PnPUserProfile.md) <sup>1</sup>
+- [Export-PnPFlow](Export-PnPFlow.md)
+- [Export-PnPListToSiteTemplate](Export-PnPListToSiteTemplate.md)
+- [Export-PnPPage](Export-PnPPage.md)
+- [Export-PnPPageMapping](Export-PnPPageMapping.md)
+- [Export-PnPPowerApp](Export-PnPPowerApp.md)
+- [Export-PnPTaxonomy](Export-PnPTaxonomy.md)
+- [Export-PnPTermGroupToXml](Export-PnPTermGroupToXml.md)
+- [Export-PnPUserInfo](Export-PnPUserInfo.md)
+- [Export-PnPUserProfile](Export-PnPUserProfile.md)
 ## Find
-- [Find-PnPFile](Find-PnPFile.md) <sup>1</sup>
+- [Find-PnPFile](Find-PnPFile.md)
 ## Get
-- [Get-PnPAccessToken](Get-PnPAccessToken.md) <sup>1</sup>
-- [Get-PnPAlert](Get-PnPAlert.md) <sup>1</sup>
-- [Get-PnPApp](Get-PnPApp.md) <sup>1</sup>
-- [Get-PnPAppErrors](Get-PnPAppErrors.md) <sup>1</sup>
-- [Get-PnPAppInfo](Get-PnPAppInfo.md) <sup>1</sup>
-- [Get-PnPApplicationCustomizer](Get-PnPApplicationCustomizer.md) <sup>1</sup>
-- [Get-PnPAuditing](Get-PnPAuditing.md) <sup>1</sup>
-- [Get-PnPAuthenticationRealm](Get-PnPAuthenticationRealm.md) <sup>1</sup>
-- [Get-PnPAvailableLanguage](Get-PnPAvailableLanguage.md) <sup>1</sup>
-- [Get-PnPAvailableSensitivityLabel](Get-PnPAvailableSensitivityLabel.md) <sup>1</sup>
-- [Get-PnPAvailableSiteClassification](Get-PnPAvailableSiteClassification.md) <sup>1</sup>
-- [Get-PnPAzureACSPrincipal](Get-PnPAzureACSPrincipal.md) <sup>1</sup>
-- [Get-PnPAzureADActivityReportDirectoryAudit](Get-PnPAzureADActivityReportDirectoryAudit.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPAzureADActivityReportSignIn](Get-PnPAzureADActivityReportSignIn.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPAzureADApp](Get-PnPAzureADApp.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPAzureADAppPermission](Get-PnPAzureADAppPermission.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPAzureADAppSitePermission](Get-PnPAzureADAppSitePermission.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPAzureADGroup](Get-PnPAzureADGroup.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPAzureADGroupMember](Get-PnPAzureADGroupMember.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPAzureADGroupOwner](Get-PnPAzureADGroupOwner.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPAzureADServicePrincipal](Get-PnPAzureADServicePrincipal.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPAzureADServicePrincipalAppRoleAssignment](Get-PnPAzureADServicePrincipalAppRoleAssignment.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPAzureADServicePrincipalAssignedAppRole](Get-PnPAzureADServicePrincipalAssignedAppRole.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPAzureADServicePrincipalAvailableAppRole](Get-PnPAzureADServicePrincipalAvailableAppRole.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPAzureADUser](Get-PnPAzureADUser.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPAzureCertificate](Get-PnPAzureCertificate.md) <sup>1</sup>
-- [Get-PnPBrandCenterConfig](Get-PnPBrandCenterConfig.md) <sup>1</sup>
-- [Get-PnPBrandCenterFont](Get-PnPBrandCenterFont.md) <sup>1</sup>
-- [Get-PnPBrandCenterFontPackage](Get-PnPBrandCenterFontPackage.md) <sup>1</sup>
-- [Get-PnPBrowserIdleSignout](Get-PnPBrowserIdleSignout.md) <sup>1</sup>
-- [Get-PnPBuiltInDesignPackageVisibility](Get-PnPBuiltInDesignPackageVisibility.md) <sup>1</sup>
-- [Get-PnPBuiltInSiteTemplateSettings](Get-PnPBuiltInSiteTemplateSettings.md) <sup>1</sup>
-- [Get-PnPChangeLog](Get-PnPChangeLog.md) <sup>1</sup>
-- [Get-PnPClientSidePage](Get-PnPClientSidePage.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPCompatibleHubContentTypes](Get-PnPCompatibleHubContentTypes.md) <sup>1</sup>
-- [Get-PnPConnection](Get-PnPConnection.md) <sup>1</sup>
-- [Get-PnPContainer](Get-PnPContainer.md) <sup>1</sup>
-- [Get-PnPContainerType](Get-PnPContainerType.md) <sup>1</sup>
-- [Get-PnPContainerTypeConfiguration](Get-PnPContainerTypeConfiguration.md) <sup>1</sup>
-- [Get-PnPContentType](Get-PnPContentType.md) <sup>1</sup>
-- [Get-PnPContentTypePublishingHubUrl](Get-PnPContentTypePublishingHubUrl.md) <sup>1</sup>
-- [Get-PnPContentTypePublishingStatus](Get-PnPContentTypePublishingStatus.md) <sup>1</sup>
-- [Get-PnPContext](Get-PnPContext.md) <sup>1</sup>
-- [Get-PnPCopilotAdminLimitedMode](Get-PnPCopilotAdminLimitedMode.md) <sup>1</sup>
-- [Get-PnPCopilotAgent](Get-PnPCopilotAgent.md) <sup>1</sup>
-- [Get-PnPCustomAction](Get-PnPCustomAction.md) <sup>1</sup>
-- [Get-PnPDefaultColumnValues](Get-PnPDefaultColumnValues.md) <sup>1</sup>
-- [Get-PnPDeletedContainer](Get-PnPDeletedContainer.md) <sup>1</sup>
-- [Get-PnPDeletedFlow](Get-PnPDeletedFlow.md) <sup>1</sup>
-- [Get-PnPDeletedMicrosoft365Group](Get-PnPDeletedMicrosoft365Group.md) <sup>1</sup>
-- [Get-PnPDeletedTeam](Get-PnPDeletedTeam.md) <sup>1</sup>
-- [Get-PnPDiagnostics](Get-PnPDiagnostics.md) <sup>1</sup>
-- [Get-PnPDisableSpacesActivation](Get-PnPDisableSpacesActivation.md) <sup>1</sup>
-- [Get-PnPDocumentSetTemplate](Get-PnPDocumentSetTemplate.md) <sup>1</sup>
-- [Get-PnPEnterpriseAppInsightsReport](Get-PnPEnterpriseAppInsightsReport.md) <sup>1</sup>
-- [Get-PnPEntraIDActivityReportDirectoryAudit](Get-PnPEntraIDActivityReportDirectoryAudit.md) <sup>1</sup>
-- [Get-PnPEntraIDActivityReportSignIn](Get-PnPEntraIDActivityReportSignIn.md) <sup>1</sup>
-- [Get-PnPEntraIDApp](Get-PnPEntraIDApp.md) <sup>1</sup>
-- [Get-PnPEntraIDAppPermission](Get-PnPEntraIDAppPermission.md) <sup>1</sup>
-- [Get-PnPEntraIDAppSitePermission](Get-PnPEntraIDAppSitePermission.md) <sup>1</sup>
-- [Get-PnPEntraIDGroup](Get-PnPEntraIDGroup.md) <sup>1</sup>
-- [Get-PnPEntraIDGroupMember](Get-PnPEntraIDGroupMember.md) <sup>1</sup>
-- [Get-PnPEntraIDGroupOwner](Get-PnPEntraIDGroupOwner.md) <sup>1</sup>
-- [Get-PnPEntraIDServicePrincipal](Get-PnPEntraIDServicePrincipal.md) <sup>1</sup>
-- [Get-PnPEntraIDServicePrincipalAppRoleAssignment](Get-PnPEntraIDServicePrincipalAppRoleAssignment.md) <sup>1</sup>
-- [Get-PnPEntraIDServicePrincipalAssignedAppRole](Get-PnPEntraIDServicePrincipalAssignedAppRole.md) <sup>1</sup>
-- [Get-PnPEntraIDServicePrincipalAvailableAppRole](Get-PnPEntraIDServicePrincipalAvailableAppRole.md) <sup>1</sup>
-- [Get-PnPEntraIDUser](Get-PnPEntraIDUser.md) <sup>1</sup>
-- [Get-PnPEventReceiver](Get-PnPEventReceiver.md) <sup>1</sup>
-- [Get-PnPException](Get-PnPException.md) <sup>1</sup>
-- [Get-PnPExternalUser](Get-PnPExternalUser.md) <sup>1</sup>
-- [Get-PnPFeature](Get-PnPFeature.md) <sup>1</sup>
-- [Get-PnPField](Get-PnPField.md) <sup>1</sup>
-- [Get-PnPFile](Get-PnPFile.md) <sup>1</sup>
-- [Get-PnPFileAnalyticsData](Get-PnPFileAnalyticsData.md) <sup>1</sup>
-- [Get-PnPFileCheckedOut](Get-PnPFileCheckedOut.md) <sup>1</sup>
-- [Get-PnPFileInFolder](Get-PnPFileInFolder.md) <sup>1</sup>
-- [Get-PnPFileRetentionLabel](Get-PnPFileRetentionLabel.md) <sup>1</sup>
-- [Get-PnPFileSensitivityLabel](Get-PnPFileSensitivityLabel.md) <sup>1</sup>
-- [Get-PnPFileSensitivityLabelInfo](Get-PnPFileSensitivityLabelInfo.md) <sup>1</sup>
-- [Get-PnPFileSharingLink](Get-PnPFileSharingLink.md) <sup>1</sup>
-- [Get-PnPFileVersion](Get-PnPFileVersion.md) <sup>1</sup>
-- [Get-PnPFlow](Get-PnPFlow.md) <sup>1</sup>
-- [Get-PnPFlowOwner](Get-PnPFlowOwner.md) <sup>1</sup>
-- [Get-PnPFlowRun](Get-PnPFlowRun.md) <sup>1</sup>
-- [Get-PnPFolder](Get-PnPFolder.md) <sup>1</sup>
-- [Get-PnPFolderInFolder](Get-PnPFolderInFolder.md) <sup>1</sup>
-- [Get-PnPFolderItem](Get-PnPFolderItem.md) <sup>1</sup>
-- [Get-PnPFolderSharingLink](Get-PnPFolderSharingLink.md) <sup>1</sup>
-- [Get-PnPFolderStorageMetric](Get-PnPFolderStorageMetric.md) <sup>1</sup>
-- [Get-PnPFooter](Get-PnPFooter.md) <sup>1</sup>
+- [Get-PnPAccessToken](Get-PnPAccessToken.md)
+- [Get-PnPAlert](Get-PnPAlert.md)
+- [Get-PnPApp](Get-PnPApp.md)
+- [Get-PnPAppErrors](Get-PnPAppErrors.md)
+- [Get-PnPAppInfo](Get-PnPAppInfo.md)
+- [Get-PnPApplicationCustomizer](Get-PnPApplicationCustomizer.md)
+- [Get-PnPAuditing](Get-PnPAuditing.md)
+- [Get-PnPAuthenticationRealm](Get-PnPAuthenticationRealm.md)
+- [Get-PnPAvailableLanguage](Get-PnPAvailableLanguage.md)
+- [Get-PnPAvailableSensitivityLabel](Get-PnPAvailableSensitivityLabel.md)
+- [Get-PnPAvailableSiteClassification](Get-PnPAvailableSiteClassification.md)
+- [Get-PnPAzureACSPrincipal](Get-PnPAzureACSPrincipal.md)
+- [Get-PnPAzureADActivityReportDirectoryAudit](Get-PnPAzureADActivityReportDirectoryAudit.md) <sup>2</sup>
+- [Get-PnPAzureADActivityReportSignIn](Get-PnPAzureADActivityReportSignIn.md) <sup>2</sup>
+- [Get-PnPAzureADApp](Get-PnPAzureADApp.md) <sup>2</sup>
+- [Get-PnPAzureADAppPermission](Get-PnPAzureADAppPermission.md) <sup>2</sup>
+- [Get-PnPAzureADAppSitePermission](Get-PnPAzureADAppSitePermission.md) <sup>2</sup>
+- [Get-PnPAzureADGroup](Get-PnPAzureADGroup.md) <sup>2</sup>
+- [Get-PnPAzureADGroupMember](Get-PnPAzureADGroupMember.md) <sup>2</sup>
+- [Get-PnPAzureADGroupOwner](Get-PnPAzureADGroupOwner.md) <sup>2</sup>
+- [Get-PnPAzureADServicePrincipal](Get-PnPAzureADServicePrincipal.md) <sup>2</sup>
+- [Get-PnPAzureADServicePrincipalAppRoleAssignment](Get-PnPAzureADServicePrincipalAppRoleAssignment.md) <sup>2</sup>
+- [Get-PnPAzureADServicePrincipalAssignedAppRole](Get-PnPAzureADServicePrincipalAssignedAppRole.md) <sup>2</sup>
+- [Get-PnPAzureADServicePrincipalAvailableAppRole](Get-PnPAzureADServicePrincipalAvailableAppRole.md) <sup>2</sup>
+- [Get-PnPAzureADUser](Get-PnPAzureADUser.md) <sup>2</sup>
+- [Get-PnPAzureCertificate](Get-PnPAzureCertificate.md)
+- [Get-PnPBrandCenterConfig](Get-PnPBrandCenterConfig.md)
+- [Get-PnPBrandCenterFont](Get-PnPBrandCenterFont.md)
+- [Get-PnPBrandCenterFontPackage](Get-PnPBrandCenterFontPackage.md)
+- [Get-PnPBrowserIdleSignout](Get-PnPBrowserIdleSignout.md)
+- [Get-PnPBuiltInDesignPackageVisibility](Get-PnPBuiltInDesignPackageVisibility.md)
+- [Get-PnPBuiltInSiteTemplateSettings](Get-PnPBuiltInSiteTemplateSettings.md)
+- [Get-PnPChangeLog](Get-PnPChangeLog.md)
+- [Get-PnPClientSidePage](Get-PnPClientSidePage.md) <sup>2</sup>
+- [Get-PnPCompatibleHubContentTypes](Get-PnPCompatibleHubContentTypes.md)
+- [Get-PnPConnection](Get-PnPConnection.md)
+- [Get-PnPContainer](Get-PnPContainer.md)
+- [Get-PnPContainerType](Get-PnPContainerType.md)
+- [Get-PnPContainerTypeConfiguration](Get-PnPContainerTypeConfiguration.md)
+- [Get-PnPContentType](Get-PnPContentType.md)
+- [Get-PnPContentTypePublishingHubUrl](Get-PnPContentTypePublishingHubUrl.md)
+- [Get-PnPContentTypePublishingStatus](Get-PnPContentTypePublishingStatus.md)
+- [Get-PnPContext](Get-PnPContext.md)
+- [Get-PnPCopilotAdminLimitedMode](Get-PnPCopilotAdminLimitedMode.md)
+- [Get-PnPCopilotAgent](Get-PnPCopilotAgent.md)
+- [Get-PnPCustomAction](Get-PnPCustomAction.md)
+- [Get-PnPDefaultColumnValues](Get-PnPDefaultColumnValues.md)
+- [Get-PnPDeletedContainer](Get-PnPDeletedContainer.md)
+- [Get-PnPDeletedFlow](Get-PnPDeletedFlow.md)
+- [Get-PnPDeletedMicrosoft365Group](Get-PnPDeletedMicrosoft365Group.md)
+- [Get-PnPDeletedTeam](Get-PnPDeletedTeam.md)
+- [Get-PnPDiagnostics](Get-PnPDiagnostics.md)
+- [Get-PnPDisableSpacesActivation](Get-PnPDisableSpacesActivation.md)
+- [Get-PnPDocumentSetTemplate](Get-PnPDocumentSetTemplate.md)
+- [Get-PnPEnterpriseAppInsightsReport](Get-PnPEnterpriseAppInsightsReport.md)
+- [Get-PnPEntraIDActivityReportDirectoryAudit](Get-PnPEntraIDActivityReportDirectoryAudit.md)
+- [Get-PnPEntraIDActivityReportSignIn](Get-PnPEntraIDActivityReportSignIn.md)
+- [Get-PnPEntraIDApp](Get-PnPEntraIDApp.md)
+- [Get-PnPEntraIDAppPermission](Get-PnPEntraIDAppPermission.md)
+- [Get-PnPEntraIDAppSitePermission](Get-PnPEntraIDAppSitePermission.md)
+- [Get-PnPEntraIDGroup](Get-PnPEntraIDGroup.md)
+- [Get-PnPEntraIDGroupMember](Get-PnPEntraIDGroupMember.md)
+- [Get-PnPEntraIDGroupOwner](Get-PnPEntraIDGroupOwner.md)
+- [Get-PnPEntraIDServicePrincipal](Get-PnPEntraIDServicePrincipal.md)
+- [Get-PnPEntraIDServicePrincipalAppRoleAssignment](Get-PnPEntraIDServicePrincipalAppRoleAssignment.md)
+- [Get-PnPEntraIDServicePrincipalAssignedAppRole](Get-PnPEntraIDServicePrincipalAssignedAppRole.md)
+- [Get-PnPEntraIDServicePrincipalAvailableAppRole](Get-PnPEntraIDServicePrincipalAvailableAppRole.md)
+- [Get-PnPEntraIDUser](Get-PnPEntraIDUser.md)
+- [Get-PnPEventReceiver](Get-PnPEventReceiver.md)
+- [Get-PnPException](Get-PnPException.md)
+- [Get-PnPExternalUser](Get-PnPExternalUser.md)
+- [Get-PnPFeature](Get-PnPFeature.md)
+- [Get-PnPField](Get-PnPField.md)
+- [Get-PnPFile](Get-PnPFile.md)
+- [Get-PnPFileAnalyticsData](Get-PnPFileAnalyticsData.md)
+- [Get-PnPFileCheckedOut](Get-PnPFileCheckedOut.md)
+- [Get-PnPFileInFolder](Get-PnPFileInFolder.md)
+- [Get-PnPFileRetentionLabel](Get-PnPFileRetentionLabel.md)
+- [Get-PnPFileSensitivityLabel](Get-PnPFileSensitivityLabel.md)
+- [Get-PnPFileSensitivityLabelInfo](Get-PnPFileSensitivityLabelInfo.md)
+- [Get-PnPFileSharingLink](Get-PnPFileSharingLink.md)
+- [Get-PnPFileVersion](Get-PnPFileVersion.md)
+- [Get-PnPFlow](Get-PnPFlow.md)
+- [Get-PnPFlowOwner](Get-PnPFlowOwner.md)
+- [Get-PnPFlowRun](Get-PnPFlowRun.md)
+- [Get-PnPFolder](Get-PnPFolder.md)
+- [Get-PnPFolderInFolder](Get-PnPFolderInFolder.md)
+- [Get-PnPFolderItem](Get-PnPFolderItem.md)
+- [Get-PnPFolderSharingLink](Get-PnPFolderSharingLink.md)
+- [Get-PnPFolderStorageMetric](Get-PnPFolderStorageMetric.md)
+- [Get-PnPFooter](Get-PnPFooter.md)
 - [Get-PnPGeoMoveCrossCompatibilityStatus](Get-PnPGeoMoveCrossCompatibilityStatus.md) <sup>1</sup>
-- [Get-PnPGraphSubscription](Get-PnPGraphSubscription.md) <sup>1</sup>
-- [Get-PnPGroup](Get-PnPGroup.md) <sup>1</sup>
-- [Get-PnPGroupMember](Get-PnPGroupMember.md) <sup>1</sup>
-- [Get-PnPGroupPermissions](Get-PnPGroupPermissions.md) <sup>1</sup>
-- [Get-PnPHideDefaultThemes](Get-PnPHideDefaultThemes.md) <sup>1</sup>
-- [Get-PnPHomePage](Get-PnPHomePage.md) <sup>1</sup>
-- [Get-PnPHomeSite](Get-PnPHomeSite.md) <sup>1</sup>
-- [Get-PnPHubSite](Get-PnPHubSite.md) <sup>1</sup>
-- [Get-PnPHubSiteChild](Get-PnPHubSiteChild.md) <sup>1</sup>
-- [Get-PnPIndexedPropertyKeys](Get-PnPIndexedPropertyKeys.md) <sup>1</sup>
-- [Get-PnPInPlaceRecordsManagement](Get-PnPInPlaceRecordsManagement.md) <sup>1</sup>
-- [Get-PnPIsSiteAliasAvailable](Get-PnPIsSiteAliasAvailable.md) <sup>1</sup>
-- [Get-PnPJavaScriptLink](Get-PnPJavaScriptLink.md) <sup>1</sup>
-- [Get-PnPKnowledgeHubSite](Get-PnPKnowledgeHubSite.md) <sup>1</sup>
-- [Get-PnPLargeListOperationStatus](Get-PnPLargeListOperationStatus.md) <sup>1</sup>
-- [Get-PnPLibraryFileVersionBatchDeleteJobStatus](Get-PnPLibraryFileVersionBatchDeleteJobStatus.md) <sup>1</sup>
-- [Get-PnPLibraryFileVersionExpirationReportJobStatus](Get-PnPLibraryFileVersionExpirationReportJobStatus.md) <sup>1</sup>
-- [Get-PnPList](Get-PnPList.md) <sup>1</sup>
-- [Get-PnPListDesign](Get-PnPListDesign.md) <sup>1</sup>
-- [Get-PnPListInformationRightsManagement](Get-PnPListInformationRightsManagement.md) <sup>1</sup>
-- [Get-PnPListItem](Get-PnPListItem.md) <sup>1</sup>
-- [Get-PnPListItemAttachment](Get-PnPListItemAttachment.md) <sup>1</sup>
-- [Get-PnPListItemComment](Get-PnPListItemComment.md) <sup>1</sup>
-- [Get-PnPListItemPermission](Get-PnPListItemPermission.md) <sup>1</sup>
-- [Get-PnPListItemVersion](Get-PnPListItemVersion.md) <sup>1</sup>
-- [Get-PnPListPermissions](Get-PnPListPermissions.md) <sup>1</sup>
-- [Get-PnPListRecordDeclaration](Get-PnPListRecordDeclaration.md) <sup>1</sup>
-- [Get-PnPListVersionPolicy](Get-PnPListVersionPolicy.md) <sup>1</sup>
-- [Get-PnPManagedAppId](Get-PnPManagedAppId.md) <sup>1</sup>
-- [Get-PnPMasterPage](Get-PnPMasterPage.md) <sup>1</sup>
-- [Get-PnPMessageCenterAnnouncement](Get-PnPMessageCenterAnnouncement.md) <sup>1</sup>
-- [Get-PnPMicrosoft365ExpiringGroup](Get-PnPMicrosoft365ExpiringGroup.md) <sup>1</sup>
-- [Get-PnPMicrosoft365Group](Get-PnPMicrosoft365Group.md) <sup>1</sup>
-- [Get-PnPMicrosoft365GroupEndpoint](Get-PnPMicrosoft365GroupEndpoint.md) <sup>1</sup>
-- [Get-PnPMicrosoft365GroupMember](Get-PnPMicrosoft365GroupMember.md) <sup>1</sup>
-- [Get-PnPMicrosoft365GroupMembers](Get-PnPMicrosoft365GroupMembers.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPMicrosoft365GroupOwner](Get-PnPMicrosoft365GroupOwner.md) <sup>1</sup>
-- [Get-PnPMicrosoft365GroupOwners](Get-PnPMicrosoft365GroupOwners.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPMicrosoft365GroupSettings](Get-PnPMicrosoft365GroupSettings.md) <sup>1</sup>
-- [Get-PnPMicrosoft365GroupSettingTemplates](Get-PnPMicrosoft365GroupSettingTemplates.md) <sup>1</sup>
-- [Get-PnPMicrosoft365GroupTeam](Get-PnPMicrosoft365GroupTeam.md) <sup>1</sup>
-- [Get-PnPMicrosoft365GroupYammerCommunity](Get-PnPMicrosoft365GroupYammerCommunity.md) <sup>1</sup>
-- [Get-PnPMicrosoft365Roadmap](Get-PnPMicrosoft365Roadmap.md) <sup>1</sup>
+- [Get-PnPGraphSubscription](Get-PnPGraphSubscription.md)
+- [Get-PnPGroup](Get-PnPGroup.md)
+- [Get-PnPGroupMember](Get-PnPGroupMember.md)
+- [Get-PnPGroupPermissions](Get-PnPGroupPermissions.md)
+- [Get-PnPHideDefaultThemes](Get-PnPHideDefaultThemes.md)
+- [Get-PnPHomePage](Get-PnPHomePage.md)
+- [Get-PnPHomeSite](Get-PnPHomeSite.md)
+- [Get-PnPHubSite](Get-PnPHubSite.md)
+- [Get-PnPHubSiteChild](Get-PnPHubSiteChild.md)
+- [Get-PnPIndexedPropertyKeys](Get-PnPIndexedPropertyKeys.md)
+- [Get-PnPInPlaceRecordsManagement](Get-PnPInPlaceRecordsManagement.md)
+- [Get-PnPIsSiteAliasAvailable](Get-PnPIsSiteAliasAvailable.md)
+- [Get-PnPJavaScriptLink](Get-PnPJavaScriptLink.md)
+- [Get-PnPKnowledgeHubSite](Get-PnPKnowledgeHubSite.md)
+- [Get-PnPLargeListOperationStatus](Get-PnPLargeListOperationStatus.md)
+- [Get-PnPLibraryFileVersionBatchDeleteJobStatus](Get-PnPLibraryFileVersionBatchDeleteJobStatus.md)
+- [Get-PnPLibraryFileVersionExpirationReportJobStatus](Get-PnPLibraryFileVersionExpirationReportJobStatus.md)
+- [Get-PnPList](Get-PnPList.md)
+- [Get-PnPListDesign](Get-PnPListDesign.md)
+- [Get-PnPListInformationRightsManagement](Get-PnPListInformationRightsManagement.md)
+- [Get-PnPListItem](Get-PnPListItem.md)
+- [Get-PnPListItemAttachment](Get-PnPListItemAttachment.md)
+- [Get-PnPListItemComment](Get-PnPListItemComment.md)
+- [Get-PnPListItemPermission](Get-PnPListItemPermission.md)
+- [Get-PnPListItemVersion](Get-PnPListItemVersion.md)
+- [Get-PnPListPermissions](Get-PnPListPermissions.md)
+- [Get-PnPListRecordDeclaration](Get-PnPListRecordDeclaration.md)
+- [Get-PnPListVersionPolicy](Get-PnPListVersionPolicy.md)
+- [Get-PnPManagedAppId](Get-PnPManagedAppId.md)
+- [Get-PnPMasterPage](Get-PnPMasterPage.md)
+- [Get-PnPMessageCenterAnnouncement](Get-PnPMessageCenterAnnouncement.md)
+- [Get-PnPMicrosoft365ExpiringGroup](Get-PnPMicrosoft365ExpiringGroup.md)
+- [Get-PnPMicrosoft365Group](Get-PnPMicrosoft365Group.md)
+- [Get-PnPMicrosoft365GroupEndpoint](Get-PnPMicrosoft365GroupEndpoint.md)
+- [Get-PnPMicrosoft365GroupMember](Get-PnPMicrosoft365GroupMember.md)
+- [Get-PnPMicrosoft365GroupMembers](Get-PnPMicrosoft365GroupMembers.md) <sup>2</sup>
+- [Get-PnPMicrosoft365GroupOwner](Get-PnPMicrosoft365GroupOwner.md)
+- [Get-PnPMicrosoft365GroupOwners](Get-PnPMicrosoft365GroupOwners.md) <sup>2</sup>
+- [Get-PnPMicrosoft365GroupSettings](Get-PnPMicrosoft365GroupSettings.md)
+- [Get-PnPMicrosoft365GroupSettingTemplates](Get-PnPMicrosoft365GroupSettingTemplates.md)
+- [Get-PnPMicrosoft365GroupTeam](Get-PnPMicrosoft365GroupTeam.md)
+- [Get-PnPMicrosoft365GroupYammerCommunity](Get-PnPMicrosoft365GroupYammerCommunity.md)
+- [Get-PnPMicrosoft365Roadmap](Get-PnPMicrosoft365Roadmap.md)
 - [Get-PnPMultiGeoCompanyAllowedDataLocation](Get-PnPMultiGeoCompanyAllowedDataLocation.md) <sup>1</sup>
-- [Get-PnPNavigationNode](Get-PnPNavigationNode.md) <sup>1</sup>
-- [Get-PnPOrgAssetsLibrary](Get-PnPOrgAssetsLibrary.md) <sup>1</sup>
-- [Get-PnPOrgNewsSite](Get-PnPOrgNewsSite.md) <sup>1</sup>
-- [Get-PnPPage](Get-PnPPage.md) <sup>1</sup>
-- [Get-PnPPageComponent](Get-PnPPageComponent.md) <sup>1</sup>
-- [Get-PnPPageCopyProgress](Get-PnPPageCopyProgress.md) <sup>1</sup>
-- [Get-PnPPageLikedByInformation](Get-PnPPageLikedByInformation.md) <sup>1</sup>
-- [Get-PnPPageSchedulingEnabled](Get-PnPPageSchedulingEnabled.md) <sup>1</sup>
-- [Get-PnPPlannerBucket](Get-PnPPlannerBucket.md) <sup>1</sup>
-- [Get-PnPPlannerConfiguration](Get-PnPPlannerConfiguration.md) <sup>1</sup>
-- [Get-PnPPlannerPlan](Get-PnPPlannerPlan.md) <sup>1</sup>
-- [Get-PnPPlannerRosterMember](Get-PnPPlannerRosterMember.md) <sup>1</sup>
-- [Get-PnPPlannerRosterPlan](Get-PnPPlannerRosterPlan.md) <sup>1</sup>
-- [Get-PnPPlannerTask](Get-PnPPlannerTask.md) <sup>1</sup>
-- [Get-PnPPlannerUserPolicy](Get-PnPPlannerUserPolicy.md) <sup>1</sup>
-- [Get-PnPPowerApp](Get-PnPPowerApp.md) <sup>1</sup>
-- [Get-PnPPowerAppPermission](Get-PnPPowerAppPermission.md) <sup>1</sup>
-- [Get-PnPPowerPlatformCustomConnector](Get-PnPPowerPlatformCustomConnector.md) <sup>1</sup>
-- [Get-PnPPowerPlatformEnvironment](Get-PnPPowerPlatformEnvironment.md) <sup>1</sup>
-- [Get-PnPPowerPlatformSolution](Get-PnPPowerPlatformSolution.md) <sup>1</sup>
-- [Get-PnPPowerShellTelemetryEnabled](Get-PnPPowerShellTelemetryEnabled.md) <sup>1</sup>
-- [Get-PnPPriviledgedIdentityManagementEligibleAssignment](Get-PnPPriviledgedIdentityManagementEligibleAssignment.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPPriviledgedIdentityManagementRole](Get-PnPPriviledgedIdentityManagementRole.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPPrivilegedIdentityManagementEligibleAssignment](Get-PnPPrivilegedIdentityManagementEligibleAssignment.md) <sup>1</sup>
-- [Get-PnPPrivilegedIdentityManagementRole](Get-PnPPrivilegedIdentityManagementRole.md) <sup>1</sup>
-- [Get-PnPProfileCardProperty](Get-PnPProfileCardProperty.md) <sup>1</sup>
-- [Get-PnPProperty](Get-PnPProperty.md) <sup>1</sup>
-- [Get-PnPPropertyBag](Get-PnPPropertyBag.md) <sup>1</sup>
-- [Get-PnPPublishingImageRendition](Get-PnPPublishingImageRendition.md) <sup>1</sup>
-- [Get-PnPRecycleBinItem](Get-PnPRecycleBinItem.md) <sup>1</sup>
-- [Get-PnPRequestAccessEmails](Get-PnPRequestAccessEmails.md) <sup>1</sup>
-- [Get-PnPRetentionLabel](Get-PnPRetentionLabel.md) <sup>1</sup>
-- [Get-PnPRoleDefinition](Get-PnPRoleDefinition.md) <sup>1</sup>
-- [Get-PnPSearchConfiguration](Get-PnPSearchConfiguration.md) <sup>1</sup>
-- [Get-PnPSearchCrawlLog](Get-PnPSearchCrawlLog.md) <sup>1</sup>
-- [Get-PnPSearchExternalConnection](Get-PnPSearchExternalConnection.md) <sup>1</sup>
-- [Get-PnPSearchExternalItem](Get-PnPSearchExternalItem.md) <sup>1</sup>
-- [Get-PnPSearchExternalSchema](Get-PnPSearchExternalSchema.md) <sup>1</sup>
-- [Get-PnPSearchResultType](Get-PnPSearchResultType.md) <sup>1</sup>
-- [Get-PnPSearchSettings](Get-PnPSearchSettings.md) <sup>1</sup>
-- [Get-PnPSearchSiteConnection](Get-PnPSearchSiteConnection.md) <sup>1</sup>
-- [Get-PnPSearchVertical](Get-PnPSearchVertical.md) <sup>1</sup>
-- [Get-PnPServiceCurrentHealth](Get-PnPServiceCurrentHealth.md) <sup>1</sup>
-- [Get-PnPServiceHealthIssue](Get-PnPServiceHealthIssue.md) <sup>1</sup>
-- [Get-PnPSharePointAddIn](Get-PnPSharePointAddIn.md) <sup>1</sup>
-- [Get-PnPSharingForNonOwnersOfSite](Get-PnPSharingForNonOwnersOfSite.md) <sup>1</sup>
-- [Get-PnPSite](Get-PnPSite.md) <sup>1</sup>
-- [Get-PnPSiteAnalyticsData](Get-PnPSiteAnalyticsData.md) <sup>1</sup>
-- [Get-PnPSiteClassification](Get-PnPSiteClassification.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPSiteClosure](Get-PnPSiteClosure.md) <sup>1</sup>
-- [Get-PnPSiteCollectionAdmin](Get-PnPSiteCollectionAdmin.md) <sup>1</sup>
-- [Get-PnPSiteCollectionAppCatalog](Get-PnPSiteCollectionAppCatalog.md) <sup>1</sup>
-- [Get-PnPSiteCollectionTermStore](Get-PnPSiteCollectionTermStore.md) <sup>1</sup>
-- [Get-PnPSiteDesign](Get-PnPSiteDesign.md) <sup>1</sup>
-- [Get-PnPSiteDesignRights](Get-PnPSiteDesignRights.md) <sup>1</sup>
-- [Get-PnPSiteDesignRun](Get-PnPSiteDesignRun.md) <sup>1</sup>
-- [Get-PnPSiteDesignRunStatus](Get-PnPSiteDesignRunStatus.md) <sup>1</sup>
-- [Get-PnPSiteDesignTask](Get-PnPSiteDesignTask.md) <sup>1</sup>
-- [Get-PnPSiteFileVersionBatchDeleteJobStatus](Get-PnPSiteFileVersionBatchDeleteJobStatus.md) <sup>1</sup>
-- [Get-PnPSiteFileVersionExpirationReportJobStatus](Get-PnPSiteFileVersionExpirationReportJobStatus.md) <sup>1</sup>
-- [Get-PnPSiteGroup](Get-PnPSiteGroup.md) <sup>1</sup>
-- [Get-PnPSitePolicy](Get-PnPSitePolicy.md) <sup>1</sup>
-- [Get-PnPSiteScript](Get-PnPSiteScript.md) <sup>1</sup>
-- [Get-PnPSiteScriptFromList](Get-PnPSiteScriptFromList.md) <sup>1</sup>
-- [Get-PnPSiteScriptFromWeb](Get-PnPSiteScriptFromWeb.md) <sup>1</sup>
-- [Get-PnPSiteSearchQueryResults](Get-PnPSiteSearchQueryResults.md) <sup>1</sup>
-- [Get-PnPSiteSensitivityLabel](Get-PnPSiteSensitivityLabel.md) <sup>1</sup>
-- [Get-PnPSiteTemplate](Get-PnPSiteTemplate.md) <sup>1</sup>
-- [Get-PnPSiteUserInvitations](Get-PnPSiteUserInvitations.md) <sup>1</sup>
-- [Get-PnPSiteVersionPolicy](Get-PnPSiteVersionPolicy.md) <sup>1</sup>
-- [Get-PnPSiteVersionPolicyStatus](Get-PnPSiteVersionPolicyStatus.md) <sup>1</sup>
-- [Get-PnPStorageEntity](Get-PnPStorageEntity.md) <sup>1</sup>
-- [Get-PnPStoredCredential](Get-PnPStoredCredential.md) <sup>1</sup>
-- [Get-PnPStructuralNavigationCacheSiteState](Get-PnPStructuralNavigationCacheSiteState.md) <sup>1</sup>
-- [Get-PnPStructuralNavigationCacheWebState](Get-PnPStructuralNavigationCacheWebState.md) <sup>1</sup>
-- [Get-PnPSubWeb](Get-PnPSubWeb.md) <sup>1</sup>
-- [Get-PnPSyntexModel](Get-PnPSyntexModel.md) <sup>1</sup>
-- [Get-PnPSyntexModelPublication](Get-PnPSyntexModelPublication.md) <sup>1</sup>
-- [Get-PnPTaxonomyItem](Get-PnPTaxonomyItem.md) <sup>1</sup>
-- [Get-PnPTaxonomySession](Get-PnPTaxonomySession.md) <sup>1</sup>
-- [Get-PnPTeamsApp](Get-PnPTeamsApp.md) <sup>1</sup>
-- [Get-PnPTeamsChannel](Get-PnPTeamsChannel.md) <sup>1</sup>
-- [Get-PnPTeamsChannelFilesFolder](Get-PnPTeamsChannelFilesFolder.md) <sup>1</sup>
-- [Get-PnPTeamsChannelMessage](Get-PnPTeamsChannelMessage.md) <sup>1</sup>
-- [Get-PnPTeamsChannelMessageReply](Get-PnPTeamsChannelMessageReply.md) <sup>1</sup>
-- [Get-PnPTeamsChannelUser](Get-PnPTeamsChannelUser.md) <sup>1</sup>
-- [Get-PnPTeamsPrimaryChannel](Get-PnPTeamsPrimaryChannel.md) <sup>1</sup>
-- [Get-PnPTeamsTab](Get-PnPTeamsTab.md) <sup>1</sup>
-- [Get-PnPTeamsTag](Get-PnPTeamsTag.md) <sup>1</sup>
-- [Get-PnPTeamsTeam](Get-PnPTeamsTeam.md) <sup>1</sup>
-- [Get-PnPTeamsUser](Get-PnPTeamsUser.md) <sup>1</sup>
-- [Get-PnPTemporarilyDisableAppBar](Get-PnPTemporarilyDisableAppBar.md) <sup>1</sup>
-- [Get-PnPTenant](Get-PnPTenant.md) <sup>1</sup>
-- [Get-PnPTenantAppCatalogUrl](Get-PnPTenantAppCatalogUrl.md) <sup>1</sup>
-- [Get-PnPTenantCdnEnabled](Get-PnPTenantCdnEnabled.md) <sup>1</sup>
-- [Get-PnPTenantCdnOrigin](Get-PnPTenantCdnOrigin.md) <sup>1</sup>
-- [Get-PnPTenantCdnPolicies](Get-PnPTenantCdnPolicies.md) <sup>1</sup>
-- [Get-PnPTenantDeletedSite](Get-PnPTenantDeletedSite.md) <sup>1</sup>
-- [Get-PnPTenantId](Get-PnPTenantId.md) <sup>1</sup>
-- [Get-PnPTenantInfo](Get-PnPTenantInfo.md) <sup>1</sup>
-- [Get-PnPTenantInstance](Get-PnPTenantInstance.md) <sup>1</sup>
-- [Get-PnPTenantInternalSetting](Get-PnPTenantInternalSetting.md) <sup>1</sup>
-- [Get-PnPTenantPronounsSetting](Get-PnPTenantPronounsSetting.md) <sup>1</sup>
-- [Get-PnPTenantRecycleBinItem](Get-PnPTenantRecycleBinItem.md) <sup>1</sup>
-- [Get-PnPTenantRestrictedSearchAllowedList](Get-PnPTenantRestrictedSearchAllowedList.md) <sup>1</sup>
-- [Get-PnPTenantRestrictedSearchMode](Get-PnPTenantRestrictedSearchMode.md) <sup>1</sup>
-- [Get-PnPTenantRetentionLabel](Get-PnPTenantRetentionLabel.md) <sup>1</sup>
-- [Get-PnPTenantSequence](Get-PnPTenantSequence.md) <sup>1</sup>
-- [Get-PnPTenantSequenceSite](Get-PnPTenantSequenceSite.md) <sup>1</sup>
-- [Get-PnPTenantServicePrincipal](Get-PnPTenantServicePrincipal.md) <sup>1</sup>
-- [Get-PnPTenantServicePrincipalPermissionGrants](Get-PnPTenantServicePrincipalPermissionGrants.md) <sup>1</sup>
-- [Get-PnPTenantServicePrincipalPermissionRequests](Get-PnPTenantServicePrincipalPermissionRequests.md) <sup>1</sup>
-- [Get-PnPTenantSite](Get-PnPTenantSite.md) <sup>1</sup>
-- [Get-PnPTenantSyncClientRestriction](Get-PnPTenantSyncClientRestriction.md) <sup>1</sup>
-- [Get-PnPTenantTemplate](Get-PnPTenantTemplate.md) <sup>1</sup>
-- [Get-PnPTenantTheme](Get-PnPTenantTheme.md) <sup>1</sup>
-- [Get-PnPTerm](Get-PnPTerm.md) <sup>1</sup>
-- [Get-PnPTermGroup](Get-PnPTermGroup.md) <sup>1</sup>
-- [Get-PnPTermLabel](Get-PnPTermLabel.md) <sup>1</sup>
-- [Get-PnPTermSet](Get-PnPTermSet.md) <sup>1</sup>
-- [Get-PnPTheme](Get-PnPTheme.md) <sup>1</sup>
-- [Get-PnPTimeZoneId](Get-PnPTimeZoneId.md) <sup>1</sup>
-- [Get-PnPTodoList](Get-PnPTodoList.md) <sup>1</sup>
-- [Get-PnPTraceLog](Get-PnPTraceLog.md) <sup>1</sup>
-- [Get-PnPUnfurlLink](Get-PnPUnfurlLink.md) <sup>1</sup>
-- [Get-PnPUnifiedAuditLog](Get-PnPUnifiedAuditLog.md) <sup>1</sup>
-- [Get-PnPUPABulkImportStatus](Get-PnPUPABulkImportStatus.md) <sup>1</sup>
-- [Get-PnPUser](Get-PnPUser.md) <sup>1</sup>
+- [Get-PnPNavigationNode](Get-PnPNavigationNode.md)
+- [Get-PnPOrgAssetsLibrary](Get-PnPOrgAssetsLibrary.md)
+- [Get-PnPOrgNewsSite](Get-PnPOrgNewsSite.md)
+- [Get-PnPPage](Get-PnPPage.md)
+- [Get-PnPPageComponent](Get-PnPPageComponent.md)
+- [Get-PnPPageCopyProgress](Get-PnPPageCopyProgress.md)
+- [Get-PnPPageLikedByInformation](Get-PnPPageLikedByInformation.md)
+- [Get-PnPPageSchedulingEnabled](Get-PnPPageSchedulingEnabled.md)
+- [Get-PnPPlannerBucket](Get-PnPPlannerBucket.md)
+- [Get-PnPPlannerConfiguration](Get-PnPPlannerConfiguration.md)
+- [Get-PnPPlannerPlan](Get-PnPPlannerPlan.md)
+- [Get-PnPPlannerRosterMember](Get-PnPPlannerRosterMember.md)
+- [Get-PnPPlannerRosterPlan](Get-PnPPlannerRosterPlan.md)
+- [Get-PnPPlannerTask](Get-PnPPlannerTask.md)
+- [Get-PnPPlannerUserPolicy](Get-PnPPlannerUserPolicy.md)
+- [Get-PnPPowerApp](Get-PnPPowerApp.md)
+- [Get-PnPPowerAppPermission](Get-PnPPowerAppPermission.md)
+- [Get-PnPPowerPlatformCustomConnector](Get-PnPPowerPlatformCustomConnector.md)
+- [Get-PnPPowerPlatformEnvironment](Get-PnPPowerPlatformEnvironment.md)
+- [Get-PnPPowerPlatformSolution](Get-PnPPowerPlatformSolution.md)
+- [Get-PnPPowerShellTelemetryEnabled](Get-PnPPowerShellTelemetryEnabled.md)
+- [Get-PnPPriviledgedIdentityManagementEligibleAssignment](Get-PnPPriviledgedIdentityManagementEligibleAssignment.md) <sup>2</sup>
+- [Get-PnPPriviledgedIdentityManagementRole](Get-PnPPriviledgedIdentityManagementRole.md) <sup>2</sup>
+- [Get-PnPPrivilegedIdentityManagementEligibleAssignment](Get-PnPPrivilegedIdentityManagementEligibleAssignment.md)
+- [Get-PnPPrivilegedIdentityManagementRole](Get-PnPPrivilegedIdentityManagementRole.md)
+- [Get-PnPProfileCardProperty](Get-PnPProfileCardProperty.md)
+- [Get-PnPProperty](Get-PnPProperty.md)
+- [Get-PnPPropertyBag](Get-PnPPropertyBag.md)
+- [Get-PnPPublishingImageRendition](Get-PnPPublishingImageRendition.md)
+- [Get-PnPRecycleBinItem](Get-PnPRecycleBinItem.md)
+- [Get-PnPRequestAccessEmails](Get-PnPRequestAccessEmails.md)
+- [Get-PnPRetentionLabel](Get-PnPRetentionLabel.md)
+- [Get-PnPRoleDefinition](Get-PnPRoleDefinition.md)
+- [Get-PnPSearchConfiguration](Get-PnPSearchConfiguration.md)
+- [Get-PnPSearchCrawlLog](Get-PnPSearchCrawlLog.md)
+- [Get-PnPSearchExternalConnection](Get-PnPSearchExternalConnection.md)
+- [Get-PnPSearchExternalItem](Get-PnPSearchExternalItem.md)
+- [Get-PnPSearchExternalSchema](Get-PnPSearchExternalSchema.md)
+- [Get-PnPSearchResultType](Get-PnPSearchResultType.md)
+- [Get-PnPSearchSettings](Get-PnPSearchSettings.md)
+- [Get-PnPSearchSiteConnection](Get-PnPSearchSiteConnection.md)
+- [Get-PnPSearchVertical](Get-PnPSearchVertical.md)
+- [Get-PnPServiceCurrentHealth](Get-PnPServiceCurrentHealth.md)
+- [Get-PnPServiceHealthIssue](Get-PnPServiceHealthIssue.md)
+- [Get-PnPSharePointAddIn](Get-PnPSharePointAddIn.md)
+- [Get-PnPSharingForNonOwnersOfSite](Get-PnPSharingForNonOwnersOfSite.md)
+- [Get-PnPSite](Get-PnPSite.md)
+- [Get-PnPSiteAnalyticsData](Get-PnPSiteAnalyticsData.md)
+- [Get-PnPSiteClassification](Get-PnPSiteClassification.md) <sup>2</sup>
+- [Get-PnPSiteClosure](Get-PnPSiteClosure.md)
+- [Get-PnPSiteCollectionAdmin](Get-PnPSiteCollectionAdmin.md)
+- [Get-PnPSiteCollectionAppCatalog](Get-PnPSiteCollectionAppCatalog.md)
+- [Get-PnPSiteCollectionTermStore](Get-PnPSiteCollectionTermStore.md)
+- [Get-PnPSiteDesign](Get-PnPSiteDesign.md)
+- [Get-PnPSiteDesignRights](Get-PnPSiteDesignRights.md)
+- [Get-PnPSiteDesignRun](Get-PnPSiteDesignRun.md)
+- [Get-PnPSiteDesignRunStatus](Get-PnPSiteDesignRunStatus.md)
+- [Get-PnPSiteDesignTask](Get-PnPSiteDesignTask.md)
+- [Get-PnPSiteFileVersionBatchDeleteJobStatus](Get-PnPSiteFileVersionBatchDeleteJobStatus.md)
+- [Get-PnPSiteFileVersionExpirationReportJobStatus](Get-PnPSiteFileVersionExpirationReportJobStatus.md)
+- [Get-PnPSiteGroup](Get-PnPSiteGroup.md)
+- [Get-PnPSitePolicy](Get-PnPSitePolicy.md)
+- [Get-PnPSiteScript](Get-PnPSiteScript.md)
+- [Get-PnPSiteScriptFromList](Get-PnPSiteScriptFromList.md)
+- [Get-PnPSiteScriptFromWeb](Get-PnPSiteScriptFromWeb.md)
+- [Get-PnPSiteSearchQueryResults](Get-PnPSiteSearchQueryResults.md)
+- [Get-PnPSiteSensitivityLabel](Get-PnPSiteSensitivityLabel.md)
+- [Get-PnPSiteTemplate](Get-PnPSiteTemplate.md)
+- [Get-PnPSiteUserInvitations](Get-PnPSiteUserInvitations.md)
+- [Get-PnPSiteVersionPolicy](Get-PnPSiteVersionPolicy.md)
+- [Get-PnPSiteVersionPolicyStatus](Get-PnPSiteVersionPolicyStatus.md)
+- [Get-PnPStorageEntity](Get-PnPStorageEntity.md)
+- [Get-PnPStoredCredential](Get-PnPStoredCredential.md)
+- [Get-PnPStructuralNavigationCacheSiteState](Get-PnPStructuralNavigationCacheSiteState.md)
+- [Get-PnPStructuralNavigationCacheWebState](Get-PnPStructuralNavigationCacheWebState.md)
+- [Get-PnPSubWeb](Get-PnPSubWeb.md)
+- [Get-PnPSyntexModel](Get-PnPSyntexModel.md)
+- [Get-PnPSyntexModelPublication](Get-PnPSyntexModelPublication.md)
+- [Get-PnPTaxonomyItem](Get-PnPTaxonomyItem.md)
+- [Get-PnPTaxonomySession](Get-PnPTaxonomySession.md)
+- [Get-PnPTeamsApp](Get-PnPTeamsApp.md)
+- [Get-PnPTeamsChannel](Get-PnPTeamsChannel.md)
+- [Get-PnPTeamsChannelFilesFolder](Get-PnPTeamsChannelFilesFolder.md)
+- [Get-PnPTeamsChannelMessage](Get-PnPTeamsChannelMessage.md)
+- [Get-PnPTeamsChannelMessageReply](Get-PnPTeamsChannelMessageReply.md)
+- [Get-PnPTeamsChannelUser](Get-PnPTeamsChannelUser.md)
+- [Get-PnPTeamsPrimaryChannel](Get-PnPTeamsPrimaryChannel.md)
+- [Get-PnPTeamsTab](Get-PnPTeamsTab.md)
+- [Get-PnPTeamsTag](Get-PnPTeamsTag.md)
+- [Get-PnPTeamsTeam](Get-PnPTeamsTeam.md)
+- [Get-PnPTeamsUser](Get-PnPTeamsUser.md)
+- [Get-PnPTemporarilyDisableAppBar](Get-PnPTemporarilyDisableAppBar.md)
+- [Get-PnPTenant](Get-PnPTenant.md)
+- [Get-PnPTenantAppCatalogUrl](Get-PnPTenantAppCatalogUrl.md)
+- [Get-PnPTenantCdnEnabled](Get-PnPTenantCdnEnabled.md)
+- [Get-PnPTenantCdnOrigin](Get-PnPTenantCdnOrigin.md)
+- [Get-PnPTenantCdnPolicies](Get-PnPTenantCdnPolicies.md)
+- [Get-PnPTenantDeletedSite](Get-PnPTenantDeletedSite.md)
+- [Get-PnPTenantId](Get-PnPTenantId.md)
+- [Get-PnPTenantInfo](Get-PnPTenantInfo.md)
+- [Get-PnPTenantInstance](Get-PnPTenantInstance.md)
+- [Get-PnPTenantInternalSetting](Get-PnPTenantInternalSetting.md)
+- [Get-PnPTenantPronounsSetting](Get-PnPTenantPronounsSetting.md)
+- [Get-PnPTenantRecycleBinItem](Get-PnPTenantRecycleBinItem.md)
+- [Get-PnPTenantRestrictedSearchAllowedList](Get-PnPTenantRestrictedSearchAllowedList.md)
+- [Get-PnPTenantRestrictedSearchMode](Get-PnPTenantRestrictedSearchMode.md)
+- [Get-PnPTenantRetentionLabel](Get-PnPTenantRetentionLabel.md)
+- [Get-PnPTenantSequence](Get-PnPTenantSequence.md)
+- [Get-PnPTenantSequenceSite](Get-PnPTenantSequenceSite.md)
+- [Get-PnPTenantServicePrincipal](Get-PnPTenantServicePrincipal.md)
+- [Get-PnPTenantServicePrincipalPermissionGrants](Get-PnPTenantServicePrincipalPermissionGrants.md)
+- [Get-PnPTenantServicePrincipalPermissionRequests](Get-PnPTenantServicePrincipalPermissionRequests.md)
+- [Get-PnPTenantSite](Get-PnPTenantSite.md)
+- [Get-PnPTenantSyncClientRestriction](Get-PnPTenantSyncClientRestriction.md)
+- [Get-PnPTenantTemplate](Get-PnPTenantTemplate.md)
+- [Get-PnPTenantTheme](Get-PnPTenantTheme.md)
+- [Get-PnPTerm](Get-PnPTerm.md)
+- [Get-PnPTermGroup](Get-PnPTermGroup.md)
+- [Get-PnPTermLabel](Get-PnPTermLabel.md)
+- [Get-PnPTermSet](Get-PnPTermSet.md)
+- [Get-PnPTheme](Get-PnPTheme.md)
+- [Get-PnPTimeZoneId](Get-PnPTimeZoneId.md)
+- [Get-PnPTodoList](Get-PnPTodoList.md)
+- [Get-PnPTraceLog](Get-PnPTraceLog.md)
+- [Get-PnPUnfurlLink](Get-PnPUnfurlLink.md)
+- [Get-PnPUnifiedAuditLog](Get-PnPUnifiedAuditLog.md)
+- [Get-PnPUPABulkImportStatus](Get-PnPUPABulkImportStatus.md)
+- [Get-PnPUser](Get-PnPUser.md)
 - [Get-PnPUserAndContentMoveState](Get-PnPUserAndContentMoveState.md) <sup>1</sup>
-- [Get-PnPUserOneDriveQuota](Get-PnPUserOneDriveQuota.md) <sup>1</sup>
-- [Get-PnPUserProfilePhoto](Get-PnPUserProfilePhoto.md) <sup>1</sup>
-- [Get-PnPUserProfileProperty](Get-PnPUserProfileProperty.md) <sup>1</sup>
-- [Get-PnPView](Get-PnPView.md) <sup>1</sup>
-- [Get-PnPVivaConnectionsDashboardACE](Get-PnPVivaConnectionsDashboardACE.md) <sup>1</sup>
-- [Get-PnPVivaEngageCommunity](Get-PnPVivaEngageCommunity.md) <sup>1</sup>
-- [Get-PnPWeb](Get-PnPWeb.md) <sup>1</sup>
-- [Get-PnPWebAlert](Get-PnPWebAlert.md) <sup>1</sup>
-- [Get-PnPWebHeader](Get-PnPWebHeader.md) <sup>1</sup>
-- [Get-PnPWebhookSubscription](Get-PnPWebhookSubscription.md) <sup>1</sup>
-- [Get-PnPWebhookSubscriptions](Get-PnPWebhookSubscriptions.md) <sup>1</sup> <sup>2</sup>
-- [Get-PnPWebPart](Get-PnPWebPart.md) <sup>1</sup>
-- [Get-PnPWebPartProperty](Get-PnPWebPartProperty.md) <sup>1</sup>
-- [Get-PnPWebPartXml](Get-PnPWebPartXml.md) <sup>1</sup>
-- [Get-PnPWebPermission](Get-PnPWebPermission.md) <sup>1</sup>
-- [Get-PnPWebTemplates](Get-PnPWebTemplates.md) <sup>1</sup>
-- [Get-PnPWikiPageContent](Get-PnPWikiPageContent.md) <sup>1</sup>
+- [Get-PnPUserOneDriveQuota](Get-PnPUserOneDriveQuota.md)
+- [Get-PnPUserProfilePhoto](Get-PnPUserProfilePhoto.md)
+- [Get-PnPUserProfileProperty](Get-PnPUserProfileProperty.md)
+- [Get-PnPView](Get-PnPView.md)
+- [Get-PnPVivaConnectionsDashboardACE](Get-PnPVivaConnectionsDashboardACE.md)
+- [Get-PnPVivaEngageCommunity](Get-PnPVivaEngageCommunity.md)
+- [Get-PnPWeb](Get-PnPWeb.md)
+- [Get-PnPWebAlert](Get-PnPWebAlert.md)
+- [Get-PnPWebHeader](Get-PnPWebHeader.md)
+- [Get-PnPWebhookSubscription](Get-PnPWebhookSubscription.md)
+- [Get-PnPWebhookSubscriptions](Get-PnPWebhookSubscriptions.md) <sup>2</sup>
+- [Get-PnPWebPart](Get-PnPWebPart.md)
+- [Get-PnPWebPartProperty](Get-PnPWebPartProperty.md)
+- [Get-PnPWebPartXml](Get-PnPWebPartXml.md)
+- [Get-PnPWebPermission](Get-PnPWebPermission.md)
+- [Get-PnPWebTemplates](Get-PnPWebTemplates.md)
+- [Get-PnPWikiPageContent](Get-PnPWikiPageContent.md)
 ## Grant
-- [Grant-PnPAzureADAppSitePermission](Grant-PnPAzureADAppSitePermission.md) <sup>1</sup> <sup>2</sup>
-- [Grant-PnPEntraIDAppSitePermission](Grant-PnPEntraIDAppSitePermission.md) <sup>1</sup>
-- [Grant-PnPHubSiteRights](Grant-PnPHubSiteRights.md) <sup>1</sup>
-- [Grant-PnPSiteDesignRights](Grant-PnPSiteDesignRights.md) <sup>1</sup>
-- [Grant-PnPTenantServicePrincipalPermission](Grant-PnPTenantServicePrincipalPermission.md) <sup>1</sup>
+- [Grant-PnPAzureADAppSitePermission](Grant-PnPAzureADAppSitePermission.md) <sup>2</sup>
+- [Grant-PnPEntraIDAppSitePermission](Grant-PnPEntraIDAppSitePermission.md)
+- [Grant-PnPHubSiteRights](Grant-PnPHubSiteRights.md)
+- [Grant-PnPSiteDesignRights](Grant-PnPSiteDesignRights.md)
+- [Grant-PnPTenantServicePrincipalPermission](Grant-PnPTenantServicePrincipalPermission.md)
 ## Import
-- [Import-PnPFlow](Import-PnPFlow.md) <sup>1</sup>
-- [Import-PnPTaxonomy](Import-PnPTaxonomy.md) <sup>1</sup>
-- [Import-PnPTermGroupFromXml](Import-PnPTermGroupFromXml.md) <sup>1</sup>
-- [Import-PnPTermSet](Import-PnPTermSet.md) <sup>1</sup>
+- [Import-PnPFlow](Import-PnPFlow.md)
+- [Import-PnPTaxonomy](Import-PnPTaxonomy.md)
+- [Import-PnPTermGroupFromXml](Import-PnPTermGroupFromXml.md)
+- [Import-PnPTermSet](Import-PnPTermSet.md)
 ## Install
-- [Install-PnPApp](Install-PnPApp.md) <sup>1</sup>
+- [Install-PnPApp](Install-PnPApp.md)
 ## Invoke
-- [Invoke-PnPBatch](Invoke-PnPBatch.md) <sup>1</sup>
-- [Invoke-PnPGraphMethod](Invoke-PnPGraphMethod.md) <sup>1</sup>
-- [Invoke-PnPListDesign](Invoke-PnPListDesign.md) <sup>1</sup>
-- [Invoke-PnPQuery](Invoke-PnPQuery.md) <sup>1</sup>
-- [Invoke-PnPSearchQuery](Invoke-PnPSearchQuery.md) <sup>1</sup> <sup>2</sup>
-- [Invoke-PnPSiteDesign](Invoke-PnPSiteDesign.md) <sup>1</sup>
-- [Invoke-PnPSiteScript](Invoke-PnPSiteScript.md) <sup>1</sup>
-- [Invoke-PnPSiteSwap](Invoke-PnPSiteSwap.md) <sup>1</sup>
-- [Invoke-PnPSiteTemplate](Invoke-PnPSiteTemplate.md) <sup>1</sup>
-- [Invoke-PnPSPRestMethod](Invoke-PnPSPRestMethod.md) <sup>1</sup>
-- [Invoke-PnPTenantTemplate](Invoke-PnPTenantTemplate.md) <sup>1</sup>
-- [Invoke-PnPWebAction](Invoke-PnPWebAction.md) <sup>1</sup>
+- [Invoke-PnPBatch](Invoke-PnPBatch.md)
+- [Invoke-PnPGraphMethod](Invoke-PnPGraphMethod.md)
+- [Invoke-PnPListDesign](Invoke-PnPListDesign.md)
+- [Invoke-PnPQuery](Invoke-PnPQuery.md)
+- [Invoke-PnPSearchQuery](Invoke-PnPSearchQuery.md) <sup>2</sup>
+- [Invoke-PnPSiteDesign](Invoke-PnPSiteDesign.md)
+- [Invoke-PnPSiteScript](Invoke-PnPSiteScript.md)
+- [Invoke-PnPSiteSwap](Invoke-PnPSiteSwap.md)
+- [Invoke-PnPSiteTemplate](Invoke-PnPSiteTemplate.md)
+- [Invoke-PnPSPRestMethod](Invoke-PnPSPRestMethod.md)
+- [Invoke-PnPTenantTemplate](Invoke-PnPTenantTemplate.md)
+- [Invoke-PnPWebAction](Invoke-PnPWebAction.md)
 ## Measure
-- [Measure-PnPList](Measure-PnPList.md) <sup>1</sup>
-- [Measure-PnPWeb](Measure-PnPWeb.md) <sup>1</sup>
+- [Measure-PnPList](Measure-PnPList.md)
+- [Measure-PnPWeb](Measure-PnPWeb.md)
 ## Merge
-- [Merge-PnPTerm](Merge-PnPTerm.md) <sup>1</sup>
+- [Merge-PnPTerm](Merge-PnPTerm.md)
 ## Move
-- [Move-PnPClientSideComponent](Move-PnPClientSideComponent.md) <sup>1</sup> <sup>2</sup>
-- [Move-PnPFile](Move-PnPFile.md) <sup>1</sup>
-- [Move-PnPFolder](Move-PnPFolder.md) <sup>1</sup>
-- [Move-PnPListItemToRecycleBin](Move-PnPListItemToRecycleBin.md) <sup>1</sup>
-- [Move-PnPPage](Move-PnPPage.md) <sup>1</sup>
-- [Move-PnPPageComponent](Move-PnPPageComponent.md) <sup>1</sup>
-- [Move-PnpRecycleBinItem](Move-PnpRecycleBinItem.md) <sup>1</sup>
-- [Move-PnPTerm](Move-PnPTerm.md) <sup>1</sup>
-- [Move-PnPTermSet](Move-PnPTermSet.md) <sup>1</sup>
+- [Move-PnPClientSideComponent](Move-PnPClientSideComponent.md) <sup>2</sup>
+- [Move-PnPFile](Move-PnPFile.md)
+- [Move-PnPFolder](Move-PnPFolder.md)
+- [Move-PnPListItemToRecycleBin](Move-PnPListItemToRecycleBin.md)
+- [Move-PnPPage](Move-PnPPage.md)
+- [Move-PnPPageComponent](Move-PnPPageComponent.md)
+- [Move-PnpRecycleBinItem](Move-PnpRecycleBinItem.md)
+- [Move-PnPTerm](Move-PnPTerm.md)
+- [Move-PnPTermSet](Move-PnPTermSet.md)
 ## New
-- [New-PnPAzureADGroup](New-PnPAzureADGroup.md) <sup>1</sup> <sup>2</sup>
-- [New-PnPAzureADUserTemporaryAccessPass](New-PnPAzureADUserTemporaryAccessPass.md) <sup>1</sup> <sup>2</sup>
-- [New-PnPAzureCertificate](New-PnPAzureCertificate.md) <sup>1</sup>
-- [New-PnPBatch](New-PnPBatch.md) <sup>1</sup>
-- [New-PnPContainerType](New-PnPContainerType.md) <sup>1</sup>
-- [New-PnPEntraIDGroup](New-PnPEntraIDGroup.md) <sup>1</sup>
-- [New-PnPEntraIDUserTemporaryAccessPass](New-PnPEntraIDUserTemporaryAccessPass.md) <sup>1</sup>
-- [New-PnPExtensibilityHandlerObject](New-PnPExtensibilityHandlerObject.md) <sup>1</sup>
-- [New-PnPGraphSubscription](New-PnPGraphSubscription.md) <sup>1</sup>
-- [New-PnPGroup](New-PnPGroup.md) <sup>1</sup>
-- [New-PnPLibraryFileVersionBatchDeleteJob](New-PnPLibraryFileVersionBatchDeleteJob.md) <sup>1</sup>
-- [New-PnPLibraryFileVersionExpirationReportJob](New-PnPLibraryFileVersionExpirationReportJob.md) <sup>1</sup>
-- [New-PnPList](New-PnPList.md) <sup>1</sup>
-- [New-PnPMicrosoft365Group](New-PnPMicrosoft365Group.md) <sup>1</sup>
-- [New-PnPMicrosoft365GroupSettings](New-PnPMicrosoft365GroupSettings.md) <sup>1</sup>
-- [New-PnPPersonalSite](New-PnPPersonalSite.md) <sup>1</sup>
-- [New-PnPPlannerPlan](New-PnPPlannerPlan.md) <sup>1</sup>
-- [New-PnpProfileCardProperty](New-PnpProfileCardProperty.md) <sup>1</sup>
-- [New-PnPSdnProvider](New-PnPSdnProvider.md) <sup>1</sup>
-- [New-PnPSearchExternalConnection](New-PnPSearchExternalConnection.md) <sup>1</sup>
-- [New-PnPSearchResultType](New-PnPSearchResultType.md) <sup>1</sup>
-- [New-PnPSearchResultTypeRule](New-PnPSearchResultTypeRule.md) <sup>1</sup>
-- [New-PnPSearchVertical](New-PnPSearchVertical.md) <sup>1</sup>
-- [New-PnPSite](New-PnPSite.md) <sup>1</sup>
-- [New-PnPSiteCollectionTermStore](New-PnPSiteCollectionTermStore.md) <sup>1</sup>
-- [New-PnPSiteFileVersionBatchDeleteJob](New-PnPSiteFileVersionBatchDeleteJob.md) <sup>1</sup>
-- [New-PnPSiteFileVersionExpirationReportJob](New-PnPSiteFileVersionExpirationReportJob.md) <sup>1</sup>
-- [New-PnPSiteGroup](New-PnPSiteGroup.md) <sup>1</sup>
-- [New-PnPSiteManageVersionPolicyJob](New-PnPSiteManageVersionPolicyJob.md) <sup>1</sup>
-- [New-PnPSiteTemplate](New-PnPSiteTemplate.md) <sup>1</sup>
-- [New-PnPSiteTemplateFromFolder](New-PnPSiteTemplateFromFolder.md) <sup>1</sup>
-- [New-PnPTeamsApp](New-PnPTeamsApp.md) <sup>1</sup>
-- [New-PnPTeamsTeam](New-PnPTeamsTeam.md) <sup>1</sup>
-- [New-PnPTenantSequence](New-PnPTenantSequence.md) <sup>1</sup>
-- [New-PnPTenantSequenceCommunicationSite](New-PnPTenantSequenceCommunicationSite.md) <sup>1</sup>
-- [New-PnPTenantSequenceTeamNoGroupSite](New-PnPTenantSequenceTeamNoGroupSite.md) <sup>1</sup>
-- [New-PnPTenantSequenceTeamNoGroupSubSite](New-PnPTenantSequenceTeamNoGroupSubSite.md) <sup>1</sup>
-- [New-PnPTenantSequenceTeamSite](New-PnPTenantSequenceTeamSite.md) <sup>1</sup>
-- [New-PnPTenantSite](New-PnPTenantSite.md) <sup>1</sup>
-- [New-PnPTenantTemplate](New-PnPTenantTemplate.md) <sup>1</sup>
-- [New-PnPTerm](New-PnPTerm.md) <sup>1</sup>
-- [New-PnPTermGroup](New-PnPTermGroup.md) <sup>1</sup>
-- [New-PnPTermLabel](New-PnPTermLabel.md) <sup>1</sup>
-- [New-PnPTermSet](New-PnPTermSet.md) <sup>1</sup>
-- [New-PnPTodoList](New-PnPTodoList.md) <sup>1</sup>
-- [New-PnPUPABulkImportJob](New-PnPUPABulkImportJob.md) <sup>1</sup>
-- [New-PnPUser](New-PnPUser.md) <sup>1</sup>
-- [New-PnPVivaEngageCommunity](New-PnPVivaEngageCommunity.md) <sup>1</sup>
-- [New-PnPWeb](New-PnPWeb.md) <sup>1</sup>
+- [New-PnPAzureADGroup](New-PnPAzureADGroup.md) <sup>2</sup>
+- [New-PnPAzureADUserTemporaryAccessPass](New-PnPAzureADUserTemporaryAccessPass.md) <sup>2</sup>
+- [New-PnPAzureCertificate](New-PnPAzureCertificate.md)
+- [New-PnPBatch](New-PnPBatch.md)
+- [New-PnPContainerType](New-PnPContainerType.md)
+- [New-PnPEntraIDGroup](New-PnPEntraIDGroup.md)
+- [New-PnPEntraIDUserTemporaryAccessPass](New-PnPEntraIDUserTemporaryAccessPass.md)
+- [New-PnPExtensibilityHandlerObject](New-PnPExtensibilityHandlerObject.md)
+- [New-PnPGraphSubscription](New-PnPGraphSubscription.md)
+- [New-PnPGroup](New-PnPGroup.md)
+- [New-PnPLibraryFileVersionBatchDeleteJob](New-PnPLibraryFileVersionBatchDeleteJob.md)
+- [New-PnPLibraryFileVersionExpirationReportJob](New-PnPLibraryFileVersionExpirationReportJob.md)
+- [New-PnPList](New-PnPList.md)
+- [New-PnPMicrosoft365Group](New-PnPMicrosoft365Group.md)
+- [New-PnPMicrosoft365GroupSettings](New-PnPMicrosoft365GroupSettings.md)
+- [New-PnPPersonalSite](New-PnPPersonalSite.md)
+- [New-PnPPlannerPlan](New-PnPPlannerPlan.md)
+- [New-PnpProfileCardProperty](New-PnpProfileCardProperty.md)
+- [New-PnPSdnProvider](New-PnPSdnProvider.md)
+- [New-PnPSearchExternalConnection](New-PnPSearchExternalConnection.md)
+- [New-PnPSearchResultType](New-PnPSearchResultType.md)
+- [New-PnPSearchResultTypeRule](New-PnPSearchResultTypeRule.md)
+- [New-PnPSearchVertical](New-PnPSearchVertical.md)
+- [New-PnPSite](New-PnPSite.md)
+- [New-PnPSiteCollectionTermStore](New-PnPSiteCollectionTermStore.md)
+- [New-PnPSiteFileVersionBatchDeleteJob](New-PnPSiteFileVersionBatchDeleteJob.md)
+- [New-PnPSiteFileVersionExpirationReportJob](New-PnPSiteFileVersionExpirationReportJob.md)
+- [New-PnPSiteGroup](New-PnPSiteGroup.md)
+- [New-PnPSiteManageVersionPolicyJob](New-PnPSiteManageVersionPolicyJob.md)
+- [New-PnPSiteTemplate](New-PnPSiteTemplate.md)
+- [New-PnPSiteTemplateFromFolder](New-PnPSiteTemplateFromFolder.md)
+- [New-PnPTeamsApp](New-PnPTeamsApp.md)
+- [New-PnPTeamsTeam](New-PnPTeamsTeam.md)
+- [New-PnPTenantSequence](New-PnPTenantSequence.md)
+- [New-PnPTenantSequenceCommunicationSite](New-PnPTenantSequenceCommunicationSite.md)
+- [New-PnPTenantSequenceTeamNoGroupSite](New-PnPTenantSequenceTeamNoGroupSite.md)
+- [New-PnPTenantSequenceTeamNoGroupSubSite](New-PnPTenantSequenceTeamNoGroupSubSite.md)
+- [New-PnPTenantSequenceTeamSite](New-PnPTenantSequenceTeamSite.md)
+- [New-PnPTenantSite](New-PnPTenantSite.md)
+- [New-PnPTenantTemplate](New-PnPTenantTemplate.md)
+- [New-PnPTerm](New-PnPTerm.md)
+- [New-PnPTermGroup](New-PnPTermGroup.md)
+- [New-PnPTermLabel](New-PnPTermLabel.md)
+- [New-PnPTermSet](New-PnPTermSet.md)
+- [New-PnPTodoList](New-PnPTodoList.md)
+- [New-PnPUPABulkImportJob](New-PnPUPABulkImportJob.md)
+- [New-PnPUser](New-PnPUser.md)
+- [New-PnPVivaEngageCommunity](New-PnPVivaEngageCommunity.md)
+- [New-PnPWeb](New-PnPWeb.md)
 ## Publish
-- [Publish-PnPApp](Publish-PnPApp.md) <sup>1</sup>
-- [Publish-PnPContentType](Publish-PnPContentType.md) <sup>1</sup>
-- [Publish-PnPSyntexModel](Publish-PnPSyntexModel.md) <sup>1</sup>
+- [Publish-PnPApp](Publish-PnPApp.md)
+- [Publish-PnPContentType](Publish-PnPContentType.md)
+- [Publish-PnPSyntexModel](Publish-PnPSyntexModel.md)
 ## Read
-- [Read-PnPSiteTemplate](Read-PnPSiteTemplate.md) <sup>1</sup>
-- [Read-PnPTenantTemplate](Read-PnPTenantTemplate.md) <sup>1</sup>
+- [Read-PnPSiteTemplate](Read-PnPSiteTemplate.md)
+- [Read-PnPTenantTemplate](Read-PnPTenantTemplate.md)
 ## Receive
-- [Receive-PnPCopyMoveJobStatus](Receive-PnPCopyMoveJobStatus.md) <sup>1</sup>
+- [Receive-PnPCopyMoveJobStatus](Receive-PnPCopyMoveJobStatus.md)
 ## Register
-- [Register-PnPAppCatalogSite](Register-PnPAppCatalogSite.md) <sup>1</sup>
-- [Register-PnPAzureADApp](Register-PnPAzureADApp.md) <sup>1</sup> <sup>2</sup>
-- [Register-PnPEntraIDApp](Register-PnPEntraIDApp.md) <sup>1</sup>
-- [Register-PnPEntraIDAppForInteractiveLogin](Register-PnPEntraIDAppForInteractiveLogin.md) <sup>1</sup>
-- [Register-PnPHubSite](Register-PnPHubSite.md) <sup>1</sup>
+- [Register-PnPAppCatalogSite](Register-PnPAppCatalogSite.md)
+- [Register-PnPAzureADApp](Register-PnPAzureADApp.md) <sup>2</sup>
+- [Register-PnPEntraIDApp](Register-PnPEntraIDApp.md)
+- [Register-PnPEntraIDAppForInteractiveLogin](Register-PnPEntraIDAppForInteractiveLogin.md)
+- [Register-PnPHubSite](Register-PnPHubSite.md)
 ## Remove
-- [Remove-PnPAdaptiveScopeProperty](Remove-PnPAdaptiveScopeProperty.md) <sup>1</sup>
-- [Remove-PnPAlert](Remove-PnPAlert.md) <sup>1</sup>
-- [Remove-PnPApp](Remove-PnPApp.md) <sup>1</sup>
-- [Remove-PnPApplicationCustomizer](Remove-PnPApplicationCustomizer.md) <sup>1</sup>
-- [Remove-PnPAvailableSiteClassification](Remove-PnPAvailableSiteClassification.md) <sup>1</sup>
-- [Remove-PnPAzureADApp](Remove-PnPAzureADApp.md) <sup>1</sup> <sup>2</sup>
-- [Remove-PnPAzureADGroup](Remove-PnPAzureADGroup.md) <sup>1</sup> <sup>2</sup>
-- [Remove-PnPAzureADGroupMember](Remove-PnPAzureADGroupMember.md) <sup>1</sup> <sup>2</sup>
-- [Remove-PnPAzureADGroupOwner](Remove-PnPAzureADGroupOwner.md) <sup>1</sup> <sup>2</sup>
-- [Remove-PnPAzureADServicePrincipalAppRoleAssignment](Remove-PnPAzureADServicePrincipalAppRoleAssignment.md) <sup>1</sup> <sup>2</sup>
-- [Remove-PnPAzureADServicePrincipalAssignedAppRole](Remove-PnPAzureADServicePrincipalAssignedAppRole.md) <sup>1</sup> <sup>2</sup>
-- [Remove-PnPAzureADUser](Remove-PnPAzureADUser.md) <sup>1</sup> <sup>2</sup>
-- [Remove-PnPClientSidePage](Remove-PnPClientSidePage.md) <sup>1</sup> <sup>2</sup>
-- [Remove-PnPContainer](Remove-PnPContainer.md) <sup>1</sup>
-- [Remove-PnPContainerType](Remove-PnPContainerType.md) <sup>1</sup>
-- [Remove-PnPContentType](Remove-PnPContentType.md) <sup>1</sup>
-- [Remove-PnPContentTypeFromDocumentSet](Remove-PnPContentTypeFromDocumentSet.md) <sup>1</sup>
-- [Remove-PnPContentTypeFromList](Remove-PnPContentTypeFromList.md) <sup>1</sup>
-- [Remove-PnPCustomAction](Remove-PnPCustomAction.md) <sup>1</sup>
-- [Remove-PnPDeletedMicrosoft365Group](Remove-PnPDeletedMicrosoft365Group.md) <sup>1</sup>
-- [Remove-PnPEntraIDApp](Remove-PnPEntraIDApp.md) <sup>1</sup>
-- [Remove-PnPEntraIDGroup](Remove-PnPEntraIDGroup.md) <sup>1</sup>
-- [Remove-PnPEntraIDGroupMember](Remove-PnPEntraIDGroupMember.md) <sup>1</sup>
-- [Remove-PnPEntraIDGroupOwner](Remove-PnPEntraIDGroupOwner.md) <sup>1</sup>
-- [Remove-PnPEntraIDServicePrincipalAppRoleAssignment](Remove-PnPEntraIDServicePrincipalAppRoleAssignment.md) <sup>1</sup>
-- [Remove-PnPEntraIDServicePrincipalAssignedAppRole](Remove-PnPEntraIDServicePrincipalAssignedAppRole.md) <sup>1</sup>
-- [Remove-PnPEntraIDUser](Remove-PnPEntraIDUser.md) <sup>1</sup>
-- [Remove-PnPEventReceiver](Remove-PnPEventReceiver.md) <sup>1</sup>
-- [Remove-PnPExternalUser](Remove-PnPExternalUser.md) <sup>1</sup>
-- [Remove-PnPField](Remove-PnPField.md) <sup>1</sup>
-- [Remove-PnPFieldFromContentType](Remove-PnPFieldFromContentType.md) <sup>1</sup>
-- [Remove-PnPFile](Remove-PnPFile.md) <sup>1</sup>
-- [Remove-PnPFileFromSiteTemplate](Remove-PnPFileFromSiteTemplate.md) <sup>1</sup>
-- [Remove-PnPFileSharingLink](Remove-PnPFileSharingLink.md) <sup>1</sup>
-- [Remove-PnPFileVersion](Remove-PnPFileVersion.md) <sup>1</sup>
-- [Remove-PnPFlow](Remove-PnPFlow.md) <sup>1</sup>
-- [Remove-PnPFlowOwner](Remove-PnPFlowOwner.md) <sup>1</sup>
-- [Remove-PnPFolder](Remove-PnPFolder.md) <sup>1</sup>
-- [Remove-PnPFolderSharingLink](Remove-PnPFolderSharingLink.md) <sup>1</sup>
-- [Remove-PnPGraphSubscription](Remove-PnPGraphSubscription.md) <sup>1</sup>
-- [Remove-PnPGroup](Remove-PnPGroup.md) <sup>1</sup>
-- [Remove-PnPGroupMember](Remove-PnPGroupMember.md) <sup>1</sup>
-- [Remove-PnPHomeSite](Remove-PnPHomeSite.md) <sup>1</sup>
-- [Remove-PnPHubSiteAssociation](Remove-PnPHubSiteAssociation.md) <sup>1</sup>
-- [Remove-PnPHubToHubAssociation](Remove-PnPHubToHubAssociation.md) <sup>1</sup>
-- [Remove-PnPIndexedProperty](Remove-PnPIndexedProperty.md) <sup>1</sup>
-- [Remove-PnPJavaScriptLink](Remove-PnPJavaScriptLink.md) <sup>1</sup>
-- [Remove-PnPKnowledgeHubSite](Remove-PnPKnowledgeHubSite.md) <sup>1</sup>
-- [Remove-PnPLibraryFileVersionBatchDeleteJob](Remove-PnPLibraryFileVersionBatchDeleteJob.md) <sup>1</sup>
-- [Remove-PnPList](Remove-PnPList.md) <sup>1</sup>
-- [Remove-PnPListDesign](Remove-PnPListDesign.md) <sup>1</sup>
-- [Remove-PnPListItem](Remove-PnPListItem.md) <sup>1</sup>
-- [Remove-PnPListItemAttachment](Remove-PnPListItemAttachment.md) <sup>1</sup>
-- [Remove-PnPListItemComment](Remove-PnPListItemComment.md) <sup>1</sup>
-- [Remove-PnPListItemVersion](Remove-PnPListItemVersion.md) <sup>1</sup>
-- [Remove-PnPManagedAppId](Remove-PnPManagedAppId.md) <sup>1</sup>
-- [Remove-PnPMicrosoft365Group](Remove-PnPMicrosoft365Group.md) <sup>1</sup>
-- [Remove-PnPMicrosoft365GroupMember](Remove-PnPMicrosoft365GroupMember.md) <sup>1</sup>
-- [Remove-PnPMicrosoft365GroupOwner](Remove-PnPMicrosoft365GroupOwner.md) <sup>1</sup>
-- [Remove-PnPMicrosoft365GroupPhoto](Remove-PnPMicrosoft365GroupPhoto.md) <sup>1</sup>
-- [Remove-PnPMicrosoft365GroupSettings](Remove-PnPMicrosoft365GroupSettings.md) <sup>1</sup>
-- [Remove-PnPNavigationNode](Remove-PnPNavigationNode.md) <sup>1</sup>
-- [Remove-PnPOrgAssetsLibrary](Remove-PnPOrgAssetsLibrary.md) <sup>1</sup>
-- [Remove-PnPOrgNewsSite](Remove-PnPOrgNewsSite.md) <sup>1</sup>
-- [Remove-PnPPage](Remove-PnPPage.md) <sup>1</sup>
-- [Remove-PnPPageComponent](Remove-PnPPageComponent.md) <sup>1</sup>
-- [Remove-PnPPlannerBucket](Remove-PnPPlannerBucket.md) <sup>1</sup>
-- [Remove-PnPPlannerPlan](Remove-PnPPlannerPlan.md) <sup>1</sup>
-- [Remove-PnPPlannerRoster](Remove-PnPPlannerRoster.md) <sup>1</sup>
-- [Remove-PnPPlannerRosterMember](Remove-PnPPlannerRosterMember.md) <sup>1</sup>
-- [Remove-PnPPlannerTask](Remove-PnPPlannerTask.md) <sup>1</sup>
-- [Remove-PnPPowerAppPermission](Remove-PnPPowerAppPermission.md) <sup>1</sup>
-- [Remove-PnPProfileCardProperty](Remove-PnPProfileCardProperty.md) <sup>1</sup>
-- [Remove-PnPPropertyBagValue](Remove-PnPPropertyBagValue.md) <sup>1</sup>
-- [Remove-PnPPublishingImageRendition](Remove-PnPPublishingImageRendition.md) <sup>1</sup>
-- [Remove-PnPRoleDefinition](Remove-PnPRoleDefinition.md) <sup>1</sup>
-- [Remove-PnPSdnProvider](Remove-PnPSdnProvider.md) <sup>1</sup>
-- [Remove-PnPSearchConfiguration](Remove-PnPSearchConfiguration.md) <sup>1</sup>
-- [Remove-PnPSearchExternalConnection](Remove-PnPSearchExternalConnection.md) <sup>1</sup>
-- [Remove-PnPSearchExternalItem](Remove-PnPSearchExternalItem.md) <sup>1</sup>
-- [Remove-PnPSearchResultType](Remove-PnPSearchResultType.md) <sup>1</sup>
-- [Remove-PnPSearchVertical](Remove-PnPSearchVertical.md) <sup>1</sup>
-- [Remove-PnPSiteCollectionAdmin](Remove-PnPSiteCollectionAdmin.md) <sup>1</sup>
-- [Remove-PnPSiteCollectionAppCatalog](Remove-PnPSiteCollectionAppCatalog.md) <sup>1</sup>
-- [Remove-PnPSiteCollectionTermStore](Remove-PnPSiteCollectionTermStore.md) <sup>1</sup>
-- [Remove-PnPSiteDesign](Remove-PnPSiteDesign.md) <sup>1</sup>
-- [Remove-PnPSiteDesignTask](Remove-PnPSiteDesignTask.md) <sup>1</sup>
-- [Remove-PnPSiteFileVersionBatchDeleteJob](Remove-PnPSiteFileVersionBatchDeleteJob.md) <sup>1</sup>
-- [Remove-PnPSiteGroup](Remove-PnPSiteGroup.md) <sup>1</sup>
-- [Remove-PnPSiteScript](Remove-PnPSiteScript.md) <sup>1</sup>
-- [Remove-PnPSiteUserInvitations](Remove-PnPSiteUserInvitations.md) <sup>1</sup>
-- [Remove-PnPStorageEntity](Remove-PnPStorageEntity.md) <sup>1</sup>
-- [Remove-PnPStoredCredential](Remove-PnPStoredCredential.md) <sup>1</sup>
-- [Remove-PnPTaxonomyItem](Remove-PnPTaxonomyItem.md) <sup>1</sup>
-- [Remove-PnPTeamsApp](Remove-PnPTeamsApp.md) <sup>1</sup>
-- [Remove-PnPTeamsChannel](Remove-PnPTeamsChannel.md) <sup>1</sup>
-- [Remove-PnPTeamsChannelUser](Remove-PnPTeamsChannelUser.md) <sup>1</sup>
-- [Remove-PnPTeamsTab](Remove-PnPTeamsTab.md) <sup>1</sup>
-- [Remove-PnPTeamsTag](Remove-PnPTeamsTag.md) <sup>1</sup>
-- [Remove-PnPTeamsTeam](Remove-PnPTeamsTeam.md) <sup>1</sup>
-- [Remove-PnPTeamsUser](Remove-PnPTeamsUser.md) <sup>1</sup>
-- [Remove-PnPTenantCdnOrigin](Remove-PnPTenantCdnOrigin.md) <sup>1</sup>
-- [Remove-PnPTenantDeletedSite](Remove-PnPTenantDeletedSite.md) <sup>1</sup>
-- [Remove-PnPTenantRestrictedSearchAllowedList](Remove-PnPTenantRestrictedSearchAllowedList.md) <sup>1</sup>
-- [Remove-PnPTenantSite](Remove-PnPTenantSite.md) <sup>1</sup>
-- [Remove-PnPTenantSyncClientRestriction](Remove-PnPTenantSyncClientRestriction.md) <sup>1</sup>
-- [Remove-PnPTenantTheme](Remove-PnPTenantTheme.md) <sup>1</sup>
-- [Remove-PnPTerm](Remove-PnPTerm.md) <sup>1</sup>
-- [Remove-PnPTermGroup](Remove-PnPTermGroup.md) <sup>1</sup>
-- [Remove-PnPTermLabel](Remove-PnPTermLabel.md) <sup>1</sup>
-- [Remove-PnPTodoList](Remove-PnPTodoList.md) <sup>1</sup>
-- [Remove-PnPUser](Remove-PnPUser.md) <sup>1</sup>
-- [Remove-PnPUserInfo](Remove-PnPUserInfo.md) <sup>1</sup>
-- [Remove-PnPUserProfile](Remove-PnPUserProfile.md) <sup>1</sup>
-- [Remove-PnPUserProfilePhoto](Remove-PnPUserProfilePhoto.md) <sup>1</sup>
-- [Remove-PnPView](Remove-PnPView.md) <sup>1</sup>
-- [Remove-PnPVivaConnectionsDashboardACE](Remove-PnPVivaConnectionsDashboardACE.md) <sup>1</sup>
-- [Remove-PnPVivaEngageCommunity](Remove-PnPVivaEngageCommunity.md) <sup>1</sup>
-- [Remove-PnPWeb](Remove-PnPWeb.md) <sup>1</sup>
-- [Remove-PnPWebAlert](Remove-PnPWebAlert.md) <sup>1</sup>
-- [Remove-PnPWebhookSubscription](Remove-PnPWebhookSubscription.md) <sup>1</sup>
-- [Remove-PnPWebPart](Remove-PnPWebPart.md) <sup>1</sup>
-- [Remove-PnPWikiPage](Remove-PnPWikiPage.md) <sup>1</sup>
+- [Remove-PnPAdaptiveScopeProperty](Remove-PnPAdaptiveScopeProperty.md)
+- [Remove-PnPAlert](Remove-PnPAlert.md)
+- [Remove-PnPApp](Remove-PnPApp.md)
+- [Remove-PnPApplicationCustomizer](Remove-PnPApplicationCustomizer.md)
+- [Remove-PnPAvailableSiteClassification](Remove-PnPAvailableSiteClassification.md)
+- [Remove-PnPAzureADApp](Remove-PnPAzureADApp.md) <sup>2</sup>
+- [Remove-PnPAzureADGroup](Remove-PnPAzureADGroup.md) <sup>2</sup>
+- [Remove-PnPAzureADGroupMember](Remove-PnPAzureADGroupMember.md) <sup>2</sup>
+- [Remove-PnPAzureADGroupOwner](Remove-PnPAzureADGroupOwner.md) <sup>2</sup>
+- [Remove-PnPAzureADServicePrincipalAppRoleAssignment](Remove-PnPAzureADServicePrincipalAppRoleAssignment.md) <sup>2</sup>
+- [Remove-PnPAzureADServicePrincipalAssignedAppRole](Remove-PnPAzureADServicePrincipalAssignedAppRole.md) <sup>2</sup>
+- [Remove-PnPAzureADUser](Remove-PnPAzureADUser.md) <sup>2</sup>
+- [Remove-PnPClientSidePage](Remove-PnPClientSidePage.md) <sup>2</sup>
+- [Remove-PnPContainer](Remove-PnPContainer.md)
+- [Remove-PnPContainerType](Remove-PnPContainerType.md)
+- [Remove-PnPContentType](Remove-PnPContentType.md)
+- [Remove-PnPContentTypeFromDocumentSet](Remove-PnPContentTypeFromDocumentSet.md)
+- [Remove-PnPContentTypeFromList](Remove-PnPContentTypeFromList.md)
+- [Remove-PnPCustomAction](Remove-PnPCustomAction.md)
+- [Remove-PnPDeletedMicrosoft365Group](Remove-PnPDeletedMicrosoft365Group.md)
+- [Remove-PnPEntraIDApp](Remove-PnPEntraIDApp.md)
+- [Remove-PnPEntraIDGroup](Remove-PnPEntraIDGroup.md)
+- [Remove-PnPEntraIDGroupMember](Remove-PnPEntraIDGroupMember.md)
+- [Remove-PnPEntraIDGroupOwner](Remove-PnPEntraIDGroupOwner.md)
+- [Remove-PnPEntraIDServicePrincipalAppRoleAssignment](Remove-PnPEntraIDServicePrincipalAppRoleAssignment.md)
+- [Remove-PnPEntraIDServicePrincipalAssignedAppRole](Remove-PnPEntraIDServicePrincipalAssignedAppRole.md)
+- [Remove-PnPEntraIDUser](Remove-PnPEntraIDUser.md)
+- [Remove-PnPEventReceiver](Remove-PnPEventReceiver.md)
+- [Remove-PnPExternalUser](Remove-PnPExternalUser.md)
+- [Remove-PnPField](Remove-PnPField.md)
+- [Remove-PnPFieldFromContentType](Remove-PnPFieldFromContentType.md)
+- [Remove-PnPFile](Remove-PnPFile.md)
+- [Remove-PnPFileFromSiteTemplate](Remove-PnPFileFromSiteTemplate.md)
+- [Remove-PnPFileSharingLink](Remove-PnPFileSharingLink.md)
+- [Remove-PnPFileVersion](Remove-PnPFileVersion.md)
+- [Remove-PnPFlow](Remove-PnPFlow.md)
+- [Remove-PnPFlowOwner](Remove-PnPFlowOwner.md)
+- [Remove-PnPFolder](Remove-PnPFolder.md)
+- [Remove-PnPFolderSharingLink](Remove-PnPFolderSharingLink.md)
+- [Remove-PnPGraphSubscription](Remove-PnPGraphSubscription.md)
+- [Remove-PnPGroup](Remove-PnPGroup.md)
+- [Remove-PnPGroupMember](Remove-PnPGroupMember.md)
+- [Remove-PnPHomeSite](Remove-PnPHomeSite.md)
+- [Remove-PnPHubSiteAssociation](Remove-PnPHubSiteAssociation.md)
+- [Remove-PnPHubToHubAssociation](Remove-PnPHubToHubAssociation.md)
+- [Remove-PnPIndexedProperty](Remove-PnPIndexedProperty.md)
+- [Remove-PnPJavaScriptLink](Remove-PnPJavaScriptLink.md)
+- [Remove-PnPKnowledgeHubSite](Remove-PnPKnowledgeHubSite.md)
+- [Remove-PnPLibraryFileVersionBatchDeleteJob](Remove-PnPLibraryFileVersionBatchDeleteJob.md)
+- [Remove-PnPList](Remove-PnPList.md)
+- [Remove-PnPListDesign](Remove-PnPListDesign.md)
+- [Remove-PnPListItem](Remove-PnPListItem.md)
+- [Remove-PnPListItemAttachment](Remove-PnPListItemAttachment.md)
+- [Remove-PnPListItemComment](Remove-PnPListItemComment.md)
+- [Remove-PnPListItemVersion](Remove-PnPListItemVersion.md)
+- [Remove-PnPManagedAppId](Remove-PnPManagedAppId.md)
+- [Remove-PnPMicrosoft365Group](Remove-PnPMicrosoft365Group.md)
+- [Remove-PnPMicrosoft365GroupMember](Remove-PnPMicrosoft365GroupMember.md)
+- [Remove-PnPMicrosoft365GroupOwner](Remove-PnPMicrosoft365GroupOwner.md)
+- [Remove-PnPMicrosoft365GroupPhoto](Remove-PnPMicrosoft365GroupPhoto.md)
+- [Remove-PnPMicrosoft365GroupSettings](Remove-PnPMicrosoft365GroupSettings.md)
+- [Remove-PnPNavigationNode](Remove-PnPNavigationNode.md)
+- [Remove-PnPOrgAssetsLibrary](Remove-PnPOrgAssetsLibrary.md)
+- [Remove-PnPOrgNewsSite](Remove-PnPOrgNewsSite.md)
+- [Remove-PnPPage](Remove-PnPPage.md)
+- [Remove-PnPPageComponent](Remove-PnPPageComponent.md)
+- [Remove-PnPPlannerBucket](Remove-PnPPlannerBucket.md)
+- [Remove-PnPPlannerPlan](Remove-PnPPlannerPlan.md)
+- [Remove-PnPPlannerRoster](Remove-PnPPlannerRoster.md)
+- [Remove-PnPPlannerRosterMember](Remove-PnPPlannerRosterMember.md)
+- [Remove-PnPPlannerTask](Remove-PnPPlannerTask.md)
+- [Remove-PnPPowerAppPermission](Remove-PnPPowerAppPermission.md)
+- [Remove-PnPProfileCardProperty](Remove-PnPProfileCardProperty.md)
+- [Remove-PnPPropertyBagValue](Remove-PnPPropertyBagValue.md)
+- [Remove-PnPPublishingImageRendition](Remove-PnPPublishingImageRendition.md)
+- [Remove-PnPRoleDefinition](Remove-PnPRoleDefinition.md)
+- [Remove-PnPSdnProvider](Remove-PnPSdnProvider.md)
+- [Remove-PnPSearchConfiguration](Remove-PnPSearchConfiguration.md)
+- [Remove-PnPSearchExternalConnection](Remove-PnPSearchExternalConnection.md)
+- [Remove-PnPSearchExternalItem](Remove-PnPSearchExternalItem.md)
+- [Remove-PnPSearchResultType](Remove-PnPSearchResultType.md)
+- [Remove-PnPSearchVertical](Remove-PnPSearchVertical.md)
+- [Remove-PnPSiteCollectionAdmin](Remove-PnPSiteCollectionAdmin.md)
+- [Remove-PnPSiteCollectionAppCatalog](Remove-PnPSiteCollectionAppCatalog.md)
+- [Remove-PnPSiteCollectionTermStore](Remove-PnPSiteCollectionTermStore.md)
+- [Remove-PnPSiteDesign](Remove-PnPSiteDesign.md)
+- [Remove-PnPSiteDesignTask](Remove-PnPSiteDesignTask.md)
+- [Remove-PnPSiteFileVersionBatchDeleteJob](Remove-PnPSiteFileVersionBatchDeleteJob.md)
+- [Remove-PnPSiteGroup](Remove-PnPSiteGroup.md)
+- [Remove-PnPSiteScript](Remove-PnPSiteScript.md)
+- [Remove-PnPSiteUserInvitations](Remove-PnPSiteUserInvitations.md)
+- [Remove-PnPStorageEntity](Remove-PnPStorageEntity.md)
+- [Remove-PnPStoredCredential](Remove-PnPStoredCredential.md)
+- [Remove-PnPTaxonomyItem](Remove-PnPTaxonomyItem.md)
+- [Remove-PnPTeamsApp](Remove-PnPTeamsApp.md)
+- [Remove-PnPTeamsChannel](Remove-PnPTeamsChannel.md)
+- [Remove-PnPTeamsChannelUser](Remove-PnPTeamsChannelUser.md)
+- [Remove-PnPTeamsTab](Remove-PnPTeamsTab.md)
+- [Remove-PnPTeamsTag](Remove-PnPTeamsTag.md)
+- [Remove-PnPTeamsTeam](Remove-PnPTeamsTeam.md)
+- [Remove-PnPTeamsUser](Remove-PnPTeamsUser.md)
+- [Remove-PnPTenantCdnOrigin](Remove-PnPTenantCdnOrigin.md)
+- [Remove-PnPTenantDeletedSite](Remove-PnPTenantDeletedSite.md)
+- [Remove-PnPTenantRestrictedSearchAllowedList](Remove-PnPTenantRestrictedSearchAllowedList.md)
+- [Remove-PnPTenantSite](Remove-PnPTenantSite.md)
+- [Remove-PnPTenantSyncClientRestriction](Remove-PnPTenantSyncClientRestriction.md)
+- [Remove-PnPTenantTheme](Remove-PnPTenantTheme.md)
+- [Remove-PnPTerm](Remove-PnPTerm.md)
+- [Remove-PnPTermGroup](Remove-PnPTermGroup.md)
+- [Remove-PnPTermLabel](Remove-PnPTermLabel.md)
+- [Remove-PnPTodoList](Remove-PnPTodoList.md)
+- [Remove-PnPUser](Remove-PnPUser.md)
+- [Remove-PnPUserInfo](Remove-PnPUserInfo.md)
+- [Remove-PnPUserProfile](Remove-PnPUserProfile.md)
+- [Remove-PnPUserProfilePhoto](Remove-PnPUserProfilePhoto.md)
+- [Remove-PnPView](Remove-PnPView.md)
+- [Remove-PnPVivaConnectionsDashboardACE](Remove-PnPVivaConnectionsDashboardACE.md)
+- [Remove-PnPVivaEngageCommunity](Remove-PnPVivaEngageCommunity.md)
+- [Remove-PnPWeb](Remove-PnPWeb.md)
+- [Remove-PnPWebAlert](Remove-PnPWebAlert.md)
+- [Remove-PnPWebhookSubscription](Remove-PnPWebhookSubscription.md)
+- [Remove-PnPWebPart](Remove-PnPWebPart.md)
+- [Remove-PnPWikiPage](Remove-PnPWikiPage.md)
 ## Rename
-- [Rename-PnPFile](Rename-PnPFile.md) <sup>1</sup>
-- [Rename-PnPFolder](Rename-PnPFolder.md) <sup>1</sup>
-- [Rename-PnPTenantSite](Rename-PnPTenantSite.md) <sup>1</sup>
+- [Rename-PnPFile](Rename-PnPFile.md)
+- [Rename-PnPFolder](Rename-PnPFolder.md)
+- [Rename-PnPTenantSite](Rename-PnPTenantSite.md)
 ## Repair
-- [Repair-PnPSite](Repair-PnPSite.md) <sup>1</sup>
+- [Repair-PnPSite](Repair-PnPSite.md)
 ## Request
-- [Request-PnPPersonalSite](Request-PnPPersonalSite.md) <sup>1</sup>
-- [Request-PnPReIndexList](Request-PnPReIndexList.md) <sup>1</sup>
-- [Request-PnPReIndexWeb](Request-PnPReIndexWeb.md) <sup>1</sup>
-- [Request-PnPSyntexClassifyAndExtract](Request-PnPSyntexClassifyAndExtract.md) <sup>1</sup>
+- [Request-PnPPersonalSite](Request-PnPPersonalSite.md)
+- [Request-PnPReIndexList](Request-PnPReIndexList.md)
+- [Request-PnPReIndexWeb](Request-PnPReIndexWeb.md)
+- [Request-PnPSyntexClassifyAndExtract](Request-PnPSyntexClassifyAndExtract.md)
 ## Reset
-- [Reset-PnPDocumentId](Reset-PnPDocumentId.md) <sup>1</sup>
-- [Reset-PnPFileVersion](Reset-PnPFileVersion.md) <sup>1</sup>
-- [Reset-PnPMicrosoft365GroupExpiration](Reset-PnPMicrosoft365GroupExpiration.md) <sup>1</sup>
-- [Reset-PnPRetentionLabel](Reset-PnPRetentionLabel.md) <sup>1</sup>
-- [Reset-PnPUserOneDriveQuotaToDefault](Reset-PnPUserOneDriveQuotaToDefault.md) <sup>1</sup>
+- [Reset-PnPDocumentId](Reset-PnPDocumentId.md)
+- [Reset-PnPFileVersion](Reset-PnPFileVersion.md)
+- [Reset-PnPMicrosoft365GroupExpiration](Reset-PnPMicrosoft365GroupExpiration.md)
+- [Reset-PnPRetentionLabel](Reset-PnPRetentionLabel.md)
+- [Reset-PnPUserOneDriveQuotaToDefault](Reset-PnPUserOneDriveQuotaToDefault.md)
 ## Resolve
-- [Resolve-PnPFolder](Resolve-PnPFolder.md) <sup>1</sup>
+- [Resolve-PnPFolder](Resolve-PnPFolder.md)
 ## Restart
-- [Restart-PnPFlowRun](Restart-PnPFlowRun.md) <sup>1</sup>
+- [Restart-PnPFlowRun](Restart-PnPFlowRun.md)
 ## Restore
-- [Restore-PnPDeletedContainer](Restore-PnPDeletedContainer.md) <sup>1</sup>
-- [Restore-PnPDeletedMicrosoft365Group](Restore-PnPDeletedMicrosoft365Group.md) <sup>1</sup>
-- [Restore-PnPFileVersion](Restore-PnPFileVersion.md) <sup>1</sup>
-- [Restore-PnPFlow](Restore-PnPFlow.md) <sup>1</sup>
-- [Restore-PnPListItemVersion](Restore-PnPListItemVersion.md) <sup>1</sup>
-- [Restore-PnPRecycleBinItem](Restore-PnPRecycleBinItem.md) <sup>1</sup>
-- [Restore-PnPTenantRecycleBinItem](Restore-PnPTenantRecycleBinItem.md) <sup>1</sup>
-- [Restore-PnPTenantSite](Restore-PnPTenantSite.md) <sup>1</sup>
+- [Restore-PnPDeletedContainer](Restore-PnPDeletedContainer.md)
+- [Restore-PnPDeletedMicrosoft365Group](Restore-PnPDeletedMicrosoft365Group.md)
+- [Restore-PnPFileVersion](Restore-PnPFileVersion.md)
+- [Restore-PnPFlow](Restore-PnPFlow.md)
+- [Restore-PnPListItemVersion](Restore-PnPListItemVersion.md)
+- [Restore-PnPRecycleBinItem](Restore-PnPRecycleBinItem.md)
+- [Restore-PnPTenantRecycleBinItem](Restore-PnPTenantRecycleBinItem.md)
+- [Restore-PnPTenantSite](Restore-PnPTenantSite.md)
 ## Revoke
-- [Revoke-PnPAzureADAppSitePermission](Revoke-PnPAzureADAppSitePermission.md) <sup>1</sup> <sup>2</sup>
-- [Revoke-PnPEntraIDAppSitePermission](Revoke-PnPEntraIDAppSitePermission.md) <sup>1</sup>
-- [Revoke-PnPHubSiteRights](Revoke-PnPHubSiteRights.md) <sup>1</sup>
-- [Revoke-PnPSiteDesignRights](Revoke-PnPSiteDesignRights.md) <sup>1</sup>
-- [Revoke-PnPTenantServicePrincipalPermission](Revoke-PnPTenantServicePrincipalPermission.md) <sup>1</sup>
-- [Revoke-PnPUserSession](Revoke-PnPUserSession.md) <sup>1</sup>
+- [Revoke-PnPAzureADAppSitePermission](Revoke-PnPAzureADAppSitePermission.md) <sup>2</sup>
+- [Revoke-PnPEntraIDAppSitePermission](Revoke-PnPEntraIDAppSitePermission.md)
+- [Revoke-PnPHubSiteRights](Revoke-PnPHubSiteRights.md)
+- [Revoke-PnPSiteDesignRights](Revoke-PnPSiteDesignRights.md)
+- [Revoke-PnPTenantServicePrincipalPermission](Revoke-PnPTenantServicePrincipalPermission.md)
+- [Revoke-PnPUserSession](Revoke-PnPUserSession.md)
 ## Save
-- [Save-PnPPageConversionLog](Save-PnPPageConversionLog.md) <sup>1</sup>
-- [Save-PnPSiteTemplate](Save-PnPSiteTemplate.md) <sup>1</sup>
-- [Save-PnPTenantTemplate](Save-PnPTenantTemplate.md) <sup>1</sup>
+- [Save-PnPPageConversionLog](Save-PnPPageConversionLog.md)
+- [Save-PnPSiteTemplate](Save-PnPSiteTemplate.md)
+- [Save-PnPTenantTemplate](Save-PnPTenantTemplate.md)
 ## Send
-- [Send-PnPMail](Send-PnPMail.md) <sup>1</sup>
+- [Send-PnPMail](Send-PnPMail.md)
 ## Set
-- [Set-PnPAdaptiveScopeProperty](Set-PnPAdaptiveScopeProperty.md) <sup>1</sup>
-- [Set-PnPApplicationCustomizer](Set-PnPApplicationCustomizer.md) <sup>1</sup>
-- [Set-PnPAppSideLoading](Set-PnPAppSideLoading.md) <sup>1</sup>
-- [Set-PnPAuditing](Set-PnPAuditing.md) <sup>1</sup>
-- [Set-PnPAvailablePageLayouts](Set-PnPAvailablePageLayouts.md) <sup>1</sup>
-- [Set-PnPAzureADAppSitePermission](Set-PnPAzureADAppSitePermission.md) <sup>1</sup> <sup>2</sup>
-- [Set-PnPAzureADGroup](Set-PnPAzureADGroup.md) <sup>1</sup> <sup>2</sup>
-- [Set-PnPBrowserIdleSignout](Set-PnPBrowserIdleSignout.md) <sup>1</sup>
-- [Set-PnPBuiltInDesignPackageVisibility](Set-PnPBuiltInDesignPackageVisibility.md) <sup>1</sup>
-- [Set-PnPBuiltInSiteTemplateSettings](Set-PnPBuiltInSiteTemplateSettings.md) <sup>1</sup>
-- [Set-PnPClientSidePage](Set-PnPClientSidePage.md) <sup>1</sup> <sup>2</sup>
-- [Set-PnPContentType](Set-PnPContentType.md) <sup>1</sup>
-- [Set-PnPContext](Set-PnPContext.md) <sup>1</sup>
-- [Set-PnPCopilotAdminLimitedMode](Set-PnPCopilotAdminLimitedMode.md) <sup>1</sup>
-- [Set-PnPDefaultColumnValues](Set-PnPDefaultColumnValues.md) <sup>1</sup>
-- [Set-PnPDefaultContentTypeToList](Set-PnPDefaultContentTypeToList.md) <sup>1</sup>
-- [Set-PnPDefaultPageLayout](Set-PnPDefaultPageLayout.md) <sup>1</sup>
-- [Set-PnPDisableSpacesActivation](Set-PnPDisableSpacesActivation.md) <sup>1</sup>
-- [Set-PnPDocumentSetField](Set-PnPDocumentSetField.md) <sup>1</sup>
-- [Set-PnPEntraIDAppSitePermission](Set-PnPEntraIDAppSitePermission.md) <sup>1</sup>
-- [Set-PnPEntraIDGroup](Set-PnPEntraIDGroup.md) <sup>1</sup>
-- [Set-PnPField](Set-PnPField.md) <sup>1</sup>
-- [Set-PnPFileArchiveState](Set-PnPFileArchiveState.md) <sup>1</sup>
-- [Set-PnPFileCheckedIn](Set-PnPFileCheckedIn.md) <sup>1</sup>
-- [Set-PnPFileCheckedOut](Set-PnPFileCheckedOut.md) <sup>1</sup>
-- [Set-PnPFileRetentionLabel](Set-PnPFileRetentionLabel.md) <sup>1</sup>
-- [Set-PnPFileVersion](Set-PnPFileVersion.md) <sup>1</sup>
-- [Set-PnPFolderArchiveState](Set-PnPFolderArchiveState.md) <sup>1</sup>
-- [Set-PnPFolderPermission](Set-PnPFolderPermission.md) <sup>1</sup>
-- [Set-PnPFooter](Set-PnPFooter.md) <sup>1</sup>
-- [Set-PnPGraphSubscription](Set-PnPGraphSubscription.md) <sup>1</sup>
-- [Set-PnPGroup](Set-PnPGroup.md) <sup>1</sup>
-- [Set-PnPGroupPermissions](Set-PnPGroupPermissions.md) <sup>1</sup>
-- [Set-PnPHideDefaultThemes](Set-PnPHideDefaultThemes.md) <sup>1</sup>
-- [Set-PnPHomePage](Set-PnPHomePage.md) <sup>1</sup>
-- [Set-PnPHomeSite](Set-PnPHomeSite.md) <sup>1</sup>
-- [Set-PnPHubSite](Set-PnPHubSite.md) <sup>1</sup>
-- [Set-PnPImageListItemColumn](Set-PnPImageListItemColumn.md) <sup>1</sup>
-- [Set-PnPIndexedProperties](Set-PnPIndexedProperties.md) <sup>1</sup>
-- [Set-PnPInPlaceRecordsManagement](Set-PnPInPlaceRecordsManagement.md) <sup>1</sup>
-- [Set-PnPKnowledgeHubSite](Set-PnPKnowledgeHubSite.md) <sup>1</sup>
-- [Set-PnPList](Set-PnPList.md) <sup>1</sup>
-- [Set-PnPListInformationRightsManagement](Set-PnPListInformationRightsManagement.md) <sup>1</sup>
-- [Set-PnPListItem](Set-PnPListItem.md) <sup>1</sup>
-- [Set-PnPListItemAsRecord](Set-PnPListItemAsRecord.md) <sup>1</sup>
-- [Set-PnPListItemPermission](Set-PnPListItemPermission.md) <sup>1</sup>
-- [Set-PnPListPermission](Set-PnPListPermission.md) <sup>1</sup>
-- [Set-PnPListRecordDeclaration](Set-PnPListRecordDeclaration.md) <sup>1</sup>
-- [Set-PnPListVersionPolicy](Set-PnPListVersionPolicy.md) <sup>1</sup>
-- [Set-PnPManagedAppId](Set-PnPManagedAppId.md) <sup>1</sup>
-- [Set-PnPMasterPage](Set-PnPMasterPage.md) <sup>1</sup>
-- [Set-PnPMessageCenterAnnouncementAsArchived](Set-PnPMessageCenterAnnouncementAsArchived.md) <sup>1</sup>
-- [Set-PnPMessageCenterAnnouncementAsFavorite](Set-PnPMessageCenterAnnouncementAsFavorite.md) <sup>1</sup>
-- [Set-PnPMessageCenterAnnouncementAsNotArchived](Set-PnPMessageCenterAnnouncementAsNotArchived.md) <sup>1</sup>
-- [Set-PnPMessageCenterAnnouncementAsNotFavorite](Set-PnPMessageCenterAnnouncementAsNotFavorite.md) <sup>1</sup>
-- [Set-PnPMessageCenterAnnouncementAsRead](Set-PnPMessageCenterAnnouncementAsRead.md) <sup>1</sup>
-- [Set-PnPMessageCenterAnnouncementAsUnread](Set-PnPMessageCenterAnnouncementAsUnread.md) <sup>1</sup>
-- [Set-PnPMicrosoft365Group](Set-PnPMicrosoft365Group.md) <sup>1</sup>
-- [Set-PnPMicrosoft365GroupSettings](Set-PnPMicrosoft365GroupSettings.md) <sup>1</sup>
-- [Set-PnPOrgAssetsLibrary](Set-PnPOrgAssetsLibrary.md) <sup>1</sup>
-- [Set-PnPPage](Set-PnPPage.md) <sup>1</sup>
-- [Set-PnPPageTextPart](Set-PnPPageTextPart.md) <sup>1</sup>
-- [Set-PnPPageWebPart](Set-PnPPageWebPart.md) <sup>1</sup>
-- [Set-PnPPlannerBucket](Set-PnPPlannerBucket.md) <sup>1</sup>
-- [Set-PnPPlannerConfiguration](Set-PnPPlannerConfiguration.md) <sup>1</sup>
-- [Set-PnPPlannerPlan](Set-PnPPlannerPlan.md) <sup>1</sup>
-- [Set-PnPPlannerTask](Set-PnPPlannerTask.md) <sup>1</sup>
-- [Set-PnPPlannerUserPolicy](Set-PnPPlannerUserPolicy.md) <sup>1</sup>
-- [Set-PnPPowerAppByPassConsent](Set-PnPPowerAppByPassConsent.md) <sup>1</sup>
-- [Set-PnPPropertyBagValue](Set-PnPPropertyBagValue.md) <sup>1</sup>
-- [Set-PnPRequestAccessEmails](Set-PnPRequestAccessEmails.md) <sup>1</sup>
-- [Set-PnPRetentionLabel](Set-PnPRetentionLabel.md) <sup>1</sup>
-- [Set-PnPRoleDefinition](Set-PnPRoleDefinition.md) <sup>1</sup>
-- [Set-PnPSearchConfiguration](Set-PnPSearchConfiguration.md) <sup>1</sup>
-- [Set-PnPSearchExternalConnection](Set-PnPSearchExternalConnection.md) <sup>1</sup>
-- [Set-PnPSearchExternalItem](Set-PnPSearchExternalItem.md) <sup>1</sup>
-- [Set-PnPSearchExternalSchema](Set-PnPSearchExternalSchema.md) <sup>1</sup>
-- [Set-PnPSearchResultType](Set-PnPSearchResultType.md) <sup>1</sup>
-- [Set-PnPSearchSettings](Set-PnPSearchSettings.md) <sup>1</sup>
-- [Set-PnPSearchVertical](Set-PnPSearchVertical.md) <sup>1</sup>
-- [Set-PnPSearchVerticalOrder](Set-PnPSearchVerticalOrder.md) <sup>1</sup>
-- [Set-PnPSite](Set-PnPSite.md) <sup>1</sup>
-- [Set-PnPSiteArchiveState](Set-PnPSiteArchiveState.md) <sup>1</sup>
-- [Set-PnPSiteClassification](Set-PnPSiteClassification.md) <sup>1</sup>
-- [Set-PnPSiteClosure](Set-PnPSiteClosure.md) <sup>1</sup>
-- [Set-PnPSiteDesign](Set-PnPSiteDesign.md) <sup>1</sup>
-- [Set-PnPSiteDocumentIdPrefix](Set-PnPSiteDocumentIdPrefix.md) <sup>1</sup>
-- [Set-PnPSiteGroup](Set-PnPSiteGroup.md) <sup>1</sup>
-- [Set-PnPSitePolicy](Set-PnPSitePolicy.md) <sup>1</sup>
-- [Set-PnPSiteScript](Set-PnPSiteScript.md) <sup>1</sup>
-- [Set-PnPSiteScriptPackage](Set-PnPSiteScriptPackage.md) <sup>1</sup>
-- [Set-PnPSiteSensitivityLabel](Set-PnPSiteSensitivityLabel.md) <sup>1</sup>
-- [Set-PnPSiteTemplateMetadata](Set-PnPSiteTemplateMetadata.md) <sup>1</sup>
-- [Set-PnPSiteVersionPolicy](Set-PnPSiteVersionPolicy.md) <sup>1</sup>
-- [Set-PnPStorageEntity](Set-PnPStorageEntity.md) <sup>1</sup>
-- [Set-PnPStructuralNavigationCacheSiteState](Set-PnPStructuralNavigationCacheSiteState.md) <sup>1</sup>
-- [Set-PnPStructuralNavigationCacheWebState](Set-PnPStructuralNavigationCacheWebState.md) <sup>1</sup>
-- [Set-PnPTaxonomyFieldValue](Set-PnPTaxonomyFieldValue.md) <sup>1</sup>
-- [Set-PnPTeamifyPromptHidden](Set-PnPTeamifyPromptHidden.md) <sup>1</sup>
-- [Set-PnPTeamsChannel](Set-PnPTeamsChannel.md) <sup>1</sup>
-- [Set-PnpTeamsChannelUser](Set-PnpTeamsChannelUser.md) <sup>1</sup>
-- [Set-PnPTeamsTab](Set-PnPTeamsTab.md) <sup>1</sup>
-- [Set-PnPTeamsTag](Set-PnPTeamsTag.md) <sup>1</sup>
-- [Set-PnPTeamsTeam](Set-PnPTeamsTeam.md) <sup>1</sup>
-- [Set-PnPTeamsTeamArchivedState](Set-PnPTeamsTeamArchivedState.md) <sup>1</sup>
-- [Set-PnPTeamsTeamPicture](Set-PnPTeamsTeamPicture.md) <sup>1</sup>
-- [Set-PnPTemporarilyDisableAppBar](Set-PnPTemporarilyDisableAppBar.md) <sup>1</sup>
-- [Set-PnPTenant](Set-PnPTenant.md) <sup>1</sup>
-- [Set-PnPTenantAppCatalogUrl](Set-PnPTenantAppCatalogUrl.md) <sup>1</sup>
-- [Set-PnPTenantCdnEnabled](Set-PnPTenantCdnEnabled.md) <sup>1</sup>
-- [Set-PnPTenantCdnPolicy](Set-PnPTenantCdnPolicy.md) <sup>1</sup>
-- [Set-PnPTenantPronounsSetting](Set-PnPTenantPronounsSetting.md) <sup>1</sup>
-- [Set-PnPTenantRestrictedSearchMode](Set-PnPTenantRestrictedSearchMode.md) <sup>1</sup>
-- [Set-PnPTenantSite](Set-PnPTenantSite.md) <sup>1</sup>
-- [Set-PnPTenantSyncClientRestriction](Set-PnPTenantSyncClientRestriction.md) <sup>1</sup>
-- [Set-PnPTerm](Set-PnPTerm.md) <sup>1</sup>
-- [Set-PnPTermGroup](Set-PnPTermGroup.md) <sup>1</sup>
-- [Set-PnPTermSet](Set-PnPTermSet.md) <sup>1</sup>
-- [Set-PnPTheme](Set-PnPTheme.md) <sup>1</sup>
-- [Set-PnPUserOneDriveQuota](Set-PnPUserOneDriveQuota.md) <sup>1</sup>
-- [Set-PnPUserProfilePhoto](Set-PnPUserProfilePhoto.md) <sup>1</sup>
-- [Set-PnPUserProfileProperty](Set-PnPUserProfileProperty.md) <sup>1</sup>
-- [Set-PnPView](Set-PnPView.md) <sup>1</sup>
-- [Set-PnPVivaConnectionsDashboardACE](Set-PnPVivaConnectionsDashboardACE.md) <sup>1</sup>
-- [Set-PnPVivaEngageCommunity](Set-PnPVivaEngageCommunity.md) <sup>1</sup>
-- [Set-PnPWeb](Set-PnPWeb.md) <sup>1</sup>
-- [Set-PnPWebHeader](Set-PnPWebHeader.md) <sup>1</sup>
-- [Set-PnPWebhookSubscription](Set-PnPWebhookSubscription.md) <sup>1</sup>
-- [Set-PnPWebPartProperty](Set-PnPWebPartProperty.md) <sup>1</sup>
-- [Set-PnPWebPermission](Set-PnPWebPermission.md) <sup>1</sup>
-- [Set-PnPWebTheme](Set-PnPWebTheme.md) <sup>1</sup>
-- [Set-PnPWikiPageContent](Set-PnPWikiPageContent.md) <sup>1</sup>
+- [Set-PnPAdaptiveScopeProperty](Set-PnPAdaptiveScopeProperty.md)
+- [Set-PnPApplicationCustomizer](Set-PnPApplicationCustomizer.md)
+- [Set-PnPAppSideLoading](Set-PnPAppSideLoading.md)
+- [Set-PnPAuditing](Set-PnPAuditing.md)
+- [Set-PnPAvailablePageLayouts](Set-PnPAvailablePageLayouts.md)
+- [Set-PnPAzureADAppSitePermission](Set-PnPAzureADAppSitePermission.md) <sup>2</sup>
+- [Set-PnPAzureADGroup](Set-PnPAzureADGroup.md) <sup>2</sup>
+- [Set-PnPBrowserIdleSignout](Set-PnPBrowserIdleSignout.md)
+- [Set-PnPBuiltInDesignPackageVisibility](Set-PnPBuiltInDesignPackageVisibility.md)
+- [Set-PnPBuiltInSiteTemplateSettings](Set-PnPBuiltInSiteTemplateSettings.md)
+- [Set-PnPClientSidePage](Set-PnPClientSidePage.md) <sup>2</sup>
+- [Set-PnPContentType](Set-PnPContentType.md)
+- [Set-PnPContext](Set-PnPContext.md)
+- [Set-PnPCopilotAdminLimitedMode](Set-PnPCopilotAdminLimitedMode.md)
+- [Set-PnPDefaultColumnValues](Set-PnPDefaultColumnValues.md)
+- [Set-PnPDefaultContentTypeToList](Set-PnPDefaultContentTypeToList.md)
+- [Set-PnPDefaultPageLayout](Set-PnPDefaultPageLayout.md)
+- [Set-PnPDisableSpacesActivation](Set-PnPDisableSpacesActivation.md)
+- [Set-PnPDocumentSetField](Set-PnPDocumentSetField.md)
+- [Set-PnPEntraIDAppSitePermission](Set-PnPEntraIDAppSitePermission.md)
+- [Set-PnPEntraIDGroup](Set-PnPEntraIDGroup.md)
+- [Set-PnPField](Set-PnPField.md)
+- [Set-PnPFileArchiveState](Set-PnPFileArchiveState.md)
+- [Set-PnPFileCheckedIn](Set-PnPFileCheckedIn.md)
+- [Set-PnPFileCheckedOut](Set-PnPFileCheckedOut.md)
+- [Set-PnPFileRetentionLabel](Set-PnPFileRetentionLabel.md)
+- [Set-PnPFileVersion](Set-PnPFileVersion.md)
+- [Set-PnPFolderArchiveState](Set-PnPFolderArchiveState.md)
+- [Set-PnPFolderPermission](Set-PnPFolderPermission.md)
+- [Set-PnPFooter](Set-PnPFooter.md)
+- [Set-PnPGraphSubscription](Set-PnPGraphSubscription.md)
+- [Set-PnPGroup](Set-PnPGroup.md)
+- [Set-PnPGroupPermissions](Set-PnPGroupPermissions.md)
+- [Set-PnPHideDefaultThemes](Set-PnPHideDefaultThemes.md)
+- [Set-PnPHomePage](Set-PnPHomePage.md)
+- [Set-PnPHomeSite](Set-PnPHomeSite.md)
+- [Set-PnPHubSite](Set-PnPHubSite.md)
+- [Set-PnPImageListItemColumn](Set-PnPImageListItemColumn.md)
+- [Set-PnPIndexedProperties](Set-PnPIndexedProperties.md)
+- [Set-PnPInPlaceRecordsManagement](Set-PnPInPlaceRecordsManagement.md)
+- [Set-PnPKnowledgeHubSite](Set-PnPKnowledgeHubSite.md)
+- [Set-PnPList](Set-PnPList.md)
+- [Set-PnPListInformationRightsManagement](Set-PnPListInformationRightsManagement.md)
+- [Set-PnPListItem](Set-PnPListItem.md)
+- [Set-PnPListItemAsRecord](Set-PnPListItemAsRecord.md)
+- [Set-PnPListItemPermission](Set-PnPListItemPermission.md)
+- [Set-PnPListPermission](Set-PnPListPermission.md)
+- [Set-PnPListRecordDeclaration](Set-PnPListRecordDeclaration.md)
+- [Set-PnPListVersionPolicy](Set-PnPListVersionPolicy.md)
+- [Set-PnPManagedAppId](Set-PnPManagedAppId.md)
+- [Set-PnPMasterPage](Set-PnPMasterPage.md)
+- [Set-PnPMessageCenterAnnouncementAsArchived](Set-PnPMessageCenterAnnouncementAsArchived.md)
+- [Set-PnPMessageCenterAnnouncementAsFavorite](Set-PnPMessageCenterAnnouncementAsFavorite.md)
+- [Set-PnPMessageCenterAnnouncementAsNotArchived](Set-PnPMessageCenterAnnouncementAsNotArchived.md)
+- [Set-PnPMessageCenterAnnouncementAsNotFavorite](Set-PnPMessageCenterAnnouncementAsNotFavorite.md)
+- [Set-PnPMessageCenterAnnouncementAsRead](Set-PnPMessageCenterAnnouncementAsRead.md)
+- [Set-PnPMessageCenterAnnouncementAsUnread](Set-PnPMessageCenterAnnouncementAsUnread.md)
+- [Set-PnPMicrosoft365Group](Set-PnPMicrosoft365Group.md)
+- [Set-PnPMicrosoft365GroupSettings](Set-PnPMicrosoft365GroupSettings.md)
+- [Set-PnPOrgAssetsLibrary](Set-PnPOrgAssetsLibrary.md)
+- [Set-PnPPage](Set-PnPPage.md)
+- [Set-PnPPageTextPart](Set-PnPPageTextPart.md)
+- [Set-PnPPageWebPart](Set-PnPPageWebPart.md)
+- [Set-PnPPlannerBucket](Set-PnPPlannerBucket.md)
+- [Set-PnPPlannerConfiguration](Set-PnPPlannerConfiguration.md)
+- [Set-PnPPlannerPlan](Set-PnPPlannerPlan.md)
+- [Set-PnPPlannerTask](Set-PnPPlannerTask.md)
+- [Set-PnPPlannerUserPolicy](Set-PnPPlannerUserPolicy.md)
+- [Set-PnPPowerAppByPassConsent](Set-PnPPowerAppByPassConsent.md)
+- [Set-PnPPropertyBagValue](Set-PnPPropertyBagValue.md)
+- [Set-PnPRequestAccessEmails](Set-PnPRequestAccessEmails.md)
+- [Set-PnPRetentionLabel](Set-PnPRetentionLabel.md)
+- [Set-PnPRoleDefinition](Set-PnPRoleDefinition.md)
+- [Set-PnPSearchConfiguration](Set-PnPSearchConfiguration.md)
+- [Set-PnPSearchExternalConnection](Set-PnPSearchExternalConnection.md)
+- [Set-PnPSearchExternalItem](Set-PnPSearchExternalItem.md)
+- [Set-PnPSearchExternalSchema](Set-PnPSearchExternalSchema.md)
+- [Set-PnPSearchResultType](Set-PnPSearchResultType.md)
+- [Set-PnPSearchSettings](Set-PnPSearchSettings.md)
+- [Set-PnPSearchVertical](Set-PnPSearchVertical.md)
+- [Set-PnPSearchVerticalOrder](Set-PnPSearchVerticalOrder.md)
+- [Set-PnPSite](Set-PnPSite.md)
+- [Set-PnPSiteArchiveState](Set-PnPSiteArchiveState.md)
+- [Set-PnPSiteClassification](Set-PnPSiteClassification.md)
+- [Set-PnPSiteClosure](Set-PnPSiteClosure.md)
+- [Set-PnPSiteDesign](Set-PnPSiteDesign.md)
+- [Set-PnPSiteDocumentIdPrefix](Set-PnPSiteDocumentIdPrefix.md)
+- [Set-PnPSiteGroup](Set-PnPSiteGroup.md)
+- [Set-PnPSitePolicy](Set-PnPSitePolicy.md)
+- [Set-PnPSiteScript](Set-PnPSiteScript.md)
+- [Set-PnPSiteScriptPackage](Set-PnPSiteScriptPackage.md)
+- [Set-PnPSiteSensitivityLabel](Set-PnPSiteSensitivityLabel.md)
+- [Set-PnPSiteTemplateMetadata](Set-PnPSiteTemplateMetadata.md)
+- [Set-PnPSiteVersionPolicy](Set-PnPSiteVersionPolicy.md)
+- [Set-PnPStorageEntity](Set-PnPStorageEntity.md)
+- [Set-PnPStructuralNavigationCacheSiteState](Set-PnPStructuralNavigationCacheSiteState.md)
+- [Set-PnPStructuralNavigationCacheWebState](Set-PnPStructuralNavigationCacheWebState.md)
+- [Set-PnPTaxonomyFieldValue](Set-PnPTaxonomyFieldValue.md)
+- [Set-PnPTeamifyPromptHidden](Set-PnPTeamifyPromptHidden.md)
+- [Set-PnPTeamsChannel](Set-PnPTeamsChannel.md)
+- [Set-PnpTeamsChannelUser](Set-PnpTeamsChannelUser.md)
+- [Set-PnPTeamsTab](Set-PnPTeamsTab.md)
+- [Set-PnPTeamsTag](Set-PnPTeamsTag.md)
+- [Set-PnPTeamsTeam](Set-PnPTeamsTeam.md)
+- [Set-PnPTeamsTeamArchivedState](Set-PnPTeamsTeamArchivedState.md)
+- [Set-PnPTeamsTeamPicture](Set-PnPTeamsTeamPicture.md)
+- [Set-PnPTemporarilyDisableAppBar](Set-PnPTemporarilyDisableAppBar.md)
+- [Set-PnPTenant](Set-PnPTenant.md)
+- [Set-PnPTenantAppCatalogUrl](Set-PnPTenantAppCatalogUrl.md)
+- [Set-PnPTenantCdnEnabled](Set-PnPTenantCdnEnabled.md)
+- [Set-PnPTenantCdnPolicy](Set-PnPTenantCdnPolicy.md)
+- [Set-PnPTenantPronounsSetting](Set-PnPTenantPronounsSetting.md)
+- [Set-PnPTenantRestrictedSearchMode](Set-PnPTenantRestrictedSearchMode.md)
+- [Set-PnPTenantSite](Set-PnPTenantSite.md)
+- [Set-PnPTenantSyncClientRestriction](Set-PnPTenantSyncClientRestriction.md)
+- [Set-PnPTerm](Set-PnPTerm.md)
+- [Set-PnPTermGroup](Set-PnPTermGroup.md)
+- [Set-PnPTermSet](Set-PnPTermSet.md)
+- [Set-PnPTheme](Set-PnPTheme.md)
+- [Set-PnPUserOneDriveQuota](Set-PnPUserOneDriveQuota.md)
+- [Set-PnPUserProfilePhoto](Set-PnPUserProfilePhoto.md)
+- [Set-PnPUserProfileProperty](Set-PnPUserProfileProperty.md)
+- [Set-PnPView](Set-PnPView.md)
+- [Set-PnPVivaConnectionsDashboardACE](Set-PnPVivaConnectionsDashboardACE.md)
+- [Set-PnPVivaEngageCommunity](Set-PnPVivaEngageCommunity.md)
+- [Set-PnPWeb](Set-PnPWeb.md)
+- [Set-PnPWebHeader](Set-PnPWebHeader.md)
+- [Set-PnPWebhookSubscription](Set-PnPWebhookSubscription.md)
+- [Set-PnPWebPartProperty](Set-PnPWebPartProperty.md)
+- [Set-PnPWebPermission](Set-PnPWebPermission.md)
+- [Set-PnPWebTheme](Set-PnPWebTheme.md)
+- [Set-PnPWikiPageContent](Set-PnPWikiPageContent.md)
 ## Start
-- [Start-PnPEnterpriseAppInsightsReport](Start-PnPEnterpriseAppInsightsReport.md) <sup>1</sup>
-- [Start-PnPTenantRename](Start-PnPTenantRename.md) <sup>1</sup>
-- [Start-PnPTraceLog](Start-PnPTraceLog.md) <sup>1</sup>
+- [Start-PnPEnterpriseAppInsightsReport](Start-PnPEnterpriseAppInsightsReport.md)
+- [Start-PnPTenantRename](Start-PnPTenantRename.md)
+- [Start-PnPTraceLog](Start-PnPTraceLog.md)
 ## Stop
-- [Stop-PnPFlowRun](Stop-PnPFlowRun.md) <sup>1</sup>
-- [Stop-PnPTraceLog](Stop-PnPTraceLog.md) <sup>1</sup>
+- [Stop-PnPFlowRun](Stop-PnPFlowRun.md)
+- [Stop-PnPTraceLog](Stop-PnPTraceLog.md)
 ## Submit
-- [Submit-PnPSearchQuery](Submit-PnPSearchQuery.md) <sup>1</sup>
-- [Submit-PnPTeamsChannelMessage](Submit-PnPTeamsChannelMessage.md) <sup>1</sup>
+- [Submit-PnPSearchQuery](Submit-PnPSearchQuery.md)
+- [Submit-PnPTeamsChannelMessage](Submit-PnPTeamsChannelMessage.md)
 ## Sync
-- [Sync-PnPAppToTeams](Sync-PnPAppToTeams.md) <sup>1</sup>
-- [Sync-PnPSharePointUserProfilesFromAzureActiveDirectory](Sync-PnPSharePointUserProfilesFromAzureActiveDirectory.md) <sup>1</sup>
+- [Sync-PnPAppToTeams](Sync-PnPAppToTeams.md)
+- [Sync-PnPSharePointUserProfilesFromAzureActiveDirectory](Sync-PnPSharePointUserProfilesFromAzureActiveDirectory.md)
 ## Test
-- [Test-PnPListItemIsRecord](Test-PnPListItemIsRecord.md) <sup>1</sup>
-- [Test-PnPMicrosoft365GroupAliasIsUsed](Test-PnPMicrosoft365GroupAliasIsUsed.md) <sup>1</sup>
-- [Test-PnPSite](Test-PnPSite.md) <sup>1</sup>
-- [Test-PnPTenantTemplate](Test-PnPTenantTemplate.md) <sup>1</sup>
+- [Test-PnPListItemIsRecord](Test-PnPListItemIsRecord.md)
+- [Test-PnPMicrosoft365GroupAliasIsUsed](Test-PnPMicrosoft365GroupAliasIsUsed.md)
+- [Test-PnPSite](Test-PnPSite.md)
+- [Test-PnPTenantTemplate](Test-PnPTenantTemplate.md)
 ## Undo
-- [Undo-PnPFileCheckedOut](Undo-PnPFileCheckedOut.md) <sup>1</sup>
+- [Undo-PnPFileCheckedOut](Undo-PnPFileCheckedOut.md)
 ## Uninstall
-- [Uninstall-PnPApp](Uninstall-PnPApp.md) <sup>1</sup>
+- [Uninstall-PnPApp](Uninstall-PnPApp.md)
 ## Unlock
-- [Unlock-PnPSensitivityLabelEncryptedFile](Unlock-PnPSensitivityLabelEncryptedFile.md) <sup>1</sup>
+- [Unlock-PnPSensitivityLabelEncryptedFile](Unlock-PnPSensitivityLabelEncryptedFile.md)
 ## Unpublish
-- [Unpublish-PnPApp](Unpublish-PnPApp.md) <sup>1</sup>
-- [Unpublish-PnPContentType](Unpublish-PnPContentType.md) <sup>1</sup>
-- [Unpublish-PnPSyntexModel](Unpublish-PnPSyntexModel.md) <sup>1</sup>
+- [Unpublish-PnPApp](Unpublish-PnPApp.md)
+- [Unpublish-PnPContentType](Unpublish-PnPContentType.md)
+- [Unpublish-PnPSyntexModel](Unpublish-PnPSyntexModel.md)
 ## Unregister
-- [Unregister-PnPHubSite](Unregister-PnPHubSite.md) <sup>1</sup>
+- [Unregister-PnPHubSite](Unregister-PnPHubSite.md)
 ## Update
-- [Update-PnPApp](Update-PnPApp.md) <sup>1</sup>
-- [Update-PnPAvailableSiteClassification](Update-PnPAvailableSiteClassification.md) <sup>1</sup>
-- [Update-PnPSiteDesignFromWeb](Update-PnPSiteDesignFromWeb.md) <sup>1</sup>
-- [Update-PnPTeamsApp](Update-PnPTeamsApp.md) <sup>1</sup>
-- [Update-PnPTeamsUser](Update-PnPTeamsUser.md) <sup>1</sup>
-- [Update-PnPTodoList](Update-PnPTodoList.md) <sup>1</sup>
-- [Update-PnPUserType](Update-PnPUserType.md) <sup>1</sup>
-- [Update-PnPVivaConnectionsDashboardACE](Update-PnPVivaConnectionsDashboardACE.md) <sup>1</sup> <sup>2</sup>
-- [Update-SiteClassification](Update-SiteClassification.md) <sup>1</sup> <sup>2</sup>
+- [Update-PnPApp](Update-PnPApp.md)
+- [Update-PnPAvailableSiteClassification](Update-PnPAvailableSiteClassification.md)
+- [Update-PnPSiteDesignFromWeb](Update-PnPSiteDesignFromWeb.md)
+- [Update-PnPTeamsApp](Update-PnPTeamsApp.md)
+- [Update-PnPTeamsUser](Update-PnPTeamsUser.md)
+- [Update-PnPTodoList](Update-PnPTodoList.md)
+- [Update-PnPUserType](Update-PnPUserType.md)
+- [Update-PnPVivaConnectionsDashboardACE](Update-PnPVivaConnectionsDashboardACE.md) <sup>2</sup>
+- [Update-SiteClassification](Update-SiteClassification.md) <sup>2</sup>
 ## Use
-- [Use-PnPBrandCenterFontPackage](Use-PnPBrandCenterFontPackage.md) <sup>1</sup>
+- [Use-PnPBrandCenterFontPackage](Use-PnPBrandCenterFontPackage.md)
 ## Write
-- [Write-PnPTraceLog](Write-PnPTraceLog.md) <sup>1</sup>
+- [Write-PnPTraceLog](Write-PnPTraceLog.md)
 
 

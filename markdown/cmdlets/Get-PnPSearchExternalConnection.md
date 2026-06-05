@@ -1,13 +1,12 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Get-PnPSearchExternalConnection
-external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchExternalConnection.html
-schema: 2.0.0
 Module Name: PnP.PowerShell
+schema: 2.0.0
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchExternalConnection.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPSearchExternalConnection
 ---
-   
+  
 # Get-PnPSearchExternalConnection
 
 ## SYNOPSIS
@@ -91,4 +90,3 @@ Accept wildcard characters: False
 [Get-PnPSearchSiteConnection](Get-PnPSearchSiteConnection.md) - Retrieves external connections via the GCS API with detailed configuration (schema, crawl settings, identity configuration). Only returns published connections available for the connected site. Use this when you need connection details for configuring search verticals with [New-PnPSearchVertical](New-PnPSearchVertical.md).
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
