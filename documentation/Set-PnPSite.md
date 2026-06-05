@@ -25,6 +25,8 @@ Set-PnPSite
  [-StorageMaximumLevel <Int64>]
  [-StorageWarningLevel <Int64>]
  [-AllowSelfServiceUpgrade]
+ [-DisableClassicPageBaselineSecurityMode <Boolean>]
+ [-DisableSiteBranding <Boolean>]
  [-NoScriptSite]
  [-Owners <System.Collections.Generic.List<[System.String]>]
  [-CommentsOnSitePagesDisabled]
@@ -40,6 +42,9 @@ Set-PnPSite
  [-SocialBarOnSitePagesDisabled]
  [-AnonymousLinkExpirationInDays <Int32>]
  [-RequestFilesLinkExpirationInDays <Int32>]
+ [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled <Boolean>]
+ [-IsAuthoritative <Boolean>]
+ [-RestrictedContentDiscoveryForCopilotAndAgents <Boolean>]
  [-OverrideTenantAnonymousLinkExpirationPolicy]
  [-MediaTranscription <MediaTranscriptionPolicyType>]
  [-SensitivityLabel <Guid>]
@@ -53,9 +58,22 @@ Set-PnPSite
  [-RestrictContentOrgWideSearch <Boolean>]
  [-CanSyncHubSitePermissions <SwitchParameter>]
  [-ClearGroupId]
+ [-InheritVersionPolicyFromTenant]
+ [-EnableAutoExpirationVersionTrim <Boolean>]
+ [-ExpireVersionsAfterDays <Int32>]
+ [-MajorVersionLimit <Int32>]
+ [-MajorWithMinorVersionsLimit <Int32>]
+ [-FileTypesForVersionExpiration <String[]>]
+ [-RemoveVersionExpirationFileTypeOverride <String[]>]
+ [-ApplyToNewDocumentLibraries]
+ [-ApplyToExistingDocumentLibraries]
+ [-Force]
  [-HidePeoplePreviewingFiles <Boolean>]
  [-HidePeopleWhoHaveListsOpen <Boolean>]
  [-RestrictedAccessControl <Boolean>]
+ [-OverrideTenantOrganizationSharingLinkExpirationPolicy <Boolean>]
+ [-OrganizationSharingLinkRecommendedExpirationInDays <int>] 
+ [-OrganizationSharingLinkMaxExpirationInDays <int>]
  [-Connection <PnPConnection>]
 ```
 
@@ -112,6 +130,34 @@ Set-PnPSite -NoScriptSite $false
 
 Allows custom script on a specific site. See [Allow or prevent custom script](https://learn.microsoft.com/sharepoint/allow-or-prevent-custom-script) for more information.
 
+### EXAMPLE 7
+```powershell
+Set-PnPSite -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 180 -MajorVersionLimit 100 -MajorWithMinorVersionsLimit 10
+```
+
+Sets the site version policy for both new and existing document libraries to keep 100 major versions, 10 minor versions, and expire versions after 180 days.
+
+### EXAMPLE 8
+```powershell
+Set-PnPSite -EnableAutoExpirationVersionTrim $true -ApplyToNewDocumentLibraries -FileTypesForVersionExpiration "pdf","docx"
+```
+
+Sets an automatic version trim policy for new document libraries only and limits the override to the specified file types.
+
+### EXAMPLE 9
+```powershell
+Set-PnPSite -ApplyToNewDocumentLibraries -RemoveVersionExpirationFileTypeOverride "pdf","docx"
+```
+
+Removes the specified file type version expiration overrides from the site policy for new document libraries.
+
+### EXAMPLE 10
+```powershell
+Set-PnPSite -InheritVersionPolicyFromTenant
+```
+
+Resets the site version policy so new document libraries inherit the tenant-level defaults.
+
 ## PARAMETERS
 
 ### -AllowSelfServiceUpgrade
@@ -119,6 +165,34 @@ Specifies if the site administrator can upgrade the site collection.
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableClassicPageBaselineSecurityMode
+Enables or disables classic page baseline security mode for the site collection.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableSiteBranding
+Enables or disables site branding for the site collection.
+
+```yaml
+Type: Boolean
 Parameter Sets: Set Properties
 
 Required: False
@@ -144,6 +218,34 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ApplyToExistingDocumentLibraries
+Applies the configured site version policy to existing document libraries. If neither this parameter nor `-ApplyToNewDocumentLibraries` is provided, the cmdlet targets both new and existing document libraries.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ApplyToNewDocumentLibraries
+Applies the configured site version policy to new document libraries. If neither this parameter nor `-ApplyToExistingDocumentLibraries` is provided, the cmdlet targets both new and existing document libraries.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -RequestFilesLinkExpirationInDays
 Specifies the number of days before a Request Files link expires for the site.
 
@@ -151,6 +253,48 @@ The value can be from 0 to 730 days.
 
 ```yaml
 Type: Int32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled
+Enables or disables adding and updating web property bag values when DenyAddAndCustomizePages is enabled.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsAuthoritative
+Marks the site collection as authoritative or not authoritative.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictedContentDiscoveryForCopilotAndAgents
+Restricts content discovery for Copilot and agents on the site collection.
+
+```yaml
+Type: Boolean
 Parameter Sets: Set Properties
 
 Required: False
@@ -318,6 +462,62 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EnableAutoExpirationVersionTrim
+Enables or disables automatic version trim for the site version policy. Set this to `$true` to use automatic trimming. Set it to `$false` to provide explicit values for `-ExpireVersionsAfterDays` and `-MajorVersionLimit`, and also `-MajorWithMinorVersionsLimit` when existing document libraries are included.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExpireVersionsAfterDays
+Sets the number of days after which versions expire when `-EnableAutoExpirationVersionTrim` is `$false`. Use `0` to keep versions indefinitely. Allowed values are `0` or from `30` through `36500`.
+
+```yaml
+Type: Int32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FileTypesForVersionExpiration
+Limits the site version policy override to the specified file types. This parameter can only be used when `-EnableAutoExpirationVersionTrim` is also provided and cannot be combined with `-ApplyToExistingDocumentLibraries`.
+
+```yaml
+Type: String[]
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+Bypasses the confirmation prompt when applying site version policy changes that target new document libraries, existing document libraries, or both.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -HidePeoplePreviewingFiles
 Allows hiding of the presence indicators of users simultaneously editing files.
 
@@ -355,6 +555,20 @@ The url of the site collection.
 Type: String
 Parameter Sets: (All)
 Aliases: Url
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InheritVersionPolicyFromTenant
+Resets the site version policy so new document libraries inherit the tenant-level version policy settings.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named
@@ -401,6 +615,34 @@ If the modern site has a Microsoft 365 Group behind it, use [Set-PnPWebHeader -S
 
 ```yaml
 Type: String
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MajorVersionLimit
+Sets the maximum number of major versions to retain when `-EnableAutoExpirationVersionTrim` is `$false`. Allowed values are from `1` through `50000`.
+
+```yaml
+Type: Int32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MajorWithMinorVersionsLimit
+Sets the maximum number of major and minor versions to retain when `-EnableAutoExpirationVersionTrim` is `$false` and the policy applies to existing document libraries. Allowed values are from `0` through `50000`.
+
+```yaml
+Type: Int32
 Parameter Sets: Set Properties
 
 Required: False
@@ -546,6 +788,20 @@ Allows configuring whether users will be able to create anonymous requests for p
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RemoveVersionExpirationFileTypeOverride
+Removes one or more file type version expiration overrides from the site policy for new document libraries. This parameter must be combined with `-ApplyToNewDocumentLibraries` and cannot be combined with the other version policy setting parameters.
+
+```yaml
+Type: String[]
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named
@@ -700,6 +956,58 @@ This parameter allows you to remove the assigned Microsoft 365 group ID on a sit
 ```yaml
 Type: Switch Parameter
 Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OverrideTenantOrganizationSharingLinkExpirationPolicy
+Allows to set organization sharing link expiration policy for this SharePoint site, which will override the tenant-level policy when set to true. When this is set to true, you can configure the organization sharing link expiration policy for this site collection using the OrganizationSharingLinkRecommendedExpirationInDays and OrganizationSharingLinkMaxExpirationInDays parameters.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OrganizationSharingLinkRecommendedExpirationInDays
+This parameter specifies the recommended number of days before organization sharing links expire in the SharePoint site. Users can still choose a different expiration period if permitted by policy, but this value is presented as the recommended default.
+
+The valid values :
+
+- Can be from 7 to 730 days and must be less than or equal to the maximum expiration value set by OrganizationSharingLinkMaxExpirationInDays.
+- When set to 0 (default), the default value will be OrganizationSharingLinkMaxExpirationInDays.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OrganizationSharingLinkMaxExpirationInDays
+This parameter specifies the maximum number of days that organization sharing links can remain active before they expire for the SharePoint site.
+
+The valid values :
+
+- can be from 7 to 730 days.
+- `0` (default) - No maximum expiration limit is enforced.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
 
 Required: False
 Position: Named

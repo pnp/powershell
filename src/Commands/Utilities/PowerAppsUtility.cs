@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading;
 using PnP.Framework;
@@ -25,7 +24,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return wrapper;
         }
 
-        internal static HttpResponseHeaders GetResponseHeader(HttpClient connection, string environmentName, string accessToken, string appName, Model.PowerPlatform.PowerApp.PowerAppPackageWrapper wrapper, object details, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static Uri GetResponseLocation(HttpClient connection, string environmentName, string accessToken, string appName, Model.PowerPlatform.PowerApp.PowerAppPackageWrapper wrapper, object details, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var exportPostData = new
             {
@@ -38,10 +37,10 @@ namespace PnP.PowerShell.Commands.Utilities
             };
 
             string baseUrl = PowerPlatformUtility.GetBapEndpoint(azureEnvironment);
-            var responseHeader = RestHelper.PostGetResponseHeader<string>(connection, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", accessToken, payload: exportPostData);
+            var responseLocation = RestHelper.PostGetResponseLocation<string>(connection, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", accessToken, payload: exportPostData);
 
 
-            return responseHeader;
+            return responseLocation;
         }
 
         internal static string GetPackageLink(HttpClient connection, string location, string accessToken)

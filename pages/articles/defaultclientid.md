@@ -17,7 +17,7 @@ To set a client id for tenant with url `https://yourtenant.sharepoint.com`, you 
 Set-PnPManagedAppId -Url https://yourtenant.sharepoint.com -AppId f0e2b362-8973-4fc7-a293-3c73e2677e79
 ```
 
-This will add an entry to your Windows Credential Manager or the MacOS keychain if your are on MacOS. Connect-PnPOnline will use this value to match the correct client id with the url you are connecting to and it is not needed use -ClientId anymore, e.g.
+This will add an entry to your Windows Credential Manager, the macOS keychain, or the Linux Secret Service. If you have configured a default vault through Microsoft.PowerShell.SecretManagement, that vault will be used instead. Connect-PnPOnline will use this value to match the correct client ID with the URL you are connecting to, so you no longer need to pass -ClientId, e.g.
 
 ```powershell
 Connect-PnPOnline -Url https://yourtenant.sharepoint.com -Interactive

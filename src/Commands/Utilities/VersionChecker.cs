@@ -4,6 +4,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Reflection;
+using System.Threading;
 using System.Xml.Linq;
 using PnP.PowerShell.Commands.Base;
 
@@ -143,19 +144,14 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <returns>The latest available version</returns>
         internal static string GetAvailableVersion(bool isNightly)
         {
-            var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-
-            // Deliberately lowering timeout as the version check is not critical so in case of a slower or blocked internet connection, this should not block the cmdlet for too long
-            httpClient.Timeout = TimeSpan.FromSeconds(VersionCheckTimeOut);
-            var request = new HttpRequestMessage(HttpMethod.Get, isNightly ? NightlyVersionCheckUrl : ReleaseVersionCheckUrl)
+            using var request = new HttpRequestMessage(HttpMethod.Get, isNightly ? NightlyVersionCheckUrl : ReleaseVersionCheckUrl)
             {
                 Version = new Version(2, 0)
             };
 
-            var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
-            if (response.IsSuccessStatusCode)
+            var onlineVersion = GetVersionCheckContent(request);
+            if (onlineVersion != null)
             {
-                var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 onlineVersion = onlineVersion.Trim(trimChars);
                 return onlineVersion;
             }
@@ -164,16 +160,11 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static PnPVersionResult GetAvailableVersion3(bool isNightly)
         {
-            var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            using var request = new HttpRequestMessage(HttpMethod.Get, isNightly ? NightlyVersionCheckJsonUrl : ReleaseVersionCheckJsonUrl);
 
-            // Deliberately lowering timeout as the version check is not critical so in case of a slower or blocked internet connection, this should not block the cmdlet for too long
-            httpClient.Timeout = TimeSpan.FromSeconds(VersionCheckTimeOut);
-            var request = new HttpRequestMessage(HttpMethod.Get, isNightly ? NightlyVersionCheckJsonUrl : ReleaseVersionCheckJsonUrl);
-
-            var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
-            if (response.IsSuccessStatusCode)
+            var onlineVersionRaw = GetVersionCheckContent(request);
+            if (onlineVersionRaw != null)
             {
-                var onlineVersionRaw = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 var onlineVersion = System.Text.Json.JsonSerializer.Deserialize<PnPVersionResult>(onlineVersionRaw);
                 return onlineVersion;
             }
@@ -183,19 +174,14 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static string GetAvailableVersion2(bool isNightly)
         {
-            var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-
-            // Deliberately lowering timeout as the version check is not critical so in case of a slower or blocked internet connection, this should not block the cmdlet for too long
-            httpClient.Timeout = TimeSpan.FromSeconds(VersionCheckTimeOut);
-            var request = new HttpRequestMessage(HttpMethod.Get, $"https://www.powershellgallery.com/api/v2/FindPackagesById()?id='PnP.PowerShell'&$top=10&$orderby=Created%20desc{(isNightly ? "" : "&$filter=IsPrerelease%20eq%20false")}");
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"https://www.powershellgallery.com/api/v2/FindPackagesById()?id='PnP.PowerShell'&$top=10&$orderby=Created%20desc{(isNightly ? "" : "&$filter=IsPrerelease%20eq%20false")}");
             request.Version = new Version(2, 0);
-            var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
-            if (response.IsSuccessStatusCode)
+            var onlineVersion = GetVersionCheckContent(request);
+            if (onlineVersion != null)
             {
                 XNamespace atomNS = "http://www.w3.org/2005/Atom";
                 XNamespace metadataNS = "http://schemas.microsoft.com/ado/2007/08/dataservices/metadata";
                 XNamespace dataServicesNS = "http://schemas.microsoft.com/ado/2007/08/dataservices";
-                var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 var xml = XDocument.Parse(onlineVersion);
                 var entry = xml.Root.Elements(atomNS + "entry").FirstOrDefault();
                 if (entry != null)
@@ -223,6 +209,19 @@ namespace PnP.PowerShell.Commands.Utilities
             var isNightly = productVersion.Contains("-");
 
             return GetAvailableVersion3(isNightly);
+        }
+
+        private static string GetVersionCheckContent(HttpRequestMessage request)
+        {
+            var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(VersionCheckTimeOut));
+            using var response = httpClient.SendAsync(request, cancellationTokenSource.Token).GetAwaiter().GetResult();
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return response.Content.ReadAsStringAsync(cancellationTokenSource.Token).GetAwaiter().GetResult();
         }
     }
 
