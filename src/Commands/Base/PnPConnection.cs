@@ -269,7 +269,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
-                    WriteCacheEnabledMessage(cmdlet);
+                    messageWriter.LogDebug("Connecting using token cache. See https://pnp.github.io/powershell/articles/persistedlogin.html for more information.");
                 }
             }
             var connectionUri = new Uri(url);
@@ -807,7 +807,7 @@ namespace PnP.PowerShell.Commands.Base
 
             PSCredential = credential;
             PnPVersionTag = pnpVersionTag;
-            ContextCache = new List<ClientContext> { context };
+            ContextCache = context != null ? new List<ClientContext> { context } : new List<ClientContext>();
             if (!string.IsNullOrEmpty(url))
             {
                 Url = new Uri(url).AbsoluteUri;
@@ -821,7 +821,7 @@ namespace PnP.PowerShell.Commands.Base
         #region Methods
         internal void RestoreCachedContext(string url)
         {
-            Context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
+            Context = ContextCache.FirstOrDefault(c => c != null && new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
             _pnpContext = null;
         }
 
@@ -829,21 +829,67 @@ namespace PnP.PowerShell.Commands.Base
         {
             if (Context == null) return;
 
-            var c = ContextCache.FirstOrDefault(cc => new Uri(cc.Url).AbsoluteUri == new Uri(Context.Url).AbsoluteUri);
+            ContextCache ??= new List<ClientContext>();
+            var c = ContextCache.FirstOrDefault(cc => cc != null && new Uri(cc.Url).AbsoluteUri == new Uri(Context.Url).AbsoluteUri);
             if (c == null)
             {
                 ContextCache.Add(Context);
             }
         }
 
+        internal bool RefreshContextIfHasPendingRequest()
+        {
+            if (Context?.HasPendingRequest != true)
+            {
+                return false;
+            }
+
+            RefreshContext();
+            return true;
+        }
+
+        internal void RefreshContext()
+        {
+            if (Context == null)
+            {
+                return;
+            }
+
+            var context = Context.Clone(Context.Url);
+            ReplaceCachedContext(context);
+
+            Context = context;
+            _pnpContext = null;
+        }
+
+        private static void ReplaceCachedContext(ClientContext context)
+        {
+            ContextCache ??= new List<ClientContext>();
+
+            var contextIndex = ContextCache.FindIndex(c => c != null && new Uri(c.Url).AbsoluteUri == new Uri(context.Url).AbsoluteUri);
+            if (contextIndex >= 0)
+            {
+                ContextCache[contextIndex] = context;
+            }
+            else
+            {
+                ContextCache.Add(context);
+            }
+        }
+
         internal ClientContext CloneContext(string url)
         {
-            var context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
+            var context = ContextCache.FirstOrDefault(c => c != null && new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
             if (context == null)
             {
                 context = Context.Clone(url);
                 context.ExecuteQueryRetry();
                 ContextCache.Add(context);
+            }
+            else if (context.HasPendingRequest)
+            {
+                context = context.Clone(context.Url);
+                ReplaceCachedContext(context);
             }
             _pnpContext = null;
             return context;

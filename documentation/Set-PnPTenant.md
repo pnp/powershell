@@ -187,8 +187,12 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-ResyncContentSecurityPolicyConfigurationEntries]
  [-ContentSecurityPolicyEnforcement <Boolean>]
  [-DisableSpacesActivation <Boolean>]
- [-DelayContentSecurityPolicyEnforcement <Boolean>]
+ [-CoreOrganizationSharingLinkRecommendedExpirationInDays <int>] 
+ [-CoreOrganizationSharingLinkMaxExpirationInDays <int>]
+ [-RestrictResourceAccountAccess <Boolean>]
  [-EnforceRequestDigest <Boolean>]
+ [-RestrictExternalSharingForAgents <Boolean>]
+ [-DelayContentSecurityPolicyEnforcement <Boolean>]
  [-EnableNotificationsSubscriptions <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
@@ -1117,7 +1121,7 @@ Accept wildcard characters: False
 ### -OneDriveOrganizationSharingLinkMaxExpirationInDays
 Specifies the maximum number of days before organization sharing links expire for all OneDrive sites. This is a tenant wide setting, and all geos will inherit the policy.
 
-The value can be from 7 to 720 days.
+The value can be from 7 to 730 days.
 
 To remove the expiration requirement, set the value to zero (0).
 
@@ -1135,7 +1139,7 @@ Accept wildcard characters: False
 ### -OneDriveOrganizationSharingLinkRecommendedExpirationInDays
 Specifies the recommended number of days before organization sharing links expire for all OneDrive sites. This setting provides a suggested expiration period to users when they create sharing links. This is a tenant wide setting, and all geos will inherit the policy.
 
-The value can be from 7 to 720 days and must be less than or equal to the maximum expiration value set by `OneDriveOrganizationSharingLinkMaxExpirationInDays`.
+The value can be from 7 to 730 days and must be less than or equal to the maximum expiration value set by `OneDriveOrganizationSharingLinkMaxExpirationInDays`.
 
 When set to 0, the default value will be `OneDriveOrganizationSharingLinkMaxExpirationInDays`.
 
@@ -3379,6 +3383,82 @@ The valid values are:
 
 - False (default) - for classic publishing site collections where administrators enabled the ability to add custom script, SharePoint will revoke that ability within 24 hours from the last time this setting was changed.
 - True - All changes performed by administrators to custom script settings are preserved.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreOrganizationSharingLinkRecommendedExpirationInDays
+This parameter specifies the recommended number of days before organization sharing links expire in SharePoint sites (not including OneDrive sites). Users can still choose a different expiration period if permitted by policy, but this value is presented as the recommended default. This is a tenant wide setting, and all geos will inherit the policy.
+
+The valid values :
+
+- Can be from 7 to 730 days and must be less than or equal to the maximum expiration value set by CoreOrganizationSharingLinkMaxExpirationInDays.
+- When set to 0 (default), the default value will be CoreOrganizationSharingLinkMaxExpirationInDays.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreOrganizationSharingLinkMaxExpirationInDays
+This parameter specifies the maximum number of days that organization sharing links can remain active before they expire for all SharePoint sites (not including OneDrive sites). This is a tenant wide setting, and all geos will inherit the policy.
+
+The valid values :
+
+- can be from 7 to 730 days.
+- `0` (default) - No maximum expiration limit is enforced.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictResourceAccountAccess
+Controls whether resource accounts used by Teams Rooms and Devices can retain access to files after the meeting/collaboration is complete. 
+
+The valid values are:
+
+- False (default) - Allows devices from accessing files and other Microsoft 365 assets when not actively in-use.
+- True - Prevents devices from accessing files and other Microsoft 365 assets when not actively in-use.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictExternalSharingForAgents
+This parameter controls whether external sharing is restricted for agents.
+
+The valid values are:
+
+- False (default) - Agents can share content externally according to existing sharing policies.
+- True - External sharing for agents is restricted.
 
 ```yaml
 Type: Boolean

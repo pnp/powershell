@@ -2,10 +2,10 @@ $runPublish = $false
 
 $dependencies = Invoke-RestMethod -Method Get -Uri https://raw.githubusercontent.com/pnp/powershell/dev/dependencies.json
 
-$pnppowershell_hash = git ls-files -s ./src | git hash-object --stdin
-#$existing_pnppowershell_hash = Get-Content ./pnppowershell_hash.txt -Raw -ErrorAction SilentlyContinue
+$pnppowershell_hash = git ls-files -s "$PSScriptRoot/../src" | git hash-object --stdin
+#$existing_pnppowershell_hash = Get-Content "$PSScriptRoot/../pnppowershell_hash.txt" -Raw -ErrorAction SilentlyContinue
 
-#$existing_pnpframework_hash = Get-Content ./pnpframework_hash.txt -Raw -ErrorAction SilentlyContinue
+#$existing_pnpframework_hash = Get-Content "$PSScriptRoot/../pnpframework_hash.txt" -Raw -ErrorAction SilentlyContinue
 $pnpframework_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpframework/branches/dev" -SkipHttpErrorCheck
 if ($null -ne $pnpframework_response) {
 	if ($null -ne $pnpframework_response.commit) {
@@ -13,7 +13,7 @@ if ($null -ne $pnpframework_response) {
 	}
 }
 
-#$existing_pnpcoresdk_hash = Get-Content ./pnpcoresdk_hash.txt -Raw -ErrorAction SilentlyContinue
+#$existing_pnpcoresdk_hash = Get-Content "$PSScriptRoot/../pnpcoresdk_hash.txt" -Raw -ErrorAction SilentlyContinue
 $pnpcoresdk_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpcore/branches/dev" -SkipHttpErrorCheck
 if ($null -ne $pnpcoresdk_response) {
 	if ($null -ne $pnpcoresdk_response.commit) {
@@ -42,18 +42,18 @@ if ($runPublish -eq $true) {
 	$dependencies.PnPFramework = $pnpframework_hash
 	$dependencies.PnPPowershell = $pnppowershell_hash
 
-	Set-Content ./dependencies.json -Value $(ConvertTo-Json $dependencies) -Force
+	Set-Content "$PSScriptRoot/../dependencies.json" -Value $(ConvertTo-Json $dependencies) -Force
 
 	$versionFileContents = Get-Content "$PSScriptRoot/../version.json" -Raw | ConvertFrom-Json
 
 	if ($versionFileContents.Version.Contains("%")) {
-		$versionString = $versionFileContents.Version.Replace("%", "0");
+		$versionString = $versionFileContents.Version.Replace("%", "0")
 		$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
-		$buildVersion = $versionObject.Patch;
+		$buildVersion = $versionObject.Patch
 	}
 	else {	
 		$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents.Version)
-		$buildVersion = $versionObject.Patch + 1;
+		$buildVersion = $versionObject.Patch + 1
 	}
 
 	$version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
@@ -70,19 +70,14 @@ if ($runPublish -eq $true) {
 		exit 1# Do not proceed.
 	}
 
-	dotnet build ./src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=nightly
+	dotnet build "$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj" --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=nightly
 
-	$documentsFolder = [environment]::getfolderpath("mydocuments");
-
-	if ($IsLinux) {
-		$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
-		$helpfileDestinationFolder = "$documentsFolder/.local/share/powershell/Modules"
-	}
-	elseif ($IsMacOS) {
+	if ($IsLinux -or $IsMacOS) {
 		$destinationFolder = "$HOME/.local/share/powershell/Modules/PnP.PowerShell"
 		$helpfileDestinationFolder = "$HOME/.local/share/powershell/Modules"
 	}
 	else {
+		$documentsFolder = [environment]::getfolderpath("mydocuments")
 		$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 		$helpfileDestinationFolder = "$documentsFolder/PowerShell/Modules"
 	}
@@ -94,7 +89,7 @@ if ($runPublish -eq $true) {
 	$coreRuntimePathx86 = "$destinationFolder/Core/runtimes/win-x86/native"
 	$coreRuntimePathLinx64 = "$destinationFolder/Core/runtimes/linux-x64/native"
 
-	$assemblyExceptions = @("System.Memory.dll");
+	$assemblyExceptions = @("System.Memory.dll")
 
 	Try {
         # Module folder there?
@@ -166,29 +161,28 @@ if ($runPublish -eq $true) {
 
 	Try {
 		Write-Host "Generating PnP.PowerShell.psd1" -ForegroundColor Yellow
-		# Load the Module in a new PowerShell session
+		# Load the Module in a new PowerShell process so the DLL is released before signing
 		$scriptBlock = {
-			$documentsFolder = [environment]::getfolderpath("mydocuments");
+			param([string] $modulePath)
 
-			if ($IsLinux) {
-				$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
-			}
-			elseif ($IsMacOS) {
-				$destinationFolder = "~/.local/share/powershell/Modules/PnP.PowerShell"
-			}
-			else {
-				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
-			}
-			Write-Host "Importing dotnet core version of assembly" -ForegroundColor Yellow
-			Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
+			$moduleAssemblyPath = Join-Path $modulePath "Core/PnP.PowerShell.dll"
+			Import-Module -Name $moduleAssemblyPath -DisableNameChecking
 
-			Write-Host "Getting cmdlet info" -ForegroundColor Yellow
 			$cmdlets = Get-Command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
 			$cmdlets -Join ","
 		}
 
 		Write-Host "Starting job to retrieve cmdlet names" -ForegroundColor Yellow
-		$cmdletsString = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
+		$cmdletJob = Start-Job -ScriptBlock $scriptBlock -ArgumentList (Resolve-Path -LiteralPath $destinationFolder).Path
+		try {
+			$cmdletsString = Receive-Job -Job $cmdletJob -Wait -ErrorAction Stop
+			if ($cmdletJob.State -ne "Completed") {
+				throw "Failed to retrieve cmdlet names. Job state: $($cmdletJob.State)"
+			}
+		}
+		finally {
+			Remove-Job -Job $cmdletJob -Force -ErrorAction SilentlyContinue
+		}
 
 		Write-Host "Writing PSD1" -ForegroundColor Yellow
 		$manifest = "@{
@@ -223,16 +217,73 @@ if ($runPublish -eq $true) {
 	}
 
 	# Generate predictor commands
-	./build/Generate-PredictorCommands.ps1 -Version "nightly"
+	& "$PSScriptRoot/../build/Generate-PredictorCommands.ps1" -Version "nightly"
 
 	Write-Host "Generating Documentation" -ForegroundColor Yellow
 	Set-PSRepository PSGallery -InstallationPolicy Trusted
 	Install-Module -Name Microsoft.PowerShell.PlatyPS -AllowPrerelease -RequiredVersion 1.0.0-preview1
 	Write-Host "Generating external help"
-	$mdFiles = Measure-PlatyPSMarkdown -Path ./documentation/*.md
+	$mdFiles = Measure-PlatyPSMarkdown -Path "$PSScriptRoot/../documentation/*.md"
 	$mdFiles | Import-MarkdownCommandHelp -Path {$_.FilePath} | Export-MamlCommandHelp -OutputFolder $helpfileDestinationFolder -Force
 	# Install-Module Microsoft.PlatyPS -ErrorAction Stop
-	# New-ExternalHelp -Path ./documentation -OutputPath $destinationFolder -Force
+	# New-ExternalHelp -Path "$PSScriptRoot/../documentation" -OutputPath $destinationFolder -Force
+
+    # Sign all required DLLs
+    function Invoke-ModuleFileSigning {
+		param(
+			[Parameter(Mandatory = $true)]
+			[System.IO.FileInfo] $File
+		)
+
+		Write-Host "Signing $($File.FullName)"
+		$signCliPath = $env:SIGN_CLI_PATH
+		if ([string]::IsNullOrWhiteSpace($signCliPath)) {
+			$signCliPath = Join-Path $PSScriptRoot "../sign"
+			if ($IsWindows -and !(Test-Path -LiteralPath $signCliPath) -and (Test-Path -LiteralPath "$signCliPath.exe")) {
+				$signCliPath = "$signCliPath.exe"
+			}
+		}
+
+		if (!(Test-Path -LiteralPath $signCliPath)) {
+			throw "Sign CLI not found at $signCliPath"
+		}
+
+		& $signCliPath code azure-key-vault $File.FullName `
+			--publisher-name "Microsoft 365 Patterns and Practices" `
+			--description "PnP PowerShell Module" `
+			--description-url "https://pnp.github.io/powershell/" `
+			--azure-key-vault-tenant-id $("$env:SIGNING_TENANTID") `
+			--azure-key-vault-client-id $("$env:SIGNING_CLIENT_ID") `
+			--azure-key-vault-certificate $("$env:SIGNING_CERTNAME") `
+			--azure-key-vault-url $("$env:SIGNING_VAULTURL") `
+			--timestamp-url "http://timestamp.digicert.com" `
+			--verbosity Debug
+
+		if ($LASTEXITCODE -ne 0) {
+			throw "Signing failed for $($File.FullName)"
+		}
+	}
+
+    Write-Host "Sign module assemblies"
+    $assembliesToBeSigned = @(
+		Get-Item -LiteralPath "$corePath/PnP.PowerShell.dll"
+		Get-Item -LiteralPath "$corePath/PnP.Core.dll"
+		Get-Item -LiteralPath "$corePath/PnP.Core.Admin.dll"
+		Get-Item -LiteralPath "$corePath/PnP.Core.Auth.dll"
+		Get-Item -LiteralPath "$corePath/PnP.Framework.dll"
+		Get-Item -LiteralPath "$commonPath/PnP.PowerShell.ALC.dll"
+    )
+
+	foreach ($assemblyToBeSigned in $assembliesToBeSigned) {
+		Invoke-ModuleFileSigning -File $assemblyToBeSigned
+	}
+
+	Write-Host "Sign PowerShell module files"
+	$powerShellFilesToBeSigned = Get-ChildItem -LiteralPath $destinationFolder -Recurse -File | Where-Object { $_.Extension -in '.ps1', '.psm1', '.ps1xml', '.psd1' }
+
+	foreach ($powerShellFileToBeSigned in $powerShellFilesToBeSigned) {
+		Invoke-ModuleFileSigning -File $powerShellFileToBeSigned
+	}
 
 	$apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
 
@@ -241,11 +292,11 @@ if ($runPublish -eq $true) {
 	Publish-Module -Name PnP.PowerShell -AllowPrerelease -NuGetApiKey $apiKey
 
 	# Write version back to version
-	Set-Content ./version.txt -Value $version -Force -NoNewline
+	Set-Content "$PSScriptRoot/../version.txt" -Value $version -Force -NoNewline
 
 	# Write version back to version.json
 	$json = @{Version = "$version"; Message = "" } | ConvertTo-Json
-	Set-Content ./version.json -Value $json -Force -NoNewline
+	Set-Content "$PSScriptRoot/../version.json" -Value $json -Force -NoNewline
 }
 else {
 	Write-Host "No changes in PnP PowerShell, PnP Framework or PnP Core SDK. Exiting." -ForegroundColor Green

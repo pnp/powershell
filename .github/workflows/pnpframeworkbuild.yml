@@ -1,0 +1,102 @@
+name: PnP Framework Build
+
+on:
+  schedule:
+    - cron: '30 1 * * *'
+  workflow_dispatch:
+    inputs:
+      pnpframework_ref:
+        description: PnP.Framework branch, tag, or SHA to build
+        required: true
+        default: dev
+        type: string
+      version_file:
+        description: Version file to use for incrementing the version (version.debug or version.release)
+        required: true
+        default: version.debug
+        type: string
+
+permissions: read-all
+
+jobs:
+  build_sign_package:
+    name: Build, sign, and package PnP.Framework
+    runs-on: windows-latest
+    environment:
+      name: gh_releases
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout PnP PowerShell
+        uses: actions/checkout@v6
+
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+          owner: pnp
+          repositories: pnpframework
+
+      - name: Checkout PnP.Framework
+        uses: actions/checkout@v6
+        with:
+          repository: pnp/pnpframework
+          path: pnpframework
+          ref: ${{ inputs.pnpframework_ref || 'dev' }}
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Install Sign CLI tool
+        shell: pwsh
+        run: |
+          $signToolPath = Join-Path $env:RUNNER_TEMP "sign"
+          dotnet tool install sign --tool-path $signToolPath --version 0.9.1-beta.25181.2
+          "SIGN_CLI_PATH=$(Join-Path $signToolPath 'sign.exe')" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Azure CLI Login
+        uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.SIGNING_CLIENT_ID }}
+          tenant-id: ${{ secrets.SIGNING_TENANTID }}
+          allow-no-subscriptions: true
+
+      - name: Build, sign and pack PnP.Framework
+        shell: pwsh
+        env:
+          SIGNING_TENANTID: ${{ secrets.SIGNING_TENANTID }}
+          SIGNING_CLIENT_ID: ${{ secrets.SIGNING_CLIENT_ID }}
+          SIGNING_CERTNAME: ${{ secrets.SIGNING_CERTNAME }}
+          SIGNING_VAULTURL: ${{ secrets.SIGNING_VAULTURL }}
+        run: |
+          ./build/Build-Nightly-PnP-Framework.ps1 -VersionFile '${{ inputs.version_file || 'version.debug' }}'
+
+      - name: Upload package zip file
+        uses: actions/upload-artifact@v7
+        with:
+          name: PnP.Framework-packages
+          path: output/zips/PnP.Framework-packages.zip
+          if-no-files-found: error
+
+      - name: Commit version increment and package to PnP.Framework
+        shell: pwsh
+        working-directory: pnpframework
+        run: |
+          git config user.name "${{ steps.app-token.outputs.app-slug }}[bot]"
+          git config user.email "${{ steps.app-token.outputs.installation-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com"
+          $incrementFile = if ('${{ inputs.version_file || 'version.debug' }}' -eq 'version.release') {
+            'build/version.release.increment'
+          } else {
+            'build/version.debug.increment'
+          }
+          git add $incrementFile
+          git add build/package/PnP.Framework-packages.zip
+          git commit -m "Updates version increment and update package [skip ci]"
+          git push

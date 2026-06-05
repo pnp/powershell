@@ -5,6 +5,12 @@
       "executablePath": "pwsh",
       "commandLineArgs": "-NoExit -NoProfile -Command Import-Module  $(ProjectDir)/_debug/debug.ps1",
       "workingDirectory": "$(ProjectDir)\\..\\..\\"
+    },
+    "PnP.PowerShell (VSCode style)": {
+      "commandName": "Executable",
+      "executablePath": "pwsh",
+      "commandLineArgs": "-NoExit -NoProfile -File $(SolutionDir)/../build/Build-Debug.ps1",
+      "workingDirectory": "$(ProjectDir)\\..\\..\\"
     }
   }
 }

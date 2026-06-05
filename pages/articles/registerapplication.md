@@ -1,3 +1,9 @@
+---
+uid: pnp.powershell.registerapplication
+title: Register an Entra ID Application to use with PnP PowerShell
+description: Register the Entra ID application required to authenticate with PnP PowerShell.
+---
+
 # Register an Entra ID Application to use with PnP PowerShell
 
 > [!NOTE]
@@ -106,7 +112,7 @@ Another option is to manually create the application registration in Entra ID. W
 
    ![image](../images/registerapplication/entraid_new_app_apipermissions_addpermission_grant_admin_consent_remove_other.png)
 
-1. The _Configured permissions_ section should now look similar to the screenshot below. You can now use this application to [connect to PnP PowerShell](authentication.md) or [add additional permissions](determinepermissions.md) to this application registration as necessary.
+1. The _Configured permissions_ section should now look similar to the screenshot below. You can now use this application to [connect to PnP PowerShell](xref:pnp.powershell.authentication) or [add additional permissions](determinepermissions.md) to this application registration as necessary.
 
    ![image](../images/registerapplication/entraid_new_app_apipermissions_minimal.png)
 

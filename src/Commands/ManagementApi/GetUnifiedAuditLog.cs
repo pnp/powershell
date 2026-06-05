@@ -81,7 +81,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
         {
             EnsureSubscription(ContentTypeString);
 
-            var url = $"{ApiUrl}/subscriptions/content?contentType={ContentTypeString}&PublisherIdentifier=${TenantId}";
+            var url = $"{ApiUrl}/subscriptions/content?contentType={ContentTypeString}&PublisherIdentifier={TenantId}";
             if (StartTime != DateTime.MinValue)
             {
                 url += $"&startTime={StartTime:yyyy-MM-ddTHH:mm:ss}";
@@ -92,26 +92,40 @@ namespace PnP.PowerShell.Commands.ManagementApi
             }
 
             List<ManagementApiSubscriptionContent> subscriptionContents = new();
-            var subscriptionResponse = RequestHelper.GetResponse(url);
-            var content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            var serializerOptions = new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            System.Net.Http.HttpResponseMessage subscriptionResponse = null;
 
-            if (subscriptionResponse.IsSuccessStatusCode)
+            try
             {
-                subscriptionContents.AddRange(collection: JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-                while (subscriptionResponse.Headers.Contains("NextPageUri"))
+                subscriptionResponse = RequestHelper.GetResponse(url);
+                var content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                if (subscriptionResponse.IsSuccessStatusCode)
                 {
-                    subscriptionResponse = RequestHelper.GetResponse(subscriptionResponse.Headers.GetValues("NextPageUri").First());
-                    if (subscriptionResponse.IsSuccessStatusCode)
+                    subscriptionContents.AddRange(collection: JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content, serializerOptions) ?? []);
+                    while (subscriptionResponse.Headers.Contains("NextPageUri"))
                     {
+                        var nextPageUri = subscriptionResponse.Headers.GetValues("NextPageUri").First();
+                        subscriptionResponse.Dispose();
+                        subscriptionResponse = RequestHelper.GetResponse(nextPageUri);
                         content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                        subscriptionContents.AddRange(collection: JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content));
+                        if (!subscriptionResponse.IsSuccessStatusCode)
+                        {
+                            throw new PSInvalidOperationException($"Service responded with HTTP {(int)subscriptionResponse.StatusCode} {subscriptionResponse.ReasonPhrase}: {content}");
+                        }
+
+                        subscriptionContents.AddRange(collection: JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content, serializerOptions) ?? []);
                     }
                 }
+                else
+                {
+                    // Request was not successful
+                    throw new PSInvalidOperationException($"Service responded with HTTP {(int)subscriptionResponse.StatusCode} {subscriptionResponse.ReasonPhrase}: {content}");
+                }
             }
-            else
+            finally
             {
-                // Request was not successful
-                throw new PSInvalidOperationException($"Service responded with HTTP {(int)subscriptionResponse.StatusCode} {subscriptionResponse.ReasonPhrase}: {content}");
+                subscriptionResponse?.Dispose();
             }
 
             if (subscriptionContents.Any())

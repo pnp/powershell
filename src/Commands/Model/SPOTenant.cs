@@ -10,6 +10,7 @@ using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Reflection;
 
 namespace PnP.PowerShell.Commands.Model
@@ -290,6 +291,11 @@ namespace PnP.PowerShell.Commands.Model
 
         public string WhoCanShareAllowListInTenant { private set; get; }
 
+        /// <summary>
+        /// Gets: a list of PrincipalNames Example output: List of PrincipalNames. e.g. ["c:0-.f|rolemanager|contoso-all-users/35533f7d-4536-4c82-9dbc-352f9424578b"]
+        /// </summary>
+        public IList<string> WhoCanShareAllowListInTenantByPrincipalIdentity { private set; get; }
+
         public bool? ExtendPermissionsToUnprotectedFiles { private set; get; }
 
         public bool? LegacyBrowserAuthProtocolsEnabled { private set; get; }
@@ -522,6 +528,10 @@ namespace PnP.PowerShell.Commands.Model
         public bool? TaxonomyTaggingEnabled { private set; get; }
 
         public bool? TranslationEnabled { private set; get; }
+ 
+        public bool? EnforceRequestDigest { private set; get; }
+         
+        public bool? EnableNotificationsSubscriptions { set; get; }
 
         public long? ArchivedFileStorageUsageMB { get; private set; }
 
@@ -538,10 +548,6 @@ namespace PnP.PowerShell.Commands.Model
         public string[] ContentTypeSyncSiteTemplatesList { get; private set; }
 
         public Guid[] DisabledAdaptiveCardExtensionIds { get; private set; }
-
-        public bool? EnableNotificationsSubscriptions { get; private set; }
-
-        public bool? EnforceRequestDigest { get; private set; }
 
         public bool? M365AdditionalStorageSPOEnabled { get; private set; }
 

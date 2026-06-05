@@ -149,6 +149,12 @@ publish/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/packages/repositories.config
 
+# Local .NET tools installed by signing workflows
+/.store/
+/.tools/
+/sign
+/sign.exe
+
 # Windows Azure Build Output
 csx/
 *.build.csdef
@@ -222,3 +228,5 @@ ModelManifest.xml
 .DS_Store
 
 #.vscode/
+src/Commands/PnP.PowerShell.csproj.lscache
+src/ALC/PnP.PowerShell.ALC.csproj.lscache
