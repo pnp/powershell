@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Set-PnPEntraIDAppListItemPermission | PnP PowerShell </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Set-PnPEntraIDAppListItemPermission | PnP PowerShell ">
+      <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+      
+      <link rel="icon" href="../images/favicon-pnp.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pnp/powershell/blob/dev/documentation/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="PnP PowerShell">
+            PnP PowerShell
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="set-pnpentraidapplistitempermission">Set-PnPEntraIDAppListItemPermission</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: Sites.ReadWrite.All</li>
+</ul>
+<p>Updates permissions for a given Entra ID application registration on a list item.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Set-PnPEntraIDAppListItemPermission -PermissionId &lt;String&gt; -Permissions &lt;Read|Write|Owner|FullControl&gt; -List &lt;String&gt; -ListItem &lt;Int32&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet updates an existing permission for an Entra ID application registration on a list item. It is used in conjunction with the Entra ID SharePoint application permission <code>ListItems.SelectedOperations.Selected</code>.</p>
+<p>Use <a href="Get-PnPEntraIDAppListItemPermission.html">Get-PnPEntraIDAppListItemPermission</a> to retrieve the <code>PermissionId</code> required by this cmdlet.</p>
+<p>The <code>-ListItem</code> parameter accepts the integer item ID. Use <code>Get-PnPListItem</code> to look up the ID if needed.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Set-PnPEntraIDAppListItemPermission -PermissionId aTowaS50fG1zLnNwLmV4dHxlMzhjZmIzMS00 -Permissions Read -List &quot;Documents&quot; -ListItem 5
+</code></pre>
+<p>Updates the permission to Read access on list item 5 in the Documents library of the currently connected site.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPEntraIDAppListItemPermission -PermissionId aTowaS50fG1zLnNwLmV4dHxlMzhjZmIzMS00 -Permissions Write -List &quot;Documents&quot; -ListItem 5 -Site https://contoso.sharepoint.com/sites/projects
+</code></pre>
+<p>Updates the permission to Write access on list item 5 in the Documents library of the specified site collection.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-list">-List</h3>
+<p>The list containing the item. Accepts a list GUID or display name.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-listitem">-ListItem</h3>
+<p>The integer ID of the list item whose permission should be updated. Use <code>Get-PnPListItem</code> to look up the ID if needed.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-permissionid">-PermissionId</h3>
+<p>The id of the permission to update. Use <a href="Get-PnPEntraIDAppListItemPermission.html">Get-PnPEntraIDAppListItemPermission</a> to retrieve the id.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-permissions">-Permissions</h3>
+<p>The updated permissions for the Entra ID application registration. Can be Read, Write, Owner, or FullControl.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Accepted values: Read, Write, Owner, FullControl
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-site">-Site</h3>
+<p>Optional url of a site to update the permissions on. Defaults to the currently connected site.</p>
+<pre><code class="lang-yaml">Type: SitePipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: Currently connected site
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

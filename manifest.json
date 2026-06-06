@@ -2527,6 +2527,36 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPEntraIDAppFilePermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPEntraIDAppFilePermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPEntraIDAppListItemPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPEntraIDAppListItemPermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPEntraIDAppListPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPEntraIDAppListPermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPEntraIDAppPermission.md",
       "output": {
         ".html": {
@@ -4771,6 +4801,36 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Grant-PnPAzureADAppSitePermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Grant-PnPEntraIDAppFilePermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Grant-PnPEntraIDAppFilePermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Grant-PnPEntraIDAppListItemPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Grant-PnPEntraIDAppListItemPermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Grant-PnPEntraIDAppListPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Grant-PnPEntraIDAppListPermission.html"
         }
       },
       "version": ""
@@ -7177,6 +7237,36 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Revoke-PnPEntraIDAppFilePermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Revoke-PnPEntraIDAppFilePermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Revoke-PnPEntraIDAppListItemPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Revoke-PnPEntraIDAppListItemPermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Revoke-PnPEntraIDAppListPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Revoke-PnPEntraIDAppListPermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Revoke-PnPEntraIDAppSitePermission.md",
       "output": {
         ".html": {
@@ -7451,6 +7541,36 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPDocumentSetField.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPEntraIDAppFilePermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPEntraIDAppFilePermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPEntraIDAppListItemPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPEntraIDAppListItemPermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPEntraIDAppListPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPEntraIDAppListPermission.html"
         }
       },
       "version": ""

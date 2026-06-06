@@ -6,7 +6,7 @@ description: Full cmdlet reference for PnP PowerShell.
 
 # PnP PowerShell cmdlets
 
-PnP PowerShell exists out of 802 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
+PnP PowerShell exists out of 814 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
  
 <sup>1</sup>: Only available in the latest nightly build. All the others can also be used using the latest stable release.  
 <sup>2</sup>: Cmdlet is an alias of another cmdlet, used to provide backwards compatibility.
@@ -240,6 +240,9 @@ PnP PowerShell exists out of 802 cmdlets which can help you in setting up, confi
 - [Get-PnPEntraIDActivityReportDirectoryAudit](Get-PnPEntraIDActivityReportDirectoryAudit.md)
 - [Get-PnPEntraIDActivityReportSignIn](Get-PnPEntraIDActivityReportSignIn.md)
 - [Get-PnPEntraIDApp](Get-PnPEntraIDApp.md)
+- [Get-PnPEntraIDAppFilePermission](Get-PnPEntraIDAppFilePermission.md) <sup>1</sup>
+- [Get-PnPEntraIDAppListItemPermission](Get-PnPEntraIDAppListItemPermission.md) <sup>1</sup>
+- [Get-PnPEntraIDAppListPermission](Get-PnPEntraIDAppListPermission.md) <sup>1</sup>
 - [Get-PnPEntraIDAppPermission](Get-PnPEntraIDAppPermission.md)
 - [Get-PnPEntraIDAppSitePermission](Get-PnPEntraIDAppSitePermission.md)
 - [Get-PnPEntraIDGroup](Get-PnPEntraIDGroup.md)
@@ -466,6 +469,9 @@ PnP PowerShell exists out of 802 cmdlets which can help you in setting up, confi
 - [Get-PnPWikiPageContent](Get-PnPWikiPageContent.md)
 ## Grant
 - [Grant-PnPAzureADAppSitePermission](Grant-PnPAzureADAppSitePermission.md) <sup>2</sup>
+- [Grant-PnPEntraIDAppFilePermission](Grant-PnPEntraIDAppFilePermission.md) <sup>1</sup>
+- [Grant-PnPEntraIDAppListItemPermission](Grant-PnPEntraIDAppListItemPermission.md) <sup>1</sup>
+- [Grant-PnPEntraIDAppListPermission](Grant-PnPEntraIDAppListPermission.md) <sup>1</sup>
 - [Grant-PnPEntraIDAppSitePermission](Grant-PnPEntraIDAppSitePermission.md)
 - [Grant-PnPHubSiteRights](Grant-PnPHubSiteRights.md)
 - [Grant-PnPSiteDesignRights](Grant-PnPSiteDesignRights.md)
@@ -726,6 +732,9 @@ PnP PowerShell exists out of 802 cmdlets which can help you in setting up, confi
 - [Restore-PnPTenantSite](Restore-PnPTenantSite.md)
 ## Revoke
 - [Revoke-PnPAzureADAppSitePermission](Revoke-PnPAzureADAppSitePermission.md) <sup>2</sup>
+- [Revoke-PnPEntraIDAppFilePermission](Revoke-PnPEntraIDAppFilePermission.md) <sup>1</sup>
+- [Revoke-PnPEntraIDAppListItemPermission](Revoke-PnPEntraIDAppListItemPermission.md) <sup>1</sup>
+- [Revoke-PnPEntraIDAppListPermission](Revoke-PnPEntraIDAppListPermission.md) <sup>1</sup>
 - [Revoke-PnPEntraIDAppSitePermission](Revoke-PnPEntraIDAppSitePermission.md)
 - [Revoke-PnPHubSiteRights](Revoke-PnPHubSiteRights.md)
 - [Revoke-PnPSiteDesignRights](Revoke-PnPSiteDesignRights.md)
@@ -757,6 +766,9 @@ PnP PowerShell exists out of 802 cmdlets which can help you in setting up, confi
 - [Set-PnPDefaultPageLayout](Set-PnPDefaultPageLayout.md)
 - [Set-PnPDisableSpacesActivation](Set-PnPDisableSpacesActivation.md)
 - [Set-PnPDocumentSetField](Set-PnPDocumentSetField.md)
+- [Set-PnPEntraIDAppFilePermission](Set-PnPEntraIDAppFilePermission.md) <sup>1</sup>
+- [Set-PnPEntraIDAppListItemPermission](Set-PnPEntraIDAppListItemPermission.md) <sup>1</sup>
+- [Set-PnPEntraIDAppListPermission](Set-PnPEntraIDAppListPermission.md) <sup>1</sup>
 - [Set-PnPEntraIDAppSitePermission](Set-PnPEntraIDAppSitePermission.md)
 - [Set-PnPEntraIDGroup](Set-PnPEntraIDGroup.md)
 - [Set-PnPField](Set-PnPField.md)

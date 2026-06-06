@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Get-PnPEntraIDAppListPermission | PnP PowerShell </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Get-PnPEntraIDAppListPermission | PnP PowerShell ">
+      <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+      
+      <link rel="icon" href="../images/favicon-pnp.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pnp/powershell/blob/dev/documentation/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="PnP PowerShell">
+            PnP PowerShell
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="get-pnpentraidapplistpermission">Get-PnPEntraIDAppListPermission</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: Sites.ReadWrite.All</li>
+</ul>
+<p>Returns Entra ID App permissions for a list.</p>
+<h2 id="syntax">SYNTAX</h2>
+<h3 id="all-permissions">All Permissions</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDAppListPermission -List &lt;String&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="by-permission-id">By Permission Id</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDAppListPermission -PermissionId &lt;String&gt; -List &lt;String&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="by-app-display-name-or-app-id">By App Display Name or App Id</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDAppListPermission -AppIdentity &lt;String&gt; -List &lt;String&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet returns app permissions for a list in either the current or a given site.</p>
+<p>The list can be identified by its GUID or display name.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDAppListPermission -List &quot;Documents&quot;
+</code></pre>
+<p>Returns all app permissions set on the Documents library of the currently connected site.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDAppListPermission -List &quot;Documents&quot; -Site https://contoso.sharepoint.com/sites/projects
+</code></pre>
+<p>Returns all app permissions set on the Documents library of the specified site collection.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDAppListPermission -List &quot;12345678-1234-1234-1234-123456789012&quot;
+</code></pre>
+<p>Returns all app permissions set on the list identified by its GUID.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDAppListPermission -List &quot;Documents&quot; -PermissionId aTowaS50fG1zLnNwLmV4dHxlMzhjZmIzMS00
+</code></pre>
+<p>Returns the specific permission details for the given permission id on the Documents library.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDAppListPermission -List &quot;Documents&quot; -AppIdentity &quot;My App&quot;
+</code></pre>
+<p>Returns the specific permission details for the app with the provided display name on the Documents library.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDAppListPermission -List &quot;Documents&quot; -AppIdentity &quot;89ea5c94-7736-4e25-95ad-3fa95f62b66e&quot;
+</code></pre>
+<p>Returns the specific permission details for the app with the provided app id on the Documents library.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-appidentity">-AppIdentity</h3>
+<p>Specify either the display name or the app id (client id) to filter the returned permissions to a specific app.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: By App Display Name or App Id
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-list">-List</h3>
+<p>The list to retrieve permissions for. Accepts a list GUID or display name.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-permissionid">-PermissionId</h3>
+<p>If specified, the permission with that id will be retrieved.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: By Permission Id
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-site">-Site</h3>
+<p>Optional url of a site to retrieve the permissions for. Defaults to the currently connected site.</p>
+<pre><code class="lang-yaml">Type: SitePipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: Currently connected site
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
