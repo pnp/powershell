@@ -8,6 +8,7 @@ permissions: read-all
 
 jobs:
   build:
+    if: github.repository_owner == 'pnp'
     runs-on: windows-latest
     environment:
       name: gh_releases    

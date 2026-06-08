@@ -26,6 +26,7 @@ permissions: read-all
 jobs:  
   analyze:
     name: Analyze
+    if: github.repository_owner == 'pnp'
     runs-on: windows-latest
     permissions:
       security-events: write

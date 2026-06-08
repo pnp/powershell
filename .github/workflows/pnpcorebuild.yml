@@ -20,6 +20,7 @@ permissions: read-all
 
 jobs:
   build_sign_package:
+    if: github.repository_owner == 'pnp'
     name: Build, sign, and package PnP.Core
     runs-on: windows-latest
     environment:
