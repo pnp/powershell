@@ -16,7 +16,7 @@ env:
 
 jobs:
   docfx:
-    
+    if: github.repository_owner == 'pnp'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6

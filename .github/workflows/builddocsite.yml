@@ -13,6 +13,7 @@ env:
 
 jobs:
   documentation:
+    if: github.repository_owner == 'pnp'
     runs-on: ubuntu-latest
     permissions:
       contents: write      

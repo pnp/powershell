@@ -7,6 +7,7 @@ permissions: read-all
 
 jobs:
   publish-docker-windows-amd64:
+    if: github.repository_owner == 'pnp'
     runs-on: windows-2025
     steps:
     - name: Checkout main branch
@@ -39,6 +40,7 @@ jobs:
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-stable-ubuntu-22.04-arm32"
 
   publish-docker-linux-arm64:
+    if: github.repository_owner == 'pnp'
     runs-on: ubuntu-24.04-arm
     steps:
     - name: Checkout main branch
@@ -56,6 +58,7 @@ jobs:
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-stable-linux-arm64"
 
   publish-docker-linux-amd64:
+    if: github.repository_owner == 'pnp'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout main branch
@@ -73,6 +76,7 @@ jobs:
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-stable-linux-amd64"
 
   publish-docker-manifest:
+    if: github.repository_owner == 'pnp'
     runs-on: ubuntu-latest
     needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-amd64 ]
     steps:

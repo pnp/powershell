@@ -10,6 +10,7 @@ permissions: read-all
 jobs:
   # This workflow contains a single job called "cleanup"
   cleanup:
+    if: github.repository_owner == 'pnp'
     # The type of runner that the job will run on
     runs-on: windows-latest
 

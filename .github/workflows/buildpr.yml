@@ -12,6 +12,7 @@ permissions: read-all
 
 jobs:
   build_dev_branch:
+    if: github.repository_owner == 'pnp'
     runs-on: macos-latest
     steps:
     - name: Checkout PnP.Framework

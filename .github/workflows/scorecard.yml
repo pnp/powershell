@@ -13,6 +13,7 @@ permissions: read-all
 jobs:
   analysis:
     name: Scorecard analysis
+    if: github.repository_owner == 'pnp'
     runs-on: ubuntu-latest
     permissions:
       # Needed for Code scanning upload
