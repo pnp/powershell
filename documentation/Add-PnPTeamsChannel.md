@@ -14,7 +14,7 @@ title: Add-PnPTeamsChannel
 **Required Permissions**
 
   * Microsoft Graph API: Group.ReadWrite.All
-  * Microsoft Graph API: ChannelMember.ReadWrite.All is also required when using -OwnerUPN to create a private or shared channel
+  * Microsoft Graph API: When using -OwnerUPN to create a private or shared channel, ChannelMember.ReadWrite.All is also required for delegated access. For application access, ChannelMember.ReadWrite.Group or ChannelMember.ReadWrite.All is also required.
 
 Adds a channel to an existing Microsoft Teams team.
 
@@ -115,7 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -OwnerUPN
-The User Principal Name (email) of the owner of the channel. When using this parameter, the Microsoft Graph API permission ChannelMember.ReadWrite.All is required in addition to the permission required to create the channel.
+The User Principal Name (email) of the owner of the channel. When using this parameter, ChannelMember.ReadWrite.All is required in addition to Group.ReadWrite.All for delegated access. For application access, ChannelMember.ReadWrite.Group or ChannelMember.ReadWrite.All is required in addition to Group.ReadWrite.All.
 
 ```yaml
 Type: String
