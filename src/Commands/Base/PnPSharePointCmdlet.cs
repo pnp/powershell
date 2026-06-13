@@ -167,6 +167,11 @@ namespace PnP.PowerShell.Commands
 
         protected override void EndProcessing()
         {
+            if (ShouldRefreshContextWithPendingRequest && ClientContext?.HasPendingRequest == true)
+            {
+                ClientContext.ExecuteQueryRetry();
+            }
+
             base.EndProcessing();
         }
 
