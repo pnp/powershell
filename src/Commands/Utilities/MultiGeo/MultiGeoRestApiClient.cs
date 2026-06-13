@@ -34,6 +34,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string UserMoveJobsMinimumApiVersion = "1.0";
 		private const string UserMoveJobsByMoveIdMinimumApiVersion = "1.2.2";
 		private const string UserMoveJobsReportMinimumApiVersion = "1.3.2";
+		private const string UserMoveJobsPath = "UserMoveJobs";
 		private const string UserMoveJobPathByUpn = "UserMoveJobs(upn='{0}')";
 		private const string UserMoveJobPathByMoveId = "UserMoveJobs/GetByMoveId(odbMoveId='{0}')";
 		private const string UserMoveJobsPathForMoveReport = "UserMoveJobs/GetMoveReport(moveState={0},moveDirection={1},startTime='{2:u}',endTime='{3:u}',limit='{4}')";
@@ -154,6 +155,17 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			var apiVersion = GetCurrentApiVersion(UserMoveJobsReportMinimumApiVersion);
 			var path = string.Format(CultureInfo.InvariantCulture, UserMoveJobsPathForMoveReport, (int)moveState, (int)moveDirection, startTime, endTime, limit);
 			return GetFeed<UserAndContentMoveState>(path, apiVersion);
+		}
+
+		internal UserAndContentMoveState CreateUserMoveJob(UserMoveJobEntityData job)
+		{
+			if (job == null)
+			{
+				throw new ArgumentNullException(nameof(job));
+			}
+
+			job.ApiVersion = GetCurrentApiVersion(UserMoveJobsMinimumApiVersion);
+			return Post<UserAndContentMoveState>(UserMoveJobsPath, job, apiVersion: UserMoveJobsMinimumApiVersion);
 		}
 
 		internal void CancelTenantRenameJob()
