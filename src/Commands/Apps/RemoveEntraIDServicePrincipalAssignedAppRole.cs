@@ -64,7 +64,10 @@ namespace PnP.PowerShell.Commands.Apps
                 {
                     if (!ParameterSpecified(nameof(BuiltInType)))
                     {
-                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(GraphRequestHelper, principal, AppRoleName.ToString());
+                        if (!ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(GraphRequestHelper, principal, AppRoleName.Value))
+                        {
+                            throw new PSArgumentException("AppRole assignment not found", nameof(AppRoleName));
+                        }
                     }
                     else
                     {
@@ -76,7 +79,10 @@ namespace PnP.PowerShell.Commands.Apps
                             throw new PSArgumentException("AppRole not found", nameof(AppRoleName));
                         }
                         LogDebug($"Removing app role {appRole.Value}: {appRole.DisplayName}");
-                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(GraphRequestHelper, principal, appRole);
+                        if (!ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(GraphRequestHelper, principal, appRole))
+                        {
+                            throw new PSArgumentException("AppRole assignment not found", nameof(AppRoleName));
+                        }
                     }
                 }
             }
