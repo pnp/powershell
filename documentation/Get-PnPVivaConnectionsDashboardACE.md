@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPVivaConnectionsD
 # Get-PnPVivaConnectionsDashboardACE
 
 ## SYNOPSIS
-Returns the Adaptive card extensions from the Viva connections dashboard page. This requires that you connect to a SharePoint Home site and have configured the Viva connections page.
+Returns the Adaptive card extensions from the Viva connections dashboard page. This requires that you connect to a SharePoint Team or Communication site and have configured the Viva connections page.
 
 ## SYNTAX
 
