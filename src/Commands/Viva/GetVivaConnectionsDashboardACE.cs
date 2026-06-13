@@ -15,6 +15,12 @@ namespace PnP.PowerShell.Commands.Viva
             var pnpContext = Connection.PnPContext;
 
             IVivaDashboard dashboard = pnpContext.Web.GetVivaDashboard();
+            if (dashboard == null)
+            {
+                LogError("Viva Connections dashboard not found. Create or configure the Viva Connections dashboard page (Dashboard.aspx) on the connected SharePoint Team site or Communication site.");
+                return;
+            }
+
             if (ParameterSpecified(nameof(Identity)))
             {
                 var aceToRetrieve = Identity.GetACE(dashboard, this);
@@ -29,7 +35,7 @@ namespace PnP.PowerShell.Commands.Viva
             }
             else
             {
-                WriteObject(dashboard?.ACEs, true);
+                WriteObject(dashboard.ACEs, true);
             }
         }
     }

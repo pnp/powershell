@@ -69,7 +69,7 @@ namespace PnP.PowerShell.Commands.Viva
             }
             else
             {
-                LogError("Dashboard not found");
+                LogError("Viva Connections dashboard not found. Create or configure the Viva Connections dashboard page (Dashboard.aspx) on the connected SharePoint Team site or Communication site.");
             }
         }
     }
