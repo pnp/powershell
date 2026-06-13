@@ -10,6 +10,8 @@ namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Add, "PnPTeamsChannel", DefaultParameterSetName = ParameterSET_STANDARD)]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All", "graph/ChannelMember.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All", "graph/ChannelMember.ReadWrite.Group")]
     public class AddTeamsChannel : PnPGraphCmdlet
     {
         private const string ParameterSET_PRIVATE = "Private channel type";
