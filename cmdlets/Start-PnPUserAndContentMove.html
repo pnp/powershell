@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Add-PnPVivaConnectionsDashboardACE | PnP PowerShell </title>
+      <title>Start-PnPUserAndContentMove | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Add-PnPVivaConnectionsDashboardACE | PnP PowerShell ">
+      <meta name="title" content="Start-PnPUserAndContentMove | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,117 +85,113 @@
         </div>
 
         <article data-uid="">
-<h1 id="add-pnpvivaconnectionsdashboardace">Add-PnPVivaConnectionsDashboardACE</h1>
+<h1 id="start-pnpuserandcontentmove">Start-PnPUserAndContentMove</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Add an Adaptive card extension in the Viva connections dashboard page. This requires that you connect to a SharePoint Team site or Communication site and have configured the Viva connections page.</p>
+<p>Starts a SharePoint Online multi-geo user and OneDrive content move job.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPVivaConnectionsDashboardACE [-Identity &lt;DefaultACE&gt;] [-Title &lt;string&gt;] [-PropertiesJSON &lt;string&gt;] [-Description &lt;string&gt;] [-IconProperty &lt;string&gt;] [-Order &lt;Int&gt;][-CardSize &lt;CardSize&gt;] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Start-PnPUserAndContentMove [-UserPrincipalName] &lt;String&gt; [-DestinationDataLocation] &lt;String&gt; [[-PreferredMoveBeginDate] &lt;DateTime&gt;] [[-PreferredMoveEndDate] &lt;DateTime&gt;] [[-Notify] &lt;String&gt;] [[-Reserved] &lt;String&gt;] [-ValidationOnly] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows you to add a new Adaptive card extension in the Viva Connections dashboard page. Before running the command, you must be connected to a SharePoint Team site or Communication site and have configured the Viva connections page.</p>
+<p>Starts a SharePoint Online multi-geo move job for a user and the user's OneDrive content to the specified destination data location.</p>
+<p>Use <code>-ValidationOnly</code> to validate whether the user and content can be moved without starting the move. Use <code>Get-PnPUserAndContentMoveState</code> to retrieve move job status after the job has been created.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPVivaConnectionsDashboardACE -Identity CardDesigner -Order 3 -Title &quot;Hello there&quot; -PropertiesJSON $myProperties -CardSize Large -Description &quot;ACE description&quot; -Iconproperty &quot;https://cdn.hubblecontent.osi.office.net/m365content/publish/002f8bf9-b8ee-4689-ae97-e411b756099d/691108002.jpg&quot;
+<pre><code class="lang-powershell">Start-PnPUserAndContentMove -UserPrincipalName user@contoso.com -DestinationDataLocation EUR
 </code></pre>
-<p>Add an Adaptive card extension of type Card Designer in the Viva connections dashboard page with Title, Description, IconProperty, Order , CardSize and PropertiesJSON of the ACE.</p>
+<p>Starts a move job for the specified user and OneDrive content to the <code>EUR</code> data location.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPVivaConnectionsDashboardACE -Identity ThirdPartyApp -Order 1 -Title &quot;Hello there&quot; -PropertiesJSON $myProperties -CardSize Medium -Description &quot;ACE with description&quot; -Iconproperty &quot;https://cdn.hubblecontent.osi.office.net/m365content/publish/002f8bf9-b8ee-4689-ae97-e411b756099d/691108002.jpg&quot;
+<pre><code class="lang-powershell">Start-PnPUserAndContentMove -UserPrincipalName user@contoso.com -DestinationDataLocation EUR -PreferredMoveBeginDate &quot;2026-06-20T22:00:00&quot; -PreferredMoveEndDate &quot;2026-06-21T04:00:00&quot;
 </code></pre>
-<p>Add an Adaptive card extension of type Third party(custom adaptive card) in the Viva connections dashboard page with Title, Description, IconProperty, Order , CardSize and PropertiesJSON of the ACE.</p>
+<p>Starts a move job with a preferred move window. The preferred dates are converted to UTC before being sent to SharePoint Online.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Add-PnPVivaConnectionsDashboardACE -Identity AssignedTasks -Order 2 -Title &quot;Tasks&quot; -PropertiesJSON $myProperties -CardSize Medium -Description &quot;My Assigned tasks&quot; -Iconproperty &quot;https://cdn.hubblecontent.osi.office.net/m365content/publish/002f8bf9-b8ee-4689-ae97-e411b756099d/691108002.jpg&quot;
+<pre><code class="lang-powershell">Start-PnPUserAndContentMove -UserPrincipalName user@contoso.com -DestinationDataLocation EUR -ValidationOnly
 </code></pre>
-<p>Add an Adaptive card extension of type AssignedTasks in the Viva connections dashboard page with Title, Description, IconProperty, Order , CardSize and PropertiesJSON of the ACE.</p>
+<p>Validates whether the user and OneDrive content can be moved to the <code>EUR</code> data location without starting the move.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Start-PnPUserAndContentMove -UserPrincipalName user@contoso.com -DestinationDataLocation EUR -Verbose
+</code></pre>
+<p>Starts a move job and includes additional diagnostic properties in the returned object.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-identity">-Identity</h3>
-<p>The Id of the Adaptive Card on the Viva connections dashboard page. Supported values are:</p>
-<ul>
-<li>Approvals</li>
-<li>AssignedTasks</li>
-<li>CardDesigner</li>
-<li>Shifts</li>
-<li>TeamsApp</li>
-<li>ThirdParty</li>
-<li>WebLink</li>
-</ul>
-<pre><code class="lang-yaml">Type: DefaultACE
+<h3 id="-userprincipalname">-UserPrincipalName</h3>
+<p>The user principal name of the user whose user profile and OneDrive content should be moved.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-title">-Title</h3>
-<p>The Title of the Adaptive Card extension.</p>
-<pre><code class="lang-yaml">Type: string
+<h3 id="-destinationdatalocation">-DestinationDataLocation</h3>
+<p>The destination SharePoint Online multi-geo data location code, such as <code>NAM</code> or <code>EUR</code>.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
-Required: False
-Position: Named
+Required: True
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-description">-Description</h3>
-<p>The Description of the Adaptive Card extension.</p>
-<pre><code class="lang-yaml">Type: string
+<h3 id="-preferredmovebegindate">-PreferredMoveBeginDate</h3>
+<p>The preferred date and time at which the move should begin. The value is converted to UTC before it is sent to SharePoint Online.</p>
+<pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
 
 Required: False
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-iconproperty">-IconProperty</h3>
-<p>The Icon used by Adaptive Card extension.</p>
-<pre><code class="lang-yaml">Type: string
+<h3 id="-preferredmoveenddate">-PreferredMoveEndDate</h3>
+<p>The preferred date and time at which the move should end. The value is converted to UTC before it is sent to SharePoint Online.</p>
+<pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
 
 Required: False
-Position: Named
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-propertiesjson">-PropertiesJSON</h3>
-<p>The properties of the Adaptive Card extension. You can get the properties by executing <code>Get-PnPVivaConnectionsDashboardACE</code> and then use the <code>JSONProperties</code>.</p>
-<pre><code class="lang-yaml">Type: string
+<h3 id="-notify">-Notify</h3>
+<p>Specifies notification information to send with the move job request.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
-Position: Named
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-order">-Order</h3>
-<p>The Order of appearance of the Adaptive Card extension on the Viva connections dashboard page. The default value is 0.</p>
-<pre><code class="lang-yaml">Type: Int
+<h3 id="-reserved">-Reserved</h3>
+<p>Reserved for future use.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
-Position: Named
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-cardsize">-CardSize</h3>
-<p>The size of the Adaptive Card extension. The available values are <code>Large</code> or <code>Medium</code>. Default card size is <code>Medium</code></p>
-<pre><code class="lang-yaml">Type: CardSize
+<h3 id="-validationonly">-ValidationOnly</h3>
+<p>Validates whether the user and OneDrive content can be moved without starting the move.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
-Position: Named
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by specifying <code>-ReturnConnection</code> on <code>Connect-PnPOnline</code> or by executing <code>Get-PnPConnection</code>.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
@@ -205,7 +201,12 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h2 id="outputs">OUTPUTS</h2>
+<h3 id="systemmanagementautomationpsobject">System.Management.Automation.PSObject</h3>
+<p>Returns an object with <code>UserPrincipalName</code>, <code>MoveJobId</code>, <code>SourceDataLocation</code>, <code>DestinationDataLocation</code>, <code>TimeStamp</code>, and <code>MoveState</code> properties. Validation-only move jobs return <code>ValidationState</code> instead of <code>TimeStamp</code> and <code>MoveState</code>. When <code>-Verbose</code> is specified, additional move job details are returned.</p>
 <h2 id="related-links">RELATED LINKS</h2>
+<p><a href="Get-PnPUserAndContentMoveState.html">Get-PnPUserAndContentMoveState</a></p>
+<p><a href="Get-PnPMultiGeoCompanyAllowedDataLocation.html">Get-PnPMultiGeoCompanyAllowedDataLocation</a></p>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>

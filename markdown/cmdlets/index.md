@@ -6,7 +6,7 @@ description: Full cmdlet reference for PnP PowerShell.
 
 # PnP PowerShell cmdlets
 
-PnP PowerShell exists out of 814 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
+PnP PowerShell exists out of 815 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
  
 <sup>1</sup>: Only available in the latest nightly build. All the others can also be used using the latest stable release.  
 <sup>2</sup>: Cmdlet is an alias of another cmdlet, used to provide backwards compatibility.
@@ -886,6 +886,7 @@ PnP PowerShell exists out of 814 cmdlets which can help you in setting up, confi
 - [Start-PnPEnterpriseAppInsightsReport](Start-PnPEnterpriseAppInsightsReport.md)
 - [Start-PnPTenantRename](Start-PnPTenantRename.md)
 - [Start-PnPTraceLog](Start-PnPTraceLog.md)
+- [Start-PnPUserAndContentMove](Start-PnPUserAndContentMove.md) <sup>1</sup>
 ## Stop
 - [Stop-PnPFlowRun](Stop-PnPFlowRun.md)
 - [Stop-PnPTraceLog](Stop-PnPTraceLog.md)

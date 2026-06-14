@@ -8737,6 +8737,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Start-PnPUserAndContentMove.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Start-PnPUserAndContentMove.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Stop-PnPFlowRun.md",
       "output": {
         ".html": {

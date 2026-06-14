@@ -91,6 +91,7 @@
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>Microsoft Graph API: Group.ReadWrite.All</li>
+<li>Microsoft Graph API: When using -OwnerUPN to create a private or shared channel, ChannelMember.ReadWrite.All is also required for delegated access. For application access, ChannelMember.ReadWrite.Group or ChannelMember.ReadWrite.All is also required.</li>
 </ul>
 <p>Adds a channel to an existing Microsoft Teams team.</p>
 <h2 id="syntax">SYNTAX</h2>
@@ -158,7 +159,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-ownerupn">-OwnerUPN</h3>
-<p>The User Principal Name (email) of the owner of the channel.</p>
+<p>The User Principal Name (email) of the owner of the channel. When using this parameter, ChannelMember.ReadWrite.All is required in addition to Group.ReadWrite.All for delegated access. For application access, ChannelMember.ReadWrite.Group or ChannelMember.ReadWrite.All is required in addition to Group.ReadWrite.All.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Private channel, Shared channel
 
@@ -192,6 +193,8 @@ Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://learn.microsoft.com/graph/api/channel-post">Microsoft Graph create channel documentation</a></p>
+<p><a href="https://learn.microsoft.com/graph/api/channel-post-members">Microsoft Graph add member to channel documentation</a></p>
 
 </article>
 
