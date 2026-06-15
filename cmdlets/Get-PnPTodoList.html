@@ -97,27 +97,46 @@
 <pre><code class="lang-powershell">Get-PnPTodoList [[-Identity] &lt;String&gt;] [-[User] &lt;EntraIDUserPipeBind&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Use the cmdlet to retrieve all Todo lists or a specific Todo list.</p>
+<p>Use the cmdlet to retrieve all Todo lists or a specific Todo list by Id or display name.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPTodoList
 </code></pre>
 <p>This will return all your (logged-in user) todo lists.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPTodoList -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASUnLfyAAA=&quot;
+<pre><code class="lang-powershell">Get-PnPTodoList -Identity &quot;ABCkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASUnLfyAAA=&quot;
 </code></pre>
 <p>This will return your (logged-in user) todo list with the specified Id.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPTodoList -Identity &quot;Travel items&quot;
+</code></pre>
+<p>This will return your (logged-in user) todo list with the specified display name.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPTodoList -User john@doe.com
 </code></pre>
 <p>This will return the todo lists for the user john.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPTodoList -User john@doe.com -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASUnLfyAAA=&quot;
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Get-PnPTodoList -User john@doe.com -Identity &quot;ABCMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASUnLfyAAA=&quot;
 </code></pre>
-<p>This will return the todo list for the user john with specified Id.</p>
+<p>This will return the todo list for the user john with the specified Id.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Get-PnPTodoList -User john@doe.com -Identity &quot;Travel items&quot;
+</code></pre>
+<p>This will return the todo list for the user john with the specified display name.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Id of the Todo list.</p>
+<p>Id or display name of the Todo list.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -130,17 +149,6 @@ Accept wildcard characters: False
 <h3 id="-user">-User</h3>
 <p>The UPN, Id or instance of an Entra ID user for which you would like to retrieve the todo list available to this user</p>
 <pre><code class="lang-yaml">Type: EntraIDUserPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
 Required: False

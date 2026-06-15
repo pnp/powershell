@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Remove-PnPTodoList | PnP PowerShell </title>
+      <title>Get-PnPTodoTaskFileAttachment | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Remove-PnPTodoList | PnP PowerShell ">
+      <meta name="title" content="Get-PnPTodoTaskFileAttachment | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,28 +85,32 @@
         </div>
 
         <article data-uid="">
-<h1 id="remove-pnptodolist">Remove-PnPTodoList</h1>
+<h1 id="get-pnptodotaskfileattachment">Get-PnPTodoTaskFileAttachment</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>Microsoft Graph API : Tasks.ReadWrite</li>
+<li>Microsoft Graph API : One of Tasks.Read, Tasks.ReadWrite</li>
 </ul>
-<p>Removes a new todo list.</p>
+<p>Gets one Todo task file attachment or all file attachments from a Todo task.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPTodoList [[-Identity] &lt;String&gt;] [-[User] &lt;EntraIDUserPipeBind&gt;]
+<pre><code class="lang-powershell">Get-PnPTodoTaskFileAttachment [-List] &lt;String&gt; [-Task] &lt;TodoTaskPipeBind&gt; [[-Identity] &lt;TodoTaskFileAttachmentPipeBind&gt;] [-User &lt;EntraIDUserPipeBind&gt;] [-DoNotIncludeFileContent]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Use the cmdlet to delete a Todo list.</p>
+<p>Use the cmdlet to retrieve file attachments from a Todo task.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPTodoList -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASYG0vWAAA=&quot;
+<pre><code class="lang-powershell">Get-PnPTodoTaskFileAttachment -List &quot;Travel items&quot; -Task &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVm&quot;
 </code></pre>
-<p>This will delete a todo list with specified Id associated with your (logged-in user) account.</p>
+<p>This will return all file attachments for the specified Todo task.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPTodoList -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASYG0vWAAA=&quot; -User john@doe.com
+<pre><code class="lang-powershell">Get-PnPTodoTaskFileAttachment -List &quot;Travel items&quot; -Task &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVm&quot; -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmAAABEgAQAJ&quot;
 </code></pre>
-<p>This will delete a todo list with specified Id associated with John's account.</p>
+<p>This will return the specified file attachment for the specified Todo task.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPTodoTaskFileAttachment -List &quot;Travel items&quot; -Task &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVm&quot; -DoNotIncludeFileContent
+</code></pre>
+<p>This will return all file attachments for the specified Todo task without including file contents in <code>ContentBytes</code>.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -119,8 +123,30 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-donotincludefilecontent">-DoNotIncludeFileContent</h3>
+<p>Specify to not retrieve and include the file contents in the <code>ContentBytes</code> property. By default file contents are included. Excluding the file content would make this cmdlet operate considerably faster, so if you just want a listing of all the attachments, but do not want the file contents, ensure to include this parameter.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Id of the Todo list.</p>
+<p>Id of the file attachment or an instance returned by <code>Get-PnPTodoTaskFileAttachment</code>.</p>
+<pre><code class="lang-yaml">Type: TodoTaskFileAttachmentPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-list">-List</h3>
+<p>Id or display name of the Todo list.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -130,8 +156,19 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-task">-Task</h3>
+<p>Id of the Todo task or an instance returned by <code>Get-PnPTodoTask</code>.</p>
+<pre><code class="lang-yaml">Type: TodoTaskPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-user">-User</h3>
-<p>The UPN, Id or instance of an Entra ID user for which you would like to create the todo list.</p>
+<p>The UPN, Id or instance of an Entra ID user for which you would like to retrieve file attachments.</p>
 <pre><code class="lang-yaml">Type: EntraIDUserPipeBind
 Parameter Sets: (All)
 

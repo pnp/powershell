@@ -108,6 +108,17 @@
 </code></pre>
 <p>This will create a todo list associated with John's account.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-displayname">-DisplayName</h3>
 <p>Display name of the Todo list.</p>
 <pre><code class="lang-yaml">Type: String
@@ -122,17 +133,6 @@ Accept wildcard characters: False
 <h3 id="-user">-User</h3>
 <p>The UPN, Id or instance of an Entra ID user for which you would like to create the todo list.</p>
 <pre><code class="lang-yaml">Type: EntraIDUserPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
 Required: False

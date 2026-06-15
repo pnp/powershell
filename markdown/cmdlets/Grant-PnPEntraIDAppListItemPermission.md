@@ -1,11 +1,11 @@
 ---
-title: Grant-PnPEntraIDAppListItemPermission
-applicable: SharePoint Online
-Module Name: PnP.PowerShell
 tags: Available in the current Nightly Release only.
-external help file: PnP.PowerShell.dll-Help.xml
-schema: 2.0.0
+applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Grant-PnPEntraIDAppListItemPermission.html
+title: Grant-PnPEntraIDAppListItemPermission
+schema: 2.0.0
+Module Name: PnP.PowerShell
+external help file: PnP.PowerShell.dll-Help.xml
 ---
    
 # Grant-PnPEntraIDAppListItemPermission

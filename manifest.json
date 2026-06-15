@@ -1327,6 +1327,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPTodoTaskFileAttachment.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPTodoTaskFileAttachment.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPView.md",
       "output": {
         ".html": {
@@ -4567,6 +4577,46 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTodoTask.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTodoTask.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTodoTaskChecklistItem.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTodoTaskChecklistItem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTodoTaskFileAttachment.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTodoTaskFileAttachment.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTodoTaskLinkedResource.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTodoTaskLinkedResource.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPTraceLog.md",
       "output": {
         ".html": {
@@ -5601,6 +5651,36 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/New-PnPTodoList.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPTodoTask.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPTodoTask.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPTodoTaskChecklistItem.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPTodoTaskChecklistItem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPTodoTaskLinkedResource.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPTodoTaskLinkedResource.html"
         }
       },
       "version": ""
@@ -6871,6 +6951,46 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPTodoList.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPTodoTask.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPTodoTask.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPTodoTaskChecklistItem.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPTodoTaskChecklistItem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPTodoTaskFileAttachment.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPTodoTaskFileAttachment.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPTodoTaskLinkedResource.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPTodoTaskLinkedResource.html"
         }
       },
       "version": ""
@@ -8971,6 +9091,26 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Update-PnPTodoList.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Update-PnPTodoTask.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Update-PnPTodoTask.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Update-PnPTodoTaskChecklistItem.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Update-PnPTodoTaskChecklistItem.html"
         }
       },
       "version": ""

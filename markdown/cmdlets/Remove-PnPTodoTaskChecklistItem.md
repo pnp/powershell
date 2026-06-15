@@ -1,13 +1,14 @@
 ---
-Module Name: PnP.PowerShell
-title: Update-PnPTodoList
-schema: 2.0.0
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTodoTaskChecklistItem.html
+title: Remove-PnPTodoTaskChecklistItem
+schema: 2.0.0
+Module Name: PnP.PowerShell
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Update-PnPTodoList.html
 ---
  
-# Update-PnPTodoList
+# Remove-PnPTodoTaskChecklistItem
 
 ## SYNOPSIS
 
@@ -15,32 +16,25 @@ online version: https://pnp.github.io/powershell/cmdlets/Update-PnPTodoList.html
 
   * Microsoft Graph API : Tasks.ReadWrite
 
-Updates a new todo list.
+Removes a Todo task checklist item.
 
 ## SYNTAX
 
 ```powershell
-Update-PnPTodoList [[-Identity] <String>] [[-DisplayName] <String>] [-[User] <EntraIDUserPipeBind>]
+Remove-PnPTodoTaskChecklistItem [-List] <String> [-Task] <TodoTaskPipeBind> [-Identity] <String> [-User <EntraIDUserPipeBind>]
 ```
 
 ## DESCRIPTION
-Use the cmdlet to update display name of a Todo list.
+Use the cmdlet to delete a checklist item from a Todo task.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Update-PnPTodoList -Identity "AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASYG0vWAAA=" -DisplayName "Travel items"
+Remove-PnPTodoTaskChecklistItem -List "AQMkADAwATM0MDAAMS0yMDkyLTllN2QtMDACLTAwCgAuAAAD" -Task "AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVm" -Identity "e8dc83b5-8fc2-4a5c-b5c8-a18b3f60f609"
 ```
 
-This will update a todo list's display name associated with your (logged-in user) account.
-
-### EXAMPLE 2
-```powershell
-Update-PnPTodoList -Identity "AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASYG0vWAAA=" -User john@doe.com -DisplayName "Travel Items"
-```
-
-This will update the display name of a todo list associated with John's account.
+This will delete the specified checklist item.
 
 ## PARAMETERS
 
@@ -58,8 +52,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DisplayName
-Display name of the Todo list.
+### -Identity
+Id of the checklist item.
 
 ```yaml
 Type: String
@@ -72,11 +66,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Identity
-Id of the Todo list.
+### -List
+Id or display name of the Todo list.
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Task
+Id of the Todo task or an instance returned by `Get-PnPTodoTask`.
+
+```yaml
+Type: TodoTaskPipeBind
 Parameter Sets: (All)
 
 Required: True
@@ -87,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -User
-The UPN, Id or instance of an Entra ID user for which you would like to create the todo list.
+The UPN, Id or instance of an Entra ID user for which you would like to delete the checklist item.
 
 ```yaml
 Type: EntraIDUserPipeBind
@@ -103,4 +111,6 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+
 

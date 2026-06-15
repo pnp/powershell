@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Remove-PnPTodoList | PnP PowerShell </title>
+      <title>Update-PnPTodoTask | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Remove-PnPTodoList | PnP PowerShell ">
+      <meta name="title" content="Update-PnPTodoTask | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,29 +85,62 @@
         </div>
 
         <article data-uid="">
-<h1 id="remove-pnptodolist">Remove-PnPTodoList</h1>
+<h1 id="update-pnptodotask">Update-PnPTodoTask</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>Microsoft Graph API : Tasks.ReadWrite</li>
 </ul>
-<p>Removes a new todo list.</p>
+<p>Updates a Todo task.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPTodoList [[-Identity] &lt;String&gt;] [-[User] &lt;EntraIDUserPipeBind&gt;]
+<pre><code class="lang-powershell">Update-PnPTodoTask [-List] &lt;String&gt; [-Identity] &lt;TodoTaskPipeBind&gt; [-Title &lt;String&gt;] [-Body &lt;String&gt;] [-BodyContentType &lt;MessageBodyContentType&gt;] [-Categories &lt;String[]&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;] [-ReminderDateTime &lt;DateTime&gt;] [-Importance &lt;ToDoTaskImportance&gt;] [-Status &lt;ToDoTaskStatus&gt;] [-IsReminderOn &lt;Boolean&gt;] [-TimeZone &lt;String&gt;] [-User &lt;EntraIDUserPipeBind&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Use the cmdlet to delete a Todo list.</p>
+<p>Use the cmdlet to update properties of a Todo task in a Todo list.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPTodoList -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASYG0vWAAA=&quot;
+<pre><code class="lang-powershell">Update-PnPTodoTask -List &quot;AQMkADAwATM0MDAAMS0yMDkyLTllN2QtMDACLTAwCgAuAAAD&quot; -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASUnLfyAAA=&quot; -Title &quot;Book return flights&quot;
 </code></pre>
-<p>This will delete a todo list with specified Id associated with your (logged-in user) account.</p>
+<p>This will update the title of a Todo task associated with your logged-in user account.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPTodoList -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASYG0vWAAA=&quot; -User john@doe.com
+<pre><code class="lang-powershell">Update-PnPTodoTask -List &quot;AQMkADAwATM0MDAAMS0yMDkyLTllN2QtMDACLTAwCgAuAAAD&quot; -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASUnLfyAAA=&quot; -Status Completed
 </code></pre>
-<p>This will delete a todo list with specified Id associated with John's account.</p>
+<p>This will mark a Todo task as completed.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-body">-Body</h3>
+<p>Body content of the Todo task.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-bodycontenttype">-BodyContentType</h3>
+<p>Content type of the Todo task body.</p>
+<pre><code class="lang-yaml">Type: MessageBodyContentType
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: Text
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-categories">-Categories</h3>
+<p>Categories associated with the Todo task.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -119,8 +152,52 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-duedatetime">-DueDateTime</h3>
+<p>Due date and time of the Todo task.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Id of the Todo list.</p>
+<p>Id of the Todo task or an instance returned by <code>Get-PnPTodoTask</code>.</p>
+<pre><code class="lang-yaml">Type: TodoTaskPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-importance">-Importance</h3>
+<p>Importance of the Todo task.</p>
+<pre><code class="lang-yaml">Type: ToDoTaskImportance
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-isreminderon">-IsReminderOn</h3>
+<p>Specify whether a reminder is enabled for the Todo task.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-list">-List</h3>
+<p>Id or display name of the Todo list.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -130,8 +207,63 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-reminderdatetime">-ReminderDateTime</h3>
+<p>Reminder date and time of the Todo task.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-startdatetime">-StartDateTime</h3>
+<p>Start date and time of the Todo task.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-status">-Status</h3>
+<p>Status of the Todo task.</p>
+<pre><code class="lang-yaml">Type: ToDoTaskStatus
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-timezone">-TimeZone</h3>
+<p>Time zone used for date and time values.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: UTC
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-title">-Title</h3>
+<p>Title of the Todo task.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-user">-User</h3>
-<p>The UPN, Id or instance of an Entra ID user for which you would like to create the todo list.</p>
+<p>The UPN, Id or instance of an Entra ID user for which you would like to update the Todo task.</p>
 <pre><code class="lang-yaml">Type: EntraIDUserPipeBind
 Parameter Sets: (All)
 

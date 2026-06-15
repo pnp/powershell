@@ -6,7 +6,7 @@ description: Full cmdlet reference for PnP PowerShell.
 
 # PnP PowerShell cmdlets
 
-PnP PowerShell exists out of 815 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
+PnP PowerShell exists out of 829 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
  
 <sup>1</sup>: Only available in the latest nightly build. All the others can also be used using the latest stable release.  
 <sup>2</sup>: Cmdlet is an alias of another cmdlet, used to provide backwards compatibility.
@@ -108,6 +108,7 @@ PnP PowerShell exists out of 815 cmdlets which can help you in setting up, confi
 - [Add-PnPTenantSequenceSubSite](Add-PnPTenantSequenceSubSite.md)
 - [Add-PnPTenantTheme](Add-PnPTenantTheme.md)
 - [Add-PnPTermToTerm](Add-PnPTermToTerm.md)
+- [Add-PnPTodoTaskFileAttachment](Add-PnPTodoTaskFileAttachment.md) <sup>1</sup>
 - [Add-PnPView](Add-PnPView.md)
 - [Add-PnPViewsFromXML](Add-PnPViewsFromXML.md)
 - [Add-PnPVivaConnectionsDashboardACE](Add-PnPVivaConnectionsDashboardACE.md)
@@ -444,6 +445,10 @@ PnP PowerShell exists out of 815 cmdlets which can help you in setting up, confi
 - [Get-PnPTheme](Get-PnPTheme.md)
 - [Get-PnPTimeZoneId](Get-PnPTimeZoneId.md)
 - [Get-PnPTodoList](Get-PnPTodoList.md)
+- [Get-PnPTodoTask](Get-PnPTodoTask.md) <sup>1</sup>
+- [Get-PnPTodoTaskChecklistItem](Get-PnPTodoTaskChecklistItem.md) <sup>1</sup>
+- [Get-PnPTodoTaskFileAttachment](Get-PnPTodoTaskFileAttachment.md) <sup>1</sup>
+- [Get-PnPTodoTaskLinkedResource](Get-PnPTodoTaskLinkedResource.md) <sup>1</sup>
 - [Get-PnPTraceLog](Get-PnPTraceLog.md)
 - [Get-PnPUnfurlLink](Get-PnPUnfurlLink.md)
 - [Get-PnPUnifiedAuditLog](Get-PnPUnifiedAuditLog.md)
@@ -557,6 +562,9 @@ PnP PowerShell exists out of 815 cmdlets which can help you in setting up, confi
 - [New-PnPTermLabel](New-PnPTermLabel.md)
 - [New-PnPTermSet](New-PnPTermSet.md)
 - [New-PnPTodoList](New-PnPTodoList.md)
+- [New-PnPTodoTask](New-PnPTodoTask.md) <sup>1</sup>
+- [New-PnPTodoTaskChecklistItem](New-PnPTodoTaskChecklistItem.md) <sup>1</sup>
+- [New-PnPTodoTaskLinkedResource](New-PnPTodoTaskLinkedResource.md) <sup>1</sup>
 - [New-PnPUPABulkImportJob](New-PnPUPABulkImportJob.md)
 - [New-PnPUser](New-PnPUser.md)
 - [New-PnPVivaEngageCommunity](New-PnPVivaEngageCommunity.md)
@@ -688,6 +696,10 @@ PnP PowerShell exists out of 815 cmdlets which can help you in setting up, confi
 - [Remove-PnPTermGroup](Remove-PnPTermGroup.md)
 - [Remove-PnPTermLabel](Remove-PnPTermLabel.md)
 - [Remove-PnPTodoList](Remove-PnPTodoList.md)
+- [Remove-PnPTodoTask](Remove-PnPTodoTask.md) <sup>1</sup>
+- [Remove-PnPTodoTaskChecklistItem](Remove-PnPTodoTaskChecklistItem.md) <sup>1</sup>
+- [Remove-PnPTodoTaskFileAttachment](Remove-PnPTodoTaskFileAttachment.md) <sup>1</sup>
+- [Remove-PnPTodoTaskLinkedResource](Remove-PnPTodoTaskLinkedResource.md) <sup>1</sup>
 - [Remove-PnPUser](Remove-PnPUser.md)
 - [Remove-PnPUserInfo](Remove-PnPUserInfo.md)
 - [Remove-PnPUserProfile](Remove-PnPUserProfile.md)
@@ -920,6 +932,8 @@ PnP PowerShell exists out of 815 cmdlets which can help you in setting up, confi
 - [Update-PnPTeamsApp](Update-PnPTeamsApp.md)
 - [Update-PnPTeamsUser](Update-PnPTeamsUser.md)
 - [Update-PnPTodoList](Update-PnPTodoList.md)
+- [Update-PnPTodoTask](Update-PnPTodoTask.md) <sup>1</sup>
+- [Update-PnPTodoTaskChecklistItem](Update-PnPTodoTaskChecklistItem.md) <sup>1</sup>
 - [Update-PnPUserType](Update-PnPUserType.md)
 - [Update-PnPVivaConnectionsDashboardACE](Update-PnPVivaConnectionsDashboardACE.md) <sup>2</sup>
 - [Update-SiteClassification](Update-SiteClassification.md) <sup>2</sup>

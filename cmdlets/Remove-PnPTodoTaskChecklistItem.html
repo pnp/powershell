@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Remove-PnPTodoList | PnP PowerShell </title>
+      <title>Remove-PnPTodoTaskChecklistItem | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Remove-PnPTodoList | PnP PowerShell ">
+      <meta name="title" content="Remove-PnPTodoTaskChecklistItem | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,28 +85,24 @@
         </div>
 
         <article data-uid="">
-<h1 id="remove-pnptodolist">Remove-PnPTodoList</h1>
+<h1 id="remove-pnptodotaskchecklistitem">Remove-PnPTodoTaskChecklistItem</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>Microsoft Graph API : Tasks.ReadWrite</li>
 </ul>
-<p>Removes a new todo list.</p>
+<p>Removes a Todo task checklist item.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPTodoList [[-Identity] &lt;String&gt;] [-[User] &lt;EntraIDUserPipeBind&gt;]
+<pre><code class="lang-powershell">Remove-PnPTodoTaskChecklistItem [-List] &lt;String&gt; [-Task] &lt;TodoTaskPipeBind&gt; [-Identity] &lt;String&gt; [-User &lt;EntraIDUserPipeBind&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Use the cmdlet to delete a Todo list.</p>
+<p>Use the cmdlet to delete a checklist item from a Todo task.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPTodoList -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASYG0vWAAA=&quot;
+<pre><code class="lang-powershell">Remove-PnPTodoTaskChecklistItem -List &quot;AQMkADAwATM0MDAAMS0yMDkyLTllN2QtMDACLTAwCgAuAAAD&quot; -Task &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVm&quot; -Identity &quot;e8dc83b5-8fc2-4a5c-b5c8-a18b3f60f609&quot;
 </code></pre>
-<p>This will delete a todo list with specified Id associated with your (logged-in user) account.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPTodoList -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASYG0vWAAA=&quot; -User john@doe.com
-</code></pre>
-<p>This will delete a todo list with specified Id associated with John's account.</p>
+<p>This will delete the specified checklist item.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -120,7 +116,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Id of the Todo list.</p>
+<p>Id of the checklist item.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -130,8 +126,30 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-list">-List</h3>
+<p>Id or display name of the Todo list.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-task">-Task</h3>
+<p>Id of the Todo task or an instance returned by <code>Get-PnPTodoTask</code>.</p>
+<pre><code class="lang-yaml">Type: TodoTaskPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-user">-User</h3>
-<p>The UPN, Id or instance of an Entra ID user for which you would like to create the todo list.</p>
+<p>The UPN, Id or instance of an Entra ID user for which you would like to delete the checklist item.</p>
 <pre><code class="lang-yaml">Type: EntraIDUserPipeBind
 Parameter Sets: (All)
 

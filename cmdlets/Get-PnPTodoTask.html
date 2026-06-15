@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Remove-PnPTodoList | PnP PowerShell </title>
+      <title>Get-PnPTodoTask | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Remove-PnPTodoList | PnP PowerShell ">
+      <meta name="title" content="Get-PnPTodoTask | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,28 +85,40 @@
         </div>
 
         <article data-uid="">
-<h1 id="remove-pnptodolist">Remove-PnPTodoList</h1>
+<h1 id="get-pnptodotask">Get-PnPTodoTask</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>Microsoft Graph API : Tasks.ReadWrite</li>
+<li>Microsoft Graph API : One of Tasks.Read, Tasks.ReadWrite, Tasks.Read.All</li>
 </ul>
-<p>Removes a new todo list.</p>
+<p>Gets one Todo task or all Todo tasks from a Todo list by list Id or display name.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPTodoList [[-Identity] &lt;String&gt;] [-[User] &lt;EntraIDUserPipeBind&gt;]
+<pre><code class="lang-powershell">Get-PnPTodoTask [-List] &lt;TodoTaskPipeBind&gt; [[-Identity] &lt;TodoTaskPipeBind&gt;] [-User &lt;EntraIDUserPipeBind&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Use the cmdlet to delete a Todo list.</p>
+<p>Use the cmdlet to retrieve all Todo tasks from a Todo list or a specific Todo task. The Todo list can be specified by Id or display name.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPTodoList -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASYG0vWAAA=&quot;
+<pre><code class="lang-powershell">Get-PnPTodoTask -List &quot;AQMkADAwATM0MDAAMS0yMDkyLTllN2QtMDACLTAwCgAuAAAD&quot;
 </code></pre>
-<p>This will delete a todo list with specified Id associated with your (logged-in user) account.</p>
+<p>This will return all tasks from the specified Todo list associated with your logged-in user account.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPTodoList -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASYG0vWAAA=&quot; -User john@doe.com
+<pre><code class="lang-powershell">Get-PnPTodoTask -List &quot;Travel items&quot;
 </code></pre>
-<p>This will delete a todo list with specified Id associated with John's account.</p>
+<p>This will return all tasks from the Todo list with the specified display name associated with your logged-in user account.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPTodoTask -List &quot;AQMkADAwATM0MDAAMS0yMDkyLTllN2QtMDACLTAwCgAuAAAD&quot; -Identity &quot;AAMkAGU4MGE1OTRiLTUzMGEtNDRjZi05ZmVmLWFiMTkyYmQxODRjOQAuAAAAAACQV8RStyZCQJ4ydzjIK5HmAQD2LFcxdwYMRqbupn47nEYYAASUnLfyAAA=&quot;
+</code></pre>
+<p>This will return the specified Todo task from the specified Todo list associated with your logged-in user account.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPTodoTask -User john@doe.com -List &quot;AQMkADAwATM0MDAAMS0yMDkyLTllN2QtMDACLTAwCgAuAAAD&quot;
+</code></pre>
+<p>This will return all tasks from the specified Todo list associated with John's account.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Get-PnPTodoTask -User john@doe.com -List &quot;Travel items&quot;
+</code></pre>
+<p>This will return all tasks from the Todo list with the specified display name associated with John's account.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -120,7 +132,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Id of the Todo list.</p>
+<p>Id of the Todo task or an instance returned by <code>Get-PnPTodoTask</code>.</p>
+<pre><code class="lang-yaml">Type: TodoTaskPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-list">-List</h3>
+<p>Id or display name of the Todo list.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -131,7 +154,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-user">-User</h3>
-<p>The UPN, Id or instance of an Entra ID user for which you would like to create the todo list.</p>
+<p>The UPN, Id or instance of an Entra ID user for which you would like to retrieve Todo tasks.</p>
 <pre><code class="lang-yaml">Type: EntraIDUserPipeBind
 Parameter Sets: (All)
 
