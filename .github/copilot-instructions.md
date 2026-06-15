@@ -269,7 +269,6 @@ When generating or modifying code:
 - Add XML code comments to utility classes and enum classes to explain classes and members; cmdlet classes do not need inline comments
 - Keep cmdlet documentation in sync: create documentation markdown files under `/documentation/` for new cmdlets, delete documentation for removed cmdlets, and update documentation when cmdlets change
 - In cmdlet documentation markdown files, list parameter subsections in the `## PARAMETERS` section alphabetically
-- Keep `src/Commands/CHANGELOG.md` in sync for cmdlet changes: add a brief entry under the appropriate `Current nightly` subsection (`Added`, `Changed`, `Fixed`, or `Removed`) and mention the specific cmdlet names that were added, changed, fixed, or removed
 - Add future repository-specific guidance and memory items to this root-level `.github/copilot-instructions.md` file rather than workspace-local instruction files
 - Consider cross-platform compatibility
 - Remember that this module runs in PowerShell 7.4+ (not Windows PowerShell 5.1)
@@ -277,4 +276,5 @@ When generating or modifying code:
 - Prioritize readability and maintainability
 - Follow the principle of least surprise for PowerShell users
 - When starting from a GitHub issue, be sure to reference and link that issue in the proposed PR that would fix it
+- Keep `CHANGELOG.md` in sync for cmdlet changes: add a brief entry under the appropriate `Current nightly` subsection (`Added`, `Changed`, `Fixed`, or `Removed`) and mention the specific cmdlet names that were added, changed, fixed, or removed
 - When creating a PR to propose a code change, please include adding an entry to the [Changelog.md](https://github.com/pnp/powershell/blob/dev/CHANGELOG.md) file under the [Current nightly] section picking either subcategory as feels appropriate for the change at hand: Added, Changed, Fixed, Removed. Ensure it contains a link to the PR.
