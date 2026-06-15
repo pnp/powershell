@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+- Added `Get-PnPTodoTask`, `New-PnPTodoTask`, `Update-PnPTodoTask`, `Remove-PnPTodoTask`, `Get-PnPTodoTaskChecklistItem`, `New-PnPTodoTaskChecklistItem`, `Update-PnPTodoTaskChecklistItem`, `Remove-PnPTodoTaskChecklistItem`, `Get-PnPTodoTaskLinkedResource`, `New-PnPTodoTaskLinkedResource`, `Remove-PnPTodoTaskLinkedResource`, `Get-PnPTodoTaskFileAttachment`, `Add-PnPTodoTaskFileAttachment`, and `Remove-PnPTodoTaskFileAttachment` cmdlets to allow working with Microsoft To Do tasks.
 
 ### Changed
 
