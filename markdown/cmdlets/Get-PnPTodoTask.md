@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTodoTask.html
-title: Get-PnPTodoTask
 schema: 2.0.0
 Module Name: PnP.PowerShell
 external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPTodoTask
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTodoTask.html
+tags: Available in the current Nightly Release only.
 ---
  
 # Get-PnPTodoTask

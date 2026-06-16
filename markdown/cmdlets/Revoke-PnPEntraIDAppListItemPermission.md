@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Revoke-PnPEntraIDAppListItemPermission.html
-title: Revoke-PnPEntraIDAppListItemPermission
 schema: 2.0.0
 Module Name: PnP.PowerShell
 external help file: PnP.PowerShell.dll-Help.xml
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Revoke-PnPEntraIDAppListItemPermission.html
+title: Revoke-PnPEntraIDAppListItemPermission
+tags: Available in the current Nightly Release only.
 ---
    
 # Revoke-PnPEntraIDAppListItemPermission

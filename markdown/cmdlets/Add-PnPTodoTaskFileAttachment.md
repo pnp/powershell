@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPTodoTaskFileAttachment.html
-title: Add-PnPTodoTaskFileAttachment
 schema: 2.0.0
 Module Name: PnP.PowerShell
 external help file: PnP.PowerShell.dll-Help.xml
+title: Add-PnPTodoTaskFileAttachment
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPTodoTaskFileAttachment.html
+tags: Available in the current Nightly Release only.
 ---
  
 # Add-PnPTodoTaskFileAttachment

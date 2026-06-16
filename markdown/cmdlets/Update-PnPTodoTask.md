@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Update-PnPTodoTask.html
-title: Update-PnPTodoTask
 schema: 2.0.0
 Module Name: PnP.PowerShell
 external help file: PnP.PowerShell.dll-Help.xml
+title: Update-PnPTodoTask
+online version: https://pnp.github.io/powershell/cmdlets/Update-PnPTodoTask.html
+tags: Available in the current Nightly Release only.
 ---
  
 # Update-PnPTodoTask

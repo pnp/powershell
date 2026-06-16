@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTodoTask.html
-title: Remove-PnPTodoTask
 schema: 2.0.0
 Module Name: PnP.PowerShell
 external help file: PnP.PowerShell.dll-Help.xml
+title: Remove-PnPTodoTask
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTodoTask.html
+tags: Available in the current Nightly Release only.
 ---
  
 # Remove-PnPTodoTask
