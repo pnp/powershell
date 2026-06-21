@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
-applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Add-PnPTeamsChannel.html
-external help file: PnP.PowerShell.dll-Help.xml
+schema: 2.0.0
 title: Add-PnPTeamsChannel
+external help file: PnP.PowerShell.dll-Help.xml
+applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
 ---
-  
+   
 # Add-PnPTeamsChannel
 
 ## SYNOPSIS
@@ -163,3 +164,4 @@ Accept wildcard characters: False
 [Microsoft Graph create channel documentation](https://learn.microsoft.com/graph/api/channel-post)
 
 [Microsoft Graph add member to channel documentation](https://learn.microsoft.com/graph/api/channel-post-members)
+
