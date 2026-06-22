@@ -1,10 +1,10 @@
 ---
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+schema: 2.0.0
 online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPFlow.html
 title: Remove-PnPFlow
 external help file: PnP.PowerShell.dll-Help.xml
-schema: 2.0.0
-tags: Available in the current Nightly Release only.
-Module Name: PnP.PowerShell
 ---
   
 # Remove-PnPFlow
