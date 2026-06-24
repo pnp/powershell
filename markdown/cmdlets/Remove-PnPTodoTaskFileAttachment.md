@@ -1,11 +1,11 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTodoTaskFileAttachment.html
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
-applicable: SharePoint Online
-Module Name: PnP.PowerShell
-title: Remove-PnPTodoTaskFileAttachment
 tags: Available in the current Nightly Release only.
+schema: 2.0.0
+title: Remove-PnPTodoTaskFileAttachment
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTodoTaskFileAttachment.html
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
 ---
  
 # Remove-PnPTodoTaskFileAttachment

@@ -1,11 +1,11 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTodoTaskLinkedResource.html
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
-applicable: SharePoint Online
-Module Name: PnP.PowerShell
-title: Remove-PnPTodoTaskLinkedResource
 tags: Available in the current Nightly Release only.
+schema: 2.0.0
+title: Remove-PnPTodoTaskLinkedResource
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTodoTaskLinkedResource.html
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
 ---
  
 # Remove-PnPTodoTaskLinkedResource

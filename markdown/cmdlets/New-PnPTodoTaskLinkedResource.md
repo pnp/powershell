@@ -1,11 +1,11 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPTodoTaskLinkedResource.html
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
-applicable: SharePoint Online
-Module Name: PnP.PowerShell
-title: New-PnPTodoTaskLinkedResource
 tags: Available in the current Nightly Release only.
+schema: 2.0.0
+title: New-PnPTodoTaskLinkedResource
+online version: https://pnp.github.io/powershell/cmdlets/New-PnPTodoTaskLinkedResource.html
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
 ---
  
 # New-PnPTodoTaskLinkedResource

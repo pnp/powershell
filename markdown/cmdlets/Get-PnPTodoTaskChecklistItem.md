@@ -1,11 +1,11 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTodoTaskChecklistItem.html
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
-applicable: SharePoint Online
-Module Name: PnP.PowerShell
-title: Get-PnPTodoTaskChecklistItem
 tags: Available in the current Nightly Release only.
+schema: 2.0.0
+title: Get-PnPTodoTaskChecklistItem
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTodoTaskChecklistItem.html
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
 ---
  
 # Get-PnPTodoTaskChecklistItem
