@@ -1,13 +1,16 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
+using Microsoft.SharePoint.Administration;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Administration;
 using Microsoft.SharePoint.Client.Sharing;
+using Microsoft.SharePoint.Client.Utilities;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Reflection;
 
 namespace PnP.PowerShell.Commands.Model
@@ -232,6 +235,10 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? AnyoneLinkTrackUsers { private set; get; }
 
+        public bool? AllowFileArchive { private set; get; }
+
+        public bool? AllowFileArchiveOnNewSitesByDefault { private set; get; }
+
         public bool? EnableSiteArchive { private set; get; }
 
         public bool? ESignatureEnabled { private set; get; }
@@ -275,6 +282,7 @@ namespace PnP.PowerShell.Commands.Model
         [CsomToModelConverter("ODBSharingCapability")]
         public SharingCapabilities? OneDriveSharingCapability { private set; get; }
 
+        [CsomToModelConverter(Skip = true)]
         public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { private set; get; }
 
         public bool? AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { private set; get; }
@@ -282,6 +290,11 @@ namespace PnP.PowerShell.Commands.Model
         public bool? SelfServiceSiteCreationDisabled { private set; get; }
 
         public string WhoCanShareAllowListInTenant { private set; get; }
+
+        /// <summary>
+        /// Gets: a list of PrincipalNames Example output: List of PrincipalNames. e.g. ["c:0-.f|rolemanager|contoso-all-users/35533f7d-4536-4c82-9dbc-352f9424578b"]
+        /// </summary>
+        public IList<string> WhoCanShareAllowListInTenantByPrincipalIdentity { private set; get; }
 
         public bool? ExtendPermissionsToUnprotectedFiles { private set; get; }
 
@@ -328,7 +341,233 @@ namespace PnP.PowerShell.Commands.Model
         public List<string> WhoCanShareAuthenticatedGuestAllowList { private set; get; }
         public bool? EnableSensitivityLabelForOneNote { private set; get; }
         public bool? EnableSensitivityLabelForVideoFiles { private set; get; }
+        public string[] KnowledgeAgentSelectedSitesList { private set; get; }
+        public bool? KnowledgeAgentEnabled { get; private set; }
+        public bool? AllowClassicPublishingSiteCreation { get; private set; }
+        public bool? AllowLimitedAccessOnUnmanagedDevices { get; private set; }
+        public string AmplifyAdminSettings { get; private set; }
+        public bool? AppOnlyBypassPeoplePickerPolicies { get; private set; }
+        public string ArchiveRedirectUrl { get; private set; }
 
+        [CsomToModelConverter(Skip = true)]
+        public bool? AutofillColumnsCustomModelEnabled { get; private set; }
+
+        public bool? AutofillColumnsEnabled { get; private set; }
+        public bool? BlockAccessOnUnmanagedDevices { get; private set; }
+        public bool? BlockAppAccessWithAuthenticationContext { get; private set; }
+        public bool? ClassicPagesRestrictMode { get; private set; }
+        public string ConditionalAccessPolicyErrorHelpLink { get; private set; }
+
+        [CsomToModelConverter(Skip = true)]
+        public bool? ResyncContentSecurityPolicyConfigurationEntries { get; private set; }
+
+        public bool? ContentSecurityPolicyConfigSynced { get; private set; }
+
+        public bool? CoreDefaultLinkToExistingAccess { get; private set; }
+
+        public string CustomizedExternalSharingServiceUrl { get; private set; }
+
+        public bool? CustomScriptsRestrictMode { get; private set; }
+
+        public bool? DelayDenyAddAndCustomizePagesEnforcement { get; private set; }
+
+        public bool? DelayContentSecurityPolicyEnforcement { get; private set; }
+
+        public bool? DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites { get; private set; }
+
+        public bool? DisableBackToClassic { get; private set; }
+
+        public bool? DisableReportProblemDialog { get; private set; }
+
+        public bool? DisableSharePointStoreAccess { get; private set; }
+
+        public bool? DocumentUnderstandingEnabled { get; private set; }
+
+        public bool? EmailAttestationEnabled { get; private set; }
+
+        public bool? EnableAutoNewsDigest { get; private set; }
+
+        public bool? EnableDirectToCustomerBilling { get; private set; }
+
+        public bool? EnableMinimumVersionRequirement { get; private set; }
+
+        public bool? EnableMipSiteLabel { get; private set; }
+
+        public bool? EnablePromotedFileHandlers { get; private set; }
+
+        public bool? EnableTenantRestrictionsInsights { get; private set; }
+
+        public bool? ExemptNativeUsersFromTenantLevelRestrictedAccessControl { get; private set; }
+
+        [CsomToModelConverter(Skip = true)]
+        public Role? AddressbarLinkPermission { get; private set; }
+
+        public string AIBuilderDefaultPowerAppsEnvironment { get; private set; }
+
+        public bool? AllowCommentsTextOnEmailEnabled { get; private set; }
+
+        public bool? AllowGuestUserShareToUsersNotInSiteCollection { get; private set; }
+
+        public bool? AllowLegacyAuthProtocolsEnabledSetting { get; private set; }
+
+        public bool? AllowLegacyBrowserAuthProtocolsEnabledSetting { get; private set; }
+        public bool? BlockDownloadOfAllFilesForGuests { get; private set; }
+
+        public bool? BlockDownloadOfAllFilesOnUnmanagedDevices { get; private set; }
+
+        public bool? BlockDownloadOfViewableFilesForGuests { get; private set; }
+
+        public bool? BlockDownloadOfViewableFilesOnUnmanagedDevices { get; private set; }
+
+        public bool? BlockMacSync { get; private set; }
+
+        public bool? BlockSendLabelMismatchEmail { get; private set; }
+
+        public string BlockUserInfoVisibility { get; private set; }
+
+        public long? BonusStorageQuotaMB { get; private set; }
+
+        public bool? CommentsOnFilesDisabled { get; private set; }
+
+        public bool? CommentsOnListItemsDisabled { get; private set; }
+
+        public SharingState? CoreBlockGuestsAsSiteAdmin { get; private set; }
+
+        public int? CoreOrganizationSharingLinkMaxExpirationInDays { get; private set; }
+
+        public int? CoreOrganizationSharingLinkRecommendedExpirationInDays { get; private set; }
+
+        public bool? DataverseUsageConsentEnabled { get; private set; }
+
+        public SiteInfoForSitePicker DefaultContentCenterSite { get; private set; }
+
+        public bool? DelegateRestrictedAccessControlConfiguration { get; private set; }
+
+        public bool? DelegateRestrictedContentDiscoveryConfiguration { get; private set; }
+
+        public bool? DisableOutlookPSTVersionTrimming { get; private set; }
+
+        public SyntexSiteScopeContentCenterMode? DocumentUnderstandingEnabledInContentCenter { get; private set; }
+
+        public string GuestSharingGroupAllowListInTenant { private set; get; }
+
+        public bool? HasIntelligentContentServicesCapability { private set; get; }
+
+        public bool? HasTopicExperiencesCapability { private set; get; }
+        public ImageTaggingChoice? ImageTaggingOption { private set; get; }
+
+        public bool? IncludeAtAGlanceInShareEmails { private set; get; }
+
+        public bool? IsAppBarTemporarilyDisabled { private set; get; }
+
+        public bool? IsHubSitesMultiGeoFlightEnabled { private set; get; }
+
+        public bool? IsMnAFlightEnabled { private set; get; }
+        public bool? IsMultiGeo { private set; get; }
+        public bool? IsMultipleHomeSitesFlightEnabled { private set; get; }
+
+        public bool? IsMultipleVivaConnectionsFlightEnabled { private set; get; }
+
+        public bool? IsUnmanagedSyncClientForTenantRestricted { private set; get; }
+
+        public bool? IsUnmanagedSyncClientRestrictionFlightEnabled { private set; get; }
+
+        public bool? IsVivaHomeFlightEnabled { private set; get; }
+
+        public bool? IsVivaHomeGAFlightEnabled { private set; get; }
+
+        public bool? IsWBFluidEnabled { private set; get; }
+
+        public KnowledgeAgentScopeMode? KnowledgeAgentScopeMode { private set; get; }
+
+        public string LabelMismatchEmailHelpLink { private set; get; }
+
+        public SPOLimitedAccessFileType? LimitedAccessFileType { private set; get; }
+
+        public bool? MachineLearningCaptureEnabled { private set; get; }
+
+        public bool? MarkAllFilesAsSensitiveByDefault { private set; get; }
+
+        public bool? MassDeleteNotificationDisabled { private set; get; }
+
+        public bool? MassDeleteNotificationDisabledForODB { private set; get; }
+
+        public bool? MassDeleteNotificationDisabledForSPO { private set; get; }
+
+        public MediaTranscriptionPolicyType? MediaTranscription { private set; get; }
+
+        public MediaTranscriptionAutomaticFeaturesPolicyType? MediaTranscriptionAutomaticFeatures { private set; get; }
+
+        public bool? MobileFriendlyUrlEnabledInTenant { private set; get; }
+
+        public string OrgNewsSiteUrl { private set; get; }
+
+        public bool? PrebuiltEnabled { private set; get; }
+
+        public SyntexSiteScopeContentCenterMode? PrebuiltEnabledInContentCenter { private set; get; }
+
+        public string RestrictedAccessControlForOneDriveErrorHelpLink { private set; get; }
+
+        public bool? RestrictedOneDriveLicense { private set; get; }
+
+        public bool? RestrictedSharePointLicense { private set; get; }
+        public bool? RestrictExternalSharingForAgents { private set; get; }
+        public bool? RestrictResourceAccountAccess { private set; get; }
+        public string RootSiteUrl { private set; get; }
+
+        public bool? SharePointAddInsBlocked { private set; get; }
+
+        public bool? ShowOpenInDesktopOptionForSyncedFiles { private set; get; }
+
+        public bool? SiteOwnersCanAccessMissingContent { private set; get; }
+
+        public bool? StopAlerts { private set; get; }
+
+        public bool? StopNew2010Workflows { private set; get; }
+
+        public bool? TaxonomyTaggingEnabled { private set; get; }
+
+        public bool? TranslationEnabled { private set; get; }
+ 
+        public bool? EnforceRequestDigest { private set; get; }
+         
+        public bool? EnableNotificationsSubscriptions { set; get; }
+
+        public long? ArchivedFileStorageUsageMB { get; private set; }
+
+        [CsomToModelConverter(Skip = true)]
+        public Guid? AllOrganizationSecurityGroupId { get; private set; }
+
+        public bool? AllowAppsBypassOfUnmanagedDevicePolicy { get; private set; }
+
+        public SPResilienceModeType? AuthContextResilienceMode { get; private set; }
+
+        public bool? BlockDownloadFileTypePolicy { get; private set; }
+
+        [CsomToModelConverter(Skip = true)]
+        public string[] ContentTypeSyncSiteTemplatesList { get; private set; }
+
+        public Guid[] DisabledAdaptiveCardExtensionIds { get; private set; }
+
+        public bool? M365AdditionalStorageSPOEnabled { get; private set; }
+
+        public bool? M365SharePointStorageEnabled { get; private set; }
+
+        public int? OneDriveOrganizationSharingLinkMaxExpirationInDays { get; private set; }
+
+        public int? OneDriveOrganizationSharingLinkRecommendedExpirationInDays { get; private set; }
+
+        public bool? ReduceTempTokenLifetimeEnabled { get; private set; }
+
+        public int? ReduceTempTokenLifetimeValue { get; private set; }
+
+        public Guid[] RestrictExternalSharing { get; private set; }
+
+        public SPOTlsTokenBindingPolicyValue? TlsTokenBindingPolicyValue { get; private set; }
+
+        public SPOFileVersionFileTypePolicySettings[] VersionPolicyFileTypeOverride { get; private set; }
+
+        public bool? ViewersCanCommentOnMediaDisabled { get; private set; }
         #endregion
 
         public SPOTenant(Tenant tenant, ClientContext clientContext, BasePSCmdlet cmdlet)
@@ -390,6 +629,110 @@ namespace PnP.PowerShell.Commands.Model
                 cmdlet.LogDebug($"Property DefaultOneDriveInformationBarrierMode not loaded due to error '{e.Message}'");
             }
 
+            try
+            {
+                var allOrganizationSecurityGroupId = tenant.AllOrganizationSecurityGroupId;
+                AllOrganizationSecurityGroupId = allOrganizationSecurityGroupId == Guid.Empty ? null : allOrganizationSecurityGroupId;
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property AllOrganizationSecurityGroupId not loaded due to error '{e.Message}'");
+            }
+
+            try
+            {
+                ContentTypeSyncSiteTemplatesList = tenant.ContentTypeSyncSiteTemplatesList?.ToArray();
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property ContentTypeSyncSiteTemplatesList not loaded due to error '{e.Message}'");
+            }
+
+            ResyncContentSecurityPolicyConfigurationEntries = ContentSecurityPolicyConfigSynced.HasValue
+                ? !ContentSecurityPolicyConfigSynced.Value
+                : null;
+
+            // KnowledgeAgentSelectedSitesList maps from KnowledgeAgentSiteList on Tenant and requires manual conversion
+            try
+            {
+                if (tenant.KnowledgeAgentSiteList != null)
+                {
+                    var siteUrls = new List<string>();
+
+                    foreach (var siteId in tenant.KnowledgeAgentSiteList)
+                    {
+                        try
+                        {
+                            var siteProperties = tenant.GetSitePropertiesById(siteId, true);
+                            clientContext.ExecuteQueryRetry();
+
+                            if (!string.IsNullOrEmpty(siteProperties?.Url))
+                            {
+                                siteUrls.Add(siteProperties.Url);
+                            }
+                            else
+                            {
+                                cmdlet.LogDebug($"KnowledgeAgentSelectedSitesList: site id '{siteId}' resolved with no URL; skipping.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Site might be deleted or otherwise not resolvable; log and continue with the next entry
+                            cmdlet.LogDebug($"KnowledgeAgentSelectedSitesList: failed to resolve site id '{siteId}' to URL due to error '{ex.Message}'; skipping.");
+                        }
+                    }
+
+                    KnowledgeAgentSelectedSitesList = siteUrls.ToArray();
+                }
+                else
+                {
+                    KnowledgeAgentSelectedSitesList = null;
+                }
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property KnowledgeAgentSelectedSitesList not loaded due to error '{e.Message}'");
+            }
+
+            try
+            {
+                clientContext.Load(tenant, t => t.AutofillColumnsCustomModelEnabled);
+                clientContext.ExecuteQueryRetry();
+                AutofillColumnsCustomModelEnabled = tenant.AutofillColumnsCustomModelEnabled;
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property AutofillColumnsCustomModelEnabled not loaded due to error '{e.Message}'");
+            }
+
+            try
+            {
+                clientContext.Load(tenant, t => t.AddressbarLinkPermission);
+                clientContext.ExecuteQueryRetry();
+                AddressbarLinkPermission = tenant.AddressbarLinkPermission;
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property AddressbarLinkPermission not loaded due to error '{e.Message}'");
+            }
+
+            // GuestSharingGroupAllowListInTenantByPrincipalIdentity requires manual handling as it cannot be parsed directly from the Tenant object value
+            try
+            {
+                clientContext.Load(tenant, t => t.GuestSharingGroupAllowListInTenantByPrincipalIdentity);
+                clientContext.ExecuteQueryRetry();
+                GuestSharingGroupAllowListInTenantByPrincipalIdentity = tenant.GuestSharingGroupAllowListInTenantByPrincipalIdentity?.ToArray();
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property GuestSharingGroupAllowListInTenantByPrincipalIdentity not loaded due to error '{e.Message}'");
+            }            
             // If one or more properties failed to load, show a warning
             if (failedProperties > 0)
             {

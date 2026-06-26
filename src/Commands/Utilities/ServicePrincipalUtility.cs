@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -141,6 +142,28 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
+        /// Returns the app role assignments configured on the provided service principal for users and groups
+        /// </summary>
+        public static List<AzureADServicePrincipalAppRoleAssignment> GetServicePrincipalAppRoleAssignedToByServicePrincipalObjectId(ApiRequestHelper requestHelper, string servicePrincipalObjectId, string appRoleAssignmentId = null)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(appRoleAssignmentId))
+                {
+                    var result = requestHelper.Get<AzureADServicePrincipalAppRoleAssignment>($"v1.0/servicePrincipals/{servicePrincipalObjectId}/appRoleAssignedTo/{appRoleAssignmentId}");
+                    var enrichedResults = EnrichAzureADServicePrincipalAppRoleAssignments(requestHelper, new List<AzureADServicePrincipalAppRoleAssignment> { result });
+                    return enrichedResults.ToList();
+                }
+
+                var results = requestHelper.GetResultCollection<AzureADServicePrincipalAppRoleAssignment>($"v1.0/servicePrincipals/{servicePrincipalObjectId}/appRoleAssignedTo");
+                var enrichedAssignments = EnrichAzureADServicePrincipalAppRoleAssignments(requestHelper, results);
+                return enrichedAssignments.ToList();
+            }
+            catch (Exception) { }
+            return null;
+        }
+
+        /// <summary>
         /// Enrich the service principal app role assignments with the friendly claim value
         /// </summary>
         /// <param name="connection">Connection to use to communicate with Microsoft Graph</param>
@@ -180,6 +203,11 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     // If we have a service principal, look for the app role and match its claim value to the app role assignment name
                     azureADServicePrincipalAppRoleAssignment.AppRoleName = servicePrincipal.AppRoles.FirstOrDefault(ar => ar.Id == azureADServicePrincipalAppRoleAssignment.AppRoleId.Value)?.Value;
+
+                    if (string.IsNullOrEmpty(azureADServicePrincipalAppRoleAssignment.AppRoleName) && azureADServicePrincipalAppRoleAssignment.AppRoleId == Guid.Empty)
+                    {
+                        azureADServicePrincipalAppRoleAssignment.AppRoleName = "Default Access";
+                    }
                 }
             }
 
@@ -203,10 +231,33 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
+        /// Adds a user or group app role assignment to the provided service principal
+        /// </summary>
+        /// <param name="requestHelper">Request helper to use to communicate with Microsoft Graph</param>
+        /// <param name="principalId">The Entra ID object id of the user or group to assign</param>
+        /// <param name="resource">The service principal representing the enterprise application</param>
+        /// <param name="appRoleToAdd">The app role to assign to the user or group</param>
+        /// <returns>The created service principal app role assignment</returns>
+        public static AzureADServicePrincipalAppRoleAssignment AddServicePrincipalAppRoleAssignment(ApiRequestHelper requestHelper, Guid principalId, AzureADServicePrincipal resource, AzureADServicePrincipalAppRole appRoleToAdd)
+        {
+            var appRoleId = appRoleToAdd.Id.GetValueOrDefault();
+            var requestBody = JsonSerializer.Serialize(new
+            {
+                principalId,
+                resourceId = resource.Id,
+                appRoleId
+            });
+
+            var content = new StringContent(requestBody, System.Text.Encoding.UTF8);
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var result = requestHelper.Post<AzureADServicePrincipalAppRoleAssignment>($"v1.0/servicePrincipals/{resource.Id}/appRoleAssignedTo", content);
+            return result;
+        }
+
+        /// <summary>
         /// Removes all role assignments from the provided service principal
         /// </summary>
-        /// <param name="connection">Connection to use to communicate with Microsoft Graph</param>
-        /// <param name="accesstoken">Access Token to use to authenticate to Microsoft Graph</param>
+        /// <param name="requestHelper">Request helper to use to communicate with Microsoft Graph</param>
         /// <param name="principalToRemoveRoleFrom">The service principal to remove the role assignments from</param>
         public static void RemoveServicePrincipalRoleAssignment(ApiRequestHelper requestHelper, AzureADServicePrincipal principalToRemoveRoleFrom)
         {
@@ -220,51 +271,94 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Removes the provided role from the role assignments of the provided service principal
         /// </summary>
-        /// <param name="connection">Connection to use to communicate with Microsoft Graph</param>
-        /// <param name="accesstoken">Access Token to use to authenticate to Microsoft Graph</param>
+        /// <param name="requestHelper">Request helper to use to communicate with Microsoft Graph</param>
         /// <param name="principalToRemoveRoleFrom">The service principal to remove the role assignment from</param>
         /// <param name="appRoleToRemove">The app role to remove from the role assignments</param>
-        public static void RemoveServicePrincipalRoleAssignment(ApiRequestHelper requestHelper, AzureADServicePrincipal principalToRemoveRoleFrom, AzureADServicePrincipalAppRole appRoleToRemove)
+        /// <returns>True if one or more matching role assignments were removed; otherwise, false</returns>
+        public static bool RemoveServicePrincipalRoleAssignment(ApiRequestHelper requestHelper, AzureADServicePrincipal principalToRemoveRoleFrom, AzureADServicePrincipalAppRole appRoleToRemove)
         {
+            if (appRoleToRemove?.Id == null)
+            {
+                return false;
+            }
+
             var assignments = GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(requestHelper, principalToRemoveRoleFrom.Id);
+            if (assignments == null)
+            {
+                return false;
+            }
+
+            var removedAssignments = false;
             foreach (var assignment in assignments)
             {
                 if (assignment.AppRoleId == appRoleToRemove.Id)
                 {
                     requestHelper.Delete($"v1.0/servicePrincipals/{principalToRemoveRoleFrom.Id}/appRoleAssignments/{assignment.Id}");
+                    removedAssignments = true;
                 }
             }
+            return removedAssignments;
         }
 
         /// <summary>
         /// Removes role with the provided name from the role assignments of the provided service principal
         /// </summary>
-        /// <param name="connection">Connection to use to communicate with Microsoft Graph</param>
-        /// <param name="accesstoken">Access Token to use to authenticate to Microsoft Graph</param>
+        /// <param name="requestHelper">Request helper to use to communicate with Microsoft Graph</param>
         /// <param name="principalToRemoveRoleFrom">The service principal to remove the role assignment from</param>
         /// <param name="roleName">The name of the app role to remove from the role assignments</param>
-        public static void RemoveServicePrincipalRoleAssignment(ApiRequestHelper requestHelper, AzureADServicePrincipal principalToRemoveRoleFrom, string roleName)
+        /// <returns>True if one or more matching role assignments were removed; otherwise, false</returns>
+        public static bool RemoveServicePrincipalRoleAssignment(ApiRequestHelper requestHelper, AzureADServicePrincipal principalToRemoveRoleFrom, string roleName)
         {
+            if (string.IsNullOrEmpty(roleName))
+            {
+                return false;
+            }
+
             var assignments = GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(requestHelper, principalToRemoveRoleFrom.Id);
+            if (assignments == null)
+            {
+                return false;
+            }
+
+            var roleId = Guid.TryParse(roleName, out var parsedRoleId) ? parsedRoleId : (Guid?)null;
+            var removedAssignments = false;
             foreach (var assignment in assignments)
             {
-                if (assignment.AppRoleName == roleName)
+                if (string.Equals(assignment.AppRoleName, roleName, StringComparison.OrdinalIgnoreCase) || (roleId.HasValue && assignment.AppRoleId == roleId))
                 {
                     requestHelper.Delete($"v1.0/servicePrincipals/{principalToRemoveRoleFrom.Id}/appRoleAssignments/{assignment.Id}");
+                    removedAssignments = true;
                 }
             }
+            return removedAssignments;
         }
 
         /// <summary>
         /// Removes a role assignment from the provided service principal
         /// </summary>
-        /// <param name="connection">Connection to use to communicate with Microsoft Graph</param>
-        /// <param name="accesstoken">Access Token to use to authenticate to Microsoft Graph</param>
-        /// <param name="principalToRemoveRoleFrom">The service principal to remove the role assignment from</param>
-        /// <param name="appRoleAssignmentoRemove">The app role assignment to remove from the service principal</param>
+        /// <param name="requestHelper">Request helper to use to communicate with Microsoft Graph</param>
+        /// <param name="appRoleAssignmenToRemove">The app role assignment to remove from the service principal</param>
         public static void RemoveServicePrincipalRoleAssignment(ApiRequestHelper requestHelper, AzureADServicePrincipalAppRoleAssignment appRoleAssignmenToRemove)
         {
             requestHelper.Delete( $"v1.0/servicePrincipals/{appRoleAssignmenToRemove.PrincipalId}/appRoleAssignments/{appRoleAssignmenToRemove.Id}");
+        }
+
+        /// <summary>
+        /// Removes a user or group app role assignment from a service principal
+        /// </summary>
+        public static void RemoveServicePrincipalAppRoleAssignment(ApiRequestHelper requestHelper, AzureADServicePrincipalAppRoleAssignment appRoleAssignmentToRemove)
+        {
+            if (appRoleAssignmentToRemove == null)
+            {
+                throw new ArgumentNullException(nameof(appRoleAssignmentToRemove));
+            }
+
+            if (appRoleAssignmentToRemove.ResourceId == null)
+            {
+                throw new ArgumentException($"{nameof(appRoleAssignmentToRemove)} must contain a ResourceId", nameof(appRoleAssignmentToRemove));
+            }
+
+            requestHelper.Delete($"v1.0/servicePrincipals/{appRoleAssignmentToRemove.ResourceId}/appRoleAssignedTo/{appRoleAssignmentToRemove.Id}");
         }
     }
 }

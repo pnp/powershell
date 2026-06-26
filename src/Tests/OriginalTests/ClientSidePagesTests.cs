@@ -254,15 +254,21 @@ namespace PnP.PowerShell.Tests
 
                     var results = scope.ExecuteCommand("Add-PnPPageSection",
                         new CommandParameter("Page", PageAddSectionTestName),
-                         new CommandParameter("SectionTemplate", CanvasSectionTemplate.ThreeColumn),
-                          new CommandParameter("Order", 10));
+                        new CommandParameter("SectionTemplate", CanvasSectionTemplate.ThreeColumn),
+                        new CommandParameter("Order", 10),
+                        new CommandParameter("Collapsible"),
+                        new CommandParameter("DisplayName", "My Collapsible Section"),
+                        new CommandParameter("IsExpanded"));
 
                     using var pnpContext = Framework.PnPCoreSdk.Instance.GetPnPContext(ctx);
                     var pages = pnpContext.Web.GetPages(PageAddSectionTestName);
                     if (pages != null && pages.FirstOrDefault(p => p.Name.Equals(PageAddSectionTestName, StringComparison.InvariantCultureIgnoreCase)) != null)
                     {
                         var p = pages.FirstOrDefault();
-                        Assert.IsTrue(p.Sections[0].Columns.Count == 3);
+                        Assert.AreEqual(3, p.Sections[0].Columns.Count);
+                        Assert.IsTrue(p.Sections[0].Collapsible);
+                        Assert.AreEqual("My Collapsible Section", p.Sections[0].DisplayName);
+                        Assert.IsTrue(p.Sections[0].IsExpanded);
                     }
 
 

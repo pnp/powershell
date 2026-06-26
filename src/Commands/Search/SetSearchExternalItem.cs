@@ -38,16 +38,16 @@ namespace PnP.PowerShell.Commands.Search
         #region ACL
 
         [Parameter(Mandatory = false)]
-        public AzureADUserPipeBind[] GrantUsers;
+        public EntraIDUserPipeBind[] GrantUsers;
 
         [Parameter(Mandatory = false)]
-        public AzureADGroupPipeBind[] GrantGroups;
+        public EntraIDGroupPipeBind[] GrantGroups;
 
         [Parameter(Mandatory = false)]
-        public AzureADUserPipeBind[] DenyUsers;
+        public EntraIDUserPipeBind[] DenyUsers;
 
         [Parameter(Mandatory = false)]
-        public AzureADGroupPipeBind[] DenyGroups;
+        public EntraIDGroupPipeBind[] DenyGroups;
 
         [Parameter(Mandatory = false)]
         public string[] GrantExternalGroups;
@@ -112,7 +112,7 @@ namespace PnP.PowerShell.Commands.Search
             WriteObject(results, false);
         }
 
-        private List<Model.Graph.MicrosoftSearch.ExternalItemAcl> GetUserAcls(AzureADUserPipeBind[] users, Enums.SearchExternalItemAclAccessType accessType)
+        private List<Model.Graph.MicrosoftSearch.ExternalItemAcl> GetUserAcls(EntraIDUserPipeBind[] users, Enums.SearchExternalItemAclAccessType accessType)
         {
             var acls = new List<Model.Graph.MicrosoftSearch.ExternalItemAcl>();
             if (users == null) return acls;
@@ -132,7 +132,7 @@ namespace PnP.PowerShell.Commands.Search
             return acls;
         }
 
-        private IEnumerable<Model.Graph.MicrosoftSearch.ExternalItemAcl> GetGroupAcls(AzureADGroupPipeBind[] groups, Enums.SearchExternalItemAclAccessType accessType)
+        private IEnumerable<Model.Graph.MicrosoftSearch.ExternalItemAcl> GetGroupAcls(EntraIDGroupPipeBind[] groups, Enums.SearchExternalItemAclAccessType accessType)
         {
             var acls = new List<Model.Graph.MicrosoftSearch.ExternalItemAcl>();
             if (groups == null) return acls;

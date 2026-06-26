@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Teams
         public string Filter = null;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_User)]
-        public AzureADUserPipeBind User;
+        public EntraIDUserPipeBind User;
 
         protected override void ExecuteCmdlet()
         {

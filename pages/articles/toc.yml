@@ -62,6 +62,8 @@
       href: buildinglocalpnpbuild.md
     - name: Running unit tests
       href: runningtests.md
+    - name: Building the documentation site locally
+      href: buildingdocumentation.md
     - name: Building using docker
       href: buildingdocker.md
     - name: Working with permission attributes

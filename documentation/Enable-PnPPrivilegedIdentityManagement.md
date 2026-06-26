@@ -28,7 +28,7 @@ Enable-PnPPrivilegedIdentityManagement -Role <PrivilegedIdentityManagementRolePi
 ### By Role Name And User
 
 ```powershell
-Enable-PnPPrivilegedIdentityManagement -Role <PrivilegedIdentityManagementRolePipeBind> -User <AzureADUserPipeBind> [-Justification <string>] [-StartAt <DateTime>] [-ExpireInHours <short>] [-Connection <PnPConnection>] 
+Enable-PnPPrivilegedIdentityManagement -Role <PrivilegedIdentityManagementRolePipeBind> -User <EntraIDUserPipeBind> [-Justification <string>] [-StartAt <DateTime>] [-ExpireInHours <short>] [-Connection <PnPConnection>] 
 ```
 
 ### By Eligible Role Assignment
@@ -167,7 +167,7 @@ Accept wildcard characters: False
 The Id, username or instance of a user which needs to be elevated
 
 ```yaml
-Type: AzureADUserPipeBind
+Type: EntraIDUserPipeBind
 Parameter Sets: By Role Name And User
 Aliases:
 

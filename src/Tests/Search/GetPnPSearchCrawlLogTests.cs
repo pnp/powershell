@@ -77,6 +77,8 @@ namespace PnP.PowerShell.Tests.Search
 				// From Cmdlet Help: Show raw crawl log data
 				var rawFormat = "";
 
+                var increaseRequestTimeout= "";
+
                 var results = scope.ExecuteCommand("Get-PnPSearchCrawlLog",
 					new CommandParameter("LogLevel", logLevel),
 					new CommandParameter("RowLimit", rowLimit),
@@ -84,7 +86,8 @@ namespace PnP.PowerShell.Tests.Search
 					new CommandParameter("ContentSource", contentSource),
 					new CommandParameter("StartDate", startDate),
 					new CommandParameter("EndDate", endDate),
-					new CommandParameter("RawFormat", rawFormat));
+					new CommandParameter("RawFormat", rawFormat),
+					new CommandParameter("IncreaseRequestTimeout", increaseRequestTimeout));
                 
                 Assert.IsNotNull(results);
             }

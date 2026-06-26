@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Model.ToDo
 {
@@ -33,14 +34,6 @@ namespace PnP.PowerShell.Commands.Model.ToDo
         /// </summary>
         [JsonConverter(typeof(JsonStringEnumConverter))]
         [JsonPropertyName("wellknownListName")]
-        public WellknownListName WellknownListName { get; set; }
-    }
-
-    public enum WellknownListName
-    {
-        None,
-        DefaultList,
-        FlaggedEmails,
-        UnknownFutureValue
+        public WellknownToDoListName WellknownListName { get; set; }
     }
 }

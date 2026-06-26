@@ -44,6 +44,8 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-PublicCdnEnabled <Boolean>]
  [-PublicCdnAllowedFileTypes <String>]
  [-RequireAnonymousLinksExpireInDays <Int32>]
+ [-OneDriveOrganizationSharingLinkMaxExpirationInDays <Int32>]
+ [-OneDriveOrganizationSharingLinkRecommendedExpirationInDays <Int32>]
  [-SharingAllowedDomainList <String>]
  [-SharingBlockedDomainList <String>]
  [-SharingDomainRestrictionMode <SharingDomainRestrictionModes>]
@@ -73,12 +75,14 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-ConditionalAccessPolicy <SPOConditionalAccessPolicyType>]
  [-AllowDownloadingNonWebViewableFiles <Boolean>]
  [-AllowEditing <Boolean>]
+ [-AllowAppsBypassOfUnmanagedDevicePolicy <Boolean>]
  [-ApplyAppEnforcedRestrictionsToAdHocRecipients <Boolean>]
  [-FilePickerExternalImageSearchEnabled <Boolean>]
  [-EmailAttestationRequired <Boolean>]
  [-EmailAttestationReAuthDays <Int32>]
  [-HideDefaultThemes <Boolean>]
  [-DisabledWebPartIds <Guid[]>]
+ [-DisabledAdaptiveCardExtensionIds <Guid[]>]
  [-EnableAIPIntegration <Boolean>]
  [-DisableCustomAppAuthentication <Boolean>] 
  [-EnableAutoNewsDigest <Boolean>]
@@ -99,6 +103,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-LabelMismatchEmailHelpLink <String>]
  [-DisableDocumentLibraryDefaultLabeling <Boolean>]
  [-IsEnableAppAuthPopUpEnabled <Boolean>]
+ [-FileTypesForVersionExpiration <String[]>]
  [-ExpireVersionsAfterDays <Int32>]
  [-MajorVersionLimit <Int32>]
  [-EnableAutoExpirationVersionTrim <Boolean>]
@@ -118,9 +123,11 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-IBImplicitGroupBased <Boolean>]
  [-ShowOpenInDesktopOptionForSyncedFiles <Boolean>]
  [-ShowPeoplePickerGroupSuggestionsForIB <Boolean>]
+ [-AuthContextResilienceMode <SPResilienceModeType>]
  [-BlockDownloadFileTypePolicy <Boolean>]
  [-BlockDownloadFileTypeIds <SPBlockDownloadFileTypeId[]>]
  [-ExcludedBlockDownloadGroupIds <GUID[]>]
+ [-TlsTokenBindingPolicyValue <SPOTlsTokenBindingPolicyValue>]
  [-ArchiveRedirectUrl <String>]
  [-StopNew2013Workflows <Boolean>]
  [-MediaTranscription <MediaTranscriptionPolicyType>]
@@ -129,7 +136,9 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-ReduceTempTokenLifetimeEnabled <Boolean>]
  [-ReduceTempTokenLifetimeValue <Int32>]
  [-ViewersCanCommentOnMediaDisabled <Boolean>]
+ [-AllOrganizationSecurityGroupId <Guid>]
  [-AllowGuestUserShareToUsersNotInSiteCollection <Boolean>]
+ [-ContentTypeSyncSiteTemplatesList <String[]>]
  [-ConditionalAccessPolicyErrorHelpLink <String>]
  [-CustomizedExternalSharingServiceUrl <String>]
  [-IncludeAtAGlanceInShareEmails <Boolean>]
@@ -141,9 +150,12 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-BlockUserInfoVisibilityInOneDrive <TenantBrowseUserInfoPolicyValue>]
  [-AllowOverrideForBlockUserInfoVisibility <Boolean>]
  [-AllowEveryoneExceptExternalUsersClaimInPrivateSite <Boolean>]
+ [-RestrictExternalSharing <Guid[]>]
  [-AIBuilderEnabled <Boolean>]
  [-AllowSensitivityLabelOnRecords <Boolean>]
  [-AnyoneLinkTrackUsers <Boolean>]
+ [-AllowFileArchive <Boolean>]
+ [-AllowFileArchiveOnNewSitesByDefault <Boolean>]
  [-EnableSiteArchive <Boolean>]
  [-ESignatureEnabled <Boolean>]
  [-BlockUserInfoVisibilityInSharePoint <TenantBrowseUserInfoPolicyValue>]
@@ -172,8 +184,16 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-HideSyncButtonOnODB <Boolean>]
  [-StreamLaunchConfig <Int32>]
  [-EnableMediaReactions <Boolean>]
+ [-ResyncContentSecurityPolicyConfigurationEntries]
  [-ContentSecurityPolicyEnforcement <Boolean>]
  [-DisableSpacesActivation <Boolean>]
+ [-CoreOrganizationSharingLinkRecommendedExpirationInDays <int>] 
+ [-CoreOrganizationSharingLinkMaxExpirationInDays <int>]
+ [-RestrictResourceAccountAccess <Boolean>]
+ [-EnforceRequestDigest <Boolean>]
+ [-RestrictExternalSharingForAgents <Boolean>]
+ [-DelayContentSecurityPolicyEnforcement <Boolean>]
+ [-EnableNotificationsSubscriptions <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -227,6 +247,28 @@ Set-PnPTenant  -GuestSharingGroupAllowListInTenantByPrincipalIdentity {}
 
 This example clears the guest sharing group allow list in the tenant.
 
+### EXAMPLE 7
+```powershell
+Set-PnPTenant -AllowFileArchive $true -AllowFileArchiveOnNewSitesByDefault $true
+```
+
+This example enables file-level archiving for the tenant and makes new sites inherit the capability by default.
+
+### EXAMPLE 8
+```powershell
+Set-PnPTenant -DelayContentSecurityPolicyEnforcement $true
+```
+
+This example will delay the Content security policy enforcement by 90 days, until June 1, 2026.
+
+### EXAMPLE 9
+```powershell
+Set-PnPTenant -ResyncContentSecurityPolicyConfigurationEntries
+(Get-PnPTenant).ResyncContentSecurityPolicyConfigurationEntries
+```
+
+This example requests a resync of Content Security Policy trusted script sources for SharePoint Framework solutions in the tenant app catalog and reads back whether the resync request is still pending.
+
 ## PARAMETERS
 
 ### -AllowDownloadingNonWebViewableFiles
@@ -247,6 +289,34 @@ Prevents users from editing Office files in the browser and copying and pasting 
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowAppsBypassOfUnmanagedDevicePolicy
+Controls whether apps can bypass the unmanaged device policy.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllOrganizationSecurityGroupId
+Sets the All-Organization Security Group by object ID. This group is then used for other features, such as `EnableDiscoverableByOrganizationForVideos`, if enabled. If you change the group ID associated with the All-Organization Security Group, it will only be effective on new shares or permission events.
+
+```yaml
+Type: Guid
 Parameter Sets: (All)
 
 Required: False
@@ -289,6 +359,20 @@ Can be used to configure a custom page to show when a user is navigating to a Sh
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AuthContextResilienceMode
+The authentication context resilience mode.
+
+```yaml
+Type: SPResilienceModeType
 Parameter Sets: (All)
 
 Required: False
@@ -430,6 +514,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DelayContentSecurityPolicyEnforcement
+Delays the Content security policy enforcement by 90 days, until June 1, 2026.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -DefaultLinkPermission
 Sets the default permission of the link in the sharing dialog box in OneDrive for Business and SharePoint Online. This applies to anonymous access, internal and direct links.
 
@@ -504,6 +602,20 @@ Microsoft Bookings: d24a7165-c455-4d43-8bc8-fedb04d6c1b5
 Stream: 275c0095-a77e-4f6d-a2a0-6a7626911518
 
 To block one of them, simply pass in the GUID behind the parameter. To disable more than one, separate the GUIDs with a comma. To unblock web parts, just set this property leaving out the one(s) you wish to unblock, leaving the ones that you would like to remain blocked. To unblock all web parts, use `-DisabledWebPartIds @()`. To see which one(s) are currently blocked, use `Get-PnPTenant | Select DisabledWebPartIds`.
+
+```yaml
+Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisabledAdaptiveCardExtensionIds
+Allows administrators to prevent certain Adaptive Card Extensions from being added to pages or rendering on pages on which they were previously added. To re-enable all disabled Adaptive Card Extensions, use `-DisabledAdaptiveCardExtensionIds @()`.
 
 ```yaml
 Type: Guid[]
@@ -997,6 +1109,42 @@ If the value is set larger than the Maximum allowed OneDrive for Business quota,
 
 ```yaml
 Type: Int64
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveOrganizationSharingLinkMaxExpirationInDays
+Specifies the maximum number of days before organization sharing links expire for all OneDrive sites. This is a tenant wide setting, and all geos will inherit the policy.
+
+The value can be from 7 to 730 days.
+
+To remove the expiration requirement, set the value to zero (0).
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveOrganizationSharingLinkRecommendedExpirationInDays
+Specifies the recommended number of days before organization sharing links expire for all OneDrive sites. This setting provides a suggested expiration period to users when they create sharing links. This is a tenant wide setting, and all geos will inherit the policy.
+
+The value can be from 7 to 730 days and must be less than or equal to the maximum expiration value set by `OneDriveOrganizationSharingLinkMaxExpirationInDays`.
+
+When set to 0, the default value will be `OneDriveOrganizationSharingLinkMaxExpirationInDays`.
+
+```yaml
+Type: Int32
 Parameter Sets: (All)
 
 Required: False
@@ -1733,6 +1881,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EnableNotificationsSubscriptions
+This opt-in setting enables or disables writing SharePoint News and Announcement notification data to the `NewsNotificationList` in each user's My Site. Third-party solutions can then monitor that list through webhooks and process notification events.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -CoreRequestFilesLinkEnabled
 Enable or disable the Request files link on the core partition for all SharePoint sites (not including OneDrive sites). If this value is not set, Request files will only show for OneDrives with Anyone links enabled.
 
@@ -2119,6 +2281,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -FileTypesForVersionExpiration
+
+Specifies one or more file types for which to apply the file type version policy override.
+
+Use this parameter together with `EnableAutoExpirationVersionTrim` or with both `ExpireVersionsAfterDays` and `MajorVersionLimit`.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -IsEnableAppAuthPopUpEnabled
 
 Enables or disables users in the organization to authenticate SharePoint applications using popups.
@@ -2213,6 +2392,20 @@ This parameter exempts users in the specified security groups from this policy s
 
 ```yaml
 Type: GUID[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TlsTokenBindingPolicyValue
+Sets the Transport Layer Security (TLS) token binding policy setting.
+
+```yaml
+Type: SPOTlsTokenBindingPolicyValue
 Parameter Sets: (All)
 
 Required: False
@@ -2320,6 +2513,20 @@ Controls whether viewers commenting on media items is disabled or not.
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ContentTypeSyncSiteTemplatesList
+Sets the site templates that receive content type hub synchronization. To allow content types to be pushed to OneDrive for Business sites, include `MySites`. To clear the configured list, pass an empty array.
+
+```yaml
+Type: String[]
 Parameter Sets: (All)
 
 Required: False
@@ -2584,6 +2791,30 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -KnowledgeAgentScope
+
+Allows administrators to control which SharePoint sites the Knowledge Agent feature is available on.
+
+Valid values:
+
+- InclusionList: Knowledge Agent is available only on sites specified in KnowledgeAgentSelectedSitesList 
+
+- ExclusionList: Knowledge Agent is available on all sites except those specified in KnowledgeAgentSelectedSitesList.
+
+- None: Knowledge Agent isn't available on any sites.
+
+
+```yaml
+Type: KnowledgeAgentScopeMode
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -KnowledgeAgentSelectedSitesList
 
 Specifies a list of site collection URLs that should be selected for the tenant Knowledge Agent. Each entry must be a full site URL (for example: "https://contoso.sharepoint.com/sites/team1"). The cmdlet will resolve each URL to the corresponding site id and configure the tenant Knowledge Agent to target those sites.
@@ -2603,6 +2834,36 @@ Accept wildcard characters: False
 
 ### -AllowSensitivityLabelOnRecords
 Allows sensitivity label on records.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowFileArchive
+Enables or disables file-level archiving for SharePoint Online sites in the tenant.
+
+When set to $false, users can no longer archive files on any site even if the site-level setting is enabled. Existing archived files remain archived and can still be reactivated.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowFileArchiveOnNewSitesByDefault
+Controls whether newly created SharePoint Online sites have file-level archiving enabled by default.
+
+Use this together with `-AllowFileArchive $true` when you want new sites to inherit file archiving automatically instead of enabling it site by site.
 
 ```yaml
 Type: Boolean
@@ -3026,11 +3287,53 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EnforceRequestDigest
+When set to `True`, a valid request digest is required on SOAP API calls that perform a state-changing operation.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ContentSecurityPolicyEnforcement
 Controls whether content security policy is enabled.
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictExternalSharing
+Sets the list of agentic identities that are restricted from sharing content to external users. Pass the full set of GUIDs that should remain restricted, or `@()` to clear the list.
+
+```yaml
+Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResyncContentSecurityPolicyConfigurationEntries
+Requests a resync of Content Security Policy trusted script sources for SharePoint Framework solutions in the tenant app catalog. SharePoint adds missing sources derived from a solution's `cdnBasePath` configuration when needed. The corresponding property returned by `Get-PnPTenant` indicates whether the resync request is still pending. The sync can take up to 24 hours to complete and is scoped per geo in multi-geo tenants.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
@@ -3080,6 +3383,82 @@ The valid values are:
 
 - False (default) - for classic publishing site collections where administrators enabled the ability to add custom script, SharePoint will revoke that ability within 24 hours from the last time this setting was changed.
 - True - All changes performed by administrators to custom script settings are preserved.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreOrganizationSharingLinkRecommendedExpirationInDays
+This parameter specifies the recommended number of days before organization sharing links expire in SharePoint sites (not including OneDrive sites). Users can still choose a different expiration period if permitted by policy, but this value is presented as the recommended default. This is a tenant wide setting, and all geos will inherit the policy.
+
+The valid values :
+
+- Can be from 7 to 730 days and must be less than or equal to the maximum expiration value set by CoreOrganizationSharingLinkMaxExpirationInDays.
+- When set to 0 (default), the default value will be CoreOrganizationSharingLinkMaxExpirationInDays.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreOrganizationSharingLinkMaxExpirationInDays
+This parameter specifies the maximum number of days that organization sharing links can remain active before they expire for all SharePoint sites (not including OneDrive sites). This is a tenant wide setting, and all geos will inherit the policy.
+
+The valid values :
+
+- can be from 7 to 730 days.
+- `0` (default) - No maximum expiration limit is enforced.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictResourceAccountAccess
+Controls whether resource accounts used by Teams Rooms and Devices can retain access to files after the meeting/collaboration is complete. 
+
+The valid values are:
+
+- False (default) - Allows devices from accessing files and other Microsoft 365 assets when not actively in-use.
+- True - Prevents devices from accessing files and other Microsoft 365 assets when not actively in-use.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictExternalSharingForAgents
+This parameter controls whether external sharing is restricted for agents.
+
+The valid values are:
+
+- False (default) - Agents can share content externally according to existing sharing policies.
+- True - External sharing for agents is restricted.
 
 ```yaml
 Type: Boolean

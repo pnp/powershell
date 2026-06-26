@@ -108,6 +108,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ClearSubScopes
+If a permission inheritance break is needed or forced with -ClearExisting, the unique permissions are cleared from child objects and they can inherit role assignments from this object.
+
+```yaml
+Type: Boolean
+Parameter Sets: User, Group
+
+Required: False
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 

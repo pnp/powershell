@@ -26,11 +26,17 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ALL)]
         public string Name;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
+        public int RetryCount;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
+        public int Delay;
+
         protected override void ExecuteCmdlet()
         {
             var environmentName = GetEnvironmentName();
             string baseUrl = PowerPlatformUtility.GetBapEndpoint(Connection.AzureEnvironment);
-            var importStatus = ImportFlowUtility.ExecuteImportFlow(Connection.HttpClient,AccessToken,baseUrl,environmentName,PackagePath,Name);
+            var importStatus = ImportFlowUtility.ExecuteImportFlow(Connection.HttpClient, AccessToken, baseUrl, environmentName, PackagePath, Name, RetryCount, Delay);
             WriteObject(importStatus);
         }
 

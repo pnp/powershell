@@ -27,6 +27,17 @@ Get-PnPPowerApp [-Environment <PowerPlatformEnvironmentPipeBind>] [-AsAdmin] [-I
 ## DESCRIPTION
 This cmdlet returns the Power Apps for a given environment.
 
+### Prerequisites
+
+Your Entra app registration must have the `user_impersonation` delegated permission from the Azure Service Management API. To add this permission using Azure CLI:
+
+```bash
+az ad app permission add --id <your-app-id> --api 797f4846-ba00-4fd7-ba43-dac1f8f63013 --api-permissions 41094075-9dad-400e-a0bd-54e686782033=Scope
+az ad app permission admin-consent --id <your-app-id>
+```
+
+For full Power Platform access, you may also need to add permissions from the PowerApps Service API (found under "APIs my organization uses" in Azure Portal).
+
 ## EXAMPLES
 
 ### Example 1

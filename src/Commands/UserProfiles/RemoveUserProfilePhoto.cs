@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
     public class RemoveUserProfilePhoto : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public AzureADUserPipeBind Identity;
+        public EntraIDUserPipeBind Identity;
         protected override void ExecuteCmdlet()
         {
             LogDebug($"Looking up user provided through the {nameof(Identity)} parameter");

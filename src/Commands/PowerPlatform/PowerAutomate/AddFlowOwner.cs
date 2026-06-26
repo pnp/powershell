@@ -49,12 +49,12 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             if (Guid.TryParse(User, out Guid identityGuid))
             {
                 LogDebug("Looking up user through Microsoft Graph by user id {identityGuid}");
-                user = Utilities.AzureAdUtility.GetUser(graphAccessToken, identityGuid, azureEnvironment: Connection.AzureEnvironment);
+                user = Utilities.EntraIdUtility.GetUser(graphAccessToken, identityGuid, azureEnvironment: Connection.AzureEnvironment);
             }
             else
             {
                 LogDebug($"Looking up user through Microsoft Graph by user principal name {User}");
-                user = Utilities.AzureAdUtility.GetUser(graphAccessToken, User, azureEnvironment: Connection.AzureEnvironment);
+                user = Utilities.EntraIdUtility.GetUser(graphAccessToken, User, azureEnvironment: Connection.AzureEnvironment);
             }
 
             if (user == null)

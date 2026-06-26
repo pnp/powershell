@@ -36,7 +36,10 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         }
 
         public Guid? Id => _id;
+        public string Value => _value ?? _appRole?.Value ?? _appRole?.Id?.ToString() ?? _id?.ToString();
         public AzureADServicePrincipalAppRole AppRole => _appRole;
+
+        public override string ToString() => Value ?? string.Empty;
 
         internal AzureADServicePrincipalAppRole GetAvailableAppRole(PnPConnection connection, string accesstoken, AzureADServicePrincipal servicePrincipal)
         {

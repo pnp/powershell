@@ -26,11 +26,35 @@ namespace PnP.PowerShell.Commands.Admin
         public bool DefaultOriginAdded = true;
 
         [Parameter(Mandatory = false)]
-        public bool IsCopilotSearchable = true;
+        public bool IsCopilotSearchable = false;
 
         protected override void ExecuteCmdlet()
         {
-            Tenant.AddToOrgAssetsLibWithConfig(CdnType, LibraryUrl, ThumbnailUrl, OrgAssetType, DefaultOriginAdded, new OrgAssetsLibraryConfigParam { IsCopilotSearchable = IsCopilotSearchable});
+            var config = new OrgAssetsLibraryConfigParam();
+
+            // Copilot search is only supported for ImageDocumentLibrary.
+            // SharePoint has started enforcing this more strictly, so we guard against sending an invalid config.
+            if (OrgAssetType != OrgAssetType.ImageDocumentLibrary)
+            {
+                if (ParameterSpecified(nameof(IsCopilotSearchable)) && IsCopilotSearchable)
+                {
+                    ThrowTerminatingError(new ErrorRecord(
+                        new PSArgumentException("-IsCopilotSearchable can only be set to $true when -OrgAssetType is ImageDocumentLibrary."),
+                        "IsCopilotSearchableUnsupportedForOrgAssetType",
+                        ErrorCategory.InvalidArgument,
+                        IsCopilotSearchable));
+                }
+
+                config.IsCopilotSearchable = false;
+                config.IsCopilotSearchablePresent = false;
+            }
+            else
+            {
+                config.IsCopilotSearchable = IsCopilotSearchable;
+                config.IsCopilotSearchablePresent = ParameterSpecified(nameof(IsCopilotSearchable));
+            }
+
+            Tenant.AddToOrgAssetsLibWithConfig(CdnType, LibraryUrl, ThumbnailUrl, OrgAssetType, DefaultOriginAdded, config);
             AdminContext.ExecuteQueryRetry();
         }
     }

@@ -20,7 +20,7 @@ Gets the profile picture of a user.
 ## SYNTAX
 
 ```powershell
-Get-PnPUserProfilePhoto -Identity <AzureADUserPipeBind> [-Filename <String>]  [-Connection <PnPConnection>] 
+Get-PnPUserProfilePhoto -Identity <EntraIDUserPipeBind> [-Filename <String>]  [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 The identity of the user to remove. This can be the UPN, the GUID or an instance of the user.
 
 ```yaml
-Type: AzureADUserPipeBind
+Type: EntraIDUserPipeBind
 Parameter Sets: (All)
 
 Required: True

@@ -822,7 +822,7 @@ Accept wildcard characters: False
 ```
 
 ### -AzureADWorkloadIdentity
-Connects using the Azure AD Workload Identity.
+Connects using Azure AD Workload Identity in Azure workload identity environments where `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_AUTHORITY_HOST`, and `AZURE_FEDERATED_TOKEN_FILE` are available. For GitHub Actions and Azure DevOps pipelines, use `-FederatedIdentity` instead.
 
 ```yaml
 Type: SwitchParameter
@@ -879,7 +879,7 @@ Accept wildcard characters: False
 
 ### -FederatedIdentity
 
-Connects using Federated Identity. For more information on this, you can visit [this link](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest).
+Connects using Federated Identity. Use this option for GitHub Actions and Azure DevOps pipelines. For Azure workload identity environments that provide `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_AUTHORITY_HOST`, and `AZURE_FEDERATED_TOKEN_FILE`, use `-AzureADWorkloadIdentity` instead. For more information on this, you can visit [this link](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest).
 
 This option is available from version 3.1.51-nightly onwards.
 

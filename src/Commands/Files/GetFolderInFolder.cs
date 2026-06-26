@@ -158,7 +158,15 @@ namespace PnP.PowerShell.Commands.Files
             {
                 foreach (var folder in folders)
                 {
-                    var relativeUrl = folder.ServerRelativeUrl.Replace(CurrentWeb.ServerRelativeUrl, "");
+                    string relativeUrl;
+                    if (CurrentWeb.ServerRelativeUrl == "/")
+                    {
+                        relativeUrl = folder.ServerRelativeUrl;
+                    }
+                    else
+                    {
+                        relativeUrl = folder.ServerRelativeUrl.Replace(CurrentWeb.ServerRelativeUrl, "");
+                    }
 
                     LogDebug($"Processing folder {relativeUrl}");
 

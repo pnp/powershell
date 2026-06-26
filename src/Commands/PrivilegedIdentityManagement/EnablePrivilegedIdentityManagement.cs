@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Principals
         public PrivilegedIdentityManagementRolePipeBind Role;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterName_BYROLENAMEANDUSER)]
-        public AzureADUserPipeBind User;
+        public EntraIDUserPipeBind User;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterName_BYROLENAMEANDPRINCIPAL)]
         public Guid? PrincipalId;

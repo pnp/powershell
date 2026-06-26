@@ -259,7 +259,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection CreateWithDeviceLogin(string clientId, string url, string tenantId, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool persistLogin, System.Management.Automation.Host.PSHost host, string ErrorActionSetting = null)
+        internal static PnPConnection CreateWithDeviceLogin(Cmdlet cmdlet, string clientId, string url, string tenantId, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool persistLogin, System.Management.Automation.Host.PSHost host, string ErrorActionSetting = null)
         {
             if (persistLogin)
             {
@@ -269,7 +269,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
-                    WriteCacheEnabledMessage(host);
+                    messageWriter.LogDebug("Connecting using token cache. See https://pnp.github.io/powershell/articles/persistedlogin.html for more information.");
                 }
             }
             var connectionUri = new Uri(url);
@@ -411,8 +411,9 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="userAssignedManagedIdentityObjectId">The Object/Principal ID of the User Assigned Managed Identity to use (optional)</param>
         /// <param name="userAssignedManagedIdentityClientId">The Client ID of the User Assigned Managed Identity to use (optional)</param>
         /// <param name="userAssignedManagedIdentityAzureResourceId">The Azure Resource ID of the User Assigned Managed Identity to use (optional)</param>
+        /// <param name="azureEnvironment">Type of Azure cloud to connect to</param>
         /// <returns>Instantiated PnPConnection</returns>
-        internal static PnPConnection CreateWithManagedIdentity(string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null)
+        internal static PnPConnection CreateWithManagedIdentity(string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             // Define the type of Managed Identity that will be used
             ManagedIdentityType managedIdentityType = ManagedIdentityType.SystemAssigned;
@@ -441,7 +442,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Set up the AuthenticationManager in PnP Framework to use a Managed Identity context
-            using (var authManager = Framework.AuthenticationManager.CreateWithManagedIdentity(null, null, managedIdentityType, managedIdentityUserAssignedIdentifier))
+            using (var authManager = Framework.AuthenticationManager.CreateWithManagedIdentity(null, null, managedIdentityType, managedIdentityUserAssignedIdentifier, azureEnvironment: azureEnvironment))
             {
                 PnPClientContext context = null;
                 ConnectionType connectionType = ConnectionType.O365;
@@ -472,7 +473,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection CreateWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, bool persistLogin, System.Management.Automation.Host.PSHost host, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials, string ErrorActionSetting = null)
+        internal static PnPConnection CreateWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, bool persistLogin, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials, string ErrorActionSetting = null)
         {
             if (persistLogin)
             {
@@ -482,7 +483,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
-                    WriteCacheEnabledMessage(host);
+                    WriteCacheEnabledMessage(cmdlet);
                 }
             }
             var context = new PnPClientContext(url.AbsoluteUri)
@@ -595,7 +596,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection CreateWithInteractiveLogin(Uri uri, string clientId, string tenantAdminUrl, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool forceAuthentication, string tenant, bool enableLoginWithWAM, bool persistLogin, System.Management.Automation.Host.PSHost host, string ErrorActionSetting)
+        internal static PnPConnection CreateWithInteractiveLogin(Cmdlet cmdlet, Uri uri, string clientId, string tenantAdminUrl, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool forceAuthentication, string tenant, bool enableLoginWithWAM, bool persistLogin, System.Management.Automation.Host.PSHost host, string ErrorActionSetting)
         {
             if (persistLogin)
             {
@@ -605,7 +606,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
-                    WriteCacheEnabledMessage(host);
+                    WriteCacheEnabledMessage(cmdlet);
                 }
             }
 
@@ -674,6 +675,9 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Acquiring token for resource " + defaultResource);
+            // Acquire an initial token to validate the workload identity configuration and to use for
+            // the initial connection test (IsTenantAdminSite). The token is cached by MSAL so this
+            // does not cause an extra round-trip on the first CSOM request.
             var accessToken = TokenHandler.GetAzureADWorkloadIdentityTokenAsync(defaultResource).GetAwaiter().GetResult();
 
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
@@ -685,9 +689,19 @@ namespace PnP.PowerShell.Commands.Base
                     context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                     context.ApplicationName = Resources.ApplicationName;
                     context.DisableReturnValueCache = true;
+
+                    // PnP.Framework's GetContext() registers an ExecutingWebRequest handler that injects
+                    // the static access token acquired above. That token expires after its Azure AD
+                    // lifetime (typically 1-2 hours). The handler below runs after PnP.Framework's and
+                    // overrides the Authorization header with a fresh token obtained from MSAL on every
+                    // CSOM request. MSAL caches the token and only contacts Azure AD when it is about to
+                    // expire, so this does not add a network round-trip on every call.
+                    var capturedDefaultResource = defaultResource;
                     context.ExecutingWebRequest += (sender, e) =>
                     {
                         e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                        var freshToken = TokenHandler.GetAzureADWorkloadIdentityTokenAsync(capturedDefaultResource).GetAwaiter().GetResult();
+                        e.WebRequestExecutor.RequestHeaders["Authorization"] = $"Bearer {freshToken}";
                     };
                     if (IsTenantAdminSite(context))
                     {
@@ -793,7 +807,7 @@ namespace PnP.PowerShell.Commands.Base
 
             PSCredential = credential;
             PnPVersionTag = pnpVersionTag;
-            ContextCache = new List<ClientContext> { context };
+            ContextCache = context != null ? new List<ClientContext> { context } : new List<ClientContext>();
             if (!string.IsNullOrEmpty(url))
             {
                 Url = new Uri(url).AbsoluteUri;
@@ -807,7 +821,7 @@ namespace PnP.PowerShell.Commands.Base
         #region Methods
         internal void RestoreCachedContext(string url)
         {
-            Context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
+            Context = ContextCache.FirstOrDefault(c => c != null && new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
             _pnpContext = null;
         }
 
@@ -815,21 +829,67 @@ namespace PnP.PowerShell.Commands.Base
         {
             if (Context == null) return;
 
-            var c = ContextCache.FirstOrDefault(cc => new Uri(cc.Url).AbsoluteUri == new Uri(Context.Url).AbsoluteUri);
+            ContextCache ??= new List<ClientContext>();
+            var c = ContextCache.FirstOrDefault(cc => cc != null && new Uri(cc.Url).AbsoluteUri == new Uri(Context.Url).AbsoluteUri);
             if (c == null)
             {
                 ContextCache.Add(Context);
             }
         }
 
+        internal bool RefreshContextIfHasPendingRequest()
+        {
+            if (Context?.HasPendingRequest != true)
+            {
+                return false;
+            }
+
+            RefreshContext();
+            return true;
+        }
+
+        internal void RefreshContext()
+        {
+            if (Context == null)
+            {
+                return;
+            }
+
+            var context = Context.Clone(Context.Url);
+            ReplaceCachedContext(context);
+
+            Context = context;
+            _pnpContext = null;
+        }
+
+        private static void ReplaceCachedContext(ClientContext context)
+        {
+            ContextCache ??= new List<ClientContext>();
+
+            var contextIndex = ContextCache.FindIndex(c => c != null && new Uri(c.Url).AbsoluteUri == new Uri(context.Url).AbsoluteUri);
+            if (contextIndex >= 0)
+            {
+                ContextCache[contextIndex] = context;
+            }
+            else
+            {
+                ContextCache.Add(context);
+            }
+        }
+
         internal ClientContext CloneContext(string url)
         {
-            var context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
+            var context = ContextCache.FirstOrDefault(c => c != null && new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
             if (context == null)
             {
                 context = Context.Clone(url);
                 context.ExecuteQueryRetry();
                 ContextCache.Add(context);
+            }
+            else if (context.HasPendingRequest)
+            {
+                context = context.Clone(context.Url);
+                ReplaceCachedContext(context);
             }
             _pnpContext = null;
             return context;
@@ -1129,9 +1189,9 @@ namespace PnP.PowerShell.Commands.Base
             Settings.Current.Save();
         }
 
-        private static void WriteCacheEnabledMessage(PSHost host)
+        private static void WriteCacheEnabledMessage(Cmdlet cmdlet)
         {
-            host.UI.WriteWarningLine("Connecting using token cache. See https://pnp.github.io/powershell/articles/persistedlogin.html for more information.");
+            cmdlet.WriteVerbose("Connecting using token cache. See https://pnp.github.io/powershell/articles/persistedlogin.html for more information.");
         }
 
         internal static void ClearCache(PnPConnection connection)

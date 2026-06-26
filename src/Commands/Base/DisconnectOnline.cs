@@ -15,11 +15,21 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public SwitchParameter ClearPersistedLogin;
 
+        private static readonly string[] sourceArray = ["stop", "ignore", "silentlycontinue"];
         protected override void ProcessRecord()
         {
+
             if (PnPConnection.Current == null)
             {
-                throw new InvalidOperationException(Properties.Resources.NoConnectionToDisconnect);
+                // If the ErrorAction is not set to Stop, Ignore or SilentlyContinue throw an exception, otherwise just continue
+                if (!sourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
+                {
+                    throw new InvalidOperationException(Properties.Resources.NoConnectionToDisconnect);
+                }
+                else
+                {
+                    return;
+                }
             }
 
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
@@ -34,7 +44,7 @@ namespace PnP.PowerShell.Commands.Base
                 PnPConnection.Current.Certificate = null;
             }
 
-            if(ClearPersistedLogin)
+            if (ClearPersistedLogin)
             {
                 PnPConnection.ClearCache(PnPConnection.Current);
             }

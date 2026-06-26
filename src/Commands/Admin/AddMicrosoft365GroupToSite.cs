@@ -5,10 +5,14 @@ using PnP.Framework.Sites;
 using System.Management.Automation;
 using System;
 
+using PnP.PowerShell.Commands.Attributes;
+
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupToSite")]
-    public class AddMicrosoft365GroupToSite: PnPSharePointOnlineAdminCmdlet
+    [RequiredApiApplicationPermissions("sharepoint/Sites.FullControl.All")]
+    [RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl")]
+    public class AddMicrosoft365GroupToSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public string Url;
@@ -38,7 +42,7 @@ namespace PnP.PowerShell.Commands.Admin
         public string[] Owners;
 
         protected override void ExecuteCmdlet()
-        {            
+        {
             var groupifyInformation = new TeamSiteCollectionGroupifyInformation()
             {
                 Alias = Alias,

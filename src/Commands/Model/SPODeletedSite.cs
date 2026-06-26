@@ -197,7 +197,29 @@ namespace PnP.PowerShell.Commands.Model
 					if (fieldValues["StorageUsed"] != null) StorageUsed = double.Parse(fieldValues["StorageUsed"].ToString());
 					if (fieldValues["TemplateId"] != null) TemplateId = short.Parse(fieldValues["TemplateId"].ToString());
 					if (fieldValues["LastItemModifiedDate"] != null) LastWebActivityOn = DateTime.Parse(fieldValues["LastItemModifiedDate"].ToString());
-					if (fieldValues["StorageUsedPercentage"] != null) StorageUsedPercentage = double.Parse(fieldValues["StorageUsedPercentage"].ToString());
+					try
+					{
+						if (fieldValues["StorageUsedPercentage"] != null)
+						{
+							var rawValue = fieldValues["StorageUsedPercentage"];
+							if (rawValue is FieldCalculatedErrorValue)
+							{
+								Log.Debug("SPODeletedSite", $"StorageUsedPercentage returned FieldCalculatedErrorValue for '{Url}'. Raw type '{rawValue.GetType().FullName}'.");
+							}
+							else if (double.TryParse(rawValue.ToString(), out var storageUsedPercentage))
+							{
+								StorageUsedPercentage = storageUsedPercentage;
+							}
+							else
+							{
+								Log.Debug("SPODeletedSite", $"Unable to parse StorageUsedPercentage value '{rawValue}' (type '{rawValue?.GetType().FullName}') for '{Url}'.");
+							}
+						}
+					}
+					catch (Exception ex)
+					{
+						Log.Error("SPODeletedSite", $"Exception while parsing StorageUsedPercentage for '{Url}': {ex}");
+					}
 					if (fieldValues["SensitivityLabel"] != null) SensitivityLabelId = Guid.Parse(fieldValues["SensitivityLabel"].ToString());
 				}
 				else

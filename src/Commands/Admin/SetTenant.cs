@@ -1,8 +1,10 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
+using Microsoft.SharePoint.Administration;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Administration;
 using Microsoft.SharePoint.Client.Sharing;
+using Microsoft.SharePoint.Client.Utilities;
 using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
@@ -97,6 +99,12 @@ namespace PnP.PowerShell.Commands.Admin
         public long? OneDriveStorageQuota;
 
         [Parameter(Mandatory = false)]
+        public int? OneDriveOrganizationSharingLinkMaxExpirationInDays;
+
+        [Parameter(Mandatory = false)]
+        public int? OneDriveOrganizationSharingLinkRecommendedExpirationInDays;
+
+        [Parameter(Mandatory = false)]
         public bool? OneDriveForGuestsEnabled;
 
         [Parameter(Mandatory = false)]
@@ -175,6 +183,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? AllowEditing;
 
         [Parameter(Mandatory = false)]
+        public bool? AllowAppsBypassOfUnmanagedDevicePolicy;
+
+        [Parameter(Mandatory = false)]
         public bool? ApplyAppEnforcedRestrictionsToAdHocRecipients;
 
         [Parameter(Mandatory = false)]
@@ -191,6 +202,10 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public Guid[] DisabledWebPartIds;
+
+        [Parameter(Mandatory = false)]
+        [ValidateNotNull]
+        public Guid[] DisabledAdaptiveCardExtensionIds;
 
         [Parameter(Mandatory = false)]
         public bool? EnableAIPIntegration;
@@ -358,6 +373,9 @@ namespace PnP.PowerShell.Commands.Admin
         public Guid[] ExcludedBlockDownloadGroupIds { get; set; }
 
         [Parameter(Mandatory = false)]
+        public SPOTlsTokenBindingPolicyValue? TlsTokenBindingPolicyValue { get; set; }
+
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         [Parameter(Mandatory = false)]
@@ -376,16 +394,28 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? SiteOwnerManageLegacyServicePrincipalEnabled { get; set; }
 
         [Parameter(Mandatory = false)]
+        public SPResilienceModeType? AuthContextResilienceMode { get; set; }
+
+        [Parameter(Mandatory = false)]
         public bool? ReduceTempTokenLifetimeEnabled { get; set; }
 
         [Parameter(Mandatory = false)]
         public int? ReduceTempTokenLifetimeValue;
 
         [Parameter(Mandatory = false)]
+        public bool? EnforceRequestDigest { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? EnableNotificationsSubscriptions { get; set; }
+
+        [Parameter(Mandatory = false)]
         public bool? ViewersCanCommentOnMediaDisabled { get; set; }
 
         [Parameter(Mandatory = false)]
         public bool? AllowGuestUserShareToUsersNotInSiteCollection { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public string[] ContentTypeSyncSiteTemplatesList { get; set; }
 
         [Parameter(Mandatory = false)]
         public string ConditionalAccessPolicyErrorHelpLink;
@@ -427,6 +457,10 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? AllowEveryoneExceptExternalUsersClaimInPrivateSite { get; set; }
 
         [Parameter(Mandatory = false)]
+        [ValidateNotNull]
+        public Guid[] RestrictExternalSharing { get; set; }
+
+        [Parameter(Mandatory = false)]
         public bool? AIBuilderEnabled { get; set; }
 
         [Parameter(Mandatory = false)]
@@ -437,6 +471,12 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? AnyoneLinkTrackUsers { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? AllowFileArchive { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? AllowFileArchiveOnNewSitesByDefault { get; set; }
 
         [Parameter(Mandatory = false)]
         public bool? EnableSiteArchive { get; set; }
@@ -466,73 +506,105 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? IsSharePointAddInsDisabled { get; set; }
 
         [Parameter(Mandatory = false)]
-        public SharingScope? CoreDefaultShareLinkScope { private set; get; }
+        public SharingScope? CoreDefaultShareLinkScope { set; get; }
 
         [Parameter(Mandatory = false)]
-        public Role? CoreDefaultShareLinkRole { private set; get; }
+        public Role? CoreDefaultShareLinkRole { set; get; }
 
         [Parameter(Mandatory = false)]
-        public SharingCapabilities? OneDriveSharingCapability { private set; get; }
+        public SharingCapabilities? OneDriveSharingCapability { set; get; }
 
         [Parameter(Mandatory = false)]
-        public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { private set; get; }
+        public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { private set; get; }
+        public bool? AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? SelfServiceSiteCreationDisabled { private set; get; }
+        public bool? SelfServiceSiteCreationDisabled { set; get; }
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter SyncAadB2BManagementPolicy { private set; get; }
+        public SwitchParameter SyncAadB2BManagementPolicy { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? ExtendPermissionsToUnprotectedFiles { private set; get; }
+        public bool? ExtendPermissionsToUnprotectedFiles { set; get; }
 
         [Parameter(Mandatory = false)]
-        public string WhoCanShareAllowListInTenant { private set; get; }
+        public string WhoCanShareAllowListInTenant { set; get; }
+
+        /// <summary>
+        /// Principal identities allowed to share content at the tenant level.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// Set-Tenant -WhoCanShareAllowListInTenantByPrincipalIdentity @("c:0-.f|rolemanager|spo-grid-all-users/****")
+        /// </code>
+        /// </example>
+        [Parameter(Mandatory = false)]
+        public string[] WhoCanShareAllowListInTenantByPrincipalIdentity { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? LegacyBrowserAuthProtocolsEnabled { private set; get; }
+        public bool? LegacyBrowserAuthProtocolsEnabled { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? EnableDiscoverableByOrganizationForVideos { private set; get; }
+        public bool? EnableDiscoverableByOrganizationForVideos { set; get; }
 
         [Parameter(Mandatory = false)]
-        public string RestrictedAccessControlforSitesErrorHelpLink { private set; get; }
+        public Guid? AllOrganizationSecurityGroupId { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? Workflow2010Disabled { private set; get; }
+        public string RestrictedAccessControlforSitesErrorHelpLink { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? AllowSharingOutsideRestrictedAccessControlGroups { private set; get; }
+        public bool? Workflow2010Disabled { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? HideSyncButtonOnDocLib { private set; get; }
+        public bool? AllowSharingOutsideRestrictedAccessControlGroups { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? HideSyncButtonOnODB { private set; get; }
+        public bool? HideSyncButtonOnDocLib { set; get; }
 
         [Parameter(Mandatory = false)]
-        public int? StreamLaunchConfig { private set; get; }
+        public bool? HideSyncButtonOnODB { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? EnableMediaReactions { private set; get; }
+        public int? StreamLaunchConfig { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? ContentSecurityPolicyEnforcement { private set; get; }
+        public bool? EnableMediaReactions { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? DisableSpacesActivation { private set; get; }
+        public SwitchParameter ResyncContentSecurityPolicyConfigurationEntries { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? AllowClassicPublishingSiteCreation { private set; get; }
+        public bool? ContentSecurityPolicyEnforcement { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites { private set; get; }
+        public bool? DisableSpacesActivation { set; get; }
 
         [Parameter(Mandatory = false)]
-        public string[] KnowledgeAgentSelectedSitesList { private set; get; }
+        public bool? AllowClassicPublishingSiteCreation { set; get; }
+
+        [Parameter(Mandatory = false)]
+        public bool? DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites { set; get; }
+
+        [Parameter(Mandatory = false)]
+        public string[] KnowledgeAgentSelectedSitesList { set; get; }
+
+        [Parameter(Mandatory = false)]
+        public KnowledgeAgentScopeMode? KnowledgeAgentScope { set; get; }
+        [Parameter(Mandatory = false)]
+        public int? CoreOrganizationSharingLinkRecommendedExpirationInDays { set; get; }
+        [Parameter(Mandatory = false)]
+        public int? CoreOrganizationSharingLinkMaxExpirationInDays { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? RestrictResourceAccountAccess { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? RestrictExternalSharingForAgents { set; get; }
+        [Parameter(Mandatory = false)]
+        public string[] FileTypesForVersionExpiration { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? DelayContentSecurityPolicyEnforcement { set; get; }
 
         protected override void ExecuteCmdlet()
         {
@@ -813,6 +885,32 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.OneDriveStorageQuota = OneDriveStorageQuota.Value;
                 modified = true;
             }
+            if (OneDriveOrganizationSharingLinkMaxExpirationInDays.HasValue)
+            {
+                if (!IsValidOrganizationSharingLinkExpirationInDays(OneDriveOrganizationSharingLinkMaxExpirationInDays.Value))
+                {
+                    throw new PSArgumentException("OneDriveOrganizationSharingLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(OneDriveOrganizationSharingLinkMaxExpirationInDays));
+                }
+
+                Tenant.OneDriveOrganizationSharingLinkMaxExpirationInDays = OneDriveOrganizationSharingLinkMaxExpirationInDays.Value;
+                modified = true;
+            }
+            if (OneDriveOrganizationSharingLinkRecommendedExpirationInDays.HasValue)
+            {
+                if (!IsValidOrganizationSharingLinkExpirationInDays(OneDriveOrganizationSharingLinkRecommendedExpirationInDays.Value))
+                {
+                    throw new PSArgumentException("OneDriveOrganizationSharingLinkRecommendedExpirationInDays must have a value of 0 or between 7 and 730", nameof(OneDriveOrganizationSharingLinkRecommendedExpirationInDays));
+                }
+
+                var oneDriveOrganizationSharingLinkMaxExpirationInDays = OneDriveOrganizationSharingLinkMaxExpirationInDays ?? Tenant.EnsureProperty(t => t.OneDriveOrganizationSharingLinkMaxExpirationInDays);
+                if (OneDriveOrganizationSharingLinkRecommendedExpirationInDays.Value > oneDriveOrganizationSharingLinkMaxExpirationInDays)
+                {
+                    throw new PSArgumentException("OneDriveOrganizationSharingLinkRecommendedExpirationInDays must be less than or equal to OneDriveOrganizationSharingLinkMaxExpirationInDays", nameof(OneDriveOrganizationSharingLinkRecommendedExpirationInDays));
+                }
+
+                Tenant.OneDriveOrganizationSharingLinkRecommendedExpirationInDays = OneDriveOrganizationSharingLinkRecommendedExpirationInDays.Value;
+                modified = true;
+            }
             if (OneDriveForGuestsEnabled.HasValue)
             {
                 string message = OneDriveForGuestsEnabled.Value ? "This will enable all users, including guests, to create OneDrive for Business sites. You must first assign OneDrive for Business licenses to the guests before they can create their OneDrive for Business sites." : "Guests will no longer be able to create new OneDrive for Business sites. Existing sites won’t be impacted.";
@@ -1042,6 +1140,11 @@ namespace PnP.PowerShell.Commands.Admin
                     throw new InvalidOperationException("Setting the property AllowEditing is not supported by your version of the service");
                 }
             }
+            if (AllowAppsBypassOfUnmanagedDevicePolicy.HasValue)
+            {
+                Tenant.AllowAppsBypassOfUnmanagedDevicePolicy = AllowAppsBypassOfUnmanagedDevicePolicy.Value;
+                modified = true;
+            }
             if (ApplyAppEnforcedRestrictionsToAdHocRecipients.HasValue)
             {
                 try
@@ -1098,6 +1201,11 @@ namespace PnP.PowerShell.Commands.Admin
             if (DisabledWebPartIds != null)
             {
                 Tenant.DisabledWebPartIds = DisabledWebPartIds;
+                modified = true;
+            }
+            if (DisabledAdaptiveCardExtensionIds != null)
+            {
+                Tenant.DisabledAdaptiveCardExtensionIds = DisabledAdaptiveCardExtensionIds.Distinct().ToArray();
                 modified = true;
             }
             if (EnableAIPIntegration.HasValue)
@@ -1428,6 +1536,12 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
+            if (AuthContextResilienceMode.HasValue)
+            {
+                Tenant.AuthContextResilienceMode = AuthContextResilienceMode.Value;
+                modified = true;
+            }
+
             if (ReduceTempTokenLifetimeEnabled.HasValue)
             {
                 Tenant.ReduceTempTokenLifetimeEnabled = ReduceTempTokenLifetimeEnabled.Value;
@@ -1443,6 +1557,15 @@ namespace PnP.PowerShell.Commands.Admin
             if (AllowGuestUserShareToUsersNotInSiteCollection.HasValue)
             {
                 Tenant.AllowGuestUserShareToUsersNotInSiteCollection = AllowGuestUserShareToUsersNotInSiteCollection.Value;
+                modified = true;
+            }
+
+            if (ContentTypeSyncSiteTemplatesList != null)
+            {
+                Tenant.ContentTypeSyncSiteTemplatesList = ContentTypeSyncSiteTemplatesList
+                    .Where(template => !string.IsNullOrWhiteSpace(template))
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
                 modified = true;
             }
 
@@ -1509,6 +1632,14 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.AllowEveryoneExceptExternalUsersClaimInPrivateSite = AllowEveryoneExceptExternalUsersClaimInPrivateSite.Value;
                 modified = true;
             }
+            if (RestrictExternalSharing != null)
+            {
+                Tenant.RestrictExternalSharing = RestrictExternalSharing
+                    .Where(appId => appId != Guid.Empty)
+                    .Distinct()
+                    .ToArray();
+                modified = true;
+            }
             if (AIBuilderEnabled.HasValue)
             {
                 Tenant.AIBuilderEnabled = AIBuilderEnabled.Value;
@@ -1522,6 +1653,16 @@ namespace PnP.PowerShell.Commands.Admin
             if (AnyoneLinkTrackUsers.HasValue)
             {
                 Tenant.AnyoneLinkTrackUsers = AnyoneLinkTrackUsers.Value;
+                modified = true;
+            }
+            if (AllowFileArchive.HasValue)
+            {
+                Tenant.AllowFileArchive = AllowFileArchive.Value;
+                modified = true;
+            }
+            if (AllowFileArchiveOnNewSitesByDefault.HasValue)
+            {
+                Tenant.AllowFileArchiveOnNewSitesByDefault = AllowFileArchiveOnNewSitesByDefault.Value;
                 modified = true;
             }
             if (EnableSiteArchive.HasValue)
@@ -1619,6 +1760,11 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.EnableDiscoverableByOrganizationForVideos = EnableDiscoverableByOrganizationForVideos.Value;
                 modified = true;
             }
+            if (AllOrganizationSecurityGroupId.HasValue)
+            {
+                Tenant.AllOrganizationSecurityGroupId = AllOrganizationSecurityGroupId.Value;
+                modified = true;
+            }
             if (RestrictedAccessControlforSitesErrorHelpLink != null)
             {
                 Tenant.RestrictedAccessControlforSitesErrorHelpLink = RestrictedAccessControlforSitesErrorHelpLink;
@@ -1654,6 +1800,11 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.EnableMediaReactions = EnableMediaReactions.Value;
                 modified = true;
             }
+            if (ResyncContentSecurityPolicyConfigurationEntries)
+            {
+                Tenant.ContentSecurityPolicyConfigSynced = false;
+                modified = true;
+            }
             if (ContentSecurityPolicyEnforcement.HasValue)
             {
                 Tenant.ContentSecurityPolicyEnforcement = ContentSecurityPolicyEnforcement.Value;
@@ -1677,6 +1828,11 @@ namespace PnP.PowerShell.Commands.Admin
             if (KnowledgeAgentEnabled.HasValue)
             {
                 Tenant.KnowledgeAgentEnabled = KnowledgeAgentEnabled.Value;
+                modified = true;
+            }
+            if (KnowledgeAgentScope.HasValue)
+            {
+                Tenant.KnowledgeAgentScopeMode = KnowledgeAgentScope.Value;
                 modified = true;
             }
             if (KnowledgeAgentSelectedSitesList != null)
@@ -1726,6 +1882,42 @@ namespace PnP.PowerShell.Commands.Admin
                     modified = true;
                 }
             }
+            if (CoreOrganizationSharingLinkMaxExpirationInDays.HasValue)
+            {
+                if (!IsValidOrganizationSharingLinkExpirationInDays(CoreOrganizationSharingLinkMaxExpirationInDays.Value))
+                {
+                    throw new PSArgumentException("CoreOrganizationSharingLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(CoreOrganizationSharingLinkMaxExpirationInDays));
+                }
+
+                Tenant.CoreOrganizationSharingLinkMaxExpirationInDays = CoreOrganizationSharingLinkMaxExpirationInDays.Value;
+                modified = true;
+            }
+            if (CoreOrganizationSharingLinkRecommendedExpirationInDays.HasValue)
+            {
+                if (!IsValidOrganizationSharingLinkExpirationInDays(CoreOrganizationSharingLinkRecommendedExpirationInDays.Value))
+                {
+                    throw new PSArgumentException("CoreOrganizationSharingLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(CoreOrganizationSharingLinkRecommendedExpirationInDays));
+                }
+
+                var coreOrganizationSharingLinkMaxExpirationInDays = CoreOrganizationSharingLinkMaxExpirationInDays ?? Tenant.EnsureProperty(t => t.CoreOrganizationSharingLinkMaxExpirationInDays);
+                if (CoreOrganizationSharingLinkRecommendedExpirationInDays.Value > coreOrganizationSharingLinkMaxExpirationInDays)
+                {
+                    throw new PSArgumentException("CoreOrganizationSharingLinkRecommendedExpirationInDays must be less than or equal to CoreOrganizationSharingLinkMaxExpirationInDays", nameof(CoreOrganizationSharingLinkRecommendedExpirationInDays));
+                }
+
+                Tenant.CoreOrganizationSharingLinkRecommendedExpirationInDays = CoreOrganizationSharingLinkRecommendedExpirationInDays.Value;
+                modified = true;
+            }
+            if (RestrictResourceAccountAccess.HasValue)
+            {
+                Tenant.RestrictResourceAccountAccess = RestrictResourceAccountAccess.Value;
+                modified = true;
+            }
+            if (RestrictExternalSharingForAgents.HasValue)
+            {
+                Tenant.RestrictExternalSharingForAgents = RestrictExternalSharingForAgents.Value;
+                modified = true;
+            }
             if (GuestSharingGroupAllowListInTenantByPrincipalIdentity != null)
             {
                 if (GuestSharingGroupAllowListInTenantByPrincipalIdentity.Length > 0)
@@ -1739,6 +1931,28 @@ namespace PnP.PowerShell.Commands.Admin
                         Tenant.GuestSharingGroupAllowListInTenantByPrincipalIdentity = new string[0];
                     }
                 }
+                modified = true;
+            }
+
+
+            if (WhoCanShareAllowListInTenantByPrincipalIdentity != null)
+            {
+                var hasValidValue = WhoCanShareAllowListInTenantByPrincipalIdentity.Any(x => !string.IsNullOrEmpty(x));
+
+                if (hasValidValue)
+                {
+                    Tenant.WhoCanShareAllowListInTenantByPrincipalIdentity = WhoCanShareAllowListInTenantByPrincipalIdentity;
+                }
+                else
+                {
+                    Tenant.WhoCanShareAllowListInTenantByPrincipalIdentity = Array.Empty<string>();
+                }
+                modified = true;
+            }
+
+            if (DelayContentSecurityPolicyEnforcement.HasValue)
+            {
+                Tenant.DelayContentSecurityPolicyEnforcement = DelayContentSecurityPolicyEnforcement.Value;
                 modified = true;
             }
             if (BlockDownloadFileTypePolicy.HasValue)
@@ -1781,6 +1995,21 @@ namespace PnP.PowerShell.Commands.Admin
                     throw new InvalidOperationException("You can only specify 10 IDs in the Block Download File Type Policy Invalid Exclusion List");
                 }
                 Tenant.SetBlockDownloadFileTypePolicyExclusionList(ExcludedBlockDownloadGroupIds);
+                modified = true;
+            }
+            if (TlsTokenBindingPolicyValue.HasValue)
+            {
+                Tenant.TlsTokenBindingPolicyValue = TlsTokenBindingPolicyValue.Value;
+                modified = true;
+            }
+            if (EnforceRequestDigest.HasValue)
+            {
+                Tenant.EnforceRequestDigest = EnforceRequestDigest.Value;
+                modified = true;
+            }
+            if (EnableNotificationsSubscriptions.HasValue)
+            {
+                Tenant.EnableNotificationsSubscriptions = EnableNotificationsSubscriptions.Value;
                 modified = true;
             }
             if (modified)
@@ -1864,12 +2093,48 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 modified = true;
             }
+
+            bool fileTypeVersionPolicyModified = false;
+            bool hasFileTypeVersionPolicySettings = EnableAutoExpirationVersionTrim.HasValue || (ExpireVersionsAfterDays.HasValue && MajorVersionLimit.HasValue);
+            if (FileTypesForVersionExpiration != null)
+            {
+                FileTypesForVersionExpiration = FileTypesForVersionExpiration
+                    .Select(fileType => fileType?.Trim())
+                    .ToArray();
+
+                if (FileTypesForVersionExpiration.Length == 0 || FileTypesForVersionExpiration.Any(string.IsNullOrWhiteSpace))
+                {
+                    throw new PSArgumentException($"The parameter {nameof(FileTypesForVersionExpiration)} must contain one or more non-empty file types.", nameof(FileTypesForVersionExpiration));
+                }
+
+                FileTypesForVersionExpiration = FileTypesForVersionExpiration
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
+
+                if (!hasFileTypeVersionPolicySettings)
+                {
+                    throw new PSArgumentException($"The parameter {nameof(FileTypesForVersionExpiration)} must be combined with {nameof(EnableAutoExpirationVersionTrim)} or with both {nameof(ExpireVersionsAfterDays)} and {nameof(MajorVersionLimit)}.", nameof(FileTypesForVersionExpiration));
+                }
+
+                fileTypeVersionPolicyModified = true;
+            }
             if (modified)
             {
                 bool isAutoTrimEnabled = (EnableAutoExpirationVersionTrim.HasValue ? EnableAutoExpirationVersionTrim.Value : Tenant.EnableAutoExpirationVersionTrim);
                 Tenant.SetFileVersionPolicy(isAutoTrimEnabled, MajorVersionLimit ?? (-1), ExpireVersionsAfterDays ?? (-1));
                 AdminContext.ExecuteQueryRetry();
             }
+            if (fileTypeVersionPolicyModified)
+            {
+                bool isAutoTrimEnabled = (EnableAutoExpirationVersionTrim.HasValue ? EnableAutoExpirationVersionTrim.Value : Tenant.EnableAutoExpirationVersionTrim);
+                Tenant.SetFileTypeVersionPolicy(FileTypesForVersionExpiration, isAutoTrimEnabled, MajorVersionLimit ?? (-1), ExpireVersionsAfterDays ?? (-1));
+                AdminContext.ExecuteQueryRetry();
+            }
+        }
+
+        private static bool IsValidOrganizationSharingLinkExpirationInDays(int value)
+        {
+            return value == 0 || value >= 7 && value <= 730;
         }
     }
 }

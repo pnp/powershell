@@ -1,6 +1,12 @@
+---
+uid: pnp.powershell.authentication
+title: Authentication
+description: Authentication options for connecting to Microsoft 365 with PnP PowerShell.
+---
+
 # Authentication
 
-Before you can authenticate using PnP PowerShell, you need to ensure you have [created your own application registration](registerapplication.md) first and that you have [set the proper permissions](determinepermissions.md) on the application registration.
+Before you can authenticate using PnP PowerShell, you need to ensure you have [created your own application registration](xref:pnp.powershell.registerapplication) first and that you have [set the proper permissions](determinepermissions.md) on the application registration.
 
 PnP PowerShell offers many different ways to authenticate to your tenant. Based on what you would like to achieve, pick the method that best suits your needs below.
 
@@ -16,7 +22,7 @@ Connecting can be done using:
 Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId <client id of your Entra ID Application Registration>
 ```
 
-This will show a popup window which will allow to authenticate and step through the multi-factor authentication flow. Ensure you provide [the Client ID of your own Entra ID Application Registration](registerapplication.md) with the `-ClientId` parameter.
+This will show a popup window which will allow to authenticate and step through the multi-factor authentication flow. Ensure you provide [the Client ID of your own Entra ID Application Registration](xref:pnp.powershell.registerapplication) with the `-ClientId` parameter.
 
 ## Authenticating from another device or specific browser
 
@@ -101,7 +107,7 @@ Connecting can be done using:
 Connect-PnPOnline [yourtenant].sharepoint.com -ClientId <client id of your Entra ID Application Registration> -Credentials (Get-Credential)
 ```
 
-and you will be prompted for credentials. Ensure you provide [the Client ID of your own Entra ID Application Registration](registerapplication.md) with the `-ClientId` parameter.
+and you will be prompted for credentials. Ensure you provide [the Client ID of your own Entra ID Application Registration](xref:pnp.powershell.registerapplication) with the `-ClientId` parameter.
 
 ## Authenticating with pre-stored credentials using the Windows Credential Manager (Windows only)
 

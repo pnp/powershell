@@ -23,7 +23,8 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
  [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-DisableCommenting <Boolean>] 
  [-EnableAutoExpirationVersionTrim <Boolean>] [-ExpireVersionsAfterDays <UInt32>]
- [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>] [-Path <String>] [-OpenDocumentsMode <DocumentLibraryOpenDocumentsInMode>] [-Color <ListColor>] [-Icon <ListIcon>] [-Connection <PnPConnection>]
+ [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>] [-Path <String>] [-OpenDocumentsMode <DocumentLibraryOpenDocumentsInMode>]
+ [-Color <ListColor>] [-Icon <ListIcon>] [-ParserDisabled <Boolean>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -114,6 +115,18 @@ Set-PnPList -Identity "Demo List" -Color Green -Icon "Plane"
 ```
 
 Changes the icon of the list to a plane, and the background color of the icon to green.
+
+### EXAMPLE 13
+```powershell
+Set-PnPList -Identity "Demo List" -ParserDisabled $true
+```
+
+Disables document property promotion/demotion.
+
+Property promotion is the process of extracting values from a document’s properties and writing them to the corresponding columns in the list or document library where the document resides. Property demotion performs the reverse operation, reading values from list columns and updating the document’s properties accordingly.
+
+Although the [Document Property Promotion and Demotion](https://learn.microsoft.com/previous-versions/office/developer/sharepoint-2010/aa543341(v=office.14)) article applies to SharePoint Foundation 2010, the process is still used in SharePoint Online.
+
 
 ## PARAMETERS
 
@@ -419,6 +432,19 @@ Allows configuring the "Opening Documents in the Browser" advanced setting on do
 Type: DocumentLibraryOpenDocumentsInMode
 Parameter Sets: (All)
 Accepted values: ClientApplication, Browser
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+### -ParserDisabled
+Disable document property promotion for Office documents. This ensures that the documents uploaded to SharePoint are not changed by a background process, which copies document properties into library columns and vice-versa. 
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
 
 Required: False
 Position: Named

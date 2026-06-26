@@ -120,9 +120,10 @@ namespace PnP.PowerShell.Commands.FeatureArea
    - PascalCase for classes, methods, properties, public fields
    - camelCase for parameters, local variables, private fields
    - Prefix interfaces with `I` (e.g., `IListItem`)
-4. **Null Checking**: Use null-conditional operators (`?.`, `??`) where appropriate
-5. **LINQ**: Prefer LINQ for collection operations
-6. **Async/Await**: Use async patterns for asynchronous operations
+4. **Models and Enums**: Keep model classes in separate files and place enums under `src/Commands/Enums` instead of grouping multiple classes and enums in one model file.
+5. **Null Checking**: Use null-conditional operators (`?.`, `??`) where appropriate
+6. **LINQ**: Prefer LINQ for collection operations
+7. **Async/Await**: Use async patterns for asynchronous operations
 
 ### Code Analysis
 - EnforceCodeStyleInBuild is enabled
@@ -265,10 +266,15 @@ Description of output type.
 When generating or modifying code:
 - Always check existing cmdlets in the same feature area for patterns
 - Maintain consistency with existing code style
+- Add XML code comments to utility classes and enum classes to explain classes and members; cmdlet classes do not need inline comments
+- Keep cmdlet documentation in sync: create documentation markdown files under `/documentation/` for new cmdlets, delete documentation for removed cmdlets, and update documentation when cmdlets change
+- In cmdlet documentation markdown files, list parameter subsections in the `## PARAMETERS` section alphabetically
+- Add future repository-specific guidance and memory items to this root-level `.github/copilot-instructions.md` file rather than workspace-local instruction files
 - Consider cross-platform compatibility
 - Remember that this module runs in PowerShell 7.4+ (not Windows PowerShell 5.1)
 - Use modern C# 12 features where appropriate
 - Prioritize readability and maintainability
 - Follow the principle of least surprise for PowerShell users
 - When starting from a GitHub issue, be sure to reference and link that issue in the proposed PR that would fix it
+- Keep `CHANGELOG.md` in sync for cmdlet changes: add a brief entry under the appropriate `Current nightly` subsection (`Added`, `Changed`, `Fixed`, or `Removed`) and mention the specific cmdlet names that were added, changed, fixed, or removed
 - When creating a PR to propose a code change, please include adding an entry to the [Changelog.md](https://github.com/pnp/powershell/blob/dev/CHANGELOG.md) file under the [Current nightly] section picking either subcategory as feels appropriate for the change at hand: Added, Changed, Fixed, Removed. Ensure it contains a link to the PR.

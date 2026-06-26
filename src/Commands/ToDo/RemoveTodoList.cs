@@ -1,6 +1,7 @@
 ﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ToDo
@@ -14,24 +15,17 @@ namespace PnP.PowerShell.Commands.ToDo
         public string Identity;
 
         [Parameter(Mandatory = false)]
-        public AzureADUserPipeBind User;
+        public EntraIDUserPipeBind User;
 
         protected override void ExecuteCmdlet()
         {
-            string url = $"/v1.0/me/todo/lists/{Identity}";
-
-            if (ParameterSpecified(nameof(User)))
+            var url = ToDoUtility.GetTodoRootUrl(this, ParameterSpecified(nameof(User)) ? User : null);
+            if (url == null)
             {
-                var user = User.GetUser(AccessToken, Connection.AzureEnvironment);
-                if (user == null)
-                {
-                    LogWarning("Provided user not found");
-                    return;
-                }
-                url = $"/v1.0/users/{user.Id.Value}/todo/lists/{Identity}";
+                return;
             }
 
-            var graphResult = GraphRequestHelper.Delete(url);
+            var graphResult = ToDoUtility.DeleteList(GraphRequestHelper, url, Identity);
 
             if (graphResult.StatusCode == System.Net.HttpStatusCode.NoContent)
             {

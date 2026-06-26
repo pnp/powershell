@@ -286,6 +286,7 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter PersistLogin;
 
         private static readonly string[] sourceArray = ["stop", "ignore", "silentlycontinue"];
+        X509Certificate2 certificate;
 
         protected override void ProcessRecord()
         {
@@ -342,6 +343,7 @@ namespace PnP.PowerShell.Commands.Base
                 // Reuse some parameters of the passed in connection
                 LogDebug("Reusing some of the connection parameters from passed in connection");
                 ClientId = Connection.ClientId;
+                certificate = Connection.Certificate;
             }
 
             if (AzureEnvironment == AzureEnvironment.Custom)
@@ -519,12 +521,13 @@ namespace PnP.PowerShell.Commands.Base
 
             var messageWriter = new CmdletMessageWriter(this);
             PnPConnection connection = null;
+            Exception connectionException = null;
             var uri = new Uri(Url);
             if ($"https://{uri.Host}".Equals(Url.ToLower()))
             {
                 Url += "/";
             }
-            var task = Task.Factory.StartNew(() =>
+            Task.Factory.StartNew(() =>
             {
                 try
                 {
@@ -572,17 +575,22 @@ namespace PnP.PowerShell.Commands.Base
                         Tenant = TenantExtensions.GetTenantIdByUrl(Url, AzureEnvironment);
                     }
 
-                    var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, messageWriter, AzureEnvironment, cancellationTokenSource, PersistLogin, Host, ErrorActionSetting);
+                    var returnedConnection = PnPConnection.CreateWithDeviceLogin(this, clientId, Url, Tenant, messageWriter, AzureEnvironment, cancellationTokenSource, PersistLogin, Host, ErrorActionSetting);
                     connection = returnedConnection;
                     messageWriter.Finished = true;
                 }
                 catch (Exception ex)
                 {
+                    connectionException = ex;
                     messageWriter.LogWarning(ex.Message, false);
                     messageWriter.Finished = true;
                 }
             }, cancellationTokenSource.Token);
             messageWriter.Start();
+            if (connectionException != null)
+            {
+                throw connectionException;
+            }
             return connection;
         }
 
@@ -614,7 +622,7 @@ namespace PnP.PowerShell.Commands.Base
                         X509KeyStorageFlags.PersistKeySet;
                 }
 
-                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword, X509KeyStorageFlags);
+                certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword, X509KeyStorageFlags);
                 if (Connection?.ClientId == ClientId &&
                     Connection?.Tenant == Tenant &&
                     Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
@@ -646,7 +654,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else if (ParameterSpecified(nameof(Thumbprint)))
             {
-                X509Certificate2 certificate = CertificateHelper.GetCertificateFromStore(Thumbprint);
+                certificate = CertificateHelper.GetCertificateFromStore(Thumbprint);
 
                 if (certificate == null)
                 {
@@ -742,7 +750,6 @@ namespace PnP.PowerShell.Commands.Base
                                                                CurrentCredentials,
                                                                TenantAdminUrl,
                                                                PersistLogin,
-                                                               Host,
                                                                AzureEnvironment,
                                                                ClientId,
                                                                RedirectUri, TransformationOnPrem, initializationType);
@@ -754,7 +761,7 @@ namespace PnP.PowerShell.Commands.Base
             LogDebug("Connecting using an Azure Managed Identity");
 
             LogDebug($"ClientID: {UserAssignedManagedIdentityClientId}");
-            return PnPConnection.CreateWithManagedIdentity(Url, TenantAdminUrl, UserAssignedManagedIdentityObjectId, UserAssignedManagedIdentityClientId, UserAssignedManagedIdentityAzureResourceId);
+            return PnPConnection.CreateWithManagedIdentity(Url, TenantAdminUrl, UserAssignedManagedIdentityObjectId, UserAssignedManagedIdentityClientId, UserAssignedManagedIdentityAzureResourceId, AzureEnvironment);
         }
 
         private PnPConnection ConnectInteractive()
@@ -790,7 +797,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
             LogDebug($"Using ClientID {ClientId}");
-            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, false, PersistLogin, Host, ErrorActionSetting);
+            return PnPConnection.CreateWithInteractiveLogin(this, new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, false, PersistLogin, Host, ErrorActionSetting);
         }
 
         private PnPConnection ConnectEnvironmentVariable(InitializationType initializationType = InitializationType.EnvironmentVariable)
@@ -883,7 +890,6 @@ namespace PnP.PowerShell.Commands.Base
                                                                    CurrentCredentials,
                                                                    TenantAdminUrl,
                                                                    PersistLogin,
-                                                                   Host,
                                                                    AzureEnvironment,
                                                                    azureClientId,
                                                                    RedirectUri, TransformationOnPrem, initializationType);
@@ -932,7 +938,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 WriteObject("Cache used. Clear the cache entry with Disconnect-PnPOnline");
             }
-            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, true, PersistLogin, Host, ErrorActionSetting);
+            return PnPConnection.CreateWithInteractiveLogin(this, new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, true, PersistLogin, Host, ErrorActionSetting);
         }
 
         private PnPConnection ConnectFederatedIdentity()

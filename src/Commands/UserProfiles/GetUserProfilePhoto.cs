@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
     public class GetUserProfilePhoto : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public AzureADUserPipeBind Identity;
+        public EntraIDUserPipeBind Identity;
 
         [Parameter(Mandatory = false)]
         public string Filename;

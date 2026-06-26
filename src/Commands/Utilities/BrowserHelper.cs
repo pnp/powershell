@@ -225,7 +225,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             else if (OperatingSystem.IsMacOS())
             {
-                Process.Start("/usr/bin/open", url);
+                Process.Start("/usr/bin/open", $"\"{url}\"");
             }
             else
             {
@@ -249,7 +249,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static void OpenLinuxBrowser(string openToolPath, string url)
         {
-            ProcessStartInfo psi = new ProcessStartInfo(openToolPath, url)
+            ProcessStartInfo psi = new ProcessStartInfo(openToolPath, [url])
             {
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,

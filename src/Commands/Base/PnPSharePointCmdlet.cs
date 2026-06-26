@@ -23,6 +23,12 @@ namespace PnP.PowerShell.Commands
         public ClientContext ClientContext => Connection?.Context;
 
         /// <summary>
+        /// Controls whether a cmdlet should replace the current SharePoint context when it already contains pending CSOM requests before the cmdlet starts.
+        /// Override this for cmdlets that intentionally execute caller-created pending requests.
+        /// </summary>
+        protected virtual bool ShouldRefreshContextWithPendingRequest => true;
+
+        /// <summary>
         /// Reference the the PnP context on the current connection. If NULL it means there is no PnP context available on the current connection.
         /// </summary>
         public PnPContext PnPContext => Connection?.PnPContext ?? Connection.PnPContext;
@@ -128,6 +134,12 @@ namespace PnP.PowerShell.Commands
                     throw new InvalidOperationException(Resources.NoDefaultSharePointConnection);
                 }
             }
+
+            if (ShouldRefreshContextWithPendingRequest && Connection.RefreshContextIfHasPendingRequest())
+            {
+                LogDebug("Refreshing the SharePoint context because it contained pending CSOM requests before cmdlet execution.");
+            }
+
             var resourceUri = new Uri(Connection.Url);
             var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
             SharePointRequestHelper = new ApiRequestHelper(GetType(), Connection, defaultResource);
@@ -155,6 +167,11 @@ namespace PnP.PowerShell.Commands
 
         protected override void EndProcessing()
         {
+            if (ShouldRefreshContextWithPendingRequest && ClientContext?.HasPendingRequest == true)
+            {
+                ClientContext.ExecuteQueryRetry();
+            }
+
             base.EndProcessing();
         }
 
@@ -186,8 +203,8 @@ namespace PnP.PowerShell.Commands
                 }
 
                 LogDebug("Checking for operation status");
-                ClientContext.Load(spoOperation);
-                ClientContext.ExecuteQueryRetry();
+                spoOperation.Context.Load(spoOperation, s => s.IsComplete, s => s.HasTimedout, s => s.PollingInterval);
+                spoOperation.Context.ExecuteQueryRetry();
             }
             LogWarning("SharePoint Operation Wait Interrupted");
         }

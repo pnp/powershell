@@ -26,6 +26,7 @@ permissions: read-all
 jobs:  
   analyze:
     name: Analyze
+    if: github.repository_owner == 'pnp'
     runs-on: windows-latest
     permissions:
       security-events: write
@@ -38,20 +39,21 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
+      uses: github/codeql-action/init@v4
       with:
-        languages: ${{ matrix.language }}            
+        languages: ${{ matrix.language }}
 
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: | 
-          6.x
-          7.x          
+          8.x
+          9.x
+          10.x
     - name: Install dependencies
       run: dotnet restore PnP.PowerShell.csproj
       working-directory: src/Commands
@@ -59,4 +61,4 @@ jobs:
       run:  dotnet build PnP.PowerShell.csproj --nologo --configuration debug --no-incremental --verbosity diagnostic --disable-build-servers --force
       working-directory: src/Commands  
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
+      uses: github/codeql-action/analyze@v4
