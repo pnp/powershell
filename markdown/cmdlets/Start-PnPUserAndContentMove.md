@@ -1,11 +1,11 @@
 ---
-schema: 2.0.0
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Start-PnPUserAndContentMove.html
-tags: Available in the current Nightly Release only.
 title: Start-PnPUserAndContentMove
+tags: Available in the current Nightly Release only.
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Start-PnPUserAndContentMove.html
+schema: 2.0.0
+applicable: SharePoint Online
 ---
  
 # Start-PnPUserAndContentMove

@@ -1,11 +1,11 @@
 ---
-schema: 2.0.0
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTodoTaskChecklistItem.html
-tags: Available in the current Nightly Release only.
 title: Remove-PnPTodoTaskChecklistItem
+tags: Available in the current Nightly Release only.
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTodoTaskChecklistItem.html
+schema: 2.0.0
+applicable: SharePoint Online
 ---
  
 # Remove-PnPTodoTaskChecklistItem
