@@ -102,7 +102,7 @@ namespace PnP.PowerShell.Commands.Admin
 				throw new PSInvalidOperationException("The unified group move job could not be created. SharePoint Online did not return a response.");
 			}
 
-			WriteObject(GroupMoveJobFormatter.ConvertToPSObject(
+			WriteObject(UserAndContentMoveStateFormatter.ConvertGroupMoveStateToPSObject(
 				createdMoveJob,
 				IsVerboseMode(),
 				multiGeoRestApiClient.IsCurrentApiVersionSupported(TimeStampMinimumApiVersion),

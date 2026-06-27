@@ -60,6 +60,8 @@ namespace PnP.PowerShell.Commands.Model
 
 		public string UserPrincipalName { get; set; }
 
+		public string GroupName { get; set; }
+
 		[JsonConverter(typeof(JsonStringEnumConverter))]
 		public PreferredDataLocationValidationResult ValidationResult { get; set; }
 
@@ -119,7 +121,8 @@ namespace PnP.PowerShell.Commands.Model
 		ValidationOnlySource = 64,
 		SuppressBcsCheck = 128,
 		EnableGLSSupportForXGeoMove = 256,
-		Force = int.MinValue
+		SuppressAllWarning = int.MinValue,
+		Force = SuppressAllWarning
 	}
 
 	public enum JobType

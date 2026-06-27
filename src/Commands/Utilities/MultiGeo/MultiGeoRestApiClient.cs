@@ -37,9 +37,11 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string UserMoveJobsPath = "UserMoveJobs";
 		private const string UserMoveJobPathByUpn = "UserMoveJobs(upn='{0}')";
 		private const string UserMoveJobPathByMoveId = "UserMoveJobs/GetByMoveId(odbMoveId='{0}')";
+		private const string UserMoveJobCancelPath = UserMoveJobPathByUpn + "/Cancel";
 		private const string UserMoveJobsPathForMoveReport = "UserMoveJobs/GetMoveReport(moveState={0},moveDirection={1},startTime='{2:u}',endTime='{3:u}',limit='{4}')";
 		private const string GroupMoveJobsMinimumApiVersion = "1.3.0";
 		private const string GroupMoveJobsPath = "GroupMoveJobs";
+		private const string GroupMoveJobPathByGroupName = "GroupMoveJobs(groupname='{0}')";
 		private const int MaximumPagination = 10;
 		private const int ApiVersionCacheValidTimeInHours = 1;
 		private static readonly TimeSpan CreateTenantRenameJobTimeout = TimeSpan.FromSeconds(300);
@@ -159,6 +161,13 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			return GetFeed<UserAndContentMoveState>(path, apiVersion);
 		}
 
+		internal UserAndContentMoveState GetUnifiedGroupMoveState(string groupAlias)
+		{
+			var apiVersion = GetCurrentApiVersion(GroupMoveJobsMinimumApiVersion);
+			var path = string.Format(CultureInfo.InvariantCulture, GroupMoveJobPathByGroupName, ProcessSpecialChars(groupAlias));
+			return Get<UserAndContentMoveState>(path, apiVersion);
+		}
+
 		internal UserAndContentMoveState CreateUserMoveJob(UserMoveJobEntityData job)
 		{
 			if (job == null)
@@ -170,7 +179,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			return Post<UserAndContentMoveState>(UserMoveJobsPath, job, apiVersion: UserMoveJobsMinimumApiVersion);
 		}
 
-		internal GroupMoveJob CreateGroupMoveJob(GroupMoveJobEntityData job)
+		internal UserAndContentMoveState CreateGroupMoveJob(GroupMoveJobEntityData job)
 		{
 			if (job == null)
 			{
@@ -179,12 +188,19 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 			var apiVersion = GetCurrentApiVersion(GroupMoveJobsMinimumApiVersion);
 			job.ApiVersion = apiVersion;
-			return Post<GroupMoveJob>(GroupMoveJobsPath, job, apiVersion: apiVersion);
+			return Post<UserAndContentMoveState>(GroupMoveJobsPath, job, apiVersion: apiVersion);
 		}
 
 		internal bool IsCurrentApiVersionSupported(string minimumApiVersion)
 		{
 			return IsSupportedApiVersion(GetCurrentApiVersion(), minimumApiVersion);
+		}
+
+		internal void CancelUserMoveJob(string userPrincipalName)
+		{
+			var apiVersion = GetCurrentApiVersion(UserMoveJobsMinimumApiVersion);
+			var path = string.Format(CultureInfo.InvariantCulture, UserMoveJobCancelPath, ProcessSpecialChars(userPrincipalName));
+			PostWithEmptyBody(path, apiVersion);
 		}
 
 		internal void CancelTenantRenameJob()
@@ -246,6 +262,11 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			var jsonPayload = payload == null ? null : JsonSerializer.Serialize(payload, SerializerOptions);
 			var responseText = Send(() => CreateRequest(HttpMethod.Post, path, apiVersion, jsonPayload), timeout, allowRetries: false);
 			return DeserializeResponse<T>(responseText);
+		}
+
+		private void PostWithEmptyBody(string path, string apiVersion)
+		{
+			Send(() => CreateRequest(HttpMethod.Post, path, apiVersion, string.Empty), timeout: null, allowRetries: false);
 		}
 
 		private HttpRequestMessage CreateRequest(HttpMethod method, string path, string apiVersion, string jsonPayload = null)

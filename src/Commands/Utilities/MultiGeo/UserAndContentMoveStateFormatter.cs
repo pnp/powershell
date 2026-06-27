@@ -12,34 +12,71 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 		internal static PSObject ConvertToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties)
 		{
+			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.UserMove, includeTimeStamp: true, useStateName: false);
+		}
+
+		internal static PSObject ConvertGroupMoveStateToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties)
+		{
+			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.GroupMove, includeTimeStamp: true, useStateName: false);
+		}
+
+		internal static PSObject ConvertGroupMoveStateToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties, bool includeTimeStamp, bool useStateName)
+		{
+			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.GroupMove, includeTimeStamp, useStateName);
+		}
+
+		private static PSObject ConvertToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties, JobType moveJobType, bool includeTimeStamp, bool useStateName)
+		{
 			var result = new PSObject();
-			AddProperty(result, "UserPrincipalName", moveState.UserPrincipalName);
+			AddMoveJobIdentityProperty(result, moveState, moveJobType);
 			AddProperty(result, "MoveJobId", moveState.Id);
 			AddProperty(result, "SourceDataLocation", moveState.SourceDataLocation);
 			AddProperty(result, "DestinationDataLocation", moveState.DestinationDataLocation);
+
+			if (includeTimeStamp && !moveState.Option.HasFlag(MoveOption.ValidationOnly))
+			{
+				AddProperty(result, "TimeStamp", moveState.LastModified.ToLocalTime());
+			}
 
 			if (moveState.Option.HasFlag(MoveOption.ValidationOnly))
 			{
 				AddProperty(result, "ValidationState", "Success");
 			}
+			else if (useStateName)
+			{
+				AddProperty(result, "MoveState", moveState.StateName);
+			}
 			else
 			{
-				AddProperty(result, "TimeStamp", moveState.LastModified.ToLocalTime());
 				AddProperty(result, "MoveState", GetMoveStateDisplayValue(moveState));
 			}
 
 			if (includeVerboseProperties)
 			{
-				AddVerboseProperties(result, moveState);
+				AddVerboseProperties(result, moveState, moveJobType);
 			}
 
 			return result;
 		}
 
-		private static void AddVerboseProperties(PSObject result, UserAndContentMoveState moveState)
+		private static void AddMoveJobIdentityProperty(PSObject result, UserAndContentMoveState moveState, JobType moveJobType)
 		{
-			AddProperty(result, "IsValidPDL", moveState.ValidationResult == PreferredDataLocationValidationResult.Valid);
-			AddProperty(result, "HasODBInCurrentLocation", moveState.HasOdbInSourceDataLocation);
+			if (moveJobType == JobType.GroupMove)
+			{
+				AddProperty(result, "GroupName", moveState.GroupName);
+				return;
+			}
+
+			AddProperty(result, "UserPrincipalName", moveState.UserPrincipalName);
+		}
+
+		private static void AddVerboseProperties(PSObject result, UserAndContentMoveState moveState, JobType moveJobType)
+		{
+			if (moveJobType == JobType.UserMove)
+			{
+				AddProperty(result, "IsValidPDL", moveState.ValidationResult == PreferredDataLocationValidationResult.Valid);
+				AddProperty(result, "HasODBInCurrentLocation", moveState.HasOdbInSourceDataLocation);
+			}
 
 			if (moveState.State == MoveState.Success)
 			{
