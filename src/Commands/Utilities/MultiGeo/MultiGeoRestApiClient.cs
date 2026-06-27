@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string UserMoveJobsPath = "UserMoveJobs";
 		private const string UserMoveJobPathByUpn = "UserMoveJobs(upn='{0}')";
 		private const string UserMoveJobPathByMoveId = "UserMoveJobs/GetByMoveId(odbMoveId='{0}')";
-		private const string UserMoveJobCancelPath = "UserMoveJobs(upn='{0}')/Cancel";
+		private const string UserMoveJobCancelPath = UserMoveJobPathByUpn + "/Cancel";
 		private const string UserMoveJobsPathForMoveReport = "UserMoveJobs/GetMoveReport(moveState={0},moveDirection={1},startTime='{2:u}',endTime='{3:u}',limit='{4}')";
 		private const int MaximumPagination = 10;
 		private const int ApiVersionCacheValidTimeInHours = 1;
