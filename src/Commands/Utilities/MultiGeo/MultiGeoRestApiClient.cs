@@ -39,6 +39,8 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string UserMoveJobPathByMoveId = "UserMoveJobs/GetByMoveId(odbMoveId='{0}')";
 		private const string UserMoveJobCancelPath = UserMoveJobPathByUpn + "/Cancel";
 		private const string UserMoveJobsPathForMoveReport = "UserMoveJobs/GetMoveReport(moveState={0},moveDirection={1},startTime='{2:u}',endTime='{3:u}',limit='{4}')";
+		private const string GroupMoveJobsMinimumApiVersion = "1.3.0";
+		private const string GroupMoveJobPathByGroupName = "GroupMoveJobs(groupname='{0}')";
 		private const int MaximumPagination = 10;
 		private const int ApiVersionCacheValidTimeInHours = 1;
 		private static readonly TimeSpan CreateTenantRenameJobTimeout = TimeSpan.FromSeconds(300);
@@ -156,6 +158,13 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			var apiVersion = GetCurrentApiVersion(UserMoveJobsReportMinimumApiVersion);
 			var path = string.Format(CultureInfo.InvariantCulture, UserMoveJobsPathForMoveReport, (int)moveState, (int)moveDirection, startTime, endTime, limit);
 			return GetFeed<UserAndContentMoveState>(path, apiVersion);
+		}
+
+		internal UserAndContentMoveState GetUnifiedGroupMoveState(string groupAlias)
+		{
+			var apiVersion = GetCurrentApiVersion(GroupMoveJobsMinimumApiVersion);
+			var path = string.Format(CultureInfo.InvariantCulture, GroupMoveJobPathByGroupName, ProcessSpecialChars(groupAlias));
+			return Get<UserAndContentMoveState>(path, apiVersion);
 		}
 
 		internal UserAndContentMoveState CreateUserMoveJob(UserMoveJobEntityData job)
