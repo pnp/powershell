@@ -42,6 +42,11 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string GroupMoveJobsMinimumApiVersion = "1.3.0";
 		private const string GroupMoveJobsPath = "GroupMoveJobs";
 		private const string GroupMoveJobPathByGroupName = "GroupMoveJobs(groupname='{0}')";
+		private const string SiteMoveJobsMinimumApiVersion = "1.3.0";
+		private const string SiteMoveJobsReportMinimumApiVersion = "1.3.8";
+		private const string SiteMoveJobPathByUrl = "SiteMoveJobs(url='{0}')";
+		private const string SiteMoveJobPathByMoveId = "SiteMoveJobs/GetByMoveId(SiteMoveId='{0}')";
+		private const string SiteMoveJobsPathForMoveReport = "SiteMoveJobs/GetMoveReport(moveState={0},moveDirection={1},startTime='{2:u}',endTime='{3:u}',limit='{4}')";
 		private const int MaximumPagination = 10;
 		private const int ApiVersionCacheValidTimeInHours = 1;
 		private static readonly TimeSpan CreateTenantRenameJobTimeout = TimeSpan.FromSeconds(300);
@@ -166,6 +171,27 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			var apiVersion = GetCurrentApiVersion(GroupMoveJobsMinimumApiVersion);
 			var path = string.Format(CultureInfo.InvariantCulture, GroupMoveJobPathByGroupName, ProcessSpecialChars(groupAlias));
 			return Get<UserAndContentMoveState>(path, apiVersion);
+		}
+
+		internal SiteMoveJob GetSiteMoveJob(string sourceSiteUrl)
+		{
+			var apiVersion = GetCurrentApiVersion(SiteMoveJobsMinimumApiVersion);
+			var path = string.Format(CultureInfo.InvariantCulture, SiteMoveJobPathByUrl, ProcessSpecialChars(sourceSiteUrl));
+			return Get<SiteMoveJob>(path, apiVersion);
+		}
+
+		internal SiteMoveJob GetSiteMoveJob(Guid siteMoveId)
+		{
+			var apiVersion = GetCurrentApiVersion(SiteMoveJobsMinimumApiVersion);
+			var path = string.Format(CultureInfo.InvariantCulture, SiteMoveJobPathByMoveId, siteMoveId);
+			return Get<SiteMoveJob>(path, apiVersion);
+		}
+
+		internal IEnumerable<SiteMoveJob> GetSiteMoveJobs(MoveState moveState, MoveDirection moveDirection, DateTime startTime, DateTime endTime, uint limit)
+		{
+			var apiVersion = GetCurrentApiVersion(SiteMoveJobsReportMinimumApiVersion);
+			var path = string.Format(CultureInfo.InvariantCulture, SiteMoveJobsPathForMoveReport, (int)moveState, (int)moveDirection, startTime, endTime, limit);
+			return GetFeed<SiteMoveJob>(path, apiVersion);
 		}
 
 		internal UserAndContentMoveState CreateUserMoveJob(UserMoveJobEntityData job)
