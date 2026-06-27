@@ -177,7 +177,7 @@ In order to connect to a GCC or a national cloud environment, ensure you have fo
 Connecting can be done using:
 
 ```powershell
-Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China|BleuCloud|DelosCloud|GovSGCloud]
 ```
 
 The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.

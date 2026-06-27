@@ -183,12 +183,12 @@ $result
 <pre><code class="lang-PowerShell">Connect-PnPOnline [yourtenant].sharepoint.com -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -CertificatePath [certificate.pfx]
 </code></pre>
 <h2 id="special-instructions-for-gcc-or-national-cloud-environments">Special instructions for GCC or National Cloud environments</h2>
-<p>In order to set up your application registration on a GCC or a national cloud environment, you will have to take a few extra steps. In the two methods described above for <a href="#automatically-create-an-app-registration-for-interactive-login">interactive login</a> and <a href="#setting-up-access-to-your-own-entra-id-app-for-app-only-access">App Only access</a>, you will have to add <code>-AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]</code> to the cmdlet picking the one that applies to your environment to register your application in Entra ID.</p>
+<p>In order to set up your application registration on a GCC or a national cloud environment, you will have to take a few extra steps. In the two methods described above for <a href="#automatically-create-an-app-registration-for-interactive-login">interactive login</a> and <a href="#setting-up-access-to-your-own-entra-id-app-for-app-only-access">App Only access</a>, you will have to add <code>-AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China|BleuCloud|DelosCloud|GovSGCloud]</code> to the cmdlet picking the one that applies to your environment to register your application in Entra ID.</p>
 <p>For an application registration meant for interactive login, use:</p>
-<pre><code class="lang-PowerShell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName &quot;PnP.PowerShell&quot; -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+<pre><code class="lang-PowerShell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName &quot;PnP.PowerShell&quot; -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China|BleuCloud|DelosCloud|GovSGCloud]
 </code></pre>
 <p>And for an App Only application registration, use:</p>
-<pre><code class="lang-PowerShell">$result = Register-PnPEntraIDApp -ApplicationName &quot;PnP.PowerShell&quot; -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+<pre><code class="lang-PowerShell">$result = Register-PnPEntraIDApp -ApplicationName &quot;PnP.PowerShell&quot; -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China|BleuCloud|DelosCloud|GovSGCloud]
 $result
 </code></pre>
 <p>The above statement grants a few permission scopes. You might want to add more if you want to. Alternatively, after registering the application, navigate to Entra ID, locate the app registration, and grant more permissions and consent to them.</p>
