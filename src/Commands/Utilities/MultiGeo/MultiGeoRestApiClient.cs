@@ -44,6 +44,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string GroupMoveJobPathByGroupName = "GroupMoveJobs(groupname='{0}')";
 		private const string SiteMoveJobsMinimumApiVersion = "1.3.0";
 		private const string SiteMoveJobsReportMinimumApiVersion = "1.3.8";
+		private const string SiteMoveJobsPath = "SiteMoveJobs";
 		private const string SiteMoveJobPathByUrl = "SiteMoveJobs(url='{0}')";
 		private const string SiteMoveJobPathByMoveId = "SiteMoveJobs/GetByMoveId(SiteMoveId='{0}')";
 		private const string SiteMoveJobsPathForMoveReport = "SiteMoveJobs/GetMoveReport(moveState={0},moveDirection={1},startTime='{2:u}',endTime='{3:u}',limit='{4}')";
@@ -216,6 +217,18 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			var apiVersion = GetCurrentApiVersion(GroupMoveJobsMinimumApiVersion);
 			job.ApiVersion = apiVersion;
 			return Post<UserAndContentMoveState>(GroupMoveJobsPath, job, apiVersion: apiVersion);
+		}
+
+		internal SiteMoveJob CreateSiteMoveJob(SiteMoveJobEntityData job)
+		{
+			if (job == null)
+			{
+				throw new ArgumentNullException(nameof(job));
+			}
+
+			var apiVersion = GetCurrentApiVersion(SiteMoveJobsMinimumApiVersion);
+			job.ApiVersion = apiVersion;
+			return Post<SiteMoveJob>(SiteMoveJobsPath, job, apiVersion: apiVersion);
 		}
 
 		internal bool IsCurrentApiVersionSupported(string minimumApiVersion)

@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Stop-PnPUserAndContentMove` cmdlet to stop SharePoint Online multi-geo user and OneDrive content move jobs. [#5363](https://github.com/pnp/powershell/pull/5363)
 - Added `Get-PnPMultiGeoCompanyAllowedDataLocation` cmdlet to retrieve SharePoint Online multi-geo allowed data locations. [#5336](https://github.com/pnp/powershell/pull/5336)
 - Added `Get-PnPGeoMoveCrossCompatibilityStatus` cmdlet to retrieve SharePoint Online multi-geo move compatibility statuses.
+- Added `Start-PnPSiteContentMove` cmdlet to start SharePoint Online multi-geo site content move jobs.
 - Added `Get-PnPEntraIDAppListItemPermission`, `Grant-PnPEntraIDAppListItemPermission`, `Set-PnPEntraIDAppListItemPermission`, `Revoke-PnPEntraIDAppListItemPermission` to allow working with list item level app permissions [#5294](https://github.com/pnp/powershell/pull/5294)
 - Added `Get-PnPEntraIDAppListPermission`, `Grant-PnPEntraIDAppListPermission`, `Set-PnPEntraIDAppListPermission`, `Revoke-PnPEntraIDAppListPermission` to allow working with list level app permissions [#5293](https://github.com/pnp/powershell/pull/5293)
 - Added `Get-PnPEntraIDAppFilePermission`, `Grant-PnPEntraIDAppFilePermission`, `Set-PnPEntraIDAppFilePermission`, `Revoke-PnPEntraIDAppFilePermission` to allow working with file item app permissions [#5295](https://github.com/pnp/powershell/pull/5295)

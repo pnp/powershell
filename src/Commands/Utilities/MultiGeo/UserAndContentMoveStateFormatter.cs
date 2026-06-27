@@ -98,6 +98,13 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 				return;
 			}
 
+			if (moveJobType == JobType.SiteMove)
+			{
+				AddProperty(result, "SourceSiteUrl", moveState.SourceSiteUrl);
+				AddProperty(result, "TargetSiteUrl", moveState.TargetSiteUrl);
+				return;
+			}
+
 			AddProperty(result, "UserPrincipalName", moveState.UserPrincipalName);
 		}
 
