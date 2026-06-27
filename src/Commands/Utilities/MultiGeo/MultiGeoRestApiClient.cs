@@ -37,6 +37,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string UserMoveJobsPath = "UserMoveJobs";
 		private const string UserMoveJobPathByUpn = "UserMoveJobs(upn='{0}')";
 		private const string UserMoveJobPathByMoveId = "UserMoveJobs/GetByMoveId(odbMoveId='{0}')";
+		private const string UserMoveJobCancelPath = "UserMoveJobs(upn='{0}')/Cancel";
 		private const string UserMoveJobsPathForMoveReport = "UserMoveJobs/GetMoveReport(moveState={0},moveDirection={1},startTime='{2:u}',endTime='{3:u}',limit='{4}')";
 		private const int MaximumPagination = 10;
 		private const int ApiVersionCacheValidTimeInHours = 1;
@@ -168,6 +169,13 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			return Post<UserAndContentMoveState>(UserMoveJobsPath, job, apiVersion: UserMoveJobsMinimumApiVersion);
 		}
 
+		internal void CancelUserMoveJob(string userPrincipalName)
+		{
+			var apiVersion = GetCurrentApiVersion(UserMoveJobsMinimumApiVersion);
+			var path = string.Format(CultureInfo.InvariantCulture, UserMoveJobCancelPath, ProcessSpecialChars(userPrincipalName));
+			PostWithEmptyBody(path, apiVersion);
+		}
+
 		internal void CancelTenantRenameJob()
 		{
 			Post<string>(TenantRenameJobsPathToCancelAJob, payload: null, apiVersion: TenantRenameCancelApiVersion);
@@ -227,6 +235,11 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			var jsonPayload = payload == null ? null : JsonSerializer.Serialize(payload, SerializerOptions);
 			var responseText = Send(() => CreateRequest(HttpMethod.Post, path, apiVersion, jsonPayload), timeout, allowRetries: false);
 			return DeserializeResponse<T>(responseText);
+		}
+
+		private void PostWithEmptyBody(string path, string apiVersion)
+		{
+			Send(() => CreateRequest(HttpMethod.Post, path, apiVersion, string.Empty), timeout: null, allowRetries: false);
 		}
 
 		private HttpRequestMessage CreateRequest(HttpMethod method, string path, string apiVersion, string jsonPayload = null)

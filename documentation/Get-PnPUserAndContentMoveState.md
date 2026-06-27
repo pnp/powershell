@@ -190,4 +190,8 @@ Returns objects with `UserPrincipalName`, `MoveJobId`, `SourceDataLocation`, `De
 
 ## RELATED LINKS
 
+[Start-PnPUserAndContentMove](Start-PnPUserAndContentMove.md)
+
+[Stop-PnPUserAndContentMove](Stop-PnPUserAndContentMove.md)
+
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
