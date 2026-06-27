@@ -122,7 +122,7 @@ namespace PnP.PowerShell.Commands.Model
 		SuppressBcsCheck = 128,
 		EnableGLSSupportForXGeoMove = 256,
 		SuppressAllWarning = int.MinValue,
-		Force = int.MinValue
+		Force = SuppressAllWarning
 	}
 
 	public enum JobType

@@ -23,11 +23,6 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private static PSObject ConvertToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties, JobType moveJobType)
 		{
 			var result = new PSObject();
-			if (moveState == null)
-			{
-				return result;
-			}
-
 			AddMoveJobIdentityProperty(result, moveState, moveJobType);
 			AddProperty(result, "MoveJobId", moveState.Id);
 			AddProperty(result, "SourceDataLocation", moveState.SourceDataLocation);

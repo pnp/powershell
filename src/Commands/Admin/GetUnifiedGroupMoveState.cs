@@ -12,13 +12,17 @@ namespace PnP.PowerShell.Commands.Admin
 	public class GetUnifiedGroupMoveState : PnPSharePointOnlineAdminCmdlet
 	{
 		[Parameter(Mandatory = true, Position = 0)]
+		[ValidateNotNullOrEmpty]
 		public string GroupAlias { get; set; }
 
 		protected override void ExecuteCmdlet()
 		{
 			var multiGeoRestApiClient = new MultiGeoRestApiClient(AdminContext);
 			var moveState = multiGeoRestApiClient.GetUnifiedGroupMoveState(GroupAlias);
-			WriteObject(UserAndContentMoveStateFormatter.ConvertGroupMoveStateToPSObject(moveState, IsVerboseMode()));
+			if (moveState != null)
+			{
+				WriteObject(UserAndContentMoveStateFormatter.ConvertGroupMoveStateToPSObject(moveState, IsVerboseMode()));
+			}
 		}
 
 		private bool IsVerboseMode()
