@@ -12,8 +12,23 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 		internal static PSObject ConvertToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties)
 		{
+			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.UserMove);
+		}
+
+		internal static PSObject ConvertGroupMoveStateToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties)
+		{
+			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.GroupMove);
+		}
+
+		private static PSObject ConvertToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties, JobType moveJobType)
+		{
 			var result = new PSObject();
-			AddProperty(result, "UserPrincipalName", moveState.UserPrincipalName);
+			if (moveState == null)
+			{
+				return result;
+			}
+
+			AddMoveJobIdentityProperty(result, moveState, moveJobType);
 			AddProperty(result, "MoveJobId", moveState.Id);
 			AddProperty(result, "SourceDataLocation", moveState.SourceDataLocation);
 			AddProperty(result, "DestinationDataLocation", moveState.DestinationDataLocation);
@@ -30,16 +45,30 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 			if (includeVerboseProperties)
 			{
-				AddVerboseProperties(result, moveState);
+				AddVerboseProperties(result, moveState, moveJobType);
 			}
 
 			return result;
 		}
 
-		private static void AddVerboseProperties(PSObject result, UserAndContentMoveState moveState)
+		private static void AddMoveJobIdentityProperty(PSObject result, UserAndContentMoveState moveState, JobType moveJobType)
 		{
-			AddProperty(result, "IsValidPDL", moveState.ValidationResult == PreferredDataLocationValidationResult.Valid);
-			AddProperty(result, "HasODBInCurrentLocation", moveState.HasOdbInSourceDataLocation);
+			if (moveJobType == JobType.GroupMove)
+			{
+				AddProperty(result, "GroupName", moveState.GroupName);
+				return;
+			}
+
+			AddProperty(result, "UserPrincipalName", moveState.UserPrincipalName);
+		}
+
+		private static void AddVerboseProperties(PSObject result, UserAndContentMoveState moveState, JobType moveJobType)
+		{
+			if (moveJobType == JobType.UserMove)
+			{
+				AddProperty(result, "IsValidPDL", moveState.ValidationResult == PreferredDataLocationValidationResult.Valid);
+				AddProperty(result, "HasODBInCurrentLocation", moveState.HasOdbInSourceDataLocation);
+			}
 
 			if (moveState.State == MoveState.Success)
 			{
