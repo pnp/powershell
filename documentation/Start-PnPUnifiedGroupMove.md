@@ -230,7 +230,7 @@ Accept wildcard characters: False
 ## OUTPUTS
 
 ### System.Management.Automation.PSObject
-Returns an object with `GroupName`, `MoveJobId`, `SourceDataLocation`, `DestinationDataLocation`, `TimeStamp`, and `MoveState` properties. Validation-only move jobs return `ValidationState` instead of `TimeStamp` and `MoveState`. When `-Verbose` is specified, additional move job details are returned.
+Returns an object with `GroupName`, `MoveJobId`, `SourceDataLocation`, `DestinationDataLocation`, and `MoveState` properties. `TimeStamp` is included for non-validation move jobs when supported by the tenant Multi-Geo API version. Validation-only move jobs return `ValidationState` instead of `TimeStamp` and `MoveState`. When `-Verbose` is specified, additional move job details are returned.
 
 ## RELATED LINKS
 
