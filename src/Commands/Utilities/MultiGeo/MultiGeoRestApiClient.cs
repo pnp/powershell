@@ -47,6 +47,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string SiteMoveJobPathByUrl = "SiteMoveJobs(url='{0}')";
 		private const string SiteMoveJobPathByMoveId = "SiteMoveJobs/GetByMoveId(SiteMoveId='{0}')";
 		private const string SiteMoveJobsPathForMoveReport = "SiteMoveJobs/GetMoveReport(moveState={0},moveDirection={1},startTime='{2:u}',endTime='{3:u}',limit='{4}')";
+		private const string SiteMoveJobCancelPath = SiteMoveJobPathByUrl + "/Cancel";
 		private const int MaximumPagination = 10;
 		private const int ApiVersionCacheValidTimeInHours = 1;
 		private static readonly TimeSpan CreateTenantRenameJobTimeout = TimeSpan.FromSeconds(300);
@@ -226,6 +227,13 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		{
 			var apiVersion = GetCurrentApiVersion(UserMoveJobsMinimumApiVersion);
 			var path = string.Format(CultureInfo.InvariantCulture, UserMoveJobCancelPath, ProcessSpecialChars(userPrincipalName));
+			PostWithEmptyBody(path, apiVersion);
+		}
+
+		internal void CancelSiteMoveJob(string sourceSiteUrl)
+		{
+			var apiVersion = GetCurrentApiVersion(SiteMoveJobsMinimumApiVersion);
+			var path = string.Format(CultureInfo.InvariantCulture, SiteMoveJobCancelPath, ProcessSpecialChars(sourceSiteUrl));
 			PostWithEmptyBody(path, apiVersion);
 		}
 
