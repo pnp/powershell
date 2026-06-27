@@ -19,7 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPEntraIDAppListPermission`, `Grant-PnPEntraIDAppListPermission`, `Set-PnPEntraIDAppListPermission`, `Revoke-PnPEntraIDAppListPermission` to allow working with list level app permissions [#5293](https://github.com/pnp/powershell/pull/5293)
 - Added `Get-PnPEntraIDAppFilePermission`, `Grant-PnPEntraIDAppFilePermission`, `Set-PnPEntraIDAppFilePermission`, `Revoke-PnPEntraIDAppFilePermission` to allow working with file item app permissions [#5295](https://github.com/pnp/powershell/pull/5295)
 - Added `Get-PnPTodoTask`, `New-PnPTodoTask`, `Update-PnPTodoTask`, `Remove-PnPTodoTask`, `Get-PnPTodoTaskChecklistItem`, `New-PnPTodoTaskChecklistItem`, `Update-PnPTodoTaskChecklistItem`, `Remove-PnPTodoTaskChecklistItem`, `Get-PnPTodoTaskLinkedResource`, `New-PnPTodoTaskLinkedResource`, `Remove-PnPTodoTaskLinkedResource`, `Get-PnPTodoTaskFileAttachment`, `Add-PnPTodoTaskFileAttachment`, and `Remove-PnPTodoTaskFileAttachment` cmdlets to allow working with Microsoft To Do tasks. [#5356](https://github.com/pnp/powershell/pull/5356)
-- 
+- Added `Start-PnPUnifiedGroupMove` cmdlet to start SharePoint Online multi-geo unified group move jobs. [#5364](https://github.com/pnp/powershell/pull/5364)
 
 ### Changed
 - Added properties `CoreOrganizationSharingLinkRecommendedExpirationInDays`, `CoreOrganizationSharingLinkMaxExpirationInDays`,`RestrictResourceAccountAccess`, `RestrictExternalSharingForAgents` to `Set-PnPTenant` and `Get-PnPTenant` cmdlet. [#5330](https://github.com/pnp/powershell/pull/5330)

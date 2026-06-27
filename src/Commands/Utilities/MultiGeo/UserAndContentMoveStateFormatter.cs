@@ -12,15 +12,20 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 		internal static PSObject ConvertToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties)
 		{
-			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.UserMove);
+			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.UserMove, includeTimeStamp: true, useStateName: false);
 		}
 
 		internal static PSObject ConvertGroupMoveStateToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties)
 		{
-			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.GroupMove);
+			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.GroupMove, includeTimeStamp: true, useStateName: false);
 		}
 
-		private static PSObject ConvertToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties, JobType moveJobType)
+		internal static PSObject ConvertGroupMoveStateToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties, bool includeTimeStamp, bool useStateName)
+		{
+			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.GroupMove, includeTimeStamp, useStateName);
+		}
+
+		private static PSObject ConvertToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties, JobType moveJobType, bool includeTimeStamp, bool useStateName)
 		{
 			var result = new PSObject();
 			AddMoveJobIdentityProperty(result, moveState, moveJobType);
@@ -28,13 +33,21 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			AddProperty(result, "SourceDataLocation", moveState.SourceDataLocation);
 			AddProperty(result, "DestinationDataLocation", moveState.DestinationDataLocation);
 
+			if (includeTimeStamp && !moveState.Option.HasFlag(MoveOption.ValidationOnly))
+			{
+				AddProperty(result, "TimeStamp", moveState.LastModified.ToLocalTime());
+			}
+
 			if (moveState.Option.HasFlag(MoveOption.ValidationOnly))
 			{
 				AddProperty(result, "ValidationState", "Success");
 			}
+			else if (useStateName)
+			{
+				AddProperty(result, "MoveState", moveState.StateName);
+			}
 			else
 			{
-				AddProperty(result, "TimeStamp", moveState.LastModified.ToLocalTime());
 				AddProperty(result, "MoveState", GetMoveStateDisplayValue(moveState));
 			}
 
