@@ -25,6 +25,37 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.GroupMove, includeTimeStamp, useStateName);
 		}
 
+		internal static PSObject ConvertSiteMoveStateToPSObject(SiteMoveJob moveState, bool includeVerboseProperties)
+		{
+			var result = new PSObject();
+			AddProperty(result, "SourceSiteUrl", moveState.SourceSiteUrl);
+			AddProperty(result, "TargetSiteUrl", moveState.TargetSiteUrl);
+			AddProperty(result, "MoveJobId", moveState.Id);
+			AddProperty(result, "SourceDataLocation", moveState.SourceDataLocation);
+			AddProperty(result, "DestinationDataLocation", moveState.DestinationDataLocation);
+
+			if (!moveState.Option.HasFlag(MoveOption.ValidationOnly))
+			{
+				AddProperty(result, "TimeStamp", moveState.LastModified.ToLocalTime());
+			}
+
+			if (moveState.Option.HasFlag(MoveOption.ValidationOnly))
+			{
+				AddProperty(result, "ValidationState", "Success");
+			}
+			else
+			{
+				AddProperty(result, "MoveState", GetMoveStateDisplayValue(moveState.StateName, moveState.State, moveState.JobPhase));
+			}
+
+			if (includeVerboseProperties)
+			{
+				AddVerboseProperties(result, moveState);
+			}
+
+			return result;
+		}
+
 		private static PSObject ConvertToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties, JobType moveJobType, bool includeTimeStamp, bool useStateName)
 		{
 			var result = new PSObject();
@@ -96,19 +127,44 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			AddProperty(result, "TriggeredBy", moveState.TriggeredBy);
 		}
 
-		private static string GetMoveStateDisplayValue(UserAndContentMoveState moveState)
+		private static void AddVerboseProperties(PSObject result, SiteMoveJob moveState)
 		{
-			if (!string.IsNullOrWhiteSpace(moveState.StateName))
+			if (moveState.State == MoveState.Success)
 			{
-				return moveState.StateName;
+				AddProperty(result, "IsContentMoved", moveState.IsContentMoved);
 			}
 
-			return moveState.State switch
+			AddProperty(result, "ErrorMessage", moveState.ErrorMessage);
+			AddProperty(result, "SiteId", moveState.SiteId);
+			AddProperty(result, "MoveDirection", moveState.Direction);
+			AddProperty(result, "MoveJobPhase", moveState.JobPhase);
+			AddProperty(result, "MoveJobType", moveState.Type);
+			AddProperty(result, "PreferredMoveBeginDate", FormatSpecificDate(moveState.PreferredMoveBeginDateInUtc));
+			AddProperty(result, "PreferredMoveEndDate", FormatSpecificDate(moveState.PreferredMoveEndDateInUtc));
+			AddProperty(result, "StartedDate", FormatSpecificDate(moveState.StartedDateInUtc));
+			AddProperty(result, "FinishedDate", FormatSpecificDate(moveState.FinishedDateInUtc));
+			AddProperty(result, "Option", moveState.Option);
+			AddProperty(result, "TriggeredBy", moveState.TriggeredBy);
+		}
+
+		private static string GetMoveStateDisplayValue(UserAndContentMoveState moveState)
+		{
+			return GetMoveStateDisplayValue(moveState.StateName, moveState.State, moveState.JobPhase);
+		}
+
+		private static string GetMoveStateDisplayValue(string stateName, MoveState state, MoveJobPhase jobPhase)
+		{
+			if (!string.IsNullOrWhiteSpace(stateName))
+			{
+				return stateName;
+			}
+
+			return state switch
 			{
 				MoveState.NotStarted => "ReadyToTrigger",
 				MoveState.Queued => "Scheduled",
-				MoveState.InProgress => string.Format(CultureInfo.InvariantCulture, "{0}({1}/4)", moveState.State, (int)moveState.JobPhase),
-				_ => moveState.State.ToString()
+				MoveState.InProgress => string.Format(CultureInfo.InvariantCulture, "{0}({1}/4)", state, (int)jobPhase),
+				_ => state.ToString()
 			};
 		}
 
