@@ -205,6 +205,47 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The client version &apos;{0}&apos; is not supported. Please try to upgrade client version first..
+        /// </summary>
+        internal static string CrossGeoInvalidVersion {
+            get {
+                return ResourceManager.GetString("CrossGeoInvalidVersion", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The new location will use the following addresses for OneDrive and SharePoint sites:
+        ///
+        ///{0}
+        ///{1}
+        ///
+        ///.
+        /// </summary>
+        internal static string CrossGeoWarningAddAdlMessage {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningAddAdlMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to set up this location?.
+        /// </summary>
+        internal static string CrossGeoWarningAddAdlMessageQuery {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningAddAdlMessageQuery", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully started setting up the new location. You will receive a notification when the process completes. You can check status using the following command: Get-SPOMultiGeoCompanyAllowedDataLocation..
+        /// </summary>
+        internal static string CrossGeoWarningAddAdlSuccessMessage {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningAddAdlSuccessMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Current site is not a tenant administration site.
         /// </summary>
         internal static string CurrentSiteIsNoTenantAdminSite {
