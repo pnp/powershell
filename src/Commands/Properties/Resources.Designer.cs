@@ -214,6 +214,33 @@ namespace PnP.PowerShell.Commands.Properties {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Server does not support suppressing the warning..
+        /// </summary>
+        internal static string CrossGeoConfirmationNotSupported {
+            get {
+                return ResourceManager.GetString("CrossGeoConfirmationNotSupported", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to There are apps instantiated on the site. Confirm to initiate the site move. After the site move completes, the apps may need to be instantiated or reconfigured at the destination geo location..
+        /// </summary>
+        internal static string CrossGeoSiteContainsMarketplaceAppsWithConfirm {
+            get {
+                return ResourceManager.GetString("CrossGeoSiteContainsMarketplaceAppsWithConfirm", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to There is Workflow 2013 instantiated on the site. Confirm to initiate the site move. After the site move completes, Workflow may need to be instantiated or reconfigured at the destination geo location..
+        /// </summary>
+        internal static string CrossGeoSiteRunsWorkflow2013WithConfirm {
+            get {
+                return ResourceManager.GetString("CrossGeoSiteRunsWorkflow2013WithConfirm", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The new location will use the following addresses for OneDrive and SharePoint sites:
         ///
         ///{0}

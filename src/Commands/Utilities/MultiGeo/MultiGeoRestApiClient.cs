@@ -60,6 +60,10 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string SiteMoveJobPathByMoveId = "SiteMoveJobs/GetByMoveId(SiteMoveId='{0}')";
 		private const string SiteMoveJobsPathForMoveReport = "SiteMoveJobs/GetMoveReport(moveState={0},moveDirection={1},startTime='{2:u}',endTime='{3:u}',limit='{4}')";
 		private const string SiteMoveJobCancelPath = SiteMoveJobPathByUrl + "/Cancel";
+		private const int SiteMoveContainsMarketplaceAppsErrorCode = -111;
+		private const int SiteMoveRunsWorkflow2013ErrorCode = -113;
+		private const int SiteMoveRequiresForceErrorCode = -116;
+		private const int SiteMoveContainsBcsErrorCode = -139;
 		private const int MaximumPagination = 10;
 		private const int ApiVersionCacheValidTimeInHours = 1;
 		private static readonly TimeSpan CreateTenantRenameJobTimeout = TimeSpan.FromSeconds(300);
@@ -277,6 +281,11 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 		internal SiteMoveJob CreateSiteMoveJob(SiteMoveJobEntityData job)
 		{
+			return CreateSiteMoveJob(job, shouldContinue: null);
+		}
+
+		internal SiteMoveJob CreateSiteMoveJob(SiteMoveJobEntityData job, Func<string, bool> shouldContinue)
+		{
 			if (job == null)
 			{
 				throw new ArgumentNullException(nameof(job));
@@ -284,7 +293,27 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 			var apiVersion = GetCurrentApiVersion(SiteMoveJobsMinimumApiVersion);
 			job.ApiVersion = apiVersion;
-			return Post<SiteMoveJob>(SiteMoveJobsPath, job, apiVersion: apiVersion);
+			while (true)
+			{
+				try
+				{
+					return Post<SiteMoveJob>(SiteMoveJobsPath, job, apiVersion: apiVersion);
+				}
+				catch (MultiGeoRestApiException ex) when (shouldContinue != null && TryGetSiteMoveConfirmation(ex, out var option, out var confirmationMessage))
+				{
+					if (job.Option.HasFlag(option))
+					{
+						throw new InvalidOperationException(CommandResources.CrossGeoConfirmationNotSupported, ex);
+					}
+
+					if (!shouldContinue(confirmationMessage))
+					{
+						throw;
+					}
+
+					job.Option |= option;
+				}
+			}
 		}
 
 		internal bool IsCurrentApiVersionSupported(string minimumApiVersion)
@@ -546,7 +575,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 				if (!response.IsSuccessStatusCode)
 				{
-					throw new InvalidOperationException(GetErrorMessage(response.StatusCode, responseText));
+					throw CreateRestApiException(response.StatusCode, responseText);
 				}
 
 				return responseText;
@@ -575,6 +604,43 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			}
 
 			return TimeSpan.FromSeconds(Math.Min(Math.Pow(2, retryAttempt), 30));
+		}
+
+		private static bool TryGetSiteMoveConfirmation(MultiGeoRestApiException exception, out MoveOption option, out string confirmationMessage)
+		{
+			option = MoveOption.None;
+			confirmationMessage = null;
+			if (!exception.ErrorCode.HasValue)
+			{
+				return false;
+			}
+
+			option = exception.ErrorCode.Value switch
+			{
+				SiteMoveContainsMarketplaceAppsErrorCode => MoveOption.SuppressMarketplaceAppCheck,
+				SiteMoveRunsWorkflow2013ErrorCode => MoveOption.SuppressWorkflow2013Check,
+				SiteMoveRequiresForceErrorCode => MoveOption.Force,
+				SiteMoveContainsBcsErrorCode => MoveOption.SuppressBcsCheck,
+				_ => MoveOption.None
+			};
+
+			if (option == MoveOption.None)
+			{
+				return false;
+			}
+
+			confirmationMessage = GetSiteMoveConfirmationMessage(exception.ErrorCode.Value, exception.ODataErrorMessage ?? exception.Message);
+			return !string.IsNullOrWhiteSpace(confirmationMessage);
+		}
+
+		private static string GetSiteMoveConfirmationMessage(int errorCode, string errorMessage)
+		{
+			return errorCode switch
+			{
+				SiteMoveContainsMarketplaceAppsErrorCode => CommandResources.CrossGeoSiteContainsMarketplaceAppsWithConfirm,
+				SiteMoveRunsWorkflow2013ErrorCode => CommandResources.CrossGeoSiteRunsWorkflow2013WithConfirm,
+				_ => errorMessage
+			};
 		}
 
 		private static T DeserializeResponse<T>(string responseText)
@@ -667,36 +733,46 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			return responseElement.TryGetProperty("value", out var valueElement) ? valueElement : responseElement;
 		}
 
-		private static string GetErrorMessage(HttpStatusCode statusCode, string responseText)
+		private static MultiGeoRestApiException CreateRestApiException(HttpStatusCode statusCode, string responseText)
 		{
 			var statusMessage = $"SharePoint Online REST request failed with status {(int)statusCode} ({statusCode}).";
 			if (string.IsNullOrWhiteSpace(responseText))
 			{
-				return statusMessage;
+				return new MultiGeoRestApiException(statusMessage, errorCode: null, oDataErrorMessage: null);
 			}
 
+			var errorCode = default(int?);
+			var errorMessage = default(string);
 			try
 			{
 				using var jsonDocument = JsonDocument.Parse(responseText);
-				var rootElement = jsonDocument.RootElement;
-				if (TryGetODataErrorMessage(rootElement, out var errorMessage))
-				{
-					return $"{statusMessage} {errorMessage}";
-				}
+				TryGetODataError(jsonDocument.RootElement, out errorCode, out errorMessage);
 			}
 			catch (JsonException)
 			{
 			}
 
-			return $"{statusMessage} {responseText}";
+			var message = !string.IsNullOrWhiteSpace(errorMessage) ? $"{statusMessage} {errorMessage}" : $"{statusMessage} {responseText}";
+			return new MultiGeoRestApiException(message, errorCode, errorMessage);
 		}
 
-		private static bool TryGetODataErrorMessage(JsonElement rootElement, out string errorMessage)
+		private static bool TryGetODataError(JsonElement rootElement, out int? errorCode, out string errorMessage)
 		{
+			errorCode = null;
 			errorMessage = null;
+			var codeText = default(string);
 			if (!rootElement.TryGetProperty("error", out var errorElement) && !rootElement.TryGetProperty("odata.error", out errorElement))
 			{
 				return false;
+			}
+
+			if (errorElement.TryGetProperty("code", out var codeElement) && codeElement.ValueKind == JsonValueKind.String)
+			{
+				codeText = codeElement.GetString();
+				if (int.TryParse(codeText, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedCode))
+				{
+					errorCode = parsedCode;
+				}
 			}
 
 			if (errorElement.TryGetProperty("message", out var messageElement))
@@ -704,23 +780,32 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 				if (messageElement.ValueKind == JsonValueKind.String)
 				{
 					errorMessage = messageElement.GetString();
-					return !string.IsNullOrWhiteSpace(errorMessage);
 				}
-
-				if (messageElement.ValueKind == JsonValueKind.Object && messageElement.TryGetProperty("value", out var valueElement))
+				else if (messageElement.ValueKind == JsonValueKind.Object && messageElement.TryGetProperty("value", out var valueElement))
 				{
 					errorMessage = valueElement.GetString();
-					return !string.IsNullOrWhiteSpace(errorMessage);
 				}
 			}
 
-			if (errorElement.TryGetProperty("code", out var codeElement))
+			if (string.IsNullOrWhiteSpace(errorMessage))
 			{
-				errorMessage = codeElement.GetString();
-				return !string.IsNullOrWhiteSpace(errorMessage);
+				errorMessage = codeText;
 			}
 
-			return false;
+			return errorCode.HasValue || !string.IsNullOrWhiteSpace(errorMessage);
+		}
+
+		private sealed class MultiGeoRestApiException : InvalidOperationException
+		{
+			internal MultiGeoRestApiException(string message, int? errorCode, string oDataErrorMessage) : base(message)
+			{
+				ErrorCode = errorCode;
+				ODataErrorMessage = oDataErrorMessage;
+			}
+
+			internal int? ErrorCode { get; }
+
+			internal string ODataErrorMessage { get; }
 		}
 
 		private sealed class ODataFeed<T>

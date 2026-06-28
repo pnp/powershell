@@ -102,7 +102,7 @@ namespace PnP.PowerShell.Commands.Admin
 			}
 
 			var multiGeoRestApiClient = new MultiGeoRestApiClient(AdminContext);
-			var createdMoveJob = multiGeoRestApiClient.CreateSiteMoveJob(moveJob);
+			var createdMoveJob = multiGeoRestApiClient.CreateSiteMoveJob(moveJob, confirmationMessage => ShouldContinue(confirmationMessage, string.Empty));
 			if (createdMoveJob == null)
 			{
 				throw new PSInvalidOperationException("The site content move job could not be created. SharePoint Online did not return a response.");
