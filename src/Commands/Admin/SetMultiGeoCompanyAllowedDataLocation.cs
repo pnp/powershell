@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.Admin
 	[Cmdlet(VerbsCommon.Set, "PnPMultiGeoCompanyAllowedDataLocation", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
 	[RequiredApiApplicationPermissions("sharepoint/Sites.FullControl.All")]
 	[RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl")]
+	[OutputType(typeof(string))]
 	public class SetMultiGeoCompanyAllowedDataLocation : PnPSharePointOnlineAdminCmdlet
 	{
 		private const string SharePointAppId = "00000003-0000-0ff1-ce00-000000000000";
