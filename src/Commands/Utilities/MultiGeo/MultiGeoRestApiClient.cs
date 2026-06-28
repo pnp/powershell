@@ -39,6 +39,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string StorageQuotasPath = "StorageQuotas";
 		private const string StorageQuotaByLocationPath = "StorageQuotas(geoLocation='{0}')";
 		private const string MultiGeoApiVersionsPath = "MultiGeoApiVersions";
+		private const string PatchVerbString = "PATCH";
 		private const string UserMoveJobsMinimumApiVersion = "1.0";
 		private const string UserMoveJobsByMoveIdMinimumApiVersion = "1.2.2";
 		private const string UserMoveJobsReportMinimumApiVersion = "1.3.2";
@@ -190,7 +191,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		internal StorageQuota GetStorageQuotaByLocation(string geoLocation)
 		{
 			var apiVersion = GetStorageQuotasApiVersion();
-			var path = string.Format(CultureInfo.InvariantCulture, StorageQuotaByLocationPath, geoLocation);
+			var path = string.Format(CultureInfo.InvariantCulture, StorageQuotaByLocationPath, ProcessSpecialChars(geoLocation));
 			return Get<StorageQuota>(path, apiVersion);
 		}
 
@@ -283,6 +284,18 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			return IsSupportedApiVersion(GetCurrentApiVersion(), minimumApiVersion);
 		}
 
+		internal void PartialUpdateStorageQuota(StorageQuotaEntityData quota)
+		{
+			if (quota == null)
+			{
+				throw new ArgumentNullException(nameof(quota));
+			}
+
+			var apiVersion = GetStorageQuotasApiVersion();
+			var path = string.Format(CultureInfo.InvariantCulture, StorageQuotaByLocationPath, ProcessSpecialChars(quota.GeoLocation));
+			PostWithMethodOverride(path, quota, PatchVerbString, apiVersion);
+		}
+
 		internal void CancelUserMoveJob(string userPrincipalName)
 		{
 			var apiVersion = GetCurrentApiVersion(UserMoveJobsMinimumApiVersion);
@@ -367,6 +380,22 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private void PostWithEmptyBody(string path, string apiVersion)
 		{
 			Send(() => CreateRequest(HttpMethod.Post, path, apiVersion, string.Empty), timeout: null, allowRetries: false);
+		}
+
+		private void PostWithMethodOverride(string path, object payload, string methodOverride, string apiVersion)
+		{
+			var jsonPayload = payload == null ? null : JsonSerializer.Serialize(payload, SerializerOptions);
+			Send(() =>
+			{
+				var request = CreateRequest(HttpMethod.Post, path, apiVersion, jsonPayload);
+				request.Headers.TryAddWithoutValidation("X-HTTP-Method", methodOverride);
+				if (request.Content != null)
+				{
+					request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json;charset=UTF-8");
+				}
+
+				return request;
+			}, timeout: null, allowRetries: false);
 		}
 
 		private HttpRequestMessage CreateRequest(HttpMethod method, string path, string apiVersion, string jsonPayload = null)
