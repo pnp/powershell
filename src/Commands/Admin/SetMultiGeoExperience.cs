@@ -19,6 +19,11 @@ namespace PnP.PowerShell.Commands.Admin
 
 		protected override void ExecuteCmdlet()
 		{
+			if (!ShouldProcess(AllInstances.ToBool() ? "all instances' multi-geo experience" : "current instance's multi-geo experience", "Upgrade to include SharePoint Online Multi-Geo"))
+			{
+				return;
+			}
+
 			var multiGeoRestApiClient = new MultiGeoRestApiClient(AdminContext);
 			multiGeoRestApiClient.EnsureGeoExperienceUpgradeSupported();
 
