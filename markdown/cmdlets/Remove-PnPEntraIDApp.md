@@ -1,12 +1,13 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
 online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPEntraIDApp.html
-schema: 2.0.0
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
 applicable: SharePoint Online
 title: Remove-PnPEntraIDApp
+external help file: PnP.PowerShell.dll-Help.xml
+schema: 2.0.0
 ---
-
+ 
 # Remove-PnPEntraIDApp
 
 ## SYNOPSIS
@@ -78,3 +79,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

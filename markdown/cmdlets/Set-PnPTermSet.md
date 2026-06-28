@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Set-PnPTermSet
-schema: 2.0.0
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTermSet.html
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+title: Set-PnPTermSet
+external help file: PnP.PowerShell.dll-Help.xml
+schema: 2.0.0
 ---
- # Set-PnPTermSet
+  # Set-PnPTermSet
 
 ## SYNOPSIS
 Updates an existing term set.
@@ -337,4 +338,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 

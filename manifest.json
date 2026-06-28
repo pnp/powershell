@@ -3877,6 +3877,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSiteContentMoveState.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSiteContentMoveState.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPSiteDesign.md",
       "output": {
         ".html": {
@@ -4651,6 +4661,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPUnifiedAuditLog.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPUnifiedGroupMoveState.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPUnifiedGroupMoveState.html"
         }
       },
       "version": ""
@@ -8837,6 +8857,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Start-PnPSiteContentMove.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Start-PnPSiteContentMove.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Start-PnPTenantRename.md",
       "output": {
         ".html": {
@@ -8851,6 +8881,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Start-PnPTraceLog.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Start-PnPUnifiedGroupMove.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Start-PnPUnifiedGroupMove.html"
         }
       },
       "version": ""
@@ -8877,10 +8917,30 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Stop-PnPSiteContentMove.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Stop-PnPSiteContentMove.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Stop-PnPTraceLog.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Stop-PnPTraceLog.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Stop-PnPUserAndContentMove.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Stop-PnPUserAndContentMove.html"
         }
       },
       "version": ""

@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Remove-PnPEventReceiver
-schema: 2.0.0
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPEventReceiver.html
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+title: Remove-PnPEventReceiver
+external help file: PnP.PowerShell.dll-Help.xml
+schema: 2.0.0
 ---
- 
+  
 # Remove-PnPEventReceiver
 
 ## SYNOPSIS
@@ -164,3 +165,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
