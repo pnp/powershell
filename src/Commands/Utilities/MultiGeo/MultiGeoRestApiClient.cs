@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using CommandResources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 {
@@ -145,6 +146,22 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		internal IEnumerable<MultiGeoCompanyAllowedDataLocation> GetAllowedDataLocations()
 		{
 			return GetFeed<MultiGeoCompanyAllowedDataLocation>(AllowedDataLocationsPath, AllowedDataLocationsApiVersion);
+		}
+
+		internal void AddAllowedDataLocation(MultiGeoCompanyAllowedDataLocationEntityData allowedDataLocation)
+		{
+			if (allowedDataLocation == null)
+			{
+				throw new ArgumentNullException(nameof(allowedDataLocation));
+			}
+
+			var apiVersion = GetCurrentApiVersion();
+			if (!IsSupportedApiVersion(apiVersion, AllowedDataLocationsApiVersion))
+			{
+				throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, CommandResources.CrossGeoInvalidVersion, typeof(MultiGeoRestApiClient).Assembly.GetName().Version));
+			}
+
+			PostWithoutResponse(AllowedDataLocationsPath, allowedDataLocation, apiVersion);
 		}
 
 		internal UserAndContentMoveState GetUserAndContentMoveState(string userPrincipalName)
@@ -309,6 +326,12 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			var jsonPayload = payload == null ? null : JsonSerializer.Serialize(payload, SerializerOptions);
 			var responseText = Send(() => CreateRequest(HttpMethod.Post, path, apiVersion, jsonPayload), timeout, allowRetries: false);
 			return DeserializeResponse<T>(responseText);
+		}
+
+		private void PostWithoutResponse(string path, object payload, string apiVersion)
+		{
+			var jsonPayload = payload == null ? null : JsonSerializer.Serialize(payload, SerializerOptions);
+			Send(() => CreateRequest(HttpMethod.Post, path, apiVersion, jsonPayload), timeout: null, allowRetries: false);
 		}
 
 		private void PostWithEmptyBody(string path, string apiVersion)
