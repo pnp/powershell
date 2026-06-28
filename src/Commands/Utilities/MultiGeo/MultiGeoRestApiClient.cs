@@ -12,6 +12,7 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using CommandResources = PnP.PowerShell.Commands.Properties.Resources;
@@ -115,7 +116,8 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private static readonly ConcurrentDictionary<string, CachedApiVersion> ApiVersionCache = new(StringComparer.OrdinalIgnoreCase);
 		private static readonly JsonSerializerOptions SerializerOptions = new()
 		{
-			PropertyNameCaseInsensitive = true
+			PropertyNameCaseInsensitive = true,
+			NumberHandling = JsonNumberHandling.AllowReadingFromString
 		};
 
 		private readonly ClientContext adminContext;
