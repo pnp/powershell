@@ -237,7 +237,7 @@ namespace PnP.PowerShell.Commands.Properties {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Successfully started setting up the new location. You will receive a notification when the process completes. You can check status using the following command: Get-SPOMultiGeoCompanyAllowedDataLocation..
+        ///   Looks up a localized string similar to Successfully started setting up the new location. You will receive a notification when the process completes. You can check status using the following command: Get-PnPMultiGeoCompanyAllowedDataLocation..
         /// </summary>
         internal static string CrossGeoWarningAddAdlSuccessMessage {
             get {
