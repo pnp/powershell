@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -29,6 +30,9 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string TenantRenameJobsPathToCancelAJob = "TenantRenameJobs/Cancel";
 		private const string GeoMoveCompatibilityChecksMinimumApiVersion = "1.3.6";
 		private const string GeoMoveCompatibilityChecksPath = "GeoMoveCompatibilityChecks";
+		private const string GeoExperienceMinimumApiVersion = "1.3.7";
+		private const string UpdateGeoExperienceModePath = "GeoExperience/UpgradeToSPOMode";
+		private const string UpdateAllInstancesExperienceModePath = "GeoExperience/UpgradeAllInstancesToSPOMode";
 		private const string AllowedDataLocationsApiVersion = "1.3.11";
 		private const string AllowedDataLocationsPath = "AllowedDataLocations";
 		private const string MultiGeoApiVersionsPath = "MultiGeoApiVersions";
@@ -146,6 +150,17 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		internal IEnumerable<MultiGeoCompanyAllowedDataLocation> GetAllowedDataLocations()
 		{
 			return GetFeed<MultiGeoCompanyAllowedDataLocation>(AllowedDataLocationsPath, AllowedDataLocationsApiVersion);
+		}
+
+		internal void UpgradeGeoExperience(bool allInstances)
+		{
+			var apiVersion = GetGeoExperienceApiVersion();
+			PostWithEmptyBody(allInstances ? UpdateAllInstancesExperienceModePath : UpdateGeoExperienceModePath, apiVersion);
+		}
+
+		internal void EnsureGeoExperienceUpgradeSupported()
+		{
+			GetGeoExperienceApiVersion();
 		}
 
 		internal void AddAllowedDataLocation(MultiGeoCompanyAllowedDataLocationEntityData allowedDataLocation)
@@ -430,6 +445,23 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			var apiVersionIndex = Array.IndexOf(ClientSupportedApiVersions, apiVersion);
 			var minimumApiVersionIndex = Array.IndexOf(ClientSupportedApiVersions, minimumApiVersion);
 			return apiVersionIndex >= 0 && minimumApiVersionIndex >= 0 && apiVersionIndex <= minimumApiVersionIndex;
+		}
+
+		private string GetGeoExperienceApiVersion()
+		{
+			var apiVersion = GetCurrentApiVersion();
+			if (!IsSupportedApiVersion(apiVersion, GeoExperienceMinimumApiVersion))
+			{
+				throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "The client version '{0}' is not supported. Please try to upgrade client version first.", GetApplicationVersion()));
+			}
+
+			return apiVersion;
+		}
+
+		private static string GetApplicationVersion()
+		{
+			var assembly = Assembly.GetExecutingAssembly();
+			return assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ?? assembly.GetName().Version?.ToString();
 		}
 
 		private string Send(Func<HttpRequestMessage> requestFactory, TimeSpan? timeout, bool allowRetries)
