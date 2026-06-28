@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Admin
 	public class SetMultiGeoExperience : PnPSharePointOnlineAdminCmdlet
 	{
 		private const string UpgradeConfirmationMessage = "This operation will upgrade your instance's multi-geo experience to include SharePoint Online Multi-Geo. This upgrade action is not reversible. Confirm that you want to continue this upgrade operation.";
-		private const string UpgradeCompletedMessage = "This upgrade operation will take some time to take effect. Please run the cmdlet Get-SPOMultiGeoExperience to check the latest mode.";
+		private const string UpgradeCompletedMessage = "This upgrade operation will take some time to take effect. Please run the cmdlet Get-PnPMultiGeoExperience to check the latest mode.";
 
 		[Parameter(Mandatory = false)]
 		public SwitchParameter AllInstances { get; set; }

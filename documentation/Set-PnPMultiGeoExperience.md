@@ -102,9 +102,9 @@ Accept wildcard characters: False
 ## OUTPUTS
 
 ### System.String
-Returns the SharePoint Online Management Shell completion message: `This upgrade operation will take some time to take effect. Please run the cmdlet Get-SPOMultiGeoExperience to check the latest mode.`
+Returns the SharePoint Online Management Shell completion message: `This upgrade operation will take some time to take effect. Please run the cmdlet Get-PnPMultiGeoExperience to check the latest mode.`
 
-`Get-SPOMultiGeoExperience` is a SharePoint Online Management Shell cmdlet.
+`Get-PnPMultiGeoExperience` is a SharePoint Online Management Shell cmdlet.
 
 ## RELATED LINKS
 
