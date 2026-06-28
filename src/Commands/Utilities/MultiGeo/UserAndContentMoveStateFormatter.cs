@@ -27,6 +27,11 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 		internal static PSObject ConvertSiteMoveStateToPSObject(SiteMoveJob moveState, bool includeVerboseProperties)
 		{
+			return ConvertSiteMoveStateToPSObject(moveState, includeVerboseProperties, includeTimeStamp: true, useStateName: false);
+		}
+
+		internal static PSObject ConvertSiteMoveStateToPSObject(SiteMoveJob moveState, bool includeVerboseProperties, bool includeTimeStamp, bool useStateName)
+		{
 			var result = new PSObject();
 			AddProperty(result, "SourceSiteUrl", moveState.SourceSiteUrl);
 			AddProperty(result, "TargetSiteUrl", moveState.TargetSiteUrl);
@@ -34,7 +39,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			AddProperty(result, "SourceDataLocation", moveState.SourceDataLocation);
 			AddProperty(result, "DestinationDataLocation", moveState.DestinationDataLocation);
 
-			if (!moveState.Option.HasFlag(MoveOption.ValidationOnly))
+			if (includeTimeStamp && !moveState.Option.HasFlag(MoveOption.ValidationOnly))
 			{
 				AddProperty(result, "TimeStamp", moveState.LastModified.ToLocalTime());
 			}
@@ -43,9 +48,13 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			{
 				AddProperty(result, "ValidationState", "Success");
 			}
+			else if (useStateName)
+			{
+				AddProperty(result, "MoveState", moveState.StateName);
+			}
 			else
 			{
-				AddProperty(result, "MoveState", GetMoveStateDisplayValue(moveState.StateName, moveState.State, moveState.JobPhase));
+				AddProperty(result, "MoveState", GetMoveStateDisplayValue(moveState.State, moveState.JobPhase));
 			}
 
 			if (includeVerboseProperties)
@@ -79,7 +88,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			}
 			else
 			{
-				AddProperty(result, "MoveState", GetMoveStateDisplayValue(moveState));
+				AddProperty(result, "MoveState", GetMoveStateDisplayValue(moveState.State, moveState.JobPhase));
 			}
 
 			if (includeVerboseProperties)
@@ -147,18 +156,8 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			AddProperty(result, "TriggeredBy", moveState.TriggeredBy);
 		}
 
-		private static string GetMoveStateDisplayValue(UserAndContentMoveState moveState)
+		private static string GetMoveStateDisplayValue(MoveState state, MoveJobPhase jobPhase)
 		{
-			return GetMoveStateDisplayValue(moveState.StateName, moveState.State, moveState.JobPhase);
-		}
-
-		private static string GetMoveStateDisplayValue(string stateName, MoveState state, MoveJobPhase jobPhase)
-		{
-			if (!string.IsNullOrWhiteSpace(stateName))
-			{
-				return stateName;
-			}
-
 			return state switch
 			{
 				MoveState.NotStarted => "ReadyToTrigger",

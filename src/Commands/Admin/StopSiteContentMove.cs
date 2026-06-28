@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Admin
 		{
 			var multiGeoRestApiClient = new MultiGeoRestApiClient(AdminContext);
 			multiGeoRestApiClient.CancelSiteMoveJob(SourceSiteUrl);
-			WriteObject("The given move job has been stopped.");
+			WriteObject("The given move job has been stopped. Please run start cmdlet to restart the move.");
 		}
 	}
 }

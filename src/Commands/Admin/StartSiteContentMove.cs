@@ -15,6 +15,8 @@ namespace PnP.PowerShell.Commands.Admin
 	{
 		private const string ParameterSetUrlAndDestinationDataLocation = "UrlAndDestinationDataLocation";
 		private const string ParameterSetUrlAndDestinationUrl = "UrlAndDestinationUrl";
+		private const string TimeStampMinimumApiVersion = "1.3.2";
+		private const string StateNameMinimumApiVersion = "1.4.3";
 		private static readonly DateTime MinimumSpecifiedMoveDate = DateTime.MinValue.AddDays(1);
 
 		[Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSetUrlAndDestinationDataLocation)]
@@ -106,7 +108,11 @@ namespace PnP.PowerShell.Commands.Admin
 				throw new PSInvalidOperationException("The site content move job could not be created. SharePoint Online did not return a response.");
 			}
 
-			WriteObject(UserAndContentMoveStateFormatter.ConvertSiteMoveStateToPSObject(createdMoveJob, IsVerboseMode()));
+			WriteObject(UserAndContentMoveStateFormatter.ConvertSiteMoveStateToPSObject(
+				createdMoveJob,
+				IsVerboseMode(),
+				multiGeoRestApiClient.IsCurrentApiVersionSupported(TimeStampMinimumApiVersion),
+				multiGeoRestApiClient.IsCurrentApiVersionSupported(StateNameMinimumApiVersion)));
 		}
 
 		private bool IsVerboseMode()

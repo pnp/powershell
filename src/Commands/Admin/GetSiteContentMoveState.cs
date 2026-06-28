@@ -17,6 +17,8 @@ namespace PnP.PowerShell.Commands.Admin
 		private const string ParameterSetMoveReport = "MoveReport";
 		private const string ParameterSetSourceSiteUrl = "SourceSiteUrl";
 		private const string ParameterSetSiteMoveId = "SiteMoveId";
+		private const string TimeStampMinimumApiVersion = "1.3.2";
+		private const string StateNameMinimumApiVersion = "1.4.3";
 
 		[Parameter(Mandatory = true, ParameterSetName = ParameterSetSourceSiteUrl)]
 		[ValidateNotNullOrEmpty]
@@ -46,16 +48,18 @@ namespace PnP.PowerShell.Commands.Admin
 		{
 			var multiGeoRestApiClient = new MultiGeoRestApiClient(AdminContext);
 			var includeVerboseProperties = IsVerboseMode();
+			var includeTimeStamp = multiGeoRestApiClient.IsCurrentApiVersionSupported(TimeStampMinimumApiVersion);
+			var useStateName = multiGeoRestApiClient.IsCurrentApiVersionSupported(StateNameMinimumApiVersion);
 
 			if (ParameterSetName == ParameterSetSourceSiteUrl)
 			{
-				WriteMoveState(multiGeoRestApiClient.GetSiteMoveJob(SourceSiteUrl), includeVerboseProperties);
+				WriteMoveState(multiGeoRestApiClient.GetSiteMoveJob(SourceSiteUrl), includeVerboseProperties, includeTimeStamp, useStateName);
 				return;
 			}
 
 			if (ParameterSetName == ParameterSetSiteMoveId)
 			{
-				WriteMoveState(multiGeoRestApiClient.GetSiteMoveJob(SiteMoveId), includeVerboseProperties);
+				WriteMoveState(multiGeoRestApiClient.GetSiteMoveJob(SiteMoveId), includeVerboseProperties, includeTimeStamp, useStateName);
 				return;
 			}
 
@@ -64,16 +68,16 @@ namespace PnP.PowerShell.Commands.Admin
 			var moveStates = multiGeoRestApiClient.GetSiteMoveJobs(MoveState, MoveDirection, moveStartTimeInUtc, moveEndTimeInUtc, Limit)
 				.Where(moveState => moveState != null)
 				.OrderByDescending(moveState => moveState.LastModified)
-				.Select(moveState => UserAndContentMoveStateFormatter.ConvertSiteMoveStateToPSObject(moveState, includeVerboseProperties));
+				.Select(moveState => UserAndContentMoveStateFormatter.ConvertSiteMoveStateToPSObject(moveState, includeVerboseProperties, includeTimeStamp, useStateName));
 
 			WriteObject(moveStates, true);
 		}
 
-		private void WriteMoveState(SiteMoveJob moveState, bool includeVerboseProperties)
+		private void WriteMoveState(SiteMoveJob moveState, bool includeVerboseProperties, bool includeTimeStamp, bool useStateName)
 		{
 			if (moveState != null)
 			{
-				WriteObject(UserAndContentMoveStateFormatter.ConvertSiteMoveStateToPSObject(moveState, includeVerboseProperties));
+				WriteObject(UserAndContentMoveStateFormatter.ConvertSiteMoveStateToPSObject(moveState, includeVerboseProperties, includeTimeStamp, useStateName));
 			}
 		}
 

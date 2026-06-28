@@ -11,6 +11,9 @@ namespace PnP.PowerShell.Commands.Admin
 	[OutputType(typeof(PSObject))]
 	public class GetUnifiedGroupMoveState : PnPSharePointOnlineAdminCmdlet
 	{
+		private const string TimeStampMinimumApiVersion = "1.3.2";
+		private const string StateNameMinimumApiVersion = "1.4.3";
+
 		[Parameter(Mandatory = true, Position = 0)]
 		[ValidateNotNullOrEmpty]
 		public string GroupAlias { get; set; }
@@ -21,7 +24,11 @@ namespace PnP.PowerShell.Commands.Admin
 			var moveState = multiGeoRestApiClient.GetUnifiedGroupMoveState(GroupAlias);
 			if (moveState != null)
 			{
-				WriteObject(UserAndContentMoveStateFormatter.ConvertGroupMoveStateToPSObject(moveState, IsVerboseMode()));
+				WriteObject(UserAndContentMoveStateFormatter.ConvertGroupMoveStateToPSObject(
+					moveState,
+					IsVerboseMode(),
+					multiGeoRestApiClient.IsCurrentApiVersionSupported(TimeStampMinimumApiVersion),
+					multiGeoRestApiClient.IsCurrentApiVersionSupported(StateNameMinimumApiVersion)));
 			}
 		}
 
