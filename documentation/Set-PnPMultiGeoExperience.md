@@ -108,4 +108,6 @@ Returns the SharePoint Online Management Shell completion message: `This upgrade
 
 ## RELATED LINKS
 
+[Get-PnPMultiGeoExperience](Get-PnPMultiGeoExperience.md)
+
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
