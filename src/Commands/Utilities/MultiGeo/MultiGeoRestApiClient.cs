@@ -35,6 +35,9 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string UpdateAllInstancesExperienceModePath = "GeoExperience/UpgradeAllInstancesToSPOMode";
 		private const string AllowedDataLocationsApiVersion = "1.3.11";
 		private const string AllowedDataLocationsPath = "AllowedDataLocations";
+		private const string StorageQuotasMinimumApiVersion = "1.3.1";
+		private const string StorageQuotasPath = "StorageQuotas";
+		private const string StorageQuotaByLocationPath = "StorageQuotas(geoLocation='{0}')";
 		private const string MultiGeoApiVersionsPath = "MultiGeoApiVersions";
 		private const string UserMoveJobsMinimumApiVersion = "1.0";
 		private const string UserMoveJobsByMoveIdMinimumApiVersion = "1.2.2";
@@ -177,6 +180,18 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			}
 
 			PostWithoutResponse(AllowedDataLocationsPath, allowedDataLocation, apiVersion);
+		}
+
+		internal IEnumerable<StorageQuota> GetStorageQuotas()
+		{
+			return GetFeed<StorageQuota>(StorageQuotasPath, GetStorageQuotasApiVersion());
+		}
+
+		internal StorageQuota GetStorageQuotaByLocation(string geoLocation)
+		{
+			var apiVersion = GetStorageQuotasApiVersion();
+			var path = string.Format(CultureInfo.InvariantCulture, StorageQuotaByLocationPath, geoLocation);
+			return Get<StorageQuota>(path, apiVersion);
 		}
 
 		internal UserAndContentMoveState GetUserAndContentMoveState(string userPrincipalName)
@@ -445,6 +460,17 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			var apiVersionIndex = Array.IndexOf(ClientSupportedApiVersions, apiVersion);
 			var minimumApiVersionIndex = Array.IndexOf(ClientSupportedApiVersions, minimumApiVersion);
 			return apiVersionIndex >= 0 && minimumApiVersionIndex >= 0 && apiVersionIndex <= minimumApiVersionIndex;
+		}
+
+		private string GetStorageQuotasApiVersion()
+		{
+			var apiVersion = GetCurrentApiVersion();
+			if (!IsSupportedApiVersion(apiVersion, StorageQuotasMinimumApiVersion))
+			{
+				throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, CommandResources.CrossGeoInvalidVersion, GetApplicationVersion()));
+			}
+
+			return apiVersion;
 		}
 
 		private string GetGeoExperienceApiVersion()

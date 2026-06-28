@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 - Added `Set-PnPMultiGeoExperience` cmdlet to upgrade the tenant multi-geo experience to include SharePoint Online Multi-Geo. [#5369](https://github.com/pnp/powershell/pull/5369)
 - Added `Set-PnPMultiGeoCompanyAllowedDataLocation` cmdlet to start setting up a SharePoint Online multi-geo allowed data location. [#5368](https://github.com/pnp/powershell/pull/5368)
+- Added `Get-PnPGeoStorageQuota` cmdlet to retrieve SharePoint Online multi-geo storage quota details. [#5371](https://github.com/pnp/powershell/pull/5371)
 - Added `Get-PnPSiteContentMoveState` cmdlet to retrieve SharePoint Online site content move states. [#5365](https://github.com/pnp/powershell/pull/5365)
 - Added `Stop-PnPSiteContentMove` cmdlet to stop SharePoint Online multi-geo site content move jobs. [#5366](https://github.com/pnp/powershell/pull/5366)
 - Added `Get-PnPUnifiedGroupMoveState` cmdlet to retrieve SharePoint Online Microsoft 365 group move states. [#5362](https://github.com/pnp/powershell/pull/5362)
