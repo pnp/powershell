@@ -147,18 +147,18 @@ Connect-PnPOnline [yourtenant].sharepoint.com -ClientId [clientid] -Tenant [your
 
 ## Special instructions for GCC or National Cloud environments
 
-In order to set up your application registration on a GCC or a national cloud environment, you will have to take a few extra steps. In the two methods described above for [interactive login](#automatically-create-an-app-registration-for-interactive-login) and [App Only access](#setting-up-access-to-your-own-entra-id-app-for-app-only-access), you will have to add `-AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]` to the cmdlet picking the one that applies to your environment to register your application in Entra ID.
+In order to set up your application registration on a GCC or a national cloud environment, you will have to take a few extra steps. In the two methods described above for [interactive login](#automatically-create-an-app-registration-for-interactive-login) and [App Only access](#setting-up-access-to-your-own-entra-id-app-for-app-only-access), you will have to add `-AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China|BleuCloud|DelosCloud|GovSGCloud]` to the cmdlet picking the one that applies to your environment to register your application in Entra ID.
 
 For an application registration meant for interactive login, use:
 
 ```PowerShell
-Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP.PowerShell" -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP.PowerShell" -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China|BleuCloud|DelosCloud|GovSGCloud]
 ```
 
 And for an App Only application registration, use:
 
 ```PowerShell
-$result = Register-PnPEntraIDApp -ApplicationName "PnP.PowerShell" -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+$result = Register-PnPEntraIDApp -ApplicationName "PnP.PowerShell" -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China|BleuCloud|DelosCloud|GovSGCloud]
 $result
 ```
 

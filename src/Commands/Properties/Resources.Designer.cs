@@ -205,6 +205,74 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The client version &apos;{0}&apos; is not supported. Please try to upgrade client version first..
+        /// </summary>
+        internal static string CrossGeoInvalidVersion {
+            get {
+                return ResourceManager.GetString("CrossGeoInvalidVersion", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Server does not support suppressing the warning..
+        /// </summary>
+        internal static string CrossGeoConfirmationNotSupported {
+            get {
+                return ResourceManager.GetString("CrossGeoConfirmationNotSupported", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to There are apps instantiated on the site. Confirm to initiate the site move. After the site move completes, the apps may need to be instantiated or reconfigured at the destination geo location..
+        /// </summary>
+        internal static string CrossGeoSiteContainsMarketplaceAppsWithConfirm {
+            get {
+                return ResourceManager.GetString("CrossGeoSiteContainsMarketplaceAppsWithConfirm", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to There is Workflow 2013 instantiated on the site. Confirm to initiate the site move. After the site move completes, Workflow may need to be instantiated or reconfigured at the destination geo location..
+        /// </summary>
+        internal static string CrossGeoSiteRunsWorkflow2013WithConfirm {
+            get {
+                return ResourceManager.GetString("CrossGeoSiteRunsWorkflow2013WithConfirm", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The new location will use the following addresses for OneDrive and SharePoint sites:
+        ///
+        ///{0}
+        ///{1}
+        ///
+        ///.
+        /// </summary>
+        internal static string CrossGeoWarningAddAdlMessage {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningAddAdlMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to set up this location?.
+        /// </summary>
+        internal static string CrossGeoWarningAddAdlMessageQuery {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningAddAdlMessageQuery", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully started setting up the new location. You will receive a notification when the process completes. You can check status using the following command: Get-PnPMultiGeoCompanyAllowedDataLocation..
+        /// </summary>
+        internal static string CrossGeoWarningAddAdlSuccessMessage {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningAddAdlSuccessMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Current site is not a tenant administration site.
         /// </summary>
         internal static string CurrentSiteIsNoTenantAdminSite {
