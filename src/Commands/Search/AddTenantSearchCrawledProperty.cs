@@ -203,9 +203,7 @@ namespace PnP.PowerShell.Commands.Search
                 return schemaId;
             }
 
-            const int fallbackSchemaId = 143692;
-            LogWarning($"Could not resolve the tenant search schema ID from the exported configuration. Falling back to {fallbackSchemaId}.");
-            return fallbackSchemaId;
+            throw new InvalidOperationException("Could not resolve the tenant search schema ID from the exported search configuration.");
         }
 
         private ResolvedPropertySet ResolvePropertySet()
@@ -287,6 +285,22 @@ namespace PnP.PowerShell.Commands.Search
             return null;
         }
 
+        private sealed class ResolvedPropertySet
+        {
+            internal ResolvedPropertySet(SearchCrawledPropertySet? knownPropertySet, CrawledPropertySetInfo info, bool usedGuidParameter)
+            {
+                KnownPropertySet = knownPropertySet;
+                Info = info;
+                UsedGuidParameter = usedGuidParameter;
+            }
+
+            internal SearchCrawledPropertySet? KnownPropertySet { get; }
+
+            internal CrawledPropertySetInfo Info { get; }
+
+            internal bool UsedGuidParameter { get; }
+        }
+
         private sealed class CrawledPropertySetInfo
         {
             internal CrawledPropertySetInfo(string id, string categoryName, bool mapToContents, bool isRecommended)
@@ -304,22 +318,6 @@ namespace PnP.PowerShell.Commands.Search
             internal bool MapToContents { get; }
 
             internal bool IsRecommended { get; }
-        }
-
-        private sealed class ResolvedPropertySet
-        {
-            internal ResolvedPropertySet(SearchCrawledPropertySet? knownPropertySet, CrawledPropertySetInfo info, bool usedGuidParameter)
-            {
-                KnownPropertySet = knownPropertySet;
-                Info = info;
-                UsedGuidParameter = usedGuidParameter;
-            }
-
-            internal SearchCrawledPropertySet? KnownPropertySet { get; }
-
-            internal CrawledPropertySetInfo Info { get; }
-
-            internal bool UsedGuidParameter { get; }
         }
     }
 }

@@ -37,6 +37,8 @@ Most SharePoint crawled properties should use one of these property sets: ShareP
 
 This cmdlet is additive only. SharePoint Online does not expose a supported PnP PowerShell command to delete crawled properties created in error or to move an existing crawled property to a different property set. Verify the crawled property name and property set before running this cmdlet in a production tenant.
 
+If this cmdlet is used to make an implicit crawled property explicit, SharePoint Online will stop automatically creating an implicit managed property for that crawled property going forward.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
