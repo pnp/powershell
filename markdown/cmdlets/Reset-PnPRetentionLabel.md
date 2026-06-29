@@ -1,11 +1,11 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Reset-PnPRetentionLabel.html
-tags: Available in the current Nightly Release only.
-Module Name: PnP.PowerShell
-applicable: SharePoint Online
 title: Reset-PnPRetentionLabel
-external help file: PnP.PowerShell.dll-Help.xml
+applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Reset-PnPRetentionLabel.html
+Module Name: PnP.PowerShell
 schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
 ---
   
 # Reset-PnPRetentionLabel

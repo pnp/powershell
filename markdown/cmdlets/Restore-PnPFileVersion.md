@@ -1,11 +1,11 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Restore-PnPFileVersion.html
-tags: Available in the current Nightly Release only.
-Module Name: PnP.PowerShell
-applicable: SharePoint Online
 title: Restore-PnPFileVersion
-external help file: PnP.PowerShell.dll-Help.xml
+applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Restore-PnPFileVersion.html
+Module Name: PnP.PowerShell
 schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
 ---
   
 # Restore-PnPFileVersion

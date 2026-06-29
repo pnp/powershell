@@ -1,11 +1,11 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Submit-PnPTeamsChannelMessage.html
-tags: Available in the current Nightly Release only.
-Module Name: PnP.PowerShell
-applicable: SharePoint Online
 title: Submit-PnPTeamsChannelMessage
-external help file: PnP.PowerShell.dll-Help.xml
+applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Submit-PnPTeamsChannelMessage.html
+Module Name: PnP.PowerShell
 schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
 ---
   
 # Submit-PnPTeamsChannelMessage

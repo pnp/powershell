@@ -2907,6 +2907,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPGeoStorageQuota.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPGeoStorageQuota.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPGraphSubscription.md",
       "output": {
         ".html": {
@@ -3341,6 +3351,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPMultiGeoCompanyAllowedDataLocation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPMultiGeoExperience.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPMultiGeoExperience.html"
         }
       },
       "version": ""
@@ -7827,6 +7847,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPGeoStorageQuota.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPGeoStorageQuota.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPGraphSubscription.md",
       "output": {
         ".html": {
@@ -8111,6 +8141,26 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPMicrosoft365GroupSettings.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPMultiGeoCompanyAllowedDataLocation.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPMultiGeoCompanyAllowedDataLocation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPMultiGeoExperience.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPMultiGeoExperience.html"
         }
       },
       "version": ""

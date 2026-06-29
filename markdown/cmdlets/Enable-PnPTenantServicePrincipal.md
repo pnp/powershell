@@ -1,11 +1,11 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Enable-PnPTenantServicePrincipal.html
-tags: Available in the current Nightly Release only.
-Module Name: PnP.PowerShell
-applicable: SharePoint Online
 title: Enable-PnPTenantServicePrincipal
-external help file: PnP.PowerShell.dll-Help.xml
+applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Enable-PnPTenantServicePrincipal.html
+Module Name: PnP.PowerShell
 schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
 ---
    
 # Enable-PnPTenantServicePrincipal

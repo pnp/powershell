@@ -6,7 +6,7 @@ description: Full cmdlet reference for PnP PowerShell.
 
 # PnP PowerShell cmdlets
 
-PnP PowerShell exists out of 835 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
+PnP PowerShell exists out of 840 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
  
 <sup>1</sup>: Only available in the latest nightly build. All the others can also be used using the latest stable release.  
 <sup>2</sup>: Cmdlet is an alias of another cmdlet, used to provide backwards compatibility.
@@ -278,6 +278,7 @@ PnP PowerShell exists out of 835 cmdlets which can help you in setting up, confi
 - [Get-PnPFolderStorageMetric](Get-PnPFolderStorageMetric.md) <sup>1</sup>
 - [Get-PnPFooter](Get-PnPFooter.md) <sup>1</sup>
 - [Get-PnPGeoMoveCrossCompatibilityStatus](Get-PnPGeoMoveCrossCompatibilityStatus.md) <sup>1</sup>
+- [Get-PnPGeoStorageQuota](Get-PnPGeoStorageQuota.md) <sup>1</sup>
 - [Get-PnPGraphSubscription](Get-PnPGraphSubscription.md) <sup>1</sup>
 - [Get-PnPGroup](Get-PnPGroup.md) <sup>1</sup>
 - [Get-PnPGroupMember](Get-PnPGroupMember.md) <sup>1</sup>
@@ -322,6 +323,7 @@ PnP PowerShell exists out of 835 cmdlets which can help you in setting up, confi
 - [Get-PnPMicrosoft365GroupYammerCommunity](Get-PnPMicrosoft365GroupYammerCommunity.md) <sup>1</sup>
 - [Get-PnPMicrosoft365Roadmap](Get-PnPMicrosoft365Roadmap.md) <sup>1</sup>
 - [Get-PnPMultiGeoCompanyAllowedDataLocation](Get-PnPMultiGeoCompanyAllowedDataLocation.md) <sup>1</sup>
+- [Get-PnPMultiGeoExperience](Get-PnPMultiGeoExperience.md) <sup>1</sup>
 - [Get-PnPNavigationNode](Get-PnPNavigationNode.md) <sup>1</sup>
 - [Get-PnPOrgAssetsLibrary](Get-PnPOrgAssetsLibrary.md) <sup>1</sup>
 - [Get-PnPOrgNewsSite](Get-PnPOrgNewsSite.md) <sup>1</sup>
@@ -794,6 +796,7 @@ PnP PowerShell exists out of 835 cmdlets which can help you in setting up, confi
 - [Set-PnPFolderArchiveState](Set-PnPFolderArchiveState.md) <sup>1</sup>
 - [Set-PnPFolderPermission](Set-PnPFolderPermission.md) <sup>1</sup>
 - [Set-PnPFooter](Set-PnPFooter.md) <sup>1</sup>
+- [Set-PnPGeoStorageQuota](Set-PnPGeoStorageQuota.md) <sup>1</sup>
 - [Set-PnPGraphSubscription](Set-PnPGraphSubscription.md) <sup>1</sup>
 - [Set-PnPGroup](Set-PnPGroup.md) <sup>1</sup>
 - [Set-PnPGroupPermissions](Set-PnPGroupPermissions.md) <sup>1</sup>
@@ -823,6 +826,8 @@ PnP PowerShell exists out of 835 cmdlets which can help you in setting up, confi
 - [Set-PnPMessageCenterAnnouncementAsUnread](Set-PnPMessageCenterAnnouncementAsUnread.md) <sup>1</sup>
 - [Set-PnPMicrosoft365Group](Set-PnPMicrosoft365Group.md) <sup>1</sup>
 - [Set-PnPMicrosoft365GroupSettings](Set-PnPMicrosoft365GroupSettings.md) <sup>1</sup>
+- [Set-PnPMultiGeoCompanyAllowedDataLocation](Set-PnPMultiGeoCompanyAllowedDataLocation.md) <sup>1</sup>
+- [Set-PnPMultiGeoExperience](Set-PnPMultiGeoExperience.md) <sup>1</sup>
 - [Set-PnPOrgAssetsLibrary](Set-PnPOrgAssetsLibrary.md) <sup>1</sup>
 - [Set-PnPPage](Set-PnPPage.md) <sup>1</sup>
 - [Set-PnPPageTextPart](Set-PnPPageTextPart.md) <sup>1</sup>
