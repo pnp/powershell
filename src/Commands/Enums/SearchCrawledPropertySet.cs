@@ -5,19 +5,6 @@ namespace PnP.PowerShell.Commands.Enums
         SharePointDefault,
         SharePointTaxonomy,
         SharePointStructured,
-        SharePointRich,
-        OfficeSummary,
-        OfficeDocumentSummary,
-        SharePointCrawl,
-        SharePointInternal,
-        Storage,
-        Basic,
-        BasicExtended,
-        BasicContent,
-        SharePointDav,
-        SharePointList,
-        BasicLegacy,
-        PublicStrings,
-        SharePointContent
+        SharePointRich
     }
 }

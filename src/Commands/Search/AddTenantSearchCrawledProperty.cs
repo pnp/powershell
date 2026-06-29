@@ -18,30 +18,34 @@ namespace PnP.PowerShell.Commands.Search
         private const string ParameterSetKnownPropertySet = "KnownPropertySet";
         private const string ParameterSetPropertySetGuid = "PropertySetGuid";
 
-        private static readonly IReadOnlyDictionary<SearchCrawledPropertySet, CrawledPropertySetInfo> PropertySets =
+        private static readonly IReadOnlyDictionary<SearchCrawledPropertySet, CrawledPropertySetInfo> RecommendedPropertySets =
             new Dictionary<SearchCrawledPropertySet, CrawledPropertySetInfo>
             {
-                { SearchCrawledPropertySet.SharePointDefault, new CrawledPropertySetInfo("00130329-0000-0130-C000-000000131346", "SharePoint", true, true) },
-                { SearchCrawledPropertySet.SharePointTaxonomy, new CrawledPropertySetInfo("158D7563-AEFF-4DBF-BF16-4A1445F0366C", "SharePoint", false, true) },
-                { SearchCrawledPropertySet.SharePointStructured, new CrawledPropertySetInfo("ED280121-B677-4E2A-8FBC-0D9E2325B0A2", "SharePoint", false, true) },
-                { SearchCrawledPropertySet.SharePointRich, new CrawledPropertySetInfo("FEA84DF6-A0FC-492C-9AA7-D28B8DCB08B3", "SharePoint", false, true) },
-                { SearchCrawledPropertySet.OfficeSummary, new CrawledPropertySetInfo("F29F85E0-4FF9-1068-AB91-08002B27B3D9", "Office", false, false) },
-                { SearchCrawledPropertySet.OfficeDocumentSummary, new CrawledPropertySetInfo("D5CDD502-2E9C-101B-9397-08002B2CF9AE", "Office", false, false) },
-                { SearchCrawledPropertySet.SharePointCrawl, new CrawledPropertySetInfo("D1B5D3F0-C0B3-11CF-9A92-00A0C908DBF1", "SharePoint", false, false) },
-                { SearchCrawledPropertySet.SharePointInternal, new CrawledPropertySetInfo("012357BD-1113-171D-1F25-292BB0B0B0B0", "Internal", false, false) },
-                { SearchCrawledPropertySet.Storage, new CrawledPropertySetInfo("B725F130-47EF-101A-A5F1-02608C9EEBAC", "Basic", false, false) },
-                { SearchCrawledPropertySet.Basic, new CrawledPropertySetInfo("49691C90-7E17-101A-A91C-08002B2ECDA9", "Basic", false, false) },
-                { SearchCrawledPropertySet.BasicExtended, new CrawledPropertySetInfo("C82BF597-B831-11D0-B733-00AA00A1EBD2", "Basic", false, false) },
-                { SearchCrawledPropertySet.BasicContent, new CrawledPropertySetInfo("70EB7A10-55D9-11CF-B75B-00AA0051FE20", "Basic", false, false) },
-                { SearchCrawledPropertySet.SharePointDav, new CrawledPropertySetInfo("00140329-0000-0140-C000-000000141446", "SharePoint", false, false) },
-                { SearchCrawledPropertySet.SharePointList, new CrawledPropertySetInfo("00110329-0000-0110-C000-000000111146", "SharePoint", false, false) },
-                { SearchCrawledPropertySet.BasicLegacy, new CrawledPropertySetInfo("0B63E343-9CCC-11D0-BCDB-00805FCCCE04", "Basic", false, false) },
-                { SearchCrawledPropertySet.PublicStrings, new CrawledPropertySetInfo("00020329-0000-0000-C000-000000000046", "SharePoint", false, false) },
-                { SearchCrawledPropertySet.SharePointContent, new CrawledPropertySetInfo("0C4B2ABA-0518-4EC2-807E-25DD264B660F", "SharePoint", false, false) }
+                { SearchCrawledPropertySet.SharePointDefault, new CrawledPropertySetInfo("00130329-0000-0130-C000-000000131346", "SharePoint", true, true, SearchCrawledPropertySet.SharePointDefault) },
+                { SearchCrawledPropertySet.SharePointTaxonomy, new CrawledPropertySetInfo("158D7563-AEFF-4DBF-BF16-4A1445F0366C", "SharePoint", false, true, SearchCrawledPropertySet.SharePointTaxonomy) },
+                { SearchCrawledPropertySet.SharePointStructured, new CrawledPropertySetInfo("ED280121-B677-4E2A-8FBC-0D9E2325B0A2", "SharePoint", false, true, SearchCrawledPropertySet.SharePointStructured) },
+                { SearchCrawledPropertySet.SharePointRich, new CrawledPropertySetInfo("FEA84DF6-A0FC-492C-9AA7-D28B8DCB08B3", "SharePoint", false, true, SearchCrawledPropertySet.SharePointRich) }
             };
 
-        private static readonly IReadOnlyDictionary<Guid, SearchCrawledPropertySet> PropertySetIds =
-            PropertySets.ToDictionary(kvp => kvp.Value.Id, kvp => kvp.Key);
+        private static readonly IReadOnlyDictionary<Guid, CrawledPropertySetInfo> AllowedPropertySetIds =
+            RecommendedPropertySets.Values
+                .Concat(new[]
+                {
+                    new CrawledPropertySetInfo("F29F85E0-4FF9-1068-AB91-08002B27B3D9", "Office", false, false),
+                    new CrawledPropertySetInfo("D5CDD502-2E9C-101B-9397-08002B2CF9AE", "Office", false, false),
+                    new CrawledPropertySetInfo("D1B5D3F0-C0B3-11CF-9A92-00A0C908DBF1", "SharePoint", false, false),
+                    new CrawledPropertySetInfo("012357BD-1113-171D-1F25-292BB0B0B0B0", "Internal", false, false),
+                    new CrawledPropertySetInfo("B725F130-47EF-101A-A5F1-02608C9EEBAC", "Basic", false, false),
+                    new CrawledPropertySetInfo("49691C90-7E17-101A-A91C-08002B2ECDA9", "Basic", false, false),
+                    new CrawledPropertySetInfo("C82BF597-B831-11D0-B733-00AA00A1EBD2", "Basic", false, false),
+                    new CrawledPropertySetInfo("70EB7A10-55D9-11CF-B75B-00AA0051FE20", "Basic", false, false),
+                    new CrawledPropertySetInfo("00140329-0000-0140-C000-000000141446", "SharePoint", false, false),
+                    new CrawledPropertySetInfo("00110329-0000-0110-C000-000000111146", "SharePoint", false, false),
+                    new CrawledPropertySetInfo("0B63E343-9CCC-11D0-BCDB-00805FCCCE04", "Basic", false, false),
+                    new CrawledPropertySetInfo("00020329-0000-0000-C000-000000000046", "SharePoint", false, false),
+                    new CrawledPropertySetInfo("0C4B2ABA-0518-4EC2-807E-25DD264B660F", "SharePoint", false, false)
+                })
+                .ToDictionary(propertySet => propertySet.Id);
 
         [Parameter(Mandatory = true, Position = 0)]
         [ValidateNotNullOrEmpty]
@@ -68,7 +72,8 @@ namespace PnP.PowerShell.Commands.Search
 
             var schemaId = ResolveTenantSchemaId();
             var configuration = BuildSearchConfigurationXml(Name, propertySet.Info.Id, propertySet.Info.CategoryName, propertySet.Info.MapToContents, schemaId);
-            LogDebug($"Creating tenant crawled property '{Name}' using property set '{propertySet.KnownPropertySet}' ({propertySet.Info.Id}), category '{propertySet.Info.CategoryName}', and schema ID '{schemaId}'.");
+            var propertySetDescription = propertySet.Info.PropertySet?.ToString() ?? propertySet.Info.Id.ToString("D", CultureInfo.InvariantCulture);
+            LogDebug($"Creating tenant crawled property '{Name}' using property set '{propertySetDescription}' ({propertySet.Info.Id}), category '{propertySet.Info.CategoryName}', and schema ID '{schemaId}'.");
             LogDebug(configuration);
 
             try
@@ -92,7 +97,7 @@ namespace PnP.PowerShell.Commands.Search
             WriteObject(new
             {
                 Name,
-                PropertySet = propertySet.KnownPropertySet?.ToString(),
+                    PropertySet = propertySet.Info.PropertySet?.ToString(),
                 PropertySetGuid = propertySet.Info.Id,
                 propertySet.Info.CategoryName,
                 propertySet.Info.MapToContents,
@@ -210,15 +215,15 @@ namespace PnP.PowerShell.Commands.Search
         {
             if (ParameterSetName == ParameterSetPropertySetGuid)
             {
-                if (!PropertySetIds.TryGetValue(PropertySetGuid, out var knownPropertySet))
+                if (!AllowedPropertySetIds.TryGetValue(PropertySetGuid, out var propertySetInfo))
                 {
                     throw new ArgumentException($"Property set '{PropertySetGuid}' is not supported by this cmdlet.");
                 }
 
-                return new ResolvedPropertySet(knownPropertySet, PropertySets[knownPropertySet], true);
+                return new ResolvedPropertySet(propertySetInfo, true);
             }
 
-            return new ResolvedPropertySet(PropertySet, PropertySets[PropertySet], false);
+            return new ResolvedPropertySet(RecommendedPropertySets[PropertySet], false);
         }
 
         private void ConfirmIfNeeded(ResolvedPropertySet propertySet)
@@ -250,13 +255,14 @@ namespace PnP.PowerShell.Commands.Search
 
             if (!propertySet.Info.IsRecommended)
             {
-                yield return $"'{propertySet.KnownPropertySet}' is a less common property set. Most SharePoint crawled properties should use SharePointDefault, SharePointTaxonomy, SharePointStructured, or SharePointRich.";
+                yield return "The selected property set GUID is for a less common property set. Most SharePoint crawled properties should use SharePointDefault, SharePointTaxonomy, SharePointStructured, or SharePointRich.";
             }
 
             var expectedPropertySet = GetExpectedPropertySet(name);
-            if (expectedPropertySet.HasValue && propertySet.KnownPropertySet != expectedPropertySet.Value)
+            if (expectedPropertySet.HasValue && propertySet.Info.PropertySet != expectedPropertySet.Value)
             {
-                yield return $"The crawled property name '{name}' usually belongs in '{expectedPropertySet.Value}', but '{propertySet.KnownPropertySet}' was selected.";
+                var selectedPropertySet = propertySet.Info.PropertySet?.ToString() ?? propertySet.Info.Id.ToString("D", CultureInfo.InvariantCulture);
+                yield return $"The crawled property name '{name}' usually belongs in '{expectedPropertySet.Value}', but '{selectedPropertySet}' was selected.";
             }
         }
 
@@ -287,14 +293,11 @@ namespace PnP.PowerShell.Commands.Search
 
         private sealed class ResolvedPropertySet
         {
-            internal ResolvedPropertySet(SearchCrawledPropertySet? knownPropertySet, CrawledPropertySetInfo info, bool usedGuidParameter)
+            internal ResolvedPropertySet(CrawledPropertySetInfo info, bool usedGuidParameter)
             {
-                KnownPropertySet = knownPropertySet;
                 Info = info;
                 UsedGuidParameter = usedGuidParameter;
             }
-
-            internal SearchCrawledPropertySet? KnownPropertySet { get; }
 
             internal CrawledPropertySetInfo Info { get; }
 
@@ -303,12 +306,13 @@ namespace PnP.PowerShell.Commands.Search
 
         private sealed class CrawledPropertySetInfo
         {
-            internal CrawledPropertySetInfo(string id, string categoryName, bool mapToContents, bool isRecommended)
+            internal CrawledPropertySetInfo(string id, string categoryName, bool mapToContents, bool isRecommended, SearchCrawledPropertySet? propertySet = null)
             {
                 Id = Guid.Parse(id);
                 CategoryName = categoryName;
                 MapToContents = mapToContents;
                 IsRecommended = isRecommended;
+                PropertySet = propertySet;
             }
 
             internal Guid Id { get; }
@@ -318,6 +322,8 @@ namespace PnP.PowerShell.Commands.Search
             internal bool MapToContents { get; }
 
             internal bool IsRecommended { get; }
+
+            internal SearchCrawledPropertySet? PropertySet { get; }
         }
     }
 }

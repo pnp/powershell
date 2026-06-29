@@ -33,7 +33,7 @@ Add-PnPTenantSearchCrawledProperty -Name <String> -PropertySetGuid <Guid>
 
 Creates a tenant-level crawled property by importing an additive search schema configuration package. This cmdlet must be run against the tenant admin site.
 
-Most SharePoint crawled properties should use one of these property sets: SharePointDefault, SharePointTaxonomy, SharePointStructured, or SharePointRich. Other property sets are supported for advanced scenarios, but the cmdlet will ask for confirmation unless -Force is specified.
+Most SharePoint crawled properties should use one of these property sets: SharePointDefault, SharePointTaxonomy, SharePointStructured, or SharePointRich. Other supported property sets can be specified by GUID for advanced scenarios, but the cmdlet will ask for confirmation unless -Force is specified.
 
 This cmdlet is additive only. SharePoint Online does not expose a supported PnP PowerShell command to delete crawled properties created in error or to move an existing crawled property to a different property set. Verify the crawled property name and property set before running this cmdlet in a production tenant.
 
@@ -120,7 +120,7 @@ Known property set to use for the crawled property. Recommended values are Share
 ```yaml
 Type: SearchCrawledPropertySet
 Parameter Sets: KnownPropertySet
-Accepted values: SharePointDefault, SharePointTaxonomy, SharePointStructured, SharePointRich, OfficeSummary, OfficeDocumentSummary, SharePointCrawl, SharePointInternal, Storage, Basic, BasicExtended, BasicContent, SharePointDav, SharePointList, BasicLegacy, PublicStrings, SharePointContent
+Accepted values: SharePointDefault, SharePointTaxonomy, SharePointStructured, SharePointRich
 
 Required: True
 Position: Named
