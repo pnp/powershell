@@ -39,6 +39,8 @@ This cmdlet is additive only. SharePoint Online does not expose a supported PnP 
 
 If this cmdlet is used to make an implicit crawled property explicit, SharePoint Online will stop automatically creating an implicit managed property for that crawled property going forward.
 
+This cmdlet supports PowerShell's standard -WhatIf and -Confirm parameters. Because creating a tenant crawled property is difficult to undo, the cmdlet asks for confirmation by default. Use -WhatIf to preview the operation or -Confirm:$false to suppress the standard confirmation prompt.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

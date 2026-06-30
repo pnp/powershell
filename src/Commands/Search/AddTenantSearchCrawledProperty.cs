@@ -13,7 +13,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Search
 {
-    [Cmdlet(VerbsCommon.Add, "PnPTenantSearchCrawledProperty", DefaultParameterSetName = ParameterSetKnownPropertySet)]
+    [Cmdlet(VerbsCommon.Add, "PnPTenantSearchCrawledProperty", DefaultParameterSetName = ParameterSetKnownPropertySet, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
     [RequiredApiApplicationPermissions("sharepoint/Sites.FullControl.All")]
     [RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl")]
     public class AddTenantSearchCrawledProperty : PnPWebCmdlet
@@ -71,11 +71,16 @@ namespace PnP.PowerShell.Commands.Search
             }
 
             var propertySet = ResolvePropertySet();
-            ConfirmIfNeeded(propertySet);
+            var propertySetDescription = propertySet.Info.PropertySet?.ToString() ?? propertySet.Info.Id.ToString("D", CultureInfo.InvariantCulture);
 
+            if (!ShouldProcess(Name, $"Create tenant search crawled property in property set '{propertySetDescription}'"))
+            {
+                return;
+            }
+
+            ConfirmIfNeeded(propertySet);
             var schemaId = ResolveTenantSchemaId();
             var configuration = BuildSearchConfigurationXml(Name, propertySet.Info.Id, propertySet.Info.CategoryName, propertySet.Info.MapToContents, schemaId);
-            var propertySetDescription = propertySet.Info.PropertySet?.ToString() ?? propertySet.Info.Id.ToString("D", CultureInfo.InvariantCulture);
             LogDebug($"Creating tenant crawled property '{Name}' using property set '{propertySetDescription}' ({propertySet.Info.Id}), category '{propertySet.Info.CategoryName}', and schema ID '{schemaId}'.");
             LogDebug(configuration);
 

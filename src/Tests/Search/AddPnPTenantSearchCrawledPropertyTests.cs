@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PnP.PowerShell.Commands.Search;
@@ -45,9 +44,7 @@ namespace PnP.PowerShell.Tests.Search
 
         private static string BuildSearchConfigurationXml(string name, Guid propertySetId, string categoryName, bool mapToContents, int schemaId)
         {
-            var method = typeof(AddTenantSearchCrawledProperty).GetMethod("BuildSearchConfigurationXml", BindingFlags.Static | BindingFlags.NonPublic);
-            Assert.IsNotNull(method, "Could not find BuildSearchConfigurationXml helper on AddTenantSearchCrawledProperty.");
-            return (string)method.Invoke(null, new object[] { name, propertySetId, categoryName, mapToContents, schemaId });
+            return AddTenantSearchCrawledProperty.BuildSearchConfigurationXml(name, propertySetId, categoryName, mapToContents, schemaId);
         }
     }
 
