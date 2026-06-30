@@ -7,12 +7,15 @@ using System.Xml.Linq;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Administration;
 using Microsoft.SharePoint.Client.Search.Portability;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Enums;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Add, "PnPTenantSearchCrawledProperty", DefaultParameterSetName = ParameterSetKnownPropertySet)]
+    [RequiredApiApplicationPermissions("sharepoint/Sites.FullControl.All")]
+    [RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl")]
     public class AddTenantSearchCrawledProperty : PnPWebCmdlet
     {
         private const string ParameterSetKnownPropertySet = "KnownPropertySet";
