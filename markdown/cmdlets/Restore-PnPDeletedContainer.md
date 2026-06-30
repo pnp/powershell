@@ -1,11 +1,11 @@
 ---
-title: Restore-PnPDeletedContainer
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Restore-PnPDeletedContainer.html
-Module Name: PnP.PowerShell
 schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+title: Restore-PnPDeletedContainer
+online version: https://pnp.github.io/powershell/cmdlets/Restore-PnPDeletedContainer.html
 ---
    
 # Restore-PnPDeletedContainer

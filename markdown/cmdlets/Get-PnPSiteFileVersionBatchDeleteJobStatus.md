@@ -1,11 +1,11 @@
 ---
-title: Get-PnPSiteFileVersionBatchDeleteJobStatus
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteFileVersionBatchDeleteJobStatus.html
-Module Name: PnP.PowerShell
 schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+title: Get-PnPSiteFileVersionBatchDeleteJobStatus
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteFileVersionBatchDeleteJobStatus.html
 ---
    
 # Get-PnPSiteFileVersionBatchDeleteJobStatus

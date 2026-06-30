@@ -1,11 +1,11 @@
 ---
-title: Unpublish-PnPContentType
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Unpublish-PnPContentType.html
-Module Name: PnP.PowerShell
 schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+title: Unpublish-PnPContentType
+online version: https://pnp.github.io/powershell/cmdlets/Unpublish-PnPContentType.html
 ---
    
 # Unpublish-PnPContentType

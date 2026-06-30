@@ -1,11 +1,11 @@
 ---
-title: Add-PnPMicrosoft365GroupMember
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPMicrosoft365GroupMember.html
-Module Name: PnP.PowerShell
 schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+title: Add-PnPMicrosoft365GroupMember
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPMicrosoft365GroupMember.html
 ---
    
 # Add-PnPMicrosoft365GroupMember

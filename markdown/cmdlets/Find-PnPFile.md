@@ -1,11 +1,11 @@
 ---
-title: Find-PnPFile
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Find-PnPFile.html
-Module Name: PnP.PowerShell
 schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+title: Find-PnPFile
+online version: https://pnp.github.io/powershell/cmdlets/Find-PnPFile.html
 ---
    
 # Find-PnPFile

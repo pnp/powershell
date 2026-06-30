@@ -1,11 +1,11 @@
 ---
-title: Get-PnPCopilotAdminLimitedMode
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPCopilotAdminLimitedMode.html
-Module Name: PnP.PowerShell
 schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+title: Get-PnPCopilotAdminLimitedMode
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPCopilotAdminLimitedMode.html
 ---
    
 # Get-PnPCopilotAdminLimitedMode

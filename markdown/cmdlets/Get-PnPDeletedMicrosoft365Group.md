@@ -1,11 +1,11 @@
 ---
-title: Get-PnPDeletedMicrosoft365Group
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPDeletedMicrosoft365Group.html
-Module Name: PnP.PowerShell
 schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+title: Get-PnPDeletedMicrosoft365Group
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPDeletedMicrosoft365Group.html
 ---
    
 # Get-PnPDeletedMicrosoft365Group

@@ -1,11 +1,11 @@
 ---
-title: Invoke-PnPSPRestMethod
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Invoke-PnPSPRestMethod.html
-Module Name: PnP.PowerShell
 schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+title: Invoke-PnPSPRestMethod
+online version: https://pnp.github.io/powershell/cmdlets/Invoke-PnPSPRestMethod.html
 ---
   
 # Invoke-PnPSPRestMethod

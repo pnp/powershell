@@ -1,11 +1,11 @@
 ---
-title: Get-PnPTeamsChannelFilesFolder
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsChannelFilesFolder.html
-Module Name: PnP.PowerShell
 schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+title: Get-PnPTeamsChannelFilesFolder
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsChannelFilesFolder.html
 ---
   
 # Get-PnPTeamsChannelFilesFolder
