@@ -83,6 +83,21 @@ Creates a crawled property by specifying the supported property set GUID directl
 
 ## PARAMETERS
 
+### -Connection
+
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Force
 
 Suppresses confirmation prompts for less common property sets, direct GUID usage, or crawled property names that do not match the selected property set.
@@ -144,17 +159,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Connection
+## RELATED LINKS
 
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
+Microsoft 365 Patterns and Practices https://aka.ms/m365pnp

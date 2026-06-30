@@ -97,10 +97,10 @@ namespace PnP.PowerShell.Commands.Search
             WriteObject(new
             {
                 Name,
-                    PropertySet = propertySet.Info.PropertySet?.ToString(),
+                PropertySet = propertySet.Info.PropertySet?.ToString(),
                 PropertySetGuid = propertySet.Info.Id,
-                propertySet.Info.CategoryName,
-                propertySet.Info.MapToContents,
+                CategoryName = propertySet.Info.CategoryName,
+                MapToContents = propertySet.Info.MapToContents,
                 SchemaId = schemaId,
                 Imported = true
             });
@@ -235,7 +235,7 @@ namespace PnP.PowerShell.Commands.Search
             }
 
             var message = string.Join(Environment.NewLine, warnings) + Environment.NewLine + "Do you want to continue creating the tenant crawled property?";
-            if (!Force && !ShouldContinue(message, Properties.Resources.Confirm))
+            if (!Force && !ShouldContinue(message, Resources.Confirm))
             {
                 throw new InvalidOperationException("Crawled property creation cancelled.");
             }
