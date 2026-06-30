@@ -62,10 +62,10 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            if (!ClientContext.Url.ToLower(CultureInfo.InvariantCulture).Contains("-admin"))
-            {
-                throw new InvalidOperationException(Resources.CurrentSiteIsNoTenantAdminSite);
-            }
+			if (!ClientContext.Url.Contains("-admin", StringComparison.OrdinalIgnoreCase))
+			{
+				throw new InvalidOperationException(Resources.CurrentSiteIsNoTenantAdminSite);
+			}
 
             var propertySet = ResolvePropertySet();
             ConfirmIfNeeded(propertySet);
