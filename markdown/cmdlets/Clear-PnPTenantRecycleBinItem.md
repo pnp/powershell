@@ -1,13 +1,12 @@
 ---
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
-tags: Available in the current Nightly Release only.
 Module Name: PnP.PowerShell
+schema: 2.0.0
 applicable: SharePoint Online
-title: Clear-PnPTenantRecycleBinItem
 online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPTenantRecycleBinItem.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Clear-PnPTenantRecycleBinItem
 ---
-   
+  
 # Clear-PnPTenantRecycleBinItem
 
 ## SYNOPSIS
@@ -104,6 +103,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 
 

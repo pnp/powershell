@@ -1,13 +1,12 @@
 ---
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
-tags: Available in the current Nightly Release only.
 Module Name: PnP.PowerShell
+schema: 2.0.0
 applicable: SharePoint Online
-title: Add-PnPPlannerTask
 online version: https://pnp.github.io/powershell/cmdlets/Add-PnPPlannerTask.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Add-PnPPlannerTask
 ---
-   
+  
 # Add-PnPPlannerTask
 
 ## SYNOPSIS
@@ -276,6 +275,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 
 

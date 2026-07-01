@@ -1,11 +1,11 @@
 ---
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+title: Set-PnPMultiGeoCompanyAllowedDataLocation
+tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMultiGeoCompanyAllowedDataLocation.html
 schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
-tags: Available in the current Nightly Release only.
-Module Name: PnP.PowerShell
-title: Set-PnPMultiGeoCompanyAllowedDataLocation
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMultiGeoCompanyAllowedDataLocation.html
 ---
   
 # Set-PnPMultiGeoCompanyAllowedDataLocation

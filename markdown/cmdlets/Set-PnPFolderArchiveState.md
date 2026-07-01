@@ -1,13 +1,12 @@
 ---
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
-tags: Available in the current Nightly Release only.
 Module Name: PnP.PowerShell
+schema: 2.0.0
 applicable: SharePoint Online
-title: Set-PnPFolderArchiveState
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPFolderArchiveState.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPFolderArchiveState
 ---
- 
+
 # Set-PnPFolderArchiveState
 
 ## SYNOPSIS
@@ -110,4 +109,3 @@ Accept wildcard characters: False
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Archive driveItem through Microsoft Graph beta](https://learn.microsoft.com/en-us/graph/api/driveitem-archive?view=graph-rest-beta&tabs=http)
 [Unarchive driveItem through Microsoft Graph beta](https://learn.microsoft.com/en-us/graph/api/driveitem-unarchive?view=graph-rest-beta&tabs=http)
-

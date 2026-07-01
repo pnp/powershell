@@ -1,11 +1,11 @@
 ---
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+title: Set-PnPGeoStorageQuota
+tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPGeoStorageQuota.html
 schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
-tags: Available in the current Nightly Release only.
-Module Name: PnP.PowerShell
-title: Set-PnPGeoStorageQuota
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPGeoStorageQuota.html
 ---
   
 # Set-PnPGeoStorageQuota
