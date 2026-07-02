@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
+title: New-PnPSiteManageVersionPolicyJob
+external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
 schema: 2.0.0
+Module Name: PnP.PowerShell
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/New-PnPSiteManageVersionPolicyJob.html
-external help file: PnP.PowerShell.dll-Help.xml
-title: New-PnPSiteManageVersionPolicyJob
 ---
-
+ 
 # New-PnPSiteManageVersionPolicyJob
 
 ## SYNOPSIS
@@ -171,3 +172,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Get-PnPSiteFileVersionBatchDeleteJobStatus](Get-PnPSiteFileVersionBatchDeleteJobStatus.md)
+
