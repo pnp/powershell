@@ -1,11 +1,11 @@
 ---
-title: Stop-PnPUserAndContentMove
 external help file: PnP.PowerShell.dll-Help.xml
+title: Stop-PnPUserAndContentMove
+online version: https://pnp.github.io/powershell/cmdlets/Stop-PnPUserAndContentMove.html
+applicable: SharePoint Online
+schema: 2.0.0
 tags: Available in the current Nightly Release only.
 Module Name: PnP.PowerShell
-schema: 2.0.0
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Stop-PnPUserAndContentMove.html
 ---
  
 # Stop-PnPUserAndContentMove
