@@ -30,24 +30,23 @@ namespace PnP.PowerShell.Commands.Admin
 		protected override void ExecuteCmdlet()
 		{
 			var multiGeoRestApiClient = new MultiGeoRestApiClient(AdminContext);
-			if (!string.IsNullOrEmpty(GroupAlias))
+			switch (ParameterSetName)
 			{
-				multiGeoRestApiClient.RemoveGeoAdministrator(GroupAlias, isGroup: true);
-				return;
-			}
+				case ParameterSetGroup:
+					multiGeoRestApiClient.RemoveGeoAdministrator(GroupAlias, isGroup: true);
+					break;
 
-			if (!string.IsNullOrEmpty(UserPrincipalName))
-			{
-				multiGeoRestApiClient.RemoveGeoAdministrator(UserPrincipalName, isGroup: false);
-				return;
-			}
+				case ParameterSetUser:
+					multiGeoRestApiClient.RemoveGeoAdministrator(UserPrincipalName, isGroup: false);
+					break;
 
-			if (ObjectId == Guid.Empty)
-			{
-				throw new InvalidOperationException();
-			}
+				case ParameterSetObjectId:
+					multiGeoRestApiClient.RemoveGeoAdministrator(ObjectId);
+					break;
 
-			multiGeoRestApiClient.RemoveGeoAdministrator(ObjectId);
+				default:
+					throw new ArgumentException("Parameter set cannot be resolved using the specified named parameters.");
+			}
 		}
 	}
 }
