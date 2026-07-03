@@ -199,6 +199,11 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			GetGeoAdministratorsByPrincipalApiVersion();
 		}
 
+		internal void EnsureGeoAdministratorSupported()
+		{
+			GetGeoAdministratorsApiVersion();
+		}
+
 		internal void UpgradeGeoExperience(bool allInstances)
 		{
 			var apiVersion = GetGeoExperienceApiVersion();

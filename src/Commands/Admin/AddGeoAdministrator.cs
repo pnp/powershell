@@ -51,6 +51,7 @@ namespace PnP.PowerShell.Commands.Admin
 					break;
 
 				case ObjectIdParameterSet:
+					multiGeoRestApiClient.EnsureGeoAdministratorSupported();
 					if (ObjectId == Guid.Empty)
 					{
 						throw new PSArgumentException("ObjectId cannot be an empty GUID.", nameof(ObjectId));
