@@ -8,6 +8,7 @@ using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Administration;
 using Microsoft.SharePoint.Client.Search.Portability;
 using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
@@ -16,7 +17,7 @@ namespace PnP.PowerShell.Commands.Search
     [Cmdlet(VerbsCommon.Add, "PnPTenantSearchCrawledProperty", DefaultParameterSetName = ParameterSetKnownPropertySet, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
     [RequiredApiApplicationPermissions("sharepoint/Sites.FullControl.All")]
     [RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl")]
-    public class AddTenantSearchCrawledProperty : PnPWebCmdlet
+    public class AddTenantSearchCrawledProperty : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSetKnownPropertySet = "KnownPropertySet";
         private const string ParameterSetPropertySetGuid = "PropertySetGuid";
@@ -65,11 +66,6 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            if (!ClientContext.Url.Contains("-admin", StringComparison.OrdinalIgnoreCase))
-            {
-                throw new InvalidOperationException(Resources.CurrentSiteIsNoTenantAdminSite);
-            }
-
             var propertySet = ResolvePropertySet();
             var propertySetDescription = propertySet.Info.PropertySet?.ToString() ?? propertySet.Info.Id.ToString("D", CultureInfo.InvariantCulture);
 
@@ -86,7 +82,7 @@ namespace PnP.PowerShell.Commands.Search
 
             try
             {
-                ClientContext.ImportSearchSettingsConfiguration(configuration, SearchObjectLevel.SPSiteSubscription);
+                AdminContext.ImportSearchSettingsConfiguration(configuration, SearchObjectLevel.SPSiteSubscription);
             }
             catch (ServerException ex)
             {
@@ -202,10 +198,10 @@ namespace PnP.PowerShell.Commands.Search
 
         private int ResolveTenantSchemaId()
         {
-            SearchObjectOwner owningScope = new SearchObjectOwner(ClientContext, SearchObjectLevel.SPSiteSubscription);
-            var config = new SearchConfigurationPortability(ClientContext);
+            SearchObjectOwner owningScope = new SearchObjectOwner(AdminContext, SearchObjectLevel.SPSiteSubscription);
+            var config = new SearchConfigurationPortability(AdminContext);
             ClientResult<string> configuration = config.ExportSearchConfiguration(owningScope);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
 
             var schemaIdValue = XDocument.Parse(configuration.Value)
                 .Descendants()
