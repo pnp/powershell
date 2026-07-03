@@ -39,6 +39,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string UpdateAllInstancesExperienceModePath = "GeoExperience/UpgradeAllInstancesToSPOMode";
 		private const string AllowedDataLocationsApiVersion = "1.3.11";
 		private const string AllowedDataLocationsPath = "AllowedDataLocations";
+		private const string AllowedDataLocationByLocationPath = "AllowedDataLocations(location='{0}')";
 		private const string GeoAdministratorsByLoginNameMaximumApiVersion = "1.3.8";
 		private const string GeoAdministratorsByPrincipalMinimumApiVersion = "1.3.9";
 		private const string GeoAdministratorsByLoginNamePath = "GeoAdministrators(loginName='{0}')";
@@ -223,6 +224,18 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			}
 
 			PostWithoutResponse(AllowedDataLocationsPath, allowedDataLocation, apiVersion);
+		}
+
+		internal void RemoveAllowedDataLocation(string location)
+		{
+			var apiVersion = GetCurrentApiVersion();
+			if (!IsSupportedApiVersion(apiVersion, AllowedDataLocationsApiVersion))
+			{
+				throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, CommandResources.CrossGeoInvalidVersion, GetApplicationVersion()));
+			}
+
+			var path = string.Format(CultureInfo.InvariantCulture, AllowedDataLocationByLocationPath, ProcessSpecialChars(location));
+			PostWithMethodOverrideEmptyBody(path, DeleteVerbString, apiVersion);
 		}
 
 		internal IEnumerable<StorageQuota> GetStorageQuotas()
