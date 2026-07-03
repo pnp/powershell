@@ -56,4 +56,6 @@ Returns objects with `Location`, `Domain`, and `IsDefault` properties.
 
 [Set-PnPMultiGeoCompanyAllowedDataLocation](Set-PnPMultiGeoCompanyAllowedDataLocation.md)
 
+[Remove-PnPMultiGeoCompanyAllowedDataLocation](Remove-PnPMultiGeoCompanyAllowedDataLocation.md)
+
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

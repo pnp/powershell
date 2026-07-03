@@ -37,11 +37,13 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string UpdateAllInstancesExperienceModePath = "GeoExperience/UpgradeAllInstancesToSPOMode";
 		private const string AllowedDataLocationsApiVersion = "1.3.11";
 		private const string AllowedDataLocationsPath = "AllowedDataLocations";
+		private const string AllowedDataLocationByLocationPath = "AllowedDataLocations(location='{0}')";
 		private const string StorageQuotasMinimumApiVersion = "1.3.1";
 		private const string StorageQuotasPath = "StorageQuotas";
 		private const string StorageQuotaByLocationPath = "StorageQuotas(geoLocation='{0}')";
 		private const string MultiGeoApiVersionsPath = "MultiGeoApiVersions";
 		private const string PatchVerbString = "PATCH";
+		private const string DeleteVerbString = "DELETE";
 		private const string UserMoveJobsMinimumApiVersion = "1.0";
 		private const string UserMoveJobsByMoveIdMinimumApiVersion = "1.2.2";
 		private const string UserMoveJobsReportMinimumApiVersion = "1.3.2";
@@ -193,6 +195,18 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			}
 
 			PostWithoutResponse(AllowedDataLocationsPath, allowedDataLocation, apiVersion);
+		}
+
+		internal void RemoveAllowedDataLocation(string location)
+		{
+			var apiVersion = GetCurrentApiVersion();
+			if (!IsSupportedApiVersion(apiVersion, AllowedDataLocationsApiVersion))
+			{
+				throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, CommandResources.CrossGeoInvalidVersion, GetApplicationVersion()));
+			}
+
+			var path = string.Format(CultureInfo.InvariantCulture, AllowedDataLocationByLocationPath, ProcessSpecialChars(location));
+			PostWithEmptyBodyMethodOverride(path, DeleteVerbString, apiVersion);
 		}
 
 		internal IEnumerable<StorageQuota> GetStorageQuotas()
@@ -425,6 +439,21 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			Send(() =>
 			{
 				var request = CreateRequest(HttpMethod.Post, path, apiVersion, jsonPayload);
+				request.Headers.TryAddWithoutValidation("X-HTTP-Method", methodOverride);
+				if (request.Content != null)
+				{
+					request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json;charset=UTF-8");
+				}
+
+				return request;
+			}, timeout: null, allowRetries: false);
+		}
+
+		private void PostWithEmptyBodyMethodOverride(string path, string methodOverride, string apiVersion)
+		{
+			Send(() =>
+			{
+				var request = CreateRequest(HttpMethod.Post, path, apiVersion, string.Empty);
 				request.Headers.TryAddWithoutValidation("X-HTTP-Method", methodOverride);
 				if (request.Content != null)
 				{

@@ -273,6 +273,63 @@ namespace PnP.PowerShell.Commands.Properties {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Any remaining user data in this location will be permanently deleted. This includes all OneDrive for Business data, SharePoint sites and Group sites. Make sure all data is moved to another location before continuing.
+        ///
+        ///If you delete this location, you won&apos;t be able to restore it.
+        ///.
+        /// </summary>
+        internal static string CrossGeoWarningRemoveAdl {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningRemoveAdl", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to permanently delete this location and all its data: {0}?.
+        /// </summary>
+        internal static string CrossGeoWarningRemoveAdlQuery {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningRemoveAdlQuery", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to I acknowledge that I am responsible for copying or moving the data from this location before I delete the location..
+        /// </summary>
+        internal static string CrossGeoWarning2RemoveAdl {
+            get {
+                return ResourceManager.GetString("CrossGeoWarning2RemoveAdl", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Did you move all data from this location?.
+        /// </summary>
+        internal static string CrossGeoWarning2RemoveAdlQuery {
+            get {
+                return ResourceManager.GetString("CrossGeoWarning2RemoveAdlQuery", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The delete operation was canceled..
+        /// </summary>
+        internal static string CrossGeoWarningRemoveAdlCancelMessage {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningRemoveAdlCancelMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Deleting the location might take a few hours. After the location is deleted, you&apos;ll be disconnected from the SharePoint Online Administration center in this location..
+        /// </summary>
+        internal static string CrossGeoWarningRemoveAdlSuccessMessage {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningRemoveAdlSuccessMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Current site is not a tenant administration site.
         /// </summary>
         internal static string CurrentSiteIsNoTenantAdminSite {
