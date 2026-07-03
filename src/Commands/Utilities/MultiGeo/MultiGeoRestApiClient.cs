@@ -37,10 +37,17 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string UpdateAllInstancesExperienceModePath = "GeoExperience/UpgradeAllInstancesToSPOMode";
 		private const string AllowedDataLocationsApiVersion = "1.3.11";
 		private const string AllowedDataLocationsPath = "AllowedDataLocations";
+		private const string GeoAdministratorsMinimumApiVersion = "1.2-beta";
+		private const string GeoAdministratorsByLoginNameMaximumApiVersion = "1.3.8";
+		private const string GeoAdministratorsByPrincipalMinimumApiVersion = "1.3.9";
+		private const string GeoAdministratorsByLoginNamePath = "GeoAdministrators(loginName='{0}')";
+		private const string GeoAdministratorsByLoginNameAndTypePath = "GeoAdministrators/GetByLoginNameAndType(loginName='{0}', memberType={1:D})";
+		private const string GeoAdministratorsByObjectIdPath = "GeoAdministrators/GetByObjectId(guid'{0:D}')";
 		private const string StorageQuotasMinimumApiVersion = "1.3.1";
 		private const string StorageQuotasPath = "StorageQuotas";
 		private const string StorageQuotaByLocationPath = "StorageQuotas(geoLocation='{0}')";
 		private const string MultiGeoApiVersionsPath = "MultiGeoApiVersions";
+		private const string DeleteVerbString = "DELETE";
 		private const string PatchVerbString = "PATCH";
 		private const string UserMoveJobsMinimumApiVersion = "1.0";
 		private const string UserMoveJobsByMoveIdMinimumApiVersion = "1.2.2";
@@ -64,6 +71,8 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const int SiteMoveRunsWorkflow2013ErrorCode = -113;
 		private const int SiteMoveRequiresForceErrorCode = -116;
 		private const int SiteMoveContainsBcsErrorCode = -139;
+		private const int GeoAdministratorUserMemberType = 1;
+		private const int GeoAdministratorGroupMemberType = 2;
 		private const int MaximumPagination = 10;
 		private const int ApiVersionCacheValidTimeInHours = 1;
 		private static readonly TimeSpan CreateTenantRenameJobTimeout = TimeSpan.FromSeconds(300);
@@ -333,6 +342,23 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			PostWithMethodOverride(path, quota, PatchVerbString, apiVersion);
 		}
 
+		internal void RemoveGeoAdministrator(string loginName, bool isGroup)
+		{
+			var apiVersion = GetGeoAdministratorsApiVersion();
+			var path = IsSupportedApiVersionRange(apiVersion, GeoAdministratorsMinimumApiVersion, GeoAdministratorsByLoginNameMaximumApiVersion)
+				? string.Format(CultureInfo.InvariantCulture, GeoAdministratorsByLoginNamePath, ProcessSpecialChars(loginName))
+				: string.Format(CultureInfo.InvariantCulture, GeoAdministratorsByLoginNameAndTypePath, ProcessSpecialChars(loginName), isGroup ? GeoAdministratorGroupMemberType : GeoAdministratorUserMemberType);
+
+			PostWithMethodOverrideEmptyBody(path, DeleteVerbString, apiVersion);
+		}
+
+		internal void RemoveGeoAdministrator(Guid objectId)
+		{
+			var apiVersion = GetGeoAdministratorsByPrincipalApiVersion();
+			var path = string.Format(CultureInfo.InvariantCulture, GeoAdministratorsByObjectIdPath, objectId);
+			PostWithMethodOverrideEmptyBody(path, DeleteVerbString, apiVersion);
+		}
+
 		internal void CancelUserMoveJob(string userPrincipalName)
 		{
 			var apiVersion = GetCurrentApiVersion(UserMoveJobsMinimumApiVersion);
@@ -425,6 +451,21 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			Send(() =>
 			{
 				var request = CreateRequest(HttpMethod.Post, path, apiVersion, jsonPayload);
+				request.Headers.TryAddWithoutValidation("X-HTTP-Method", methodOverride);
+				if (request.Content != null)
+				{
+					request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json;charset=UTF-8");
+				}
+
+				return request;
+			}, timeout: null, allowRetries: false);
+		}
+
+		private void PostWithMethodOverrideEmptyBody(string path, string methodOverride, string apiVersion)
+		{
+			Send(() =>
+			{
+				var request = CreateRequest(HttpMethod.Post, path, apiVersion, string.Empty);
 				request.Headers.TryAddWithoutValidation("X-HTTP-Method", methodOverride);
 				if (request.Content != null)
 				{
@@ -528,10 +569,43 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			return apiVersionIndex >= 0 && minimumApiVersionIndex >= 0 && apiVersionIndex <= minimumApiVersionIndex;
 		}
 
+		private static bool IsSupportedApiVersionRange(string apiVersion, string minimumApiVersion, string maximumApiVersion)
+		{
+			var apiVersionIndex = Array.IndexOf(ClientSupportedApiVersions, apiVersion);
+			var minimumApiVersionIndex = Array.IndexOf(ClientSupportedApiVersions, minimumApiVersion);
+			var maximumApiVersionIndex = Array.IndexOf(ClientSupportedApiVersions, maximumApiVersion);
+			return apiVersionIndex >= 0 && minimumApiVersionIndex >= 0 && maximumApiVersionIndex >= 0
+				&& apiVersionIndex <= minimumApiVersionIndex
+				&& apiVersionIndex >= maximumApiVersionIndex;
+		}
+
 		private string GetStorageQuotasApiVersion()
 		{
 			var apiVersion = GetCurrentApiVersion();
 			if (!IsSupportedApiVersion(apiVersion, StorageQuotasMinimumApiVersion))
+			{
+				throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, CommandResources.CrossGeoInvalidVersion, GetApplicationVersion()));
+			}
+
+			return apiVersion;
+		}
+
+		private string GetGeoAdministratorsApiVersion()
+		{
+			var apiVersion = GetCurrentApiVersion();
+			if (!IsSupportedApiVersionRange(apiVersion, GeoAdministratorsMinimumApiVersion, GeoAdministratorsByLoginNameMaximumApiVersion)
+				&& !IsSupportedApiVersion(apiVersion, GeoAdministratorsByPrincipalMinimumApiVersion))
+			{
+				throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, CommandResources.CrossGeoInvalidVersion, GetApplicationVersion()));
+			}
+
+			return apiVersion;
+		}
+
+		private string GetGeoAdministratorsByPrincipalApiVersion()
+		{
+			var apiVersion = GetCurrentApiVersion();
+			if (!IsSupportedApiVersion(apiVersion, GeoAdministratorsByPrincipalMinimumApiVersion))
 			{
 				throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, CommandResources.CrossGeoInvalidVersion, GetApplicationVersion()));
 			}
