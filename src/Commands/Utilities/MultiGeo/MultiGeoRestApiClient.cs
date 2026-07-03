@@ -31,6 +31,8 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string TenantRenameJobsPathToCancelAJob = "TenantRenameJobs/Cancel";
 		private const string GeoMoveCompatibilityChecksMinimumApiVersion = "1.3.6";
 		private const string GeoMoveCompatibilityChecksPath = "GeoMoveCompatibilityChecks";
+		private const string GeoAdministratorsMinimumApiVersion = "1.2-beta";
+		private const string GeoAdministratorsPath = "GeoAdministrators";
 		private const string GeoExperienceMinimumApiVersion = "1.3.7";
 		private const string GeoExperiencePath = "GeoExperience";
 		private const string UpdateGeoExperienceModePath = "GeoExperience/UpgradeToSPOMode";
@@ -156,6 +158,11 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		internal IEnumerable<GeoMoveTenantCompatibilityCheck> GetGeoMoveCompatibilityChecks()
 		{
 			return GetFeed<GeoMoveTenantCompatibilityCheck>(GeoMoveCompatibilityChecksPath, GetCurrentApiVersion(GeoMoveCompatibilityChecksMinimumApiVersion));
+		}
+
+		internal GeoAdministratorCollection GetGeoAdministrators()
+		{
+			return Get<GeoAdministratorCollection>(GeoAdministratorsPath, GetGeoAdministratorsApiVersion());
 		}
 
 		internal MultiGeoExperience GetGeoExperience()
@@ -532,6 +539,17 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		{
 			var apiVersion = GetCurrentApiVersion();
 			if (!IsSupportedApiVersion(apiVersion, StorageQuotasMinimumApiVersion))
+			{
+				throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, CommandResources.CrossGeoInvalidVersion, GetApplicationVersion()));
+			}
+
+			return apiVersion;
+		}
+
+		private string GetGeoAdministratorsApiVersion()
+		{
+			var apiVersion = GetCurrentApiVersion();
+			if (!IsSupportedApiVersion(apiVersion, GeoAdministratorsMinimumApiVersion))
 			{
 				throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, CommandResources.CrossGeoInvalidVersion, GetApplicationVersion()));
 			}
