@@ -183,6 +183,21 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			return GetFeed<MultiGeoCompanyAllowedDataLocation>(AllowedDataLocationsPath, AllowedDataLocationsApiVersion);
 		}
 
+		internal GeoAdministrator AddGeoAdministrator(GeoAdministratorEntityData geoAdministrator)
+		{
+			if (geoAdministrator == null)
+			{
+				throw new ArgumentNullException(nameof(geoAdministrator));
+			}
+
+			return Post<GeoAdministrator>(GeoAdministratorsPath, geoAdministrator, apiVersion: GetGeoAdministratorsApiVersion());
+		}
+
+		internal void EnsureGeoAdministratorObjectIdSupported()
+		{
+			GetGeoAdministratorsByPrincipalApiVersion();
+		}
+
 		internal void UpgradeGeoExperience(bool allInstances)
 		{
 			var apiVersion = GetGeoExperienceApiVersion();
