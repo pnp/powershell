@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+- Added `Get-PnPGeoAdministrator` cmdlet to retrieve SharePoint Online geo administrators.
 - Added `Get-PnPMultiGeoExperience` cmdlet to retrieve the SharePoint Online multi-geo experience mode. [#5372](https://github.com/pnp/powershell/pull/5372)
 - Added `Set-PnPMultiGeoExperience` cmdlet to upgrade the tenant multi-geo experience to include SharePoint Online Multi-Geo. [#5369](https://github.com/pnp/powershell/pull/5369)
 - Added `Set-PnPMultiGeoCompanyAllowedDataLocation` cmdlet to start setting up a SharePoint Online multi-geo allowed data location. [#5368](https://github.com/pnp/powershell/pull/5368)
