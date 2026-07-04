@@ -13,6 +13,7 @@ namespace PnP.PowerShell.Commands.Admin
 	public class GetUserOneDriveLocation : PnPSharePointOnlineAdminCmdlet
 	{
 		[Parameter(Mandatory = true)]
+		[ValidateNotNullOrEmpty]
 		public string UserPrincipalName { get; set; }
 
 		protected override void ExecuteCmdlet()
