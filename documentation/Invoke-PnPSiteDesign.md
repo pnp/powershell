@@ -14,14 +14,27 @@ Apply a Site Design to an existing site. * Requires Tenant Administration Rights
 
 ## SYNTAX
 
+### By Site Design (Default)
+
 ```powershell
 Invoke-PnPSiteDesign [-Identity] <TenantSiteDesignPipeBind> [-WebUrl <String>] 
  [-Connection <PnPConnection>]   
 ```
 
+### By Built-in Template
+
+```powershell
+Invoke-PnPSiteDesign -Template <BuiltInSiteTemplates> [-WebUrl <String>] 
+ [-Connection <PnPConnection>]   
+```
+
 ## DESCRIPTION
 
-Applies the Site Design provided through Identity to an existing site. When providing a site design name and multiple site designs exist with the same name, all of them will be invoked.
+Applies a Site Design to an existing site.
+
+Use `-Identity` to apply a tenant-registered site design by Id or name. When a name matches multiple designs, all of them will be invoked.
+
+Use `-Template` to apply one of the built-in Microsoft site designs (e.g. Event, Department, Human Resources) directly by name, without needing to look up the design Id first. This calls the SharePoint SiteScriptUtility REST API against the built-in template store (store 1).
 
 ## EXAMPLES
 
@@ -44,30 +57,30 @@ Applies the specified site design to the specified site.
 Get-PnPSiteDesign | ?{$_.Title -eq "Demo"} | Invoke-PnPSiteDesign
 ```
 
-Applies the specified site design to the specified site.
+Applies the site design named "Demo" to the current site via the pipeline.
+
+### EXAMPLE 4
+```powershell
+Invoke-PnPSiteDesign -Template Event -WebUrl "https://contoso.sharepoint.com/sites/myevent"
+```
+
+Applies the built-in Event site design to the specified communication site.
+
+### EXAMPLE 5
+```powershell
+Invoke-PnPSiteDesign -Template Department
+```
+
+Applies the built-in Department site design to the current site.
 
 ## PARAMETERS
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Identity
-The Site Design Id or an actual Site Design object to apply
+The Site Design Id, name, or an actual Site Design object to apply.
 
 ```yaml
 Type: TenantSiteDesignPipeBind
-Parameter Sets: (All)
+Parameter Sets: By Site Design
 
 Required: True
 Position: 0
@@ -76,7 +89,19 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -Template
+The name of a built-in Microsoft site design to apply. Uses the SharePoint SiteScriptUtility REST API against the built-in template store (store 1). Cannot be combined with -Identity.
 
+```yaml
+Type: BuiltInSiteTemplates
+Parameter Sets: By Built-in Template
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -WebUrl
 The URL of the web to apply the site design to. If not specified it will default to the current web based upon the URL specified with Connect-PnPOnline.
@@ -92,7 +117,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
