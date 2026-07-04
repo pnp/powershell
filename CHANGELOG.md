@@ -38,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added properties `OrganizationSharingLinkRecommendedExpirationInDays`, `OrganizationSharingLinkMaxExpirationInDays`, `OverrideTenantOrganizationSharingLinkExpirationPolicy` to `Set-PnPSite`, `Set-PnPTenantsite` cmdlets. [#5333](https://github.com/pnp/powershell/pull/5333)
 - Added `WhoCanShareAllowListInTenantByPrincipalIdentity` property to `Set-PnPTenant` cmdlet. [#5322](https://github.com/pnp/powershell/pull/5322)
 - `Add/Set/Get/Remove-PnPVivaConnectionsDashboardACE` cmdlets no longer check the home site, they will work on any communication or modern team sites. [#5351](https://github.com/pnp/powershell/pull/5351)
+- Added `-BuiltIn` parameter to `Get-PnPSiteDesign` cmdlet to fetch OOTB site designs. [#5358](https://github.com/pnp/powershell/pull/5358)
 
 ### Fixed
 - `Remove-PnPEntraIDServicePrincipalAssignedAppRole` cmdlet now works properly if `-AppRole` is specified. [#5353](https://github.com/pnp/powershell/pull/5353)
