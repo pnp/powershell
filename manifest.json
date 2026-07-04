@@ -767,6 +767,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPGeoAdministrator.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPGeoAdministrator.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPGroupMember.md",
       "output": {
         ".html": {
@@ -2891,6 +2901,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPFooter.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPGeoAdministrator.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPGeoAdministrator.html"
         }
       },
       "version": ""
@@ -6277,6 +6297,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPGeoAdministrator.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPGeoAdministrator.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPGraphSubscription.md",
       "output": {
         ".html": {
@@ -6491,6 +6521,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPMicrosoft365GroupSettings.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPMultiGeoCompanyAllowedDataLocation.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPMultiGeoCompanyAllowedDataLocation.html"
         }
       },
       "version": ""

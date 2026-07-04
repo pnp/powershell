@@ -1,36 +1,36 @@
 ---
-title: Get-PnPMultiGeoExperience
+title: Get-PnPGeoAdministrator
 external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 applicable: SharePoint Online
 tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPMultiGeoExperience.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPGeoAdministrator.html
 Module Name: PnP.PowerShell
 ---
-  
-# Get-PnPMultiGeoExperience
+ 
+# Get-PnPGeoAdministrator
 
 ## SYNOPSIS
-Returns the SharePoint Online multi-geo experience mode.
+Returns SharePoint Online geo administrators.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPMultiGeoExperience [-Connection <PnPConnection>]
+Get-PnPGeoAdministrator [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Returns the SharePoint Online multi-geo experience mode for the current geo location.
+Returns the SharePoint Online geo administrators configured for the tenant.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 
 ```powershell
-Get-PnPMultiGeoExperience
+Get-PnPGeoAdministrator
 ```
 
-Returns the SharePoint Online multi-geo experience mode for the current geo location.
+Returns all SharePoint Online geo administrators.
 
 ## PARAMETERS
 
@@ -50,12 +50,12 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### PnP.PowerShell.Commands.Model.MultiGeoExperience
-Returns an object with `GeoLocation` and `MultiGeoExperienceMode` properties.
+### PnP.PowerShell.Commands.Model.GeoAdministrator
+Returns objects with `DisplayName`, `LoginName`, `MemberType`, `ObjectId`, and `GeoLocation` properties.
 
 ## RELATED LINKS
 
-[Set-PnPMultiGeoExperience](Set-PnPMultiGeoExperience.md)
+[Get-PnPMultiGeoCompanyAllowedDataLocation](Get-PnPMultiGeoCompanyAllowedDataLocation.md)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 

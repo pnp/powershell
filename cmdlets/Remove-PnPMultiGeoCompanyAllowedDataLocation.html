@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Set-PnPMultiGeoCompanyAllowedDataLocation | PnP PowerShell </title>
+      <title>Remove-PnPMultiGeoCompanyAllowedDataLocation | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Set-PnPMultiGeoCompanyAllowedDataLocation | PnP PowerShell ">
+      <meta name="title" content="Remove-PnPMultiGeoCompanyAllowedDataLocation | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,20 +85,20 @@
         </div>
 
         <article data-uid="">
-<h1 id="set-pnpmultigeocompanyalloweddatalocation">Set-PnPMultiGeoCompanyAllowedDataLocation</h1>
+<h1 id="remove-pnpmultigeocompanyalloweddatalocation">Remove-PnPMultiGeoCompanyAllowedDataLocation</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Starts setting up a multi-geo data location for the SharePoint Online tenant.</p>
+<p>Deletes a SharePoint Online multi-geo data location from the tenant.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPMultiGeoCompanyAllowedDataLocation [-Location] &lt;String&gt; [-InitialDomain] &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm]
+<pre><code class="lang-powershell">Remove-PnPMultiGeoCompanyAllowedDataLocation [-Location] &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Starts setting up an allowed SharePoint Online multi-geo data location for the tenant.</p>
+<p>Deletes an allowed SharePoint Online multi-geo data location from the tenant. Any remaining user data in the location will be permanently deleted.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPMultiGeoCompanyAllowedDataLocation -Location EUR -InitialDomain contoso.onmicrosoft.com
+<pre><code class="lang-powershell">Remove-PnPMultiGeoCompanyAllowedDataLocation -Location EUR
 </code></pre>
-<p>Starts setting up the EUR multi-geo data location for the tenant with the initial domain <code>contoso.onmicrosoft.com</code>.</p>
+<p>Deletes the EUR multi-geo data location from the tenant.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-confirm">-Confirm</h3>
 <p>Prompts you for confirmation before running the cmdlet.</p>
@@ -122,19 +122,8 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-initialdomain">-InitialDomain</h3>
-<p>Specifies the initial SharePoint Online domain for the data location.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-location">-Location</h3>
-<p>Specifies the multi-geo location code to set up.</p>
+<p>Specifies the multi-geo location code to delete.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -156,11 +145,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="outputs">OUTPUTS</h2>
-<h3 id="systemstring">System.String</h3>
-<p>Returns a message indicating that setting up the new location has started.</p>
+<h3 id="systemobject">System.Object</h3>
+<p>Writes the SharePoint Online Management Shell cancellation message if the delete operation is canceled. On success, writes a warning that deleting the location might take a few hours.</p>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="Get-PnPMultiGeoCompanyAllowedDataLocation.html">Get-PnPMultiGeoCompanyAllowedDataLocation</a></p>
-<p><a href="Remove-PnPMultiGeoCompanyAllowedDataLocation.html">Remove-PnPMultiGeoCompanyAllowedDataLocation</a></p>
+<p><a href="Set-PnPMultiGeoCompanyAllowedDataLocation.html">Set-PnPMultiGeoCompanyAllowedDataLocation</a></p>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>

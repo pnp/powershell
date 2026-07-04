@@ -1,36 +1,36 @@
 ---
-title: Set-PnPMultiGeoCompanyAllowedDataLocation
+title: Remove-PnPMultiGeoCompanyAllowedDataLocation
 external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 applicable: SharePoint Online
 tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMultiGeoCompanyAllowedDataLocation.html
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPMultiGeoCompanyAllowedDataLocation.html
 Module Name: PnP.PowerShell
 ---
   
-# Set-PnPMultiGeoCompanyAllowedDataLocation
+# Remove-PnPMultiGeoCompanyAllowedDataLocation
 
 ## SYNOPSIS
-Starts setting up a multi-geo data location for the SharePoint Online tenant.
+Deletes a SharePoint Online multi-geo data location from the tenant.
 
 ## SYNTAX
 
 ```powershell
-Set-PnPMultiGeoCompanyAllowedDataLocation [-Location] <String> [-InitialDomain] <String> [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
+Remove-PnPMultiGeoCompanyAllowedDataLocation [-Location] <String> [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
 ```
 
 ## DESCRIPTION
-Starts setting up an allowed SharePoint Online multi-geo data location for the tenant.
+Deletes an allowed SharePoint Online multi-geo data location from the tenant. Any remaining user data in the location will be permanently deleted.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 
 ```powershell
-Set-PnPMultiGeoCompanyAllowedDataLocation -Location EUR -InitialDomain contoso.onmicrosoft.com
+Remove-PnPMultiGeoCompanyAllowedDataLocation -Location EUR
 ```
 
-Starts setting up the EUR multi-geo data location for the tenant with the initial domain `contoso.onmicrosoft.com`.
+Deletes the EUR multi-geo data location from the tenant.
 
 ## PARAMETERS
 
@@ -62,22 +62,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InitialDomain
-Specifies the initial SharePoint Online domain for the data location.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Location
-Specifies the multi-geo location code to set up.
+Specifies the multi-geo location code to delete.
 
 ```yaml
 Type: String
@@ -106,14 +92,14 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.String
-Returns a message indicating that setting up the new location has started.
+### System.Object
+Writes the SharePoint Online Management Shell cancellation message if the delete operation is canceled. On success, writes a warning that deleting the location might take a few hours.
 
 ## RELATED LINKS
 
 [Get-PnPMultiGeoCompanyAllowedDataLocation](Get-PnPMultiGeoCompanyAllowedDataLocation.md)
 
-[Remove-PnPMultiGeoCompanyAllowedDataLocation](Remove-PnPMultiGeoCompanyAllowedDataLocation.md)
+[Set-PnPMultiGeoCompanyAllowedDataLocation](Set-PnPMultiGeoCompanyAllowedDataLocation.md)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 

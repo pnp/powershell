@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Set-PnPMultiGeoCompanyAllowedDataLocation | PnP PowerShell </title>
+      <title>Get-PnPGeoAdministrator | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Set-PnPMultiGeoCompanyAllowedDataLocation | PnP PowerShell ">
+      <meta name="title" content="Get-PnPGeoAdministrator | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,32 +85,21 @@
         </div>
 
         <article data-uid="">
-<h1 id="set-pnpmultigeocompanyalloweddatalocation">Set-PnPMultiGeoCompanyAllowedDataLocation</h1>
+<h1 id="get-pnpgeoadministrator">Get-PnPGeoAdministrator</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Starts setting up a multi-geo data location for the SharePoint Online tenant.</p>
+<p>Returns SharePoint Online geo administrators.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPMultiGeoCompanyAllowedDataLocation [-Location] &lt;String&gt; [-InitialDomain] &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm]
+<pre><code class="lang-powershell">Get-PnPGeoAdministrator [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Starts setting up an allowed SharePoint Online multi-geo data location for the tenant.</p>
+<p>Returns the SharePoint Online geo administrators configured for the tenant.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPMultiGeoCompanyAllowedDataLocation -Location EUR -InitialDomain contoso.onmicrosoft.com
+<pre><code class="lang-powershell">Get-PnPGeoAdministrator
 </code></pre>
-<p>Starts setting up the EUR multi-geo data location for the tenant with the initial domain <code>contoso.onmicrosoft.com</code>.</p>
+<p>Returns all SharePoint Online geo administrators.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by specifying <code>-ReturnConnection</code> on <code>Connect-PnPOnline</code> or by executing <code>Get-PnPConnection</code>.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -122,45 +111,11 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-initialdomain">-InitialDomain</h3>
-<p>Specifies the initial SharePoint Online domain for the data location.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-location">-Location</h3>
-<p>Specifies the multi-geo location code to set up.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h2 id="outputs">OUTPUTS</h2>
-<h3 id="systemstring">System.String</h3>
-<p>Returns a message indicating that setting up the new location has started.</p>
+<h3 id="pnppowershellcommandsmodelgeoadministrator">PnP.PowerShell.Commands.Model.GeoAdministrator</h3>
+<p>Returns objects with <code>DisplayName</code>, <code>LoginName</code>, <code>MemberType</code>, <code>ObjectId</code>, and <code>GeoLocation</code> properties.</p>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="Get-PnPMultiGeoCompanyAllowedDataLocation.html">Get-PnPMultiGeoCompanyAllowedDataLocation</a></p>
-<p><a href="Remove-PnPMultiGeoCompanyAllowedDataLocation.html">Remove-PnPMultiGeoCompanyAllowedDataLocation</a></p>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>
