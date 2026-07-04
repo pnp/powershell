@@ -205,6 +205,131 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The client version &apos;{0}&apos; is not supported. Please try to upgrade client version first..
+        /// </summary>
+        internal static string CrossGeoInvalidVersion {
+            get {
+                return ResourceManager.GetString("CrossGeoInvalidVersion", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Server does not support suppressing the warning..
+        /// </summary>
+        internal static string CrossGeoConfirmationNotSupported {
+            get {
+                return ResourceManager.GetString("CrossGeoConfirmationNotSupported", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to There are apps instantiated on the site. Confirm to initiate the site move. After the site move completes, the apps may need to be instantiated or reconfigured at the destination geo location..
+        /// </summary>
+        internal static string CrossGeoSiteContainsMarketplaceAppsWithConfirm {
+            get {
+                return ResourceManager.GetString("CrossGeoSiteContainsMarketplaceAppsWithConfirm", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to There is Workflow 2013 instantiated on the site. Confirm to initiate the site move. After the site move completes, Workflow may need to be instantiated or reconfigured at the destination geo location..
+        /// </summary>
+        internal static string CrossGeoSiteRunsWorkflow2013WithConfirm {
+            get {
+                return ResourceManager.GetString("CrossGeoSiteRunsWorkflow2013WithConfirm", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The new location will use the following addresses for OneDrive and SharePoint sites:
+        ///
+        ///{0}
+        ///{1}
+        ///
+        ///.
+        /// </summary>
+        internal static string CrossGeoWarningAddAdlMessage {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningAddAdlMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to set up this location?.
+        /// </summary>
+        internal static string CrossGeoWarningAddAdlMessageQuery {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningAddAdlMessageQuery", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully started setting up the new location. You will receive a notification when the process completes. You can check status using the following command: Get-PnPMultiGeoCompanyAllowedDataLocation..
+        /// </summary>
+        internal static string CrossGeoWarningAddAdlSuccessMessage {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningAddAdlSuccessMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Any remaining user data in this location will be permanently deleted. This includes all OneDrive for Business data, SharePoint sites and Group sites. Make sure all data is moved to another location before continuing.
+        ///
+        ///If you delete this location, you won&apos;t be able to restore it.
+        ///.
+        /// </summary>
+        internal static string CrossGeoWarningRemoveAdl {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningRemoveAdl", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to permanently delete this location and all its data: {0}?.
+        /// </summary>
+        internal static string CrossGeoWarningRemoveAdlQuery {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningRemoveAdlQuery", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to I acknowledge that I am responsible for copying or moving the data from this location before I delete the location..
+        /// </summary>
+        internal static string CrossGeoWarning2RemoveAdl {
+            get {
+                return ResourceManager.GetString("CrossGeoWarning2RemoveAdl", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Did you move all data from this location?.
+        /// </summary>
+        internal static string CrossGeoWarning2RemoveAdlQuery {
+            get {
+                return ResourceManager.GetString("CrossGeoWarning2RemoveAdlQuery", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The delete operation was canceled..
+        /// </summary>
+        internal static string CrossGeoWarningRemoveAdlCancelMessage {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningRemoveAdlCancelMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Deleting the location might take a few hours. After the location is deleted, you&apos;ll be disconnected from the SharePoint Online Administration center in this location..
+        /// </summary>
+        internal static string CrossGeoWarningRemoveAdlSuccessMessage {
+            get {
+                return ResourceManager.GetString("CrossGeoWarningRemoveAdlSuccessMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Current site is not a tenant administration site.
         /// </summary>
         internal static string CurrentSiteIsNoTenantAdminSite {

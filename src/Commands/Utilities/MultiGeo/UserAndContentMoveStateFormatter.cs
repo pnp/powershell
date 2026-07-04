@@ -12,20 +12,49 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 		internal static PSObject ConvertToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties)
 		{
+			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.UserMove, includeTimeStamp: true, useStateName: false);
+		}
+
+		internal static PSObject ConvertGroupMoveStateToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties)
+		{
+			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.GroupMove, includeTimeStamp: true, useStateName: false);
+		}
+
+		internal static PSObject ConvertGroupMoveStateToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties, bool includeTimeStamp, bool useStateName)
+		{
+			return ConvertToPSObject(moveState, includeVerboseProperties, JobType.GroupMove, includeTimeStamp, useStateName);
+		}
+
+		internal static PSObject ConvertSiteMoveStateToPSObject(SiteMoveJob moveState, bool includeVerboseProperties)
+		{
+			return ConvertSiteMoveStateToPSObject(moveState, includeVerboseProperties, includeTimeStamp: true, useStateName: false);
+		}
+
+		internal static PSObject ConvertSiteMoveStateToPSObject(SiteMoveJob moveState, bool includeVerboseProperties, bool includeTimeStamp, bool useStateName)
+		{
 			var result = new PSObject();
-			AddProperty(result, "UserPrincipalName", moveState.UserPrincipalName);
+			AddProperty(result, "SourceSiteUrl", moveState.SourceSiteUrl);
+			AddProperty(result, "TargetSiteUrl", moveState.TargetSiteUrl);
 			AddProperty(result, "MoveJobId", moveState.Id);
 			AddProperty(result, "SourceDataLocation", moveState.SourceDataLocation);
 			AddProperty(result, "DestinationDataLocation", moveState.DestinationDataLocation);
+
+			if (includeTimeStamp && !moveState.Option.HasFlag(MoveOption.ValidationOnly))
+			{
+				AddProperty(result, "TimeStamp", moveState.LastModified.ToLocalTime());
+			}
 
 			if (moveState.Option.HasFlag(MoveOption.ValidationOnly))
 			{
 				AddProperty(result, "ValidationState", "Success");
 			}
+			else if (useStateName)
+			{
+				AddProperty(result, "MoveState", moveState.StateName);
+			}
 			else
 			{
-				AddProperty(result, "TimeStamp", moveState.LastModified.ToLocalTime());
-				AddProperty(result, "MoveState", GetMoveStateDisplayValue(moveState));
+				AddProperty(result, "MoveState", GetMoveStateDisplayValue(moveState.State, moveState.JobPhase));
 			}
 
 			if (includeVerboseProperties)
@@ -36,10 +65,58 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			return result;
 		}
 
-		private static void AddVerboseProperties(PSObject result, UserAndContentMoveState moveState)
+		private static PSObject ConvertToPSObject(UserAndContentMoveState moveState, bool includeVerboseProperties, JobType moveJobType, bool includeTimeStamp, bool useStateName)
 		{
-			AddProperty(result, "IsValidPDL", moveState.ValidationResult == PreferredDataLocationValidationResult.Valid);
-			AddProperty(result, "HasODBInCurrentLocation", moveState.HasOdbInSourceDataLocation);
+			var result = new PSObject();
+			AddMoveJobIdentityProperty(result, moveState, moveJobType);
+			AddProperty(result, "MoveJobId", moveState.Id);
+			AddProperty(result, "SourceDataLocation", moveState.SourceDataLocation);
+			AddProperty(result, "DestinationDataLocation", moveState.DestinationDataLocation);
+
+			if (includeTimeStamp && !moveState.Option.HasFlag(MoveOption.ValidationOnly))
+			{
+				AddProperty(result, "TimeStamp", moveState.LastModified.ToLocalTime());
+			}
+
+			if (moveState.Option.HasFlag(MoveOption.ValidationOnly))
+			{
+				AddProperty(result, "ValidationState", "Success");
+			}
+			else if (useStateName)
+			{
+				AddProperty(result, "MoveState", moveState.StateName);
+			}
+			else
+			{
+				AddProperty(result, "MoveState", GetMoveStateDisplayValue(moveState.State, moveState.JobPhase));
+			}
+
+			if (includeVerboseProperties)
+			{
+				AddVerboseProperties(result, moveState, moveJobType);
+			}
+
+			return result;
+		}
+
+		private static void AddMoveJobIdentityProperty(PSObject result, UserAndContentMoveState moveState, JobType moveJobType)
+		{
+			if (moveJobType == JobType.GroupMove)
+			{
+				AddProperty(result, "GroupName", moveState.GroupName);
+				return;
+			}
+
+			AddProperty(result, "UserPrincipalName", moveState.UserPrincipalName);
+		}
+
+		private static void AddVerboseProperties(PSObject result, UserAndContentMoveState moveState, JobType moveJobType)
+		{
+			if (moveJobType == JobType.UserMove)
+			{
+				AddProperty(result, "IsValidPDL", moveState.ValidationResult == PreferredDataLocationValidationResult.Valid);
+				AddProperty(result, "HasODBInCurrentLocation", moveState.HasOdbInSourceDataLocation);
+			}
 
 			if (moveState.State == MoveState.Success)
 			{
@@ -59,19 +136,34 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			AddProperty(result, "TriggeredBy", moveState.TriggeredBy);
 		}
 
-		private static string GetMoveStateDisplayValue(UserAndContentMoveState moveState)
+		private static void AddVerboseProperties(PSObject result, SiteMoveJob moveState)
 		{
-			if (!string.IsNullOrWhiteSpace(moveState.StateName))
+			if (moveState.State == MoveState.Success)
 			{
-				return moveState.StateName;
+				AddProperty(result, "IsContentMoved", moveState.IsContentMoved);
 			}
 
-			return moveState.State switch
+			AddProperty(result, "ErrorMessage", moveState.ErrorMessage);
+			AddProperty(result, "SiteId", moveState.SiteId);
+			AddProperty(result, "MoveDirection", moveState.Direction);
+			AddProperty(result, "MoveJobPhase", moveState.JobPhase);
+			AddProperty(result, "MoveJobType", moveState.Type);
+			AddProperty(result, "PreferredMoveBeginDate", FormatSpecificDate(moveState.PreferredMoveBeginDateInUtc));
+			AddProperty(result, "PreferredMoveEndDate", FormatSpecificDate(moveState.PreferredMoveEndDateInUtc));
+			AddProperty(result, "StartedDate", FormatSpecificDate(moveState.StartedDateInUtc));
+			AddProperty(result, "FinishedDate", FormatSpecificDate(moveState.FinishedDateInUtc));
+			AddProperty(result, "Option", moveState.Option);
+			AddProperty(result, "TriggeredBy", moveState.TriggeredBy);
+		}
+
+		private static string GetMoveStateDisplayValue(MoveState state, MoveJobPhase jobPhase)
+		{
+			return state switch
 			{
 				MoveState.NotStarted => "ReadyToTrigger",
 				MoveState.Queued => "Scheduled",
-				MoveState.InProgress => string.Format(CultureInfo.InvariantCulture, "{0}({1}/4)", moveState.State, (int)moveState.JobPhase),
-				_ => moveState.State.ToString()
+				MoveState.InProgress => string.Format(CultureInfo.InvariantCulture, "{0}({1}/4)", state, (int)jobPhase),
+				_ => state.ToString()
 			};
 		}
 

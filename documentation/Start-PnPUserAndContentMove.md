@@ -180,6 +180,8 @@ Returns an object with `UserPrincipalName`, `MoveJobId`, `SourceDataLocation`, `
 
 [Get-PnPUserAndContentMoveState](Get-PnPUserAndContentMoveState.md)
 
+[Stop-PnPUserAndContentMove](Stop-PnPUserAndContentMove.md)
+
 [Get-PnPMultiGeoCompanyAllowedDataLocation](Get-PnPMultiGeoCompanyAllowedDataLocation.md)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
