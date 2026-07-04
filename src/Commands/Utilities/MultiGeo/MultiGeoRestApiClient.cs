@@ -51,6 +51,8 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string MultiGeoApiVersionsPath = "MultiGeoApiVersions";
 		private const string DeleteVerbString = "DELETE";
 		private const string PatchVerbString = "PATCH";
+		private const string UserPersonalSiteLocationMinimumApiVersion = "1.0";
+		private const string UserPersonalSiteLocationPath = "UserPersonalSiteLocation('{0}')";
 		private const string UserMoveJobsMinimumApiVersion = "1.0";
 		private const string UserMoveJobsByMoveIdMinimumApiVersion = "1.2.2";
 		private const string UserMoveJobsReportMinimumApiVersion = "1.3.2";
@@ -260,6 +262,13 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			var apiVersion = GetCurrentApiVersion(UserMoveJobsMinimumApiVersion);
 			var path = string.Format(CultureInfo.InvariantCulture, UserMoveJobPathByUpn, ProcessSpecialChars(userPrincipalName));
 			return Get<UserAndContentMoveState>(path, apiVersion);
+		}
+
+		internal UserPersonalSiteLocation GetUserPersonalSiteLocation(string userPrincipalName)
+		{
+			var apiVersion = GetCurrentApiVersion(UserPersonalSiteLocationMinimumApiVersion);
+			var path = string.Format(CultureInfo.InvariantCulture, UserPersonalSiteLocationPath, ProcessSpecialChars(userPrincipalName));
+			return Get<UserPersonalSiteLocation>(path, apiVersion);
 		}
 
 		internal UserAndContentMoveState GetUserAndContentMoveState(Guid odbMoveId)
