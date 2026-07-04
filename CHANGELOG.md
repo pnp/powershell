@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+- Added `Get-PnPUserOneDriveLocation` cmdlet to retrieve SharePoint Online multi-geo location details for a user's OneDrive personal site.
 - Added `Remove-PnPGeoAdministrator` cmdlet to remove SharePoint Online geo administrators. [#5380](https://github.com/pnp/powershell/pull/5380)
 - Added `Get-PnPGeoAdministrator` cmdlet to retrieve SharePoint Online geo administrators. [#5378](https://github.com/pnp/powershell/pull/5378)
 - Added `Add-PnPGeoAdministrator` cmdlet to add SharePoint Online multi-geo administrators. [#5381](https://github.com/pnp/powershell/pull/5381)
