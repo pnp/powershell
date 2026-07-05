@@ -90,11 +90,18 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Apply a Site Design to an existing site. * Requires Tenant Administration Rights *</p>
 <h2 id="syntax">SYNTAX</h2>
+<h3 id="by-site-design-default">By Site Design (Default)</h3>
 <pre><code class="lang-powershell">Invoke-PnPSiteDesign [-Identity] &lt;TenantSiteDesignPipeBind&gt; [-WebUrl &lt;String&gt;] 
  [-Connection &lt;PnPConnection&gt;]   
 </code></pre>
+<h3 id="by-built-in-template">By Built-in Template</h3>
+<pre><code class="lang-powershell">Invoke-PnPSiteDesign -Template &lt;BuiltInSiteTemplates&gt; [-WebUrl &lt;String&gt;] 
+ [-Connection &lt;PnPConnection&gt;]   
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Applies the Site Design provided through Identity to an existing site. When providing a site design name and multiple site designs exist with the same name, all of them will be invoked.</p>
+<p>Applies a Site Design to an existing site.</p>
+<p>Use <code>-Identity</code> to apply a tenant-registered site design by Id or name. When a name matches multiple designs, all of them will be invoked.</p>
+<p>Use <code>-Template</code> to apply one of the built-in Microsoft site designs (e.g. Event, Department, Human Resources) directly by name, without needing to look up the design Id first. This calls the SharePoint SiteScriptUtility REST API against the built-in template store (store 1).</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd
@@ -107,11 +114,41 @@
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPSiteDesign | ?{$_.Title -eq &quot;Demo&quot;} | Invoke-PnPSiteDesign
 </code></pre>
-<p>Applies the specified site design to the specified site.</p>
+<p>Applies the site design named &quot;Demo&quot; to the current site via the pipeline.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Invoke-PnPSiteDesign -Template Event -WebUrl &quot;https://contoso.sharepoint.com/sites/myevent&quot;
+</code></pre>
+<p>Applies the built-in Event site design to the specified communication site.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Invoke-PnPSiteDesign -Template Department
+</code></pre>
+<p>Applies the built-in Department site design to the current site.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
+<h3 id="-identity">-Identity</h3>
+<p>The Site Design Id, name, or an actual Site Design object to apply.</p>
+<pre><code class="lang-yaml">Type: TenantSiteDesignPipeBind
+Parameter Sets: By Site Design
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-template">-Template</h3>
+<p>The name of a built-in Microsoft site design to apply. Uses the SharePoint SiteScriptUtility REST API against the built-in template store (store 1). Cannot be combined with -Identity.</p>
+<pre><code class="lang-yaml">Type: BuiltInSiteTemplates
+Parameter Sets: By Built-in Template
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-weburl">-WebUrl</h3>
+<p>The URL of the web to apply the site design to. If not specified it will default to the current web based upon the URL specified with Connect-PnPOnline.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
@@ -120,20 +157,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>The Site Design Id or an actual Site Design object to apply</p>
-<pre><code class="lang-yaml">Type: TenantSiteDesignPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-weburl">-WebUrl</h3>
-<p>The URL of the web to apply the site design to. If not specified it will default to the current web based upon the URL specified with Connect-PnPOnline.</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
 Required: False

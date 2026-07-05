@@ -4737,6 +4737,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPUserOneDriveLocation.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPUserOneDriveLocation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPUserOneDriveQuota.md",
       "output": {
         ".html": {

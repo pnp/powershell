@@ -2,35 +2,35 @@
 schema: 2.0.0
 tags: Available in the current Nightly Release only.
 Module Name: PnP.PowerShell
-title: Stop-PnPUserAndContentMove
-online version: https://pnp.github.io/powershell/cmdlets/Stop-PnPUserAndContentMove.html
+title: Get-PnPUserOneDriveLocation
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUserOneDriveLocation.html
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 ---
- 
-# Stop-PnPUserAndContentMove
+  
+# Get-PnPUserOneDriveLocation
 
 ## SYNOPSIS
-Stops a SharePoint Online multi-geo user and OneDrive content move job.
+Returns the SharePoint Online multi-geo location details for a user's OneDrive personal site.
 
 ## SYNTAX
 
 ```powershell
-Stop-PnPUserAndContentMove [-UserPrincipalName] <String> [-Connection <PnPConnection>]
+Get-PnPUserOneDriveLocation -UserPrincipalName <String> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Stops a SharePoint Online multi-geo move job for a user and the user's OneDrive content.
+Returns the SharePoint Online multi-geo location, OneDrive personal site URL, site ID, and user principal name for the specified user.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 
 ```powershell
-Stop-PnPUserAndContentMove -UserPrincipalName user@contoso.com
+Get-PnPUserOneDriveLocation -UserPrincipalName user@contoso.com
 ```
 
-Stops the move job for the specified user.
+Returns the OneDrive personal site location details for the specified user.
 
 ## PARAMETERS
 
@@ -49,14 +49,14 @@ Accept wildcard characters: False
 ```
 
 ### -UserPrincipalName
-The user principal name of the user whose user and OneDrive content move job should be stopped.
+The user principal name of the user whose OneDrive personal site location details should be returned.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 
 Required: True
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -64,14 +64,12 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.String
-Returns `The given move job has been stopped. Please run start cmdlet to restart the move.` when the move job has been stopped.
+### PnP.PowerShell.Commands.Model.UserPersonalSiteLocation
+Returns an object with `UserPrincipalName`, `Location`, `MySiteUrl`, and `SiteId` properties.
 
 ## RELATED LINKS
 
 [Get-PnPUserAndContentMoveState](Get-PnPUserAndContentMoveState.md)
-
-[Start-PnPUserAndContentMove](Start-PnPUserAndContentMove.md)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 

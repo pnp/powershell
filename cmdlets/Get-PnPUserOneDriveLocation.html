@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Get-PnPSiteDesign | PnP PowerShell </title>
+      <title>Get-PnPUserOneDriveLocation | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Get-PnPSiteDesign | PnP PowerShell ">
+      <meta name="title" content="Get-PnPUserOneDriveLocation | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,66 +85,23 @@
         </div>
 
         <article data-uid="">
-<h1 id="get-pnpsitedesign">Get-PnPSiteDesign</h1>
+<h1 id="get-pnpuseronedrivelocation">Get-PnPUserOneDriveLocation</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
-</ul>
-<p>Retrieve Site Designs that have been registered on the current tenant, or list the built-in Microsoft site designs.</p>
+<p>Returns the SharePoint Online multi-geo location details for a user's OneDrive personal site.</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="default-default">Default (Default)</h3>
-<pre><code class="lang-powershell">Get-PnPSiteDesign [[-Identity] &lt;TenantSiteDesignPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] 
-</code></pre>
-<h3 id="builtin">BuiltIn</h3>
-<pre><code class="lang-powershell">Get-PnPSiteDesign -BuiltIn [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPUserOneDriveLocation -UserPrincipalName &lt;String&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Retrieve Site Designs that have been registered on the current tenant. When providing a name with -Identity, it returns all site designs with that name.</p>
-<p>Use the -BuiltIn switch to instead return the built-in Microsoft site designs (e.g. Event, Department, Human Resources) which are available from the SharePoint site template store.</p>
+<p>Returns the SharePoint Online multi-geo location, OneDrive personal site URL, site ID, and user principal name for the specified user.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPSiteDesign
+<pre><code class="lang-powershell">Get-PnPUserOneDriveLocation -UserPrincipalName user@contoso.com
 </code></pre>
-<p>Returns all tenant-registered site designs.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd
-</code></pre>
-<p>Returns a specific registered site design.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPSiteDesign -BuiltIn
-</code></pre>
-<p>Returns all built-in Microsoft site designs, including their Ids, titles, and matching template enum values.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPSiteDesign -BuiltIn | Where-Object { $_.Template -eq &quot;Event&quot; }
-</code></pre>
-<p>Returns the built-in Event site design.</p>
+<p>Returns the OneDrive personal site location details for the specified user.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-identity">-Identity</h3>
-<p>If specified, retrieves the site design with the given Id or name.</p>
-<pre><code class="lang-yaml">Type: TenantSiteDesignPipeBind
-Parameter Sets: Default
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-builtin">-BuiltIn</h3>
-<p>When specified, returns the built-in Microsoft site designs from the SharePoint site template store (store 1) instead of tenant-registered designs.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: BuiltIn
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by specifying <code>-ReturnConnection</code> on <code>Connect-PnPOnline</code> or by executing <code>Get-PnPConnection</code>.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
@@ -154,7 +111,22 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-userprincipalname">-UserPrincipalName</h3>
+<p>The user principal name of the user whose OneDrive personal site location details should be returned.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="outputs">OUTPUTS</h2>
+<h3 id="pnppowershellcommandsmodeluserpersonalsitelocation">PnP.PowerShell.Commands.Model.UserPersonalSiteLocation</h3>
+<p>Returns an object with <code>UserPrincipalName</code>, <code>Location</code>, <code>MySiteUrl</code>, and <code>SiteId</code> properties.</p>
 <h2 id="related-links">RELATED LINKS</h2>
+<p><a href="Get-PnPUserAndContentMoveState.html">Get-PnPUserAndContentMoveState</a></p>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>

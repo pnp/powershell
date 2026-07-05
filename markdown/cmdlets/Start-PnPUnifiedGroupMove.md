@@ -1,11 +1,11 @@
 ---
-title: Start-PnPUnifiedGroupMove
-external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
-applicable: SharePoint Online
 tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Start-PnPUnifiedGroupMove.html
 Module Name: PnP.PowerShell
+title: Start-PnPUnifiedGroupMove
+online version: https://pnp.github.io/powershell/cmdlets/Start-PnPUnifiedGroupMove.html
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
 ---
  
 # Start-PnPUnifiedGroupMove

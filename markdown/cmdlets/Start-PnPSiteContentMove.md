@@ -1,11 +1,11 @@
 ---
-title: Start-PnPSiteContentMove
-external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
-applicable: SharePoint Online
 tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Start-PnPSiteContentMove.html
 Module Name: PnP.PowerShell
+title: Start-PnPSiteContentMove
+online version: https://pnp.github.io/powershell/cmdlets/Start-PnPSiteContentMove.html
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
 ---
  
 # Start-PnPSiteContentMove
