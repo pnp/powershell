@@ -1,11 +1,11 @@
 ---
-applicable: SharePoint Online
-Module Name: PnP.PowerShell
-title: Set-PnPMultiGeoExperience
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
 tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPMultiGeoExperience
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMultiGeoExperience.html
+Module Name: PnP.PowerShell
+schema: 2.0.0
 ---
   
 # Set-PnPMultiGeoExperience

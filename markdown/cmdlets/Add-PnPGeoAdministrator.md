@@ -1,11 +1,11 @@
 ---
-applicable: SharePoint Online
-Module Name: PnP.PowerShell
-title: Add-PnPGeoAdministrator
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
 tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+title: Add-PnPGeoAdministrator
 online version: https://pnp.github.io/powershell/cmdlets/Add-PnPGeoAdministrator.html
+Module Name: PnP.PowerShell
+schema: 2.0.0
 ---
  
 # Add-PnPGeoAdministrator
