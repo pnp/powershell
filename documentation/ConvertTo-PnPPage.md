@@ -709,4 +709,4 @@ Accept pipeline input: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 
-
+[Migrate classic pages to modern with the least permission possible](https://pnp.github.io/pnpassessment/classic/migrate-minimal-permissions.html)
