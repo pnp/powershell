@@ -7,6 +7,7 @@ permissions: read-all
 
 jobs:
   stale:
+    if: github.repository_owner == 'pnp'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/stale@v3

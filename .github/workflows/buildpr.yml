@@ -12,26 +12,27 @@ permissions: read-all
 
 jobs:
   build_dev_branch:
+    if: github.repository_owner == 'pnp'
     runs-on: macos-latest
     steps:
     - name: Checkout PnP.Framework
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         repository: pnp/pnpframework
         path: pnpframework
         ref: 'dev'
     - name: Checkout PnP.Core
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         repository: pnp/pnpcore
         path: pnpcore
         ref: 'dev'  
     - name: Checkout PnP.PowerShell
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         path: powershell
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |           
            10.0.x

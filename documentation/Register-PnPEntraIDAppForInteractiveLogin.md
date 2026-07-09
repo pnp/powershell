@@ -153,7 +153,7 @@ The Azure environment to use for authentication, the defaults to 'Production' wh
 Type: AzureEnvironment
 Parameter Sets: (All)
 Aliases:
-Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD, Custom
+Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD, BleuCloud, DelosCloud, GovSGCloud, Custom
 
 Required: False
 Position: Named

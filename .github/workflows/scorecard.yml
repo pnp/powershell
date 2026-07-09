@@ -13,6 +13,7 @@ permissions: read-all
 jobs:
   analysis:
     name: Scorecard analysis
+    if: github.repository_owner == 'pnp'
     runs-on: ubuntu-latest
     permissions:
       # Needed for Code scanning upload
@@ -22,14 +23,14 @@ jobs:
 
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        uses: actions/checkout@v6
         with:          
           ref: ${{ github.event.inputs.branch }}
           path: ${{ github.sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Run analysis"
-        uses: ossf/scorecard-action@0864cf19026789058feabb7e87baa5f140aac736 # v2.3.1
+        uses: ossf/scorecard-action@v2.4.3
         with:
           results_file: results.sarif
           results_format: sarif
@@ -44,7 +45,7 @@ jobs:
       # uploads of run results in SARIF format to the repository Actions tab.
       # https://docs.github.com/en/actions/advanced-guides/storing-workflow-data-as-artifacts
       - name: "Upload artifact"
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@v7
         with:
           name: SARIF file
           path: results.sarif
@@ -53,6 +54,6 @@ jobs:
       # Upload the results to GitHub's code scanning dashboard (optional).
       # Commenting out will disable upload of results to your repo's Code Scanning dashboard
       - name: "Upload to code-scanning"
-        uses: github/codeql-action/upload-sarif@8f596b4ae3cb3c588a5c46780b86dd53fef16c52 # v3.25.2
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: results.sarif

@@ -8,6 +8,54 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Current nightly]
 
+## [3.3.0]
+
+### Added
+- Added `Get-PnPUserOneDriveLocation` cmdlet to retrieve SharePoint Online multi-geo location details for a user's OneDrive personal site. [#5382](https://github.com/pnp/powershell/pull/5382)
+- Added `Remove-PnPGeoAdministrator` cmdlet to remove SharePoint Online geo administrators. [#5380](https://github.com/pnp/powershell/pull/5380)
+- Added `Get-PnPGeoAdministrator` cmdlet to retrieve SharePoint Online geo administrators. [#5378](https://github.com/pnp/powershell/pull/5378)
+- Added `Add-PnPGeoAdministrator` cmdlet to add SharePoint Online multi-geo administrators. [#5381](https://github.com/pnp/powershell/pull/5381)
+- Added `Get-PnPMultiGeoExperience` cmdlet to retrieve the SharePoint Online multi-geo experience mode. [#5372](https://github.com/pnp/powershell/pull/5372)
+- Added `Set-PnPMultiGeoExperience` cmdlet to upgrade the tenant multi-geo experience to include SharePoint Online Multi-Geo. [#5369](https://github.com/pnp/powershell/pull/5369)
+- Added `Set-PnPMultiGeoCompanyAllowedDataLocation` cmdlet to start setting up a SharePoint Online multi-geo allowed data location. [#5368](https://github.com/pnp/powershell/pull/5368)
+- Added `Remove-PnPMultiGeoCompanyAllowedDataLocation` cmdlet to delete a SharePoint Online multi-geo allowed data location. [#5379](https://github.com/pnp/powershell/pull/5379)
+- Added `Get-PnPGeoStorageQuota` cmdlet to retrieve SharePoint Online multi-geo storage quota details. [#5371](https://github.com/pnp/powershell/pull/5371)
+- Added `Set-PnPGeoStorageQuota` cmdlet to set SharePoint Online multi-geo storage quotas. [#5370](https://github.com/pnp/powershell/pull/5370)
+- Added `Get-PnPSiteContentMoveState` cmdlet to retrieve SharePoint Online site content move states. [#5365](https://github.com/pnp/powershell/pull/5365)
+- Added `Stop-PnPSiteContentMove` cmdlet to stop SharePoint Online multi-geo site content move jobs. [#5366](https://github.com/pnp/powershell/pull/5366)
+- Added `Get-PnPUnifiedGroupMoveState` cmdlet to retrieve SharePoint Online Microsoft 365 group move states. [#5362](https://github.com/pnp/powershell/pull/5362)
+- Added `Start-PnPUserAndContentMove` cmdlet to start SharePoint Online multi-geo user and OneDrive content move jobs. [#5355](https://github.com/pnp/powershell/pull/5355)
+- Added `Get-PnPUserAndContentMoveState` cmdlet to retrieve SharePoint Online user and OneDrive content move states.
+- Added `Stop-PnPUserAndContentMove` cmdlet to stop SharePoint Online multi-geo user and OneDrive content move jobs. [#5363](https://github.com/pnp/powershell/pull/5363)
+- Added `Get-PnPMultiGeoCompanyAllowedDataLocation` cmdlet to retrieve SharePoint Online multi-geo allowed data locations. [#5336](https://github.com/pnp/powershell/pull/5336)
+- Added `Get-PnPGeoMoveCrossCompatibilityStatus` cmdlet to retrieve SharePoint Online multi-geo move compatibility statuses.
+- Added `Start-PnPSiteContentMove` cmdlet to start SharePoint Online multi-geo site content move jobs.
+- Added `Get-PnPEntraIDAppListItemPermission`, `Grant-PnPEntraIDAppListItemPermission`, `Set-PnPEntraIDAppListItemPermission`, `Revoke-PnPEntraIDAppListItemPermission` to allow working with list item level app permissions [#5294](https://github.com/pnp/powershell/pull/5294)
+- Added `Get-PnPEntraIDAppListPermission`, `Grant-PnPEntraIDAppListPermission`, `Set-PnPEntraIDAppListPermission`, `Revoke-PnPEntraIDAppListPermission` to allow working with list level app permissions [#5293](https://github.com/pnp/powershell/pull/5293)
+- Added `Get-PnPEntraIDAppFilePermission`, `Grant-PnPEntraIDAppFilePermission`, `Set-PnPEntraIDAppFilePermission`, `Revoke-PnPEntraIDAppFilePermission` to allow working with file item app permissions [#5295](https://github.com/pnp/powershell/pull/5295)
+- Added `Get-PnPTodoTask`, `New-PnPTodoTask`, `Update-PnPTodoTask`, `Remove-PnPTodoTask`, `Get-PnPTodoTaskChecklistItem`, `New-PnPTodoTaskChecklistItem`, `Update-PnPTodoTaskChecklistItem`, `Remove-PnPTodoTaskChecklistItem`, `Get-PnPTodoTaskLinkedResource`, `New-PnPTodoTaskLinkedResource`, `Remove-PnPTodoTaskLinkedResource`, `Get-PnPTodoTaskFileAttachment`, `Add-PnPTodoTaskFileAttachment`, and `Remove-PnPTodoTaskFileAttachment` cmdlets to allow working with Microsoft To Do tasks. [#5356](https://github.com/pnp/powershell/pull/5356)
+- Added `Start-PnPUnifiedGroupMove` cmdlet to start SharePoint Online multi-geo unified group move jobs. [#5364](https://github.com/pnp/powershell/pull/5364)
+
+### Changed
+- Added properties `CoreOrganizationSharingLinkRecommendedExpirationInDays`, `CoreOrganizationSharingLinkMaxExpirationInDays`,`RestrictResourceAccountAccess`, `RestrictExternalSharingForAgents` to `Set-PnPTenant` and `Get-PnPTenant` cmdlet. [#5330](https://github.com/pnp/powershell/pull/5330)
+- Added properties `OrganizationSharingLinkRecommendedExpirationInDays`, `OrganizationSharingLinkMaxExpirationInDays`, `OverrideTenantOrganizationSharingLinkExpirationPolicy` to `Set-PnPSite`, `Set-PnPTenantsite` cmdlets. [#5333](https://github.com/pnp/powershell/pull/5333)
+- Added `WhoCanShareAllowListInTenantByPrincipalIdentity` property to `Set-PnPTenant` cmdlet. [#5322](https://github.com/pnp/powershell/pull/5322)
+- `Add/Set/Get/Remove-PnPVivaConnectionsDashboardACE` cmdlets no longer check the home site, they will work on any communication or modern team sites. [#5351](https://github.com/pnp/powershell/pull/5351)
+- Added `-BuiltIn` parameter to `Get-PnPSiteDesign` cmdlet to fetch OOTB site designs. [#5358](https://github.com/pnp/powershell/pull/5358)
+
+### Fixed
+- `Remove-PnPEntraIDServicePrincipalAssignedAppRole` cmdlet now works properly if `-AppRole` is specified. [#5353](https://github.com/pnp/powershell/pull/5353)
+- `Add-PnPTeamsChannel` and `Add-PnPTeamsChannelUser` cmdlet now support `ChannelMember.ReadWrite.All` and `ChannelMember.ReadWrite.Group` permissions as well. [#5353](https://github.com/pnp/powershell/pull/5353)
+- Fixed issue with `Set-PnPListItem` and other SharePoint cmdlets as `ClientContext` is now processed more correctly when used in combination with other related cmdlets. [#5354](https://github.com/pnp/powershell/pull/5354)
+
+### Contributors
+
+- Reshmee Auckloo [reshmee011]
+- [Tetronic]
+- Vasco Azevedo [vascoazevedo08]
+- Fabian Hutzli [fabianhutzli]
+- Koen Zomers [koenzomers]
+
 ## [3.2.0]
 
 ### Added

@@ -1,8 +1,8 @@
 ﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
-using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.ToDo
 {
@@ -18,31 +18,13 @@ namespace PnP.PowerShell.Commands.ToDo
         public EntraIDUserPipeBind User;
         protected override void ExecuteCmdlet()
         {
-            string url = "/v1.0/me/todo/lists";
-
-            if (Connection.ConnectionMethod == Model.ConnectionMethod.AzureADAppOnly)
+            var url = ToDoUtility.GetTodoRootUrl(this, ParameterSpecified(nameof(User)) ? User : null);
+            if (url == null)
             {
-                if (!ParameterSpecified(nameof(User)))
-                {
-                    throw new PSInvalidOperationException($"Please specify the parameter {nameof(User)} when invoking this cmdlet in app-only scenario");
-                }
+                return;
             }
 
-            if (ParameterSpecified(nameof(User)))
-            {
-                var user = User.GetUser(AccessToken, Connection.AzureEnvironment);
-                if (user == null)
-                {
-                    LogWarning("Provided user not found");
-                    return;
-                }
-                url = $"/v1.0/users/{user.Id.Value}/todo/lists";
-            }
-
-            var stringContent = new StringContent($"{{'displayName':'{DisplayName}'}}");
-            stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-
-            var todoList = GraphRequestHelper.Post<Model.ToDo.ToDoList>(url, stringContent);
+            var todoList = ToDoUtility.CreateList(GraphRequestHelper, url, DisplayName);
             WriteObject(todoList, false);
         }
     }

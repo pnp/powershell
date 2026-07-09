@@ -21,7 +21,8 @@
     "resource": [
       {
         "files": [
-          "images/**"
+          "images/**",
+          "llms.txt"
         ]
       }
     ],
@@ -30,7 +31,8 @@
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "templates/material"
+      "modern",
+      "templates/pnp-modern"
     ],
     "postProcessors": [],
     "markdownEngineName": "markdig",
@@ -40,15 +42,17 @@
     "disableGitFeatures": false,
     "globalMetadata": {
       "_appTitle": "PnP PowerShell",
+      "_appName": "PnP PowerShell",
       "_gitContribute": {
         "repo": "https://github.com/pnp/powershell",
         "branch": "dev"
       },
-      "_appFaviconPath": "https://c.s-microsoft.com/favicon.ico?v2",
+      "_appFaviconPath": "images/favicon-pnp.svg",
       "_description": "PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.",
       "_appLogoPath": "images/logo.svg",
       "_enableSearch": true,
-      "_enableNewTab": true
+      "_enableNewTab": true,
+      "_lang": "en"
     },
     "fileMetadata": {
       "_gitContribute": {
@@ -56,6 +60,33 @@
           "repo": "https://github.com/pnp/powershell",
           "branch": "dev",
           "path":"documentation"
+        }
+      }
+    },
+    "sitemap": {
+      "baseUrl": "https://pnp.github.io/powershell/",
+      "changefreq": "weekly",
+      "priority": 0.5,
+      "fileOptions": {
+        "articles/**.md": {
+          "changefreq": "monthly",
+          "priority": 0.7
+        },
+        "cmdlets/**.md": {
+          "changefreq": "weekly",
+          "priority": 0.6
+        },
+        "articles/index.md": {
+          "changefreq": "weekly",
+          "priority": 0.8
+        },
+        "cmdlets/index.md": {
+          "changefreq": "weekly",
+          "priority": 0.9
+        },
+        "index.md": {
+          "changefreq": "weekly",
+          "priority": 1.0
         }
       }
     }

@@ -44,14 +44,14 @@ This will update the display name of a todo list associated with John's account.
 
 ## PARAMETERS
 
-### -Identity
-Id of the Todo list.
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
-Type: String
+Type: PnPConnection
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -72,25 +72,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -User
-The UPN, Id or instance of an Entra ID user for which you would like to create the todo list.
+### -Identity
+Id of the Todo list.
 
 ```yaml
-Type: EntraIDUserPipeBind
+Type: String
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+### -User
+The UPN, Id or instance of an Entra ID user for which you would like to create the todo list.
 
 ```yaml
-Type: PnPConnection
+Type: EntraIDUserPipeBind
 Parameter Sets: (All)
 
 Required: False

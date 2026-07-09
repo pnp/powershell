@@ -10,29 +10,34 @@ on:
 
 permissions: read-all
 
+env:
+  DOCFX_VERSION: 2.78.5
+  DOTNET_VERSION: 10.x
+
 jobs:
   docfx:
-    
+    if: github.repository_owner == 'pnp'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: master
           path: master
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: dev
           path: dev
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: gh-pages
           path: gh-pages
-      - name: Setup .NET 7.0
-        uses: actions/setup-dotnet@v4
+      - name: Setup .NET 10.0
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 7.x
+          dotnet-version: ${{ env.DOTNET_VERSION }}
       
-      - run: dotnet tool install -g docfx --version 2.72.1
+      - name: Install DocFX
+        run: dotnet tool install -g docfx --version ${{ env.DOCFX_VERSION }}
       
       - name: Build docs
         shell: pwsh

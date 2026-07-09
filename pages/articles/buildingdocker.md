@@ -11,7 +11,7 @@ docker build . -f ./pages/Dockerfile-Linux -t pnp.powershell-pages-build
 ## Build Documentation
 
 ```bash
-docker run --rm -it -v $(pwd)/pages:/home pnp.powershell-pages-build /usr/bin/mono /usr/local/lib/docfx/docfx.exe build /home/docfx.json
+docker run --rm -it -v $(pwd)/pages:/workspace -w /workspace pnp.powershell-pages-build docfx build docfx.json
 ```
 
 ## Clean documentation
@@ -32,7 +32,7 @@ docker build . -f ./pages/Dockerfile-Windows -t pnp.powershell-pages-build
 ## Build Documentation
 
 ```bat
-docker run --rm -it -v %cd%\pages:C:\workplace pnp.powershell-pages-build powershell -c Start-Process -NoNewWindow -FilePath $env:TEMP\docfx\docfx.exe -ArgumentList build, C:\workplace\docfx.json -Wait
+docker run --rm -it -v %cd%\pages:C:\workspace -w C:\workspace pnp.powershell-pages-build docfx build docfx.json
 ```
 
 ## Clean documentation
@@ -53,7 +53,7 @@ docker build . -f ./pages/Dockerfile-Windows -t pnp.powershell-pages-build
 ## Build Documentation
 
 ```powershell
-docker run --rm -it -v ${pwd}\pages:C:\workplace pnp.powershell-pages-build powershell -c "Start-Process -NoNewWindow -FilePath `$env:TEMP\docfx\docfx.exe -ArgumentList build, C:\workplace\docfx.json -Wait"
+docker run --rm -it -v ${pwd}\pages:C:\workspace -w C:\workspace pnp.powershell-pages-build docfx build docfx.json
 ```
 
 ## Clean documentation
