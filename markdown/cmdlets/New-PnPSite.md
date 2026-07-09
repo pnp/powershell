@@ -1,13 +1,12 @@
 ---
-tags: Available in the current Nightly Release only.
-title: New-PnPSite
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPSite.html
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
+title: New-PnPSite
+schema: 2.0.0
 applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/New-PnPSite.html
 ---
-  
+ 
 # New-PnPSite
 
 ## SYNOPSIS
@@ -591,4 +590,3 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [https://pnp.github.io/pnpframework/api/PnP.Framework.Enums.TimeZone.html](https://pnp.github.io/pnpframework/api/PnP.Framework.Enums.TimeZone.html)
-

@@ -1,13 +1,12 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Add-PnPFileSensitivityLabel
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPFileSensitivityLabel.html
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
+schema: 2.0.0
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPFileSensitivityLabel.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Add-PnPFileSensitivityLabel
 ---
- 
+
 # Add-PnPFileSensitivityLabel
 
 ## SYNOPSIS
@@ -141,4 +140,3 @@ Accept wildcard characters: False
 * [Overview of metered APIs and services in Microsoft Graph](https://learn.microsoft.com/en-us/graph/metered-api-overview)
 
 * [Metered APIs and services in Microsoft Graph](https://learn.microsoft.com/en-us/graph/metered-api-list)
-

@@ -1,13 +1,12 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Get-PnPTenantServicePrincipalPermissionGrants
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantServicePrincipalPermissionGrants.html
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
+title: Get-PnPTenantServicePrincipalPermissionGrants
+schema: 2.0.0
 applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantServicePrincipalPermissionGrants.html
 ---
-  
+ 
 # Get-PnPTenantServicePrincipalPermissionGrants
 
 ## SYNOPSIS
@@ -57,5 +56,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 

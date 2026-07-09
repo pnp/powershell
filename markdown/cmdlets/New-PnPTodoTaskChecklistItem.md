@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: New-PnPTodoTaskChecklistItem
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPTodoTaskChecklistItem.html
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
+title: New-PnPTodoTaskChecklistItem
 applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/New-PnPTodoTaskChecklistItem.html
+external help file: PnP.PowerShell.dll-Help.xml
+schema: 2.0.0
 ---
  
 # New-PnPTodoTaskChecklistItem
