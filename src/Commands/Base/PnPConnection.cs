@@ -1205,7 +1205,24 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (connection.AuthenticationManager != null)
             {
-                connection.AuthenticationManager.ClearTokenCache();
+                // Clearing the MSAL token cache can hang when the connection uses the WAM broker: the underlying
+                // GetAccountsAsync/RemoveAsync calls go into the native broker, which can block waiting for a window
+                // handle or message pump (most visibly when debugging in Visual Studio with F5). Run it off the
+                // pipeline thread and bound the wait so Disconnect-PnPOnline -ClearPersistedLogin always returns.
+                // The PnP-level persisted cache entry has already been removed above, so the persisted login is
+                // cleared regardless of whether the broker account purge completes in time.
+                try
+                {
+                    var clearCacheTask = Task.Run(() => connection.AuthenticationManager.ClearTokenCache());
+                    if (!clearCacheTask.Wait(TimeSpan.FromSeconds(15)))
+                    {
+                        PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Clearing the MSAL token cache timed out (the authentication broker may be unavailable). Continuing disconnect.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    PnP.Framework.Diagnostics.Log.Debug("PnPConnection", $"Clearing the MSAL token cache failed: {ex.Message}");
+                }
             }
         }
         #endregion
