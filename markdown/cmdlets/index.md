@@ -51,7 +51,7 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Add-PnPFolderOrganizationalSharingLink](Add-PnPFolderOrganizationalSharingLink.md)
 - [Add-PnPFolderSharingInvite](Add-PnPFolderSharingInvite.md)
 - [Add-PnPFolderUserSharingLink](Add-PnPFolderUserSharingLink.md)
-- [Add-PnPGeoAdministrator](Add-PnPGeoAdministrator.md) <sup>1</sup>
+- [Add-PnPGeoAdministrator](Add-PnPGeoAdministrator.md)
 - [Add-PnPGroupMember](Add-PnPGroupMember.md)
 - [Add-PnPHomeSite](Add-PnPHomeSite.md)
 - [Add-PnPHtmlPublishingPageLayout](Add-PnPHtmlPublishingPageLayout.md)
@@ -109,7 +109,7 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Add-PnPTenantSequenceSubSite](Add-PnPTenantSequenceSubSite.md)
 - [Add-PnPTenantTheme](Add-PnPTenantTheme.md)
 - [Add-PnPTermToTerm](Add-PnPTermToTerm.md)
-- [Add-PnPTodoTaskFileAttachment](Add-PnPTodoTaskFileAttachment.md) <sup>1</sup>
+- [Add-PnPTodoTaskFileAttachment](Add-PnPTodoTaskFileAttachment.md)
 - [Add-PnPView](Add-PnPView.md)
 - [Add-PnPViewsFromXML](Add-PnPViewsFromXML.md)
 - [Add-PnPVivaConnectionsDashboardACE](Add-PnPVivaConnectionsDashboardACE.md)
@@ -242,9 +242,9 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Get-PnPEntraIDActivityReportDirectoryAudit](Get-PnPEntraIDActivityReportDirectoryAudit.md)
 - [Get-PnPEntraIDActivityReportSignIn](Get-PnPEntraIDActivityReportSignIn.md)
 - [Get-PnPEntraIDApp](Get-PnPEntraIDApp.md)
-- [Get-PnPEntraIDAppFilePermission](Get-PnPEntraIDAppFilePermission.md) <sup>1</sup>
-- [Get-PnPEntraIDAppListItemPermission](Get-PnPEntraIDAppListItemPermission.md) <sup>1</sup>
-- [Get-PnPEntraIDAppListPermission](Get-PnPEntraIDAppListPermission.md) <sup>1</sup>
+- [Get-PnPEntraIDAppFilePermission](Get-PnPEntraIDAppFilePermission.md)
+- [Get-PnPEntraIDAppListItemPermission](Get-PnPEntraIDAppListItemPermission.md)
+- [Get-PnPEntraIDAppListPermission](Get-PnPEntraIDAppListPermission.md)
 - [Get-PnPEntraIDAppPermission](Get-PnPEntraIDAppPermission.md)
 - [Get-PnPEntraIDAppSitePermission](Get-PnPEntraIDAppSitePermission.md)
 - [Get-PnPEntraIDGroup](Get-PnPEntraIDGroup.md)
@@ -278,9 +278,9 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Get-PnPFolderSharingLink](Get-PnPFolderSharingLink.md)
 - [Get-PnPFolderStorageMetric](Get-PnPFolderStorageMetric.md)
 - [Get-PnPFooter](Get-PnPFooter.md)
-- [Get-PnPGeoAdministrator](Get-PnPGeoAdministrator.md) <sup>1</sup>
-- [Get-PnPGeoMoveCrossCompatibilityStatus](Get-PnPGeoMoveCrossCompatibilityStatus.md) <sup>1</sup>
-- [Get-PnPGeoStorageQuota](Get-PnPGeoStorageQuota.md) <sup>1</sup>
+- [Get-PnPGeoAdministrator](Get-PnPGeoAdministrator.md)
+- [Get-PnPGeoMoveCrossCompatibilityStatus](Get-PnPGeoMoveCrossCompatibilityStatus.md)
+- [Get-PnPGeoStorageQuota](Get-PnPGeoStorageQuota.md)
 - [Get-PnPGraphSubscription](Get-PnPGraphSubscription.md)
 - [Get-PnPGroup](Get-PnPGroup.md)
 - [Get-PnPGroupMember](Get-PnPGroupMember.md)
@@ -324,8 +324,8 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Get-PnPMicrosoft365GroupTeam](Get-PnPMicrosoft365GroupTeam.md)
 - [Get-PnPMicrosoft365GroupYammerCommunity](Get-PnPMicrosoft365GroupYammerCommunity.md)
 - [Get-PnPMicrosoft365Roadmap](Get-PnPMicrosoft365Roadmap.md)
-- [Get-PnPMultiGeoCompanyAllowedDataLocation](Get-PnPMultiGeoCompanyAllowedDataLocation.md) <sup>1</sup>
-- [Get-PnPMultiGeoExperience](Get-PnPMultiGeoExperience.md) <sup>1</sup>
+- [Get-PnPMultiGeoCompanyAllowedDataLocation](Get-PnPMultiGeoCompanyAllowedDataLocation.md)
+- [Get-PnPMultiGeoExperience](Get-PnPMultiGeoExperience.md)
 - [Get-PnPNavigationNode](Get-PnPNavigationNode.md)
 - [Get-PnPOrgAssetsLibrary](Get-PnPOrgAssetsLibrary.md)
 - [Get-PnPOrgNewsSite](Get-PnPOrgNewsSite.md)
@@ -379,7 +379,7 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Get-PnPSiteCollectionAdmin](Get-PnPSiteCollectionAdmin.md)
 - [Get-PnPSiteCollectionAppCatalog](Get-PnPSiteCollectionAppCatalog.md)
 - [Get-PnPSiteCollectionTermStore](Get-PnPSiteCollectionTermStore.md)
-- [Get-PnPSiteContentMoveState](Get-PnPSiteContentMoveState.md) <sup>1</sup>
+- [Get-PnPSiteContentMoveState](Get-PnPSiteContentMoveState.md)
 - [Get-PnPSiteDesign](Get-PnPSiteDesign.md)
 - [Get-PnPSiteDesignRights](Get-PnPSiteDesignRights.md)
 - [Get-PnPSiteDesignRun](Get-PnPSiteDesignRun.md)
@@ -450,18 +450,18 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Get-PnPTheme](Get-PnPTheme.md)
 - [Get-PnPTimeZoneId](Get-PnPTimeZoneId.md)
 - [Get-PnPTodoList](Get-PnPTodoList.md)
-- [Get-PnPTodoTask](Get-PnPTodoTask.md) <sup>1</sup>
-- [Get-PnPTodoTaskChecklistItem](Get-PnPTodoTaskChecklistItem.md) <sup>1</sup>
-- [Get-PnPTodoTaskFileAttachment](Get-PnPTodoTaskFileAttachment.md) <sup>1</sup>
-- [Get-PnPTodoTaskLinkedResource](Get-PnPTodoTaskLinkedResource.md) <sup>1</sup>
+- [Get-PnPTodoTask](Get-PnPTodoTask.md)
+- [Get-PnPTodoTaskChecklistItem](Get-PnPTodoTaskChecklistItem.md)
+- [Get-PnPTodoTaskFileAttachment](Get-PnPTodoTaskFileAttachment.md)
+- [Get-PnPTodoTaskLinkedResource](Get-PnPTodoTaskLinkedResource.md)
 - [Get-PnPTraceLog](Get-PnPTraceLog.md)
 - [Get-PnPUnfurlLink](Get-PnPUnfurlLink.md)
 - [Get-PnPUnifiedAuditLog](Get-PnPUnifiedAuditLog.md)
-- [Get-PnPUnifiedGroupMoveState](Get-PnPUnifiedGroupMoveState.md) <sup>1</sup>
+- [Get-PnPUnifiedGroupMoveState](Get-PnPUnifiedGroupMoveState.md)
 - [Get-PnPUPABulkImportStatus](Get-PnPUPABulkImportStatus.md)
 - [Get-PnPUser](Get-PnPUser.md)
-- [Get-PnPUserAndContentMoveState](Get-PnPUserAndContentMoveState.md) <sup>1</sup>
-- [Get-PnPUserOneDriveLocation](Get-PnPUserOneDriveLocation.md) <sup>1</sup>
+- [Get-PnPUserAndContentMoveState](Get-PnPUserAndContentMoveState.md)
+- [Get-PnPUserOneDriveLocation](Get-PnPUserOneDriveLocation.md)
 - [Get-PnPUserOneDriveQuota](Get-PnPUserOneDriveQuota.md)
 - [Get-PnPUserProfilePhoto](Get-PnPUserProfilePhoto.md)
 - [Get-PnPUserProfileProperty](Get-PnPUserProfileProperty.md)
@@ -481,9 +481,9 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Get-PnPWikiPageContent](Get-PnPWikiPageContent.md)
 ## Grant
 - [Grant-PnPAzureADAppSitePermission](Grant-PnPAzureADAppSitePermission.md) <sup>2</sup>
-- [Grant-PnPEntraIDAppFilePermission](Grant-PnPEntraIDAppFilePermission.md) <sup>1</sup>
-- [Grant-PnPEntraIDAppListItemPermission](Grant-PnPEntraIDAppListItemPermission.md) <sup>1</sup>
-- [Grant-PnPEntraIDAppListPermission](Grant-PnPEntraIDAppListPermission.md) <sup>1</sup>
+- [Grant-PnPEntraIDAppFilePermission](Grant-PnPEntraIDAppFilePermission.md)
+- [Grant-PnPEntraIDAppListItemPermission](Grant-PnPEntraIDAppListItemPermission.md)
+- [Grant-PnPEntraIDAppListPermission](Grant-PnPEntraIDAppListPermission.md)
 - [Grant-PnPEntraIDAppSitePermission](Grant-PnPEntraIDAppSitePermission.md)
 - [Grant-PnPHubSiteRights](Grant-PnPHubSiteRights.md)
 - [Grant-PnPSiteDesignRights](Grant-PnPSiteDesignRights.md)
@@ -569,9 +569,9 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [New-PnPTermLabel](New-PnPTermLabel.md)
 - [New-PnPTermSet](New-PnPTermSet.md)
 - [New-PnPTodoList](New-PnPTodoList.md)
-- [New-PnPTodoTask](New-PnPTodoTask.md) <sup>1</sup>
-- [New-PnPTodoTaskChecklistItem](New-PnPTodoTaskChecklistItem.md) <sup>1</sup>
-- [New-PnPTodoTaskLinkedResource](New-PnPTodoTaskLinkedResource.md) <sup>1</sup>
+- [New-PnPTodoTask](New-PnPTodoTask.md)
+- [New-PnPTodoTaskChecklistItem](New-PnPTodoTaskChecklistItem.md)
+- [New-PnPTodoTaskLinkedResource](New-PnPTodoTaskLinkedResource.md)
 - [New-PnPUPABulkImportJob](New-PnPUPABulkImportJob.md)
 - [New-PnPUser](New-PnPUser.md)
 - [New-PnPVivaEngageCommunity](New-PnPVivaEngageCommunity.md)
@@ -631,7 +631,7 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Remove-PnPFlowOwner](Remove-PnPFlowOwner.md)
 - [Remove-PnPFolder](Remove-PnPFolder.md)
 - [Remove-PnPFolderSharingLink](Remove-PnPFolderSharingLink.md)
-- [Remove-PnPGeoAdministrator](Remove-PnPGeoAdministrator.md) <sup>1</sup>
+- [Remove-PnPGeoAdministrator](Remove-PnPGeoAdministrator.md)
 - [Remove-PnPGraphSubscription](Remove-PnPGraphSubscription.md)
 - [Remove-PnPGroup](Remove-PnPGroup.md)
 - [Remove-PnPGroupMember](Remove-PnPGroupMember.md)
@@ -654,7 +654,7 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Remove-PnPMicrosoft365GroupOwner](Remove-PnPMicrosoft365GroupOwner.md)
 - [Remove-PnPMicrosoft365GroupPhoto](Remove-PnPMicrosoft365GroupPhoto.md)
 - [Remove-PnPMicrosoft365GroupSettings](Remove-PnPMicrosoft365GroupSettings.md)
-- [Remove-PnPMultiGeoCompanyAllowedDataLocation](Remove-PnPMultiGeoCompanyAllowedDataLocation.md) <sup>1</sup>
+- [Remove-PnPMultiGeoCompanyAllowedDataLocation](Remove-PnPMultiGeoCompanyAllowedDataLocation.md)
 - [Remove-PnPNavigationNode](Remove-PnPNavigationNode.md)
 - [Remove-PnPOrgAssetsLibrary](Remove-PnPOrgAssetsLibrary.md)
 - [Remove-PnPOrgNewsSite](Remove-PnPOrgNewsSite.md)
@@ -705,10 +705,10 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Remove-PnPTermGroup](Remove-PnPTermGroup.md)
 - [Remove-PnPTermLabel](Remove-PnPTermLabel.md)
 - [Remove-PnPTodoList](Remove-PnPTodoList.md)
-- [Remove-PnPTodoTask](Remove-PnPTodoTask.md) <sup>1</sup>
-- [Remove-PnPTodoTaskChecklistItem](Remove-PnPTodoTaskChecklistItem.md) <sup>1</sup>
-- [Remove-PnPTodoTaskFileAttachment](Remove-PnPTodoTaskFileAttachment.md) <sup>1</sup>
-- [Remove-PnPTodoTaskLinkedResource](Remove-PnPTodoTaskLinkedResource.md) <sup>1</sup>
+- [Remove-PnPTodoTask](Remove-PnPTodoTask.md)
+- [Remove-PnPTodoTaskChecklistItem](Remove-PnPTodoTaskChecklistItem.md)
+- [Remove-PnPTodoTaskFileAttachment](Remove-PnPTodoTaskFileAttachment.md)
+- [Remove-PnPTodoTaskLinkedResource](Remove-PnPTodoTaskLinkedResource.md)
 - [Remove-PnPUser](Remove-PnPUser.md)
 - [Remove-PnPUserInfo](Remove-PnPUserInfo.md)
 - [Remove-PnPUserProfile](Remove-PnPUserProfile.md)
@@ -753,9 +753,9 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Restore-PnPTenantSite](Restore-PnPTenantSite.md)
 ## Revoke
 - [Revoke-PnPAzureADAppSitePermission](Revoke-PnPAzureADAppSitePermission.md) <sup>2</sup>
-- [Revoke-PnPEntraIDAppFilePermission](Revoke-PnPEntraIDAppFilePermission.md) <sup>1</sup>
-- [Revoke-PnPEntraIDAppListItemPermission](Revoke-PnPEntraIDAppListItemPermission.md) <sup>1</sup>
-- [Revoke-PnPEntraIDAppListPermission](Revoke-PnPEntraIDAppListPermission.md) <sup>1</sup>
+- [Revoke-PnPEntraIDAppFilePermission](Revoke-PnPEntraIDAppFilePermission.md)
+- [Revoke-PnPEntraIDAppListItemPermission](Revoke-PnPEntraIDAppListItemPermission.md)
+- [Revoke-PnPEntraIDAppListPermission](Revoke-PnPEntraIDAppListPermission.md)
 - [Revoke-PnPEntraIDAppSitePermission](Revoke-PnPEntraIDAppSitePermission.md)
 - [Revoke-PnPHubSiteRights](Revoke-PnPHubSiteRights.md)
 - [Revoke-PnPSiteDesignRights](Revoke-PnPSiteDesignRights.md)
@@ -787,9 +787,9 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Set-PnPDefaultPageLayout](Set-PnPDefaultPageLayout.md)
 - [Set-PnPDisableSpacesActivation](Set-PnPDisableSpacesActivation.md)
 - [Set-PnPDocumentSetField](Set-PnPDocumentSetField.md)
-- [Set-PnPEntraIDAppFilePermission](Set-PnPEntraIDAppFilePermission.md) <sup>1</sup>
-- [Set-PnPEntraIDAppListItemPermission](Set-PnPEntraIDAppListItemPermission.md) <sup>1</sup>
-- [Set-PnPEntraIDAppListPermission](Set-PnPEntraIDAppListPermission.md) <sup>1</sup>
+- [Set-PnPEntraIDAppFilePermission](Set-PnPEntraIDAppFilePermission.md)
+- [Set-PnPEntraIDAppListItemPermission](Set-PnPEntraIDAppListItemPermission.md)
+- [Set-PnPEntraIDAppListPermission](Set-PnPEntraIDAppListPermission.md)
 - [Set-PnPEntraIDAppSitePermission](Set-PnPEntraIDAppSitePermission.md)
 - [Set-PnPEntraIDGroup](Set-PnPEntraIDGroup.md)
 - [Set-PnPField](Set-PnPField.md)
@@ -801,7 +801,7 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Set-PnPFolderArchiveState](Set-PnPFolderArchiveState.md)
 - [Set-PnPFolderPermission](Set-PnPFolderPermission.md)
 - [Set-PnPFooter](Set-PnPFooter.md)
-- [Set-PnPGeoStorageQuota](Set-PnPGeoStorageQuota.md) <sup>1</sup>
+- [Set-PnPGeoStorageQuota](Set-PnPGeoStorageQuota.md)
 - [Set-PnPGraphSubscription](Set-PnPGraphSubscription.md)
 - [Set-PnPGroup](Set-PnPGroup.md)
 - [Set-PnPGroupPermissions](Set-PnPGroupPermissions.md)
@@ -831,8 +831,8 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Set-PnPMessageCenterAnnouncementAsUnread](Set-PnPMessageCenterAnnouncementAsUnread.md)
 - [Set-PnPMicrosoft365Group](Set-PnPMicrosoft365Group.md)
 - [Set-PnPMicrosoft365GroupSettings](Set-PnPMicrosoft365GroupSettings.md)
-- [Set-PnPMultiGeoCompanyAllowedDataLocation](Set-PnPMultiGeoCompanyAllowedDataLocation.md) <sup>1</sup>
-- [Set-PnPMultiGeoExperience](Set-PnPMultiGeoExperience.md) <sup>1</sup>
+- [Set-PnPMultiGeoCompanyAllowedDataLocation](Set-PnPMultiGeoCompanyAllowedDataLocation.md)
+- [Set-PnPMultiGeoExperience](Set-PnPMultiGeoExperience.md)
 - [Set-PnPOrgAssetsLibrary](Set-PnPOrgAssetsLibrary.md)
 - [Set-PnPPage](Set-PnPPage.md)
 - [Set-PnPPageTextPart](Set-PnPPageTextPart.md)
@@ -908,16 +908,16 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Set-PnPWikiPageContent](Set-PnPWikiPageContent.md)
 ## Start
 - [Start-PnPEnterpriseAppInsightsReport](Start-PnPEnterpriseAppInsightsReport.md)
-- [Start-PnPSiteContentMove](Start-PnPSiteContentMove.md) <sup>1</sup>
+- [Start-PnPSiteContentMove](Start-PnPSiteContentMove.md)
 - [Start-PnPTenantRename](Start-PnPTenantRename.md)
 - [Start-PnPTraceLog](Start-PnPTraceLog.md)
-- [Start-PnPUnifiedGroupMove](Start-PnPUnifiedGroupMove.md) <sup>1</sup>
-- [Start-PnPUserAndContentMove](Start-PnPUserAndContentMove.md) <sup>1</sup>
+- [Start-PnPUnifiedGroupMove](Start-PnPUnifiedGroupMove.md)
+- [Start-PnPUserAndContentMove](Start-PnPUserAndContentMove.md)
 ## Stop
 - [Stop-PnPFlowRun](Stop-PnPFlowRun.md)
-- [Stop-PnPSiteContentMove](Stop-PnPSiteContentMove.md) <sup>1</sup>
+- [Stop-PnPSiteContentMove](Stop-PnPSiteContentMove.md)
 - [Stop-PnPTraceLog](Stop-PnPTraceLog.md)
-- [Stop-PnPUserAndContentMove](Stop-PnPUserAndContentMove.md) <sup>1</sup>
+- [Stop-PnPUserAndContentMove](Stop-PnPUserAndContentMove.md)
 ## Submit
 - [Submit-PnPSearchQuery](Submit-PnPSearchQuery.md)
 - [Submit-PnPTeamsChannelMessage](Submit-PnPTeamsChannelMessage.md)
@@ -948,8 +948,8 @@ PnP PowerShell exists out of 845 cmdlets which can help you in setting up, confi
 - [Update-PnPTeamsApp](Update-PnPTeamsApp.md)
 - [Update-PnPTeamsUser](Update-PnPTeamsUser.md)
 - [Update-PnPTodoList](Update-PnPTodoList.md)
-- [Update-PnPTodoTask](Update-PnPTodoTask.md) <sup>1</sup>
-- [Update-PnPTodoTaskChecklistItem](Update-PnPTodoTaskChecklistItem.md) <sup>1</sup>
+- [Update-PnPTodoTask](Update-PnPTodoTask.md)
+- [Update-PnPTodoTaskChecklistItem](Update-PnPTodoTaskChecklistItem.md)
 - [Update-PnPUserType](Update-PnPUserType.md)
 - [Update-PnPVivaConnectionsDashboardACE](Update-PnPVivaConnectionsDashboardACE.md) <sup>2</sup>
 - [Update-SiteClassification](Update-SiteClassification.md) <sup>2</sup>
