@@ -8,6 +8,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Current nightly]
 
+### Added
+- Added `Add-PnPTenantSearchCrawledProperty` cmdlet which allows creation of a tenant level crawled property for SharePoint Online search. [#5373](https://github.com/pnp/powershell/pull/5373)
+
+### Changed
+
+### Fixed
+- Fixed an issue with `Add-PnPLisItem` and `Set-PnPListItem` cmdlets when trying to set taxonomy fields by passing in a GUID or term instance using a Batch. [#5174](https://github.com/pnp/powershell/pull/5174)
+
+### Removed
+
+### Contributors
+- [reusto]
+- Patrick Schneider [pschneid]
+- 
 ## [3.3.0]
 
 ### Added
@@ -35,7 +49,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPEntraIDAppFilePermission`, `Grant-PnPEntraIDAppFilePermission`, `Set-PnPEntraIDAppFilePermission`, `Revoke-PnPEntraIDAppFilePermission` to allow working with file item app permissions [#5295](https://github.com/pnp/powershell/pull/5295)
 - Added `Get-PnPTodoTask`, `New-PnPTodoTask`, `Update-PnPTodoTask`, `Remove-PnPTodoTask`, `Get-PnPTodoTaskChecklistItem`, `New-PnPTodoTaskChecklistItem`, `Update-PnPTodoTaskChecklistItem`, `Remove-PnPTodoTaskChecklistItem`, `Get-PnPTodoTaskLinkedResource`, `New-PnPTodoTaskLinkedResource`, `Remove-PnPTodoTaskLinkedResource`, `Get-PnPTodoTaskFileAttachment`, `Add-PnPTodoTaskFileAttachment`, and `Remove-PnPTodoTaskFileAttachment` cmdlets to allow working with Microsoft To Do tasks. [#5356](https://github.com/pnp/powershell/pull/5356)
 - Added `Start-PnPUnifiedGroupMove` cmdlet to start SharePoint Online multi-geo unified group move jobs. [#5364](https://github.com/pnp/powershell/pull/5364)
-- Added `Add-PnPTenantSearchCrawledProperty` cmdlet which allows creation of a tenant level crawled property for SharePoint Online search. [#5373](https://github.com/pnp/powershell/pull/5373)
 
 ### Changed
 - Added properties `CoreOrganizationSharingLinkRecommendedExpirationInDays`, `CoreOrganizationSharingLinkMaxExpirationInDays`,`RestrictResourceAccountAccess`, `RestrictExternalSharingForAgents` to `Set-PnPTenant` and `Get-PnPTenant` cmdlet. [#5330](https://github.com/pnp/powershell/pull/5330)
@@ -48,12 +61,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `Remove-PnPEntraIDServicePrincipalAssignedAppRole` cmdlet now works properly if `-AppRole` is specified. [#5353](https://github.com/pnp/powershell/pull/5353)
 - `Add-PnPTeamsChannel` and `Add-PnPTeamsChannelUser` cmdlet now support `ChannelMember.ReadWrite.All` and `ChannelMember.ReadWrite.Group` permissions as well. [#5353](https://github.com/pnp/powershell/pull/5353)
 - Fixed issue with `Set-PnPListItem` and other SharePoint cmdlets as `ClientContext` is now processed more correctly when used in combination with other related cmdlets. [#5354](https://github.com/pnp/powershell/pull/5354)
-- Fixed an issue with `Add-PnPLisItem` and `Set-PnPListItem` cmdlets when trying to set taxonomy fields by passing in a GUID or term instance using a Batch. [#5174](https://github.com/pnp/powershell/pull/5174)
 
 ### Contributors
-
-- [reusto]
-- Patrick Schneider [pschneid]
 - Reshmee Auckloo [reshmee011]
 - [Tetronic]
 - Vasco Azevedo [vascoazevedo08]
