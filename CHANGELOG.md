@@ -39,9 +39,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `Remove-PnPEntraIDServicePrincipalAssignedAppRole` cmdlet now works properly if `-AppRole` is specified. [#5353](https://github.com/pnp/powershell/pull/5353)
 - `Add-PnPTeamsChannel` and `Add-PnPTeamsChannelUser` cmdlet now support `ChannelMember.ReadWrite.All` and `ChannelMember.ReadWrite.Group` permissions as well. [#5353](https://github.com/pnp/powershell/pull/5353)
 - Fixed issue with `Set-PnPListItem` and other SharePoint cmdlets as `ClientContext` is now processed more correctly when used in combination with other related cmdlets. [#5354](https://github.com/pnp/powershell/pull/5354)
+- Fixed an issue with `Add-PnPLisItem` and `Set-PnPListItem` cmdlets when trying to set taxonomy fields by passing in a GUID or term instance using a Batch. [#5174](https://github.com/pnp/powershell/pull/5174)
 
 ### Contributors
 
+- [reusto]
 - Reshmee Auckloo [reshmee011]
 - [Tetronic]
 - Vasco Azevedo [vascoazevedo08]
