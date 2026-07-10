@@ -1,4 +1,4 @@
-$version = "3.2.0"
+$version = "3.3.0"
 
 Write-Host "Building PnP.PowerShell $version on PowerShell $($PSVersionTable.PSVersion.ToString())" -ForegroundColor Yellow
 
@@ -25,12 +25,11 @@ else {
 
 $corePath = "$destinationFolder/Core"
 $commonPath = "$destinationFolder/Common"
-$coreRuntimePathWin64 = "$destinationFolder/Core/runtimes/win-x64/native"
-$coreRuntimePathArm64 = "$destinationFolder/Core/runtimes/win-arm64/native"
-$coreRuntimePathx86 = "$destinationFolder/Core/runtimes/win-x86/native"
-$coreRuntimePathLinx64 = "$destinationFolder/Core/runtimes/linux-x64/native"
-
-$assemblyExceptions = @("System.Memory.dll")
+# Native dependencies live alongside their managed assemblies in Common (the isolated ALC probe path).
+$commonRuntimePathWin64 = "$destinationFolder/Common/runtimes/win-x64/native"
+$commonRuntimePathArm64 = "$destinationFolder/Common/runtimes/win-arm64/native"
+$commonRuntimePathx86 = "$destinationFolder/Common/runtimes/win-x86/native"
+$commonRuntimePathLinx64 = "$destinationFolder/Common/runtimes/linux-x64/native"
 
 Try {
 	# Module folder there?
@@ -47,45 +46,59 @@ Try {
 	Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
 
 	$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
+	# Only the module assembly itself stays in Core (loaded into the default ALC so its cmdlets are
+	# discoverable). Every other assembly is a private dependency and goes to Common, which the module's
+	# PnPAssemblyLoadContext treats as its isolated probe path.
+	$moduleAssemblies = @('PnP.PowerShell.dll', 'PnP.PowerShell.pdb')
 	Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
-	Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }; Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
-	Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
+	# ScriptsToProcess bootstrap that registers the isolated-dependency resolver before the binary module loads.
+	Copy-Item -Path "$PSscriptRoot/../resources/RegisterPnPAssemblyResolver.ps1" -Destination "$destinationFolder"
+	Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+	Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object {
+		if ($moduleAssemblies -contains $_.Name) {
+			Copy-Item -LiteralPath $_.FullName -Destination $corePath
+		}
+		elseif (-not $commonFiles.Contains($_.Name)) {
+			[void]$commonFiles.Add($_.Name)
+			Copy-Item -LiteralPath $_.FullName -Destination $commonPath
+		}
+	}
 
 	# Check if runtime folders exist in source before copying
 	$sourceRuntimeBase = "$PSScriptRoot/../src/Commands/bin/Release/net8.0/runtimes"
 	if (Test-Path $sourceRuntimeBase) {
 		Write-Host "Runtime folders found in source, creating destination runtime structure" -ForegroundColor Yellow
-		New-Item -Path "$destinationFolder\Core\runtimes" -ItemType Directory -Force | Out-Null
+		New-Item -Path "$destinationFolder\Common\runtimes" -ItemType Directory -Force | Out-Null
 
 		# Copy win-x64 runtime if exists
 		$sourceRuntimePathWin64 = "$sourceRuntimeBase/win-x64/native"
 		if (Test-Path $sourceRuntimePathWin64) {
-			New-Item -Path "$destinationFolder\Core\runtimes\win-x64\native" -ItemType Directory -Force | Out-Null
-			Get-ChildItem -Path $sourceRuntimePathWin64 -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathWin64 }
+			New-Item -Path "$destinationFolder\Common\runtimes\win-x64\native" -ItemType Directory -Force | Out-Null
+			Get-ChildItem -Path $sourceRuntimePathWin64 -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $commonRuntimePathWin64 }
 			Write-Host "Copied win-x64 runtime files" -ForegroundColor Green
 		}
 
 		# Copy win-arm64 runtime if exists
 		$sourceRuntimePathArm64 = "$sourceRuntimeBase/win-arm64/native"
 		if (Test-Path $sourceRuntimePathArm64) {
-			New-Item -Path "$destinationFolder\Core\runtimes\win-arm64\native" -ItemType Directory -Force | Out-Null
-			Get-ChildItem -Path $sourceRuntimePathArm64 -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathArm64 }
+			New-Item -Path "$destinationFolder\Common\runtimes\win-arm64\native" -ItemType Directory -Force | Out-Null
+			Get-ChildItem -Path $sourceRuntimePathArm64 -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $commonRuntimePathArm64 }
 			Write-Host "Copied win-arm64 runtime files" -ForegroundColor Green
 		}
 
 		# Copy win-x86 runtime if exists
 		$sourceRuntimePathx86 = "$sourceRuntimeBase/win-x86/native"
 		if (Test-Path $sourceRuntimePathx86) {
-			New-Item -Path "$destinationFolder\Core\runtimes\win-x86\native" -ItemType Directory -Force | Out-Null
-			Get-ChildItem -Path $sourceRuntimePathx86 -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathx86 }
+			New-Item -Path "$destinationFolder\Common\runtimes\win-x86\native" -ItemType Directory -Force | Out-Null
+			Get-ChildItem -Path $sourceRuntimePathx86 -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $commonRuntimePathx86 }
 			Write-Host "Copied win-x86 runtime files" -ForegroundColor Green
 		}
 
 		# Copy linux-x64 runtime if exists
 		$sourceRuntimePathLinx64 = "$sourceRuntimeBase/linux-x64/native"
 		if (Test-Path $sourceRuntimePathLinx64) {
-			New-Item -Path "$destinationFolder\Core\runtimes\linux-x64\native" -ItemType Directory -Force | Out-Null
-			Get-ChildItem -Path $sourceRuntimePathLinx64 -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb', '.so' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathLinx64 }
+			New-Item -Path "$destinationFolder\Common\runtimes\linux-x64\native" -ItemType Directory -Force | Out-Null
+			Get-ChildItem -Path $sourceRuntimePathLinx64 -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb', '.so' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $commonRuntimePathLinx64 }
 			Write-Host "Copied linux-x64 runtime files" -ForegroundColor Green
 		}
 	} else {
@@ -106,6 +119,9 @@ Try {
 	$scriptBlock = {
 		param([string] $modulePath)
 
+		# Register the isolated-dependency resolver first (same bootstrap the manifest's ScriptsToProcess uses),
+		# otherwise importing the raw DLL fails to resolve PnP.Framework/PnP.Core now that they live in Common.
+		. (Join-Path $modulePath "RegisterPnPAssemblyResolver.ps1")
 		$moduleAssemblyPath = Join-Path $modulePath "Core/PnP.PowerShell.dll"
 		Import-Module -Name $moduleAssemblyPath -DisableNameChecking
 
@@ -127,6 +143,7 @@ Try {
 
 	Write-Host "Writing PSD1" -ForegroundColor Yellow
 	$manifest = "@{
+ScriptsToProcess = 'RegisterPnPAssemblyResolver.ps1'
 NestedModules =  'Core/PnP.PowerShell.dll'
 ModuleVersion = '$version'
 Description = 'Microsoft 365 Patterns and Practices PowerShell Cmdlets'
@@ -207,10 +224,10 @@ function Invoke-ModuleFileSigning {
 Write-Host "Sign module assemblies"
 $assembliesToBeSigned = @(
 	Get-Item -LiteralPath "$corePath/PnP.PowerShell.dll"
-	Get-Item -LiteralPath "$corePath/PnP.Core.dll"
-	Get-Item -LiteralPath "$corePath/PnP.Core.Admin.dll"
-	Get-Item -LiteralPath "$corePath/PnP.Core.Auth.dll"
-	Get-Item -LiteralPath "$corePath/PnP.Framework.dll"
+	Get-Item -LiteralPath "$commonPath/PnP.Core.dll"
+	Get-Item -LiteralPath "$commonPath/PnP.Core.Admin.dll"
+	Get-Item -LiteralPath "$commonPath/PnP.Core.Auth.dll"
+	Get-Item -LiteralPath "$commonPath/PnP.Framework.dll"
 	Get-Item -LiteralPath "$commonPath/PnP.PowerShell.ALC.dll"
 )
 
