@@ -124,16 +124,21 @@ if ($LASTEXITCODE -eq 0) {
 		Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
 
 		$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
-		# Only the module assembly itself stays in Core (loaded into the default ALC so its cmdlets are
-		# discoverable). Every other assembly is a private dependency and goes to Common, which the module's
-		# PnPAssemblyLoadContext treats as its isolated probe path.
+		# The module assembly itself stays in Core (loaded into the default ALC so its cmdlets are discoverable).
+		# The CSOM client libraries (Microsoft.SharePoint.Client.* / Microsoft.Online.SharePoint.Client.*) also
+		# stay in Core: PowerShell probes the imported binary module's own directory (Core), so placing them there
+		# loads them into the default ALC. That keeps their types resolvable by PowerShell's [TypeName] resolver in
+		# user scripts (e.g. [Microsoft.SharePoint.Client.ScriptSafeDomainEntityData]), which only sees the default
+		# context. CSOM has no Microsoft.Extensions.* dependency, so sharing it in the default context does not
+		# weaken the isolation that fixes the Azure Functions dependency conflict (#5350).
+		# Every other assembly is a private dependency and goes to Common, the module's isolated ALC probe path.
 		$moduleAssemblies = @('PnP.PowerShell.dll', 'PnP.PowerShell.pdb')
 		Copy-Item -Path "$PSScriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
 		# ScriptsToProcess bootstrap that registers the isolated-dependency resolver before the binary module loads.
 		Copy-Item -Path "$PSScriptRoot/../resources/RegisterPnPAssemblyResolver.ps1" -Destination "$destinationFolder"
 		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Debug/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
 		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/$configuration" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object {
-			if ($moduleAssemblies -contains $_.Name) {
+			if ($moduleAssemblies -contains $_.Name -or $_.Name -like 'Microsoft.SharePoint.Client*' -or $_.Name -like 'Microsoft.Online.SharePoint.Client*') {
 				Copy-Item -LiteralPath $_.FullName -Destination $corePath
 			}
 			elseif (-not $commonFiles.Contains($_.Name)) {
