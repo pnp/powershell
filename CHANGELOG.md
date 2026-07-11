@@ -15,13 +15,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 - Fixed an issue with `Add-PnPLisItem` and `Set-PnPListItem` cmdlets when trying to set taxonomy fields by passing in a GUID or term instance using a Batch. [#5174](https://github.com/pnp/powershell/pull/5174)
+- Fixed issue with Azure functions not working properly when we also have other modules like Az which rely on .NET 10. [#5393](https://github.com/pnp/powershell/pull/5393)
 
 ### Removed
 
 ### Contributors
 - [reusto]
 - Patrick Schneider [pschneid]
-- 
+    
 ## [3.3.0]
 
 ### Added
