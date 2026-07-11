@@ -1287,6 +1287,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPTenantSearchCrawledProperty.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPTenantSearchCrawledProperty.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPTenantSequence.md",
       "output": {
         ".html": {
