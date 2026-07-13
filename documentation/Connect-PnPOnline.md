@@ -308,6 +308,22 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com" -FederatedIdentity
 
 Connect to SharePoint/Microsoft Graph using federated identity credentials in Azure DevOps. This option is available from version 3.1.51-nightly onwards.
 
+### EXAMPLE 22
+```powershell
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentity
+```
+
+Connect to SharePoint/Microsoft Graph using federated identity credentials in GitLab CI/CD. This requires the job to request an ID token named `GITLAB_OIDC_TOKEN` with audience `api://AzureADTokenExchange`, for example:
+
+```yaml
+job:
+  id_tokens:
+    GITLAB_OIDC_TOKEN:
+      aud: api://AzureADTokenExchange
+```
+
+The corresponding federated credential on the Entra ID app registration must have issuer `https://gitlab.com` (or your self-managed GitLab instance URL) and a subject matching the GitLab OIDC claim for the job, e.g. `project_path:<group>/<project>:ref_type:branch:ref:<branch>`.
+
 ## PARAMETERS
 
 ### -AccessToken
@@ -822,7 +838,7 @@ Accept wildcard characters: False
 ```
 
 ### -AzureADWorkloadIdentity
-Connects using Azure AD Workload Identity in Azure workload identity environments where `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_AUTHORITY_HOST`, and `AZURE_FEDERATED_TOKEN_FILE` are available. For GitHub Actions and Azure DevOps pipelines, use `-FederatedIdentity` instead.
+Connects using Azure AD Workload Identity in Azure workload identity environments where `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_AUTHORITY_HOST`, and `AZURE_FEDERATED_TOKEN_FILE` are available. For GitHub Actions, Azure DevOps and GitLab CI/CD pipelines, use `-FederatedIdentity` instead.
 
 ```yaml
 Type: SwitchParameter
@@ -879,7 +895,7 @@ Accept wildcard characters: False
 
 ### -FederatedIdentity
 
-Connects using Federated Identity. Use this option for GitHub Actions and Azure DevOps pipelines. For Azure workload identity environments that provide `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_AUTHORITY_HOST`, and `AZURE_FEDERATED_TOKEN_FILE`, use `-AzureADWorkloadIdentity` instead. For more information on this, you can visit [this link](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest).
+Connects using Federated Identity. Use this option for GitHub Actions, Azure DevOps and GitLab CI/CD pipelines. For Azure workload identity environments that provide `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_AUTHORITY_HOST`, and `AZURE_FEDERATED_TOKEN_FILE`, use `-AzureADWorkloadIdentity` instead. For more information on this, you can visit [this link](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest).
 
 This option is available from version 3.1.51-nightly onwards.
 
