@@ -346,7 +346,7 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
-        /// Returns an access token based on a Federated Identity. Only works within Azure components supporting federated identities like GitHub/AzureDevOps.
+        /// Returns an access token based on a Federated Identity. Only works within Azure components supporting federated identities like GitHub Actions, Azure DevOps and GitLab CI/CD.
         /// </summary>
         /// <param name="clientId">The client Id of the Federated Identity application</param>
         /// <param name="tenant">The tenant Id of the Federated Identity application</param>
@@ -363,6 +363,8 @@ namespace PnP.PowerShell.Commands.Base
             var actionsIdTokenRequestUrl = Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_URL");
             var actionsIdTokenRequestToken = Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_TOKEN");
             var systemOidcRequestUri = Environment.GetEnvironmentVariable("SYSTEM_OIDCREQUESTURI");
+            var gitlabCi = Environment.GetEnvironmentVariable("GITLAB_CI");
+            var gitlabOidcToken = Environment.GetEnvironmentVariable("GITLAB_OIDC_TOKEN");
 
             if (!string.IsNullOrWhiteSpace(actionsIdTokenRequestUrl) && !string.IsNullOrWhiteSpace(actionsIdTokenRequestToken))
             {
@@ -403,9 +405,22 @@ namespace PnP.PowerShell.Commands.Base
                 var federationToken = await GetFederationTokenFromAzureDevOpsAsync(systemOidcRequestUri, systemAccessToken, serviceConnectionId);
                 return await GetAccessTokenWithFederatedTokenAsync(serviceConnectionAppId, serviceConnectionTenantId, requiredScope, federationToken);
             }
+            else if (!string.IsNullOrWhiteSpace(gitlabCi) && !string.IsNullOrWhiteSpace(gitlabOidcToken))
+            {
+                if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(tenant))
+                {
+                    throw new PSInvalidOperationException("ClientId and Tenant must be provided when using Federated Identity in GitLab CI/CD.");
+                }
+
+                Framework.Diagnostics.Log.Debug("TokenHandler", "GITLAB_CI and GITLAB_OIDC_TOKEN env variables found. The context is GitLab CI/CD...");
+
+                // GitLab's id_tokens feature mints the OIDC JWT directly into the configured job variable, so no
+                // separate request to GitLab is needed to obtain the federation token before exchanging it with Entra ID.
+                return await GetAccessTokenWithFederatedTokenAsync(clientId, tenant, requiredScope, gitlabOidcToken);
+            }
             else
             {
-                throw new PSInvalidOperationException("Federated identity is currently only supported in GitHub Actions and Azure DevOps.");
+                throw new PSInvalidOperationException("Federated identity is currently only supported in GitHub Actions, Azure DevOps and GitLab CI/CD.");
             }
         }
 
