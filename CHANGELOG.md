@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added `Add-PnPTenantSearchCrawledProperty` cmdlet which allows creation of a tenant level crawled property for SharePoint Online search. [#5373](https://github.com/pnp/powershell/pull/5373)
+- Added `GitLab CI/CD` support to `Connect-PnPOnline -FederatedIdentity`. [#5395](https://github.com/pnp/powershell/pull/5395)
 
 ### Changed
 
@@ -20,6 +21,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Removed
 
 ### Contributors
+
+- Fabian Hutzli [fabianhutzli]
 - [reusto]
 - Patrick Schneider [pschneid]
     
