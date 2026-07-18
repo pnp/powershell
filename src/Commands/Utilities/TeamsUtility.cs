@@ -8,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 using Team = PnP.PowerShell.Commands.Model.Teams.Team;
@@ -21,6 +23,8 @@ namespace PnP.PowerShell.Commands.Utilities
     internal static class TeamsUtility
     {
         private const int PageSize = 100;
+        private const int TeamsAsyncOperationPollingIntervalSeconds = 30;
+        private const int TeamsAsyncOperationMaxRetries = 12;
 
         #region Team
         public static List<Group> GetGroupsWithTeam(ApiRequestHelper requestHelper, string filter = null)
@@ -147,6 +151,11 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static Team NewTeam(ApiRequestHelper requestHelper, string groupId, string displayName, string description, string classification, string mailNickname, GroupVisibility visibility, TeamCreationInformation teamCI, string[] owners, string[] members, Guid[] sensitivityLabels, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
         {
+            if (string.IsNullOrEmpty(groupId) && templateType != TeamsTemplateType.None)
+            {
+                return CreateTeamFromTemplate(requestHelper, displayName, description, classification, visibility, teamCI, owners, members, templateType);
+            }
+
             Group group = null;
             Team returnTeam = null;
             Random random = new();
@@ -155,7 +164,7 @@ namespace PnP.PowerShell.Commands.Utilities
             // Create the Group
             if (string.IsNullOrEmpty(groupId))
             {
-                group = CreateGroup(requestHelper, displayName, description, classification, mailNickname, visibility, owners, sensitivityLabels, templateType, resourceBehaviorOptions);
+                group = CreateGroup(requestHelper, displayName, description, classification, mailNickname, visibility, owners, sensitivityLabels, resourceBehaviorOptions);
                 bool wait = true;
                 int iterations = 0;
 
@@ -244,34 +253,262 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 }
 
-                // Construct a list of all owners and members to add
-                var teamOwnersAndMembers = new List<TeamChannelMember>();
-                if (owners != null && owners.Length > 0)
-                {
-                    foreach (var owner in owners)
-                    {
-                        teamOwnersAndMembers.Add(new TeamChannelMember { Roles = new List<string> { "owner" }, UserIdentifier = $"https://{requestHelper.GraphEndPoint}/v1.0/users('{owner}')" });
-                    }
-                }
+                AddTeamOwnersAndMembers(requestHelper, group.Id, owners, members);
+            }
+            return returnTeam;
+        }
 
-                if (members != null && members.Length > 0)
-                {
-                    foreach (var member in members)
-                    {
-                        teamOwnersAndMembers.Add(new TeamChannelMember { Roles = new List<string>(), UserIdentifier = $"https://{requestHelper.GraphEndPoint}/v1.0/users('{member}')" });
-                    }
-                }
+        private static Team CreateTeamFromTemplate(ApiRequestHelper requestHelper, string displayName, string description, string classification, GroupVisibility visibility, TeamCreationInformation teamCI, string[] owners, string[] members, TeamsTemplateType templateType)
+        {
+            var teamVisibility = visibility == GroupVisibility.NotSpecified ? GroupVisibility.Private : visibility;
+            var team = teamCI.ToTeam(teamVisibility);
+            var payload = new Dictionary<string, object>
+            {
+                { "template@odata.bind", $"https://{requestHelper.GraphEndPoint}/v1.0/teamsTemplates('{GetTeamsTemplateId(templateType)}')" },
+                { "displayName", displayName },
+                { "description", description ?? string.Empty }
+            };
 
-                if (teamOwnersAndMembers.Count > 0)
+            if (!string.IsNullOrEmpty(classification))
+            {
+                payload.Add("classification", classification);
+            }
+
+            if (templateType != TeamsTemplateType.EDU_Class)
+            {
+                payload.Add("visibility", teamVisibility.ToString());
+            }
+
+            if (HasMemberSettings(team.MemberSettings))
+            {
+                payload.Add("memberSettings", team.MemberSettings);
+            }
+
+            if (HasGuestSettings(team.GuestSettings))
+            {
+                payload.Add("guestSettings", team.GuestSettings);
+            }
+
+            if (HasMessagingSettings(team.MessagingSettings))
+            {
+                payload.Add("messagingSettings", team.MessagingSettings);
+            }
+
+            if (HasFunSettings(team.FunSettings))
+            {
+                payload.Add("funSettings", team.FunSettings);
+            }
+
+            if (HasDiscoverySettings(team.DiscoverySettings))
+            {
+                payload.Add("discoverySettings", team.DiscoverySettings);
+            }
+
+            var teamMembers = CreateInitialTeamMembers(requestHelper, owners, members);
+            if (teamMembers.Count > 0)
+            {
+                payload.Add("members", teamMembers);
+            }
+
+            var response = requestHelper.PostHttpContent("v1.0/teams", CreateJsonContent(payload));
+            var operation = WaitForTeamsAsyncOperation(requestHelper, response);
+
+            if (string.IsNullOrEmpty(operation.TargetResourceId))
+            {
+                throw new PSInvalidOperationException("Microsoft Graph completed the team creation operation without returning a target team identifier.");
+            }
+
+            team.GroupId = operation.TargetResourceId;
+            team.DisplayName = displayName;
+            team.Description = description;
+            team.Classification = classification;
+            team.Visibility = templateType == TeamsTemplateType.EDU_Class ? GroupVisibility.HiddenMembership : teamVisibility;
+            team.Specialization = GetTeamSpecialization(templateType);
+            return team;
+        }
+
+        private static List<TeamChannelMember> CreateInitialTeamMembers(ApiRequestHelper requestHelper, string[] owners, string[] members)
+        {
+            var teamMembers = new List<TeamChannelMember>();
+            var ownerIdentifiers = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            if (owners != null && owners.Length > 0)
+            {
+                foreach (var owner in owners.Distinct(StringComparer.OrdinalIgnoreCase))
                 {
-                    var ownersAndMembers = GraphBatchUtility.Chunk(teamOwnersAndMembers, 200);
-                    foreach (var chunk in ownersAndMembers)
+                    ownerIdentifiers.Add(owner);
+                    teamMembers.Add(new TeamChannelMember { Roles = new List<string> { "owner" }, UserIdentifier = GetUserODataBindUrl(requestHelper, owner) });
+                }
+            }
+
+            if (members != null && members.Length > 0)
+            {
+                foreach (var member in members.Distinct(StringComparer.OrdinalIgnoreCase))
+                {
+                    if (!ownerIdentifiers.Contains(member))
                     {
-                        requestHelper.Post($"v1.0/teams/{group.Id}/members/add", new { values = chunk.ToList() });
+                        teamMembers.Add(new TeamChannelMember { Roles = new List<string>(), UserIdentifier = GetUserODataBindUrl(requestHelper, member) });
                     }
                 }
             }
-            return returnTeam;
+
+            return teamMembers;
+        }
+
+        private static string GetUserODataBindUrl(ApiRequestHelper requestHelper, string user)
+        {
+            return $"https://{requestHelper.GraphEndPoint}/v1.0/users('{user}')";
+        }
+
+        private static StringContent CreateJsonContent(object payload)
+        {
+            var content = new StringContent(JsonSerializer.Serialize(payload, new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            return content;
+        }
+
+        private static TeamsAsyncOperation WaitForTeamsAsyncOperation(ApiRequestHelper requestHelper, HttpResponseMessage response)
+        {
+            if (!response.Headers.TryGetValues("Location", out var locations) || !locations.Any())
+            {
+                throw new PSInvalidOperationException("Microsoft Graph did not return a Location header for the team creation operation.");
+            }
+
+            var operationStatusUrl = locations.First();
+            TeamsAsyncOperation operation = null;
+            for (var retryCount = 0; retryCount < TeamsAsyncOperationMaxRetries; retryCount++)
+            {
+                if (retryCount > 0)
+                {
+                    Thread.Sleep(TimeSpan.FromSeconds(TeamsAsyncOperationPollingIntervalSeconds));
+                }
+
+                try
+                {
+                    operation = requestHelper.Get<TeamsAsyncOperation>(operationStatusUrl);
+                }
+                catch (GraphException ex) when (IsTransientTeamsAsyncOperationError(ex) && retryCount < TeamsAsyncOperationMaxRetries - 1)
+                {
+                    continue;
+                }
+
+                if (operation == null || string.IsNullOrEmpty(operation.Status))
+                {
+                    continue;
+                }
+
+                if (operation.Status.Equals("succeeded", StringComparison.OrdinalIgnoreCase) || operation.Status.Equals("completed", StringComparison.OrdinalIgnoreCase))
+                {
+                    return operation;
+                }
+
+                if (operation.Status.Equals("failed", StringComparison.OrdinalIgnoreCase))
+                {
+                    var errorMessage = !string.IsNullOrEmpty(operation.Error?.Message) ? $": {operation.Error.Message}" : string.Empty;
+                    throw new PSInvalidOperationException($"Microsoft Graph team creation operation failed{errorMessage}");
+                }
+            }
+
+            throw new PSInvalidOperationException($"Timed out waiting for Microsoft Graph team creation operation at {operationStatusUrl} to complete.");
+        }
+
+        private static bool IsTransientTeamsAsyncOperationError(GraphException ex)
+        {
+            return ex.HttpResponse?.StatusCode == HttpStatusCode.NotFound ||
+                ex.HttpResponse?.StatusCode == HttpStatusCode.BadGateway ||
+                ex.HttpResponse?.StatusCode == HttpStatusCode.ServiceUnavailable ||
+                ex.HttpResponse?.StatusCode == HttpStatusCode.GatewayTimeout;
+        }
+
+        private static string GetTeamsTemplateId(TeamsTemplateType templateType)
+        {
+            return templateType switch
+            {
+                TeamsTemplateType.Standard => "standard",
+                TeamsTemplateType.EDU_Class => "educationClass",
+                TeamsTemplateType.EDU_PLC => "educationProfessionalLearningCommunity",
+                TeamsTemplateType.EDU_Staff => "educationStaff",
+                _ => "standard"
+            };
+        }
+
+        private static TeamSpecialization GetTeamSpecialization(TeamsTemplateType templateType)
+        {
+            return templateType switch
+            {
+                TeamsTemplateType.Standard => TeamSpecialization.None,
+                TeamsTemplateType.EDU_Class => TeamSpecialization.EducationClass,
+                TeamsTemplateType.EDU_PLC => TeamSpecialization.EducationProfessionalLearningCommunity,
+                TeamsTemplateType.EDU_Staff => TeamSpecialization.EducationStaff,
+                _ => TeamSpecialization.None
+            };
+        }
+
+        private static void AddTeamOwnersAndMembers(ApiRequestHelper requestHelper, string groupId, string[] owners, string[] members)
+        {
+            var teamOwnersAndMembers = new List<TeamChannelMember>();
+            if (owners != null && owners.Length > 0)
+            {
+                foreach (var owner in owners)
+                {
+                    teamOwnersAndMembers.Add(new TeamChannelMember { Roles = new List<string> { "owner" }, UserIdentifier = GetUserODataBindUrl(requestHelper, owner) });
+                }
+            }
+
+            if (members != null && members.Length > 0)
+            {
+                foreach (var member in members)
+                {
+                    teamOwnersAndMembers.Add(new TeamChannelMember { Roles = new List<string>(), UserIdentifier = GetUserODataBindUrl(requestHelper, member) });
+                }
+            }
+
+            if (teamOwnersAndMembers.Count > 0)
+            {
+                var ownersAndMembers = GraphBatchUtility.Chunk(teamOwnersAndMembers, 200);
+                foreach (var chunk in ownersAndMembers)
+                {
+                    requestHelper.Post($"v1.0/teams/{groupId}/members/add", new { values = chunk.ToList() });
+                }
+            }
+        }
+
+        private static bool HasMemberSettings(TeamMemberSettings memberSettings)
+        {
+            return memberSettings.AllowCreateUpdateChannels.HasValue ||
+                memberSettings.AllowDeleteChannels.HasValue ||
+                memberSettings.AllowAddRemoveApps.HasValue ||
+                memberSettings.AllowCreateUpdateRemoveTabs.HasValue ||
+                memberSettings.AllowCreateUpdateRemoveConnectors.HasValue ||
+                memberSettings.AllowCreatePrivateChannels.HasValue;
+        }
+
+        private static bool HasGuestSettings(TeamGuestSettings guestSettings)
+        {
+            return guestSettings.AllowCreateUpdateChannels.HasValue ||
+                guestSettings.AllowDeleteChannels.HasValue;
+        }
+
+        private static bool HasMessagingSettings(TeamMessagingSettings messagingSettings)
+        {
+            return messagingSettings.AllowUserEditMessages.HasValue ||
+                messagingSettings.AllowUserDeleteMessages.HasValue ||
+                messagingSettings.AllowOwnerDeleteMessages.HasValue ||
+                messagingSettings.AllowTeamMentions.HasValue ||
+                messagingSettings.AllowChannelMentions.HasValue;
+        }
+
+        private static bool HasFunSettings(TeamFunSettings funSettings)
+        {
+            return funSettings.AllowGiphy.HasValue ||
+                funSettings.AllowCustomMemes.HasValue ||
+                funSettings.AllowStickersAndMemes.HasValue ||
+                funSettings.GiphyContentRating != default;
+        }
+
+        private static bool HasDiscoverySettings(TeamDiscoverySettings discoverySettings)
+        {
+            return discoverySettings.ShowInTeamsSearchAndSuggestions.HasValue;
         }
 
         internal static string GetUserGraphUrlForUPN(string upn)
@@ -284,7 +521,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return $"users/{escapedUpn}";
         }
 
-        private static Group CreateGroup(ApiRequestHelper requestHelper, string displayName, string description, string classification, string mailNickname, GroupVisibility visibility, string[] owners, Guid[] sensitivityLabels, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
+        private static Group CreateGroup(ApiRequestHelper requestHelper, string displayName, string description, string classification, string mailNickname, GroupVisibility visibility, string[] owners, Guid[] sensitivityLabels, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
         {
             // When creating a group, we always need an owner, thus we'll try to define it from the passed in owners array
             string ownerId = null;
@@ -376,22 +613,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 group.AssignedLabels = assignedLabels;
             }
 
-            switch (templateType)
-            {
-                case TeamsTemplateType.EDU_Class:
-                    group.Visibility = GroupVisibility.HiddenMembership;
-                    group.CreationOptions = new List<string> { "ExchangeProvisioningFlags:461", "classAssignments" };
-                    group.EducationObjectType = "Section";
-                    break;
-
-                case TeamsTemplateType.EDU_PLC:
-                    group.CreationOptions = new List<string> { "PLC" };
-                    break;
-
-                default:
-                    group.CreationOptions = new List<string> { "ExchangeProvisioningFlags:3552" };
-                    break;
-            }
+            group.CreationOptions = new List<string> { "ExchangeProvisioningFlags:3552" };
             try
             {
                 return requestHelper.Post<Group>("v1.0/groups", group);
