@@ -19,7 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed an issue with `Add-PnPListItem` and `Set-PnPListItem` cmdlets when trying to set taxonomy fields by passing in a GUID or term instance using a Batch. [#5174](https://github.com/pnp/powershell/pull/5174)
 - Fixed issue with Azure functions not working properly when we also have other modules like Az which rely on .NET 10. [#5393](https://github.com/pnp/powershell/pull/5393)
 - Fixed multi-geo compatibility issues with `Get-PnPGeoAdministrator` response handling, `Set-PnPMultiGeoExperience` confirmation prompts, and unsupported-version errors for `Set-PnPMultiGeoCompanyAllowedDataLocation`. [#5401](https://github.com/pnp/powershell/pull/5401)
-- Fixed Power Apps cmdlets to use cloud-specific Power Apps service audiences and endpoints for government clouds. [#5400](https://github.com/pnp/powershell/issues/5400)
+- Fixed Power Apps cmdlets to use cloud-specific Power Apps service audiences and endpoints for government clouds. [#5404](https://github.com/pnp/powershell/pull/5404)
 
 ### Removed
 
