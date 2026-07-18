@@ -25,6 +25,7 @@ namespace PnP.PowerShell.Commands.Utilities
         private const int PageSize = 100;
         private const int TeamsAsyncOperationPollingIntervalSeconds = 30;
         private const int TeamsAsyncOperationMaxRetries = 12;
+        private const int TeamsTemplateInitialMembersLimit = 20;
 
         #region Team
         public static List<Group> GetGroupsWithTeam(ApiRequestHelper requestHelper, string filter = null)
@@ -294,9 +295,9 @@ namespace PnP.PowerShell.Commands.Utilities
                 payload.Add("messagingSettings", team.MessagingSettings);
             }
 
-            if (HasFunSettings(team.FunSettings))
+            if (HasFunSettings(teamCI))
             {
-                payload.Add("funSettings", team.FunSettings);
+                payload.Add("funSettings", CreateFunSettingsPayload(teamCI));
             }
 
             if (HasDiscoverySettings(team.DiscoverySettings))
@@ -305,13 +306,19 @@ namespace PnP.PowerShell.Commands.Utilities
             }
 
             var teamMembers = CreateInitialTeamMembers(requestHelper, owners, members);
+            ValidateInitialTeamMembersLimit(teamMembers);
             if (teamMembers.Count > 0)
             {
                 payload.Add("members", teamMembers);
             }
 
-            var response = requestHelper.PostHttpContent("v1.0/teams", CreateJsonContent(payload));
-            var operation = WaitForTeamsAsyncOperation(requestHelper, response);
+            string operationStatusUrl;
+            using (var response = requestHelper.PostHttpContent("v1.0/teams", CreateJsonContent(payload)))
+            {
+                operationStatusUrl = GetTeamsAsyncOperationStatusUrl(response);
+            }
+
+            var operation = WaitForTeamsAsyncOperation(requestHelper, operationStatusUrl);
 
             if (string.IsNullOrEmpty(operation.TargetResourceId))
             {
@@ -355,6 +362,14 @@ namespace PnP.PowerShell.Commands.Utilities
             return teamMembers;
         }
 
+        private static void ValidateInitialTeamMembersLimit(IReadOnlyCollection<TeamChannelMember> teamMembers)
+        {
+            if (teamMembers.Count > TeamsTemplateInitialMembersLimit)
+            {
+                throw new PSInvalidOperationException($"Microsoft Graph supports a maximum of {TeamsTemplateInitialMembersLimit} distinct owners and members in the initial members collection when creating a team from a template. Specify no more than {TeamsTemplateInitialMembersLimit} combined owners and members when using the Template parameter.");
+            }
+        }
+
         private static string GetUserODataBindUrl(ApiRequestHelper requestHelper, string user)
         {
             return $"https://{requestHelper.GraphEndPoint}/v1.0/users('{user}')";
@@ -367,14 +382,18 @@ namespace PnP.PowerShell.Commands.Utilities
             return content;
         }
 
-        private static TeamsAsyncOperation WaitForTeamsAsyncOperation(ApiRequestHelper requestHelper, HttpResponseMessage response)
+        private static string GetTeamsAsyncOperationStatusUrl(HttpResponseMessage response)
         {
             if (!response.Headers.TryGetValues("Location", out var locations) || !locations.Any())
             {
                 throw new PSInvalidOperationException("Microsoft Graph did not return a Location header for the team creation operation.");
             }
 
-            var operationStatusUrl = locations.First();
+            return locations.First();
+        }
+
+        private static TeamsAsyncOperation WaitForTeamsAsyncOperation(ApiRequestHelper requestHelper, string operationStatusUrl)
+        {
             TeamsAsyncOperation operation = null;
             for (var retryCount = 0; retryCount < TeamsAsyncOperationMaxRetries; retryCount++)
             {
@@ -498,12 +517,39 @@ namespace PnP.PowerShell.Commands.Utilities
                 messagingSettings.AllowChannelMentions.HasValue;
         }
 
-        private static bool HasFunSettings(TeamFunSettings funSettings)
+        private static bool HasFunSettings(TeamCreationInformation teamCI)
         {
-            return funSettings.AllowGiphy.HasValue ||
-                funSettings.AllowCustomMemes.HasValue ||
-                funSettings.AllowStickersAndMemes.HasValue ||
-                funSettings.GiphyContentRating != default;
+            return teamCI.AllowGiphy.HasValue ||
+                teamCI.AllowCustomMemes.HasValue ||
+                teamCI.AllowStickersAndMemes.HasValue ||
+                teamCI.GiphyContentRatingSpecified;
+        }
+
+        private static Dictionary<string, object> CreateFunSettingsPayload(TeamCreationInformation teamCI)
+        {
+            var funSettings = new Dictionary<string, object>();
+
+            if (teamCI.AllowGiphy.HasValue)
+            {
+                funSettings.Add("allowGiphy", teamCI.AllowGiphy.Value);
+            }
+
+            if (teamCI.GiphyContentRatingSpecified)
+            {
+                funSettings.Add("giphyContentRating", teamCI.GiphyContentRating.ToString());
+            }
+
+            if (teamCI.AllowStickersAndMemes.HasValue)
+            {
+                funSettings.Add("allowStickersAndMemes", teamCI.AllowStickersAndMemes.Value);
+            }
+
+            if (teamCI.AllowCustomMemes.HasValue)
+            {
+                funSettings.Add("allowCustomMemes", teamCI.AllowCustomMemes.Value);
+            }
+
+            return funSettings;
         }
 
         private static bool HasDiscoverySettings(TeamDiscoverySettings discoverySettings)

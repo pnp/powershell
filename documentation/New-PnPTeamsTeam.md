@@ -440,6 +440,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Template
+The Microsoft Teams template to use for the new team. Use Standard for the standard team template, EDU_Class for the education class template, EDU_PLC for the education professional learning community template, or EDU_Staff for the education staff template. When this parameter is used, Microsoft Graph provisions the team using POST /teams with a teamsTemplates binding and creates the backing Microsoft 365 Group automatically. Owners are required when using application permissions. Microsoft Graph allows at most 20 distinct users across Owners and Members in the initial members collection when using Template. Omit this parameter to keep the existing Microsoft 365 Group creation and teamify behavior.
+
+```yaml
+Type: TeamsTemplateType
+Parameter Sets: For a new group
+Accepted values: None, Standard, EDU_Class, EDU_PLC, EDU_Staff
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Visibility
 Set to Public to allow all users in your organization to join the group by default. Set to Private to require that an owner approve the join request.
 
@@ -470,7 +484,7 @@ Accept wildcard characters: False
 ```
 
 ### -Owners
-The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as owners. If omitted and the cmdlet is run using a token containing a user identity, such as when logging on with -Interactive or -DeviceLogin, the user used to authenticate with would become the owner. You can provide as many owners as you want, as long as you stay within the [Microsoft 365 Groups limits](https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
+The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as owners. If omitted and the cmdlet is run using a token containing a user identity, such as when logging on with -Interactive or -DeviceLogin, the user used to authenticate with would become the owner. You can provide as many owners as you want, as long as you stay within the [Microsoft 365 Groups limits](https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). When using Template, Microsoft Graph allows at most 20 distinct users across Owners and Members in the initial members collection. Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
 
 ```yaml
 Type: String[]
@@ -484,7 +498,7 @@ Accept wildcard characters: False
 ```
 
 ### -Members
-The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as members. You can provide as many members as you want, as long as you stay within the [Microsoft 365 Groups limits](https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
+The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as members. You can provide as many members as you want, as long as you stay within the [Microsoft 365 Groups limits](https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). When using Template, Microsoft Graph allows at most 20 distinct users across Owners and Members in the initial members collection. Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
 
 ```yaml
 Type: String[]
@@ -518,20 +532,6 @@ The Sensitivity label to be set to the Microsoft 365 Group and Team. To retrieve
 ```yaml
 Type: GUID[]
 Parameter Sets: For a new group
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Template
-The Microsoft Teams template to use for the new team. Use Standard for the standard team template, EDU_Class for the education class template, EDU_PLC for the education professional learning community template, or EDU_Staff for the education staff template. When this parameter is used, Microsoft Graph provisions the team using POST /teams with a teamsTemplates binding and creates the backing Microsoft 365 Group automatically. Owners are required when using application permissions. Omit this parameter to keep the existing Microsoft 365 Group creation and teamify behavior.
-
-```yaml
-Type: TeamsTemplateType
-Parameter Sets: For a new group
-Accepted values: None, Standard, EDU_Class, EDU_PLC, EDU_Staff
 Required: False
 Position: Named
 Default value: None

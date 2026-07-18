@@ -157,6 +157,7 @@ namespace PnP.PowerShell.Commands.Teams
                 Description = Description,
                 DisplayName = DisplayName,
                 GiphyContentRating = GiphyContentRating,
+                GiphyContentRatingSpecified = ParameterSpecified(nameof(GiphyContentRating)),
                 GroupId = GroupId,
                 ShowInTeamsSearchAndSuggestions = ShowInTeamsSearchAndSuggestions,
                 Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()),
