@@ -19,6 +19,16 @@ namespace PnP.PowerShell.Commands.Admin
 
 		protected override void ExecuteCmdlet()
 		{
+			// SPO uses ShouldContinue only; call ShouldProcess only to honor -WhatIf without adding a second default confirmation prompt.
+			if (IsWhatIf())
+			{
+				var target = AllInstances.ToBool() ? "all instances' multi-geo experience" : "current instance's multi-geo experience";
+				if (!ShouldProcess(target, "Upgrade to include SharePoint Online Multi-Geo"))
+				{
+					return;
+				}
+			}
+
 			var multiGeoRestApiClient = new MultiGeoRestApiClient(AdminContext);
 			multiGeoRestApiClient.EnsureGeoExperienceUpgradeSupported();
 
@@ -29,6 +39,11 @@ namespace PnP.PowerShell.Commands.Admin
 
 			multiGeoRestApiClient.UpgradeGeoExperience(AllInstances.ToBool());
 			WriteObject(UpgradeCompletedMessage);
+		}
+
+		private bool IsWhatIf()
+		{
+			return MyInvocation.BoundParameters.TryGetValue("WhatIf", out var whatIfValue) && whatIfValue is SwitchParameter whatIf && whatIf.ToBool();
 		}
 	}
 }
