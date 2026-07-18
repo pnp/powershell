@@ -9,14 +9,19 @@ namespace PnP.PowerShell.Commands.Model
 	public class GeoAdministrator
 	{
 		/// <summary>
-		/// The display name of the geo administrator.
+		/// The geo location administered by the geo administrator.
 		/// </summary>
-		public string DisplayName { get; set; }
+		public string GeoLocation { get; set; }
 
 		/// <summary>
 		/// The login name of the geo administrator.
 		/// </summary>
 		public string LoginName { get; set; }
+
+		/// <summary>
+		/// The display name of the geo administrator.
+		/// </summary>
+		public string DisplayName { get; set; }
 
 		/// <summary>
 		/// The member type of the geo administrator.
@@ -27,10 +32,5 @@ namespace PnP.PowerShell.Commands.Model
 		/// The object identifier of the geo administrator.
 		/// </summary>
 		public Guid ObjectId { get; set; }
-
-		/// <summary>
-		/// The geo location administered by the geo administrator.
-		/// </summary>
-		public string GeoLocation { get; set; }
 	}
 }
