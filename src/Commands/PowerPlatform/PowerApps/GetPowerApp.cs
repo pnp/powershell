@@ -40,7 +40,10 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             {
                 LogDebug($"Retrieving all PowerApps within environment '{environmentName}'");
 
-                var apps = PowerAppsRequestHelper.GetResultCollection<Model.PowerPlatform.PowerApp.PowerApp>($"{powerAppsUrl}/providers/Microsoft.PowerApps/apps?api-version=2016-11-01&$filter=environment eq '{environmentName}'");
+                var requestUrl = AsAdmin
+                    ? $"{powerAppsUrl}/providers/Microsoft.PowerApps/scopes/admin/environments/{environmentName}/apps?api-version=2016-11-01"
+                    : $"{powerAppsUrl}/providers/Microsoft.PowerApps/apps?api-version=2016-11-01&$filter=environment eq '{environmentName}'";
+                var apps = PowerAppsRequestHelper.GetResultCollection<Model.PowerPlatform.PowerApp.PowerApp>(requestUrl);
                 WriteObject(apps, true);
             }
         }

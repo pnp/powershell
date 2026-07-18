@@ -125,7 +125,17 @@ namespace PnP.PowerShell.Commands.Base
                 "azure" or "management.azure.com" or "management.chinacloudapi.cn" or "management.usgovcloudapi.net" => Enums.ResourceTypeName.AzureManagementApi,
                 "exchangeonline" or "outlook.office.com" or "outlook.office365.com" => Enums.ResourceTypeName.ExchangeOnline,
                 "flow" or "service.flow.microsoft.com" => Enums.ResourceTypeName.PowerAutomate,
-                "powerapps" or "api.powerapps.com" => Enums.ResourceTypeName.PowerApps,
+                "powerapps"
+                    or "api.powerapps.com"
+                    or "service.powerapps.com"
+                    or "api.powerapps.cn"
+                    or "service.powerapps.cn"
+                    or "gov.api.powerapps.us"
+                    or "gov.service.powerapps.us"
+                    or "high.api.powerapps.us"
+                    or "high.service.powerapps.us"
+                    or "api.apps.appsplatform.us"
+                    or "service.apps.appsplatform.us" => Enums.ResourceTypeName.PowerApps,
                 "dynamics" or "admin.services.crm.dynamics.com" or "api.crm.dynamics.com" => Enums.ResourceTypeName.DynamicsCRM,
                 "gcs" or "gcs.office.com" => Enums.ResourceTypeName.Gcs,
 
