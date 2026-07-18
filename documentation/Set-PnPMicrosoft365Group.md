@@ -21,7 +21,7 @@ Sets Microsoft 365 Group properties.
 ## SYNTAX
 
 ```powershell
-Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <String>] [-Description <String>] [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam]  [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-RequireSenderAuthenticationEnabled <Boolean>] [-AutoSubscribeNewMembers <Boolean>] [-MailNickname <String>] [-PreferredDataLocation <String>] [-SensitivityLabels <GUID[]>] [-Verbose]
+Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <String>] [-Description <String>] [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam]  [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-AllowExternalSenders <Boolean>] [-AutoSubscribeNewMembers <Boolean>] [-MailNickname <String>] [-PreferredDataLocation <String>] [-SensitivityLabels <GUID[]>] [-Verbose]
 ```
 
 ## DESCRIPTION
