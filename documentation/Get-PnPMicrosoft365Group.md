@@ -86,6 +86,13 @@ $groups = Get-PnPMicrosoft365Group -Filter "startswith(description, 'contoso')"
 
 Retrieves all Microsoft 365 Groups in this tenant with description starting with Contoso. This example demonstrates using Advanced Query capabilities (see: https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties).
 
+### EXAMPLE 9
+```powershell
+Get-PnPMicrosoft365Group -Identity $groupId | Select-Object DisplayName, PreferredDataLocation
+```
+
+Retrieves a specific Microsoft 365 Group and returns its preferred data location.
+
 ## PARAMETERS
 
 ### -Detailed
@@ -180,5 +187,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 
