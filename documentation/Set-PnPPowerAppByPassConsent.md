@@ -14,6 +14,7 @@ title: Set-PnPPowerAppByPassConsent
 **Required Permissions**
 
 * Azure: management.azure.com
+* PowerApps: service.powerapps.com
 
 Sets the consent bypass flag of a Power Apps for a given environment
 

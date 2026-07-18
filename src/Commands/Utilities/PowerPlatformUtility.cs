@@ -1,4 +1,5 @@
-﻿using PnP.Framework;
+﻿using System;
+using PnP.Framework;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Linq;
 using PnP.Framework.Diagnostics;
@@ -26,6 +27,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 AzureEnvironment.USGovernmentHigh => "https://high.api.flow.microsoft.us",
                 AzureEnvironment.USGovernmentDoD => "https://api.flow.appsplatform.us",
                 AzureEnvironment.PPE => "https://api.flow.microsoft.com",
+                AzureEnvironment.BleuCloud or AzureEnvironment.DelosCloud or AzureEnvironment.GovSGCloud => throw GetUnsupportedPowerPlatformCloudException(environment),
                 _ => "https://api.flow.microsoft.com"
             };
         }
@@ -41,12 +43,34 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 AzureEnvironment.Production => "https://api.powerapps.com",
                 AzureEnvironment.Germany => "https://api.powerapps.com",
-                AzureEnvironment.China => "https://api.powerautomate.cn",
+                AzureEnvironment.China => "https://api.powerapps.cn",
                 AzureEnvironment.USGovernment => "https://gov.api.powerapps.us",
                 AzureEnvironment.USGovernmentHigh => "https://high.api.powerapps.us",
                 AzureEnvironment.USGovernmentDoD => "https://api.apps.appsplatform.us",
                 AzureEnvironment.PPE => "https://api.powerapps.com",
+                AzureEnvironment.BleuCloud or AzureEnvironment.DelosCloud or AzureEnvironment.GovSGCloud => throw GetUnsupportedPowerPlatformCloudException(environment),
                 _ => "https://api.powerapps.com"
+            };
+        }
+
+        /// <summary>
+        /// Returns the audience URL for acquiring tokens for Power Apps APIs based on the Azure Environment
+        /// </summary>
+        /// <param name="environment">Azure Environment to indicate the type of cloud to target</param>
+        /// <returns>Audience URL for acquiring tokens for Power Apps APIs</returns>
+        public static string GetPowerAppsServiceEndpoint(AzureEnvironment environment)
+        {
+            return environment switch
+            {
+                AzureEnvironment.Production => "https://service.powerapps.com",
+                AzureEnvironment.Germany => "https://service.powerapps.com",
+                AzureEnvironment.China => "https://service.powerapps.cn",
+                AzureEnvironment.USGovernment => "https://gov.service.powerapps.us",
+                AzureEnvironment.USGovernmentHigh => "https://high.service.powerapps.us",
+                AzureEnvironment.USGovernmentDoD => "https://service.apps.appsplatform.us",
+                AzureEnvironment.PPE => "https://service.powerapps.com",
+                AzureEnvironment.BleuCloud or AzureEnvironment.DelosCloud or AzureEnvironment.GovSGCloud => throw GetUnsupportedPowerPlatformCloudException(environment),
+                _ => "https://service.powerapps.com"
             };
         }
 
@@ -66,8 +90,14 @@ namespace PnP.PowerShell.Commands.Utilities
                 AzureEnvironment.USGovernmentHigh => "https://high.api.bap.microsoft.us",
                 AzureEnvironment.USGovernmentDoD => "https://api.bap.appsplatform.us",
                 AzureEnvironment.PPE => "https://api.bap.microsoft.com",
+                AzureEnvironment.BleuCloud or AzureEnvironment.DelosCloud or AzureEnvironment.GovSGCloud => throw GetUnsupportedPowerPlatformCloudException(environment),
                 _ => "https://api.bap.microsoft.com"
             };
+        }
+
+        private static NotSupportedException GetUnsupportedPowerPlatformCloudException(AzureEnvironment environment)
+        {
+            return new NotSupportedException($"Power Platform endpoints for AzureEnvironment '{environment}' are not currently documented or supported.");
         }
 
         /// <summary>

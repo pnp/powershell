@@ -14,6 +14,7 @@ title: Get-PnPPowerApp
 **Required Permissions**
 
 * Azure: management.azure.com
+* PowerApps: service.powerapps.com
 
 Returns the Power Apps for a given environment
 
