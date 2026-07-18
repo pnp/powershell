@@ -171,9 +171,9 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			return GetFeed<GeoMoveTenantCompatibilityCheck>(GeoMoveCompatibilityChecksPath, GetCurrentApiVersion(GeoMoveCompatibilityChecksMinimumApiVersion));
 		}
 
-		internal GeoAdministratorCollection GetGeoAdministrators()
+		internal IEnumerable<GeoAdministrator> GetGeoAdministrators()
 		{
-			return Get<GeoAdministratorCollection>(GeoAdministratorsPath, GetGeoAdministratorsApiVersion());
+			return GetFeed<GeoAdministrator>(GeoAdministratorsPath, GetGeoAdministratorsApiVersion());
 		}
 
 		internal MultiGeoExperience GetGeoExperience()
@@ -227,7 +227,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			var apiVersion = GetCurrentApiVersion();
 			if (!IsSupportedApiVersion(apiVersion, AllowedDataLocationsApiVersion))
 			{
-				throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, CommandResources.CrossGeoInvalidVersion, typeof(MultiGeoRestApiClient).Assembly.GetName().Version));
+				throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, CommandResources.CrossGeoInvalidVersion, GetApplicationVersion()));
 			}
 
 			PostWithoutResponse(AllowedDataLocationsPath, allowedDataLocation, apiVersion);

@@ -50,7 +50,7 @@ Accept wildcard characters: False
 ## OUTPUTS
 
 ### PnP.PowerShell.Commands.Model.GeoAdministrator
-Returns objects with `DisplayName`, `LoginName`, `MemberType`, `ObjectId`, and `GeoLocation` properties.
+Returns objects with `GeoLocation`, `LoginName`, `DisplayName`, `MemberType`, and `ObjectId` properties.
 
 ## RELATED LINKS
 

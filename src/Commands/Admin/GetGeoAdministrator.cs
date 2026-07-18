@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Admin
 		protected override void ExecuteCmdlet()
 		{
 			var multiGeoRestApiClient = new MultiGeoRestApiClient(AdminContext);
-			WriteObject(multiGeoRestApiClient.GetGeoAdministrators().GeoAdministrators, true);
+			WriteObject(multiGeoRestApiClient.GetGeoAdministrators(), true);
 		}
 	}
 }
