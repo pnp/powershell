@@ -1,13 +1,12 @@
 ---
-title: Set-PnPMicrosoft365Group
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMicrosoft365Group.html
-external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPMicrosoft365Group
 schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMicrosoft365Group.html
 ---
-  
+ 
 # Set-PnPMicrosoft365Group
 
 ## SYNOPSIS
@@ -15,13 +14,14 @@ schema: 2.0.0
 **Required Permissions**
 
   * Microsoft Graph API: Group.ReadWrite.All
+  * Microsoft Graph API: Directory.ReadWrite.All is required when setting PreferredDataLocation
 
 Sets Microsoft 365 Group properties.
 
 ## SYNTAX
 
 ```powershell
-Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <String>] [-Description <String>] [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam]  [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-RequireSenderAuthenticationEnabled <Boolean>] [-AutoSubscribeNewMembers <Boolean>] [-MailNickname <String>] [-SensitivityLabels <GUID[]>] [-Verbose] 
+Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <String>] [-Description <String>] [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam]  [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-AllowExternalSenders <Boolean>] [-AutoSubscribeNewMembers <Boolean>] [-MailNickname <String>] [-PreferredDataLocation <String>] [-SensitivityLabels <GUID[]>] [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -71,6 +71,13 @@ Set-PnPMicrosoft365Group -Identity $group -SensitivityLabels "bc98af29-59eb-4869
 ```
 
 Sets the sensitivity label of the group.
+
+### EXAMPLE 7
+```powershell
+Set-PnPMicrosoft365Group -Identity $group -PreferredDataLocation EUR
+```
+
+Sets the preferred data location of the group.
 
 ## PARAMETERS
 
@@ -266,6 +273,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -PreferredDataLocation
+The preferred data location for the Microsoft 365 Group. To set this property, the calling app must have Directory.ReadWrite.All permission and the user must be assigned an eligible Microsoft Entra role, such as User Account Administrator, Directory Writer, Exchange Administrator, or SharePoint Administrator.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -SensitivityLabels
 The Sensitivity label to be set to the Microsoft 365 Group. To retrieve the sensitivity label Ids you can use [Get-PnPAvailableSensitivityLabel](Get-PnPAvailableSensitivityLabel.md).
 
@@ -297,4 +318,3 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Microsoft Graph documentation](https://learn.microsoft.com/graph/api/group-update)
-

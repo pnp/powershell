@@ -1,13 +1,12 @@
 ---
-title: New-PnPMicrosoft365Group
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPMicrosoft365Group.html
-external help file: PnP.PowerShell.dll-Help.xml
+title: New-PnPMicrosoft365Group
 schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/New-PnPMicrosoft365Group.html
 ---
-  
+ 
 # New-PnPMicrosoft365Group
 
 ## SYNOPSIS
@@ -15,6 +14,7 @@ schema: 2.0.0
 **Required Permissions**
 
   * Microsoft Graph API : One of Directory.ReadWrite.All, Group.Create, Group.ReadWrite.All
+  * Microsoft Graph API : Directory.ReadWrite.All is required when setting PreferredDataLocation
 
 Creates a new Microsoft 365 Group
 
@@ -24,13 +24,13 @@ Creates a new Microsoft 365 Group
 
 ```powershell
 New-PnPMicrosoft365Group -DisplayName <String> -Description <String> -MailNickname <String>
- [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam] [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>] [-MailEnabled <Boolean>] [-Force] [-SensitivityLabels <GUID[]>] [-Connection <PnPConnection>]
+ [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam] [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>] [-MailEnabled <Boolean>] [-PreferredDataLocation <String>] [-Force] [-SensitivityLabels <GUID[]>] [-Connection <PnPConnection>]
 ```
 
 ### Dynamic membership
 
 ```powershell
-New-PnPMicrosoft365Group -DisplayName <String> -Description <String> -MailNickname <String> -DynamicMembershipRule <String> [-DynamicMembershipRuleProcessingState <DynamicMembershipRuleProcessingState>] [-Owners <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam] [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>] [-Force] [-SensitivityLabels <GUID[]>] [-Connection <PnPConnection>]
+New-PnPMicrosoft365Group -DisplayName <String> -Description <String> -MailNickname <String> -DynamicMembershipRule <String> [-DynamicMembershipRuleProcessingState <DynamicMembershipRuleProcessingState>] [-Owners <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam] [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>] [-PreferredDataLocation <String>] [-Force] [-SensitivityLabels <GUID[]>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -258,6 +258,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -PreferredDataLocation
+The preferred data location for the Microsoft 365 Group. To set this property, the calling app must have Directory.ReadWrite.All permission and the user must be assigned an eligible Microsoft Entra role, such as User Account Administrator, Directory Writer, Exchange Administrator, or SharePoint Administrator.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -HideFromAddressLists
 Controls whether the group is hidden or shown in the Global Address List (GAL).
 
@@ -319,4 +333,3 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Microsoft Graph documentation](https://learn.microsoft.com/graph/api/group-post-groups)
-

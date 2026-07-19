@@ -1,13 +1,12 @@
 ---
-title: Set-PnPDefaultColumnValues
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPDefaultColumnValues.html
-external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPDefaultColumnValues
 schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPDefaultColumnValues.html
 ---
-  
+ 
 # Set-PnPDefaultColumnValues
 
 ## SYNOPSIS
@@ -147,5 +146,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 

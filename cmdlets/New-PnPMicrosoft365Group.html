@@ -91,15 +91,16 @@
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>Microsoft Graph API : One of Directory.ReadWrite.All, Group.Create, Group.ReadWrite.All</li>
+<li>Microsoft Graph API : Directory.ReadWrite.All is required when setting PreferredDataLocation</li>
 </ul>
 <p>Creates a new Microsoft 365 Group</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="assigned-membership-default">Assigned membership (default)</h3>
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName &lt;String&gt; -Description &lt;String&gt; -MailNickname &lt;String&gt;
- [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-ResourceBehaviorOptions &lt;TeamResourceBehaviorOptions&gt;] [-MailEnabled &lt;Boolean&gt;] [-Force] [-SensitivityLabels &lt;GUID[]&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-ResourceBehaviorOptions &lt;TeamResourceBehaviorOptions&gt;] [-MailEnabled &lt;Boolean&gt;] [-PreferredDataLocation &lt;String&gt;] [-Force] [-SensitivityLabels &lt;GUID[]&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="dynamic-membership">Dynamic membership</h3>
-<pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName &lt;String&gt; -Description &lt;String&gt; -MailNickname &lt;String&gt; -DynamicMembershipRule &lt;String&gt; [-DynamicMembershipRuleProcessingState &lt;DynamicMembershipRuleProcessingState&gt;] [-Owners &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-ResourceBehaviorOptions &lt;TeamResourceBehaviorOptions&gt;] [-Force] [-SensitivityLabels &lt;GUID[]&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName &lt;String&gt; -Description &lt;String&gt; -MailNickname &lt;String&gt; -DynamicMembershipRule &lt;String&gt; [-DynamicMembershipRuleProcessingState &lt;DynamicMembershipRuleProcessingState&gt;] [-Owners &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-ResourceBehaviorOptions &lt;TeamResourceBehaviorOptions&gt;] [-PreferredDataLocation &lt;String&gt;] [-Force] [-SensitivityLabels &lt;GUID[]&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to create a new Microsoft 365 Group. It can have an assigned membership or a dynamically defined membership.</p>
@@ -257,6 +258,17 @@ Accept wildcard characters: False
 <h3 id="-owners">-Owners</h3>
 <p>The array UserPrincipalName values of the group's owners</p>
 <pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-preferreddatalocation">-PreferredDataLocation</h3>
+<p>The preferred data location for the Microsoft 365 Group. To set this property, the calling app must have Directory.ReadWrite.All permission and the user must be assigned an eligible Microsoft Entra role, such as User Account Administrator, Directory Writer, Exchange Administrator, or SharePoint Administrator.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
