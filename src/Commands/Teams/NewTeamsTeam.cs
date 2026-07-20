@@ -8,11 +8,13 @@ using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Management.Automation;
+using ConnectionMethod = PnP.PowerShell.Commands.Model.ConnectionMethod;
 
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.New, "PnPTeamsTeam")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Team.Create")]
     public class NewTeamsTeam : PnPGraphCmdlet
     {
         private const string ParameterSet_EXISTINGGROUP = "For an existing group";
@@ -109,6 +111,31 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
+            var contextSettings = Connection.Context.GetContextSettings();
+
+            if (Template != TeamsTemplateType.None)
+            {
+                if (ParameterSpecified(nameof(MailNickName)))
+                {
+                    LogWarning($"{nameof(MailNickName)} is ignored when using {nameof(Template)} because Microsoft Graph creates the backing group when provisioning a team from a template.");
+                }
+
+                if (ParameterSpecified(nameof(ResourceBehaviorOptions)) || ParameterSpecified(nameof(SensitivityLabels)))
+                {
+                    throw new PSInvalidOperationException($"{nameof(ResourceBehaviorOptions)} and {nameof(SensitivityLabels)} are not supported when using {nameof(Template)} because Microsoft Graph creates the backing group when provisioning a team from a template.");
+                }
+
+                if (IsApplicationConnection(Connection.ConnectionMethod) && (Owners == null || Owners.Length == 0))
+                {
+                    throw new PSInvalidOperationException($"{nameof(Owners)} is required when using {nameof(Template)} with application permissions because Microsoft Graph requires a user in the members collection when creating a team with application permissions.");
+                }
+
+                if (Template == TeamsTemplateType.EDU_Class && ParameterSpecified(nameof(Visibility)))
+                {
+                    LogWarning("The EDU_Class template sets team visibility to HiddenMembership and does not allow overriding it. The Visibility value will be ignored by Microsoft Graph.");
+                }
+            }
+
             var teamCI = new TeamCreationInformation()
             {
                 AllowAddRemoveApps = AllowAddRemoveApps,
@@ -130,13 +157,13 @@ namespace PnP.PowerShell.Commands.Teams
                 Description = Description,
                 DisplayName = DisplayName,
                 GiphyContentRating = GiphyContentRating,
+                GiphyContentRatingSpecified = ParameterSpecified(nameof(GiphyContentRating)),
                 GroupId = GroupId,
                 ShowInTeamsSearchAndSuggestions = ShowInTeamsSearchAndSuggestions,
                 Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()),
                 AllowCreatePrivateChannels = AllowCreatePrivateChannels
             };
 
-            var contextSettings = Connection.Context.GetContextSettings();
             if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
             {
                 if (SensitivityLabels != null && SensitivityLabels.Length > 0)
@@ -147,6 +174,14 @@ namespace PnP.PowerShell.Commands.Teams
             }
 
             WriteObject(TeamsUtility.NewTeam(GraphRequestHelper, GroupId, DisplayName, Description, Classification, MailNickName, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Owners, Members, SensitivityLabels, Template, ResourceBehaviorOptions));
+        }
+
+        private static bool IsApplicationConnection(ConnectionMethod connectionMethod)
+        {
+            return connectionMethod == ConnectionMethod.AzureADAppOnly ||
+                connectionMethod == ConnectionMethod.ManagedIdentity ||
+                connectionMethod == ConnectionMethod.AzureADWorkloadIdentity ||
+                connectionMethod == ConnectionMethod.FederatedIdentity;
         }
     }
 }
