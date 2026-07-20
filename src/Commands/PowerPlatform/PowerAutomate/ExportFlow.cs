@@ -6,10 +6,12 @@ using System;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
     [Cmdlet(VerbsData.Export, "PnPFlow")]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation", "https://service.powerapps.com/user")]
     public class ExportFlow : PnPAzureManagementApiCmdlet
     {
         private const string ParameterSet_ASJSON = "As Json";
@@ -71,6 +73,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
             if (AsZipPackage)
             {
+                var powerAppsServiceAccessToken = PowerAppsServiceAccessToken;
                 var postData = new
                 {
                     baseResourceIds = new[] {
@@ -78,7 +81,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 }
                 };
                 string baseUrl = PowerPlatformUtility.GetBapEndpoint(Connection.AzureEnvironment);
-                var wrapper = RestHelper.Post<Model.PowerPlatform.PowerAutomate.FlowExportPackageWrapper>(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", AccessToken, payload: postData);
+                var wrapper = RestHelper.Post<Model.PowerPlatform.PowerAutomate.FlowExportPackageWrapper>(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", powerAppsServiceAccessToken, payload: postData);
 
                 if (wrapper.Status == Model.PowerPlatform.PowerAutomate.Enums.FlowExportStatus.Succeeded)
                 {
@@ -111,7 +114,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                         resources = wrapper.Resources
                     };
 
-                    var resultElement = RestHelper.Post<JsonElement>(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", AccessToken, payload: exportPostData);
+                    var resultElement = RestHelper.Post<JsonElement>(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", powerAppsServiceAccessToken, payload: exportPostData);
                     if (resultElement.TryGetProperty("status", out JsonElement statusElement))
                     {
                         if (statusElement.GetString() == "Succeeded")

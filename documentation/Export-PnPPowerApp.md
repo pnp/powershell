@@ -14,6 +14,7 @@ title: Export-PnPPowerApp
 **Required Permissions**
 
 * Azure: management.azure.com
+* PowerApps: service.powerapps.com
 
 Exports a Microsoft Power App
 

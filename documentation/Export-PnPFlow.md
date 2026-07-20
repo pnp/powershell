@@ -14,6 +14,7 @@ title: Export-PnPFlow
 **Required Permissions**
 
 * Azure: management.azure.com
+* PowerApps: service.powerapps.com (when exporting as a ZIP package)
 
 Exports a Microsoft Power Automate Flow
 

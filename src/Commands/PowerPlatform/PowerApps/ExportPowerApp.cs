@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 {
     [Cmdlet(VerbsData.Export, "PnPPowerApp")]
-    [RequiredApiApplicationPermissions("https://management.azure.com/.default")]
+    [RequiredApiApplicationPermissions("https://management.azure.com/user_impersonation", "https://service.powerapps.com/user")]
     public class ExportPowerApp : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -59,8 +59,9 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 
             var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(ArmRequestHelper, Connection.AzureEnvironment)?.Name;
             var appName = Identity.GetName();
+            var powerAppsServiceAccessToken = PowerAppsServiceAccessToken;
 
-            var wrapper = PowerAppsUtility.GetWrapper(Connection.HttpClient, environmentName, AccessToken, appName, Connection.AzureEnvironment);
+            var wrapper = PowerAppsUtility.GetWrapper(Connection.HttpClient, environmentName, powerAppsServiceAccessToken, appName, Connection.AzureEnvironment);
 
             if (wrapper.Status == Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Succeeded)
             {
@@ -78,11 +79,11 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                     creator = PackageCreatedBy,
                     sourceEnvironment = PackageSourceEnvironment
                 };
-                var responseLocation = PowerAppsUtility.GetResponseLocation(Connection.HttpClient, environmentName, AccessToken, appName, wrapper, objectDetails);
+                var responseLocation = PowerAppsUtility.GetResponseLocation(Connection.HttpClient, environmentName, powerAppsServiceAccessToken, appName, wrapper, objectDetails, Connection.AzureEnvironment);
 
 
-                var packageLink = PowerAppsUtility.GetPackageLink(Connection.HttpClient, Convert.ToString(responseLocation), AccessToken);
-                var getFileByteArray = PowerAppsUtility.GetFileByteArray(Connection.HttpClient, packageLink, AccessToken);
+                var packageLink = PowerAppsUtility.GetPackageLink(Connection.HttpClient, Convert.ToString(responseLocation), powerAppsServiceAccessToken);
+                var getFileByteArray = PowerAppsUtility.GetFileByteArray(Connection.HttpClient, packageLink, powerAppsServiceAccessToken);
                 var fileName = string.Empty;
                 if (ParameterSpecified(nameof(OutPath)))
                 {
