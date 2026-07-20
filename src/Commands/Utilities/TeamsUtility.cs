@@ -25,7 +25,8 @@ namespace PnP.PowerShell.Commands.Utilities
         private const int PageSize = 100;
         private const int TeamsAsyncOperationPollingIntervalSeconds = 30;
         private const int TeamsAsyncOperationMaxRetries = 12;
-        private const int TeamsTemplateInitialMembersLimit = 20;
+        private const int TeamsTemplateGetTeamRetryIntervalSeconds = 5;
+        private const int TeamsTemplateGetTeamMaxRetries = 3;
 
         #region Team
         public static List<Group> GetGroupsWithTeam(ApiRequestHelper requestHelper, string filter = null)
@@ -306,7 +307,6 @@ namespace PnP.PowerShell.Commands.Utilities
             }
 
             var teamMembers = CreateInitialTeamMembers(requestHelper, owners, members);
-            ValidateInitialTeamMembersLimit(teamMembers);
             if (teamMembers.Count > 0)
             {
                 payload.Add("members", teamMembers);
@@ -325,6 +325,15 @@ namespace PnP.PowerShell.Commands.Utilities
                 throw new PSInvalidOperationException("Microsoft Graph completed the team creation operation without returning a target team identifier.");
             }
 
+            // The team was provisioned successfully. Try to return the fully hydrated team from Microsoft Graph so the
+            // output matches the non-template creation path. Fall back to the requested values if the freshly created
+            // team cannot be read back yet due to replication delays.
+            var provisionedTeam = GetProvisionedTeam(requestHelper, operation.TargetResourceId);
+            if (provisionedTeam != null)
+            {
+                return provisionedTeam;
+            }
+
             team.GroupId = operation.TargetResourceId;
             team.DisplayName = displayName;
             team.Description = description;
@@ -332,6 +341,34 @@ namespace PnP.PowerShell.Commands.Utilities
             team.Visibility = templateType == TeamsTemplateType.EDU_Class ? GroupVisibility.HiddenMembership : teamVisibility;
             team.Specialization = GetTeamSpecialization(templateType);
             return team;
+        }
+
+        private static Team GetProvisionedTeam(ApiRequestHelper requestHelper, string groupId)
+        {
+            // Right after an async provisioning operation completes, the backing group and team can take a short while
+            // to become queryable. Retry a few times before giving up and letting the caller fall back to the requested values.
+            for (var retryCount = 0; retryCount < TeamsTemplateGetTeamMaxRetries; retryCount++)
+            {
+                if (retryCount > 0)
+                {
+                    Thread.Sleep(TimeSpan.FromSeconds(TeamsTemplateGetTeamRetryIntervalSeconds));
+                }
+
+                try
+                {
+                    var team = GetTeam(requestHelper, groupId);
+                    if (team != null)
+                    {
+                        return team;
+                    }
+                }
+                catch (GraphException)
+                {
+                    // The team is not queryable yet, retry.
+                }
+            }
+
+            return null;
         }
 
         private static List<TeamChannelMember> CreateInitialTeamMembers(ApiRequestHelper requestHelper, string[] owners, string[] members)
@@ -362,14 +399,6 @@ namespace PnP.PowerShell.Commands.Utilities
             return teamMembers;
         }
 
-        private static void ValidateInitialTeamMembersLimit(IReadOnlyCollection<TeamChannelMember> teamMembers)
-        {
-            if (teamMembers.Count > TeamsTemplateInitialMembersLimit)
-            {
-                throw new PSInvalidOperationException($"Microsoft Graph supports a maximum of {TeamsTemplateInitialMembersLimit} distinct owners and members in the initial members collection when creating a team from a template. Specify no more than {TeamsTemplateInitialMembersLimit} combined owners and members when using the Template parameter.");
-            }
-        }
-
         private static string GetUserODataBindUrl(ApiRequestHelper requestHelper, string user)
         {
             return $"https://{requestHelper.GraphEndPoint}/v1.0/users('{user}')";
@@ -395,6 +424,7 @@ namespace PnP.PowerShell.Commands.Utilities
         private static TeamsAsyncOperation WaitForTeamsAsyncOperation(ApiRequestHelper requestHelper, string operationStatusUrl)
         {
             TeamsAsyncOperation operation = null;
+            GraphException lastTransientException = null;
             for (var retryCount = 0; retryCount < TeamsAsyncOperationMaxRetries; retryCount++)
             {
                 if (retryCount > 0)
@@ -406,8 +436,11 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     operation = requestHelper.Get<TeamsAsyncOperation>(operationStatusUrl);
                 }
-                catch (GraphException ex) when (IsTransientTeamsAsyncOperationError(ex) && retryCount < TeamsAsyncOperationMaxRetries - 1)
+                catch (GraphException ex) when (IsTransientTeamsAsyncOperationError(ex))
                 {
+                    // A transient error (including on the final attempt) should not surface as a raw Graph exception.
+                    // Remember it so it can be included in the timeout message if we never get a definitive status.
+                    lastTransientException = ex;
                     continue;
                 }
 
@@ -428,7 +461,10 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
 
-            throw new PSInvalidOperationException($"Timed out waiting for Microsoft Graph team creation operation at {operationStatusUrl} to complete.");
+            var timeoutDetail = lastTransientException?.HttpResponse != null
+                ? $" The last polling attempt failed with status code {(int)lastTransientException.HttpResponse.StatusCode}."
+                : string.Empty;
+            throw new PSInvalidOperationException($"Timed out waiting for Microsoft Graph team creation operation at {operationStatusUrl} to complete.{timeoutDetail}");
         }
 
         private static bool IsTransientTeamsAsyncOperationError(GraphException ex)
