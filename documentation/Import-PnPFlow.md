@@ -14,6 +14,7 @@ title: Import-PnPFlow
 **Required Permissions**
 
 * Azure: management.azure.com
+* PowerApps: service.powerapps.com
 
 Imports a Microsoft Power Automate Flow.
 

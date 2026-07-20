@@ -14,6 +14,7 @@ title: Get-PnPPowerPlatformCustomConnector
 **Required Permissions**
 
 * Azure: management.azure.com
+* PowerApps: service.powerapps.com
 
 Returns the custom Power Platform Connectors for a given environment
 
