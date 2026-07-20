@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPTenantSearchCrawledProperty` cmdlet which allows creation of a tenant level crawled property for SharePoint Online search. [#5373](https://github.com/pnp/powershell/pull/5373)
 - Added `GitLab CI/CD` support to `Connect-PnPOnline -FederatedIdentity`. [#5395](https://github.com/pnp/powershell/pull/5395)
 - Added `PreferredDataLocation` support to `Set-PnPMicrosoft365Group` and documented it for `Get-PnPMicrosoft365Group` and `New-PnPMicrosoft365Group`. [#5402](https://github.com/pnp/powershell/pull/5402)
+- Added `Standard` and `EDU_Staff` template support to `New-PnPTeamsTeam` and provision Teams templates through Microsoft Graph team templates. Note that `EDU_Class` and `EDU_PLC` are now also provisioned through Microsoft Graph team templates (`POST /teams`) instead of the previous Microsoft 365 Group creation and teamify flow. [#999](https://github.com/pnp/powershell/issues/999)
 
 ### Changed
 
