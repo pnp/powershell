@@ -21,7 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with Azure functions not working properly when we also have other modules like Az which rely on .NET 10. [#5393](https://github.com/pnp/powershell/pull/5393)
 - Fixed multi-geo compatibility issues with `Get-PnPGeoAdministrator` response handling, `Set-PnPMultiGeoExperience` confirmation prompts, and unsupported-version errors for `Set-PnPMultiGeoCompanyAllowedDataLocation`. [#5401](https://github.com/pnp/powershell/pull/5401)
 - Fixed Power Apps cmdlets to use cloud-specific Power Apps service audiences and endpoints for government clouds. [#5404](https://github.com/pnp/powershell/pull/5404)
-- Fixed `Export-PnPPowerApp`, `Get-PnPPowerPlatformCustomConnector`, `Export-PnPFlow -AsZipPackage`, and `Import-PnPFlow` to use the Power Apps service audience when calling Power Apps and Business Applications endpoints in sovereign clouds.
+- Fixed `Export-PnPPowerApp`, `Get-PnPPowerPlatformCustomConnector`, `Export-PnPFlow -AsZipPackage`, and `Import-PnPFlow` to use the Power Apps service audience when calling Power Apps and Business Applications endpoints in sovereign clouds. [#5408](https://github.com/pnp/powershell/pull/5408)
 
 ### Removed
 
