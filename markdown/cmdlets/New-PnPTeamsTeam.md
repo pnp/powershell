@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: New-PnPTeamsTeam
-schema: 2.0.0
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/New-PnPTeamsTeam.html
+schema: 2.0.0
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
+title: New-PnPTeamsTeam
+external help file: PnP.PowerShell.dll-Help.xml
 ---
- 
+  
 # New-PnPTeamsTeam
 
 ## SYNOPSIS
@@ -14,6 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPTeamsTeam.html
 **Required Permissions**
 
   * Microsoft Graph API: Group.ReadWrite.All
+  * Microsoft Graph API: Team.Create when using -Template
 
 Creates a new team in Microsoft Teams or teamifies an existing Microsoft 365 Group. If the Microsoft 365 Group does not exist yet, it will create it first and then add a Microsoft Teams team to the group. If it does already exist, it will use the provided Microsoft 365 Group and just teamify it by adding a Microsoft Teams team to it.
 
@@ -46,7 +48,8 @@ New-PnPTeamsTeam -DisplayName <String> [-MailNickName <String>] [-Description <S
  [-Owners <String[]>] [-Members <String[]>]
  [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>]
  [-SensitivityLabels <GUID[]>]
- 
+ [-Template <TeamsTemplateType>]
+
 ```
 
 ## DESCRIPTION
@@ -97,6 +100,34 @@ New-PnPTeamsTeam -DisplayName "myPnPDemo1" -Visibility Private -Owners "user1@co
 ```
 
 This will create a new Microsoft Teams team called "myPnPDemo1" and sets the privacy to Private. User1 and user2 will be added as owners. User3 will be added as a member. The team will also get the sensitivity label value corresponding to the GUID specified.
+
+### EXAMPLE 7
+```powershell
+New-PnPTeamsTeam -DisplayName "Staff Team" -Visibility Private -Template EDU_Staff -Owners "principal@contoso.onmicrosoft.com"
+```
+
+This will create a new Microsoft Teams education staff team called "Staff Team" and adds the provided user as owner. Owners are required when using application permissions.
+
+### EXAMPLE 8
+```powershell
+New-PnPTeamsTeam -DisplayName "Biology 101" -Template EDU_Class -Owners "teacher@contoso.onmicrosoft.com" -Members "student@contoso.onmicrosoft.com"
+```
+
+This will create a new Microsoft Teams education class team called "Biology 101". Microsoft Graph sets class team visibility to HiddenMembership.
+
+### EXAMPLE 9
+```powershell
+New-PnPTeamsTeam -DisplayName "Math PLC" -Visibility Private -Template EDU_PLC -Owners "lead@contoso.onmicrosoft.com"
+```
+
+This will create a new Microsoft Teams education professional learning community team called "Math PLC".
+
+### EXAMPLE 10
+```powershell
+New-PnPTeamsTeam -DisplayName "Project Team" -Visibility Private -Template Standard -Owners "owner@contoso.onmicrosoft.com"
+```
+
+This will create a new standard Microsoft Teams team through Microsoft Graph team templates. Omitting Template keeps the existing Microsoft 365 Group creation and teamify behavior.
 
 ## PARAMETERS
 
@@ -381,7 +412,7 @@ Accept wildcard characters: False
 ```
 
 ### -MailNickName
-The MailNickName parameter specifies the alias for the associated Microsoft 365 Group. This value will be used for the mail enabled object and will be used as PrimarySmtpAddress for this Microsoft 365 Group.The value of the MailNickName parameter has to be unique across your tenant.
+The MailNickName parameter specifies the alias for the associated Microsoft 365 Group. This value will be used for the mail enabled object and will be used as PrimarySmtpAddress for this Microsoft 365 Group.The value of the MailNickName parameter has to be unique across your tenant. This parameter is ignored when used together with Template because Microsoft Graph creates the backing group.
 
 ```yaml
 Type: String
@@ -403,6 +434,20 @@ Setting that determines whether or not private teams should be searchable from T
 Type: Boolean
 Parameter Sets: (All)
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Template
+The Microsoft Teams template to use for the new team. Use Standard for the standard team template, EDU_Class for the education class template, EDU_PLC for the education professional learning community template, or EDU_Staff for the education staff template. When this parameter is used, Microsoft Graph provisions the team using POST /teams with a teamsTemplates binding and creates the backing Microsoft 365 Group automatically. Owners are required when using application permissions. Owners and Members are added to the initial members collection when provisioning the team; Microsoft Graph enforces its own limit on the number of users allowed in that collection. Omit this parameter to keep the existing Microsoft 365 Group creation and teamify behavior.
+
+```yaml
+Type: TeamsTemplateType
+Parameter Sets: For a new group
+Accepted values: None, Standard, EDU_Class, EDU_PLC, EDU_Staff
 Required: False
 Position: Named
 Default value: None
@@ -440,7 +485,7 @@ Accept wildcard characters: False
 ```
 
 ### -Owners
-The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as owners. If omitted and the cmdlet is run using a token containing a user identity, such as when logging on with -Interactive or -DeviceLogin, the user used to authenticate with would become the owner. You can provide as many owners as you want, as long as you stay within the [Microsoft 365 Groups limits](https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
+The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as owners. If omitted and the cmdlet is run using a token containing a user identity, such as when logging on with -Interactive or -DeviceLogin, the user used to authenticate with would become the owner. You can provide as many owners as you want, as long as you stay within the [Microsoft 365 Groups limits](https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). When using Template, Owners and Members are added to the initial members collection and Microsoft Graph enforces its own limit on the number of users allowed in that collection. Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
 
 ```yaml
 Type: String[]
@@ -454,7 +499,7 @@ Accept wildcard characters: False
 ```
 
 ### -Members
-The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as members. You can provide as many members as you want, as long as you stay within the [Microsoft 365 Groups limits](https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
+The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as members. You can provide as many members as you want, as long as you stay within the [Microsoft 365 Groups limits](https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). When using Template, Owners and Members are added to the initial members collection and Microsoft Graph enforces its own limit on the number of users allowed in that collection. Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
 
 ```yaml
 Type: String[]
@@ -468,7 +513,7 @@ Accept wildcard characters: False
 
 ### -ResourceBehaviorOptions
 
-Allows providing ResourceBehaviorOptions which accepts multiple values that specify group behaviors for a Microsoft 365 Group. This will only work when you create a new Microsoft 365 Group, it will not work for existing groups.
+Allows providing ResourceBehaviorOptions which accepts multiple values that specify group behaviors for a Microsoft 365 Group. This will only work when you create a new Microsoft 365 Group, it will not work for existing groups. This parameter cannot be used together with Template.
 
 ```yaml
 Type: TeamResourceBehaviorOptions
@@ -483,7 +528,7 @@ Accept wildcard characters: False
 ```
 
 ### -SensitivityLabels
-The Sensitivity label to be set to the Microsoft 365 Group and Team. To retrieve the sensitivity label you need to use the Graph API mentioned [here](https://learn.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&tabs=http).
+The Sensitivity label to be set to the Microsoft 365 Group and Team. To retrieve the sensitivity label you need to use the Graph API mentioned [here](https://learn.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&tabs=http). This parameter cannot be used together with Template.
 
 ```yaml
 Type: GUID[]
