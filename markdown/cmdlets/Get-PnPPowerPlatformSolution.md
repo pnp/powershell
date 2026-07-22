@@ -1,13 +1,12 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerPlatformSolution.html
-schema: 2.0.0
 Module Name: PnP.PowerShell
+schema: 2.0.0
 applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-title: Get-PnPPowerPlatformSolution
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerPlatformSolution.html
 external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPPowerPlatformSolution
 ---
-   
+  
 # Get-PnPPowerPlatformSolution
 
 ## SYNOPSIS
@@ -89,4 +88,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

@@ -1,13 +1,12 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Start-PnPUnifiedGroupMove.html
-schema: 2.0.0
 Module Name: PnP.PowerShell
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
 title: Start-PnPUnifiedGroupMove
+schema: 2.0.0
+applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Start-PnPUnifiedGroupMove.html
 ---
- 
+
 # Start-PnPUnifiedGroupMove
 
 ## SYNOPSIS
@@ -240,4 +239,3 @@ Returns an object with `GroupName`, `MoveJobId`, `SourceDataLocation`, `Destinat
 [Get-PnPGeoMoveCrossCompatibilityStatus](Get-PnPGeoMoveCrossCompatibilityStatus.md)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
