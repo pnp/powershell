@@ -72,19 +72,19 @@ namespace PnP.PowerShell.Commands.Files
                 // We can't deal with absolute URLs
                 Url = UrlUtility.MakeRelativeUrl(Url);
             }
-            
-            // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
-            Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
 
             var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-            if (!Url.ToLower().StartsWith(webUrl.ToLower()))
+            // The provided Url can be the literal name of the file or a URL encoded version of it.
+            // Try it as provided first so files with i.e. %20 or + in their actual name resolve,
+            // and only fall back to the decoded form so URLs copied from a browser keep working.
+            // The + character is excluded from decoding as it would otherwise turn into a space.
+            serverRelativeUrl = ToServerRelativeUrl(webUrl, Url);
+            var decodedUrl = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
+            var decodedServerRelativeUrl = ToServerRelativeUrl(webUrl, decodedUrl);
+            if (!decodedServerRelativeUrl.Equals(serverRelativeUrl, StringComparison.Ordinal) && !FileExists(serverRelativeUrl))
             {
-                serverRelativeUrl = UrlUtility.Combine(webUrl, Url);
-            }
-            else
-            {
-                serverRelativeUrl = Url;
+                serverRelativeUrl = decodedServerRelativeUrl;
             }
 
             switch (ParameterSetName)
@@ -161,6 +161,19 @@ namespace PnP.PowerShell.Commands.Files
                     WriteObject(stream);
                     break;
             }
+        }
+
+        private static string ToServerRelativeUrl(string webUrl, string url)
+        {
+            return !url.ToLower().StartsWith(webUrl.ToLower()) ? UrlUtility.Combine(webUrl, url) : url;
+        }
+
+        private bool FileExists(string serverRelativeUrl)
+        {
+            var file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+            ClientContext.Load(file, f => f.Exists);
+            ClientContext.ExecuteQueryRetry();
+            return file.Exists;
         }
 
         private static async Task SaveFileToLocal(IFile fileToDownload, string filePath)
