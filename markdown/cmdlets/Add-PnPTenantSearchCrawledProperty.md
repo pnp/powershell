@@ -1,11 +1,11 @@
 ---
 schema: 2.0.0
-title: Add-PnPTenantSearchCrawledProperty
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
+applicable: SharePoint Online
+title: Add-PnPTenantSearchCrawledProperty
+tags: Available in the current Nightly Release only.
 online version: https://pnp.github.io/powershell/cmdlets/Add-PnPTenantSearchCrawledProperty.html
+external help file: PnP.PowerShell.dll-Help.xml
 ---
  
 # Add-PnPTenantSearchCrawledProperty
