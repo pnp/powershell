@@ -3,6 +3,7 @@ using PnP.PowerShell.Commands.Model.Planner;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
 
@@ -10,6 +11,11 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class PlannerUtility
     {
+        /// <summary>
+        /// Number of times updating a plan is retried when it keeps being modified by someone else while the update is in flight
+        /// </summary>
+        private const int MaxPlanUpdateAttempts = 5;
+
         #region Plans
         public static IEnumerable<PlannerPlan> GetPlans(ApiRequestHelper requestHelper, string groupId, bool resolveDisplayNames)
         {
@@ -62,21 +68,45 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static PlannerPlan UpdatePlan(ApiRequestHelper requestHelper, PlannerPlan plan, string title)
         {
-            var stringContent = new StringContent(JsonSerializer.Serialize(new { title }));
-            stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var responseMessage = requestHelper.Patch(stringContent, $"v1.0/planner/plans/{plan.Id}", new Dictionary<string, string>() { { "IF-MATCH", plan.ETag } });
-            while (responseMessage.StatusCode == System.Net.HttpStatusCode.PreconditionFailed)
+            var planId = plan.Id;
+
+            // An outdated ETag makes Microsoft Graph respond with an HTTP 412. Retrieve the plan again to pick up its
+            // current ETag and retry. PatchWithoutValidation is used so the 412 can be handled here rather than thrown.
+            for (var attempt = 0; attempt < MaxPlanUpdateAttempts; attempt++)
             {
-                // retrieve the plan again
-                plan = requestHelper.Get<PlannerPlan>($"v1.0/planner/plans/{plan.Id}");
-                responseMessage = requestHelper.Patch(stringContent, $"v1.0/planner/plans/{plan.Id}", new Dictionary<string, string>() { { "IF-MATCH", plan.ETag } });
+                // The request content is consumed by the send, so it has to be recreated for every attempt
+                var stringContent = new StringContent(JsonSerializer.Serialize(new { title }));
+                stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+                using var responseMessage = requestHelper.PatchWithoutValidation(stringContent, $"v1.0/planner/plans/{planId}", new Dictionary<string, string>() { { "IF-MATCH", plan.ETag } });
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var responseContent = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    return JsonSerializer.Deserialize<PlannerPlan>(responseContent);
+                }
+
+                if (responseMessage.StatusCode != System.Net.HttpStatusCode.PreconditionFailed)
+                {
+                    throw new PSInvalidOperationException(DescribePlanUpdateFailure(requestHelper, responseMessage, planId));
+                }
+
+                plan = requestHelper.Get<PlannerPlan>($"v1.0/planner/plans/{planId}");
+                if (plan == null)
+                {
+                    throw new PSInvalidOperationException($"Failed to update Planner plan '{planId}' because it could no longer be retrieved to resolve a concurrent modification.");
+                }
             }
-            if (responseMessage.IsSuccessStatusCode)
+
+            throw new PSInvalidOperationException($"Failed to update Planner plan '{planId}' after {MaxPlanUpdateAttempts} attempts because it kept being modified by someone else.");
+        }
+
+        private static string DescribePlanUpdateFailure(ApiRequestHelper requestHelper, HttpResponseMessage responseMessage, string planId)
+        {
+            if (requestHelper.TryGetGraphException(responseMessage, out GraphException ex) && !string.IsNullOrWhiteSpace(ex.Error?.Message))
             {
-                var responseContent = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                return JsonSerializer.Deserialize<PlannerPlan>(responseContent);
+                return $"Failed to update Planner plan '{planId}': {ex.Error.Message}";
             }
-            return null;
+            return $"Failed to update Planner plan '{planId}'. Microsoft Graph returned HTTP {(int)responseMessage.StatusCode} {responseMessage.StatusCode}.";
         }
 
         public static void DeletePlan(ApiRequestHelper requestHelper, string planId)
