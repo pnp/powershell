@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
+tags: Available in the current Nightly Release only.
 title: Get-PnPListVersionPolicy
+Module Name: PnP.PowerShell
 schema: 2.0.0
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPListVersionPolicy.html
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPListVersionPolicy.html
 ---
-
+ 
 # Get-PnPListVersionPolicy
 
 ## SYNOPSIS
@@ -92,3 +93,4 @@ Contains the library version policy settings and any file type override settings
 ## RELATED LINKS
 
 [Set-PnPListVersionPolicy](Set-PnPListVersionPolicy.md)
+

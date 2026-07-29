@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
+tags: Available in the current Nightly Release only.
 title: Import-PnPTermGroupFromXml
+Module Name: PnP.PowerShell
 schema: 2.0.0
+online version: https://pnp.github.io/powershell/cmdlets/Import-PnPTermGroupFromXml.html
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Import-PnPTermGroupFromXml.html
 ---
- 
+  
 # Import-PnPTermGroupFromXml
 
 ## SYNOPSIS
@@ -93,4 +94,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 

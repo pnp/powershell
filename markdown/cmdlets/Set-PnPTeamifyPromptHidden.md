@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
+tags: Available in the current Nightly Release only.
 title: Set-PnPTeamifyPromptHidden
+Module Name: PnP.PowerShell
 schema: 2.0.0
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTeamifyPromptHidden.html
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTeamifyPromptHidden.html
 ---
- 
+  
 # Set-PnPTeamifyPromptHidden
 
 ## SYNOPSIS
@@ -53,4 +54,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 
