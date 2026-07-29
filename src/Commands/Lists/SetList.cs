@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
@@ -9,6 +10,8 @@ namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Set, "PnPList")]
     [OutputType(typeof(List))]
+    [RequiredApiApplicationPermissions("graph/InformationProtectionPolicy.Read.All")]
+    [RequiredApiDelegatedPermissions("graph/InformationProtectionPolicy.Read")]
     public class SetList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

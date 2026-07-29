@@ -10,6 +10,11 @@ online version: https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html
 # Send-PnPMail
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Mail.Send (delegated or application) when using a Microsoft Graph parameter set
+
 Allows sending an e-mail
 
 ## SYNTAX
