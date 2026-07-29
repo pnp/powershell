@@ -87,13 +87,11 @@ namespace PnP.PowerShell.Commands.UserProfiles
             }
             if (getphoto)
             {
-                var response = GraphRequestHelper.GetResponse($"users/{user.Id}/photo/$value");
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
-                    System.IO.File.WriteAllBytes(Filename, content);
-                    WriteObject($"File saved as: {Filename}");
-                }
+                // A non successful response will throw from within GetResponse
+                using var response = GraphRequestHelper.GetResponse($"users/{user.Id}/photo/$value");
+                var content = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                System.IO.File.WriteAllBytes(Filename, content);
+                WriteObject($"File saved as: {Filename}");
             }
         }
 

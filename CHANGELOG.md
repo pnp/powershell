@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Standard` and `EDU_Staff` template support to `New-PnPTeamsTeam` and provision Teams templates through Microsoft Graph team templates. Note that `EDU_Class` and `EDU_PLC` are now also provisioned through Microsoft Graph team templates (`POST /teams`) instead of the previous Microsoft 365 Group creation and teamify flow. [#999](https://github.com/pnp/powershell/issues/999)
 
 ### Changed
+- Changed `Export-PnPFlow -AsZipPackage` and `Export-PnPPowerApp` to ask for confirmation before overwriting an existing file when `-OutPath` is omitted, as they already did when `-OutPath` is specified. Unattended scripts that rely on the previous silent overwrite need to specify `-Force`. [#5421](https://github.com/pnp/powershell/pull/5421)
 
 ### Fixed
 - Fixed an issue with `Add-PnPListItem` and `Set-PnPListItem` cmdlets when trying to set taxonomy fields by passing in a GUID or term instance using a Batch. [#5174](https://github.com/pnp/powershell/pull/5174)
@@ -22,6 +23,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed multi-geo compatibility issues with `Get-PnPGeoAdministrator` response handling, `Set-PnPMultiGeoExperience` confirmation prompts, and unsupported-version errors for `Set-PnPMultiGeoCompanyAllowedDataLocation`. [#5401](https://github.com/pnp/powershell/pull/5401)
 - Fixed Power Apps cmdlets to use cloud-specific Power Apps service audiences and endpoints for government clouds. [#5404](https://github.com/pnp/powershell/pull/5404)
 - Fixed `Export-PnPPowerApp`, `Get-PnPPowerPlatformCustomConnector`, `Export-PnPFlow -AsZipPackage`, and `Import-PnPFlow` to use the Power Apps service audience when calling Power Apps and Business Applications endpoints in sovereign clouds. [#5408](https://github.com/pnp/powershell/pull/5408)
+- Fixed `Export-PnPFlow -AsZipPackage` silently doing nothing when the export failed. Failures are now reported on the PowerShell error stream and incomplete or unsuccessful package responses are rejected instead of resulting in an empty or invalid file. [#1340](https://github.com/pnp/powershell/issues/1340)
+- Fixed `Export-PnPPowerApp` silently doing nothing when the export failed, and no longer polling forever when the service reports a failed export. The cmdlet now waits up to 30 minutes for the package to be prepared, following the polling interval requested by the service. [#1340](https://github.com/pnp/powershell/issues/1340)
+- Fixed `Import-PnPFlow` ignoring its documented default polling behavior when `-RetryCount` and `-Delay` were omitted, which made the import fail with a missing property error. Both parameters now validate their range and a run that never becomes ready reports why. [#5421](https://github.com/pnp/powershell/pull/5421)
+- Fixed `Set-PnPPlannerPlan` failing to update a plan that was modified by someone else while the update was in flight, and returning nothing instead of an error when the update could not be applied. [#5421](https://github.com/pnp/powershell/pull/5421)
+- Fixed `Get-PnPUserProfilePhoto` and other Microsoft Graph backed cmdlets silently ignoring a failed request when the error response could be parsed but did not contain any error details. [#5421](https://github.com/pnp/powershell/pull/5421)
 
 ### Removed
 
