@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Base;
+﻿using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 using System;
@@ -8,6 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 {
     [Cmdlet(VerbsCommon.Get, "PnPPowerAppPermission")]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation", "https://service.powerapps.com/user")]
     [OutputType(typeof(Model.PowerPlatform.PowerApp.PowerApp))]
     public class GetPowerAppPermission : PnPAzureManagementApiCmdlet
     {

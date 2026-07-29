@@ -10,7 +10,7 @@ using PnP.PowerShell.Commands.Attributes;
 namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 {
     [Cmdlet(VerbsCommon.Get, "PnPPowerPlatformSolution")]
-    [RequiredApiDelegatedPermissions("azure/user_impersonation")]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation", "dynamics/user_impersonation")]
     public class GetPowerPlatformSolution: PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
