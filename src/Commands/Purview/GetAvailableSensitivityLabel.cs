@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Purview
     [Cmdlet(VerbsCommon.Get, "PnPAvailableSensitivityLabel")]
     [OutputType(typeof(IEnumerable<Model.Graph.Purview.InformationProtectionLabel>))]
     [OutputType(typeof(Model.Graph.Purview.InformationProtectionLabel))]
-    [RequiredApiApplicationPermissions("graph/InformationProtectionPolicy.ReadAll")]
+    [RequiredApiApplicationPermissions("graph/InformationProtectionPolicy.Read.All")]
     [RequiredApiDelegatedPermissions("graph/InformationProtectionPolicy.Read")]
     public class GetAvailableSensitivityLabel : PnPGraphCmdlet
     {
