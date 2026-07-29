@@ -105,7 +105,6 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             };
             var responseLocation = PowerAppsUtility.GetResponseLocation(Connection.HttpClient, environmentName, powerAppsServiceAccessToken, appName, wrapper, objectDetails, Connection.AzureEnvironment);
             var packageLink = PowerAppsUtility.GetPackageLink(Connection.HttpClient, Convert.ToString(responseLocation), powerAppsServiceAccessToken);
-            var fileBytes = Utilities.REST.RestHelper.GetByteArray(Connection.HttpClient, packageLink, null, "application/zip");
 
             string fileName;
             if (ParameterSpecified(nameof(OutPath)))
@@ -130,6 +129,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                 }
             }
 
+            var fileBytes = Utilities.REST.RestHelper.GetByteArray(Connection.HttpClient, packageLink, null, "application/zip");
             System.IO.File.WriteAllBytes(fileName, fileBytes);
             var returnObject = new PSObject();
             returnObject.Properties.Add(new PSNoteProperty("Filename", fileName));

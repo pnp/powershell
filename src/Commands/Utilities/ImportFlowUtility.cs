@@ -127,7 +127,10 @@ namespace PnP.PowerShell.Commands.Utilities
 
                 retryCount++;
                 Log.Debug("ImportFlowUtility", $"Import operations not ready yet. Retry {retryCount}/{resolvedMaxRetries}...");
-                Thread.Sleep(resolvedDelayMs);
+                if (retryCount < resolvedMaxRetries)
+                {
+                    Thread.Sleep(resolvedDelayMs);
+                }
             }
 
             Log.Debug("ImportFlowUtility", "Import operations did not become available within the allowed number of retries");

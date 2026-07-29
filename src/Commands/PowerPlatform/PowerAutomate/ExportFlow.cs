@@ -174,7 +174,6 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 return;
             }
 
-            var byteArray = RestHelper.GetByteArray(Connection.HttpClient, packageLink, null, "application/zip");
             string fileName;
             if (ParameterSpecified(nameof(OutPath)))
             {
@@ -198,6 +197,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 }
             }
 
+            var byteArray = RestHelper.GetByteArray(Connection.HttpClient, packageLink, null, "application/zip");
             System.IO.File.WriteAllBytes(fileName, byteArray);
             var returnObject = new PSObject();
             returnObject.Properties.Add(new PSNoteProperty("Filename", fileName));

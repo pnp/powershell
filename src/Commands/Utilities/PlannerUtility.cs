@@ -81,8 +81,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 using var responseMessage = requestHelper.PatchWithoutValidation(stringContent, $"v1.0/planner/plans/{planId}", new Dictionary<string, string>() { { "IF-MATCH", plan.ETag } });
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    var responseContent = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                    return JsonSerializer.Deserialize<PlannerPlan>(responseContent);
+                    return requestHelper.Get<PlannerPlan>($"v1.0/planner/plans/{planId}");
                 }
 
                 if (responseMessage.StatusCode != System.Net.HttpStatusCode.PreconditionFailed)

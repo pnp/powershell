@@ -22,13 +22,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed multi-geo compatibility issues with `Get-PnPGeoAdministrator` response handling, `Set-PnPMultiGeoExperience` confirmation prompts, and unsupported-version errors for `Set-PnPMultiGeoCompanyAllowedDataLocation`. [#5401](https://github.com/pnp/powershell/pull/5401)
 - Fixed Power Apps cmdlets to use cloud-specific Power Apps service audiences and endpoints for government clouds. [#5404](https://github.com/pnp/powershell/pull/5404)
 - Fixed `Export-PnPPowerApp`, `Get-PnPPowerPlatformCustomConnector`, `Export-PnPFlow -AsZipPackage`, and `Import-PnPFlow` to use the Power Apps service audience when calling Power Apps and Business Applications endpoints in sovereign clouds. [#5408](https://github.com/pnp/powershell/pull/5408)
-- Fixed `Export-PnPFlow -AsZipPackage` to emit capturable PowerShell errors for failed exports and reject incomplete or unsuccessful package responses. [#1340](https://github.com/pnp/powershell/issues/1340)
-- Fixed `Export-PnPPowerApp` to emit capturable PowerShell errors for failed exports, reject incomplete or unsuccessful package responses, and stop polling for the export status indefinitely when the service reports a failure. [#1340](https://github.com/pnp/powershell/issues/1340)
-- Fixed `Import-PnPFlow` to honor the documented default polling behavior when `-RetryCount` and `-Delay` are omitted, and to report a clear error instead of a missing property when the import parameters never become available. [#PRNUMBER](https://github.com/pnp/powershell/pull/PRNUMBER)
-- Fixed Microsoft Graph backed cmdlets silently ignoring a failed request when the error response body could be parsed but contained no error details. [#PRNUMBER](https://github.com/pnp/powershell/pull/PRNUMBER)
-- Fixed `Set-PnPPlannerPlan` retrying the update when the plan was modified by someone else while the update was in flight, and reporting the reason instead of returning nothing when the update fails. [#PRNUMBER](https://github.com/pnp/powershell/pull/PRNUMBER)
-- Fixed `Export-PnPFlow -AsZipPackage` and `Export-PnPPowerApp` silently overwriting an existing file when `-OutPath` was omitted. The overwrite is now confirmed unless `-Force` is specified, as it already was when `-OutPath` is used. [#PRNUMBER](https://github.com/pnp/powershell/pull/PRNUMBER)
-- Fixed `Export-PnPPowerApp` giving up on a Power App that takes a while to export. The cmdlet now waits up to 30 minutes and follows the polling interval requested by the service. [#PRNUMBER](https://github.com/pnp/powershell/pull/PRNUMBER)
 
 ### Removed
 
