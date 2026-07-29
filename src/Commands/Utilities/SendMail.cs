@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     [Cmdlet(VerbsCommunications.Send, "PnPMail", DefaultParameterSetName = ParameterSet_SENDTHROUGHSPO)]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Mail.Send")]
+    [RequiredApiDelegatedPermissions("graph/Mail.Send.Shared")]
     public class SendMail : PnPWebCmdlet
     {
         private const string ParameterSet_SENDTHROUGHSPO = "Send through SharePoint Online";
