@@ -149,7 +149,7 @@ Creates a new Entra ID Application registration, creates a new self signed certi
 Register-PnPEntraIDApp -ApplicationName "Reporting App" -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -ExchangeApplicationPermissions "Exchange.ManageAsApp" -PowerBIDelegatePermissions "Tenant.Read.All" -O365ManagementApplicationPermissions "ActivityFeed.Read"
 ```
 
-Creates a new Entra ID Application registration requesting permissions on Exchange Online, Power BI and the Office 365 Management APIs. The permissions of these resources are read from the tenant, so they are not tab completed.
+Creates a new Entra ID Application registration requesting permissions on Exchange Online, Power BI and the Office 365 Management APIs. The Exchange Online and Power BI permissions are read from the tenant, so those two are not tab completed. The Office 365 Management APIs permissions ship with the module and are tab completed.
 
 ### EXAMPLE 10
 ```powershell

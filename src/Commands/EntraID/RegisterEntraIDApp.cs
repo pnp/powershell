@@ -351,10 +351,19 @@ namespace PnP.PowerShell.Commands.EntraID
             var resolvedScopes = new List<PermissionScope>();
             foreach (var appRole in servicePrincipal.AppRoles ?? new List<AzureADServicePrincipalAppRole>())
             {
+                // Only roles that are enabled and assignable to an application can be granted to the app being registered
+                if (appRole.IsEnabled != true || appRole.AllowedMemberTypes?.Contains("Application") != true)
+                {
+                    continue;
+                }
                 resolvedScopes.Add(new PermissionScope { resourceAppId = resourceAppId, Id = appRole.Id?.ToString(), Identifier = appRole.Value, Type = "Role" });
             }
             foreach (var oauth2PermissionScope in servicePrincipal.Oauth2PermissionScopes ?? new List<AzureADServicePrincipalOauth2PermissionScopes>())
             {
+                if (oauth2PermissionScope.IsEnabled != true)
+                {
+                    continue;
+                }
                 resolvedScopes.Add(new PermissionScope { resourceAppId = resourceAppId, Id = oauth2PermissionScope.Id?.ToString(), Identifier = oauth2PermissionScope.Value, Type = "Scope" });
             }
 
@@ -369,11 +378,12 @@ namespace PnP.PowerShell.Commands.EntraID
             {
                 return wellKnownResourceAppId;
             }
-            if (!Guid.TryParse(resource, out _))
+            if (!Guid.TryParse(resource, out var resourceAppId))
             {
                 throw new PSArgumentException($"Every -ResourcePermissions entry needs a Resource key holding the application id of the resource, or one of: {string.Join(", ", resources.Select(r => r.Name))}.", nameof(ResourcePermissions));
             }
-            return resource;
+            // Normalised, as the application id is compared against the well known ones and grouped per resource, both of which are case sensitive
+            return resourceAppId.ToString();
         }
 
         private IEnumerable<string> GetBoundPermissions(string parameterName)

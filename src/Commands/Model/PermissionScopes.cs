@@ -66,7 +66,8 @@ namespace PnP.PowerShell.Commands.Model
                         resourceAppId = resourceAppId,
                         Id = idElement.GetString(),
                         Identifier = valueElement.GetString(),
-                        Type = type
+                        Type = type,
+                        IsEnabled = !scope.TryGetProperty("isEnabled", out JsonElement isEnabledElement) || isEnabledElement.ValueKind != JsonValueKind.False
                     });
                 }
             }
@@ -74,17 +75,17 @@ namespace PnP.PowerShell.Commands.Model
 
         public string[] GetIdentifiers()
         {
-            return scopes.Select(s => curatedResources[s.resourceAppId].LegacyPrefix + s.Identifier).Distinct().ToArray();
+            return scopes.Where(s => s.IsEnabled).Select(s => curatedResources[s.resourceAppId].LegacyPrefix + s.Identifier).Distinct().ToArray();
         }
 
         public string[] GetIdentifiers(string resourceAppId, string type)
         {
-            return scopes.Where(s => s.resourceAppId == resourceAppId && s.Type == type).Select(s => s.Identifier).Distinct().ToArray();
+            return scopes.Where(s => s.resourceAppId == resourceAppId && s.Type == type && s.IsEnabled).Select(s => s.Identifier).Distinct().ToArray();
         }
 
         public PermissionScope GetScope(string resourceAppId, string identifier, string type)
         {
-            return scopes.FirstOrDefault(s => s.resourceAppId == resourceAppId && s.Identifier == identifier && s.Type == type);
+            return scopes.FirstOrDefault(s => s.resourceAppId == resourceAppId && s.Identifier == identifier && s.Type == type && s.IsEnabled);
         }
 
         /// <summary>
@@ -105,6 +106,10 @@ namespace PnP.PowerShell.Commands.Model
             return null;
         }
 
+        /// <summary>
+        /// Resolves a permission id back to its name for reporting. Deliberately not limited to enabled permissions: an app registration
+        /// that already holds a permission the resource has since disabled should still be reported by name rather than as a blank.
+        /// </summary>
         public string GetIdentifier(string resourceAppId, string id, string type)
         {
             var permission = scopes.FirstOrDefault(s => s.resourceAppId == resourceAppId && s.Id == id && s.Type == type);
