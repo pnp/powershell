@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Get-PnPMicrosoft365GroupMember
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPMicrosoft365GroupMember.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Get-PnPMicrosoft365GroupMember
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPMicrosoft365GroupMember.html
+schema: 2.0.0
 ---
    
 # Get-PnPMicrosoft365GroupMember

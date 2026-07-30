@@ -1,10 +1,10 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Get-PnPMicrosoft365ExpiringGroup
 Module Name: PnP.PowerShell
 schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPMicrosoft365ExpiringGroup.html
+title: Get-PnPMicrosoft365ExpiringGroup
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPMicrosoft365ExpiringGroup.html
 external help file: PnP.PowerShell.dll-Help.xml
 ---
   

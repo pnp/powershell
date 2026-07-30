@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Add-PnPTeamsChannelUser
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPTeamsChannelUser.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Add-PnPTeamsChannelUser
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPTeamsChannelUser.html
+schema: 2.0.0
 ---
    
 # Add-PnPTeamsChannelUser

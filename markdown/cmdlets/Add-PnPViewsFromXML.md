@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Add-PnPViewsFromXML
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPViewsFromXML.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Add-PnPViewsFromXML
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPViewsFromXML.html
+schema: 2.0.0
 ---
    
 # Add-PnPViewsFromXML

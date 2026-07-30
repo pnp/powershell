@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Remove-PnPContainerType
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPContainerType.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Remove-PnPContainerType
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPContainerType.html
+schema: 2.0.0
 ---
    
 # Remove-PnPContainerType

@@ -1,10 +1,10 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Save-PnPTenantTemplate
 Module Name: PnP.PowerShell
 schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Save-PnPTenantTemplate.html
+title: Save-PnPTenantTemplate
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Save-PnPTenantTemplate.html
 external help file: PnP.PowerShell.dll-Help.xml
 ---
   

@@ -1,10 +1,10 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Remove-PnPJavaScriptLink
 Module Name: PnP.PowerShell
 schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPJavaScriptLink.html
+title: Remove-PnPJavaScriptLink
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPJavaScriptLink.html
 external help file: PnP.PowerShell.dll-Help.xml
 ---
   

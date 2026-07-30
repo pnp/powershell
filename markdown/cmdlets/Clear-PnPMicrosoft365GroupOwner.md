@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Clear-PnPMicrosoft365GroupOwner
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPMicrosoft365GroupOwner.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Clear-PnPMicrosoft365GroupOwner
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPMicrosoft365GroupOwner.html
+schema: 2.0.0
 ---
    
 # Clear-PnPMicrosoft365GroupOwner

@@ -1,10 +1,10 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Get-PnPUserOneDriveLocation
 Module Name: PnP.PowerShell
 schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUserOneDriveLocation.html
+title: Get-PnPUserOneDriveLocation
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUserOneDriveLocation.html
 external help file: PnP.PowerShell.dll-Help.xml
 ---
   

@@ -1,10 +1,10 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Remove-PnPSiteDesign
 Module Name: PnP.PowerShell
 schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPSiteDesign.html
+title: Remove-PnPSiteDesign
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPSiteDesign.html
 external help file: PnP.PowerShell.dll-Help.xml
 ---
   

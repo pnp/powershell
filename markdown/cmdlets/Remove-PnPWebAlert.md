@@ -1,10 +1,10 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Remove-PnPWebAlert
 Module Name: PnP.PowerShell
 schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPWebAlert.html
+title: Remove-PnPWebAlert
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPWebAlert.html
 external help file: PnP.PowerShell.dll-Help.xml
 ---
  

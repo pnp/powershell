@@ -1,10 +1,10 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Remove-PnPTeamsApp
 Module Name: PnP.PowerShell
 schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTeamsApp.html
+title: Remove-PnPTeamsApp
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTeamsApp.html
 external help file: PnP.PowerShell.dll-Help.xml
 ---
   

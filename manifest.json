@@ -6847,6 +6847,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPSiteSensitivityLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPSiteSensitivityLabel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPSiteUserInvitations.md",
       "output": {
         ".html": {

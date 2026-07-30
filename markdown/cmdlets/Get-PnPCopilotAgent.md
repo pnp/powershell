@@ -1,13 +1,13 @@
 ---
 tags: Available in the current Nightly Release only.
 PlatyPS schema version: 2024-05-01
-title: Get-PnPCopilotAgent
-HelpUri: ''
+document type: cmdlet
+ms.date: 12/06/2024
 Module Name: PnP.PowerShell
 Locale: en-US
-document type: cmdlet
+title: Get-PnPCopilotAgent
 external help file: PnP.PowerShell.dll-Help.xml
-ms.date: 12/06/2024
+HelpUri: ''
 ---
  
 # Get-PnPCopilotAgent

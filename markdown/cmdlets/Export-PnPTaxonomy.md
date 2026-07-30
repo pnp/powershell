@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Export-PnPTaxonomy
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Export-PnPTaxonomy.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Export-PnPTaxonomy
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Export-PnPTaxonomy.html
+schema: 2.0.0
 ---
    
 # Export-PnPTaxonomy

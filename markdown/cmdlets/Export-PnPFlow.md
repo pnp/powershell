@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Export-PnPFlow
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Export-PnPFlow.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Export-PnPFlow
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Export-PnPFlow.html
+schema: 2.0.0
 ---
    
 # Export-PnPFlow
@@ -38,7 +38,9 @@ Export-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] -Identity <Powe
 ## DESCRIPTION
 This cmdlet exports a Microsoft Power Automate Flow either as a json file or as a zip package.
 
-Many times exporting a Microsoft Power Automate Flow will not be possible due to various reasons such as connections having gone stale, SharePoint sites referenced no longer existing or other configuration errors in the Flow. To display these errors when trying to export a Flow, provide the -Verbose flag with your export request. If not provided, these errors will silently be ignored.
+Exporting a Microsoft Power Automate Flow might fail due to stale connections, SharePoint sites that no longer exist, or other configuration errors in the Flow. ZIP package export failures are written to the PowerShell error stream. By default, these errors are non-terminating so batch exports can continue. Use `-ErrorVariable` to capture them, or `-ErrorAction Stop` to handle a failed export with `try`/`catch`.
+
+The cmdlet uses the module's shared HTTP behavior. Throttled requests (HTTP 429) are retried automatically; other failures, such as server errors or timeouts, are reported immediately without a retry. There are no timeout or retry settings specific to this cmdlet.
 
 ## EXAMPLES
 
@@ -62,6 +64,27 @@ Get-PnPPowerPlatformEnvironment | foreach { Get-PnPFlow -Environment $_.Name } |
 ```
 
 This will export all the Microsoft Power Automate Flows available within the tenant from all users from all the available Power Platform environments as a ZIP package for each of them to a local folder c:\flows
+
+### Example 4
+```powershell
+$exportErrors = @()
+Export-PnPFlow -Environment "myenvironment" -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -OutPath "c:\flows\flow.zip" -AsZipPackage -ErrorAction Continue -ErrorVariable +exportErrors
+$exportErrors | Out-File "c:\flows\export-errors.log"
+```
+
+This attempts to export the Flow and captures any export failure in the `$exportErrors` variable for logging.
+
+### Example 5
+```powershell
+try {
+    Export-PnPFlow -Environment "myenvironment" -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -OutPath "c:\flows\flow.zip" -AsZipPackage -ErrorAction Stop
+}
+catch {
+    Write-Host "Flow export failed: $($_.Exception.Message)"
+}
+```
+
+This turns an export failure into a terminating error so it can be handled with `try`/`catch`.
 
 ## PARAMETERS
 
@@ -111,21 +134,6 @@ Accept pipeline input: True
 Accept wildcard characters: False
 ```
 
-### -Identity
-The value of the Name property of a Microsoft Power Automate Flow that you wish to export
-
-```yaml
-Type: PowerAutomateFlowPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Force
 If specified and the file exported already exists it will be overwritten without confirmation.
 
@@ -141,8 +149,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Identity
+The value of the Name property of a Microsoft Power Automate Flow that you wish to export
+
+```yaml
+Type: PowerAutomateFlowPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -OutPath
-Optional file name of the file to export to. If not provided, it will store the ZIP package to the current location from where the cmdlet is being run.
+Optional file name of the file to export to. If not provided, it will store the ZIP package to the current location from where the cmdlet is being run, using the filename returned by the service. Either way, when a file with that name already exists you are asked to confirm the overwrite unless `-Force` is specified.
 
 ```yaml
 Type: String

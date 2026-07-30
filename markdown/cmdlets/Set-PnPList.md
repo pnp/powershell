@@ -1,16 +1,21 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Set-PnPList
 Module Name: PnP.PowerShell
 schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPList.html
+title: Set-PnPList
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPList.html
 external help file: PnP.PowerShell.dll-Help.xml
 ---
   
 # Set-PnPList
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: One of InformationProtectionPolicy.Read (delegated), InformationProtectionPolicy.Read.All (application) when resolving `-DefaultSensitivityLabelForLibrary` by name
+
 Updates list settings.
 
 ## SYNTAX
@@ -217,6 +222,8 @@ Accept wildcard characters: False
 
 ### -DefaultSensitivityLabelForLibrary
 The instance, Id or name of the sensitivity label to set as the default for the library. If $null is provided, the default label will be removed.
+
+Providing a label name resolves the label through the Microsoft Graph beta sensitivity labels API and requires InformationProtectionPolicy.Read (delegated) or InformationProtectionPolicy.Read.All (application). Microsoft Learn currently lists this API as available only in the global service. In sovereign clouds, provide the label Id instead.
 
 ```yaml
 Type: SensitivityLabelPipeBind

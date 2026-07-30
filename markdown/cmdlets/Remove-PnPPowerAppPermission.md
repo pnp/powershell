@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Remove-PnPPowerAppPermission
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPPowerAppPermission.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Remove-PnPPowerAppPermission
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPPowerAppPermission.html
+schema: 2.0.0
 ---
    
 # Remove-PnPPowerAppPermission
@@ -16,7 +16,9 @@ external help file: PnP.PowerShell.dll-Help.xml
 
 * Azure: management.azure.com  
 * PowerApps: service.powerapps.com
-* Microsoft Graph: User.Read.All, Group.Read.All
+* Microsoft Graph with `-User`: User.ReadBasic.All (delegated) or User.Read.All (application)
+* Microsoft Graph with `-Group`: Group.Read.All
+* Microsoft Graph with `-Tenant`: no Microsoft Graph permission required
 
 Removes user, group and (Everyone in organization) permissions from a Power App
 

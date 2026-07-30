@@ -1,10 +1,10 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Resolve-PnPFolder
 Module Name: PnP.PowerShell
 schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Resolve-PnPFolder.html
+title: Resolve-PnPFolder
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Resolve-PnPFolder.html
 external help file: PnP.PowerShell.dll-Help.xml
 ---
   

@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Add-PnPWebhookSubscription
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPWebhookSubscription.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Add-PnPWebhookSubscription
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPWebhookSubscription.html
+schema: 2.0.0
 ---
    
 # Add-PnPWebhookSubscription

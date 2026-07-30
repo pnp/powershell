@@ -1,10 +1,10 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Get-PnPTermSet
 Module Name: PnP.PowerShell
 schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTermSet.html
+title: Get-PnPTermSet
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTermSet.html
 external help file: PnP.PowerShell.dll-Help.xml
 ---
   # Get-PnPTermSet

@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Remove-PnPFolderSharingLink
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPFolderSharingLink.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Remove-PnPFolderSharingLink
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPFolderSharingLink.html
+schema: 2.0.0
 ---
    
 # Remove-PnPFolderSharingLink

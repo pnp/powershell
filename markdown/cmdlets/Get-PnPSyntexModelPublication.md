@@ -1,10 +1,10 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Get-PnPSyntexModelPublication
 Module Name: PnP.PowerShell
 schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSyntexModelPublication.html
+title: Get-PnPSyntexModelPublication
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSyntexModelPublication.html
 external help file: PnP.PowerShell.dll-Help.xml
 ---
   

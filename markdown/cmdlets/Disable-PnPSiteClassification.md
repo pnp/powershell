@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Disable-PnPSiteClassification
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Disable-PnPSiteClassification.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Disable-PnPSiteClassification
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Disable-PnPSiteClassification.html
+schema: 2.0.0
 ---
    
 # Disable-PnPSiteClassification

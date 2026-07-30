@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Clear-PnPMicrosoft365GroupMember
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPMicrosoft365GroupMember.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Clear-PnPMicrosoft365GroupMember
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPMicrosoft365GroupMember.html
+schema: 2.0.0
 ---
    
 # Clear-PnPMicrosoft365GroupMember

@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Add-PnPFlowOwner
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPFlowOwner.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Add-PnPFlowOwner
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPFlowOwner.html
+schema: 2.0.0
 ---
    
 # Add-PnPFlowOwner
@@ -15,6 +15,7 @@ external help file: PnP.PowerShell.dll-Help.xml
 **Required Permissions**
 
 * Azure: management.azure.com
+* Microsoft Graph: User.ReadBasic.All (delegated) or User.Read.All (application)
 
 Assigns/updates permissions to a Power Automate flow
 

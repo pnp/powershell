@@ -92,7 +92,9 @@
 <ul>
 <li>Azure: management.azure.com</li>
 <li>PowerApps: service.powerapps.com</li>
-<li>Microsoft Graph: User.Read.All, Group.Read.All</li>
+<li>Microsoft Graph with <code>-User</code>: User.ReadBasic.All (delegated) or User.Read.All (application)</li>
+<li>Microsoft Graph with <code>-Group</code>: Group.Read.All</li>
+<li>Microsoft Graph with <code>-Tenant</code>: no Microsoft Graph permission required</li>
 </ul>
 <p>Removes user, group and (Everyone in organization) permissions from a Power App</p>
 <h2 id="syntax">SYNTAX</h2>

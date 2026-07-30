@@ -1,10 +1,10 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Get-PnPUnifiedGroupMoveState
 Module Name: PnP.PowerShell
 schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUnifiedGroupMoveState.html
+title: Get-PnPUnifiedGroupMoveState
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUnifiedGroupMoveState.html
 external help file: PnP.PowerShell.dll-Help.xml
 ---
  

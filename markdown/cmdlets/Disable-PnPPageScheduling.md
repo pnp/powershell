@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Disable-PnPPageScheduling
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Disable-PnPPageScheduling.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Disable-PnPPageScheduling
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Disable-PnPPageScheduling.html
+schema: 2.0.0
 ---
    
 # Disable-PnPPageScheduling

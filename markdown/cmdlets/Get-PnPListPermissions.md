@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Get-PnPListPermissions
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPListPermissions.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: Get-PnPListPermissions
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPListPermissions.html
+schema: 2.0.0
 ---
    
 # Get-PnPListPermissions

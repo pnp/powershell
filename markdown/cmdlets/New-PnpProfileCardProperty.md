@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-title: New-PnpProfileCardProperty
-Module Name: PnP.PowerShell
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/New-PnpProfileCardProperty.html
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+title: New-PnpProfileCardProperty
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/New-PnpProfileCardProperty.html
+schema: 2.0.0
 ---
    
 # New-PnpProfileCardProperty

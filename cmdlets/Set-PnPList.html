@@ -88,6 +88,10 @@
 <h1 id="set-pnplist">Set-PnPList</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: One of InformationProtectionPolicy.Read (delegated), InformationProtectionPolicy.Read.All (application) when resolving <code>-DefaultSensitivityLabelForLibrary</code> by name</li>
+</ul>
 <p>Updates list settings.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPList -Identity &lt;ListPipeBind&gt; [-EnableContentTypes &lt;Boolean&gt;] [-BreakRoleInheritance]
@@ -227,6 +231,7 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-defaultsensitivitylabelforlibrary">-DefaultSensitivityLabelForLibrary</h3>
 <p>The instance, Id or name of the sensitivity label to set as the default for the library. If $null is provided, the default label will be removed.</p>
+<p>Providing a label name resolves the label through the Microsoft Graph beta sensitivity labels API and requires InformationProtectionPolicy.Read (delegated) or InformationProtectionPolicy.Read.All (application). Microsoft Learn currently lists this API as available only in the global service. In sovereign clouds, provide the label Id instead.</p>
 <pre><code class="lang-yaml">Type: SensitivityLabelPipeBind
 Parameter Sets: (All)
 

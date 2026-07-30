@@ -101,7 +101,7 @@
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet imports a Microsoft Power Automate Flow from a ZIP package. At present, only flows originating from the same tenant are supported.</p>
-<p>Many times Importing a Microsoft Power Automate Flow will not be possible due to various reasons such as connections having gone stale, SharePoint sites referenced no longer existing or other configuration errors in the Flow. To display these errors when trying to Import a Flow, provide the -Verbose flag with your Import request. If not provided, these errors will silently be ignored.</p>
+<p>Importing a Flow might fail due to stale connections, SharePoint sites that no longer exist, or other configuration errors in the Flow. A failed import raises a terminating error describing the cause, so the cmdlet no longer completes silently. Use <code>-Verbose</code> to display progress details while the package is processed.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">Import-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -PackagePath C:\Temp\Export-ReEnableFlow_20250414140636.zip -Name NewFlowName
@@ -118,7 +118,7 @@
 <h3 id="example-4">Example 4</h3>
 <pre><code class="lang-powershell">Import-PnPFlow -PackagePath C:\Temp\Export-ReEnableFlow_20250414140636.zip -Name NewFlowName -Verbose
 </code></pre>
-<p>This will Import a flow to the default environment. The flow will be imported as a zip package. The name of the flow will be set to NewFlowName. With the -Verbose flag, any errors that occur during the import process will be displayed in the console.</p>
+<p>This will Import a flow to the default environment. The flow will be imported as a zip package. The name of the flow will be set to NewFlowName. The <code>-Verbose</code> flag displays progress details during the import.</p>
 <h3 id="example-5">Example 5</h3>
 <pre><code class="lang-powershell">Import-PnPFlow -PackagePath C:\Temp\Export-ReEnableFlow_20250414140636.zip -Name NewFlowName -RetryCount 15 -Delay 3000
 </code></pre>
@@ -128,6 +128,18 @@
 <p>Optional connection to be used by the cmdlet.
 Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-delay">-Delay</h3>
+<p>Delay in milliseconds between attempts to poll for the import parameters. Accepts a value between 500 and 300000. If omitted, the cmdlet uses its default delay policy which is 5000ms.</p>
+<pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 Aliases:
 
@@ -149,18 +161,6 @@ Default value: The default environment
 Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-packagepath">-PackagePath</h3>
-<p>Local path of the .zip package to import. The path must be a valid path on the local file system.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: true
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-name">-Name</h3>
 <p>The new name of the flow.</p>
 <pre><code class="lang-yaml">Type: String
@@ -173,20 +173,20 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-retrycount">-RetryCount</h3>
-<p>Number of times to poll for import operations to become available. If omitted, the cmdlet uses its default retry policy which is 10.</p>
-<pre><code class="lang-yaml">Type: Int32
+<h3 id="-packagepath">-PackagePath</h3>
+<p>Local path of the .zip package to import. The path must be a valid path on the local file system.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: true
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-delay">-Delay</h3>
-<p>Delay in milliseconds between polling attempts. If omitted, the cmdlet uses its default delay policy which is 5000ms.</p>
+<h3 id="-retrycount">-RetryCount</h3>
+<p>Number of times to poll for the import parameters to become available. Accepts a value between 1 and 100. If omitted, the cmdlet uses its default retry policy which is 10.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 Aliases:

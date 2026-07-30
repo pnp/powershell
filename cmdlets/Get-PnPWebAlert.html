@@ -88,6 +88,10 @@
 <h1 id="get-pnpwebalert">Get-PnPWebAlert</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: One of User.ReadBasic.All (delegated), User.Read.All (application) when using <code>-UserId</code></li>
+</ul>
 <p>Returns alerts from the current web, optionally filtered by list and user.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="all">All</h3>
@@ -167,7 +171,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-userid">-UserId</h3>
-<p>The user ID (GUID) to filter alerts by. Do not specify together with UserName.</p>
+<p>The user ID (GUID) to filter alerts by. The user principal name is resolved through Microsoft Graph, which requires User.ReadBasic.All (delegated) or User.Read.All (application). Do not specify together with UserName.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
 

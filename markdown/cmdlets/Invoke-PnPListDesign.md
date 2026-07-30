@@ -1,10 +1,10 @@
 ---
-tags: Available in the current Nightly Release only.
-title: Invoke-PnPListDesign
 Module Name: PnP.PowerShell
 schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Invoke-PnPListDesign.html
+title: Invoke-PnPListDesign
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Invoke-PnPListDesign.html
 external help file: PnP.PowerShell.dll-Help.xml
 ---
   
