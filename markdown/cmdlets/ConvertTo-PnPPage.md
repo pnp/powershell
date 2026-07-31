@@ -1,13 +1,12 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-title: ConvertTo-PnPPage
-tags: Available in the current Nightly Release only.
+schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/ConvertTo-PnPPage.html
-schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
+title: ConvertTo-PnPPage
 ---
-   
+  
 # ConvertTo-PnPPage
 
 ## SYNOPSIS
@@ -711,4 +710,3 @@ Accept pipeline input: False
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 
 [Migrate classic pages to modern with the least permission possible](https://pnp.github.io/pnpassessment/classic/migrate-minimal-permissions.html)
-

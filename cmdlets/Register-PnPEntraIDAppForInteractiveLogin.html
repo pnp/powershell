@@ -97,6 +97,8 @@
                                        [-GraphDelegatePermissions &lt;Permission[]&gt;]
                                        [-SharePointApplicationPermissions &lt;Permission[]&gt;]
                                        [-SharePointDelegatePermissions &lt;Permission[]&gt;]
+                                       [-O365ManagementApplicationPermissions &lt;Permission[]&gt;]
+                                       [-O365ManagementDelegatePermissions &lt;Permission[]&gt;]
                                        [-LogoFilePath &lt;string&gt;]
                                        [-MicrosoftGraphEndPoint &lt;string&gt;]
                                        [-EntraIDLoginEndPoint &lt;string&gt;]
@@ -110,6 +112,8 @@
                                        [-GraphDelegatePermissions &lt;Permission[]&gt;]
                                        [-SharePointApplicationPermissions &lt;Permission[]&gt;]
                                        [-SharePointDelegatePermissions &lt;Permission[]&gt;]
+                                       [-O365ManagementApplicationPermissions &lt;Permission[]&gt;]
+                                       [-O365ManagementDelegatePermissions &lt;Permission[]&gt;]
                                        [-LogoFilePath &lt;string&gt;]
                                        [-SignInAudience &lt;EntraIDSignInAudience&gt;]
 </code></pre>
@@ -173,7 +177,25 @@ Accept pipeline input: False
 <h3 id="-sharepointdelegatepermissions">-SharePointDelegatePermissions</h3>
 <p>Specify which Microsoft SharePoint Delegate permissions to request.</p>
 <pre><code class="lang-yaml">Type: Permission[]
-Parameter Sets: Generate Certificate
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+</code></pre>
+<h3 id="-o365managementapplicationpermissions">-O365ManagementApplicationPermissions</h3>
+<p>Specify which Office 365 Management APIs Application permissions to request.</p>
+<pre><code class="lang-yaml">Type: Permission[]
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+</code></pre>
+<h3 id="-o365managementdelegatepermissions">-O365ManagementDelegatePermissions</h3>
+<p>Specify which Office 365 Management APIs Delegate permissions to request.</p>
+<pre><code class="lang-yaml">Type: Permission[]
+Parameter Sets: (All)
 
 Required: False
 Position: 0

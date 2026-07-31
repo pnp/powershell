@@ -1,13 +1,12 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-title: Register-PnPEntraIDAppForInteractiveLogin
-tags: Available in the current Nightly Release only.
+schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Register-PnPEntraIDAppForInteractiveLogin.html
-schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
+title: Register-PnPEntraIDAppForInteractiveLogin
 ---
-  
+ 
 # Register-PnPEntraIDAppForInteractiveLogin
 
 ## SYNOPSIS
@@ -23,6 +22,8 @@ Register-PnPEntraIDAppForInteractiveLogin -ApplicationName <String>
                                        [-GraphDelegatePermissions <Permission[]>]
                                        [-SharePointApplicationPermissions <Permission[]>]
                                        [-SharePointDelegatePermissions <Permission[]>]
+                                       [-O365ManagementApplicationPermissions <Permission[]>]
+                                       [-O365ManagementDelegatePermissions <Permission[]>]
                                        [-LogoFilePath <string>]
                                        [-MicrosoftGraphEndPoint <string>]
                                        [-EntraIDLoginEndPoint <string>]
@@ -38,6 +39,8 @@ Register-PnPEntraIDAppForInteractiveLogin -ApplicationName <String>
                                        [-GraphDelegatePermissions <Permission[]>]
                                        [-SharePointApplicationPermissions <Permission[]>]
                                        [-SharePointDelegatePermissions <Permission[]>]
+                                       [-O365ManagementApplicationPermissions <Permission[]>]
+                                       [-O365ManagementDelegatePermissions <Permission[]>]
                                        [-LogoFilePath <string>]
                                        [-SignInAudience <EntraIDSignInAudience>]
 ```
@@ -128,7 +131,31 @@ Specify which Microsoft SharePoint Delegate permissions to request.
 
 ```yaml
 Type: Permission[]
-Parameter Sets: Generate Certificate
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -O365ManagementApplicationPermissions
+Specify which Office 365 Management APIs Application permissions to request.
+
+```yaml
+Type: Permission[]
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -O365ManagementDelegatePermissions
+Specify which Office 365 Management APIs Delegate permissions to request.
+
+```yaml
+Type: Permission[]
+Parameter Sets: (All)
 
 Required: False
 Position: 0
@@ -218,5 +245,4 @@ Accept pipeline input: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 

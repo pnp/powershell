@@ -1,13 +1,12 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-title: Register-PnPEntraIDApp
-tags: Available in the current Nightly Release only.
+schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Register-PnPEntraIDApp.html
-schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
+title: Register-PnPEntraIDApp
 ---
-  
+ 
 # Register-PnPEntraIDApp
 
 ## SYNOPSIS
@@ -27,6 +26,16 @@ Register-PnPEntraIDApp -ApplicationName <String>
                                        [-GraphDelegatePermissions <Permission[]>]
                                        [-SharePointApplicationPermissions <Permission[]>]
                                        [-SharePointDelegatePermissions <Permission[]>]
+                                       [-O365ManagementApplicationPermissions <Permission[]>]
+                                       [-O365ManagementDelegatePermissions <Permission[]>]
+                                       [-ExchangeApplicationPermissions <Permission[]>]
+                                       [-ExchangeDelegatePermissions <Permission[]>]
+                                       [-PowerBIApplicationPermissions <Permission[]>]
+                                       [-PowerBIDelegatePermissions <Permission[]>]
+                                       [-DataverseDelegatePermissions <Permission[]>]
+                                       [-PowerAppsDelegatePermissions <Permission[]>]
+                                       [-AzureServiceManagementDelegatePermissions <Permission[]>]
+                                       [-ResourcePermissions <Hashtable[]>]
                                        [-Country <String>]
                                        [-State <String>]
                                        [-Locality <String>]
@@ -50,6 +59,16 @@ Register-PnPEntraIDApp  -CertificatePath <String>
                         [-GraphDelegatePermissions <Permission[]>]
                         [-SharePointApplicationPermissions <Permission[]>]
                         [-SharePointDelegatePermissions <Permission[]>]
+                        [-O365ManagementApplicationPermissions <Permission[]>]
+                        [-O365ManagementDelegatePermissions <Permission[]>]
+                        [-ExchangeApplicationPermissions <Permission[]>]
+                        [-ExchangeDelegatePermissions <Permission[]>]
+                        [-PowerBIApplicationPermissions <Permission[]>]
+                        [-PowerBIDelegatePermissions <Permission[]>]
+                        [-DataverseDelegatePermissions <Permission[]>]
+                        [-PowerAppsDelegatePermissions <Permission[]>]
+                        [-AzureServiceManagementDelegatePermissions <Permission[]>]
+                        [-ResourcePermissions <Hashtable[]>]
                         [-CertificatePassword <SecureString>]
                         [-LogoFilePath <string>]
 ```
@@ -58,6 +77,14 @@ Register-PnPEntraIDApp  -CertificatePath <String>
 Registers an Entra ID App and optionally creates a new self-signed certificate to use with the application registration. 
 
 Note: if you want to use the newly created app to authenticate with username/password. Use `Register-PnPEntraIDAppForInteractiveLogin` to create an app that allows users to login with.
+
+Permissions can be requested for Microsoft Graph, SharePoint, the Office 365 Management APIs, Exchange Online, Power BI, Dataverse, PowerApps and Azure Resource Manager. Use `-ResourcePermissions` for any other API, or for a permission that the parameters above do not offer yet.
+
+Dataverse, PowerApps and Azure Resource Manager expose delegated permissions only, so only a `-{Resource}DelegatePermissions` parameter is offered for them. They also expose very few: Dataverse has `user_impersonation` and `mcp.tools`, PowerApps has `User`, and Azure Resource Manager has `user_impersonation`.
+
+For Microsoft Graph, SharePoint and the Office 365 Management APIs the available permissions ship with the module, so they can be tab completed. The permissions of all other resources are read from the tenant, which means they are not tab completed and an invalid permission name is only reported after you authenticated.
+
+The consent flow at the end of the registration needs Microsoft Graph or SharePoint permissions to run against. If the app requests neither, grant admin consent for it through the Entra ID portal instead.
 
 ## EXAMPLES
 
@@ -116,6 +143,23 @@ Register-PnPEntraIDApp -ApplicationName "ACS App" -Tenant yourtenant.onmicrosoft
 ```
 
 Creates a new Entra ID Application registration, creates a new self signed certificate, writes it to the c:\temp folder. It will upload the certificate to the azure app registration and it will request the shown permissions. A browser window will be shown allowing you to authenticate.
+
+### EXAMPLE 9
+```powershell
+Register-PnPEntraIDApp -ApplicationName "Reporting App" -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -ExchangeApplicationPermissions "Exchange.ManageAsApp" -PowerBIDelegatePermissions "Tenant.Read.All" -O365ManagementApplicationPermissions "ActivityFeed.Read"
+```
+
+Creates a new Entra ID Application registration requesting permissions on Exchange Online, Power BI and the Office 365 Management APIs. The Exchange Online and Power BI permissions are read from the tenant, so those two are not tab completed. The Office 365 Management APIs permissions ship with the module and are tab completed.
+
+### EXAMPLE 10
+```powershell
+Register-PnPEntraIDApp -ApplicationName "Automation App" -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -ResourcePermissions @(
+  @{ Resource = "Exchange"; ApplicationPermissions = "Exchange.ManageAsApp" }
+  @{ Resource = "PowerBI"; DelegatePermissions = "Tenant.Read.All" }
+)
+```
+
+Creates a new Entra ID Application registration requesting permissions through `-ResourcePermissions`. `Resource` takes one of `Graph`, `SharePoint`, `O365Management`, `Exchange`, `PowerBI`, `Dataverse`, `PowerApps` and `AzureServiceManagement`, or the application id of any other API that has a service principal in your tenant. Permissions requested this way are always read from the tenant, which makes this the way to request a permission that the lists shipping with the module do not have yet.
 
 ## PARAMETERS
 
@@ -244,7 +288,7 @@ Specify which Microsoft Graph Application permissions to request.
 
 ```yaml
 Type: Permission[]
-Parameter Sets: Generate Certificate
+Parameter Sets: (All)
 
 Required: False
 Position: 0
@@ -256,7 +300,7 @@ Specify which Microsoft Graph Delegate permissions to request.
 
 ```yaml
 Type: Permission[]
-Parameter Sets: Generate Certificate
+Parameter Sets: (All)
 
 Required: False
 Position: 0
@@ -268,7 +312,7 @@ Specify which Microsoft SharePoint Application permissions to request.
 
 ```yaml
 Type: Permission[]
-Parameter Sets: Generate Certificate
+Parameter Sets: (All)
 
 Required: False
 Position: 0
@@ -280,10 +324,130 @@ Specify which Microsoft SharePoint Delegate permissions to request.
 
 ```yaml
 Type: Permission[]
-Parameter Sets: Generate Certificate
+Parameter Sets: (All)
 
 Required: False
 Position: 0
+Accept pipeline input: False
+```
+
+### -O365ManagementApplicationPermissions
+Specify which Office 365 Management APIs Application permissions to request.
+
+```yaml
+Type: Permission[]
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -O365ManagementDelegatePermissions
+Specify which Office 365 Management APIs Delegate permissions to request.
+
+```yaml
+Type: Permission[]
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -ExchangeApplicationPermissions
+Specify which Office 365 Exchange Online Application permissions to request. The available permissions are read from the tenant, so they are not tab completed.
+
+```yaml
+Type: Permission[]
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -ExchangeDelegatePermissions
+Specify which Office 365 Exchange Online Delegate permissions to request. The available permissions are read from the tenant, so they are not tab completed.
+
+```yaml
+Type: Permission[]
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -PowerBIApplicationPermissions
+Specify which Power BI Service Application permissions to request. The available permissions are read from the tenant, so they are not tab completed.
+
+```yaml
+Type: Permission[]
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -PowerBIDelegatePermissions
+Specify which Power BI Service Delegate permissions to request. The available permissions are read from the tenant, so they are not tab completed.
+
+```yaml
+Type: Permission[]
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -DataverseDelegatePermissions
+Specify which Dataverse Delegate permissions to request, being `user_impersonation` or `mcp.tools`. Dataverse exposes no application permissions. The available permissions are read from the tenant, so they are not tab completed.
+
+```yaml
+Type: Permission[]
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -PowerAppsDelegatePermissions
+Specify which PowerApps Service Delegate permissions to request, being `User`. PowerApps Service exposes no application permissions. The available permissions are read from the tenant, so they are not tab completed.
+
+```yaml
+Type: Permission[]
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -AzureServiceManagementDelegatePermissions
+Specify which Azure Resource Manager, formerly named the Windows Azure Service Management API, Delegate permissions to request, being `user_impersonation`. Azure Resource Manager exposes no application permissions. The available permissions are read from the tenant, so they are not tab completed.
+
+```yaml
+Type: Permission[]
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -ResourcePermissions
+Specify permissions to request on any API, for APIs without a dedicated parameter and for permissions the dedicated parameters do not offer. Every entry is a hashtable with a `Resource` key holding either the application id of the resource or one of `Graph`, `SharePoint`, `O365Management`, `Exchange`, `PowerBI`, `Dataverse`, `PowerApps` and `AzureServiceManagement`, together with an `ApplicationPermissions` and/or a `DelegatePermissions` key. The permissions are read from the tenant, so this also covers application permissions on a resource that exposes none today.
+
+```yaml
+Type: Hashtable[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -406,5 +570,4 @@ Accept pipeline input: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 

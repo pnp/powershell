@@ -1,13 +1,12 @@
 ---
 Module Name: PnP.PowerShell
-schema: 2.0.0
 title: Move-PnPTerm
-tags: Available in the current Nightly Release only.
+schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Move-PnPTerm.html
 external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Move-PnPTerm.html
 ---
- 
+
 # Move-PnPTerm
 
 ## SYNOPSIS
@@ -176,4 +175,3 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-

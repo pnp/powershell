@@ -1,13 +1,12 @@
 ---
 Module Name: PnP.PowerShell
-schema: 2.0.0
 title: Start-PnPSiteContentMove
-tags: Available in the current Nightly Release only.
+schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Start-PnPSiteContentMove.html
 external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Start-PnPSiteContentMove.html
 ---
- 
+
 # Start-PnPSiteContentMove
 
 ## SYNOPSIS
@@ -270,4 +269,3 @@ Returns an object with `SourceSiteUrl`, `TargetSiteUrl`, `MoveJobId`, `SourceDat
 [Get-PnPGeoMoveCrossCompatibilityStatus](Get-PnPGeoMoveCrossCompatibilityStatus.md)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
