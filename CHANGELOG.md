@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPUserProfilePhoto` and other Microsoft Graph backed cmdlets silently ignoring a failed request when the error response could be parsed but did not contain any error details. [#5421](https://github.com/pnp/powershell/pull/5421)
 - Fixed `Resolve-PnPFolder` cmdlet not working in large lists and document library due to 5000 items threshold. [#5411](https://github.com/pnp/powershell/pull/5411)
 - Fixed `Set-PnPDefaultColumnValues` corrupting library defaults on invalid taxonomy values. [#5412](https://github.com/pnp/powershell/pull/5412)
+- Fixed `New-PnPTeamsTeam` sporadically failing with `Not Found (404): Resource '<id>' does not exist or one of its queried reference-property objects are not present.` while the team was in fact created. [#5414](https://github.com/pnp/powershell/issues/5414)
 
 ### Removed
 
