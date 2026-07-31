@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
@@ -9,6 +10,10 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPowerAppPermission")]
+    [RequiredApiApplicationPermissions("graph/User.Read.All")]
+    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation", "https://service.powerapps.com/user", "graph/User.ReadBasic.All")]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation", "https://service.powerapps.com/user", "graph/Group.Read.All")]
     public class RemovePowerAppPermission : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -57,16 +62,14 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                 throw new PSArgumentException("Specify only one of User, Group, or Tenant.");
             }
 
-            string graphAccessToken = TokenHandler.GetAccessToken($"https://{Connection.GraphEndPoint}/.default", Connection);
-            LogDebug("Microsoft Graph access token acquired");
-
-            var graphRequestHelper = new ApiRequestHelper(GetType(), Connection, $"https://{Connection.GraphEndPoint}/.default");
-
             string entityId = null ;
 
             if (!string.IsNullOrEmpty(User))
             {
                 LogDebug("Processing User parameter");
+                string graphAccessToken = TokenHandler.GetAccessToken($"https://{Connection.GraphEndPoint}/.default", Connection);
+                LogDebug("Microsoft Graph access token acquired");
+
                 Model.AzureAD.User graphUser;
                 if (Guid.TryParse(User, out Guid userGuid))
                 {
@@ -89,6 +92,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             else if (!string.IsNullOrEmpty(Group))
             {
                 LogDebug("Processing Group parameter");
+                var graphRequestHelper = new ApiRequestHelper(GetType(), Connection, $"https://{Connection.GraphEndPoint}/.default");
 
                 var graphGroup = Guid.TryParse(Group, out Guid groupGuid)
                     ? Utilities.AzureADGroupsUtility.GetGroup(graphRequestHelper, groupGuid)

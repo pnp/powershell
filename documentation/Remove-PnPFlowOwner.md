@@ -14,6 +14,7 @@ title: Remove-PnPFlowOwner
 **Required Permissions**
 
 * Azure: management.azure.com
+* Microsoft Graph: User.ReadBasic.All (delegated) or User.Read.All (application)
 
 Removes owner permissions to a Power Automate flow
 

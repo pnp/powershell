@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
 using PnP.Framework.Entities;
 using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
@@ -64,6 +65,13 @@ namespace PnP.PowerShell.Commands.Lists
                             throw new PSArgumentException("Due to limitations of SharePoint Online, setting a default column value on a folder with special characters is not supported");
                         }
                     }
+                    if (field.TypeAsString == "TaxonomyFieldType" || field.TypeAsString == "TaxonomyFieldTypeMulti")
+                    {
+                        // An unresolvable term would be silently dropped further down and a malformed
+                        // entry written to client_LocationBasedDefaults.html, breaking all default
+                        // column values on the library, so fail fast instead
+                        ValidateTaxonomyValues();
+                    }
                     IDefaultColumnValue defaultColumnValue = field.GetDefaultColumnValueFromField(ClientContext, Folder, Value);
                     list.SetDefaultColumnValues(new List<IDefaultColumnValue>() { defaultColumnValue });
                 }
@@ -75,6 +83,40 @@ namespace PnP.PowerShell.Commands.Lists
             else
             {
                 LogWarning("List is not a document library");
+            }
+        }
+
+        private void ValidateTaxonomyValues()
+        {
+            foreach (var value in Value)
+            {
+                Term term = null;
+                if (Guid.TryParse(value, out Guid termGuid))
+                {
+                    var taxSession = TaxonomySession.GetTaxonomySession(ClientContext);
+                    term = taxSession.GetTerm(termGuid);
+                    ClientContext.Load(term);
+                    ClientContext.ExecuteQueryRetry();
+                    if (term.ServerObjectIsNull.GetValueOrDefault(true))
+                    {
+                        term = null;
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        term = ClientContext.Site.GetTaxonomyItemByPath(value) as Term;
+                    }
+                    catch (Exception)
+                    {
+                        term = null;
+                    }
+                }
+                if (term == null)
+                {
+                    throw new PSArgumentException($"Value '{value}' could not be resolved to a term. Provide a term id or the full path to the term in the format 'TermGroup|TermSet|Term'. The default column values on the list have not been changed.", nameof(Value));
+                }
             }
         }
     }

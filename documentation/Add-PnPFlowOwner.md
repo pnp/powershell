@@ -14,6 +14,7 @@ title: Add-PnPFlowOwner
 **Required Permissions**
 
 * Azure: management.azure.com
+* Microsoft Graph: User.ReadBasic.All (delegated) or User.Read.All (application)
 
 Assigns/updates permissions to a Power Automate flow
 

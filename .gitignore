@@ -230,3 +230,4 @@ ModelManifest.xml
 #.vscode/
 src/Commands/PnP.PowerShell.csproj.lscache
 src/ALC/PnP.PowerShell.ALC.csproj.lscache
+.copilot/settings.json

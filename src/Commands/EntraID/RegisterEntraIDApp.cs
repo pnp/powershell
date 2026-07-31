@@ -2,9 +2,11 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Model.AzureAD;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
@@ -29,7 +31,41 @@ namespace PnP.PowerShell.Commands.EntraID
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
         private const string ParameterSet_NEWCERT = "Generate Certificate";
 
+        /// <summary>
+        /// The resources for which a -{Name}DelegatePermissions and, when the resource exposes application permissions at all, a
+        /// -{Name}ApplicationPermissions parameter is offered. Permissions of resources that do not ship with the module are resolved
+        /// from the tenant, so no permission list has to be maintained for them.
+        /// </summary>
+        private static readonly (string Name, string ResourceAppId, bool HasApplicationPermissions)[] resources = new[]
+        {
+            ("Graph", PermissionScopes.ResourceAppId_Graph, true),
+            ("SharePoint", PermissionScopes.ResourceAppId_SPO, true),
+            ("O365Management", PermissionScopes.ResourceAppID_O365Management, true),
+            ("Exchange", "00000002-0000-0ff1-ce00-000000000000", true),
+            ("PowerBI", "00000009-0000-0000-c000-000000000000", true),
+            // Dataverse, PowerApps and Azure Resource Manager expose delegated permissions only. Should they ever gain application
+            // permissions, they can be requested through -ResourcePermissions without a change here, as that resolves from the tenant.
+            ("Dataverse", "00000007-0000-0000-c000-000000000000", false),
+            ("PowerApps", "475226c6-020e-4fb2-8a90-7a972cbfc1d4", false),
+            ("AzureServiceManagement", "797f4846-ba00-4fd7-ba43-dac1f8f63013", false)
+        };
+
+        private static IEnumerable<string> PermissionParameterNames =>
+            resources.SelectMany(r => r.HasApplicationPermissions
+                ? new[] { $"{r.Name}ApplicationPermissions", $"{r.Name}DelegatePermissions" }
+                : new[] { $"{r.Name}DelegatePermissions" });
+
+        private static readonly string[] resourcePermissionKeys = { "Resource", "ApplicationPermissions", "DelegatePermissions" };
+
         private CancellationTokenSource cancellationTokenSource;
+
+        private readonly PermissionScopes permissionScopes = new PermissionScopes();
+
+        private readonly Dictionary<string, List<PermissionScope>> tenantScopes = new Dictionary<string, List<PermissionScope>>();
+
+        private HttpClient httpClient;
+
+        private string accessToken;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ApplicationName;
@@ -92,12 +128,17 @@ namespace PnP.PowerShell.Commands.EntraID
         [Parameter(Mandatory = false)]
         public EntraIDSignInAudience SignInAudience;
 
+        [Parameter(Mandatory = false)]
+        public Hashtable[] ResourcePermissions;
+
         protected override void ProcessRecord()
         {
             if (ParameterSpecified(nameof(Store)) && !OperatingSystem.IsWindows())
             {
                 throw new PSArgumentException("The Store parameter is only supported on Microsoft Windows");
             }
+
+            ValidateRequestedPermissions();
 
             if (!string.IsNullOrWhiteSpace(OutPath))
             {
@@ -129,80 +170,22 @@ namespace PnP.PowerShell.Commands.EntraID
                 loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment) ?? EntraIDLoginEndPoint;
             }
 
-            var permissionScopes = new PermissionScopes();
-            var scopes = new List<PermissionScope>();
-            if (this.Scopes != null)
-            {
-                foreach (var scopeIdentifier in this.Scopes)
-                {
-                    PermissionScope scope = null;
-                    scope = permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, scopeIdentifier.Replace("MSGraph.", ""), "Role");
-                    if (scope == null)
-                    {
-                        scope = permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, scopeIdentifier.Replace("SPO.", ""), "Role");
-                    }
-                    if (scope == null)
-                    {
-                        scope = permissionScopes.GetScope(PermissionScopes.ResourceAppID_O365Management, scopeIdentifier.Replace("O365.", ""), "Role");
-                    }
-                    if (scope != null)
-                    {
-                        scopes.Add(scope);
-                    }
-                }
-            }
-            else
-            {
-                if (GraphApplicationPermissions != null)
-                {
-                    foreach (var scopeIdentifier in this.GraphApplicationPermissions)
-                    {
-                        scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, scopeIdentifier, "Role"));
-                    }
-                }
-                if (GraphDelegatePermissions != null)
-                {
-                    foreach (var scopeIdentifier in this.GraphDelegatePermissions)
-                    {
-                        scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, scopeIdentifier, "Scope"));
-                    }
-                }
-                if (SharePointApplicationPermissions != null)
-                {
-                    foreach (var scopeIdentifier in this.SharePointApplicationPermissions)
-                    {
-                        scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, scopeIdentifier, "Role"));
-                    }
-                }
-                if (SharePointDelegatePermissions != null)
-                {
-                    foreach (var scopeIdentifier in this.SharePointDelegatePermissions)
-                    {
-                        scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, scopeIdentifier, "Scope"));
-                    }
-                }
-            }
-            if (!scopes.Any())
-            {
-                messageWriter.LogWarning("No permissions specified, using default permissions");
-                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "Sites.FullControl.All", "Role")); // AppOnly
-                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "AllSites.FullControl", "Scope")); // AppOnly
-                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, "Group.ReadWrite.All", "Role")); // AppOnly
-                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "User.ReadWrite.All", "Role")); // AppOnly
-                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, "User.ReadWrite.All", "Role")); // AppOnly
-            }
             var record = new PSObject();
 
             string token = GetAuthToken(messageWriter);
 
             if (!string.IsNullOrEmpty(token))
             {
+                httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+                accessToken = token;
+
+                var scopes = GetRequestedScopes();
+
                 X509Certificate2 cert = null;
                 if (!SkipCertCreation)
                 {
                     cert = GetCertificate(record);
                 }
-                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
                 if (!AppExists(ApplicationName, httpClient, token))
                 {
@@ -244,174 +227,220 @@ namespace PnP.PowerShell.Commands.EntraID
             {
                 var id = distinctResource.resourceAppId;
                 var appResource = new AppResource() { Id = id };
-                appResource.ResourceAccess.AddRange(scopes.Where(s => s.resourceAppId == id).ToList());
+                // Deduplicating on id is only correct within a single resource: different resources do reuse permission ids,
+                // Microsoft Graph and SharePoint for instance share the id of their User.Read.All and User.ReadWrite.All app roles
+                appResource.ResourceAccess.AddRange(scopes.Where(s => s.resourceAppId == id).GroupBy(s => (s.Id, s.Type)).Select(g => g.First()));
                 resourcePermissions.Add(appResource);
             }
             return resourcePermissions;
         }
 
-        protected IEnumerable<string> Scopes
+        /// <summary>
+        /// Validates everything about the requested permissions that can be checked without contacting the tenant, so that a malformed
+        /// invocation fails before the user is asked to authenticate. Whether a permission exists is checked later, in <see cref="AddScopes"/>.
+        /// </summary>
+        private void ValidateRequestedPermissions()
         {
-            get
+            if (GetBoundPermissions("Scopes").Any())
             {
-                if (ParameterSpecified(nameof(Scopes)) && MyInvocation.BoundParameters["Scopes"] != null)
+                var conflicting = PermissionParameterNames.Where(MyInvocation.BoundParameters.ContainsKey).ToList();
+                if (ResourcePermissions != null)
                 {
-                    return MyInvocation.BoundParameters["Scopes"] as string[];
+                    conflicting.Add(nameof(ResourcePermissions));
                 }
-                else
+                if (conflicting.Any())
                 {
-                    return null;
+                    throw new PSArgumentException($"-Scopes cannot be combined with {string.Join(", ", conflicting.Select(c => $"-{c}"))}, as only -Scopes would be applied. Use the per resource parameters, -Scopes is obsolete.", "Scopes");
+                }
+            }
+
+            foreach (var resourcePermission in ResourcePermissions ?? Array.Empty<Hashtable>())
+            {
+                var unknownKeys = resourcePermission.Keys.Cast<object>().Select(k => k?.ToString())
+                    .Where(k => !resourcePermissionKeys.Contains(k, StringComparer.OrdinalIgnoreCase)).ToArray();
+                if (unknownKeys.Any())
+                {
+                    throw new PSArgumentException($"A -ResourcePermissions entry contains the unsupported key(s) {string.Join(", ", unknownKeys)}. Supported keys are {string.Join(", ", resourcePermissionKeys)}.", nameof(ResourcePermissions));
+                }
+
+                var resourceAppId = GetResourceAppId(resourcePermission["Resource"] as string);
+                if (!AsStrings(resourcePermission["ApplicationPermissions"]).Any() && !AsStrings(resourcePermission["DelegatePermissions"]).Any())
+                {
+                    throw new PSArgumentException($"The -ResourcePermissions entry for resource {resourceAppId} has neither an ApplicationPermissions nor a DelegatePermissions key holding a permission.", nameof(ResourcePermissions));
                 }
             }
         }
 
-        protected IEnumerable<string> GraphApplicationPermissions
+        /// <summary>
+        /// Turns the requested permissions into the scopes to register on the app. Every requested permission has to resolve, an unknown
+        /// permission is an error rather than something to skip, as silently dropping it would register an app without the access asked for.
+        /// </summary>
+        private List<PermissionScope> GetRequestedScopes()
         {
-            get
+            var scopes = new List<PermissionScope>();
+
+            var legacyScopes = GetBoundPermissions("Scopes").ToArray();
+            if (legacyScopes.Any())
             {
-                if (ParameterSpecified(nameof(GraphApplicationPermissions)) && MyInvocation.BoundParameters[nameof(GraphApplicationPermissions)] != null)
+                foreach (var identifier in legacyScopes)
                 {
-                    return MyInvocation.BoundParameters[nameof(GraphApplicationPermissions)] as string[];
+                    scopes.Add(permissionScopes.GetScopeByLegacyIdentifier(identifier)
+                        ?? throw new PSArgumentException($"Permission '{identifier}' does not exist.", "Scopes"));
                 }
-                else
+                return scopes;
+            }
+
+            foreach (var (name, resourceAppId, hasApplicationPermissions) in resources)
+            {
+                if (hasApplicationPermissions)
                 {
-                    return null;
+                    AddScopes(scopes, resourceAppId, "Role", GetBoundPermissions($"{name}ApplicationPermissions"), false);
                 }
+                AddScopes(scopes, resourceAppId, "Scope", GetBoundPermissions($"{name}DelegatePermissions"), false);
+            }
+
+            foreach (var resourcePermission in ResourcePermissions ?? Array.Empty<Hashtable>())
+            {
+                var resourceAppId = GetResourceAppId(resourcePermission["Resource"] as string);
+
+                // Always resolved from the tenant, so that permissions missing from the lists shipping with the module can be requested too
+                AddScopes(scopes, resourceAppId, "Role", AsStrings(resourcePermission["ApplicationPermissions"]), true);
+                AddScopes(scopes, resourceAppId, "Scope", AsStrings(resourcePermission["DelegatePermissions"]), true);
+            }
+
+            if (scopes.Any())
+            {
+                return scopes;
+            }
+
+            LogWarning("No permissions specified, using default permissions");
+            AddScopes(scopes, PermissionScopes.ResourceAppId_SPO, "Role", new[] { "Sites.FullControl.All", "User.ReadWrite.All" }, false);
+            AddScopes(scopes, PermissionScopes.ResourceAppId_SPO, "Scope", new[] { "AllSites.FullControl" }, false);
+            AddScopes(scopes, PermissionScopes.ResourceAppId_Graph, "Role", new[] { "Group.ReadWrite.All", "User.ReadWrite.All" }, false);
+            return scopes;
+        }
+
+        private void AddScopes(List<PermissionScope> scopes, string resourceAppId, string type, IEnumerable<string> identifiers, bool resolveFromTenant)
+        {
+            foreach (var identifier in identifiers)
+            {
+                var scope = !resolveFromTenant && PermissionScopes.IsCuratedResource(resourceAppId)
+                    ? permissionScopes.GetScope(resourceAppId, identifier, type)
+                    : GetTenantScopes(resourceAppId).FirstOrDefault(s => s.Identifier == identifier && s.Type == type);
+
+                scopes.Add(scope ?? throw new PSArgumentException($"Resource {resourceAppId} does not expose {(type == "Role" ? "an application" : "a delegated")} permission named '{identifier}'."));
             }
         }
 
-        protected IEnumerable<string> GraphDelegatePermissions
+        /// <summary>
+        /// Reads the permissions a resource exposes from its service principal in the tenant, so that no list of them has to be maintained.
+        /// </summary>
+        private List<PermissionScope> GetTenantScopes(string resourceAppId)
         {
-            get
+            if (tenantScopes.TryGetValue(resourceAppId, out var cachedScopes))
             {
-                if (ParameterSpecified(nameof(GraphDelegatePermissions)) && MyInvocation.BoundParameters[nameof(GraphDelegatePermissions)] != null)
-                {
-                    return MyInvocation.BoundParameters[nameof(GraphDelegatePermissions)] as string[];
-                }
-                else
-                {
-                    return null;
-                }
+                return cachedScopes;
             }
+
+            var servicePrincipal = RestHelper.Get<RestResultCollection<AzureADServicePrincipal>>(httpClient, $"{GetGraphEndPoint()}/v1.0/servicePrincipals?$filter=appId eq '{resourceAppId}'&$select=appRoles,oauth2PermissionScopes", accessToken)?.Items?.FirstOrDefault();
+            if (servicePrincipal == null)
+            {
+                throw new PSArgumentException($"Resource {resourceAppId} has no service principal in tenant {Tenant}, so the permissions it exposes cannot be determined. The API may not be available in this tenant.");
+            }
+
+            var resolvedScopes = new List<PermissionScope>();
+            foreach (var appRole in servicePrincipal.AppRoles ?? new List<AzureADServicePrincipalAppRole>())
+            {
+                // Only roles that are enabled and assignable to an application can be granted to the app being registered
+                if (appRole.IsEnabled != true || appRole.AllowedMemberTypes?.Contains("Application") != true)
+                {
+                    continue;
+                }
+                resolvedScopes.Add(new PermissionScope { resourceAppId = resourceAppId, Id = appRole.Id?.ToString(), Identifier = appRole.Value, Type = "Role" });
+            }
+            foreach (var oauth2PermissionScope in servicePrincipal.Oauth2PermissionScopes ?? new List<AzureADServicePrincipalOauth2PermissionScopes>())
+            {
+                if (oauth2PermissionScope.IsEnabled != true)
+                {
+                    continue;
+                }
+                resolvedScopes.Add(new PermissionScope { resourceAppId = resourceAppId, Id = oauth2PermissionScope.Id?.ToString(), Identifier = oauth2PermissionScope.Value, Type = "Scope" });
+            }
+
+            tenantScopes.Add(resourceAppId, resolvedScopes);
+            return resolvedScopes;
         }
 
-        protected IEnumerable<string> SharePointApplicationPermissions
+        private static string GetResourceAppId(string resource)
         {
-            get
+            var wellKnownResourceAppId = resources.FirstOrDefault(r => r.Name.Equals(resource, StringComparison.OrdinalIgnoreCase)).ResourceAppId;
+            if (wellKnownResourceAppId != null)
             {
-                if (ParameterSpecified(nameof(SharePointApplicationPermissions)) && MyInvocation.BoundParameters[nameof(SharePointApplicationPermissions)] != null)
-                {
-                    return MyInvocation.BoundParameters[nameof(SharePointApplicationPermissions)] as string[];
-                }
-                else
-                {
-                    return null;
-                }
+                return wellKnownResourceAppId;
             }
+            if (!Guid.TryParse(resource, out var resourceAppId))
+            {
+                throw new PSArgumentException($"Every -ResourcePermissions entry needs a Resource key holding the application id of the resource, or one of: {string.Join(", ", resources.Select(r => r.Name))}.", nameof(ResourcePermissions));
+            }
+            // Normalised, as the application id is compared against the well known ones and grouped per resource, both of which are case sensitive
+            return resourceAppId.ToString();
         }
 
-        protected IEnumerable<string> SharePointDelegatePermissions
+        private IEnumerable<string> GetBoundPermissions(string parameterName)
         {
-            get
-            {
-                if (ParameterSpecified(nameof(SharePointDelegatePermissions)) && MyInvocation.BoundParameters[nameof(SharePointDelegatePermissions)] != null)
-                {
-                    return MyInvocation.BoundParameters[nameof(SharePointDelegatePermissions)] as string[];
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            return MyInvocation.BoundParameters.TryGetValue(parameterName, out var value) ? AsStrings(value) : Enumerable.Empty<string>();
         }
 
-        protected IEnumerable<string> O365ManagementApplicationPermissions
+        private static IEnumerable<string> AsStrings(object value)
         {
-            get
-            {
-                if (ParameterSpecified(nameof(O365ManagementApplicationPermissions)) && MyInvocation.BoundParameters[nameof(O365ManagementApplicationPermissions)] != null)
-                {
-                    return MyInvocation.BoundParameters[nameof(O365ManagementApplicationPermissions)] as string[];
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-
-        protected IEnumerable<string> O365ManagementDelegatePermissions
-        {
-            get
-            {
-                if (ParameterSpecified(nameof(O365ManagementDelegatePermissions)) && MyInvocation.BoundParameters[nameof(O365ManagementDelegatePermissions)] != null)
-                {
-                    return MyInvocation.BoundParameters[nameof(O365ManagementDelegatePermissions)] as string[];
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            return value == null ? Enumerable.Empty<string>() : LanguagePrimitives.ConvertTo<string[]>(value);
         }
 
         public object GetDynamicParameters()
         {
-            // var classAttribute = this.GetType().GetCustomAttributes(false).FirstOrDefault(a => a is PropertyLoadingAttribute);
-            const string parameterName = "Scopes";
-
             var parameterDictionary = new RuntimeDefinedParameterDictionary();
-            var attributeCollection = new System.Collections.ObjectModel.Collection<Attribute>();
 
-            // Scopes
-            var parameterAttribute = new ParameterAttribute
+            var attributeCollection = new System.Collections.ObjectModel.Collection<Attribute>
             {
-                ValueFromPipeline = false,
-                ValueFromPipelineByPropertyName = false,
-                Mandatory = false
+                new ParameterAttribute { ValueFromPipeline = false, ValueFromPipelineByPropertyName = false, Mandatory = false },
+                new ObsoleteAttribute("Use either -GraphApplicationPermissions, -GraphDelegatePermissions, -SharePointApplicationPermissions or -SharePointDelegatePermissions"),
+                new ValidateSetAttribute(permissionScopes.GetIdentifiers())
             };
+            parameterDictionary.Add("Scopes", new RuntimeDefinedParameter("Scopes", typeof(string[]), attributeCollection));
 
-            attributeCollection.Add(parameterAttribute);
-            attributeCollection.Add(new ObsoleteAttribute("Use either -GraphApplicationPermissions, -GraphDelegatePermissions, -SharePointApplicationPermissions or -SharePointDelegatePermissions"));
-
-            var identifiers = new PermissionScopes().GetIdentifiers();
-
-            var validateSetAttribute = new ValidateSetAttribute(identifiers);
-            attributeCollection.Add(validateSetAttribute);
-
-            var runtimeParameter = new RuntimeDefinedParameter(parameterName, typeof(string[]), attributeCollection);
-
-            parameterDictionary.Add(parameterName, runtimeParameter);
-
-            // Graph
-            parameterDictionary.Add("GraphApplicationPermissions", GetParameter("GraphApplicationPermissions", PermissionScopes.ResourceAppId_Graph, "Role"));
-            parameterDictionary.Add("GraphDelegatePermissions", GetParameter("GraphDelegatePermissions", PermissionScopes.ResourceAppId_Graph, "Scope"));
-
-            // SharePoint
-            parameterDictionary.Add("SharePointApplicationPermissions", GetParameter("SharePointApplicationPermissions", PermissionScopes.ResourceAppId_SPO, "Role"));
-            parameterDictionary.Add("SharePointDelegatePermissions", GetParameter("SharePointDelegatePermissions", PermissionScopes.ResourceAppId_SPO, "Scope"));
-
-            // O365 Management
-            parameterDictionary.Add("O365ManagementApplicationPermissions", GetParameter("O365ManagementApplicationPermissions", PermissionScopes.ResourceAppID_O365Management, "Role"));
-            parameterDictionary.Add("O365ManagementDelegatePermissions", GetParameter("O365ManagementDelegatePermissions", PermissionScopes.ResourceAppID_O365Management, "Scope"));
+            foreach (var (name, resourceAppId, hasApplicationPermissions) in resources)
+            {
+                if (hasApplicationPermissions)
+                {
+                    parameterDictionary.Add($"{name}ApplicationPermissions", GetParameter($"{name}ApplicationPermissions", resourceAppId, "Role"));
+                }
+                parameterDictionary.Add($"{name}DelegatePermissions", GetParameter($"{name}DelegatePermissions", resourceAppId, "Scope"));
+            }
 
             return parameterDictionary;
         }
 
         private RuntimeDefinedParameter GetParameter(string parameterName, string resourceAppId, string type)
         {
-            var attributeCollection = new System.Collections.ObjectModel.Collection<Attribute>();
-            var parameterAttribute = new ParameterAttribute
+            var attributeCollection = new System.Collections.ObjectModel.Collection<Attribute>
             {
-                ValueFromPipeline = false,
-                ValueFromPipelineByPropertyName = false,
-                Mandatory = false
+                new ParameterAttribute { ValueFromPipeline = false, ValueFromPipelineByPropertyName = false, Mandatory = false }
             };
-            attributeCollection.Add(parameterAttribute);
-            var validateSetAttribute = new ValidateSetAttribute(new PermissionScopes().GetIdentifiers(resourceAppId, type));
-            attributeCollection.Add(validateSetAttribute);
-            var parameter = new RuntimeDefinedParameter(parameterName, typeof(string[]), attributeCollection);
-            return parameter;
+            if (PermissionScopes.IsCuratedResource(resourceAppId))
+            {
+                // Permissions of the other resources are validated against the tenant, as their available permissions are only known there
+                attributeCollection.Add(new ValidateSetAttribute(permissionScopes.GetIdentifiers(resourceAppId, type)));
+            }
+            return new RuntimeDefinedParameter(parameterName, typeof(string[]), attributeCollection);
+        }
+
+        private string GetGraphEndPoint()
+        {
+            if (AzureEnvironment == AzureEnvironment.Custom)
+            {
+                return Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? MicrosoftGraphEndPoint;
+            }
+            return $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
         }
 
         private string GetAuthToken(CmdletMessageWriter messageWriter)
@@ -443,7 +472,6 @@ namespace PnP.PowerShell.Commands.EntraID
                 });
                 messageWriter.Start();
             }
-
 
             return token;
         }
@@ -515,13 +543,7 @@ namespace PnP.PowerShell.Commands.EntraID
         {
             Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Checking if application '{appName}' does not exist yet...");
 
-            var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
-            if (AzureEnvironment == AzureEnvironment.Custom)
-            {
-                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? MicrosoftGraphEndPoint;
-            }
-
-            var azureApps = RestHelper.Get<RestResultCollection<AzureADApp>>(httpClient, $"{graphEndpoint}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token);
+            var azureApps = RestHelper.Get<RestResultCollection<AzureADApp>>(httpClient, $"{GetGraphEndPoint()}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token);
             if (azureApps != null && azureApps.Items.Any())
             {
                 Host.UI.WriteLine();
@@ -571,11 +593,7 @@ namespace PnP.PowerShell.Commands.EntraID
                 };
             }
 
-            var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
-            if (AzureEnvironment == AzureEnvironment.Custom)
-            {
-                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? MicrosoftGraphEndPoint;
-            }
+            var graphEndpoint = GetGraphEndPoint();
 
             var azureApp = RestHelper.Post<AzureADApp>(httpClient, $"{graphEndpoint}/v1.0/applications", token, payload);
 
@@ -617,13 +635,17 @@ namespace PnP.PowerShell.Commands.EntraID
             var htmlMessageConsentSuccess = $"<html lang=en><meta charset=utf-8><title>PnP PowerShell - Consent</title><meta content=\"width=device-width,initial-scale=1\"name=viewport><style>html{{height:100%}}.message-container{{flex-grow:1;display:flex;align-items:center;justify-content:center;margin:0 30px}}body{{box-sizing:border-box;min-height:100%;display:flex;flex-direction:column;color:#fff;font-family:\"Segoe UI\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;background-color:#2c2c32;margin:0;padding:15px 30px}}.message{{font-weight:300;font-size:1.4rem}}.branding{{background-image:url(data:image/png;base64,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);background-repeat:no-repeat;padding-left:26px;font-size:20px;letter-spacing:-.04rem;font-weight:400;height:26px;color:#fff;background-position:left center;text-decoration:none}}</style><a class=branding href=https://pnp.github.io/powershell>PnP PowerShell</a><div class=message-container><div class=message>You successfully provided consent now and can close this page.</div></div>";
             var htmlMessageConsentFailed = $"<html lang=en><meta charset=utf-8><title>PnP PowerShell - Consent</title><meta content=\"width=device-width,initial-scale=1\"name=viewport><style>html{{height:100%}}.error-text{{color:red;font-size:1rem}}.message-container{{flex-grow:1;display:flex;align-items:center;justify-content:center;margin:0 30px}}body{{box-sizing:border-box;min-height:100%;display:flex;flex-direction:column;color:#fff;font-family:\"Segoe UI\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;background-color:#2c2c32;margin:0;padding:15px 30px}}.message{{font-weight:300;font-size:1.4rem}}.branding{{background-image:url(data:image/png;base64,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);background-repeat:no-repeat;height:26px;padding-left:26px;font-size:20px;letter-spacing:-.04rem;font-weight:400;color:#fff;background-position:left center;text-decoration:none}}</style><a class=branding href=https://pnp.github.io/powershell>PnP PowerShell</a><div class=message-container><div class=message>You failed to provide consent. Please try again. You can close this page.</div></div>";
 
-            var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
-            if (AzureEnvironment == AzureEnvironment.Custom)
-            {
-                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? MicrosoftGraphEndPoint;
-            }
+            // The consent flow needs a resource to request a token for, which can only be derived for Microsoft Graph and SharePoint
+            var resource = scopes.Any(s => s.resourceAppId == PermissionScopes.ResourceAppId_Graph) ? $"{GetGraphEndPoint()}/.default"
+                : scopes.Any(s => s.resourceAppId == PermissionScopes.ResourceAppId_SPO) ? "https://microsoft.sharepoint-df.com/.default"
+                : null;
 
-            var resource = scopes.FirstOrDefault(s => s.resourceAppId == PermissionScopes.ResourceAppId_Graph) != null ? $"{graphEndpoint}/.default" : "https://microsoft.sharepoint-df.com/.default";
+            if (resource == null)
+            {
+                LogWarning($"No Microsoft Graph or SharePoint permissions were requested, so no consent flow can be started. Grant admin consent for app {azureApp.AppId} through the Entra ID portal.");
+                WriteObject(record);
+                return;
+            }
 
             var consentUrl = $"{loginEndPoint}/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope={resource}&redirect_uri={redirectUri}";
 
@@ -688,7 +710,6 @@ namespace PnP.PowerShell.Commands.EntraID
                     }
                 }
             }
-
             WriteObject(record);
         }
 
@@ -704,13 +725,7 @@ namespace PnP.PowerShell.Commands.EntraID
                 {
                     LogDebug("Setting the logo for the EntraID app");
 
-                    var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
-                    if (AzureEnvironment == AzureEnvironment.Custom)
-                    {
-                        graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? MicrosoftGraphEndPoint;
-                    }
-
-                    var endpoint = $"{graphEndpoint}/v1.0/applications/{azureApp.Id}/logo";
+                    var endpoint = $"{GetGraphEndPoint()}/v1.0/applications/{azureApp.Id}/logo";
 
                     var bytes = File.ReadAllBytes(LogoFilePath);
 

@@ -1,4 +1,5 @@
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Attributes;
 using System;
 using System.Linq;
 using System.Management.Automation;
@@ -9,6 +10,11 @@ namespace PnP.PowerShell.Commands.Purview
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteSensitivityLabel")]
     [OutputType(typeof(void))]
+    [RequiredApiApplicationPermissions("graph/InformationProtectionPolicy.Read.All")]
+    [RequiredApiDelegatedPermissions("graph/InformationProtectionPolicy.Read")]
+    [RequiredApiDelegatedPermissions("graph/Group.ManageProtection.All")]
+    [RequiredApiDelegatedPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedPermissions("graph/Directory.ReadWrite.All")]
     public class SetSiteSensitivityLabel : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
