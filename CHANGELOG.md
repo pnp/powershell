@@ -39,11 +39,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Import-PnPFlow` ignoring its documented default polling behavior when `-RetryCount` and `-Delay` were omitted, which made the import fail with a missing property error. Both parameters now validate their range and a run that never becomes ready reports why. [#5421](https://github.com/pnp/powershell/pull/5421)
 - Fixed `Set-PnPPlannerPlan` failing to update a plan that was modified by someone else while the update was in flight, and returning nothing instead of an error when the update could not be applied. [#5421](https://github.com/pnp/powershell/pull/5421)
 - Fixed `Get-PnPUserProfilePhoto` and other Microsoft Graph backed cmdlets silently ignoring a failed request when the error response could be parsed but did not contain any error details. [#5421](https://github.com/pnp/powershell/pull/5421)
+- Fixed `Resolve-PnPFolder` cmdlet not working in large lists and document library due to 5000 items threshold. [#5411](https://github.com/pnp/powershell/pull/5411)
+- Fixed `Set-PnPDefaultColumnValues` corrupting library defaults on invalid taxonomy values. [#5412](https://github.com/pnp/powershell/pull/5412)
 
 ### Removed
 
 ### Contributors
 
+- [svermaark]
 - Fabian Hutzli [fabianhutzli]
 - [reusto]
 - Patrick Schneider [pschneid]
