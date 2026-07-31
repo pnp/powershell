@@ -270,6 +270,7 @@ When generating or modifying code:
 - Keep cmdlet documentation in sync: create documentation markdown files under `/documentation/` for new cmdlets, delete documentation for removed cmdlets, and update documentation when cmdlets change
 - In cmdlet documentation markdown files, list parameter subsections in the `## PARAMETERS` section alphabetically
 - Add future repository-specific guidance and memory items to this root-level `.github/copilot-instructions.md` file rather than workspace-local instruction files
+- Do not add or modify files under `src/Tests`
 - Consider cross-platform compatibility
 - Remember that this module runs in PowerShell 7.4+ (not Windows PowerShell 5.1)
 - Use modern C# 12 features where appropriate

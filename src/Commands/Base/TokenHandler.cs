@@ -137,12 +137,27 @@ namespace PnP.PowerShell.Commands.Base
                     or "api.apps.appsplatform.us"
                     or "service.apps.appsplatform.us" => Enums.ResourceTypeName.PowerApps,
                 "dynamics" or "admin.services.crm.dynamics.com" or "api.crm.dynamics.com" => Enums.ResourceTypeName.DynamicsCRM,
+                _ when IsDynamicsCrmAudience(sanitizedAudience) => Enums.ResourceTypeName.DynamicsCRM,
                 "gcs" or "gcs.office.com" => Enums.ResourceTypeName.Gcs,
 
                 // We assume SharePoint as the default as vanity domains cause no fixed structure to be present in the audience name
                 _ => Enums.ResourceTypeName.SharePoint
             };
             return resource;
+        }
+
+        private static bool IsDynamicsCrmAudience(string audience)
+        {
+            var hasCrmHostLabel = audience
+                .Split('.')
+                .Any(label => label.StartsWith("crm", StringComparison.Ordinal));
+
+            return hasCrmHostLabel &&
+                (audience.EndsWith(".dynamics.com", StringComparison.Ordinal) ||
+                 audience.EndsWith(".dynamics.cn", StringComparison.Ordinal) ||
+                 audience.EndsWith(".microsoftdynamics.de", StringComparison.Ordinal) ||
+                 audience.EndsWith(".microsoftdynamics.us", StringComparison.Ordinal) ||
+                 audience.EndsWith(".appsplatform.us", StringComparison.Ordinal));
         }
 
         /// <summary>

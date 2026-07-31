@@ -1,106 +1,167 @@
 {
-    "delegatedScopesList": [
-        {
-            "adminConsentDescription": "Allows the application to read activity data for your organization.",
-            "adminConsentDisplayName": "Read activity data for your organization",
-            "id": "594c1fb6-4f81-4475-ae41-0c394909246c",
-            "isEnabled": true,
-            "isAdmin": true,
-            "consentDescription": "Allows the application to read activity data for your organization.",
-            "consentDisplayName": "Read activity data for your organization",
-            "value": "ActivityFeed.Read"
-        },
-        {
-            "adminConsentDescription": "Allows the application to read DLP policy events, including detected sensitive data, for your organization.",
-            "adminConsentDisplayName": "Read DLP policy events including detected sensitive data",
-            "id": "4807a72c-ad38-4250-94c9-4eabfe26cd55",
-            "isEnabled": true,
-            "isAdmin": true,
-            "consentDescription": "Allows the application to read DLP policy events, including detected sensitive data, for your organization.",
-            "consentDisplayName": "Read DLP policy events including detected sensitive data",
-            "value": "ActivityFeed.ReadDlp"
-        },
-        {
-            "adminConsentDescription": "Allows the application to read service health information for your organization.",
-            "adminConsentDisplayName": "Read service health information for your organization",
-            "id": "e2cea78f-e743-4d8f-a16a-75b629a038ae",
-            "isEnabled": true,
-            "isAdmin": true,
-            "consentDescription": "Allows the application to read service health information for your organization.",
-            "consentDisplayName": "Read service health information for your organization",
-            "value": "ServiceHealth.Read"
-        },
-        {
-            "adminConsentDescription": "Allows the application to read service health information for your organization.",
-            "adminConsentDisplayName": "Read activity reports for your organization",
-            "id": "b3b78c39-cb1d-4d17-820a-25d9196a800e",
-            "isEnabled": true,
-            "isAdmin": true,
-            "consentDescription": "Allows the application to read service health information for your organization.",
-            "consentDisplayName": "Read service health information for your organization",
-            "value": "ActivityReports.Read"
-        },
-        {
-            "adminConsentDescription": "Allows the application to read threat intelligence data for your organization",
-            "adminConsentDisplayName": "Read threat intelligence data for your organization",
-            "id": "17f1c501-83cd-414c-9064-cd10f7aef836",
-            "isEnabled": true,
-            "isAdmin": true,
-            "consentDescription": "Allows the application to read threat intelligence data for your organization",
-            "consentDisplayName": "Read threat intelligence data for your organization",
-            "value": "ThreatIntelligence.Read"
-        }
-    ],
-    "applicationScopesList": [
-        {
-            "adminConsentDescription": "Allows the application to read activity data for your organization.",
-            "adminConsentDisplayName": "Read activity data for your organization",
-            "id": "594c1fb6-4f81-4475-ae41-0c394909246c",
-            "isEnabled": true,
-            "isAdmin": true,
-            "consentDescription": "Allows the application to read activity data for your organization.",
-            "consentDisplayName": "Read activity data for your organization",
-            "value": "ActivityFeed.Read"
-        },
-        {
-            "adminConsentDescription": "Allows the application to read DLP policy events, including detected sensitive data, for your organization.",
-            "adminConsentDisplayName": "Read DLP policy events including detected sensitive data",
-            "id": "4807a72c-ad38-4250-94c9-4eabfe26cd55",
-            "isEnabled": true,
-            "isAdmin": true,
-            "consentDescription": "Allows the application to read DLP policy events, including detected sensitive data, for your organization.",
-            "consentDisplayName": "Read DLP policy events including detected sensitive data",
-            "value": "ActivityFeed.ReadDlp"
-        },
-        {
-            "adminConsentDescription": "Allows the application to read service health information for your organization.",
-            "adminConsentDisplayName": "Read service health information for your organization",
-            "id": "e2cea78f-e743-4d8f-a16a-75b629a038ae",
-            "isEnabled": true,
-            "isAdmin": true,
-            "consentDescription": "Allows the application to read service health information for your organization.",
-            "consentDisplayName": "Read service health information for your organization",
-            "value": "ServiceHealth.Read"
-        },
-        {
-            "adminConsentDescription": "Allows the application to read service health information for your organization.",
-            "adminConsentDisplayName": "Read activity reports for your organization",
-            "id": "b3b78c39-cb1d-4d17-820a-25d9196a800e",
-            "isEnabled": true,
-            "isAdmin": true,
-            "consentDescription": "Allows the application to read service health information for your organization.",
-            "consentDisplayName": "Read service health information for your organization",
-            "value": "ActivityReports.Read"
-        },
-        {
-            "adminConsentDescription": "Allows the application to read threat intelligence data for your organization",
-            "adminConsentDisplayName": "Read threat intelligence data for your organization",
-            "id": "17f1c501-83cd-414c-9064-cd10f7aef836",
-            "isEnabled": true,
-            "isAdmin": true,
-            "consentDescription": "Allows the application to read threat intelligence data for your organization",
-            "consentDisplayName": "Read threat intelligence data for your organization",
-            "value": "ThreatIntelligence.Read"
-        }
-    ]
+  "delegatedScopesList": [
+    {
+      "adminConsentDescription": "Allows the application to read activity data for your organization.",
+      "adminConsentDisplayName": "Read activity data for your organization",
+      "consentDescription": "Allows the application to read activity data for your organization.",
+      "consentDisplayName": "Read activity data for your organization",
+      "id": "594c1fb6-4f81-4475-ae41-0c394909246c",
+      "isAdmin": true,
+      "isEnabled": true,
+      "value": "ActivityFeed.Read"
+    },
+    {
+      "adminConsentDescription": "Allows the application to read DLP policy events, including detected sensitive data, for your organization.",
+      "adminConsentDisplayName": "Read DLP policy events including detected sensitive data",
+      "consentDescription": "Allows the application to read DLP policy events, including detected sensitive data, for your organization.",
+      "consentDisplayName": "Read DLP policy events including detected sensitive data",
+      "id": "4807a72c-ad38-4250-94c9-4eabfe26cd55",
+      "isAdmin": true,
+      "isEnabled": true,
+      "value": "ActivityFeed.ReadDlp"
+    },
+    {
+      "adminConsentDescription": "Allows the application to read service health information for your organization.",
+      "adminConsentDisplayName": "Read activity reports for your organization",
+      "consentDescription": "Allows the application to read service health information for your organization.",
+      "consentDisplayName": "Read service health information for your organization",
+      "id": "b3b78c39-cb1d-4d17-820a-25d9196a800e",
+      "isAdmin": true,
+      "isEnabled": false,
+      "value": "ActivityReports.Read"
+    },
+    {
+      "adminConsentDescription": "Allows the application to read service health information for your organization.",
+      "adminConsentDisplayName": "Read activity reports for your organization",
+      "consentDescription": "Allows the application to read service health information for your organization.",
+      "consentDisplayName": "Read service health information for your organization",
+      "id": "825c9d21-ba03-4e97-8007-83f020ff8c0f",
+      "isAdmin": true,
+      "isEnabled": false,
+      "value": "Deprecated_ActivityReports.Read"
+    },
+    {
+      "adminConsentDescription": "Allows the application to read threat intelligence data for your organization",
+      "adminConsentDisplayName": "Read threat intelligence data for your organization",
+      "consentDescription": "Allows the application to read threat intelligence data for your organization",
+      "consentDisplayName": "Read threat intelligence data for your organization",
+      "id": "69784729-33e3-471d-b130-744ce05343e5",
+      "isAdmin": true,
+      "isEnabled": false,
+      "value": "Deprecated_ThreatIntelligence.Read"
+    },
+    {
+      "adminConsentDescription": "Allows the application to read service health information for your organization.",
+      "adminConsentDisplayName": "Read service health information for your organization",
+      "consentDescription": "Allows the application to read service health information for your organization.",
+      "consentDisplayName": "Read service health information for your organization",
+      "id": "e2cea78f-e743-4d8f-a16a-75b629a038ae",
+      "isAdmin": true,
+      "isEnabled": true,
+      "value": "ServiceHealth.Read"
+    },
+    {
+      "adminConsentDescription": "Allows the application to read threat intelligence data for your organization",
+      "adminConsentDisplayName": "Read threat intelligence data for your organization",
+      "consentDescription": "Allows the application to read threat intelligence data for your organization",
+      "consentDisplayName": "Read threat intelligence data for your organization",
+      "id": "17f1c501-83cd-414c-9064-cd10f7aef836",
+      "isAdmin": true,
+      "isEnabled": false,
+      "value": "ThreatIntelligence.Read"
+    }
+  ],
+  "applicationScopesList": [
+    {
+      "adminConsentDescription": "Allows the application to read activity data for your organization.",
+      "adminConsentDisplayName": "Read activity data for your organization",
+      "allowedMemberTypes": [
+        "Application"
+      ],
+      "consentDescription": "Allows the application to read activity data for your organization.",
+      "consentDisplayName": "Read activity data for your organization",
+      "id": "594c1fb6-4f81-4475-ae41-0c394909246c",
+      "isAdmin": true,
+      "isEnabled": true,
+      "value": "ActivityFeed.Read"
+    },
+    {
+      "adminConsentDescription": "Allows the application to read DLP policy events, including detected sensitive data, for your organization.",
+      "adminConsentDisplayName": "Read DLP policy events including detected sensitive data",
+      "allowedMemberTypes": [
+        "Application"
+      ],
+      "consentDescription": "Allows the application to read DLP policy events, including detected sensitive data, for your organization.",
+      "consentDisplayName": "Read DLP policy events including detected sensitive data",
+      "id": "4807a72c-ad38-4250-94c9-4eabfe26cd55",
+      "isAdmin": true,
+      "isEnabled": true,
+      "value": "ActivityFeed.ReadDlp"
+    },
+    {
+      "adminConsentDescription": "Allows the application to read service health information for your organization.",
+      "adminConsentDisplayName": "Read activity reports for your organization",
+      "allowedMemberTypes": [
+        "Application"
+      ],
+      "consentDescription": "Allows the application to read service health information for your organization.",
+      "consentDisplayName": "Read activity reports for your organization",
+      "id": "b3b78c39-cb1d-4d17-820a-25d9196a800e",
+      "isAdmin": true,
+      "isEnabled": false,
+      "value": "ActivityReports.Read"
+    },
+    {
+      "adminConsentDescription": "Allows the application to read service health information for your organization.",
+      "adminConsentDisplayName": "Read activity reports for your organization",
+      "allowedMemberTypes": [
+        "Application"
+      ],
+      "consentDescription": "Allows the application to read service health information for your organization.",
+      "consentDisplayName": "Read activity reports for your organization",
+      "id": "825c9d21-ba03-4e97-8007-83f020ff8c0f",
+      "isAdmin": true,
+      "isEnabled": false,
+      "value": "Deprecated_ActivityReports.Read"
+    },
+    {
+      "adminConsentDescription": "Allows the application to read threat intelligence data for your organization",
+      "adminConsentDisplayName": "Read threat intelligence data for your organization",
+      "allowedMemberTypes": [
+        "Application"
+      ],
+      "consentDescription": "Allows the application to read threat intelligence data for your organization",
+      "consentDisplayName": "Read threat intelligence data for your organization",
+      "id": "69784729-33e3-471d-b130-744ce05343e5",
+      "isAdmin": true,
+      "isEnabled": false,
+      "value": "Deprecated_ThreatIntelligence.Read"
+    },
+    {
+      "adminConsentDescription": "Allows the application to read service health information for your organization.",
+      "adminConsentDisplayName": "Read service health information for your organization",
+      "allowedMemberTypes": [
+        "Application"
+      ],
+      "consentDescription": "Allows the application to read service health information for your organization.",
+      "consentDisplayName": "Read service health information for your organization",
+      "id": "e2cea78f-e743-4d8f-a16a-75b629a038ae",
+      "isAdmin": true,
+      "isEnabled": true,
+      "value": "ServiceHealth.Read"
+    },
+    {
+      "adminConsentDescription": "Allows the application to read threat intelligence data for your organization",
+      "adminConsentDisplayName": "Read threat intelligence data for your organization",
+      "allowedMemberTypes": [
+        "Application"
+      ],
+      "consentDescription": "Allows the application to read threat intelligence data for your organization",
+      "consentDisplayName": "Read threat intelligence data for your organization",
+      "id": "17f1c501-83cd-414c-9064-cd10f7aef836",
+      "isAdmin": true,
+      "isEnabled": false,
+      "value": "ThreatIntelligence.Read"
+    }
+  ]
 }
