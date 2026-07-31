@@ -255,21 +255,6 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
-        /// Failures that retrying can never resolve, because the caller is not allowed to make the call in the first place.
-        /// Retrying these only delays telling the user what is actually wrong.
-        /// </summary>
-        private static bool IsAuthorizationFailure(Exception ex)
-        {
-            return ex is GraphException graphException &&
-                graphException.HttpResponse?.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden;
-        }
-
-        private static bool IsConflict(Exception ex)
-        {
-            return ex is GraphException graphException && graphException.HttpResponse?.StatusCode == HttpStatusCode.Conflict;
-        }
-
-        /// <summary>
         /// Waits for a freshly created group to become queryable through Microsoft Graph. Not becoming queryable within the
         /// attempt budget is deliberately not a hard failure here, because enabling teams on the group is retried separately.
         /// </summary>
@@ -290,9 +275,10 @@ namespace PnP.PowerShell.Commands.Utilities
                         return;
                     }
                 }
-                catch (Exception ex) when (!IsAuthorizationFailure(ex))
+                catch (Exception ex) when (IsTransientFailure(ex))
                 {
-                    // The group has not replicated yet, or the call did not get through. Retry.
+                    // The group has not replicated yet, or the call did not get through. Retry. A failure that retrying cannot
+                    // resolve is deliberately left to surface instead of being waited out and then ignored.
                 }
             }
         }
@@ -310,10 +296,9 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 RetryWithBackoff(
                     () => requestHelper.Put($"v1.0/groups/{group.Id}/team", team),
-                    // Anything other than being told the caller is not allowed to do this is worth another attempt, as the
-                    // group this is called for can have been created moments ago. A conflict has to surface right away
-                    // instead, because it means the team already exists and is handled as a success below.
-                    ex => !IsAuthorizationFailure(ex) && !IsConflict(ex),
+                    // Microsoft Graph reports a group it cannot find yet as an HTTP 404 here, which the transient failures
+                    // cover. A conflict is not one of them, so it surfaces right away and is handled as a success below.
+                    IsTransientFailure,
                     TeamifyGroupMaxAttempts,
                     TeamifyGroupInitialBackoffSeconds,
                     TeamifyGroupMaximumBackoffSeconds);
