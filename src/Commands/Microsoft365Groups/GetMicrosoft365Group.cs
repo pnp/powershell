@@ -34,18 +34,21 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         [Parameter(Mandatory = false)]
         public SwitchParameter IncludeSensitivityLabels;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter IncludeExtensionAttributes;
+
         protected override void ExecuteCmdlet()
         {
             var includeSiteUrl = IncludeSiteUrl.ToBool();
 
             if (Identity != null)
             {
-                var group = Identity.GetGroup(GraphRequestHelper, includeSiteUrl, IncludeOwners, Detailed.ToBool(), IncludeSensitivityLabels);
+                var group = Identity.GetGroup(GraphRequestHelper, includeSiteUrl, IncludeOwners, Detailed.ToBool(), IncludeSensitivityLabels, IncludeExtensionAttributes);
                 WriteObject(group);
             }
             else
             {
-                var groupsResult = Microsoft365GroupsUtility.GetGroups(GraphRequestHelper, includeSiteUrl, IncludeOwners, Filter, IncludeSensitivityLabels);
+                var groupsResult = Microsoft365GroupsUtility.GetGroups(GraphRequestHelper, includeSiteUrl, IncludeOwners, Filter, IncludeSensitivityLabels, IncludeExtensionAttributes);
 
                 WriteObject(groupsResult.Groups.OrderBy(p => p.DisplayName), true);
                 if(groupsResult.Errors.Any())
