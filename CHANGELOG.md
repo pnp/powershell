@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+- Added `Get-PnPCommandPermission` to return declared API permission metadata and inferred SharePoint authorization guidance for PnP PowerShell cmdlets.
 - Added `Add-PnPTenantSearchCrawledProperty` cmdlet which allows creation of a tenant level crawled property for SharePoint Online search. [#5373](https://github.com/pnp/powershell/pull/5373)
 - Added `GitLab CI/CD` support to `Connect-PnPOnline -FederatedIdentity`. [#5395](https://github.com/pnp/powershell/pull/5395)
 - Added `PreferredDataLocation` support to `Set-PnPMicrosoft365Group` and documented it for `Get-PnPMicrosoft365Group` and `New-PnPMicrosoft365Group`. [#5402](https://github.com/pnp/powershell/pull/5402)
