@@ -11,6 +11,11 @@ namespace PnP.PowerShell.Commands.Attributes
     public class ApiPermissionsDependOnResource : Attribute
     {
         /// <summary>
+        /// The API on which the permissions are required. Even though the exact scopes cannot be stated up front, the API they are on is known, which allows these cmdlets to be found when filtering on a resource type.
+        /// </summary>
+        public Enums.ResourceTypeName ResourceType { get; set; } = Enums.ResourceTypeName.Graph;
+
+        /// <summary>
         /// Name of the parameter of which the value determines the permissions required, if the resource is provided through a parameter of the cmdlet
         /// </summary>
         public string ParameterName { get; set; }

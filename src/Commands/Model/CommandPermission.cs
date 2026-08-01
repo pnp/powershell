@@ -19,14 +19,19 @@ namespace PnP.PowerShell.Commands.Model
         public string[] Aliases { get; set; } = Array.Empty<string>();
 
         /// <summary>
-        /// Delegated permissions required to run this cmdlet. The permissions within one set are all required, the sets are alternatives to eachother.
+        /// Delegated permissions required to run this cmdlet. The permissions within one set are all required, the sets are alternatives to each other.
         /// </summary>
         public CommandPermissionSet[] DelegatedPermissions { get; set; } = Array.Empty<CommandPermissionSet>();
 
         /// <summary>
-        /// Application permissions required to run this cmdlet. The permissions within one set are all required, the sets are alternatives to eachother.
+        /// Application permissions required to run this cmdlet. The permissions within one set are all required, the sets are alternatives to each other.
         /// </summary>
         public CommandPermissionSet[] ApplicationPermissions { get; set; } = Array.Empty<CommandPermissionSet>();
+
+        /// <summary>
+        /// The APIs this cmdlet requires permissions on. Also populated for cmdlets of which the exact scopes depend on the resource they are pointed at at runtime.
+        /// </summary>
+        public ResourceTypeName[] ResourceTypes { get; set; } = Array.Empty<ResourceTypeName>();
 
         /// <summary>
         /// Indicates if this cmdlet can be run using a delegated access token

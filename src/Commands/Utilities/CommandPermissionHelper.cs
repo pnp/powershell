@@ -29,6 +29,7 @@ namespace PnP.PowerShell.Commands.Utilities
             VerbsData.Export,
             VerbsDiagnostic.Test,
             VerbsDiagnostic.Measure,
+            VerbsCommunications.Read,
             VerbsCommunications.Receive
         };
 
@@ -52,24 +53,27 @@ namespace PnP.PowerShell.Commands.Utilities
             "Permission", "RoleDefinition", "RoleAssignment", "SiteCollectionAdmin", "Sharing", "ExternalUser", "Auditing"
         ];
 
-        private const string GuidanceInferred = "These permissions have been derived from the type of cmdlet and the operation it performs. They are a least privilege estimate and may need to be raised for specific operations.";
+        private const string GuidanceInferred = "These permissions have been derived from the type of cmdlet and the operation it performs. They are a least privilege estimate and may need to be raised for specific operations. The estimate covers the SharePoint API only, so a cmdlet which also calls another API needs the permissions of that API on top of these.";
 
         #endregion
 
         #region Command index
 
-        private static readonly Lazy<IReadOnlyList<CommandPermission>> _permissions = new(BuildPermissions, isThreadSafe: true);
+        // Only the reflection over the assembly is cached. The permission instances themselves are composed per request, so a caller that modifies a returned
+        // instance cannot affect what a later call returns.
+        private static readonly Lazy<IReadOnlyList<Type>> _cmdletTypes = new(
+            () => GetCmdletTypes().OrderBy(GetCommandName, StringComparer.OrdinalIgnoreCase).ToArray(), isThreadSafe: true);
 
-        private static readonly Lazy<IReadOnlyDictionary<string, CommandPermission>> _permissionsByName = new(() =>
+        private static readonly Lazy<IReadOnlyDictionary<string, Type>> _cmdletTypesByName = new(() =>
         {
-            var index = new Dictionary<string, CommandPermission>(StringComparer.OrdinalIgnoreCase);
-            foreach (var permission in _permissions.Value)
+            var index = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
+            foreach (var cmdletType in _cmdletTypes.Value)
             {
-                index.TryAdd(permission.CommandName, permission);
+                index.TryAdd(GetCommandName(cmdletType), cmdletType);
 
-                foreach (var alias in permission.Aliases)
+                foreach (var alias in GetAliases(cmdletType))
                 {
-                    index.TryAdd(alias, permission);
+                    index.TryAdd(alias, cmdletType);
                 }
             }
             return index;
@@ -78,12 +82,12 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// All cmdlets in this module with their permission information, ordered by cmdlet name
         /// </summary>
-        internal static IReadOnlyList<CommandPermission> GetAll() => _permissions.Value;
+        internal static IEnumerable<CommandPermission> GetAll() => _cmdletTypes.Value.Select(Build).Where(permission => permission != null);
 
         /// <summary>
         /// The names of all cmdlets in this module, excluding their aliases, ordered alphabetically
         /// </summary>
-        internal static IEnumerable<string> GetCommandNames() => _permissions.Value.Select(permission => permission.CommandName);
+        internal static IEnumerable<string> GetCommandNames() => _cmdletTypes.Value.Select(GetCommandName);
 
         /// <summary>
         /// Looks up the permission information of one cmdlet by its name or by one of its aliases
@@ -97,17 +101,19 @@ namespace PnP.PowerShell.Commands.Utilities
                 return null;
             }
 
-            return _permissionsByName.Value.TryGetValue(commandName.Trim(), out var permission) ? permission : null;
+            return _cmdletTypesByName.Value.TryGetValue(commandName.Trim(), out var cmdletType) ? Build(cmdletType) : null;
         }
 
-        private static IReadOnlyList<CommandPermission> BuildPermissions()
+        private static string GetCommandName(Type cmdletType)
         {
-            return GetCmdletTypes()
-                .Select(Build)
-                .Where(permission => permission != null)
-                .OrderBy(permission => permission.CommandName, StringComparer.OrdinalIgnoreCase)
-                .ToArray();
+            var cmdletAttribute = cmdletType.GetCustomAttribute<CmdletAttribute>(false);
+            return $"{cmdletAttribute.VerbName}-{cmdletAttribute.NounName}";
         }
+
+        private static string[] GetAliases(Type cmdletType) => cmdletType.GetCustomAttributes<AliasAttribute>(false)
+            .SelectMany(alias => alias.AliasNames)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
 
         private static IEnumerable<Type> GetCmdletTypes()
         {
@@ -148,12 +154,24 @@ namespace PnP.PowerShell.Commands.Utilities
             var permission = new CommandPermission
             {
                 CommandName = $"{cmdletAttribute.VerbName}-{cmdletAttribute.NounName}",
-                Aliases = cmdletType.GetCustomAttributes<AliasAttribute>(false).SelectMany(alias => alias.AliasNames).Distinct(StringComparer.OrdinalIgnoreCase).ToArray(),
+                Aliases = GetAliases(cmdletType),
                 DelegatedAvailable = !Attribute.IsDefined(cmdletType, typeof(ApiNotAvailableUnderDelegatedPermissions)),
                 ApplicationAvailable = !Attribute.IsDefined(cmdletType, typeof(ApiNotAvailableUnderApplicationPermissions)),
                 DelegatedPermissions = ToPermissionSets(delegatedAttributes),
                 ApplicationPermissions = ToPermissionSets(applicationAttributes)
             };
+
+            // A RequiredApiDelegatedOrApplicationPermissions attribute declares a scope for both token types, which contradicts an ApiNotAvailableUnder* attribute
+            // on the same cmdlet. The token type the cmdlet cannot be used with wins, so no permissions are reported for it.
+            if (!permission.DelegatedAvailable)
+            {
+                permission.DelegatedPermissions = [];
+            }
+
+            if (!permission.ApplicationAvailable)
+            {
+                permission.ApplicationPermissions = [];
+            }
 
             var resourceDependent = cmdletType.GetCustomAttribute<ApiPermissionsDependOnResource>(false);
 
@@ -161,6 +179,8 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 permission.PermissionSource = CommandPermissionSource.Declared;
                 permission.MinimumSharePointRole = InferSharePointRole(cmdletType, cmdletAttribute);
+
+                AddSharePointRequirementToDeclaredPermissions(cmdletType, permission);
             }
             else if (resourceDependent != null)
             {
@@ -174,8 +194,81 @@ namespace PnP.PowerShell.Commands.Utilities
             }
 
             ApplyAdditionalRoles(cmdletType, permission);
+            ApplyResourceTypes(permission, resourceDependent);
 
             return permission;
+        }
+
+        /// <summary>
+        /// Adds the SharePoint permission needed by a cmdlet which uses SharePoint CSOM but only declares permissions on another API, i.e. Set-PnPList which declares
+        /// Microsoft Graph information protection permissions while also performing SharePoint CSOM operations. The SharePoint permission is required next to the
+        /// declared permissions, so it is added to each of the declared alternatives to keep the AND within a set and the OR between the sets intact.
+        /// </summary>
+        private static void AddSharePointRequirementToDeclaredPermissions(Type cmdletType, CommandPermission permission)
+        {
+            if (!typeof(PnPSharePointCmdlet).IsAssignableFrom(cmdletType))
+            {
+                return;
+            }
+
+            // If a SharePoint permission is already declared, the declared metadata is complete and takes precedence
+            if (permission.DelegatedPermissions.Concat(permission.ApplicationPermissions)
+                .SelectMany(set => set.Permissions)
+                .Any(scope => scope.ResourceType == ResourceTypeName.SharePoint))
+            {
+                return;
+            }
+
+            var (delegatedScope, applicationScope) = GetSharePointScopes(permission.MinimumSharePointRole);
+
+            if (permission.DelegatedAvailable)
+            {
+                permission.DelegatedPermissions = AddScopeToEachSet(permission.DelegatedPermissions, delegatedScope);
+            }
+
+            if (permission.ApplicationAvailable)
+            {
+                permission.ApplicationPermissions = AddScopeToEachSet(permission.ApplicationPermissions, applicationScope);
+            }
+
+            permission.PermissionSource = CommandPermissionSource.DeclaredAndInferred;
+            permission.Guidance = "This cmdlet uses SharePoint CSOM next to the API for which permissions are declared on it. The SharePoint permission listed has been derived from the operation the cmdlet performs and is required in addition to the declared permissions.";
+        }
+
+        /// <summary>
+        /// Adds a scope to every alternative in the provided sets, or returns a single set holding just that scope if there are no alternatives yet
+        /// </summary>
+        private static CommandPermissionSet[] AddScopeToEachSet(CommandPermissionSet[] sets, string scope)
+        {
+            var additionalScope = new RequiredApiPermission(ResourceTypeName.SharePoint, scope);
+
+            if (sets.Length == 0)
+            {
+                return [new CommandPermissionSet { Permissions = [additionalScope] }];
+            }
+
+            return sets.Select(set => new CommandPermissionSet
+            {
+                Permissions = [.. set.Permissions, additionalScope]
+            }).ToArray();
+        }
+
+        /// <summary>
+        /// Records the APIs this cmdlet needs permissions on, so cmdlets of which the exact scopes depend on the resource can still be found when filtering on a resource type
+        /// </summary>
+        private static void ApplyResourceTypes(CommandPermission permission, ApiPermissionsDependOnResource resourceDependent)
+        {
+            var resourceTypes = permission.DelegatedPermissions.Concat(permission.ApplicationPermissions)
+                .SelectMany(set => set.Permissions)
+                .Select(scope => scope.ResourceType)
+                .ToList();
+
+            if (resourceDependent != null)
+            {
+                resourceTypes.Add(resourceDependent.ResourceType);
+            }
+
+            permission.ResourceTypes = resourceTypes.Distinct().OrderBy(resourceType => resourceType).ToArray();
         }
 
         /// <summary>
@@ -238,9 +331,19 @@ namespace PnP.PowerShell.Commands.Utilities
 
                 permission.PermissionSource = CommandPermissionSource.Inferred;
                 permission.MinimumSharePointRole = role;
-                permission.DelegatedPermissions = [CreatePermissionSet(ResourceTypeName.SharePoint, delegatedScope)];
-                permission.ApplicationPermissions = [CreatePermissionSet(ResourceTypeName.SharePoint, applicationScope)];
                 permission.Guidance = GuidanceInferred;
+
+                // Do not report permissions for a token type the cmdlet declares it cannot be used with
+                if (permission.DelegatedAvailable)
+                {
+                    permission.DelegatedPermissions = [CreatePermissionSet(ResourceTypeName.SharePoint, delegatedScope)];
+                }
+
+                if (permission.ApplicationAvailable)
+                {
+                    permission.ApplicationPermissions = [CreatePermissionSet(ResourceTypeName.SharePoint, applicationScope)];
+                }
+
                 return;
             }
 

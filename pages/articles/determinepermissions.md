@@ -7,6 +7,110 @@
 
 In case you're starting from the beginning and you do not have your own Entra ID Application Registration yet to use with PnP Powershell, which is mandatory, you can [follow these steps](registerapplication.md) to create your Entra ID Application Registration.
 
+## Asking PnP PowerShell which permissions a cmdlet needs
+
+Before working out permissions by trial and error, ask the module directly. [Get-PnPCommandPermission](../cmdlets/Get-PnPCommandPermission.md) returns the permissions a cmdlet needs. It reads the metadata that ships inside the module, so it works offline and does **not** require you to be connected to a tenant:
+
+```powershell
+Get-PnPCommandPermission -CommandName Get-PnPTeamsTeam
+```
+
+```
+CommandName            : Get-PnPTeamsTeam
+PermissionSource       : Declared
+DelegatedPermissions   : Graph: Group.Read.All OR Graph: Group.ReadWrite.All
+ApplicationPermissions : Graph: Group.Read.All OR Graph: Group.ReadWrite.All
+ResourceTypes          : Graph
+DelegatedAvailable     : True
+ApplicationAvailable   : True
+MinimumSharePointRole  : NotApplicable
+```
+
+Read the result as follows:
+
+- Permissions **within one set** are all required together, they are combined with `AND`. Multiple sets are **alternatives**, combined with `OR`, and are listed from least to most privileged. In the example above, granting only `Group.Read.All` is enough.
+- `MinimumSharePointRole` tells you which permission the *user or application* needs on the SharePoint resource itself, next to the API permission on the application registration. Granting `Sites.ReadWrite.All` does not help if the account has only Read on the target site.
+- `DelegatedAvailable` and `ApplicationAvailable` tell you whether the cmdlet can be used at all in that scenario. A cmdlet with `ApplicationAvailable : False` cannot be run app only, no matter which permissions you grant.
+
+### How reliable is the answer
+
+Always check `PermissionSource`, it states how authoritative the answer is:
+
+| PermissionSource | What it means |
+| ---------------- | ------------- |
+| `Declared` | The permissions are declared on the cmdlet itself. These are accurate. |
+| `DeclaredAndInferred` | The cmdlet calls another API next to SharePoint. The declared part is accurate, the SharePoint part is an estimate. |
+| `Inferred` | Derived from what the cmdlet does. A least privilege estimate that may need to be raised, and it covers the SharePoint API only. |
+| `ResourceDependent` | The permission follows from what you point the cmdlet at, i.e. `New-PnPGraphSubscription` needs read permissions on the resource you subscribe to. The `Guidance` property links to the relevant documentation. |
+| `NotApplicable` | The cmdlet needs no permissions at all, i.e. `Get-PnPChangeLog`. |
+| `Unknown` | The permissions could not be determined. Fall back to the approach described further down this article. |
+
+Anything other than `Declared` is guidance rather than a guarantee, so verify it against your own scenario.
+
+### Working out the permissions for an entire script
+
+The most useful application is composing the permission set for a script before you run it. Extract the PnP cmdlets it uses and ask for their permissions in one go:
+
+```powershell
+$cmdlets = [regex]::Matches((Get-Content ./myscript.ps1 -Raw), '\b[A-Z][a-zA-Z]+-PnP[A-Za-z0-9]+\b') |
+    ForEach-Object { $_.Value } | Sort-Object -Unique
+
+$cmdlets | Get-PnPCommandPermission |
+    Format-Table CommandName, PermissionSource,
+        @{ n = 'Application'; e = { ($_.ApplicationPermissions | ForEach-Object { $_.ToString() }) -join ' OR ' } }
+```
+
+```
+CommandName       PermissionSource Application
+-----------       ---------------- -----------
+Add-PnPListItem           Inferred SharePoint: Sites.ReadWrite.All
+Connect-PnPOnline    NotApplicable
+Get-PnPList               Declared SharePoint: Sites.Selected OR SharePoint: Sites.Read.All OR …
+Get-PnPTeamsTeam          Declared Graph: Group.Read.All OR Graph: Group.ReadWrite.All
+Set-PnPWeb                Inferred SharePoint: Sites.FullControl.All
+```
+
+To get the actual list to grant, take the **least privileged alternative** of each cmdlet, which is the first set, and group it per API. This matches the order in which you add permissions in the Entra ID portal:
+
+```powershell
+$cmdlets | Get-PnPCommandPermission |
+    Where-Object { $_.ApplicationPermissions.Count -gt 0 } |
+    ForEach-Object { $_.ApplicationPermissions[0].Permissions } |
+    Group-Object ResourceType |
+    ForEach-Object { "{0}: {1}" -f $_.Name, (($_.Group.Scope | Sort-Object -Unique) -join ', ') }
+```
+
+```
+Graph: Group.Read.All
+SharePoint: Sites.FullControl.All, Sites.ReadWrite.All, Sites.Selected
+```
+
+Where several SharePoint scopes appear, the most privileged one covers the others, so in this example `Sites.FullControl.All` is what the script ends up needing. That immediately shows you which single cmdlet is driving the permission up, in this case `Set-PnPWeb`. If you can avoid that cmdlet, the whole script drops to `Sites.ReadWrite.All`.
+
+Use `-Source` to review only the answers that are estimates and therefore worth verifying:
+
+```powershell
+$cmdlets | Get-PnPCommandPermission | Where-Object PermissionSource -ne 'Declared'
+```
+
+### Other useful queries
+
+```powershell
+# Every cmdlet that touches Microsoft Graph, with authoritative metadata only
+Get-PnPCommandPermission -ResourceTypeName Graph -Source Declared
+
+# Every Teams related cmdlet
+Get-PnPCommandPermission -CommandName *Teams*
+
+# Which cmdlets require SharePoint administrator rights
+Get-PnPCommandPermission | Where-Object MinimumSharePointRole -eq 'SharePointAdministrator'
+
+# Which cmdlets cannot be used app only
+Get-PnPCommandPermission | Where-Object { -not $_.ApplicationAvailable }
+```
+
+The rest of this article describes how to apply these permissions to your application registration, starting from the smallest possible set.
+
 ## Starting with minimal permissions
 
 It is highly recommended to keep the permissions on your Entra ID Application Registration to a minimum to avoid risks when access through your application registration would somehow fall in the wrong hands. As PnP PowerShell always starts with connecting to SharePoint Online, you will at least need permissions to access SharePoint Online, regardless of whatever else you plan on doing with PnP PowerShell.
@@ -55,7 +159,9 @@ What technically happens here when you provide consent through this dialog is th
 
 For an app only scenario, you will have to follow a different approach, as there is no way for it to interactively request for more permissions. If you try to execute a cmdlet for which the Entra ID application registration does not have permissions, it will return you an access denied notice.
 
-What you could try if you run into this, is to add `-Verbose` to your cmdlet. For many, but unfortunately not all, cmdlets, this will reveal which permissions it receives through the application registration and which permissions it actually needs to be able to execute properly. See the following example:
+The quickest way to find out what to add is to run [Get-PnPCommandPermission](../cmdlets/Get-PnPCommandPermission.md) against the cmdlet that failed, as described [earlier in this article](#asking-pnp-powershell-which-permissions-a-cmdlet-needs). It requires no connection, so you can run it before ever hitting the access denied.
+
+Alternatively you can add `-Verbose` to your cmdlet. For many, but unfortunately not all, cmdlets, this will reveal which permissions it receives through the application registration and which permissions it actually needs to be able to execute properly. See the following example:
 
 ![image](../images/determinepermissions/entraid_permissions_accessdenied_verbose.png)
 
@@ -63,11 +169,13 @@ In this scenario, you now know you need to add `Application.Read.All` on the app
 
 ## Help, I can't figure out which permissions I need
 
-As mentioned above, unfortunately, not for all cmdlets it will be clear which exact (minimum) permissions will be needed. Not even when using `-Verbose`. To give some guidance which permissions you could try for a minimum permissions approach, follow the table below.
+First run [Get-PnPCommandPermission](../cmdlets/Get-PnPCommandPermission.md) against the cmdlet, as described [earlier in this article](#asking-pnp-powershell-which-permissions-a-cmdlet-needs). It has an answer for nearly every cmdlet in the module.
+
+If it returns a `PermissionSource` of `Unknown`, or an `Inferred` answer that turns out not to be sufficient, use the table below for guidance on a minimum permissions approach.
 
 What are you trying to do | Permission type | Permission(s) likely needed from least to most privileged 
 | ------------------------| --------------- | -------------------------- |
 | Interact with SharePoint | Delegate | AllSites.Read / AllSites.Write / AllSites.Manage / AllSites.FullControl |
 | Interact with SharePoint | App Only | Sites.Selected / Sites.Read.All / Sites.ReadWrite.All / Sites.Manage.All / Sites.FullControl .All |
-| Interact with Microsoft Graph | Delegate \ App Only | Use `-Verbose` or look at [the documentation](../cmdlets/index.md) to find the permissions needed |
+| Interact with Microsoft Graph | Delegate \ App Only | Use `Get-PnPCommandPermission -CommandName <cmdlet>`, `-Verbose`, or look at [the documentation](../cmdlets/index.md) to find the permissions needed |
 | Interact with Power Platform | Delegate | `Azure Service Management\user_impersonation` AND `Dynamics CRM\user_impersonation` AND `PowerApps Service\User` (the last one you can find on the second tab: APIs that my organization uses) |

@@ -40,7 +40,8 @@ namespace PnP.PowerShell.Commands.Base
                 var permission = CommandPermissionHelper.Get(CommandName);
                 if (permission == null)
                 {
-                    ThrowTerminatingError(new ErrorRecord(
+                    // Non terminating so that piping a list of cmdlet names reports the ones that could not be found without discarding the rest
+                    WriteError(new ErrorRecord(
                         new PSArgumentException($"The PnP PowerShell cmdlet '{CommandName}' was not found."),
                         "CommandNotFound",
                         ErrorCategory.ObjectNotFound,
@@ -66,9 +67,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private static bool RequiresResource(CommandPermission permission, Enums.ResourceTypeName resourceType)
         {
-            return permission.DelegatedPermissions.Concat(permission.ApplicationPermissions)
-                .SelectMany(set => set.Permissions)
-                .Any(scope => scope.ResourceType == resourceType);
+            return permission.ResourceTypes.Contains(resourceType);
         }
     }
 }

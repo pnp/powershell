@@ -1,5 +1,6 @@
 ﻿using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Model.SharePoint.SharePointUserProfileSync;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,12 @@ namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsData.Sync, "PnPSharePointUserProfilesFromAzureActiveDirectory")]
     [OutputType(typeof(SharePointUserProfileSyncStatus))]
+
+    // Next to SharePoint CSOM this cmdlet reads the users to synchronize from Microsoft Graph through EntraIdUtility.ListUsers, the same call Get-PnPEntraIDUser makes
+    [RequiredApiDelegatedOrApplicationPermissions("graph/User.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/User.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]
     public class SyncSharePointUserProfilesFromAzureActiveDirectory : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false)]

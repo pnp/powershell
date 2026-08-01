@@ -3369,6 +3369,10 @@
                 <ScriptBlock>($_.ApplicationPermissions | ForEach-Object { $_.ToString() }) -join ' OR '</ScriptBlock>
               </ListItem>
               <ListItem>
+                <Label>ResourceTypes</Label>
+                <ScriptBlock>$_.ResourceTypes -join ', '</ScriptBlock>
+              </ListItem>
+              <ListItem>
                 <Label>DelegatedAvailable</Label>
                 <PropertyName>DelegatedAvailable</PropertyName>
               </ListItem>

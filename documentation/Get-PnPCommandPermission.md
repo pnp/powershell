@@ -20,7 +20,7 @@ Get-PnPCommandPermission [[-CommandName] <String>] [-ResourceTypeName <ResourceT
 ```
 
 ## DESCRIPTION
-Returns the delegated and application API permission sets required to run a PnP PowerShell cmdlet, together with the minimum SharePoint role the calling user needs to hold. Permissions within one set are all required, while multiple sets are alternatives to eachother.
+Returns the delegated and application API permission sets required to run a PnP PowerShell cmdlet, together with the minimum SharePoint role the calling user needs to hold. Permissions within one set are all required, while multiple sets are alternatives to each other.
 
 Use this cmdlet to determine up front which permissions to grant to an Entra ID app registration, rather than discovering it from a failed call.
 
@@ -29,6 +29,7 @@ The `PermissionSource` property states how reliable the returned information is:
 | PermissionSource | Meaning |
 |------------------|---------|
 | `Declared` | The permissions are declared on the cmdlet through its permission attributes and are authoritative. |
+| `DeclaredAndInferred` | The cmdlet uses SharePoint CSOM next to the API it declares permissions for, i.e. `Set-PnPList`. The SharePoint permission has been derived and added to each declared alternative, so it is required in addition to the declared permissions. |
 | `Inferred` | The permissions have been derived from the type of cmdlet and the operation it performs. They are a least privilege estimate and may need to be raised for specific operations. |
 | `ResourceDependent` | The permissions follow from the resource the cmdlet is pointed at at runtime and cannot be stated up front, i.e. `New-PnPGraphSubscription` or `Invoke-PnPGraphMethod`. The `Guidance` property names the parameter involved and links to the relevant documentation. |
 | `NotApplicable` | The cmdlet does not call into an API and requires no permissions, i.e. `Get-PnPChangeLog`. |
@@ -98,7 +99,7 @@ Only return cmdlets which require a permission on the specified resource, i.e. `
 ```yaml
 Type: ResourceTypeName
 Parameter Sets: (All)
-Accepted values: Unknown, Graph, SharePoint, AzureManagementApi, ExchangeOnline, PowerAutomate, PowerApps, DynamicsCRM
+Accepted values: Unknown, Graph, SharePoint, AzureManagementApi, ExchangeOnline, PowerAutomate, PowerApps, DynamicsCRM, Gcs
 
 Required: False
 Position: Named
@@ -113,7 +114,7 @@ Only return cmdlets whose permission information originates from the specified s
 ```yaml
 Type: CommandPermissionSource
 Parameter Sets: (All)
-Accepted values: Unknown, Declared, Inferred, NotApplicable, ResourceDependent
+Accepted values: Unknown, Declared, Inferred, NotApplicable, ResourceDependent, DeclaredAndInferred
 
 Required: False
 Position: Named
@@ -132,6 +133,7 @@ Accept wildcard characters: False
 | `Aliases` | Aliases under which the cmdlet can also be called. |
 | `DelegatedPermissions` | Delegated permission sets. Permissions within a set are all required, sets are alternatives. |
 | `ApplicationPermissions` | Application permission sets. Permissions within a set are all required, sets are alternatives. |
+| `ResourceTypes` | The APIs this cmdlet requires permissions on. Also populated when the exact scopes depend on the resource, which is what `-ResourceTypeName` filters on. |
 | `DelegatedAvailable` | Indicates if the cmdlet can run using a delegated access token. |
 | `ApplicationAvailable` | Indicates if the cmdlet can run using an application access token. |
 | `PermissionSource` | Where the permission information originates from. |
@@ -142,5 +144,7 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+[How to determine which permissions you need](https://pnp.github.io/powershell/articles/determinepermissions.html)
 
 [Working with permission attributes](https://pnp.github.io/powershell/articles/permissionattributes.html)
