@@ -10,6 +10,11 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPGraphSubscriptio
 # New-PnPGraphSubscription
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API : depends on the value passed to `-Resource`. Microsoft Graph requires read permissions on the resource being subscribed to, i.e. `Mail.Read` to subscribe to messages, `Sites.Read.All` to subscribe to a SharePoint list, `Group.Read.All` to subscribe to groups or `User.Read.All` to subscribe to users. See [Create subscription](https://learn.microsoft.com/graph/api/subscription-post-subscriptions?view=graph-rest-1.0#permissions) for the permissions per resource.
+
 Creates a new Microsoft Graph Subscription which allows your webhook API to be called when a change occurs in Microsoft Graph
 
 ## SYNTAX

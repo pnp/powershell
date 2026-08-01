@@ -17,6 +17,12 @@ using System.Text.RegularExpressions;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPGraphMethod", DefaultParameterSetName = ParameterSet_TOCONSOLE)]
+
+    // Deliberately not declaring RequiredApi*Permissions attributes: this cmdlet calls an arbitrary Microsoft Graph endpoint, so the permissions required follow entirely from the url being called.
+    [Attributes.ApiPermissionsDependOnResource(
+        ParameterName = nameof(Url),
+        Remarks = "This cmdlet calls the Microsoft Graph endpoint provided, so it requires whichever permissions that endpoint requires.",
+        DocumentationUrl = "https://learn.microsoft.com/graph/permissions-reference")]
     public class InvokeGraphMethod : PnPGraphCmdlet
     {
         private const string ParameterSet_TOSTREAM = "Out to stream";

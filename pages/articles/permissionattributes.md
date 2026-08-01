@@ -9,6 +9,7 @@ Types of permissions that can be used in the permission attributes are:
 - [RequiredApiApplicationPermissions](#requiredapiapplicationpermissions)
 - [RequiredApiDelegatedPermissions](#requiredapidelegatedpermissions)
 - [RequiredApiDelegatedOrApplicationPermissions](#requiredapidelegatedorapplicationpermissions)
+- [ApiPermissionsDependOnResource](#apipermissionsdependonresource)
 
 The attributes can be applied to the cmdlet class. The RequiredApi attributes take a string array as a parameter. The string array contains the permissions required to run the cmdlet. The permissions are defined in the format `resource/scope`. The resource is the resource that the permission is required for, and the permission is the permission that is required.
 
@@ -84,3 +85,20 @@ This attribute indicates that the cmdlet requires specific permissions to run, w
 
 Sample of how the attribute can be applied:
 ![Sample how the attribute can be applied](./../images/permissionattributes/RequiredApiDelegatedOrApplicationPermissionsSample.png)
+
+## ApiPermissionsDependOnResource
+
+Some cmdlets do not have a fixed set of required permissions, because the permissions follow from the resource the cmdlet is pointed at at runtime. The Microsoft Graph change notification cmdlets are an example: `New-PnPGraphSubscription` requires read permissions on the resource being subscribed to, so subscribing to messages requires `Mail.Read` while subscribing to a SharePoint list requires `Sites.Read.All`. `Invoke-PnPGraphMethod` is another: it requires whichever permissions the endpoint passed to `-Url` requires.
+
+For these cmdlets, declaring a `RequiredApi*Permissions` attribute would be inaccurate and would cause a warning for users who hold the correct permission for their resource but not the one that happens to be declared. Use this attribute instead:
+
+```csharp
+[ApiPermissionsDependOnResource(
+    ParameterName = nameof(Resource),
+    Remarks = "Microsoft Graph requires read permissions on the resource being subscribed to, i.e. Mail.Read to subscribe to messages.",
+    DocumentationUrl = "https://learn.microsoft.com/graph/api/subscription-post-subscriptions?view=graph-rest-1.0#permissions")]
+```
+
+All three properties are optional. Omit `ParameterName` when the resource does not come from a parameter of the cmdlet, i.e. when it follows from an existing subscription being addressed by its id.
+
+Unlike the other attributes on this page, this attribute is purely informational. It is surfaced through `Get-PnPCommandPermission`, which reports these cmdlets with a `PermissionSource` of `ResourceDependent` rather than `Unknown`, and it is deliberately not evaluated when validating an access token, so it can never produce a warning.

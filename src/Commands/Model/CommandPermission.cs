@@ -1,19 +1,61 @@
 using System;
+using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Model
 {
-	/// <summary>
-	/// Describes the API permissions and additional authorization guidance for a cmdlet.
-	/// </summary>
-	public class CommandPermission
-	{
-		public string CommandName { get; set; }
-		public CommandPermissionSet[] DelegatedPermissions { get; set; } = Array.Empty<CommandPermissionSet>();
-		public CommandPermissionSet[] ApplicationPermissions { get; set; } = Array.Empty<CommandPermissionSet>();
-		public bool DelegatedAvailable { get; set; }
-		public bool ApplicationAvailable { get; set; }
-		public string PermissionSource { get; set; }
-		public string[] AdditionalRoles { get; set; } = Array.Empty<string>();
-		public string Guidance { get; set; }
-	}
+    /// <summary>
+    /// Describes the API permissions and additional authorization requirements of a cmdlet
+    /// </summary>
+    public class CommandPermission
+    {
+        /// <summary>
+        /// Name of the cmdlet these permissions apply to
+        /// </summary>
+        public string CommandName { get; set; }
+
+        /// <summary>
+        /// Aliases under which this cmdlet can also be called
+        /// </summary>
+        public string[] Aliases { get; set; } = Array.Empty<string>();
+
+        /// <summary>
+        /// Delegated permissions required to run this cmdlet. The permissions within one set are all required, the sets are alternatives to eachother.
+        /// </summary>
+        public CommandPermissionSet[] DelegatedPermissions { get; set; } = Array.Empty<CommandPermissionSet>();
+
+        /// <summary>
+        /// Application permissions required to run this cmdlet. The permissions within one set are all required, the sets are alternatives to eachother.
+        /// </summary>
+        public CommandPermissionSet[] ApplicationPermissions { get; set; } = Array.Empty<CommandPermissionSet>();
+
+        /// <summary>
+        /// Indicates if this cmdlet can be run using a delegated access token
+        /// </summary>
+        public bool DelegatedAvailable { get; set; }
+
+        /// <summary>
+        /// Indicates if this cmdlet can be run using an application access token
+        /// </summary>
+        public bool ApplicationAvailable { get; set; }
+
+        /// <summary>
+        /// Indicates where the permissions in this instance originate from and therefore how authoritative they are
+        /// </summary>
+        public CommandPermissionSource PermissionSource { get; set; }
+
+        /// <summary>
+        /// The minimum SharePoint role or permission level needed on the resource this cmdlet acts on
+        /// </summary>
+        public SharePointMinimumRole MinimumSharePointRole { get; set; }
+
+        /// <summary>
+        /// Roles which need to be held next to the API permissions to be able to run this cmdlet
+        /// </summary>
+        public string[] AdditionalRoles { get; set; } = Array.Empty<string>();
+
+        /// <summary>
+        /// Remarks on how to interpret the permissions in this instance
+        /// </summary>
+        public string Guidance { get; set; }
+    }
 }

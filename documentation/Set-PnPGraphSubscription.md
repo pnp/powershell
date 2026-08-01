@@ -10,7 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPGraphSubscriptio
 # Set-PnPGraphSubscription
 
 ## SYNOPSIS
-Updates an existing Microsoft Graph subscription. Required Azure Active Directory application permission depends on the resource the subscription exists on, see https://learn.microsoft.com/graph/api/subscription-delete#permissions.
+
+**Required Permissions**
+
+  * Microsoft Graph API : depends on the resource the subscription was created on. The same read permissions that were needed to create the subscription are required to renew it, i.e. `Mail.Read` for a subscription on messages or `Sites.ReadWrite.All` for one on a SharePoint list. See [Update subscription](https://learn.microsoft.com/graph/api/subscription-update?view=graph-rest-1.0#permissions) for the permissions per resource.
+
+Updates an existing Microsoft Graph subscription.
 
 ## SYNTAX
 
