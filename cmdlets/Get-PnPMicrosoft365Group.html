@@ -94,7 +94,7 @@
 </ul>
 <p>Gets one Microsoft 365 Group or a list of Microsoft 365 Groups</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPMicrosoft365Group [-Identity &lt;Microsoft365GroupPipeBind&gt;] [-IncludeSiteUrl] [-IncludeOwners] [-Detailed] [-Filter &lt;string&gt;] [-IncludeSensitivityLabels]
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Group [-Identity &lt;Microsoft365GroupPipeBind&gt;] [-IncludeSiteUrl] [-IncludeOwners] [-Detailed] [-Filter &lt;string&gt;] [-IncludeSensitivityLabels] [-IncludeExtensionAttributes]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to retrieve Microsoft 365 Groups. By using <code>Identity</code> option you may specify the exact group that will be retrieved.</p>
@@ -136,6 +136,11 @@ $g[0].Owners
 <pre><code class="lang-powershell">Get-PnPMicrosoft365Group -Identity $groupId | Select-Object DisplayName, PreferredDataLocation
 </code></pre>
 <p>Retrieves a specific Microsoft 365 Group and returns its preferred data location.</p>
+<h3 id="example-10">EXAMPLE 10</h3>
+<pre><code class="lang-powershell">$group = Get-PnPMicrosoft365Group -Identity $groupId -IncludeExtensionAttributes
+$group.OnPremisesExtensionAttributes.ExtensionAttribute1
+</code></pre>
+<p>Retrieves a specific Microsoft 365 Group including its extension attributes and returns the first one. Note that Microsoft Graph only populates these for groups that are synchronized from an on-premises Active Directory, see the <code>-IncludeExtensionAttributes</code> parameter.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-detailed">-Detailed</h3>
 <p>When provided, the following properties originating from Exchange Online, will also be loaded into the returned group. Without providing this flag, they will not be populated. Providing this flag causes an extra call to be made to Microsoft Graph, so only add it when you need one of the properties below.</p>
@@ -199,6 +204,18 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-includesensitivitylabels">-IncludeSensitivityLabels</h3>
 <p>Include fetching the sensitivity labels. This slows down large listings.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includeextensionattributes">-IncludeExtensionAttributes</h3>
+<p>Include fetching the extension attributes 1-15 of the group. They are returned in the <code>OnPremisesExtensionAttributes</code> property of the returned group. Microsoft Graph only returns these attributes when they are explicitly requested, so providing this flag causes an extra call to be made to Microsoft Graph. This slows down large listings.</p>
+<p>Microsoft Graph only populates these attributes for groups that are synchronized from an on-premises Active Directory. For a cloud only group they are always empty, also when the equivalent <code>CustomAttribute1-15</code> properties do hold a value in Exchange Online, as Microsoft Graph does not expose the values that Exchange Online stores. Use <code>Get-UnifiedGroup</code> from the Exchange Online PowerShell module to read those.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
