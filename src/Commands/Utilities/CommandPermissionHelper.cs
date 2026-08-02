@@ -34,24 +34,60 @@ namespace PnP.PowerShell.Commands.Utilities
         };
 
         /// <summary>
-        /// Nouns on which a modifying operation affects the security or the structure of a site, for which Contribute rights are not sufficient.
-        /// The noun is evaluated without its PnP prefix.
+        /// Fragments in a noun for which both reading and changing need Full Control. Enumerating and managing permissions, reading the audit configuration and
+        /// reading who a site is shared with are rights that only the Full Control permission level holds, so unlike the other categories this one is not limited
+        /// to modifying operations.
         /// </summary>
-        private static readonly HashSet<string> ElevatedNouns = new(StringComparer.OrdinalIgnoreCase)
+        // Deliberately not matching on "Sharing" as a whole: sharing a file or a folder is something a member can do, only the sharing configuration of the site itself
+        // is restricted, which is why SharingForNonOwnersOfSite is listed explicitly.
+        private static readonly string[] FullControlNounFragments =
+        [
+            "Permission", "RoleDefinition", "RoleAssignment", "ExternalUser", "Auditing", "RequestAccessEmails",
+            "SearchConfiguration", "SearchSettings", "SharingForNonOwnersOfSite", "SharingSetting", "SiteSharing"
+        ];
+
+        /// <summary>
+        /// Nouns on which a modifying operation changes the security, the structure, the branding or the configuration of a site. Those need rights such as Manage Web Site,
+        /// Apply Themes, Add and Customize Pages or Manage Permissions, none of which the Contribute or Edit permission levels hold. The noun is evaluated without its PnP prefix.
+        /// </summary>
+        private static readonly HashSet<string> SiteConfigurationNouns = new(StringComparer.OrdinalIgnoreCase)
         {
-            "Site", "Web", "SubWeb", "Feature", "Group", "SiteGroup", "GroupMember", "GroupOwner",
-            "User", "RoleDefinition", "RoleAssignment", "CustomAction", "EventReceiver",
-            "SiteDesign", "SiteScript", "AppCatalog", "App", "StorageEntity", "HubSite",
-            "Theme", "AuditSetting", "PropertyBagValue", "IndexedPropertyBagKey", "WebHook"
+            // Structure and security of the site
+            "Site", "Web", "SubWeb", "Feature", "Group", "SiteGroup", "GroupMember", "GroupOwner", "User",
+            "RoleDefinition", "RoleAssignment", "HubSite", "SiteTemplate", "TenantTemplate",
+
+            // Customizations registered on the site itself, which need Manage Web Site
+            "CustomAction", "ApplicationCustomizer", "EventReceiver", "WebAction", "JavaScriptBlock", "JavaScriptLink",
+            "NavigationNode", "Footer", "WebHeader", "PageScheduling", "CommSite",
+            "BrandCenterFont", "BrandCenterFontPackage",
+
+            // Applications and app catalogs
+            "App", "AppCatalog", "AppSideLoading", "AppToTeams", "StorageEntity",
+
+            // Site level settings, policies and governance
+            "SiteDesign", "SiteScript", "SiteDesignTask", "SiteClassification", "SiteClosure", "SitePolicy",
+            "AuditSetting", "PropertyBagValue", "IndexedPropertyBagKey", "IndexedProperty", "IndexedProperties",
+            "InPlaceRecordsManagement", "RetentionLabel", "DocumentId", "SiteDocumentIdPrefix", "TeamifyPromptHidden",
+            "SiteCollectionTermStore", "SyntexModel", "SyntexClassifyAndExtract", "VivaConnectionsDashboardACE",
+            "ReIndexWeb", "WebHook",
+
+            // Tenant wide version trim and cleanup jobs run against the whole site
+            "SiteFileVersionBatchDeleteJob", "SiteFileVersionExpirationReportJob",
+            "LibraryFileVersionBatchDeleteJob", "LibraryFileVersionExpirationReportJob"
         };
 
         /// <summary>
-        /// Fragments in a noun which indicate that a modifying operation affects security, for which Contribute rights are not sufficient.
+        /// Nouns on which a modifying operation customizes pages or branding. Per the SharePoint permission level reference those need the Add and Customize Pages,
+        /// Apply Themes and Borders or Apply Style Sheets rights, which are held by Design and Full Control but not by Edit or Contribute.
+        /// Modern site pages live in a document library, so those are content operations a member can perform and are deliberately not listed here.
         /// </summary>
-        private static readonly string[] ElevatedNounFragments =
-        [
-            "Permission", "RoleDefinition", "RoleAssignment", "SiteCollectionAdmin", "Sharing", "ExternalUser", "Auditing"
-        ];
+        private static readonly HashSet<string> SiteDesignNouns = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "AvailablePageLayouts", "DefaultPageLayout", "PublishingImageRendition", "PublishingPageLayout",
+            "HtmlPublishingPageLayout", "PublishingPage", "WikiPage", "WikiPageContent", "MasterPage",
+            "WebPart", "WebPartProperty", "WebPartToWebPartPage", "WebPartToWikiPage",
+            "Theme", "WebTheme", "HomePage"
+        };
 
         /// <summary>
         /// Nouns on which a modifying operation changes the structure of a list or library. That needs the Manage Lists right, which the Contribute permission level does not grant,
@@ -61,14 +97,22 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             // Deliberately not including content operations such as Folder, DocumentSet and ListItemVersion: adding, moving or deleting items, folders and versions
             // is covered by Contribute and does not need the Manage Lists right.
-            "List", "View", "Field", "ContentType", "ContentTypeToList", "ContentTypeFromList", "ContentTypeToDocumentSet",
-            "ContentTypeFromDocumentSet", "ContentTypesFromContentTypeHub", "FieldFromList", "ListDesign",
-            "DefaultColumnValues", "ListRecordDeclaration", "ListWebhook", "DocumentSetField"
+            "List", "View", "ViewsFromXML", "Field", "TaxonomyField", "FieldFromList", "FieldFromXml",
+            "ContentType", "ContentTypeToList", "ContentTypeFromList", "ContentTypeToDocumentSet",
+            "ContentTypeFromDocumentSet", "ContentTypesFromContentTypeHub", "DefaultContentTypeToList",
+            "FieldFromContentType", "FieldToContentType", "DocumentSetField", "DocumentSetTemplate",
+            "ListDesign", "DefaultColumnValues", "ListRecordDeclaration", "ListWebhook", "WebhookSubscription",
+            "ListInformationRightsManagement", "ReIndexList"
         };
 
         private const string GuidanceInferred = "These permissions have been derived from the type of cmdlet and the operation it performs. They are a least privilege estimate and may need to be raised for specific operations. The estimate covers the SharePoint API only, so a cmdlet which also calls another API needs the permissions of that API on top of these.";
 
         private const string GuidanceNotApplicable = "This cmdlet does not require API permissions on the Entra ID application registration used to connect with PnP PowerShell.";
+
+        /// <summary>
+        /// The SharePoint application scope which grants access only to the sites the application has explicitly been granted access to, making it the least privileged of all
+        /// </summary>
+        private const string SitesSelectedScope = "Sites.Selected";
 
         #endregion
 
@@ -232,11 +276,34 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
 
+            permission.DelegatedPermissions = OrderSharePointAlternativesByPrivilege(permission.DelegatedPermissions);
+            permission.ApplicationPermissions = OrderSharePointAlternativesByPrivilege(permission.ApplicationPermissions);
+
             ApplyAvailability(permission, delegatedUnavailable, applicationUnavailable);
             ApplyAdditionalRoles(cmdletType, cmdletAttribute, permission);
             ApplyResourceTypes(permission, resourceDependent);
 
             return permission;
+        }
+
+        /// <summary>
+        /// Orders the alternatives from least to most privileged where every alternative is a single SharePoint scope with a known privilege level, i.e. on Get-PnPList.
+        /// For those the order is guaranteed rather than dependent on the order in which the attributes happen to be reflected. Any other shape, such as alternatives on
+        /// Microsoft Graph for which no privilege model exists, is left in the order the cmdlet declares them in.
+        /// </summary>
+        private static CommandPermissionSet[] OrderSharePointAlternativesByPrivilege(CommandPermissionSet[] sets)
+        {
+            if (sets.Length < 2 || !sets.All(set => set.Permissions.Length == 1 &&
+                                                    set.Permissions[0].ResourceType == ResourceTypeName.SharePoint &&
+                                                    (SharePointScopeRoles.ContainsKey(set.Permissions[0].Scope) || set.Permissions[0].Scope.Equals(SitesSelectedScope, StringComparison.OrdinalIgnoreCase))))
+            {
+                return sets;
+            }
+
+            // Sites.Selected is the least privileged of all, it only grants access to the sites the application has been granted access to explicitly
+            return sets.OrderBy(set => set.Permissions[0].Scope.Equals(SitesSelectedScope, StringComparison.OrdinalIgnoreCase)
+                ? SharePointMinimumRole.Unknown
+                : SharePointScopeRoles[set.Permissions[0].Scope]).ToArray();
         }
 
         /// <summary>
@@ -271,18 +338,28 @@ namespace PnP.PowerShell.Commands.Utilities
 
             var (delegatedScope, applicationScope) = GetSharePointScopes(permission.MinimumSharePointRole);
 
+            // Some cmdlets reach their goal either through the declared API or through SharePoint, depending on how they are invoked. For those the SharePoint
+            // permission is an alternative to the declared ones rather than a requirement on top of them.
+            var isAlternative = cmdletType.GetCustomAttribute<ApiPermissionsDependOnResource>(false)?.ApiIsAlternativeToSharePoint == true;
+
             if (!delegatedUnavailable)
             {
-                permission.DelegatedPermissions = AddScopeToEachSet(permission.DelegatedPermissions, delegatedScope);
+                permission.DelegatedPermissions = isAlternative
+                    ? [.. permission.DelegatedPermissions, CreatePermissionSet(ResourceTypeName.SharePoint, delegatedScope)]
+                    : AddScopeToEachSet(permission.DelegatedPermissions, delegatedScope);
             }
 
             if (!applicationUnavailable)
             {
-                permission.ApplicationPermissions = AddScopeToEachSet(permission.ApplicationPermissions, applicationScope);
+                permission.ApplicationPermissions = isAlternative
+                    ? [.. permission.ApplicationPermissions, CreatePermissionSet(ResourceTypeName.SharePoint, applicationScope)]
+                    : AddScopeToEachSet(permission.ApplicationPermissions, applicationScope);
             }
 
             permission.PermissionSource = CommandPermissionSource.DeclaredAndInferred;
-            permission.Guidance = "This cmdlet uses SharePoint CSOM next to the API for which permissions are declared on it. The SharePoint permission listed has been derived from the operation the cmdlet performs and is required in addition to the declared permissions.";
+            permission.Guidance = isAlternative
+                ? "This cmdlet can use SharePoint CSOM instead of the API for which permissions are declared on it. The SharePoint permission listed has been derived from the operation the cmdlet performs and is an alternative to the declared permissions, not a requirement next to them."
+                : "This cmdlet uses SharePoint CSOM next to the API for which permissions are declared on it. The SharePoint permission listed has been derived from the operation the cmdlet performs and is required in addition to the declared permissions.";
         }
 
         /// <summary>
@@ -379,6 +456,14 @@ namespace PnP.PowerShell.Commands.Utilities
                 var role = InferSharePointRole(cmdletType, cmdletAttribute);
                 var (delegatedScope, applicationScope) = GetSharePointScopes(role);
 
+                // The term store is addressed through its own SharePoint scopes rather than through the site scopes
+                if (IsTaxonomyCmdlet(cmdletType))
+                {
+                    var termStoreScope = ReadVerbs.Contains(cmdletAttribute.VerbName) ? "TermStore.Read.All" : "TermStore.ReadWrite.All";
+                    delegatedScope = termStoreScope;
+                    applicationScope = termStoreScope;
+                }
+
                 permission.PermissionSource = CommandPermissionSource.Inferred;
                 permission.MinimumSharePointRole = role;
                 permission.Guidance = GuidanceInferred;
@@ -394,9 +479,10 @@ namespace PnP.PowerShell.Commands.Utilities
                     // For an operation scoped to a single site, Sites.Selected combined with a grant on that site is less privileged than any of the tenant wide
                     // scopes, which is why the declared metadata lists it first as well, i.e. on Get-PnPList. It does not apply to cmdlets which run against the
                     // SharePoint Online admin site, as those act tenant wide by definition.
-                    permission.ApplicationPermissions = role == SharePointMinimumRole.SharePointAdministrator
+                    // Not for term store operations either, as Sites.Selected grants access to sites and not to the term store
+                    permission.ApplicationPermissions = role == SharePointMinimumRole.SharePointAdministrator || IsTaxonomyCmdlet(cmdletType)
                         ? [CreatePermissionSet(ResourceTypeName.SharePoint, applicationScope)]
-                        : [CreatePermissionSet(ResourceTypeName.SharePoint, "Sites.Selected"), CreatePermissionSet(ResourceTypeName.SharePoint, applicationScope)];
+                        : [CreatePermissionSet(ResourceTypeName.SharePoint, SitesSelectedScope), CreatePermissionSet(ResourceTypeName.SharePoint, applicationScope)];
                 }
 
                 return;
@@ -418,8 +504,8 @@ namespace PnP.PowerShell.Commands.Utilities
             ["Sites.Read.All"] = SharePointMinimumRole.SiteVisitor,
             ["AllSites.Write"] = SharePointMinimumRole.SiteMember,
             ["Sites.ReadWrite.All"] = SharePointMinimumRole.SiteMember,
-            ["AllSites.Manage"] = SharePointMinimumRole.SiteEditor,
-            ["Sites.Manage.All"] = SharePointMinimumRole.SiteEditor,
+            ["AllSites.Manage"] = SharePointMinimumRole.SiteDesigner,
+            ["Sites.Manage.All"] = SharePointMinimumRole.SiteDesigner,
             ["AllSites.FullControl"] = SharePointMinimumRole.SiteOwner,
             ["Sites.FullControl.All"] = SharePointMinimumRole.SiteOwner
         };
@@ -465,11 +551,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 return SharePointMinimumRole.SharePointAdministrator;
             }
 
-            if (ReadVerbs.Contains(cmdletAttribute.VerbName))
-            {
-                return SharePointMinimumRole.SiteVisitor;
-            }
-
             var noun = StripPnPPrefix(cmdletAttribute.NounName);
 
             // Creating a site collection is a tenant operation. There is no site to hold a role on yet, so the tenant administrator role applies unless self service
@@ -479,19 +560,44 @@ namespace PnP.PowerShell.Commands.Utilities
                 return SharePointMinimumRole.SharePointAdministrator;
             }
 
-            // Changing who administers a site collection can only be done by a site collection administrator, Full Control through the Owners group is not enough
+            // Reading and changing who administers a site collection can only be done by a site collection administrator, Full Control through the Owners group is not enough
             if (noun.Contains("SiteCollectionAdmin", StringComparison.OrdinalIgnoreCase))
             {
                 return SharePointMinimumRole.SiteCollectionAdministrator;
             }
 
-            if (IsElevatedNoun(cmdletAttribute.NounName))
+            // Evaluated before the verb: enumerating permissions, reading the audit configuration and reading how a site is shared are Full Control rights,
+            // so for these nouns reading needs just as much as changing does
+            if (FullControlNounFragments.Any(fragment => noun.Contains(fragment, StringComparison.OrdinalIgnoreCase)))
             {
                 return SharePointMinimumRole.SiteOwner;
             }
 
+            // Term store operations are governed by the term store roles rather than by a permission level on a site, so no site role applies to them
+            if (IsTaxonomyCmdlet(cmdletType))
+            {
+                return SharePointMinimumRole.NotApplicable;
+            }
+
+            if (ReadVerbs.Contains(cmdletAttribute.VerbName))
+            {
+                return SharePointMinimumRole.SiteVisitor;
+            }
+
+            // Changing the security, structure or configuration of a site needs rights that only Full Control holds, such as Manage Web Site
+            if (SiteConfigurationNouns.Contains(noun))
+            {
+                return SharePointMinimumRole.SiteOwner;
+            }
+
+            // Customizing pages and branding needs Add and Customize Pages or Apply Themes, which Design holds and Edit does not
+            if (SiteDesignNouns.Contains(noun))
+            {
+                return SharePointMinimumRole.SiteDesigner;
+            }
+
             // Changing the structure of a list needs the Manage Lists right, which Contribute does not grant
-            return IsListManagementNoun(cmdletAttribute.NounName) ? SharePointMinimumRole.SiteEditor : SharePointMinimumRole.SiteMember;
+            return ListManagementNouns.Contains(noun) ? SharePointMinimumRole.SiteEditor : SharePointMinimumRole.SiteMember;
         }
 
         /// <summary>
@@ -501,19 +607,14 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             SharePointMinimumRole.SiteVisitor => ("AllSites.Read", "Sites.Read.All"),
             SharePointMinimumRole.SiteMember or SharePointMinimumRole.SiteEditor => ("AllSites.Write", "Sites.ReadWrite.All"),
+            SharePointMinimumRole.SiteDesigner => ("AllSites.Manage", "Sites.Manage.All"),
             _ => ("AllSites.FullControl", "Sites.FullControl.All")
         };
 
+        private static bool IsTaxonomyCmdlet(Type cmdletType) => cmdletType.Namespace?.Contains(".Taxonomy", StringComparison.OrdinalIgnoreCase) == true;
+
         private static string StripPnPPrefix(string nounName) => nounName.StartsWith("PnP", StringComparison.OrdinalIgnoreCase) ? nounName[3..] : nounName;
 
-        private static bool IsElevatedNoun(string nounName)
-        {
-            var noun = StripPnPPrefix(nounName);
-
-            return ElevatedNouns.Contains(noun) || ElevatedNounFragments.Any(fragment => noun.Contains(fragment, StringComparison.OrdinalIgnoreCase));
-        }
-
-        private static bool IsListManagementNoun(string nounName) => ListManagementNouns.Contains(StripPnPPrefix(nounName));
 
         /// <summary>
         /// Adds the roles which need to be held next to the API permissions for specific groups of cmdlets
@@ -537,6 +638,9 @@ namespace PnP.PowerShell.Commands.Utilities
                     break;
                 case SharePointMinimumRole.SiteOwner:
                     roles.Add($"Full Control on the target site, i.e. through the Owners group, {appliesTo}");
+                    break;
+                case SharePointMinimumRole.SiteDesigner:
+                    roles.Add($"Design on the target site, Edit does not grant the right to customize pages or apply themes, {appliesTo}");
                     break;
                 case SharePointMinimumRole.SiteEditor:
                     roles.Add($"Edit on the target site, Contribute is not sufficient to manage lists, {appliesTo}");

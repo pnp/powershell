@@ -21,6 +21,13 @@ namespace PnP.PowerShell.Commands.Attributes
         public string ParameterName { get; set; }
 
         /// <summary>
+        /// Set this on a SharePoint cmdlet which reaches its goal either through the API it declares permissions for or through SharePoint, depending on how it is
+        /// invoked, i.e. Send-PnPMail which sends through Microsoft Graph or through the SharePoint SendEmail API. The SharePoint permission is then reported as an
+        /// alternative to the declared permissions instead of as a requirement next to them.
+        /// </summary>
+        public bool ApiIsAlternativeToSharePoint { get; set; }
+
+        /// <summary>
         /// Url of the documentation which lists the permissions required per resource
         /// </summary>
         public string DocumentationUrl { get; set; }

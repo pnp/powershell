@@ -100,7 +100,15 @@ For these cmdlets, declaring a `RequiredApi*Permissions` attribute would be inac
     DocumentationUrl = "https://learn.microsoft.com/graph/api/subscription-post-subscriptions?view=graph-rest-1.0#permissions")]
 ```
 
-All three properties are optional. Omit `ParameterName` when the resource does not come from a parameter of the cmdlet, i.e. when it follows from an existing subscription being addressed by its id.
+The attribute exposes four properties, all optional:
+
+| Property | Purpose |
+|----------|---------|
+| `ResourceType` | The API the permissions are needed on. Defaults to `Graph`. Even though the exact scopes cannot be stated, the API is known, and this is what `Get-PnPCommandPermission -ResourceTypeName` filters on. **Set it explicitly when the API is not Microsoft Graph**, otherwise the cmdlet is reported against the wrong API. |
+| `ParameterName` | The parameter of which the value determines the permissions. Omit it when the resource does not come from a parameter, i.e. when it follows from an existing subscription addressed by its id, or when the condition is the *absence* of a parameter, as the generated text reads "follow from the value provided to -X". |
+| `Remarks` | Explains which permissions are needed and under which condition. This is where the detail belongs. |
+| `DocumentationUrl` | Link to the table listing the permissions per resource. |
+| `ApiIsAlternativeToSharePoint` | Set this on a SharePoint cmdlet which reaches its goal either through the declared API or through SharePoint depending on how it is invoked, i.e. `Send-PnPMail`. The SharePoint permission is then reported as an alternative to the declared permissions rather than as a requirement next to them. |
 
 Unlike the other attributes on this page, this attribute is purely informational. It is surfaced through `Get-PnPCommandPermission`, which reports these cmdlets with a `PermissionSource` of `ResourceDependent` rather than `Unknown`, and it is deliberately not evaluated when validating an access token, so it can never produce a warning.
 
