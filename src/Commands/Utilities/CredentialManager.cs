@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 [assembly: InternalsVisibleTo("PnP.PowerShell.Tests")]
@@ -23,6 +24,9 @@ namespace PnP.PowerShell.Commands.Utilities
         private const string LinuxManagedAppIdSchemaName = "pnp.powershell.managedappid";
         private const string LinuxManagedAppIdSecretLabel = "PnP PowerShell managed App Id";
         private const string LinuxManagedAppIdCacheDirectory = ".m365pnppowershell";
+
+        private const string LinuxCredentialSchemaName = "pnp.powershell.credential";
+        private const string LinuxCredentialSecretLabel = "PnP PowerShell credential";
 
 
         public static bool AddCredential(string name, string username, SecureString password, bool overwrite)
@@ -50,6 +54,10 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     WriteMacOSKeyChainEntry(name, SecureStringToString(password));
                 }
+                else if (OperatingSystem.IsLinux())
+                {
+                    WriteLinuxCredentialEntry(name, username, SecureStringToString(password));
+                }
             }
             return true;
         }
@@ -71,7 +79,6 @@ namespace PnP.PowerShell.Commands.Utilities
             var secureAppId = new NetworkCredential(null, appid).SecurePassword;
             if (OperatingSystem.IsWindows())
             {
-
                 WriteWindowsCredentialManagerEntry(name, null, secureAppId);
             }
             else if (OperatingSystem.IsMacOS())
@@ -114,6 +121,15 @@ namespace PnP.PowerShell.Commands.Utilities
                     if (cred == null)
                     {
                         cred = ReadMacOSKeyChainEntry($"PnPPS:{name}");
+                    }
+                    return cred;
+                }
+                if (OperatingSystem.IsLinux())
+                {
+                    var cred = ReadLinuxCredentialEntry(name);
+                    if (cred == null)
+                    {
+                        cred = ReadLinuxCredentialEntry($"PnPPS:{name}");
                     }
                     return cred;
                 }
@@ -187,6 +203,15 @@ namespace PnP.PowerShell.Commands.Utilities
                     if (!success)
                     {
                         success = DeleteMacOSKeyChainEntry($"PnPPS:{name}");
+                    }
+                    return success;
+                }
+                if (OperatingSystem.IsLinux())
+                {
+                    success = DeleteLinuxCredentialEntry(name);
+                    if (!success)
+                    {
+                        success = DeleteLinuxCredentialEntry($"PnPPS:{name}");
                     }
                     return success;
                 }
@@ -527,21 +552,121 @@ namespace PnP.PowerShell.Commands.Utilities
             // return success;
         }
 
-        private static Storage CreateLinuxManagedAppIdStorage(string name)
+        private static Storage CreateLinuxManagedAppIdStorage(string name) =>
+            CreateLinuxStorage(name, "pnp.managedappid", LinuxManagedAppIdSchemaName, LinuxManagedAppIdSecretLabel);
+
+        private static Storage CreateLinuxCredentialStorage(string name) =>
+            CreateLinuxStorage(name, "pnp.credential", LinuxCredentialSchemaName, LinuxCredentialSecretLabel);
+
+        private static Storage CreateLinuxStorage(string name, string filePrefix, string schemaName, string secretLabel)
         {
             var cacheDir = Path.Combine(MsalCacheHelper.UserRootDirectory, LinuxManagedAppIdCacheDirectory);
-            var cacheFileName = $"pnp.managedappid.{GetSha256Hash(name)}.cache";
+            var cacheFileName = $"{filePrefix}.{GetSha256Hash(name)}.cache";
 
             var properties = new StorageCreationPropertiesBuilder(cacheFileName, cacheDir)
                 .WithLinuxKeyring(
-                    schemaName: LinuxManagedAppIdSchemaName,
+                    schemaName: schemaName,
                     collection: MsalCacheHelper.LinuxKeyRingDefaultCollection,
-                    secretLabel: LinuxManagedAppIdSecretLabel,
+                    secretLabel: secretLabel,
                     attribute1: new KeyValuePair<string, string>("Product", "PnPPowerShell"),
                     attribute2: new KeyValuePair<string, string>("Name", name))
                 .Build();
 
             return Storage.Create(properties);
+        }
+
+        /// <summary>
+        /// Stores a username and password pair in the Linux Secret Service. Both are needed to be able to hand back a complete
+        /// PSCredential later on, so the payload is serialized rather than storing the password on its own.
+        /// </summary>
+        private static void WriteLinuxCredentialEntry(string name, string username, string password)
+        {
+            try
+            {
+                var payload = JsonSerializer.Serialize(new LinuxStoredCredential { Username = username, Password = password });
+
+                var storage = CreateLinuxCredentialStorage(name);
+                storage.VerifyPersistence();
+                storage.WriteData(Encoding.UTF8.GetBytes(payload));
+            }
+            catch (MsalCachePersistenceException ex)
+            {
+                throw new InvalidOperationException("Unable to store the credential in Linux Secret Service. Ensure a Secret Service provider such as GNOME Keyring or KWallet is installed and unlocked, or configure a default vault through Microsoft.PowerShell.SecretManagement.", ex);
+            }
+        }
+
+        private static PSCredential ReadLinuxCredentialEntry(string name)
+        {
+            byte[] data;
+            try
+            {
+                data = CreateLinuxCredentialStorage(name).ReadData();
+            }
+            catch (MsalCachePersistenceException)
+            {
+                return null;
+            }
+
+            if (data == null || data.Length == 0)
+            {
+                return null;
+            }
+
+            var raw = Encoding.UTF8.GetString(data);
+
+            string username = null;
+            string password;
+            try
+            {
+                var stored = JsonSerializer.Deserialize<LinuxStoredCredential>(raw);
+                username = stored?.Username;
+                password = stored?.Password;
+            }
+            catch (JsonException)
+            {
+                // Entries written before the username was stored alongside the password hold the raw password only. Reading them back
+                // as a credential without a username is still better than discarding a credential the user did successfully store.
+                password = raw;
+            }
+
+            if (password == null)
+            {
+                return null;
+            }
+
+            var securePassword = new SecureString();
+            foreach (var character in password)
+            {
+                securePassword.AppendChar(character);
+            }
+            securePassword.MakeReadOnly();
+
+            return new PSCredential(string.IsNullOrEmpty(username) ? name : username, securePassword);
+        }
+
+        private static bool DeleteLinuxCredentialEntry(string name)
+        {
+            try
+            {
+                var storage = CreateLinuxCredentialStorage(name);
+                if (storage.ReadData() is not { Length: > 0 })
+                {
+                    return false;
+                }
+
+                storage.Clear();
+                return true;
+            }
+            catch (MsalCachePersistenceException)
+            {
+                return false;
+            }
+        }
+
+        private sealed class LinuxStoredCredential
+        {
+            public string Username { get; set; }
+            public string Password { get; set; }
         }
 
         private static void WriteLinuxAppIdEntry(string name, string appId)
