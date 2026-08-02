@@ -115,8 +115,9 @@ namespace PnP.PowerShell.Commands.Model
                 }
                 else
                 {
-                    // Permissions have been defined, so we need to check if the access token contains these permissions
-                    var missingScopes = requiredScopes.Where(requiredScope => !scopes.Any(scope => scope.Scope.Equals(requiredScope.Scope, StringComparison.InvariantCultureIgnoreCase))).ToArray();
+                    // Permissions have been defined, so we need to check if the access token contains these permissions. A scope which is more
+                    // privileged than the one required covers it, i.e. Sites.FullControl.All satisfies a required Sites.Read.All.
+                    var missingScopes = requiredScopes.Where(requiredScope => !ApiPermissionEvaluator.IsSatisfiedBy(requiredScope, scopes)).ToArray();
 
                     responses.Add(new AccessTokenPermissionValidationResponse
                     {

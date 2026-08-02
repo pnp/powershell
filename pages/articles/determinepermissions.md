@@ -48,6 +48,29 @@ Always check `PermissionSource`, it states how authoritative the answer is:
 
 Anything other than `Declared` is guidance rather than a guarantee, so verify it against your own scenario.
 
+### Testing the permissions of your current connection
+
+After connecting, use [Test-PnPConnectionPermission](../cmdlets/Test-PnPConnectionPermission.md) to compare the `scp` or `roles` claims in the current connection's access tokens with the permissions reported for a cmdlet:
+
+```powershell
+Connect-PnPOnline -Url https://contoso.sharepoint.com/sites/project -Interactive -ClientId $clientId
+Test-PnPConnectionPermission -CommandName Set-PnPList
+```
+
+The cmdlet returns `$true` when the connection holds one complete permission set and `$false` when a required permission is missing, naming the missing `AND` and `OR` alternatives on the error stream. A more privileged scope satisfies a lesser one, so a connection holding `AllSites.FullControl` passes a check for `AllSites.Read`.
+
+Because the error is non-terminating, the same cmdlet serves both a conditional and a preflight style:
+
+```powershell
+# Branch on the result
+if (Test-PnPConnectionPermission -CommandName Set-PnPList -ErrorAction SilentlyContinue) { ... }
+
+# Or fail the script before anything is changed
+Test-PnPConnectionPermission -CommandName Set-PnPList -ErrorAction Stop
+```
+
+The test covers API permission claims only. It cannot verify the signed-in user's SharePoint permission level, a `Sites.Selected` grant on the target site, directory roles or the other requirements listed in `MinimumSharePointRole` and `AdditionalRoles`. Where `Get-PnPCommandPermission` reports unknown, conditional or resource-dependent permissions, or where no token could be acquired for a resource, the cmdlet returns nothing and reports the requirement as indeterminate rather than claiming a permission is missing. `Inferred` permissions remain estimates even when the current token contains them. Read the error and the `Guidance` from `Get-PnPCommandPermission` for those cases.
+
 ### Working out the permissions for an entire script
 
 The most useful application is composing the permission set for a script before you run it. Extract the PnP cmdlets it uses and ask for their permissions in one go:
