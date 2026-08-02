@@ -19,7 +19,7 @@ Get-PnPStoredCredential -Name <String>
 ```
 
 ## DESCRIPTION
-Returns a stored credential from the Windows Credential Manager or Mac OS Key Chain Entry.
+Returns a stored credential. If a default vault has been registered through `Microsoft.PowerShell.SecretManagement`, the credential is read from that vault. If not, it is read from the credential store native to the operating system: the Windows Credential Manager on Windows, the Keychain on macOS and the Secret Service on Linux. Reading a credential from the Linux Secret Service requires a provider such as GNOME Keyring or KWallet to be installed and unlocked. See [Credential Management](https://pnp.github.io/powershell/articles/credentialmanagement.html) for the details.
 
 ## EXAMPLES
 
