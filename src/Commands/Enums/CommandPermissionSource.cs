@@ -32,7 +32,8 @@ namespace PnP.PowerShell.Commands.Enums
         DeclaredAndInferred = 5,
 
         /// <summary>
-        /// The cmdlet does not call into an API and therefore does not require any permissions
+        /// The cmdlet requires no API permissions on the Entra ID application registration used to connect with PnP PowerShell. That covers cmdlets which call no API at all,
+        /// as well as cmdlets which authenticate separately, such as Register-PnPEntraIDApp, which can still require rights of their own. The guidance states which.
         /// </summary>
         [Description("Not applicable")]
         NotApplicable = 3,

@@ -34,14 +34,16 @@ namespace PnP.PowerShell.Commands.Model
         public ResourceTypeName[] ResourceTypes { get; set; } = Array.Empty<ResourceTypeName>();
 
         /// <summary>
-        /// Indicates if this cmdlet can be run using a delegated access token
+        /// Indicates if this cmdlet can be run using a delegated access token. NULL when that could not be determined, which is the case when no permissions are
+        /// reported to base it on, i.e. for a cmdlet of which the permissions depend on the resource it is pointed at.
         /// </summary>
-        public bool DelegatedAvailable { get; set; }
+        public bool? DelegatedAvailable { get; set; }
 
         /// <summary>
-        /// Indicates if this cmdlet can be run using an application access token
+        /// Indicates if this cmdlet can be run using an application access token. NULL when that could not be determined, which is the case when no permissions are
+        /// reported to base it on, i.e. for a cmdlet of which the permissions depend on the resource it is pointed at.
         /// </summary>
-        public bool ApplicationAvailable { get; set; }
+        public bool? ApplicationAvailable { get; set; }
 
         /// <summary>
         /// Indicates where the permissions in this instance originate from and therefore how authoritative they are

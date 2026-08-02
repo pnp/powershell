@@ -28,11 +28,11 @@ The `PermissionSource` property states how reliable the returned information is:
 
 | PermissionSource | Meaning |
 |------------------|---------|
-| `Declared` | The permissions are declared on the cmdlet through its permission attributes and are authoritative. |
+| `Declared` | The permissions are declared on the cmdlet through its permission attributes and are authoritative. Check `Guidance`, as a cmdlet can additionally require permissions that depend on how it is invoked. |
 | `DeclaredAndInferred` | The cmdlet uses SharePoint CSOM next to the API it declares permissions for, i.e. `Set-PnPList`. The SharePoint permission has been derived and added to each declared alternative, so it is required in addition to the declared permissions. |
 | `Inferred` | The permissions have been derived from the type of cmdlet and the operation it performs. They are a least privilege estimate and may need to be raised for specific operations. |
 | `ResourceDependent` | The permissions follow from the resource the cmdlet is pointed at at runtime and cannot be stated up front, i.e. `New-PnPGraphSubscription` or `Invoke-PnPGraphMethod`. The `Guidance` property names the parameter involved and links to the relevant documentation. |
-| `NotApplicable` | The cmdlet does not call into an API and requires no permissions, i.e. `Get-PnPChangeLog`. |
+| `NotApplicable` | The cmdlet requires no permissions on the Entra ID application registration used to connect with PnP PowerShell. That covers cmdlets which call no API at all, i.e. `Get-PnPChangeLog`, as well as cmdlets which authenticate separately, i.e. `Register-PnPEntraIDApp`, which can still require rights of their own. `Guidance` states which. |
 | `Unknown` | No permissions are declared on the cmdlet and they could not be derived. Consult the documentation of that cmdlet. |
 
 Omitting `-CommandName` returns the permission information of every cmdlet in the module, which allows the full permission surface to be audited.

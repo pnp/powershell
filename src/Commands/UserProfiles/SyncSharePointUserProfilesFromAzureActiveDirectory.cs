@@ -13,11 +13,14 @@ namespace PnP.PowerShell.Commands.UserProfiles
     [OutputType(typeof(SharePointUserProfileSyncStatus))]
 
     // The SharePoint permissions below are always needed, the import runs against the tenant and writes to a document library and to the user profiles.
-    // The Microsoft Graph permission is deliberately not declared: Graph is only called to list the users when -Users is not provided, in which case User.Read.All
-    // is needed. Declaring that unconditionally would warn about a missing permission when the users to synchronize are passed in directly.
-    // See documentation/Sync-PnPSharePointUserProfilesFromAzureActiveDirectory.md for the full description.
+    // The Microsoft Graph permission is deliberately not declared as a required permission: Graph is only called to list the users when -Users is not provided, so
+    // declaring it unconditionally would warn about a missing permission when the users to synchronize are passed in directly. It is surfaced informationally instead.
     [RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl", "sharepoint/TermStore.ReadWrite.All", "sharepoint/User.ReadWrite.All")]
     [RequiredApiApplicationPermissions("sharepoint/Sites.FullControl.All", "sharepoint/TermStore.ReadWrite.All", "sharepoint/User.ReadWrite.All")]
+    [ApiPermissionsDependOnResource(
+        ParameterName = nameof(Users),
+        Remarks = "When -Users is not provided, the users to synchronize are read from Microsoft Graph, which requires User.Read.All. When -Users is provided, Microsoft Graph is not called.",
+        DocumentationUrl = "https://learn.microsoft.com/graph/api/user-list?view=graph-rest-1.0#permissions")]
     public class SyncSharePointUserProfilesFromAzureActiveDirectory : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false)]
