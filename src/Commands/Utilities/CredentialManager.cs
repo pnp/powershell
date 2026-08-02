@@ -31,33 +31,28 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static bool AddCredential(string name, string username, SecureString password, bool overwrite)
         {
-            if (HasSecretManagement())
+            var defaultVault = GetDefaultVaultIfAvailable();
+            if (!string.IsNullOrEmpty(defaultVault))
             {
-                var defaultVault = GetDefaultVault();
-
-                if (!string.IsNullOrEmpty(defaultVault))
-                {
-                    AddVaultCredential(defaultVault, name, username, password);
-                }
+                AddVaultCredential(defaultVault, name, username, password);
+                return true;
             }
-            else
+
+            if (!name.StartsWith("PnPPS:"))
             {
-                if (!name.StartsWith("PnPPS:"))
-                {
-                    name = $"PnPPS:{name}";
-                }
-                if (OperatingSystem.IsWindows())
-                {
-                    WriteWindowsCredentialManagerEntry(name, username, password);
-                }
-                else if (OperatingSystem.IsMacOS())
-                {
-                    WriteMacOSKeyChainEntry(name, SecureStringToString(password));
-                }
-                else if (OperatingSystem.IsLinux())
-                {
-                    WriteLinuxCredentialEntry(name, username, SecureStringToString(password));
-                }
+                name = $"PnPPS:{name}";
+            }
+            if (OperatingSystem.IsWindows())
+            {
+                WriteWindowsCredentialManagerEntry(name, username, password);
+            }
+            else if (OperatingSystem.IsMacOS())
+            {
+                WriteMacOSKeyChainEntry(name, SecureStringToString(password));
+            }
+            else if (OperatingSystem.IsLinux())
+            {
+                WriteLinuxCredentialEntry(name, username, SecureStringToString(password));
             }
             return true;
         }
@@ -94,45 +89,39 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static PSCredential GetCredential(string name)
         {
-            // check if Microsoft.PowerShell.SecretManagement is available
-            if (HasSecretManagement())
+            // check if Microsoft.PowerShell.SecretManagement is available and has a default vault configured
+            var defaultVault = GetDefaultVaultIfAvailable();
+            if (!string.IsNullOrEmpty(defaultVault))
             {
-                var defaultVault = GetDefaultVault();
-
-                if (!string.IsNullOrEmpty(defaultVault))
-                {
-                    return GetVaultCredential(defaultVault, name);
-                }
+                return GetVaultCredential(defaultVault, name);
             }
-            else
+
+            if (OperatingSystem.IsWindows())
             {
-                if (OperatingSystem.IsWindows())
+                var cred = ReadWindowsCredentialManagerEntry(name);
+                if (cred == null)
                 {
-                    var cred = ReadWindowsCredentialManagerEntry(name);
-                    if (cred == null)
-                    {
-                        cred = ReadWindowsCredentialManagerEntry($"PnPPS:{name}");
-                    }
-                    return cred;
+                    cred = ReadWindowsCredentialManagerEntry($"PnPPS:{name}");
                 }
-                if (OperatingSystem.IsMacOS())
+                return cred;
+            }
+            if (OperatingSystem.IsMacOS())
+            {
+                var cred = ReadMacOSKeyChainEntry(name);
+                if (cred == null)
                 {
-                    var cred = ReadMacOSKeyChainEntry(name);
-                    if (cred == null)
-                    {
-                        cred = ReadMacOSKeyChainEntry($"PnPPS:{name}");
-                    }
-                    return cred;
+                    cred = ReadMacOSKeyChainEntry($"PnPPS:{name}");
                 }
-                if (OperatingSystem.IsLinux())
+                return cred;
+            }
+            if (OperatingSystem.IsLinux())
+            {
+                var cred = ReadLinuxCredentialEntry(name);
+                if (cred == null)
                 {
-                    var cred = ReadLinuxCredentialEntry(name);
-                    if (cred == null)
-                    {
-                        cred = ReadLinuxCredentialEntry($"PnPPS:{name}");
-                    }
-                    return cred;
+                    cred = ReadLinuxCredentialEntry($"PnPPS:{name}");
                 }
+                return cred;
             }
             return null;
         }
@@ -177,44 +166,39 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             bool success = false;
 
-            if (HasSecretManagement())
+            var defaultVault = GetDefaultVaultIfAvailable();
+            if (!string.IsNullOrEmpty(defaultVault))
             {
-                var defaultVault = GetDefaultVault();
-
-                if (!string.IsNullOrEmpty(defaultVault))
-                {
-                    RemoveVaultCredential(defaultVault, name);
-                    return true;
-                }
+                RemoveVaultCredential(defaultVault, name);
+                return true;
             }
-            else
+
+            if (OperatingSystem.IsWindows())
             {
-                if (OperatingSystem.IsWindows())
+                success = DeleteWindowsCredentialManagerEntry(name);
+                if (!success)
                 {
-                    success = DeleteWindowsCredentialManagerEntry(name);
-                    if (!success)
-                    {
-                        success = DeleteWindowsCredentialManagerEntry($"PnPPS:{name}");
-                    }
+                    success = DeleteWindowsCredentialManagerEntry($"PnPPS:{name}");
                 }
-                if (OperatingSystem.IsMacOS())
+                return success;
+            }
+            if (OperatingSystem.IsMacOS())
+            {
+                success = DeleteMacOSKeyChainEntry(name);
+                if (!success)
                 {
-                    success = DeleteMacOSKeyChainEntry(name);
-                    if (!success)
-                    {
-                        success = DeleteMacOSKeyChainEntry($"PnPPS:{name}");
-                    }
-                    return success;
+                    success = DeleteMacOSKeyChainEntry($"PnPPS:{name}");
                 }
-                if (OperatingSystem.IsLinux())
+                return success;
+            }
+            if (OperatingSystem.IsLinux())
+            {
+                success = DeleteLinuxCredentialEntry(name);
+                if (!success)
                 {
-                    success = DeleteLinuxCredentialEntry(name);
-                    if (!success)
-                    {
-                        success = DeleteLinuxCredentialEntry($"PnPPS:{name}");
-                    }
-                    return success;
+                    success = DeleteLinuxCredentialEntry($"PnPPS:{name}");
                 }
+                return success;
             }
             return success;
         }

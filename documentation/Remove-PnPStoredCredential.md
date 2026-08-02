@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPStoredCredent
 # Remove-PnPStoredCredential
 
 ## SYNOPSIS
-Removes a credential from the Credential Manager
+Removes a stored credential
 
 ## SYNTAX
 
@@ -19,7 +19,7 @@ Remove-PnPStoredCredential -Name <String> [-Force]
 ```
 
 ## DESCRIPTION
-Removes a stored credential from the Credential Manager
+Removes a stored credential. If a default vault has been registered through `Microsoft.PowerShell.SecretManagement`, the credential is removed from that vault. If not, it is removed from the credential store native to the operating system: the Windows Credential Manager on Windows, the Keychain on macOS and the Secret Service on Linux. See [Credential Management](https://pnp.github.io/powershell/articles/credentialmanagement.html) for the details.
 
 ## EXAMPLES
 
@@ -28,7 +28,7 @@ Removes a stored credential from the Credential Manager
 Remove-PnPStoredCredential -Name "https://tenant.sharepoint.com"
 ```
 
-Removes the specified credential from the Credential Manager
+Removes the specified credential from the credential store
 
 ## PARAMETERS
 

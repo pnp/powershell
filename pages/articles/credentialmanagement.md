@@ -4,7 +4,9 @@ PnP PowerShell is the ultimate library to execute cmdlets unattended in scripts,
 
 However, in order to automate authentication you need to safely store these credentials. You should -never- store them in your scripts.
 
-We currently recommend the Microsoft provided Secret Management and Secret Store modules to set up a vault which PnP PowerShell can use to store and retrieve credentials.
+We currently recommend the Microsoft provided Secret Management and Secret Store modules to set up a vault which PnP PowerShell can use to store and retrieve credentials. This works the same way on every platform PnP PowerShell runs on, which is why it is the recommended option.
+
+If you do not register a default vault, `Add-PnPStoredCredential`, `Get-PnPStoredCredential` and `Remove-PnPStoredCredential` fall back to the credential store built into your operating system, described under [Storing credentials without a vault](#storing-credentials-without-a-vault) below.
 
 ## Install the required modules
 
@@ -78,3 +80,17 @@ Remove-Secret -Name [yourlabel] -Vaultname [VaultName]
 ```powershell
 Remove-PnPStoredCredential -Name [yourlabel]
 ```
+
+## Storing credentials without a vault
+
+When no default vault is registered, the PnP PowerShell cmdlets above use the credential store that comes with your operating system. Nothing needs to be installed for this on Windows and macOS, and the credentials are stored under a name prefixed with `PnPPS:`.
+
+| Platform | Credential store | Prerequisites |
+| -------- | ---------------- | ------------- |
+| Windows | Windows Credential Manager | None |
+| macOS | Keychain | None |
+| Linux | Secret Service | A Secret Service provider such as GNOME Keyring or KWallet must be installed, running and unlocked |
+
+On Linux this means a headless machine, a container or an SSH session without a running keyring daemon typically has no Secret Service available. `Add-PnPStoredCredential` will then fail with an error explaining that the credential could not be stored, and `Get-PnPStoredCredential` will return nothing. On such machines, register a default vault with the Secret Management modules as described above, or pass credentials to `Connect-PnPOnline` in another way.
+
+Note that a credential stored in the operating system credential store is not visible to the Secret Management module, and the other way around. If you register a default vault after having stored credentials natively, PnP PowerShell will look in the vault only and you will need to add the credentials there again.
