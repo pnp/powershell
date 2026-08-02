@@ -40,7 +40,7 @@ Always check `PermissionSource`, it states how authoritative the answer is:
 | PermissionSource | What it means |
 | ---------------- | ------------- |
 | `Declared` | The permissions are declared on the cmdlet itself. These are accurate. |
-| `DeclaredAndInferred` | The cmdlet calls another API next to SharePoint. The declared part is accurate, the SharePoint part is an estimate. |
+| `DeclaredAndInferred` | Part declared, part derived. The declared part is accurate, the SharePoint part is an estimate. Either the cmdlet uses SharePoint **next to** the declared API, in which case the SharePoint permission is needed on top, or it uses SharePoint **instead of** it depending on how you call it, in which case it is an alternative. Read `Guidance` before granting anything. |
 | `Inferred` | Derived from what the cmdlet does. A least privilege estimate that may need to be raised, and it covers the SharePoint API only. |
 | `ResourceDependent` | The permission follows from what you point the cmdlet at, i.e. `New-PnPGraphSubscription` needs read permissions on the resource you subscribe to. The `Guidance` property links to the relevant documentation. |
 | `NotApplicable` | The cmdlet needs no permissions on the application registration you connect with. That covers cmdlets which perform no request at all, i.e. `Get-PnPContext`, cmdlets which call an API that needs no permissions, i.e. `Get-PnPChangeLog` which reads the release notes from GitHub, and cmdlets which authenticate separately and can still require rights of their own such as a directory role, i.e. `Register-PnPEntraIDApp`. Read `Guidance` to see which applies. |

@@ -252,6 +252,13 @@ namespace PnP.PowerShell.Commands.Utilities
 
                 AddSharePointRequirementToDeclaredPermissions(cmdletType, permission, delegatedUnavailable, applicationUnavailable);
             }
+            else if (resourceDependent != null && resourceDependent.ResourceType == ResourceTypeName.SharePoint)
+            {
+                // The permissions depend on how the cmdlet is invoked on the very API the inference would guess at, i.e. Invoke-PnPSPRestMethod which calls an
+                // arbitrary SharePoint endpoint. Inferring a SharePoint scope here would contradict the attribute, so nothing is inferred and the block below
+                // reports it as resource dependent.
+                permission.PermissionSource = CommandPermissionSource.Unknown;
+            }
             else
             {
                 ApplyInferredPermissions(cmdletType, cmdletAttribute, permission, delegatedUnavailable, applicationUnavailable);
@@ -266,13 +273,19 @@ namespace PnP.PowerShell.Commands.Utilities
                     permission.MinimumSharePointRole = SharePointMinimumRole.NotApplicable;
                     permission.Guidance = BuildResourceDependentGuidance(resourceDependent);
                 }
-                else
+                else if (!resourceDependent.ApiIsAlternativeToSharePoint)
                 {
                     // The cmdlet has permissions of its own and calls another API depending on how it is invoked, i.e. Set-PnPSiteClassification only calls Microsoft
                     // Graph for a site with a Microsoft 365 group behind it. What was determined stays, the conditional requirement is added to the guidance.
+                    // Skipped when the APIs are alternatives, as the guidance for that case already explains the relation and speaking of additional permissions
+                    // on top of it would imply the opposite.
                     permission.Guidance = string.IsNullOrWhiteSpace(permission.Guidance)
                         ? BuildResourceDependentGuidance(resourceDependent, isAdditional: true)
                         : $"{permission.Guidance} {BuildResourceDependentGuidance(resourceDependent, isAdditional: true)}";
+                }
+                else if (!string.IsNullOrWhiteSpace(resourceDependent.Remarks))
+                {
+                    permission.Guidance = $"{permission.Guidance} {resourceDependent.Remarks}".Trim();
                 }
             }
 

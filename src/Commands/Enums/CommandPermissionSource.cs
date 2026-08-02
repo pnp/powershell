@@ -26,7 +26,9 @@ namespace PnP.PowerShell.Commands.Enums
         Inferred = 2,
 
         /// <summary>
-        /// Part of the permissions is declared on the cmdlet through its permission attributes and part of it has been derived. This applies to cmdlets which call into another API next to SharePoint CSOM.
+        /// Part of the permissions is declared on the cmdlet through its permission attributes and part of it has been derived. That covers two cases: a cmdlet which uses
+        /// SharePoint CSOM next to the API it declares permissions for, where the derived SharePoint permission is required in addition to the declared ones, and a cmdlet
+        /// which reaches its goal either through the declared API or through SharePoint, where it is an alternative to them. The guidance states which of the two applies.
         /// </summary>
         [Description("Declared and inferred")]
         DeclaredAndInferred = 5,

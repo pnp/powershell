@@ -100,7 +100,7 @@ For these cmdlets, declaring a `RequiredApi*Permissions` attribute would be inac
     DocumentationUrl = "https://learn.microsoft.com/graph/api/subscription-post-subscriptions?view=graph-rest-1.0#permissions")]
 ```
 
-The attribute exposes four properties, all optional:
+The attribute exposes five properties, all optional:
 
 | Property | Purpose |
 |----------|---------|
