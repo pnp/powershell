@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPGraphSubscrip
 
 **Required Permissions**
 
-  * Microsoft Graph API : depends on the resource the subscription was created on. The same read permissions that were needed to create the subscription are required to delete it, i.e. `Mail.Read` for a subscription on messages or `Sites.ReadWrite.All` for one on a SharePoint list. See [Delete subscription](https://learn.microsoft.com/graph/api/subscription-delete?view=graph-rest-1.0#permissions) for the permissions per resource.
+  * Microsoft Graph API : depends on the resource the subscription was created on. Deleting a subscription requires read permissions on that resource, i.e. `Mail.Read` for a subscription on messages or `Sites.ReadWrite.All` for one on a SharePoint list. Note that the permission is not always the same as the one needed to create the subscription, so use the table in [Delete subscription](https://learn.microsoft.com/graph/api/subscription-delete?view=graph-rest-1.0#permissions) rather than the one for creating.
 
 Removes an existing Microsoft Graph subscription.
 

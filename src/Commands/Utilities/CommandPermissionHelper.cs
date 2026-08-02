@@ -167,12 +167,17 @@ namespace PnP.PowerShell.Commands.Utilities
                 .Where(attribute => attribute is RequiredApiApplicationPermissions or RequiredApiDelegatedOrApplicationPermissions)
                 .ToArray();
 
+            // Where a cmdlet declares permissions, the token types it declares them for are the ones it supports. Declaring a scope for one token type only, such as the
+            // delegated only ServiceMessageViewpoint.Write on Set-PnPMessageCenterAnnouncementAsArchived, means the other token type is not supported rather than that it
+            // needs no permissions. Where nothing is declared, only the explicit ApiNotAvailableUnder markers say anything about availability.
+            var hasDeclaredPermissions = permissionAttributes.Length > 0;
+
             var permission = new CommandPermission
             {
                 CommandName = $"{cmdletAttribute.VerbName}-{cmdletAttribute.NounName}",
                 Aliases = GetAliases(cmdletType),
-                DelegatedAvailable = !Attribute.IsDefined(cmdletType, typeof(ApiNotAvailableUnderDelegatedPermissions)),
-                ApplicationAvailable = !Attribute.IsDefined(cmdletType, typeof(ApiNotAvailableUnderApplicationPermissions)),
+                DelegatedAvailable = !Attribute.IsDefined(cmdletType, typeof(ApiNotAvailableUnderDelegatedPermissions)) && (!hasDeclaredPermissions || delegatedAttributes.Length > 0),
+                ApplicationAvailable = !Attribute.IsDefined(cmdletType, typeof(ApiNotAvailableUnderApplicationPermissions)) && (!hasDeclaredPermissions || applicationAttributes.Length > 0),
                 DelegatedPermissions = ToPermissionSets(delegatedAttributes),
                 ApplicationPermissions = ToPermissionSets(applicationAttributes)
             };
@@ -205,7 +210,10 @@ namespace PnP.PowerShell.Commands.Utilities
             if (delegatedAttributes.Length > 0 || applicationAttributes.Length > 0)
             {
                 permission.PermissionSource = CommandPermissionSource.Declared;
-                permission.MinimumSharePointRole = InferSharePointRole(cmdletType, cmdletAttribute);
+
+                // Where SharePoint scopes are declared they say more about the rights needed than the verb does, i.e. Sync-PnPSharePointUserProfilesFromAzureActiveDirectory
+                // declares Sites.FullControl.All while its verb would suggest Contribute is enough
+                permission.MinimumSharePointRole = GetRoleFromDeclaredSharePointScopes(cmdletType, permission) ?? InferSharePointRole(cmdletType, cmdletAttribute);
 
                 AddSharePointRequirementToDeclaredPermissions(cmdletType, permission);
             }
@@ -364,7 +372,12 @@ namespace PnP.PowerShell.Commands.Utilities
 
                 if (permission.ApplicationAvailable)
                 {
-                    permission.ApplicationPermissions = [CreatePermissionSet(ResourceTypeName.SharePoint, applicationScope)];
+                    // For an operation scoped to a single site, Sites.Selected combined with a grant on that site is less privileged than any of the tenant wide
+                    // scopes, which is why the declared metadata lists it first as well, i.e. on Get-PnPList. It does not apply to cmdlets which run against the
+                    // SharePoint Online admin site, as those act tenant wide by definition.
+                    permission.ApplicationPermissions = role == SharePointMinimumRole.SharePointAdministrator
+                        ? [CreatePermissionSet(ResourceTypeName.SharePoint, applicationScope)]
+                        : [CreatePermissionSet(ResourceTypeName.SharePoint, "Sites.Selected"), CreatePermissionSet(ResourceTypeName.SharePoint, applicationScope)];
                 }
 
                 return;
@@ -374,6 +387,47 @@ namespace PnP.PowerShell.Commands.Utilities
             permission.PermissionSource = CommandPermissionSource.Unknown;
             permission.MinimumSharePointRole = SharePointMinimumRole.NotApplicable;
             permission.Guidance = "No permission metadata has been declared on this cmdlet and the permissions required could not be derived. Consult the documentation of this cmdlet for the permissions it needs.";
+        }
+
+        /// <summary>
+        /// Maps a declared SharePoint scope to the permission level it corresponds to on a site. Scopes which do not describe a level on a site, such as
+        /// Sites.Selected, TermStore.ReadWrite.All and User.ReadWrite.All, have no equivalent and are skipped.
+        /// </summary>
+        private static readonly Dictionary<string, SharePointMinimumRole> SharePointScopeRoles = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["AllSites.Read"] = SharePointMinimumRole.SiteVisitor,
+            ["Sites.Read.All"] = SharePointMinimumRole.SiteVisitor,
+            ["AllSites.Write"] = SharePointMinimumRole.SiteMember,
+            ["Sites.ReadWrite.All"] = SharePointMinimumRole.SiteMember,
+            ["AllSites.Manage"] = SharePointMinimumRole.SiteEditor,
+            ["Sites.Manage.All"] = SharePointMinimumRole.SiteEditor,
+            ["AllSites.FullControl"] = SharePointMinimumRole.SiteOwner,
+            ["Sites.FullControl.All"] = SharePointMinimumRole.SiteOwner
+        };
+
+        /// <summary>
+        /// Determines the minimum SharePoint role from the SharePoint scopes a cmdlet declares itself, which is more accurate than deriving it from the verb.
+        /// Within one set the scopes are all required, so the highest level in it applies. The sets are alternatives, so the lowest of those levels is the minimum.
+        /// </summary>
+        /// <returns>The role, or NULL when the cmdlet declares no SharePoint scope that maps to a permission level on a site</returns>
+        private static SharePointMinimumRole? GetRoleFromDeclaredSharePointScopes(Type cmdletType, CommandPermission permission)
+        {
+            // Cmdlets which run against the SharePoint Online admin site always need the tenant administrator role, whatever they declare
+            if (typeof(PnPSharePointOnlineAdminCmdlet).IsAssignableFrom(cmdletType))
+            {
+                return SharePointMinimumRole.SharePointAdministrator;
+            }
+
+            var rolesPerSet = permission.DelegatedPermissions.Concat(permission.ApplicationPermissions)
+                .Select(set => set.Permissions
+                    .Where(scope => scope.ResourceType == ResourceTypeName.SharePoint && SharePointScopeRoles.ContainsKey(scope.Scope))
+                    .Select(scope => SharePointScopeRoles[scope.Scope])
+                    .DefaultIfEmpty()
+                    .Max())
+                .Where(role => role != default)
+                .ToArray();
+
+            return rolesPerSet.Length > 0 ? rolesPerSet.Min() : null;
         }
 
         /// <summary>
@@ -475,7 +529,9 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
 
-            if (cmdletType.Namespace?.Contains(".UserProfiles", StringComparison.OrdinalIgnoreCase) == true)
+            // Only for the user profile cmdlets which act on SharePoint. The namespace also holds Microsoft Graph only cmdlets such as Get-PnPUserProfilePhoto,
+            // for which no SharePoint role applies at all.
+            if (cmdletType.Namespace?.Contains(".UserProfiles", StringComparison.OrdinalIgnoreCase) == true && typeof(PnPSharePointCmdlet).IsAssignableFrom(cmdletType))
             {
                 if (permission.MinimumSharePointRole != SharePointMinimumRole.SharePointAdministrator)
                 {

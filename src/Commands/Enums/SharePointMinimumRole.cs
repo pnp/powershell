@@ -3,7 +3,8 @@ using System.ComponentModel;
 namespace PnP.PowerShell.Commands.Enums
 {
     /// <summary>
-    /// The minimum SharePoint role or permission level a user needs to hold to be able to run a cmdlet, next to the API permissions that need to be granted
+    /// The minimum SharePoint role a user needs to hold to be able to run a cmdlet, next to the API permissions that need to be granted.
+    /// The values are ordered from least to most privileged, so they can be compared.
     /// </summary>
     public enum SharePointMinimumRole : short
     {
@@ -35,24 +36,24 @@ namespace PnP.PowerShell.Commands.Enums
         /// Edit access on the site the cmdlet acts on. Needed to manage lists, views, fields and content types, which the Contribute permission level does not allow.
         /// </summary>
         [Description("Edit on the target site")]
-        SiteEditor = 7,
+        SiteEditor = 4,
 
         /// <summary>
         /// Full Control on the site the cmdlet acts on, i.e. through the Owners group
         /// </summary>
         [Description("Full Control on the target site")]
-        SiteOwner = 4,
+        SiteOwner = 5,
 
         /// <summary>
         /// Site collection administrator on the site collection the cmdlet acts on
         /// </summary>
         [Description("Site collection administrator")]
-        SiteCollectionAdministrator = 5,
+        SiteCollectionAdministrator = 6,
 
         /// <summary>
         /// SharePoint Administrator or Global Administrator on the tenant
         /// </summary>
         [Description("SharePoint Administrator")]
-        SharePointAdministrator = 6
+        SharePointAdministrator = 7
     }
 }

@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPGraphSubscriptio
 
 **Required Permissions**
 
-  * Microsoft Graph API : depends on the resource the subscription was created on. The same read permissions that were needed to create the subscription are required to renew it, i.e. `Mail.Read` for a subscription on messages or `Sites.ReadWrite.All` for one on a SharePoint list. See [Update subscription](https://learn.microsoft.com/graph/api/subscription-update?view=graph-rest-1.0#permissions) for the permissions per resource.
+  * Microsoft Graph API : depends on the resource the subscription was created on. Renewing a subscription requires read permissions on that resource, i.e. `Mail.Read` for a subscription on messages or `Sites.ReadWrite.All` for one on a SharePoint list. Note that the permission is not always the same as the one needed to create the subscription, so use the table in [Update subscription](https://learn.microsoft.com/graph/api/subscription-update?view=graph-rest-1.0#permissions) rather than the one for creating.
 
 Updates an existing Microsoft Graph subscription.
 
