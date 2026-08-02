@@ -289,11 +289,17 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSInvalidOperationException($"The access token for {resourceType.GetDescription()} represents {tokenType.GetDescription()} permissions while the connection represents {expectedTokenType.GetDescription()} permissions.");
             }
 
-            // The token was requested for this resource type, so its scopes are labelled with it rather than with the resource type derived from
-            // the audience claim. That keeps the comparison working for endpoints whose audience is not recognized, i.e. in a sovereign cloud.
-            var permissions = TokenHandler.ReturnScopes(decodedToken)
-                .Select(permission => new RequiredApiPermission(resourceType, permission.Scope))
-                .ToArray();
+            // A connection made with -AccessToken hands out the very same token whatever resource is asked for, so what comes back is not
+            // necessarily a token for the resource that was requested. Trusting the request and labelling the scopes with the requested resource
+            // type would present, i.e., SharePoint roles as Microsoft Graph roles and report a permission as held which the target API will reject.
+            // The audience claim is what decides which API the token is actually for.
+            var tokenResourceType = TokenHandler.DefineResourceTypeFromAudience(decodedToken.Audiences.FirstOrDefault());
+            if (tokenResourceType != resourceType)
+            {
+                throw new PSInvalidOperationException($"The access token returned for {resourceType.GetDescription()} was issued for {tokenResourceType.GetDescription()}, so the permissions of this connection on {resourceType.GetDescription()} cannot be established from it.");
+            }
+
+            var permissions = TokenHandler.ReturnScopes(decodedToken);
 
             WriteVerbose($"Access token for {resourceType.GetDescription()} contains {permissions.Length} {tokenType.GetDescription()} permission scope(s): {string.Join(", ", permissions.Select(permission => permission.Scope))}");
 

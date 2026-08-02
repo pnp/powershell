@@ -37,6 +37,8 @@ The check validates API permissions only. SharePoint permission levels, `Sites.S
 
 Validation is supported for Microsoft Graph, SharePoint Online, Azure Resource Manager, Power Apps and Graph Connector Service access tokens. The Dynamics CRM audience used by `Get-PnPPowerPlatformSolution` depends on the selected environment and cannot be determined from a cmdlet name, so that permission set is reported as indeterminate. Connections made with an ACS app only token are also reported as indeterminate, as such a token cannot be exchanged for a token carrying permission scopes.
 
+A connection made with `Connect-PnPOnline -AccessToken` holds one fixed token and returns it whatever resource is asked for. The audience of every token is therefore verified before its scopes are used, and a token issued for another API is reported as indeterminate rather than compared against the requirement. In practice this means such a connection can only be tested for cmdlets which use the API the token was issued for.
+
 Testing a SharePoint permission requires a connection created with a SharePoint site URL, because that URL determines the access token audience.
 
 Permissions with a source of `Inferred` or `DeclaredAndInferred` remain estimates. This cmdlet tests the estimate returned by `Get-PnPCommandPermission`; it cannot make inferred metadata authoritative.

@@ -33,14 +33,16 @@ namespace PnP.PowerShell.Commands.Utilities
         };
 
         /// <summary>
-        /// The access levels which can appear as the second segment of a scope, ordered by privilege. Anything not listed here, such as Send or
-        /// Create, describes an operation rather than a level and is therefore only ever satisfied by an exact match.
+        /// The access levels which can appear as the second segment of a scope, ordered by privilege. Anything not listed here describes an
+        /// operation rather than a level and is therefore only ever satisfied by an exact match.
+        /// Write is deliberately absent: on Microsoft Graph it denotes an operation which does not include reading, i.e. AuditActivity.Write
+        /// uploads audit logs while AuditActivity.Read reads them, so ranking it above Read would report a permission as held which it is not.
+        /// The SharePoint scopes which do use Write as a level, such as AllSites.Write, are covered by the ladder above instead.
         /// </summary>
         private static readonly Dictionary<string, int> AccessLevels = new(StringComparer.OrdinalIgnoreCase)
         {
             ["ReadBasic"] = 1,
             ["Read"] = 2,
-            ["Write"] = 3,
             ["ReadWrite"] = 3,
             ["Manage"] = 4,
             ["FullControl"] = 5
