@@ -61,7 +61,8 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             // Deliberately not including content operations such as Folder, DocumentSet and ListItemVersion: adding, moving or deleting items, folders and versions
             // is covered by Contribute and does not need the Manage Lists right.
-            "List", "View", "Field", "ContentType", "ContentTypeToList", "FieldFromList", "ListDesign",
+            "List", "View", "Field", "ContentType", "ContentTypeToList", "ContentTypeFromList", "ContentTypeToDocumentSet",
+            "ContentTypeFromDocumentSet", "ContentTypesFromContentTypeHub", "FieldFromList", "ListDesign",
             "DefaultColumnValues", "ListRecordDeclaration", "ListWebhook", "DocumentSetField"
         };
 
@@ -469,8 +470,17 @@ namespace PnP.PowerShell.Commands.Utilities
                 return SharePointMinimumRole.SiteVisitor;
             }
 
+            var noun = StripPnPPrefix(cmdletAttribute.NounName);
+
+            // Creating a site collection is a tenant operation. There is no site to hold a role on yet, so the tenant administrator role applies unless self service
+            // site creation has been enabled.
+            if (noun.Equals("Site", StringComparison.OrdinalIgnoreCase) && cmdletAttribute.VerbName.Equals(VerbsCommon.New, StringComparison.OrdinalIgnoreCase))
+            {
+                return SharePointMinimumRole.SharePointAdministrator;
+            }
+
             // Changing who administers a site collection can only be done by a site collection administrator, Full Control through the Owners group is not enough
-            if (StripPnPPrefix(cmdletAttribute.NounName).Contains("SiteCollectionAdmin", StringComparison.OrdinalIgnoreCase))
+            if (noun.Contains("SiteCollectionAdmin", StringComparison.OrdinalIgnoreCase))
             {
                 return SharePointMinimumRole.SiteCollectionAdministrator;
             }

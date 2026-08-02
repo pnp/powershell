@@ -53,7 +53,9 @@ Anything other than `Declared` is guidance rather than a guarantee, so verify it
 The most useful application is composing the permission set for a script before you run it. Extract the PnP cmdlets it uses and ask for their permissions in one go:
 
 ```powershell
-$cmdlets = [regex]::Matches((Get-Content ./myscript.ps1 -Raw), '\b[A-Z][a-zA-Z]+-PnP[A-Za-z0-9]+\b') |
+# Matched case insensitively, as PowerShell command names are. Get-PnPCommandPermission resolves
+# any casing, and any alias, back to the canonical cmdlet name.
+$cmdlets = [regex]::Matches((Get-Content ./myscript.ps1 -Raw), '\b[a-z]+-pnp[a-z0-9]+\b', 'IgnoreCase') |
     ForEach-Object { $_.Value } | Sort-Object -Unique
 
 $cmdlets | Get-PnPCommandPermission |
