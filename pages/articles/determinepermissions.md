@@ -28,8 +28,9 @@ MinimumSharePointRole  : NotApplicable
 
 Read the result as follows:
 
-- Permissions **within one set** are all required together, they are combined with `AND`. Multiple sets are **alternatives**, combined with `OR`, and are listed from least to most privileged. In the example above, granting only `Group.Read.All` is enough.
-- `MinimumSharePointRole` tells you which permission the *user or application* needs on the SharePoint resource itself, next to the API permission on the application registration. Granting `Sites.ReadWrite.All` does not help if the account has only Read on the target site.
+- Permissions **within one set** are all required together, they are combined with `AND`. Multiple sets are **alternatives**, combined with `OR`. In the example above, granting only `Group.Read.All` is enough.
+- The alternatives are listed in the order they are declared on the cmdlet, which by convention starts with the least privileged one. Treat that as a strong hint rather than a guarantee and check the scopes before granting them.
+- `MinimumSharePointRole` tells you which rights are needed on the SharePoint site itself, on top of the API permission. This applies when **connecting delegated**, where the signed in user is bound by their own rights, and when connecting **app only using `Sites.Selected`**, where the application has to be granted access per site. A tenant wide application permission such as `Sites.ReadWrite.All` already covers every site, so in that case nothing has to be assigned on the site.
 - `DelegatedAvailable` and `ApplicationAvailable` tell you whether the cmdlet can be used at all in that scenario. A cmdlet with `ApplicationAvailable : False` cannot be run app only, no matter which permissions you grant.
 
 ### How reliable is the answer
@@ -70,7 +71,7 @@ Get-PnPTeamsTeam          Declared Graph: Group.Read.All OR Graph: Group.ReadWri
 Set-PnPWeb                Inferred SharePoint: Sites.FullControl.All
 ```
 
-To get the actual list to grant, take the **least privileged alternative** of each cmdlet, which is the first set, and group it per API. This matches the order in which you add permissions in the Entra ID portal:
+To get a starting list to grant, take the **first alternative** of each cmdlet, which by convention is the least privileged one, and group it per API. Always review the result before granting it, as that convention is not enforced:
 
 ```powershell
 $cmdlets | Get-PnPCommandPermission |

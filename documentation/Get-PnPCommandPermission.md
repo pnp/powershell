@@ -20,7 +20,7 @@ Get-PnPCommandPermission [[-CommandName] <String>] [-ResourceTypeName <ResourceT
 ```
 
 ## DESCRIPTION
-Returns the delegated and application API permission sets required to run a PnP PowerShell cmdlet, together with the minimum SharePoint role the calling user needs to hold. Permissions within one set are all required, while multiple sets are alternatives to each other.
+Returns the delegated and application API permission sets required to run a PnP PowerShell cmdlet, together with the minimum SharePoint rights the calling user needs to hold. Permissions within one set are all required, while multiple sets are alternatives to each other. The alternatives are listed in the order they are declared on the cmdlet, which by convention starts with the least privileged one.
 
 Use this cmdlet to determine up front which permissions to grant to an Entra ID app registration, rather than discovering it from a failed call.
 
@@ -137,8 +137,8 @@ Accept wildcard characters: False
 | `DelegatedAvailable` | Indicates if the cmdlet can run using a delegated access token. |
 | `ApplicationAvailable` | Indicates if the cmdlet can run using an application access token. |
 | `PermissionSource` | Where the permission information originates from. |
-| `MinimumSharePointRole` | Minimum SharePoint role needed on the resource the cmdlet acts on. |
-| `AdditionalRoles` | Roles which need to be held next to the API permissions. |
+| `MinimumSharePointRole` | Minimum rights needed on the SharePoint site the cmdlet acts on. Applies when connecting delegated, and when connecting app only using `Sites.Selected`. A tenant wide application permission such as `Sites.ReadWrite.All` already covers every site. Possible values are `SiteVisitor` (Read), `SiteMember` (Contribute), `SiteEditor` (Edit, needed to manage lists, views, fields and content types), `SiteOwner` (Full Control), `SiteCollectionAdministrator` and `SharePointAdministrator`. |
+| `AdditionalRoles` | Roles which need to be held next to the API permissions. Each entry states in which connection scenario it applies. |
 | `Guidance` | Remarks on how to interpret the returned permissions. |
 
 ## RELATED LINKS

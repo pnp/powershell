@@ -1,5 +1,4 @@
 using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Attributes;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Purview
@@ -7,9 +6,9 @@ namespace PnP.PowerShell.Commands.Purview
     [Cmdlet(VerbsCommon.Set, "PnPSiteClassification")]
     [OutputType(typeof(void))]
 
-    // Next to SharePoint CSOM this cmdlet updates the classification of the Microsoft 365 group behind the site through Microsoft Graph
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]
+    // Deliberately not declaring RequiredApi*Permissions attributes: Microsoft Graph is only called when the site has a Microsoft 365 group behind it, in which case
+    // Directory.Read.All or Directory.ReadWrite.All is needed. Declaring that unconditionally would warn about a missing permission on sites without a group.
+    // See documentation/Set-PnPSiteClassification.md for the full description.
     public class SetSiteClassification : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

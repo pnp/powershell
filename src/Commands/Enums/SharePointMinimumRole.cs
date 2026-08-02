@@ -32,6 +32,12 @@ namespace PnP.PowerShell.Commands.Enums
         SiteMember = 3,
 
         /// <summary>
+        /// Edit access on the site the cmdlet acts on. Needed to manage lists, views, fields and content types, which the Contribute permission level does not allow.
+        /// </summary>
+        [Description("Edit on the target site")]
+        SiteEditor = 7,
+
+        /// <summary>
         /// Full Control on the site the cmdlet acts on, i.e. through the Owners group
         /// </summary>
         [Description("Full Control on the target site")]

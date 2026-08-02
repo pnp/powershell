@@ -49,12 +49,14 @@ namespace PnP.PowerShell.Commands.Model
         public CommandPermissionSource PermissionSource { get; set; }
 
         /// <summary>
-        /// The minimum SharePoint role or permission level needed on the resource this cmdlet acts on
+        /// The minimum SharePoint role or permission level needed on the resource this cmdlet acts on. This applies when connecting delegated, where the signed in user is bound
+        /// by their own rights, and when connecting app only using Sites.Selected. A tenant wide application permission such as Sites.ReadWrite.All already grants access to every
+        /// site, so in that case no role has to be assigned on the site itself.
         /// </summary>
         public SharePointMinimumRole MinimumSharePointRole { get; set; }
 
         /// <summary>
-        /// Roles which need to be held next to the API permissions to be able to run this cmdlet
+        /// Roles which need to be held next to the API permissions to be able to run this cmdlet. Each entry states in which connection scenario it applies.
         /// </summary>
         public string[] AdditionalRoles { get; set; } = Array.Empty<string>();
 

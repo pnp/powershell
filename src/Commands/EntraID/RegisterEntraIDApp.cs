@@ -26,6 +26,7 @@ namespace PnP.PowerShell.Commands.EntraID
 {
     [Cmdlet(VerbsLifecycle.Register, "PnPEntraIDApp")]
     [Alias("Register-PnPAzureADApp")]
+    [Attributes.ApiPermissionsNotRequired(Remarks = "It authenticates separately instead of using the PnP connection. The account signing in must hold the Application Developer or Global Administrator role to be able to create the application registration.")]
     public class RegisterAzureADApp : BasePSCmdlet, IDynamicParameters
     {
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";

@@ -10,6 +10,7 @@ Types of permissions that can be used in the permission attributes are:
 - [RequiredApiDelegatedPermissions](#requiredapidelegatedpermissions)
 - [RequiredApiDelegatedOrApplicationPermissions](#requiredapidelegatedorapplicationpermissions)
 - [ApiPermissionsDependOnResource](#apipermissionsdependonresource)
+- [ApiPermissionsNotRequired](#apipermissionsnotrequired)
 
 The attributes can be applied to the cmdlet class. The RequiredApi attributes take a string array as a parameter. The string array contains the permissions required to run the cmdlet. The permissions are defined in the format `resource/scope`. The resource is the resource that the permission is required for, and the permission is the permission that is required.
 
@@ -102,3 +103,15 @@ For these cmdlets, declaring a `RequiredApi*Permissions` attribute would be inac
 All three properties are optional. Omit `ParameterName` when the resource does not come from a parameter of the cmdlet, i.e. when it follows from an existing subscription being addressed by its id.
 
 Unlike the other attributes on this page, this attribute is purely informational. It is surfaced through `Get-PnPCommandPermission`, which reports these cmdlets with a `PermissionSource` of `ResourceDependent` rather than `Unknown`, and it is deliberately not evaluated when validating an access token, so it can never produce a warning.
+
+## ApiPermissionsNotRequired
+
+Where a cmdlet declares no permissions at all, `Get-PnPCommandPermission` derives them from the base class the cmdlet uses. That works for the vast majority of cmdlets, but not for cmdlets which use a connected base class without actually calling an API. `Get-PnPContext` derives from `PnPSharePointCmdlet` but only returns the client context held in memory, and `Register-PnPEntraIDApp` calls Microsoft Graph using a token it acquires itself rather than through the PnP connection. Without a marker these would be reported as requiring permissions they do not need.
+
+Apply this attribute to such cmdlets:
+
+```csharp
+[ApiPermissionsNotRequired(Remarks = "This cmdlet returns the client context currently held in memory and performs no request.")]
+```
+
+The optional `Remarks` are appended to the guidance returned by `Get-PnPCommandPermission` and are the place to state which rights *are* needed instead, i.e. a directory role. Like `ApiPermissionsDependOnResource` this attribute is informational only and is not evaluated when validating an access token.

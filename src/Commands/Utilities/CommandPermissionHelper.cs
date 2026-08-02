@@ -53,7 +53,19 @@ namespace PnP.PowerShell.Commands.Utilities
             "Permission", "RoleDefinition", "RoleAssignment", "SiteCollectionAdmin", "Sharing", "ExternalUser", "Auditing"
         ];
 
+        /// <summary>
+        /// Nouns on which a modifying operation changes the structure of a list or library. That needs the Manage Lists right, which the Contribute permission level does not grant,
+        /// so Edit is the lowest permission level that suffices. The API scope needed stays the same as for any other write operation.
+        /// </summary>
+        private static readonly HashSet<string> ListManagementNouns = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "List", "View", "Field", "ContentType", "ContentTypeToList", "FieldFromList", "ListDesign", "ListItemVersion",
+            "DefaultColumnValues", "ListRecordDeclaration", "ListWebhook", "Folder", "DocumentSet", "DocumentSetField"
+        };
+
         private const string GuidanceInferred = "These permissions have been derived from the type of cmdlet and the operation it performs. They are a least privilege estimate and may need to be raised for specific operations. The estimate covers the SharePoint API only, so a cmdlet which also calls another API needs the permissions of that API on top of these.";
+
+        private const string GuidanceNotApplicable = "This cmdlet does not require API permissions on the Entra ID application registration used to connect with PnP PowerShell.";
 
         #endregion
 
@@ -144,11 +156,15 @@ namespace PnP.PowerShell.Commands.Utilities
                 return null;
             }
 
-            var delegatedAttributes = GetPermissionAttributes<RequiredApiDelegatedPermissions>(cmdletType)
-                .Concat(GetPermissionAttributes<RequiredApiDelegatedOrApplicationPermissions>(cmdletType))
+            // Read all permission attributes in one go so they stay in the order they are declared on the cmdlet. Reading them per type and concatenating would group
+            // them by attribute type instead, which breaks the convention that the least privileged alternative is declared first.
+            var permissionAttributes = Attribute.GetCustomAttributes(cmdletType, typeof(RequiredApiPermissionsBase)).Cast<RequiredApiPermissionsBase>().ToArray();
+
+            var delegatedAttributes = permissionAttributes
+                .Where(attribute => attribute is RequiredApiDelegatedPermissions or RequiredApiDelegatedOrApplicationPermissions)
                 .ToArray();
-            var applicationAttributes = GetPermissionAttributes<RequiredApiApplicationPermissions>(cmdletType)
-                .Concat(GetPermissionAttributes<RequiredApiDelegatedOrApplicationPermissions>(cmdletType))
+            var applicationAttributes = permissionAttributes
+                .Where(attribute => attribute is RequiredApiApplicationPermissions or RequiredApiDelegatedOrApplicationPermissions)
                 .ToArray();
 
             var permission = new CommandPermission
@@ -174,6 +190,17 @@ namespace PnP.PowerShell.Commands.Utilities
             }
 
             var resourceDependent = cmdletType.GetCustomAttribute<ApiPermissionsDependOnResource>(false);
+            var permissionsNotRequired = cmdletType.GetCustomAttribute<ApiPermissionsNotRequired>(false);
+
+            if (permissionsNotRequired != null)
+            {
+                permission.PermissionSource = CommandPermissionSource.NotApplicable;
+                permission.MinimumSharePointRole = SharePointMinimumRole.NotApplicable;
+                permission.Guidance = string.IsNullOrWhiteSpace(permissionsNotRequired.Remarks) ? GuidanceNotApplicable : $"{GuidanceNotApplicable} {permissionsNotRequired.Remarks}";
+                permission.ResourceTypes = [];
+
+                return permission;
+            }
 
             if (delegatedAttributes.Length > 0 || applicationAttributes.Length > 0)
             {
@@ -193,7 +220,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 ApplyInferredPermissions(cmdletType, cmdletAttribute, permission);
             }
 
-            ApplyAdditionalRoles(cmdletType, permission);
+            ApplyAdditionalRoles(cmdletType, cmdletAttribute, permission);
             ApplyResourceTypes(permission, resourceDependent);
 
             return permission;
@@ -293,11 +320,6 @@ namespace PnP.PowerShell.Commands.Utilities
             return guidance;
         }
 
-        private static IEnumerable<RequiredApiPermissionsBase> GetPermissionAttributes<T>(Type cmdletType) where T : RequiredApiPermissionsBase
-        {
-            return Attribute.GetCustomAttributes(cmdletType, typeof(T)).Cast<RequiredApiPermissionsBase>();
-        }
-
         private static CommandPermissionSet[] ToPermissionSets(IEnumerable<RequiredApiPermissionsBase> attributes)
         {
             return attributes
@@ -314,12 +336,13 @@ namespace PnP.PowerShell.Commands.Utilities
         /// </summary>
         private static void ApplyInferredPermissions(Type cmdletType, CmdletAttribute cmdletAttribute, CommandPermission permission)
         {
-            // Cmdlets which do not connect to an API at all, i.e. Get-PnPChangeLog or Connect-PnPOnline
+            // Cmdlets which do not use the PnP connection, i.e. Get-PnPChangeLog or Connect-PnPOnline. Note that a cmdlet in this category can still call an API using
+            // a token it acquires itself, such as Register-PnPEntraIDApp, which is why the guidance is scoped to the application registration PnP PowerShell connects with.
             if (!typeof(PnPConnectedCmdlet).IsAssignableFrom(cmdletType))
             {
                 permission.PermissionSource = CommandPermissionSource.NotApplicable;
                 permission.MinimumSharePointRole = SharePointMinimumRole.NotApplicable;
-                permission.Guidance = "This cmdlet does not call into an API which requires permissions to be granted.";
+                permission.Guidance = GuidanceNotApplicable;
                 return;
             }
 
@@ -374,7 +397,13 @@ namespace PnP.PowerShell.Commands.Utilities
                 return SharePointMinimumRole.SiteVisitor;
             }
 
-            return IsElevatedNoun(cmdletAttribute.NounName) ? SharePointMinimumRole.SiteOwner : SharePointMinimumRole.SiteMember;
+            if (IsElevatedNoun(cmdletAttribute.NounName))
+            {
+                return SharePointMinimumRole.SiteOwner;
+            }
+
+            // Changing the structure of a list needs the Manage Lists right, which Contribute does not grant
+            return IsListManagementNoun(cmdletAttribute.NounName) ? SharePointMinimumRole.SiteEditor : SharePointMinimumRole.SiteMember;
         }
 
         /// <summary>
@@ -383,7 +412,7 @@ namespace PnP.PowerShell.Commands.Utilities
         private static (string Delegated, string Application) GetSharePointScopes(SharePointMinimumRole role) => role switch
         {
             SharePointMinimumRole.SiteVisitor => ("AllSites.Read", "Sites.Read.All"),
-            SharePointMinimumRole.SiteMember => ("AllSites.Write", "Sites.ReadWrite.All"),
+            SharePointMinimumRole.SiteMember or SharePointMinimumRole.SiteEditor => ("AllSites.Write", "Sites.ReadWrite.All"),
             _ => ("AllSites.FullControl", "Sites.FullControl.All")
         };
 
@@ -394,35 +423,51 @@ namespace PnP.PowerShell.Commands.Utilities
             return ElevatedNouns.Contains(noun) || ElevatedNounFragments.Any(fragment => noun.Contains(fragment, StringComparison.OrdinalIgnoreCase));
         }
 
+        private static bool IsListManagementNoun(string nounName)
+        {
+            var noun = nounName.StartsWith("PnP", StringComparison.OrdinalIgnoreCase) ? nounName[3..] : nounName;
+
+            return ListManagementNouns.Contains(noun);
+        }
+
         /// <summary>
         /// Adds the roles which need to be held next to the API permissions for specific groups of cmdlets
         /// </summary>
-        private static void ApplyAdditionalRoles(Type cmdletType, CommandPermission permission)
+        private static void ApplyAdditionalRoles(Type cmdletType, CmdletAttribute cmdletAttribute, CommandPermission permission)
         {
             var roles = new List<string>();
+            var isReadOperation = ReadVerbs.Contains(cmdletAttribute.VerbName);
+
+            // A tenant wide application permission such as Sites.ReadWrite.All already grants access to every site, so no role has to be assigned on the site itself.
+            // These roles apply to delegated access, where the signed in user is bound by their own rights, and to app only access using Sites.Selected.
+            const string appliesTo = "when connecting delegated, or app only using Sites.Selected";
 
             switch (permission.MinimumSharePointRole)
             {
                 case SharePointMinimumRole.SharePointAdministrator:
-                    roles.Add("SharePoint Administrator or Global Administrator");
+                    roles.Add("SharePoint Administrator or Global Administrator when connecting delegated");
                     break;
                 case SharePointMinimumRole.SiteCollectionAdministrator:
-                    roles.Add("Site collection administrator on the target site collection");
+                    roles.Add($"Site collection administrator on the target site collection {appliesTo}");
                     break;
                 case SharePointMinimumRole.SiteOwner:
-                    roles.Add("Full Control on the target site, i.e. through the Owners group");
+                    roles.Add($"Full Control on the target site, i.e. through the Owners group, {appliesTo}");
+                    break;
+                case SharePointMinimumRole.SiteEditor:
+                    roles.Add($"Edit on the target site, Contribute is not sufficient to manage lists, {appliesTo}");
                     break;
                 case SharePointMinimumRole.SiteMember:
-                    roles.Add("Contribute on the target site, i.e. through the Members group");
+                    roles.Add($"Contribute on the target site, i.e. through the Members group, {appliesTo}");
                     break;
                 case SharePointMinimumRole.SiteVisitor:
-                    roles.Add("Read on the target site, i.e. through the Visitors group");
+                    roles.Add($"Read on the target site, i.e. through the Visitors group, {appliesTo}");
                     break;
             }
 
-            if (cmdletType.Namespace?.Contains(".Taxonomy", StringComparison.OrdinalIgnoreCase) == true)
+            // Only modifying operations on the term store need a term store role, reading terms does not
+            if (cmdletType.Namespace?.Contains(".Taxonomy", StringComparison.OrdinalIgnoreCase) == true && !isReadOperation)
             {
-                roles.Add("Term Store Administrator, Group Manager or Contributor in the term store for write operations");
+                roles.Add("Term Store Administrator, Group Manager or Contributor in the term store");
 
                 if (permission.PermissionSource == CommandPermissionSource.Inferred)
                 {
