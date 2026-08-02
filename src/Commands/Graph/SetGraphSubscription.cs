@@ -1,4 +1,5 @@
 ﻿using PnP.Framework.Graph;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
@@ -8,6 +9,11 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPGraphSubscription")]
     [OutputType(typeof(Framework.Graph.Model.Subscription))]
+
+    // Deliberately not declaring RequiredApi*Permissions attributes: Microsoft Graph requires read permissions on the resource the subscription was created on, which differ per resource, so any fixed set declared here would be inaccurate.
+    [ApiPermissionsDependOnResource(
+        Remarks = "Microsoft Graph requires the same read permissions on the resource that were needed to create the subscription, i.e. Mail.Read to renew a subscription on messages.",
+        DocumentationUrl = "https://learn.microsoft.com/graph/api/subscription-update?view=graph-rest-1.0#permissions")]
     public class SetGraphSubscription : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

@@ -14,6 +14,13 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "PnPSite")]
     [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+
+    // Microsoft Graph is only called for -Type TeamSite, which creates the Microsoft 365 group behind the site. The application permission above is declared
+    // unconditionally so that path is validated, the delegated equivalent is surfaced informationally to avoid warning on the two site types that never call Graph.
+    [ApiPermissionsDependOnResource(
+        ParameterName = nameof(Type),
+        Remarks = "Microsoft Graph is only called for -Type TeamSite, to create the Microsoft 365 group behind the site. That needs Group.ReadWrite.All, as a delegated permission when connecting delegated or as the application permission declared on this cmdlet. A communication site and a team site without a Microsoft 365 group are created through SharePoint only and do not use the Microsoft Graph permission, even though it is listed above.",
+        DocumentationUrl = "https://pnp.github.io/powershell/cmdlets/New-PnPSite.html")]
     public class NewSite : PnPSharePointCmdlet, IDynamicParameters
     {
         private const string ParameterSet_COMMUNICATIONBUILTINDESIGN = "Communication Site with Built-In Site Design";

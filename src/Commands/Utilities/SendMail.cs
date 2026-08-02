@@ -12,6 +12,13 @@ namespace PnP.PowerShell.Commands.Utilities
     [Cmdlet(VerbsCommunications.Send, "PnPMail", DefaultParameterSetName = ParameterSet_SENDTHROUGHSPO)]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Mail.Send")]
     [RequiredApiDelegatedPermissions("graph/Mail.Send.Shared")]
+
+    // The mail is sent either through Microsoft Graph or through the SharePoint SendEmail API, depending on the parameter set used, so the SharePoint permission is
+    // an alternative to the Microsoft Graph permissions above rather than something needed next to them.
+    [Attributes.ApiPermissionsDependOnResource(
+        ApiIsAlternativeToSharePoint = true,
+        Remarks = "The mail is sent through Microsoft Graph when -From is provided, which needs the Microsoft Graph permission, or through the SharePoint SendEmail API otherwise, which needs the SharePoint permission instead. Note that the SharePoint SendEmail API has been retired, so sending through Microsoft Graph is the only option going forward.",
+        DocumentationUrl = "https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html")]
     public class SendMail : PnPWebCmdlet
     {
         private const string ParameterSet_SENDTHROUGHSPO = "Send through SharePoint Online";

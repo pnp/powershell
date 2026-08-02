@@ -4,6 +4,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPPowerShellTelemetry")]
+    [Attributes.ApiPermissionsNotRequired(Remarks = "This cmdlet updates a local file, an environment variable and the telemetry setting of the current connection, and performs no request.")]
     public class DisablePowerShellTelemetry : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false)]

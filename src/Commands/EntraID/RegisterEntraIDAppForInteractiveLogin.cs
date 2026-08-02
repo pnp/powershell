@@ -19,6 +19,7 @@ using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 namespace PnP.PowerShell.Commands.EntraID
 {
     [Cmdlet(VerbsLifecycle.Register, "PnPEntraIDAppForInteractiveLogin", DefaultParameterSetName = "Interactive")]
+    [Attributes.ApiPermissionsNotRequired(Remarks = "It authenticates separately instead of using the PnP connection. Creating the application registration requires that the tenant allows users to register applications, or that the account signing in holds a role that may create them, such as Application Developer, Application Administrator, Cloud Application Administrator or Global Administrator.")]
     public class RegisterEntraIDAppForInteractiveLogin : BasePSCmdlet, IDynamicParameters
     {
         /// <summary>
