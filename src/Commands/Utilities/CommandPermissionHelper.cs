@@ -169,32 +169,18 @@ namespace PnP.PowerShell.Commands.Utilities
                 .Where(attribute => attribute is RequiredApiApplicationPermissions or RequiredApiDelegatedOrApplicationPermissions)
                 .ToArray();
 
-            // Where a cmdlet declares permissions, the token types it declares them for are the ones it supports. Declaring a scope for one token type only, such as the
-            // delegated only ServiceMessageViewpoint.Write on Set-PnPMessageCenterAnnouncementAsArchived, means the other token type is not supported rather than that it
-            // needs no permissions. Where nothing is declared, only the explicit ApiNotAvailableUnder markers say anything about availability.
-            var hasDeclaredPermissions = permissionAttributes.Length > 0;
+            // Only the explicit markers prove that a cmdlet cannot be used with a token type. The absence of a declared scope for one of the two says nothing:
+            // New-PnPSite declares an application permission only, yet runs perfectly well delegated. Such a gap is reported as undetermined rather than unavailable.
+            var delegatedUnavailable = Attribute.IsDefined(cmdletType, typeof(ApiNotAvailableUnderDelegatedPermissions));
+            var applicationUnavailable = Attribute.IsDefined(cmdletType, typeof(ApiNotAvailableUnderApplicationPermissions));
 
             var permission = new CommandPermission
             {
                 CommandName = $"{cmdletAttribute.VerbName}-{cmdletAttribute.NounName}",
                 Aliases = GetAliases(cmdletType),
-                DelegatedAvailable = !Attribute.IsDefined(cmdletType, typeof(ApiNotAvailableUnderDelegatedPermissions)) && (!hasDeclaredPermissions || delegatedAttributes.Length > 0),
-                ApplicationAvailable = !Attribute.IsDefined(cmdletType, typeof(ApiNotAvailableUnderApplicationPermissions)) && (!hasDeclaredPermissions || applicationAttributes.Length > 0),
-                DelegatedPermissions = ToPermissionSets(delegatedAttributes),
-                ApplicationPermissions = ToPermissionSets(applicationAttributes)
+                DelegatedPermissions = delegatedUnavailable ? [] : ToPermissionSets(delegatedAttributes),
+                ApplicationPermissions = applicationUnavailable ? [] : ToPermissionSets(applicationAttributes)
             };
-
-            // A RequiredApiDelegatedOrApplicationPermissions attribute declares a scope for both token types, which contradicts an ApiNotAvailableUnder* attribute
-            // on the same cmdlet. The token type the cmdlet cannot be used with wins, so no permissions are reported for it.
-            if (permission.DelegatedAvailable == false)
-            {
-                permission.DelegatedPermissions = [];
-            }
-
-            if (permission.ApplicationAvailable == false)
-            {
-                permission.ApplicationPermissions = [];
-            }
 
             var resourceDependent = cmdletType.GetCustomAttribute<ApiPermissionsDependOnResource>(false);
             var permissionsNotRequired = cmdletType.GetCustomAttribute<ApiPermissionsNotRequired>(false);
@@ -205,13 +191,13 @@ namespace PnP.PowerShell.Commands.Utilities
                 permission.MinimumSharePointRole = SharePointMinimumRole.NotApplicable;
                 permission.Guidance = string.IsNullOrWhiteSpace(permissionsNotRequired.Remarks) ? GuidanceNotApplicable : $"{GuidanceNotApplicable} {permissionsNotRequired.Remarks}";
                 permission.ResourceTypes = [];
-                permission.DelegatedAvailable = null;
-                permission.ApplicationAvailable = null;
+
+                ApplyAvailability(permission, delegatedUnavailable, applicationUnavailable);
 
                 return permission;
             }
 
-            if (delegatedAttributes.Length > 0 || applicationAttributes.Length > 0)
+            if (permission.DelegatedPermissions.Length > 0 || permission.ApplicationPermissions.Length > 0)
             {
                 permission.PermissionSource = CommandPermissionSource.Declared;
 
@@ -219,31 +205,33 @@ namespace PnP.PowerShell.Commands.Utilities
                 // declares Sites.FullControl.All while its verb would suggest Contribute is enough
                 permission.MinimumSharePointRole = GetRoleFromDeclaredSharePointScopes(cmdletType, permission) ?? InferSharePointRole(cmdletType, cmdletAttribute);
 
-                AddSharePointRequirementToDeclaredPermissions(cmdletType, permission);
+                AddSharePointRequirementToDeclaredPermissions(cmdletType, permission, delegatedUnavailable, applicationUnavailable);
+            }
+            else
+            {
+                ApplyInferredPermissions(cmdletType, cmdletAttribute, permission, delegatedUnavailable, applicationUnavailable);
+            }
 
-                // A cmdlet can declare the permissions it always needs and additionally call another API depending on how it is invoked, i.e.
-                // Sync-PnPSharePointUserProfilesFromAzureActiveDirectory only calls Microsoft Graph when -Users is not provided. The declared permissions stay
-                // authoritative, the conditional requirement is described in the guidance so the reported set is not mistaken for the complete picture.
-                if (resourceDependent != null)
+            if (resourceDependent != null)
+            {
+                if (permission.PermissionSource == CommandPermissionSource.Unknown)
                 {
+                    // Nothing could be determined, so the resource the cmdlet is pointed at is the whole story, i.e. for New-PnPGraphSubscription
+                    permission.PermissionSource = CommandPermissionSource.ResourceDependent;
+                    permission.MinimumSharePointRole = SharePointMinimumRole.NotApplicable;
+                    permission.Guidance = BuildResourceDependentGuidance(resourceDependent);
+                }
+                else
+                {
+                    // The cmdlet has permissions of its own and calls another API depending on how it is invoked, i.e. Set-PnPSiteClassification only calls Microsoft
+                    // Graph for a site with a Microsoft 365 group behind it. What was determined stays, the conditional requirement is added to the guidance.
                     permission.Guidance = string.IsNullOrWhiteSpace(permission.Guidance)
                         ? BuildResourceDependentGuidance(resourceDependent, isAdditional: true)
                         : $"{permission.Guidance} {BuildResourceDependentGuidance(resourceDependent, isAdditional: true)}";
                 }
             }
-            else if (resourceDependent != null)
-            {
-                permission.PermissionSource = CommandPermissionSource.ResourceDependent;
-                permission.MinimumSharePointRole = SharePointMinimumRole.NotApplicable;
-                permission.Guidance = BuildResourceDependentGuidance(resourceDependent);
-                permission.DelegatedAvailable = null;
-                permission.ApplicationAvailable = null;
-            }
-            else
-            {
-                ApplyInferredPermissions(cmdletType, cmdletAttribute, permission);
-            }
 
+            ApplyAvailability(permission, delegatedUnavailable, applicationUnavailable);
             ApplyAdditionalRoles(cmdletType, cmdletAttribute, permission);
             ApplyResourceTypes(permission, resourceDependent);
 
@@ -251,11 +239,21 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
+        /// Determines whether the cmdlet can be used with each of the two token types. FALSE only where the cmdlet explicitly declares it cannot be used with it,
+        /// TRUE where permissions are reported for it, and NULL where there is nothing to base it on.
+        /// </summary>
+        private static void ApplyAvailability(CommandPermission permission, bool delegatedUnavailable, bool applicationUnavailable)
+        {
+            permission.DelegatedAvailable = delegatedUnavailable ? false : permission.DelegatedPermissions.Length > 0 ? true : null;
+            permission.ApplicationAvailable = applicationUnavailable ? false : permission.ApplicationPermissions.Length > 0 ? true : null;
+        }
+
+        /// <summary>
         /// Adds the SharePoint permission needed by a cmdlet which uses SharePoint CSOM but only declares permissions on another API, i.e. Set-PnPList which declares
         /// Microsoft Graph information protection permissions while also performing SharePoint CSOM operations. The SharePoint permission is required next to the
         /// declared permissions, so it is added to each of the declared alternatives to keep the AND within a set and the OR between the sets intact.
         /// </summary>
-        private static void AddSharePointRequirementToDeclaredPermissions(Type cmdletType, CommandPermission permission)
+        private static void AddSharePointRequirementToDeclaredPermissions(Type cmdletType, CommandPermission permission, bool delegatedUnavailable, bool applicationUnavailable)
         {
             if (!typeof(PnPSharePointCmdlet).IsAssignableFrom(cmdletType))
             {
@@ -272,12 +270,12 @@ namespace PnP.PowerShell.Commands.Utilities
 
             var (delegatedScope, applicationScope) = GetSharePointScopes(permission.MinimumSharePointRole);
 
-            if (permission.DelegatedAvailable == true)
+            if (!delegatedUnavailable)
             {
                 permission.DelegatedPermissions = AddScopeToEachSet(permission.DelegatedPermissions, delegatedScope);
             }
 
-            if (permission.ApplicationAvailable == true)
+            if (!applicationUnavailable)
             {
                 permission.ApplicationPermissions = AddScopeToEachSet(permission.ApplicationPermissions, applicationScope);
             }
@@ -362,7 +360,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Derives the API permissions for a cmdlet which does not declare them through its permission attributes
         /// </summary>
-        private static void ApplyInferredPermissions(Type cmdletType, CmdletAttribute cmdletAttribute, CommandPermission permission)
+        private static void ApplyInferredPermissions(Type cmdletType, CmdletAttribute cmdletAttribute, CommandPermission permission, bool delegatedUnavailable, bool applicationUnavailable)
         {
             // Cmdlets which do not use the PnP connection, i.e. Get-PnPChangeLog or Connect-PnPOnline. Note that a cmdlet in this category can still call an API using
             // a token it acquires itself, such as Register-PnPEntraIDApp, which is why the guidance is scoped to the application registration PnP PowerShell connects with.
@@ -371,8 +369,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 permission.PermissionSource = CommandPermissionSource.NotApplicable;
                 permission.MinimumSharePointRole = SharePointMinimumRole.NotApplicable;
                 permission.Guidance = GuidanceNotApplicable;
-                permission.DelegatedAvailable = null;
-                permission.ApplicationAvailable = null;
                 return;
             }
 
@@ -387,12 +383,12 @@ namespace PnP.PowerShell.Commands.Utilities
                 permission.Guidance = GuidanceInferred;
 
                 // Do not report permissions for a token type the cmdlet declares it cannot be used with
-                if (permission.DelegatedAvailable == true)
+                if (!delegatedUnavailable)
                 {
                     permission.DelegatedPermissions = [CreatePermissionSet(ResourceTypeName.SharePoint, delegatedScope)];
                 }
 
-                if (permission.ApplicationAvailable == true)
+                if (!applicationUnavailable)
                 {
                     // For an operation scoped to a single site, Sites.Selected combined with a grant on that site is less privileged than any of the tenant wide
                     // scopes, which is why the declared metadata lists it first as well, i.e. on Get-PnPList. It does not apply to cmdlets which run against the
@@ -409,8 +405,6 @@ namespace PnP.PowerShell.Commands.Utilities
             permission.PermissionSource = CommandPermissionSource.Unknown;
             permission.MinimumSharePointRole = SharePointMinimumRole.NotApplicable;
             permission.Guidance = "No permission metadata has been declared on this cmdlet and the permissions required could not be derived. Consult the documentation of this cmdlet for the permissions it needs.";
-            permission.DelegatedAvailable = null;
-            permission.ApplicationAvailable = null;
         }
 
         /// <summary>
@@ -475,6 +469,12 @@ namespace PnP.PowerShell.Commands.Utilities
                 return SharePointMinimumRole.SiteVisitor;
             }
 
+            // Changing who administers a site collection can only be done by a site collection administrator, Full Control through the Owners group is not enough
+            if (StripPnPPrefix(cmdletAttribute.NounName).Contains("SiteCollectionAdmin", StringComparison.OrdinalIgnoreCase))
+            {
+                return SharePointMinimumRole.SiteCollectionAdministrator;
+            }
+
             if (IsElevatedNoun(cmdletAttribute.NounName))
             {
                 return SharePointMinimumRole.SiteOwner;
@@ -494,19 +494,16 @@ namespace PnP.PowerShell.Commands.Utilities
             _ => ("AllSites.FullControl", "Sites.FullControl.All")
         };
 
+        private static string StripPnPPrefix(string nounName) => nounName.StartsWith("PnP", StringComparison.OrdinalIgnoreCase) ? nounName[3..] : nounName;
+
         private static bool IsElevatedNoun(string nounName)
         {
-            var noun = nounName.StartsWith("PnP", StringComparison.OrdinalIgnoreCase) ? nounName[3..] : nounName;
+            var noun = StripPnPPrefix(nounName);
 
             return ElevatedNouns.Contains(noun) || ElevatedNounFragments.Any(fragment => noun.Contains(fragment, StringComparison.OrdinalIgnoreCase));
         }
 
-        private static bool IsListManagementNoun(string nounName)
-        {
-            var noun = nounName.StartsWith("PnP", StringComparison.OrdinalIgnoreCase) ? nounName[3..] : nounName;
-
-            return ListManagementNouns.Contains(noun);
-        }
+        private static bool IsListManagementNoun(string nounName) => ListManagementNouns.Contains(StripPnPPrefix(nounName));
 
         /// <summary>
         /// Adds the roles which need to be held next to the API permissions for specific groups of cmdlets
