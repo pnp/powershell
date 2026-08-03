@@ -10,6 +10,11 @@ online version: https://pnp.github.io/powershell/cmdlets/Invoke-PnPGraphMethod.h
 # Invoke-PnPGraphMethod
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API : depends on the value passed to `-Url`. This cmdlet calls the Microsoft Graph endpoint provided, so it requires whichever permissions that endpoint requires. See [Microsoft Graph permissions reference](https://learn.microsoft.com/graph/permissions-reference).
+
 Invokes a REST request towards the Microsoft Graph API
 
 ## SYNTAX

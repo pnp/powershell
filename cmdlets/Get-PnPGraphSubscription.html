@@ -90,7 +90,8 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>Microsoft Graph API : Subscription.Read.All</li>
+<li>Microsoft Graph API : depends on the resource the subscription was created on. Reading a subscription back requires read permissions on that resource, i.e. <code>Mail.Read</code> for a subscription on messages or <code>Sites.ReadWrite.All</code> for one on a SharePoint list. Note that the permission is not always the same as the one needed to create the subscription, so use the table in <a href="https://learn.microsoft.com/graph/api/subscription-list?view=graph-rest-1.0#permissions">List subscriptions</a> rather than the one for creating.</li>
+<li>Microsoft Graph API : <code>Subscription.Read.All</code> (delegated) is only required to also return subscriptions that were created by <em>other</em> applications. It is not needed to return the subscriptions created by this application.</li>
 </ul>
 <p>Gets subscriptions from Microsoft Graph.</p>
 <h2 id="syntax">SYNTAX</h2>

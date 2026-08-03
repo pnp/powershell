@@ -93,6 +93,124 @@
 </div>
 <h2 id="creating-an-entra-id-application-registration">Creating an Entra ID Application Registration</h2>
 <p>In case you're starting from the beginning and you do not have your own Entra ID Application Registration yet to use with PnP Powershell, which is mandatory, you can <a href="registerapplication.html">follow these steps</a> to create your Entra ID Application Registration.</p>
+<h2 id="asking-pnp-powershell-which-permissions-a-cmdlet-needs">Asking PnP PowerShell which permissions a cmdlet needs</h2>
+<p>Before working out permissions by trial and error, ask the module directly. <a href="../cmdlets/Get-PnPCommandPermission.html">Get-PnPCommandPermission</a> returns the permissions a cmdlet needs. It reads the metadata that ships inside the module, so it works offline and does <strong>not</strong> require you to be connected to a tenant:</p>
+<pre><code class="lang-powershell">Get-PnPCommandPermission -CommandName Get-PnPTeamsTeam
+</code></pre>
+<pre><code>CommandName            : Get-PnPTeamsTeam
+PermissionSource       : Declared
+DelegatedPermissions   : Graph: Group.Read.All OR Graph: Group.ReadWrite.All
+ApplicationPermissions : Graph: Group.Read.All OR Graph: Group.ReadWrite.All
+ResourceTypes          : Graph
+DelegatedAvailable     : True
+ApplicationAvailable   : True
+MinimumSharePointRole  : NotApplicable
+</code></pre>
+<p>Read the result as follows:</p>
+<ul>
+<li>Permissions <strong>within one set</strong> are all required together, they are combined with <code>AND</code>. Multiple sets are <strong>alternatives</strong>, combined with <code>OR</code>. In the example above, granting only <code>Group.Read.All</code> is enough.</li>
+<li>The alternatives are listed in the order they are declared on the cmdlet, which by convention starts with the least privileged one. Treat that as a strong hint rather than a guarantee and check the scopes before granting them.</li>
+<li><code>MinimumSharePointRole</code> follows the <a href="https://learn.microsoft.com/sharepoint/sites/user-permissions-and-permission-levels">SharePoint permission levels</a> and tells you which rights are needed on the SharePoint site itself, on top of the API permission. Note that some operations need a higher level than their verb suggests: reading permissions needs the Enumerate Permissions right, which only Full Control holds, and customizing pages or applying a theme needs Design rather than Edit. This applies when <strong>connecting delegated</strong>, where the signed in user is bound by their own rights, and when connecting <strong>app only using <code>Sites.Selected</code></strong>, where the application has to be granted access per site. A tenant wide application permission such as <code>Sites.ReadWrite.All</code> already covers every site, so in that case nothing has to be assigned on the site.</li>
+<li><code>DelegatedAvailable</code> and <code>ApplicationAvailable</code> tell you whether the cmdlet can be used at all in that scenario. A cmdlet with <code>ApplicationAvailable : False</code> cannot be run app only, no matter which permissions you grant. They are empty when there are no permissions to base that on, i.e. for a <code>ResourceDependent</code> or <code>NotApplicable</code> result.</li>
+</ul>
+<h3 id="how-reliable-is-the-answer">How reliable is the answer</h3>
+<p>Always check <code>PermissionSource</code>, it states how authoritative the answer is:</p>
+<table>
+<thead>
+<tr>
+<th>PermissionSource</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Declared</code></td>
+<td>The permissions are declared on the cmdlet itself. These are accurate.</td>
+</tr>
+<tr>
+<td><code>DeclaredAndInferred</code></td>
+<td>Part declared, part derived. The declared part is accurate, the SharePoint part is an estimate. Either the cmdlet uses SharePoint <strong>next to</strong> the declared API, in which case the SharePoint permission is needed on top, or it uses SharePoint <strong>instead of</strong> it depending on how you call it, in which case it is an alternative. Read <code>Guidance</code> before granting anything.</td>
+</tr>
+<tr>
+<td><code>Inferred</code></td>
+<td>Derived from what the cmdlet does. A least privilege estimate that may need to be raised, and it covers the SharePoint API only.</td>
+</tr>
+<tr>
+<td><code>ResourceDependent</code></td>
+<td>The permission follows from what you point the cmdlet at, i.e. <code>New-PnPGraphSubscription</code> needs read permissions on the resource you subscribe to. The <code>Guidance</code> property links to the relevant documentation.</td>
+</tr>
+<tr>
+<td><code>NotApplicable</code></td>
+<td>The cmdlet needs no permissions on the application registration you connect with. That covers cmdlets which perform no request at all, i.e. <code>Get-PnPContext</code>, cmdlets which call an API that needs no permissions, i.e. <code>Get-PnPChangeLog</code> which reads the release notes from GitHub, and cmdlets which authenticate separately and can still require rights of their own such as a directory role, i.e. <code>Register-PnPEntraIDApp</code>. Read <code>Guidance</code> to see which applies.</td>
+</tr>
+<tr>
+<td><code>Unknown</code></td>
+<td>The permissions could not be determined. Fall back to the approach described further down this article.</td>
+</tr>
+</tbody>
+</table>
+<p>Anything other than <code>Declared</code> is guidance rather than a guarantee, so verify it against your own scenario.</p>
+<h3 id="testing-the-permissions-of-your-current-connection">Testing the permissions of your current connection</h3>
+<p>After connecting, use <a href="../cmdlets/Test-PnPConnectionPermission.html">Test-PnPConnectionPermission</a> to compare the <code>scp</code> or <code>roles</code> claims in the current connection's access tokens with the permissions reported for a cmdlet:</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com/sites/project -Interactive -ClientId $clientId
+Test-PnPConnectionPermission -CommandName Set-PnPList
+</code></pre>
+<p>The cmdlet returns <code>$true</code> when the connection holds one complete permission set and <code>$false</code> when a required permission is missing, naming the missing <code>AND</code> and <code>OR</code> alternatives on the error stream. A more privileged scope satisfies a lesser one, so a connection holding <code>AllSites.FullControl</code> passes a check for <code>AllSites.Read</code>.</p>
+<p>Because the error is non-terminating, the same cmdlet serves both a conditional and a preflight style:</p>
+<pre><code class="lang-powershell"># Branch on the result
+if (Test-PnPConnectionPermission -CommandName Set-PnPList -ErrorAction SilentlyContinue) { ... }
+
+# Or fail the script before anything is changed
+Test-PnPConnectionPermission -CommandName Set-PnPList -ErrorAction Stop
+</code></pre>
+<p>The test covers API permission claims only. It cannot verify the signed-in user's SharePoint permission level, a <code>Sites.Selected</code> grant on the target site, directory roles or the other requirements listed in <code>MinimumSharePointRole</code> and <code>AdditionalRoles</code>. Where <code>Get-PnPCommandPermission</code> reports unknown, conditional or resource-dependent permissions, or where no token could be acquired for a resource, the cmdlet returns nothing and reports the requirement as indeterminate rather than claiming a permission is missing. <code>Inferred</code> permissions remain estimates even when the current token contains them. Read the error and the <code>Guidance</code> from <code>Get-PnPCommandPermission</code> for those cases.</p>
+<h3 id="working-out-the-permissions-for-an-entire-script">Working out the permissions for an entire script</h3>
+<p>The most useful application is composing the permission set for a script before you run it. Extract the PnP cmdlets it uses and ask for their permissions in one go:</p>
+<pre><code class="lang-powershell"># Matched case insensitively, as PowerShell command names are. Get-PnPCommandPermission resolves
+# any casing, and any alias, back to the canonical cmdlet name.
+$cmdlets = [regex]::Matches((Get-Content ./myscript.ps1 -Raw), '\b[a-z]+-pnp[a-z0-9]+\b', 'IgnoreCase') |
+    ForEach-Object { $_.Value } | Sort-Object -Unique
+
+$cmdlets | Get-PnPCommandPermission |
+    Format-Table CommandName, PermissionSource,
+        @{ n = 'Application'; e = { ($_.ApplicationPermissions | ForEach-Object { $_.ToString() }) -join ' OR ' } }
+</code></pre>
+<pre><code>CommandName       PermissionSource Application
+-----------       ---------------- -----------
+Add-PnPListItem           Inferred SharePoint: Sites.ReadWrite.All
+Connect-PnPOnline    NotApplicable
+Get-PnPList               Declared SharePoint: Sites.Selected OR SharePoint: Sites.Read.All OR …
+Get-PnPTeamsTeam          Declared Graph: Group.Read.All OR Graph: Group.ReadWrite.All
+Set-PnPWeb                Inferred SharePoint: Sites.FullControl.All
+</code></pre>
+<p>To get a starting list to grant, take the <strong>first alternative</strong> of each cmdlet, which by convention is the least privileged one, and group it per API. Always review the result before granting it, as that convention is not enforced:</p>
+<pre><code class="lang-powershell">$cmdlets | Get-PnPCommandPermission |
+    Where-Object { $_.ApplicationPermissions.Count -gt 0 } |
+    ForEach-Object { $_.ApplicationPermissions[0].Permissions } |
+    Group-Object ResourceType |
+    ForEach-Object { &quot;{0}: {1}&quot; -f $_.Name, (($_.Group.Scope | Sort-Object -Unique) -join ', ') }
+</code></pre>
+<pre><code>Graph: Group.Read.All
+SharePoint: Sites.FullControl.All, Sites.ReadWrite.All, Sites.Selected
+</code></pre>
+<p>Where several SharePoint scopes appear, the most privileged one covers the others, so in this example <code>Sites.FullControl.All</code> is what the script ends up needing. That immediately shows you which single cmdlet is driving the permission up, in this case <code>Set-PnPWeb</code>. If you can avoid that cmdlet, the whole script drops to <code>Sites.ReadWrite.All</code>.</p>
+<p>Use <code>-Source</code> to review only the answers that are estimates and therefore worth verifying:</p>
+<pre><code class="lang-powershell">$cmdlets | Get-PnPCommandPermission | Where-Object PermissionSource -ne 'Declared'
+</code></pre>
+<h3 id="other-useful-queries">Other useful queries</h3>
+<pre><code class="lang-powershell"># Every cmdlet that touches Microsoft Graph, with authoritative metadata only
+Get-PnPCommandPermission -ResourceTypeName Graph -Source Declared
+
+# Every Teams related cmdlet
+Get-PnPCommandPermission -CommandName *Teams*
+
+# Which cmdlets require SharePoint administrator rights
+Get-PnPCommandPermission | Where-Object MinimumSharePointRole -eq 'SharePointAdministrator'
+
+# Which cmdlets cannot be used app only
+Get-PnPCommandPermission | Where-Object ApplicationAvailable -eq $false
+</code></pre>
+<p>The rest of this article describes how to apply these permissions to your application registration, starting from the smallest possible set.</p>
 <h2 id="starting-with-minimal-permissions">Starting with minimal permissions</h2>
 <p>It is highly recommended to keep the permissions on your Entra ID Application Registration to a minimum to avoid risks when access through your application registration would somehow fall in the wrong hands. As PnP PowerShell always starts with connecting to SharePoint Online, you will at least need permissions to access SharePoint Online, regardless of whatever else you plan on doing with PnP PowerShell.</p>
 <h3 id="when-using-a-delegate-login">When using a delegate login</h3>
@@ -117,11 +235,13 @@
 <p><img src="../images/determinepermissions/entraid_permissions_delegate_enterprisepermissionadded.png" alt="image"></p>
 <h3 id="when-using-an-app-only-context-1">When using an app only context</h3>
 <p>For an app only scenario, you will have to follow a different approach, as there is no way for it to interactively request for more permissions. If you try to execute a cmdlet for which the Entra ID application registration does not have permissions, it will return you an access denied notice.</p>
-<p>What you could try if you run into this, is to add <code>-Verbose</code> to your cmdlet. For many, but unfortunately not all, cmdlets, this will reveal which permissions it receives through the application registration and which permissions it actually needs to be able to execute properly. See the following example:</p>
+<p>The quickest way to find out what to add is to run <a href="../cmdlets/Get-PnPCommandPermission.html">Get-PnPCommandPermission</a> against the cmdlet that failed, as described <a href="#asking-pnp-powershell-which-permissions-a-cmdlet-needs">earlier in this article</a>. It requires no connection, so you can run it before ever hitting the access denied.</p>
+<p>Alternatively you can add <code>-Verbose</code> to your cmdlet. For many, but unfortunately not all, cmdlets, this will reveal which permissions it receives through the application registration and which permissions it actually needs to be able to execute properly. See the following example:</p>
 <p><img src="../images/determinepermissions/entraid_permissions_accessdenied_verbose.png" alt="image"></p>
 <p>In this scenario, you now know you need to add <code>Application.Read.All</code> on the applications scope of Microsoft Graph in your application registration in order to give it sufficient rights to execute this cmdlet.</p>
 <h2 id="help-i-cant-figure-out-which-permissions-i-need">Help, I can't figure out which permissions I need</h2>
-<p>As mentioned above, unfortunately, not for all cmdlets it will be clear which exact (minimum) permissions will be needed. Not even when using <code>-Verbose</code>. To give some guidance which permissions you could try for a minimum permissions approach, follow the table below.</p>
+<p>First run <a href="../cmdlets/Get-PnPCommandPermission.html">Get-PnPCommandPermission</a> against the cmdlet, as described <a href="#asking-pnp-powershell-which-permissions-a-cmdlet-needs">earlier in this article</a>. It has an answer for nearly every cmdlet in the module.</p>
+<p>If it returns a <code>PermissionSource</code> of <code>Unknown</code>, or an <code>Inferred</code> answer that turns out not to be sufficient, use the table below for guidance on a minimum permissions approach.</p>
 <table>
 <thead>
 <tr>
@@ -144,7 +264,7 @@
 <tr>
 <td>Interact with Microsoft Graph</td>
 <td>Delegate \ App Only</td>
-<td>Use <code>-Verbose</code> or look at <a href="../cmdlets/index.html">the documentation</a> to find the permissions needed</td>
+<td>Use <code>Get-PnPCommandPermission -CommandName &lt;cmdlet&gt;</code>, <code>-Verbose</code>, or look at <a href="../cmdlets/index.html">the documentation</a> to find the permissions needed</td>
 </tr>
 <tr>
 <td>Interact with Power Platform</td>

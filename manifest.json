@@ -2317,6 +2317,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPCommandPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPCommandPermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPCompatibleHubContentTypes.md",
       "output": {
         ".html": {
@@ -9101,6 +9111,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Sync-PnPSharePointUserProfilesFromAzureActiveDirectory.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Test-PnPConnectionPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Test-PnPConnectionPermission.html"
         }
       },
       "version": ""

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Test-PnPConnectionPermission | PnP PowerShell </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Test-PnPConnectionPermission | PnP PowerShell ">
+      <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+      
+      <link rel="icon" href="../images/favicon-pnp.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pnp/powershell/blob/dev/documentation/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="PnP PowerShell">
+            PnP PowerShell
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="test-pnpconnectionpermission">Test-PnPConnectionPermission</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Tests whether the current connection has the API permissions required by a PnP PowerShell cmdlet.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Test-PnPConnectionPermission [-CommandName] &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [-Verbose]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Acquires the access tokens needed by the specified cmdlet and compares their <code>scp</code> or <code>roles</code> claims with the cmdlet's permission metadata as reported by <a href="Get-PnPCommandPermission.html">Get-PnPCommandPermission</a>. Returns <code>$true</code> when the connection holds one complete permission set and <code>$false</code> when it does not.</p>
+<p>A required permission is satisfied by the very same scope, but also by any scope which is more privileged. <code>Sites.FullControl.All</code> therefore satisfies a required <code>Sites.Read.All</code>, and the delegated notation and the application notation of the same SharePoint level are treated as equivalent, so <code>AllSites.FullControl</code> satisfies a required <code>Sites.ReadWrite.All</code>. This matters because the permission metadata reports the least privileged scope which suffices rather than the exact scope to hold. <code>Sites.Selected</code> is deliberately excluded from this: it grants access only to the sites the application has explicitly been granted access to, so it neither covers nor is covered by the tenant wide scopes.</p>
+<p>When permissions are missing the cmdlet returns <code>$false</code> and writes a non-terminating <code>RequiredPermissionMissing</code> error which names each missing permission and preserves the <code>AND</code> and <code>OR</code> relationship between permission sets. Because the error is non-terminating, the cmdlet fits all three common usages:</p>
+<table>
+<thead>
+<tr>
+<th>Usage</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>if (Test-PnPConnectionPermission ...)</code></td>
+<td>Branch on the result, with the missing permissions reported on the error stream</td>
+</tr>
+<tr>
+<td><code>-ErrorAction SilentlyContinue</code></td>
+<td>Return the boolean without writing the error</td>
+</tr>
+<tr>
+<td><code>-ErrorAction Stop</code></td>
+<td>Terminate the script, for use as a preflight check in unattended runs</td>
+</tr>
+</tbody>
+</table>
+<p>Where the requirement cannot be established, the cmdlet writes a non-terminating <code>PermissionRequirementsIndeterminate</code> error and returns nothing at all rather than <code>$false</code>. Reporting <code>$false</code> would state that the connection does not hold the permissions, while in these cases the check could not be performed. This covers cmdlets whose permissions depend on the resource they are pointed at or on how they are invoked, cmdlets for which no permissions are declared for the token type in use, and resources for which no access token could be acquired.</p>
+<p>The check validates API permissions only. SharePoint permission levels, <code>Sites.Selected</code> site grants and the additional roles reported by <code>Get-PnPCommandPermission</code> cannot be inferred from an access token and are not tested. A <code>$true</code> result therefore confirms the token claims, not every authorization requirement of the target resource.</p>
+<p>Validation is supported for Microsoft Graph, SharePoint Online, Azure Resource Manager, Power Apps and Graph Connector Service access tokens. The Dynamics CRM audience used by <code>Get-PnPPowerPlatformSolution</code> depends on the selected environment and cannot be determined from a cmdlet name, so that permission set is reported as indeterminate. Connections made with an ACS app only token are also reported as indeterminate, as such a token cannot be exchanged for a token carrying permission scopes.</p>
+<p>A connection made with <code>Connect-PnPOnline -AccessToken</code> holds one fixed token and returns it whatever resource is asked for. The audience of every token is therefore verified before its scopes are used, and a token issued for another API is reported as indeterminate rather than compared against the requirement. In practice this means such a connection can only be tested for cmdlets which use the API the token was issued for.</p>
+<p>Testing a SharePoint permission requires a connection created with a SharePoint site URL, because that URL determines the access token audience.</p>
+<p>Permissions with a source of <code>Inferred</code> or <code>DeclaredAndInferred</code> remain estimates. This cmdlet tests the estimate returned by <code>Get-PnPCommandPermission</code>; it cannot make inferred metadata authoritative.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Test-PnPConnectionPermission -CommandName Get-PnPTeamsTeam
+</code></pre>
+<p>Returns <code>$true</code> if the current connection contains one complete delegated or application permission set required by <code>Get-PnPTeamsTeam</code>. Otherwise, it returns <code>$false</code> and reports the missing permissions.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">if (-not (Test-PnPConnectionPermission -CommandName Set-PnPList -ErrorAction SilentlyContinue)) {
+    Write-Host &quot;Skipping the list configuration step, the connection is not permitted to change lists.&quot;
+}
+</code></pre>
+<p>Branches on the result without writing the missing permissions to the error stream.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">'Get-PnPTeamsTeam', 'Set-PnPList', 'Get-PnPList' | Test-PnPConnectionPermission
+</code></pre>
+<p>Tests a sequence of cmdlets and returns one boolean per cmdlet. Access tokens are acquired once and reused across all of them. Processing continues after a cmdlet for which a permission is missing.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">$connection = Connect-PnPOnline -Url https://contoso.sharepoint.com/sites/project -Interactive -ReturnConnection
+Test-PnPConnectionPermission -CommandName Set-PnPList -Connection $connection -ErrorAction Stop
+</code></pre>
+<p>Tests the supplied connection and terminates the script when a required permission is missing, for use as a preflight check in an unattended run.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-commandname">-CommandName</h3>
+<p>The name or alias of the PnP PowerShell cmdlet whose required permissions should be tested. Tab completion is available for PnP cmdlet names.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases: Identity, Name
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be tested. Retrieve a connection by specifying <code>-ReturnConnection</code> on <code>Connect-PnPOnline</code> or by executing <code>Get-PnPConnection</code>.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Aliases: None
+
+Required: False
+Position: Named
+Default value: Current connection
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="outputs">OUTPUTS</h2>
+<h3 id="systemboolean">System.Boolean</h3>
+<p><code>$true</code> when one complete required permission set is present, <code>$false</code> when a required permission is missing. Nothing is returned where the requirement could not be established; use <code>-Verbose</code> to see the scopes read from each access token.</p>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://pnp.github.io/powershell/cmdlets/Get-PnPCommandPermission.html">Get-PnPCommandPermission</a></p>
+<p><a href="https://pnp.github.io/powershell/articles/determinepermissions.html">How to determine which permissions you need</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

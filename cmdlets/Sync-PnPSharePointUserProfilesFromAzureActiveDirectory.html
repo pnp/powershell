@@ -91,7 +91,7 @@
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>SharePoint: Sites.FullControl.All, TermStore.ReadWrite.All, User.ReadWrite.All</li>
-<li>Microsoft Graph: User.Read</li>
+<li>Microsoft Graph: User.Read.All, only needed when <code>-Users</code> is not provided. Without <code>-Users</code> this cmdlet lists all users from Entra ID, which <code>User.Read</code> does not allow as that only grants access to the profile of the signed in user. When the users to synchronize are passed in through <code>-Users</code>, Microsoft Graph is not called at all.</li>
 <li>ACS: No longer needed</li>
 </ul>
 <p>Synchronizes user profiles from Entra ID into the SharePoint Online User Profiles</p>

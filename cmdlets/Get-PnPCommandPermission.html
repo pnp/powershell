@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Get-PnPCommandPermission | PnP PowerShell </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Get-PnPCommandPermission | PnP PowerShell ">
+      <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+      
+      <link rel="icon" href="../images/favicon-pnp.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pnp/powershell/blob/dev/documentation/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="PnP PowerShell">
+            PnP PowerShell
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="get-pnpcommandpermission">Get-PnPCommandPermission</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Returns the API permissions and roles required to run a PnP PowerShell cmdlet.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Get-PnPCommandPermission [[-CommandName] &lt;String&gt;] [-ResourceTypeName &lt;ResourceTypeName&gt;]
+ [-Source &lt;CommandPermissionSource&gt;] [-Verbose]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Returns the delegated and application API permission sets required to run a PnP PowerShell cmdlet, together with the minimum SharePoint rights the calling user needs to hold. Permissions within one set are all required, while multiple sets are alternatives to each other. The alternatives are listed in the order they are declared on the cmdlet, which by convention starts with the least privileged one.</p>
+<p>Use this cmdlet to determine up front which permissions to grant to an Entra ID app registration, rather than discovering it from a failed call.</p>
+<p>The <code>PermissionSource</code> property states how reliable the returned information is:</p>
+<table>
+<thead>
+<tr>
+<th>PermissionSource</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Declared</code></td>
+<td>The permissions are declared on the cmdlet through its permission attributes and are authoritative. Check <code>Guidance</code>, as a cmdlet can additionally require permissions that depend on how it is invoked.</td>
+</tr>
+<tr>
+<td><code>DeclaredAndInferred</code></td>
+<td>Part declared, part derived, in one of two ways. Either the cmdlet uses SharePoint CSOM <strong>next to</strong> the API it declares permissions for, i.e. <code>Set-PnPList</code>, in which case the derived SharePoint permission is added to each declared alternative and is required on top of them. Or the cmdlet reaches its goal <strong>either</strong> through the declared API <strong>or</strong> through SharePoint, i.e. <code>Send-PnPMail</code>, in which case the derived SharePoint permission is listed as a separate alternative. Read <code>Guidance</code> to see which of the two applies before granting anything.</td>
+</tr>
+<tr>
+<td><code>Inferred</code></td>
+<td>The permissions have been derived from the type of cmdlet and the operation it performs. They are a least privilege estimate and may need to be raised for specific operations.</td>
+</tr>
+<tr>
+<td><code>ResourceDependent</code></td>
+<td>The permissions follow from the resource the cmdlet is pointed at at runtime and cannot be stated up front, i.e. <code>New-PnPGraphSubscription</code> or <code>Invoke-PnPGraphMethod</code>. The <code>Guidance</code> property names the parameter involved and links to the relevant documentation.</td>
+</tr>
+<tr>
+<td><code>NotApplicable</code></td>
+<td>The cmdlet requires no permissions on the Entra ID application registration used to connect with PnP PowerShell. That covers cmdlets which perform no request at all, i.e. <code>Get-PnPContext</code>, cmdlets which call an API that needs no permissions, i.e. <code>Get-PnPChangeLog</code> which reads the release notes from GitHub, and cmdlets which authenticate separately and can still require rights of their own, i.e. <code>Register-PnPEntraIDApp</code>. <code>Guidance</code> states which applies.</td>
+</tr>
+<tr>
+<td><code>Unknown</code></td>
+<td>No permissions are declared on the cmdlet and they could not be derived. Consult the documentation of that cmdlet.</td>
+</tr>
+</tbody>
+</table>
+<p>Omitting <code>-CommandName</code> returns the permission information of every cmdlet in the module, which allows the full permission surface to be audited.</p>
+<p>This cmdlet does not require a connection.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Get-PnPCommandPermission -CommandName Get-PnPTeamsTeam
+</code></pre>
+<p>Returns the permissions declared for <code>Get-PnPTeamsTeam</code>.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPCommandPermission -CommandName *TeamsChannel*
+</code></pre>
+<p>Returns the permissions of every cmdlet whose name matches the wildcard pattern.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPCommandPermission | Group-Object PermissionSource
+</code></pre>
+<p>Returns how many cmdlets declare their permissions and how many have them inferred.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPCommandPermission -ResourceTypeName Graph -Source Declared | Select-Object CommandName, ApplicationPermissions
+</code></pre>
+<p>Returns every cmdlet with authoritative Microsoft Graph permission metadata, which can be used to compose the permission set of an app registration.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Get-PnPCommandPermission -CommandName Set-PnPWeb | Select-Object -ExpandProperty MinimumSharePointRole
+</code></pre>
+<p>Returns the minimum SharePoint role required to run <code>Set-PnPWeb</code>.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-commandname">-CommandName</h3>
+<p>The name of the PnP PowerShell cmdlet for which the permission information should be returned. Accepts an alias of a cmdlet as well as wildcards. If omitted, the permission information of all cmdlets is returned. Tab completion is available for PnP cmdlet names.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases: Identity, Name
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: True
+</code></pre>
+<h3 id="-resourcetypename">-ResourceTypeName</h3>
+<p>Only return cmdlets which require a permission on the specified resource, i.e. <code>Graph</code> or <code>SharePoint</code>.</p>
+<pre><code class="lang-yaml">Type: ResourceTypeName
+Parameter Sets: (All)
+Accepted values: Unknown, Graph, SharePoint, AzureManagementApi, ExchangeOnline, PowerAutomate, PowerApps, DynamicsCRM, Gcs
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-source">-Source</h3>
+<p>Only return cmdlets whose permission information originates from the specified source.</p>
+<pre><code class="lang-yaml">Type: CommandPermissionSource
+Parameter Sets: (All)
+Accepted values: Unknown, Declared, Inferred, NotApplicable, ResourceDependent, DeclaredAndInferred
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="outputs">OUTPUTS</h2>
+<h3 id="pnppowershellcommandsmodelcommandpermission">PnP.PowerShell.Commands.Model.CommandPermission</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CommandName</code></td>
+<td>Name of the cmdlet.</td>
+</tr>
+<tr>
+<td><code>Aliases</code></td>
+<td>Aliases under which the cmdlet can also be called.</td>
+</tr>
+<tr>
+<td><code>DelegatedPermissions</code></td>
+<td>Delegated permission sets. Permissions within a set are all required, sets are alternatives.</td>
+</tr>
+<tr>
+<td><code>ApplicationPermissions</code></td>
+<td>Application permission sets. Permissions within a set are all required, sets are alternatives.</td>
+</tr>
+<tr>
+<td><code>ResourceTypes</code></td>
+<td>The APIs this cmdlet requires permissions on. Also populated when the exact scopes depend on the resource, which is what <code>-ResourceTypeName</code> filters on.</td>
+</tr>
+<tr>
+<td><code>DelegatedAvailable</code></td>
+<td>Indicates if the cmdlet can run using a delegated access token.</td>
+</tr>
+<tr>
+<td><code>ApplicationAvailable</code></td>
+<td>Indicates if the cmdlet can run using an application access token.</td>
+</tr>
+<tr>
+<td><code>PermissionSource</code></td>
+<td>Where the permission information originates from.</td>
+</tr>
+<tr>
+<td><code>MinimumSharePointRole</code></td>
+<td>Minimum rights needed on the SharePoint site the cmdlet acts on. Applies when connecting delegated, and when connecting app only using <code>Sites.Selected</code>. A tenant wide application permission such as <code>Sites.ReadWrite.All</code> already covers every site. The values follow the <a href="https://learn.microsoft.com/sharepoint/sites/user-permissions-and-permission-levels">SharePoint permission levels</a>: <code>SiteVisitor</code> (Read), <code>SiteMember</code> (Contribute), <code>SiteEditor</code> (Edit, holds Manage Lists), <code>SiteDesigner</code> (Design, holds Add and Customize Pages and Apply Themes), <code>SiteOwner</code> (Full Control, holds Manage Permissions, Enumerate Permissions, Manage Web Site and Manage Alerts), <code>SiteCollectionAdministrator</code> and <code>SharePointAdministrator</code>. <code>NotApplicable</code> is also returned for operations not governed by a site permission level at all, such as term store operations.</td>
+</tr>
+<tr>
+<td><code>AdditionalRoles</code></td>
+<td>Roles which need to be held next to the API permissions. Each entry states in which connection scenario it applies.</td>
+</tr>
+<tr>
+<td><code>Guidance</code></td>
+<td>Remarks on how to interpret the returned permissions.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://pnp.github.io/powershell/articles/determinepermissions.html">How to determine which permissions you need</a></p>
+<p><a href="https://pnp.github.io/powershell/articles/permissionattributes.html">Working with permission attributes</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
