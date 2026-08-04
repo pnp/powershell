@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Grant-PnPTenantServicePrincipalPermission
-schema: 2.0.0
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+title: Grant-PnPTenantServicePrincipalPermission
 online version: https://pnp.github.io/powershell/cmdlets/Grant-PnPTenantServicePrincipalPermission.html
+applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
+schema: 2.0.0
+Module Name: PnP.PowerShell
 ---
- 
+  
 # Grant-PnPTenantServicePrincipalPermission
 
 ## SYNOPSIS
@@ -85,4 +86,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 
