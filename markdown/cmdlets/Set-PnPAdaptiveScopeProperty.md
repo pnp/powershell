@@ -1,13 +1,12 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
-title: Set-PnPAdaptiveScopeProperty
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPAdaptiveScopeProperty.html
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-schema: 2.0.0
 Module Name: PnP.PowerShell
+title: Set-PnPAdaptiveScopeProperty
+schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPAdaptiveScopeProperty.html
 ---
-  
+ 
 # Set-PnPAdaptiveScopeProperty
 
 ## SYNOPSIS
@@ -87,4 +86,3 @@ Accept wildcard characters: False
 [Microsoft 365 Information Governance](https://learn.microsoft.com/microsoft-365/compliance/manage-information-governance?view=o365-worldwide)
 
 [Adaptive policy scopes](https://learn.microsoft.com/microsoft-365/compliance/retention?view=o365-worldwide#adaptive-or-static-policy-scopes-for-retention)
-

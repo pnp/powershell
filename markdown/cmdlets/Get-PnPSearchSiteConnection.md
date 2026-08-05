@@ -1,13 +1,12 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
-applicable: SharePoint Online
-title: Get-PnPSearchSiteConnection
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchSiteConnection.html
-tags: Available in the current Nightly Release only.
-schema: 2.0.0
 Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchSiteConnection.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPSearchSiteConnection
 ---
- 
+
 # Get-PnPSearchSiteConnection
 
 ## SYNOPSIS
@@ -117,4 +116,3 @@ Accept wildcard characters: False
 [Get-PnPSearchExternalConnection](Get-PnPSearchExternalConnection.md) - Retrieves external connections at the tenant level via Microsoft Graph. Returns basic connection info (id, name, state) for all connections including those in draft state. Use `Get-PnPSearchSiteConnection` instead when you need detailed connection configuration (schema, crawl settings, identity configuration) or want to list only published connections available for search verticals.
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
