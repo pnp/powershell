@@ -64,13 +64,17 @@ namespace PnP.PowerShell.Commands.Principals
 
             if (Identity == null)
             {
+                if (WithRightsAssigned)
+                {
+                    WriteUsersWithRightsAssigned();
+                    return;
+                }
+
                 CurrentWeb.Context.Load(CurrentWeb.SiteUsers, u => u.Include(RetrievalExpressions));
 
                 List<DetailedUser> users = new List<DetailedUser>();
 
-                if (WithRightsAssigned
-                    || WithRightsAssignedDetailed
-                    )
+                if (WithRightsAssignedDetailed)
                 {
                     // Get all the role assignments and role definition bindings to be able to see which users have been given rights directly on the site level
                     CurrentWeb.Context.Load(CurrentWeb.RoleAssignments, ac => ac.Include(a => a.RoleDefinitionBindings, a => a.Member));
@@ -93,27 +97,19 @@ namespace PnP.PowerShell.Commands.Principals
                     allUsersWithPermissions.AddRange(usersWithGroupPermissions);
 
                     // Add the found users and add them to the custom object
-                    if (WithRightsAssignedDetailed)
-                    {
-                        CurrentWeb.Context.Load(CurrentWeb, s => s.ServerRelativeUrl);
-                        CurrentWeb.Context.ExecuteQueryRetry();
+                    CurrentWeb.Context.Load(CurrentWeb, s => s.ServerRelativeUrl);
+                    CurrentWeb.Context.ExecuteQueryRetry();
 
-                        LogWarning("Using the -WithRightsAssignedDetailed parameter will cause the script to take longer than normal because of the all enumerations that take place");
-                        users.AddRange(GetPermissions(CurrentWeb.RoleAssignments, CurrentWeb.ServerRelativeUrl));
-                        foreach (var user in allUsersWithPermissions)
-                        {
-                            users.Add(new DetailedUser()
-                            {
-                                Groups = user.Groups,
-                                User = user,
-                                Url = CurrentWeb.ServerRelativeUrl
-                            });
-                        }
-                    }
-                    else
+                    LogWarning("Using the -WithRightsAssignedDetailed parameter will cause the script to take longer than normal because of the all enumerations that take place");
+                    users.AddRange(GetPermissions(CurrentWeb.RoleAssignments, CurrentWeb.ServerRelativeUrl));
+                    foreach (var user in allUsersWithPermissions)
                     {
-                        // Filter out the users that have been given rights at both places so they will only be returned once
-                        WriteObject(allUsersWithPermissions.GroupBy(u => u.Id).Select(u => u.First()), true);
+                        users.Add(new DetailedUser()
+                        {
+                            Groups = user.Groups,
+                            User = user,
+                            Url = CurrentWeb.ServerRelativeUrl
+                        });
                     }
                 }
                 else
@@ -290,6 +286,88 @@ namespace PnP.PowerShell.Commands.Principals
                 var user = Identity.GetUser(ClientContext, retrievalOptions: RetrievalExpressions);
                 WriteObject(user);
             }
+        }
+
+        private void WriteUsersWithRightsAssigned()
+        {
+            // Keep direct-principal requests small enough to avoid recreating the original oversized payload.
+            const int directlyAssignedPrincipalBatchSize = 20;
+            var retrievalExpressions = RetrievalExpressions;
+
+            CurrentWeb.Context.Load(CurrentWeb.RoleAssignments, assignments => assignments.Include(
+                assignment => assignment.Member.Id,
+                assignment => assignment.Member.PrincipalType));
+            CurrentWeb.Context.ExecuteQueryRetry();
+
+            var directlyAssignedUserIds = CurrentWeb.RoleAssignments
+                .Where(assignment => assignment.Member.PrincipalType != Microsoft.SharePoint.Client.Utilities.PrincipalType.SharePointGroup)
+                .Select(assignment => assignment.Member.Id)
+                .Distinct()
+                .ToList();
+            var assignedSharePointGroupIds = CurrentWeb.RoleAssignments
+                .Where(assignment => assignment.Member.PrincipalType == Microsoft.SharePoint.Client.Utilities.PrincipalType.SharePointGroup)
+                .Select(assignment => assignment.Member.Id)
+                .Distinct()
+                .ToList();
+            var usersWithPermissions = new List<User>();
+
+            foreach (var userIdBatch in directlyAssignedUserIds.Chunk(directlyAssignedPrincipalBatchSize))
+            {
+                try
+                {
+                    var directlyAssignedUsers = userIdBatch
+                        .Select(userId => CurrentWeb.SiteUsers.GetById(userId))
+                        .ToList();
+
+                    foreach (var user in directlyAssignedUsers)
+                    {
+                        CurrentWeb.Context.Load(user, retrievalExpressions);
+                    }
+
+                    CurrentWeb.Context.ExecuteQueryRetry();
+                    usersWithPermissions.AddRange(directlyAssignedUsers);
+                }
+                catch (ServerException batchException) when (IsPrincipalNotFoundException(batchException))
+                {
+                    LogDebug($"A batch of assigned principals contained a principal that could not be found. Retrying {userIdBatch.Length} principals individually");
+                    foreach (var userId in userIdBatch)
+                    {
+                        try
+                        {
+                            var user = CurrentWeb.SiteUsers.GetById(userId);
+                            CurrentWeb.Context.Load(user, retrievalExpressions);
+                            CurrentWeb.Context.ExecuteQueryRetry();
+                            usersWithPermissions.Add(user);
+                        }
+                        catch (ServerException principalException) when (IsPrincipalNotFoundException(principalException))
+                        {
+                            LogWarning($"Unable to retrieve assigned principal with ID {userId}: {principalException.Message}");
+                        }
+                    }
+                }
+            }
+
+            foreach (var groupId in assignedSharePointGroupIds)
+            {
+                try
+                {
+                    var group = CurrentWeb.SiteGroups.GetById(groupId);
+                    CurrentWeb.Context.Load(group.Users, users => users.Include(retrievalExpressions));
+                    CurrentWeb.Context.ExecuteQueryRetry();
+                    usersWithPermissions.AddRange(group.Users);
+                }
+                catch (ServerException ex) when (IsPrincipalNotFoundException(ex))
+                {
+                    LogWarning($"Unable to retrieve members of assigned SharePoint group with ID {groupId}: {ex.Message}");
+                }
+            }
+
+            WriteObject(usersWithPermissions.GroupBy(user => user.Id).Select(users => users.First()), true);
+        }
+
+        private static bool IsPrincipalNotFoundException(ServerException ex)
+        {
+            return string.Equals(ex.ServerErrorTypeName, "Microsoft.SharePoint.Client.ResourceNotFoundException", StringComparison.InvariantCultureIgnoreCase);
         }
 
         private void WriteProgress(ProgressRecord record, string message, int step, int count)
