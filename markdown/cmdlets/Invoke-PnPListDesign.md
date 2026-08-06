@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Invoke-PnPListDesign
-schema: 2.0.0
-applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
 external help file: PnP.PowerShell.dll-Help.xml
+schema: 2.0.0
 online version: https://pnp.github.io/powershell/cmdlets/Invoke-PnPListDesign.html
+title: Invoke-PnPListDesign
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
 ---
- 
+  
 # Invoke-PnPListDesign
 
 ## SYNOPSIS
@@ -95,4 +96,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 
