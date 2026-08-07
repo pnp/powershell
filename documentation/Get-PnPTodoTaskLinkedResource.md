@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTodoTaskLinkedRe
 
 **Required Permissions**
 
-  * Microsoft Graph API : One of Tasks.Read, Tasks.ReadWrite
+  * Microsoft Graph API: One of Tasks.Read or Tasks.ReadWrite (delegated), or Tasks.Read.All (application)
 
 Gets one Todo task linked resource or all linked resources from a Todo task.
 

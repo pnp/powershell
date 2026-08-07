@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.ToDo
 {
     [Cmdlet(VerbsData.Update, "PnPTodoList")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.ReadWrite")]
     [ApiNotAvailableUnderApplicationPermissions]
     public class UpdateTodoList : PnPGraphCmdlet
     {

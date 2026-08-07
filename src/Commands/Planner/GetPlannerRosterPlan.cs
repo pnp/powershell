@@ -7,8 +7,10 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Get, "PnPPlannerRosterPlan", DefaultParameterSetName = ParameterSet_BYROSTER)]
-    [RequiredApiApplicationPermissions("graph/Tasks.Read")]
-    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.Read")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiApplicationPermissions("graph/Tasks.Read.All")]
+    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite.All")]
 
     public class GetPlannerRosterPlan : PnPGraphCmdlet
     {

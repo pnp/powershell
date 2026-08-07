@@ -7,7 +7,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsTag")]
-    [RequiredApiApplicationPermissions("graph/TeamworkTag.ReadWrite")]
+    [RequiredApiDelegatedPermissions("graph/TeamworkTag.ReadWrite")]
+    [RequiredApiApplicationPermissions("graph/TeamworkTag.ReadWrite.All")]
     public class SetTeamsTag : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

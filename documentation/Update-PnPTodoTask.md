@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Update-PnPTodoTask.html
 
 **Required Permissions**
 
-  * Microsoft Graph API : Tasks.ReadWrite
+  * Microsoft Graph API: Tasks.ReadWrite (delegated) or Tasks.ReadWrite.All (application)
 
 Updates a Todo task.
 

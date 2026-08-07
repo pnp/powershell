@@ -9,8 +9,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 {
     [Cmdlet(VerbsData.Export, "PnPPowerApp")]
-    [RequiredApiApplicationPermissions("https://management.azure.com/user_impersonation", "https://service.powerapps.com/user")]
     [RequiredApiDelegatedPermissions("azure/user_impersonation", "https://service.powerapps.com/user")]
+    [ApiNotAvailableUnderApplicationPermissions]
     public class ExportPowerApp : PnPAzureManagementApiCmdlet
     {
         private const string ExportPowerAppFailedErrorId = "ExportPnPPowerAppFailed";

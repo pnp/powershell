@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTodoTaskFileAtta
 
 **Required Permissions**
 
-  * Microsoft Graph API : One of Tasks.Read, Tasks.ReadWrite
+  * Microsoft Graph API: One of Tasks.Read or Tasks.ReadWrite (delegated), or Tasks.Read.All (application)
 
 Gets one Todo task file attachment or all file attachments from a Todo task.
 

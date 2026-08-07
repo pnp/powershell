@@ -13,8 +13,7 @@ title: Set-PnPPowerAppByPassConsent
 
 **Required Permissions**
 
-* Azure: management.azure.com
-* PowerApps: service.powerapps.com
+* Both Azure Service Management API user_impersonation and Power Apps Service API user (delegated). Application permissions are not supported.
 
 Sets the consent bypass flag of a Power Apps for a given environment
 

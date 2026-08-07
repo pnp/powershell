@@ -7,12 +7,12 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Get, "PnPPlannerBucket")]
-    [RequiredApiApplicationPermissions("graph/Tasks.Read")]
-    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.Read")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.ReadWrite")]
     [RequiredApiApplicationPermissions("graph/Tasks.Read.All")]
     [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite.All")]
-    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedPermissions("graph/Group.ReadWrite.All")]
     public class GetPlannerBucket : PnPGraphCmdlet
     {
         private const string ParameterName_BYGROUP = "By Group";

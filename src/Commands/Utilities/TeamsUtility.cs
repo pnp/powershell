@@ -1449,7 +1449,12 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var byteArrayContent = new ByteArrayContent(bytes);
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
-            return requestHelper.PutHttpContent($"v1.0/appCatalogs/teamsApps/{appId}", byteArrayContent);
+
+            // Microsoft Learn documents this operation as POST /appCatalogs/teamsApps/{id}/appDefinitions on both v1.0 and beta, and no longer
+            // describes the PUT /appCatalogs/teamsApps/{id} which was used here before. The scopes declared on Update-PnPTeamsApp, AppCatalog.Submit
+            // in particular, are the ones documented for this POST, so calling the undocumented PUT could pass the permission check and still be
+            // denied by the service. Without the requiresReview query parameter this answers 204 just like the PUT did.
+            return requestHelper.PostHttpContent($"v1.0/appCatalogs/teamsApps/{appId}/appDefinitions", byteArrayContent);
         }
 
         public static HttpResponseMessage DeleteApp(ApiRequestHelper requestHelper, string appId)

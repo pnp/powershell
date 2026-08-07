@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Update-PnPTeamsApp.html
 
 **Required Permissions**
 
-  * Microsoft Graph API: Group.ReadWrite.All
+  * Microsoft Graph API: One of AppCatalog.Submit, AppCatalog.ReadWrite.All, or Directory.ReadWrite.All (delegated). Application permissions are not supported. The signed-in user must hold the Teams Service Administrator role or a higher privileged role.
 
 Updates an existing app in the Teams App Catalog.
 

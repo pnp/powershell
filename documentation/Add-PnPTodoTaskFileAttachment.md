@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Add-PnPTodoTaskFileAtta
 
 **Required Permissions**
 
-  * Microsoft Graph API : Tasks.ReadWrite
+  * Microsoft Graph API: Tasks.ReadWrite (delegated). Application permissions are not supported.
 
 Adds a file attachment to a Todo task.
 
