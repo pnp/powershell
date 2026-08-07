@@ -22,11 +22,11 @@ namespace PnP.PowerShell.Commands.Utilities
         /// Gets the Microsoft Graph To Do lists root URL for the current user or a specified user.
         /// </summary>
         /// <param name="cmdlet">Cmdlet requesting the To Do root URL.</param>
-        /// <param name="user">Optional user to target. Required for app-only connections.</param>
-        /// <returns>The Microsoft Graph To Do lists URL, or <c>null</c> if the specified user cannot be found.</returns>
+        /// <param name="user">Optional user to target. Required when the connection holds an application token.</param>
+        /// <returns>The Microsoft Graph To Do lists URL, or <c>null</c> if <paramref name="user"/> carries no identifier to address a user with.</returns>
         public static string GetTodoRootUrl(PnPGraphCmdlet cmdlet, EntraIDUserPipeBind user)
         {
-            if (cmdlet.Connection.ConnectionMethod == ConnectionMethod.AzureADAppOnly && user == null)
+            if (user == null && HoldsApplicationToken(cmdlet))
             {
                 throw new PSInvalidOperationException("Please specify the parameter User when invoking this cmdlet in app-only scenario");
             }
@@ -44,6 +44,34 @@ namespace PnP.PowerShell.Commands.Utilities
             }
 
             return $"/v1.0/users/{Uri.EscapeDataString(userIdentifier)}/todo/lists";
+        }
+
+        /// <summary>
+        /// Determines whether the connection of the cmdlet holds an application token, as Microsoft Graph does not resolve /me for those and a user
+        /// has to be named instead.
+        /// </summary>
+        /// <remarks>
+        /// The connection method states how the connection was made, not which type of token came out of it. A managed identity, a workload identity,
+        /// a federated identity and an application token handed to -AccessToken all yield an application token while none of them is
+        /// <see cref="ConnectionMethod.AzureADAppOnly"/>, so the token itself is what decides. The connection method remains the fallback for when the
+        /// token cannot be read.
+        /// </remarks>
+        private static bool HoldsApplicationToken(PnPGraphCmdlet cmdlet)
+        {
+            try
+            {
+                var tokenType = TokenHandler.RetrieveTokenType(cmdlet.AccessToken);
+                if (tokenType != Enums.IdType.Unknown)
+                {
+                    return tokenType == Enums.IdType.Application;
+                }
+            }
+            catch (Exception)
+            {
+                // The token could not be read, so the connection method is all there is to go on
+            }
+
+            return cmdlet.Connection.ConnectionMethod == ConnectionMethod.AzureADAppOnly;
         }
 
         /// <summary>

@@ -24,7 +24,7 @@ Get-PnPUserProfilePhoto -Identity <EntraIDUserPipeBind> [-Filename <String>]  [-
 ```
 
 ## DESCRIPTION
-This cmdlet downloads the user profile photo to the specified path and filename. If no filename has been specified it will default to the Display Name of the user with the either the extension .png or .jpeg depending on the format of the file. On a connection which can read the photo but not the user behind it, such as one holding `ProfilePhoto.Read.All` only, the identifier provided through -Identity is used in place of the display name.
+This cmdlet downloads the user profile photo to the specified path and filename. If no filename has been specified it will default to the Display Name of the user with either the extension .jpg or .png depending on the format of the photo. On a connection which can read the photo but not the user behind it, such as one holding `ProfilePhoto.Read.All` only, the identifier provided through -Identity is used in place of the display name.
 
 ## EXAMPLES
 
