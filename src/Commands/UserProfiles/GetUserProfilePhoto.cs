@@ -88,10 +88,11 @@ namespace PnP.PowerShell.Commands.UserProfiles
                             }
                         default:
                             {
-                                // Microsoft Graph answers with a 1x1 image/gif placeholder for a user without a photo. There is no extension to
-                                // derive a file name from in that case, so this used to fail further down on the file name still being NULL.
-                                Log.Error("Get-PnPUserProfilePhoto", $"Photo of unsupported type {photoData.ContentType} returned");
-                                throw new PSArgumentException($"Microsoft Graph returned a photo of type '{photoData.ContentType}' for the user, which typically means the user has no profile photo. Provide the {nameof(Filename)} parameter to download it regardless.");
+                                // Microsoft Graph answers the metadata request with a 1x1 image/gif placeholder for a user without a photo, while
+                                // the request for the binary data behind it fails with a 404. There is nothing to download and no extension to
+                                // derive a file name from, so this used to fail further down on the file name still being NULL.
+                                Log.Error("Get-PnPUserProfilePhoto", $"No profile photo found, Microsoft Graph returned a placeholder of type {photoData.ContentType}");
+                                throw new PSArgumentException($"The user does not have a profile photo. Microsoft Graph returned a placeholder of type '{photoData.ContentType}' rather than an image.");
                             }
                     }
                 }
