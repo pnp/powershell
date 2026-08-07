@@ -516,7 +516,7 @@ namespace PnP.PowerShell.Commands.EntraID
                     string pfxPath = Path.Combine(OutPath, $"{ApplicationName}.pfx");
                     string cerPath = Path.Combine(OutPath, $"{ApplicationName}.cer");
                     byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
-                    File.WriteAllBytes(pfxPath, certPfxData);
+                    CertificateHelper.WritePrivateKeyFile(pfxPath, certPfxData);
                     record.Properties.Add(new PSVariableProperty(new PSVariable("Pfx file", pfxPath)));
 
                     byte[] certCerData = cert.Export(X509ContentType.Cert);
