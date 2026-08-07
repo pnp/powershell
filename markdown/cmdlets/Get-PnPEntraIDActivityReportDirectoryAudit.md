@@ -1,13 +1,12 @@
 ---
-tags: Available in the current Nightly Release only.
 external help file: PnP.PowerShell.dll-Help.xml
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPEntraIDActivityReportDirectoryAudit.html
-title: Get-PnPEntraIDActivityReportDirectoryAudit
 Module Name: PnP.PowerShell
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPEntraIDActivityReportDirectoryAudit.html
+schema: 2.0.0
 applicable: SharePoint Online
+title: Get-PnPEntraIDActivityReportDirectoryAudit
 ---
- 
+
 # Get-PnPEntraIDActivityReportDirectoryAudit
 
 ## SYNOPSIS
@@ -106,4 +105,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
