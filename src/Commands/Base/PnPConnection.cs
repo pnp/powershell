@@ -1054,15 +1054,18 @@ namespace PnP.PowerShell.Commands.Base
             {
                 // The private key is asked for once and then offered to both providers. Returning early when it is not a Cryptography Next Generation
                 // key would make the legacy cryptographic service provider branch below unreachable, which is what used to leave the key containers
-                // of such a certificate behind.
-                var rsaPrivateKey = certificate.GetRSAPrivateKey();
-
+                // of such a certificate behind. It is a caller owned object, so it is disposed again right away rather than being left to the garbage
+                // collector, as the handle it holds on the key would otherwise still be open while the file behind it is deleted further down.
+                string uniqueKeyContainerName;
+                using (var rsaPrivateKey = certificate.GetRSAPrivateKey())
+                {
 #pragma warning disable CA1416 // Validate platform compatibility, this whole block only runs on Windows
-                // Both of these are the name of the file the key lives in. For the legacy providers that is UniqueKeyContainerName, where
-                // KeyContainerName is only the logical name of the container and never matches anything on disk.
-                string uniqueKeyContainerName = (rsaPrivateKey as RSACng)?.Key?.UniqueName
-                    ?? (rsaPrivateKey as RSACryptoServiceProvider)?.CspKeyContainerInfo?.UniqueKeyContainerName;
+                    // Both of these are the name of the file the key lives in. For the legacy providers that is UniqueKeyContainerName, where
+                    // KeyContainerName is only the logical name of the container and never matches anything on disk.
+                    uniqueKeyContainerName = (rsaPrivateKey as RSACng)?.Key?.UniqueName
+                        ?? (rsaPrivateKey as RSACryptoServiceProvider)?.CspKeyContainerInfo?.UniqueKeyContainerName;
 #pragma warning restore CA1416 // Validate platform compatibility
+                }
 
                 if (string.IsNullOrEmpty(uniqueKeyContainerName))
                 {
