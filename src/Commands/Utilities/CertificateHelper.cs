@@ -117,30 +117,19 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
-        /// Opens the X509Certificate2 at the provided path using the provided certificate password
-        /// </summary>
-        /// <param name="cmdlet">Cmdlet executing this function</param>
-        /// <param name="certificatePath">Path to the private key certificate file</param>
-        /// <param name="certificatePassword">Password to open the certificate or NULL if no password set on the certificate</param>
-        /// <param name="x509KeyStorageFlags">Key storage flags for created X509Certificate2</param>
-        /// <returns>X509Certificate2 instance</returns>
-        /// <exception cref="PSArgumentException">Thrown if the certificate cannot be read</exception>
-        /// <exception cref="FileNotFoundException">Thrown if the certificate cannot be found at the provided path</exception>
-        /// <summary>
         /// Writes a file which holds private key material, ensuring that only the current user is able to read it back.
         /// </summary>
         /// <param name="path">Path of the file to write to.</param>
         /// <param name="contents">Contents to write, i.e. the exported PKCS#12 bytes.</param>
         /// <remarks>
         /// On Linux and macOS a file is created using the default permissions of the process, which the usual umask leaves at 0644, meaning any
-        /// local account could read the private key. The file is therefore created with the restrictive mode already applied rather than being
-        /// relaxed and tightened again, so that the key is never readable by others, not even briefly. Windows has no equivalent notion and throws
-        /// on these APIs, so there the file keeps inheriting the permissions of the folder it is written to.
+        /// local account could read the private key. Windows has no equivalent notion and throws on these APIs, so there the file keeps inheriting
+        /// the permissions of the folder it is written to.
         /// </remarks>
         internal static void WritePrivateKeyFile(string path, byte[] contents)
         {
             // Deliberately the framework check rather than the PnP one, as that is what lets the platform compatibility analyzer see that the code
-            // below is unreachable on Windows, where setting UnixCreateMode throws
+            // below is unreachable on Windows, where the two Unix mode APIs throw
             if (System.OperatingSystem.IsWindows())
             {
                 File.WriteAllBytes(path, contents);
@@ -151,13 +140,30 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 Mode = FileMode.Create,
                 Access = FileAccess.Write,
+
+                // Applies when the file gets created, so that the key is never readable by others, not even briefly
                 UnixCreateMode = UnixFileMode.UserRead | UnixFileMode.UserWrite
             };
 
             using var fileStream = File.Open(path, fileStreamOptions);
+
+            // The mode above is only applied to a file which did not exist yet. Writing over a file which is already there truncates it and leaves
+            // whatever permissions it had, so the mode is set again here, while the file is still empty, to cover that case as well.
+            File.SetUnixFileMode(path, UnixFileMode.UserRead | UnixFileMode.UserWrite);
+
             fileStream.Write(contents, 0, contents.Length);
         }
 
+        /// <summary>
+        /// Opens the X509Certificate2 at the provided path using the provided certificate password
+        /// </summary>
+        /// <param name="cmdlet">Cmdlet executing this function</param>
+        /// <param name="certificatePath">Path to the private key certificate file</param>
+        /// <param name="certificatePassword">Password to open the certificate or NULL if no password set on the certificate</param>
+        /// <param name="x509KeyStorageFlags">Key storage flags for created X509Certificate2</param>
+        /// <returns>X509Certificate2 instance</returns>
+        /// <exception cref="PSArgumentException">Thrown if the certificate cannot be read</exception>
+        /// <exception cref="FileNotFoundException">Thrown if the certificate cannot be found at the provided path</exception>
         internal static X509Certificate2 GetCertificateFromPath(Cmdlet cmdlet, string certificatePath, SecureString certificatePassword,
             X509KeyStorageFlags x509KeyStorageFlags =
                         X509KeyStorageFlags.Exportable |

@@ -1052,19 +1052,15 @@ namespace PnP.PowerShell.Commands.Base
 
             if (Utilities.OperatingSystem.IsWindows())
             {
-                var privateKey = (certificate.GetRSAPrivateKey() as RSACng)?.Key;
-                // var privateKey = (certificate.PrivateKey as RSACng)?.Key;
-                if (privateKey == null)
-                    return;
+                // The private key is asked for once and then offered to both providers. Returning early when it is not a Cryptography Next Generation
+                // key would make the legacy cryptographic service provider branch below unreachable, which is what used to leave the key containers
+                // of such a certificate behind.
+                var rsaPrivateKey = certificate.GetRSAPrivateKey();
 
-                string uniqueKeyContainerName = privateKey.UniqueName;
-                if (uniqueKeyContainerName == null)
-                {
-#pragma warning disable CA1416 // Validate platform compatibilit
-                    RSACryptoServiceProvider rsaCSP = certificate.GetRSAPrivateKey() as RSACryptoServiceProvider;
-                    uniqueKeyContainerName = rsaCSP?.CspKeyContainerInfo?.KeyContainerName;
+#pragma warning disable CA1416 // Validate platform compatibility, this whole block only runs on Windows
+                string uniqueKeyContainerName = (rsaPrivateKey as RSACng)?.Key?.UniqueName
+                    ?? (rsaPrivateKey as RSACryptoServiceProvider)?.CspKeyContainerInfo?.KeyContainerName;
 #pragma warning restore CA1416 // Validate platform compatibility
-                }
 
                 if (string.IsNullOrEmpty(uniqueKeyContainerName))
                 {
@@ -1095,11 +1091,18 @@ namespace PnP.PowerShell.Commands.Base
                     }
                 }
 
+                // A certificate loaded with X509KeyStorageFlags.MachineKeySet, which -X509KeyStorageFlags accepts and the documentation of
+                // Connect-PnPOnline shows, ends up machine wide instead of in the profile of the user
                 var programDataPath = Environment.GetEnvironmentVariable("ProgramData");
                 if (string.IsNullOrEmpty(programDataPath))
                 {
                     programDataPath = @"C:\ProgramData";
                 }
+
+                // Where a machine wide key created through Cryptography Next Generation ends up
+                candidatePaths.Add(Path.Combine(programDataPath, "Microsoft", "Crypto", "Keys", uniqueKeyContainerName));
+
+                // Where a machine wide key created through the legacy cryptographic service providers ends up
                 candidatePaths.Add(Path.Combine(programDataPath, "Microsoft", "Crypto", "RSA", "MachineKeys", uniqueKeyContainerName));
 
                 foreach (var candidatePath in candidatePaths)
