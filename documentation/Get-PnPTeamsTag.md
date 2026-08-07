@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsTag.html
 
 **Required Permissions**
 
-* Microsoft Graph API: One of TeamworkTag.Read or TeamworkTag.ReadWrite (delegated), or one of TeamworkTag.Read.All or TeamworkTag.ReadWrite.All (application)
+* Microsoft Graph API: One of TeamworkTag.Read or TeamworkTag.ReadWrite (delegated), or one of TeamworkTag.Read.All or TeamworkTag.ReadWrite.All (application). Additionally Group.Read.All when -Team is supplied as a mail nickname or display name rather than as a group id, as resolving those reads the group from Microsoft Graph.
 
 Gets one or all tags in a team.
 

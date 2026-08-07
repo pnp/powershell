@@ -53,8 +53,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <remarks>
         /// The connection method states how the connection was made, not which type of token came out of it. A managed identity, a workload identity,
         /// a federated identity and an application token handed to -AccessToken all yield an application token while none of them is
-        /// <see cref="ConnectionMethod.AzureADAppOnly"/>, so the token itself is what decides. The connection method remains the fallback for when the
-        /// token cannot be read.
+        /// <see cref="ConnectionMethod.AzureADAppOnly"/>, so the token itself is what decides. Only where the token cannot be read at all does the
+        /// connection method decide, and then every method which can only produce an application token counts. -AccessToken is deliberately absent
+        /// from that list, as it accepts either type of token and therefore says nothing on its own.
         /// </remarks>
         private static bool HoldsApplicationToken(PnPGraphCmdlet cmdlet)
         {
@@ -71,7 +72,10 @@ namespace PnP.PowerShell.Commands.Utilities
                 // The token could not be read, so the connection method is all there is to go on
             }
 
-            return cmdlet.Connection.ConnectionMethod == ConnectionMethod.AzureADAppOnly;
+            return cmdlet.Connection.ConnectionMethod is ConnectionMethod.AzureADAppOnly
+                or ConnectionMethod.ManagedIdentity
+                or ConnectionMethod.AzureADWorkloadIdentity
+                or ConnectionMethod.FederatedIdentity;
         }
 
         /// <summary>

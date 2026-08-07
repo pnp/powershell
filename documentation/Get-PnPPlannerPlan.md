@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPlannerPlan.html
 
 **Required Permissions**
 
-  * Microsoft Graph API: One of Tasks.Read, Tasks.ReadWrite, Group.Read.All, or Group.ReadWrite.All (delegated), or one of Tasks.Read.All or Tasks.ReadWrite.All (application)
+  * Microsoft Graph API: One of Tasks.Read, Tasks.ReadWrite, Group.Read.All, or Group.ReadWrite.All (delegated), or one of Tasks.Read.All or Tasks.ReadWrite.All (application). Additionally Group.Read.All when -Group is supplied as a mail nickname or display name rather than as a group id, as resolving those reads the group from Microsoft Graph.
   
 Returns all or a specific Planner plan for a Microsoft 365 Group.
 
