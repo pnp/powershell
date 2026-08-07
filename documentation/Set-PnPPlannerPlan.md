@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPlannerPlan.html
 
 **Required Permissions**
 
-  * Microsoft Graph API: Group.ReadWrite.All
+  * Microsoft Graph API: One of Tasks.ReadWrite or Group.ReadWrite.All (delegated), or Tasks.ReadWrite.All (application)
 
 Updates an existing Planner plan.
 

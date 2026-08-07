@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPlannerBucket.ht
 
 **Required Permissions**
 
-  * Microsoft Graph API: One of Tasks.Read, Tasks.ReadWrite, Tasks.Read.All, Tasks.ReadWrite.All, Group.Read.All, Group.ReadWrite.All  
+  * Microsoft Graph API: One of Tasks.Read, Tasks.ReadWrite, Group.Read.All, or Group.ReadWrite.All (delegated), or one of Tasks.Read.All or Tasks.ReadWrite.All (application)
 
 Returns all or a specific Planner bucket
 

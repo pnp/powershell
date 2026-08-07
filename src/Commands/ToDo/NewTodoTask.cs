@@ -12,8 +12,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.ToDo
 {
     [Cmdlet(VerbsCommon.New, "PnPTodoTask")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Tasks.ReadWrite")]
-    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite.All")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.ReadWrite")]
+    [ApiNotAvailableUnderApplicationPermissions]
     public class NewTodoTask : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true), ArgumentCompleter(typeof(TodoListCompleter))]

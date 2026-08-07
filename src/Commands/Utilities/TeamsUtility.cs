@@ -1449,6 +1449,10 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var byteArrayContent = new ByteArrayContent(bytes);
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
+
+            // This is the legacy form of the update. Microsoft Learn documents the operation as POST /appCatalogs/teamsApps/{id}/appDefinitions on
+            // both v1.0 and beta and no longer describes this PUT, so the permissions declared on Update-PnPTeamsApp are the ones documented for
+            // that POST. Moving over would also gain the requiresReview query parameter, but it answers 201 with a body where this answers 204.
             return requestHelper.PutHttpContent($"v1.0/appCatalogs/teamsApps/{appId}", byteArrayContent);
         }
 

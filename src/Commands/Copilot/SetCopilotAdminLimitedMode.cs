@@ -6,7 +6,8 @@ using System.Net.Http.Json;
 namespace PnP.PowerShell.Commands.Copilot
 {
     [Cmdlet(VerbsCommon.Set, "PnPCopilotAdminLimitedMode")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/CopilotSettings-LimitedMode.ReadWrite")]
+    [RequiredApiDelegatedPermissions("graph/CopilotSettings-LimitedMode.ReadWrite")]
+    [ApiNotAvailableUnderApplicationPermissions]
     [OutputType(typeof(Model.Graph.Copilot.CopilotAdminLimitedMode))]
     public class SetCopilotAdminLimitedMode : PnPGraphCmdlet
     {

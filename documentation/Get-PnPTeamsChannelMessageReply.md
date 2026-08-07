@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsChannelMess
 
 **Required Permissions**
 
-  * Microsoft Graph API: ChannelMessage.Read.All
+  * Microsoft Graph API: One of ChannelMessage.Read.All, Group.Read.All, or Group.ReadWrite.All (delegated or application). Under application permissions the resource specific consent permission ChannelMessage.Read.Group can be used instead.
 
 Returns replies from the specified Microsoft Teams channel message.
 

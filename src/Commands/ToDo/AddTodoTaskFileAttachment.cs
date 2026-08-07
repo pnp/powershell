@@ -11,7 +11,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.ToDo
 {
     [Cmdlet(VerbsCommon.Add, "PnPTodoTaskFileAttachment")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.ReadWrite")]
     [ApiNotAvailableUnderApplicationPermissions]
     public class AddTodoTaskFileAttachment : PnPGraphCmdlet
     {

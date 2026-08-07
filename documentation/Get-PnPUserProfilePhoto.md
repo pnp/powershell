@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUserProfilePhoto
 
 **Required Permissions**
 
-  * Microsoft Graph API: One of ProfilePhoto.ReadWrite.All, User.ReadWrite or User.ReadWrite.All
+  * Microsoft Graph API: One of ProfilePhoto.Read.All, User.ReadBasic.All, or User.Read.All (delegated), or one of ProfilePhoto.Read.All or User.Read.All (application)
 
 Gets the profile picture of a user.
 
@@ -24,7 +24,7 @@ Get-PnPUserProfilePhoto -Identity <EntraIDUserPipeBind> [-Filename <String>]  [-
 ```
 
 ## DESCRIPTION
-This cmdlet downloads the user profile photo to the specified path and filename. If no filename has been specified it will default to the Display Name of the user with the either the extension .png or .jpeg depending on the format of the file.
+This cmdlet downloads the user profile photo to the specified path and filename. If no filename has been specified it will default to the Display Name of the user with the either the extension .png or .jpeg depending on the format of the file. On a connection which can read the photo but not the user behind it, such as one holding `ProfilePhoto.Read.All` only, the identifier provided through -Identity is used in place of the display name.
 
 ## EXAMPLES
 

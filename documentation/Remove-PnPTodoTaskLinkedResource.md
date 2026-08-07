@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTodoTaskLinke
 
 **Required Permissions**
 
-  * Microsoft Graph API : Tasks.ReadWrite
+  * Microsoft Graph API: Tasks.ReadWrite (delegated). Application permissions are not supported.
 
 Removes a linked resource from a Todo task.
 

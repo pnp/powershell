@@ -26,6 +26,8 @@ Set-PnPCopilotAdminLimitedMode -IsEnabledForGroup <boolean> -GroupId <String> [-
 
 Represents a setting that controls whether Microsoft 365 Copilot in Teams Meetings users can receive responses to sentiment-related prompts. If this setting is enabled, Copilot in Teams Meetings doesn't respond to sentiment-related prompts and questions asked by the user. If the setting is disabled, Copilot in Teams Meetings responds to sentiment-related prompts and questions asked by the user. Copilot in Teams Meetings currently honors this setting. By default, the setting is disabled.
 
+This cmdlet uses the beta endpoint of Microsoft Graph. Microsoft can change the permissions it requires without notice, so verify the permission above against Microsoft Learn if a call is unexpectedly denied.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -36,14 +36,14 @@ namespace PnP.PowerShell.Commands.Utilities
                 return "/v1.0/me/todo/lists";
             }
 
-            var graphUser = user.GetUser(cmdlet.AccessToken, cmdlet.Connection.AzureEnvironment);
-            if (graphUser == null)
+            var userIdentifier = user.User?.Id?.ToString() ?? user.UserId?.ToString() ?? user.User?.UserPrincipalName ?? user.Upn;
+            if (string.IsNullOrWhiteSpace(userIdentifier))
             {
-                cmdlet.LogWarning("Provided user not found");
+                cmdlet.LogWarning("Provided user cannot be resolved");
                 return null;
             }
 
-            return $"/v1.0/users/{graphUser.Id.Value}/todo/lists";
+            return $"/v1.0/users/{Uri.EscapeDataString(userIdentifier)}/todo/lists";
         }
 
         /// <summary>

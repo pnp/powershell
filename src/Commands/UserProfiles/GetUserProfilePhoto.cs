@@ -13,9 +13,9 @@ using System.Text.Json.Serialization;
 namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Get, "PnPUserProfilePhoto")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/ProfilePhoto.ReadWrite.All")]
-    [RequiredApiDelegatedPermissions("graph/User.ReadWrite")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/User.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/ProfilePhoto.Read.All")]
+    [RequiredApiDelegatedPermissions("graph/User.ReadBasic.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/User.Read.All")]
     public class GetUserProfilePhoto : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -30,34 +30,68 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
         protected override void ExecuteCmdlet()
         {
-            LogDebug($"Looking up user provided through the {nameof(Identity)} parameter");
-            Model.AzureAD.User user = Identity.GetUser(AccessToken, Connection.AzureEnvironment);
+            // The identifier as it was provided already addresses the photo endpoints, so it acts as the fallback for a connection which holds
+            // ProfilePhoto.Read.All only. Such a connection cannot read the user object that the id and display name below come from.
+            var userIdentifier = Identity.User?.Id?.ToString() ?? Identity.UserId?.ToString() ?? Identity.User?.UserPrincipalName ?? Identity.Upn;
+            if (string.IsNullOrWhiteSpace(userIdentifier))
+            {
+                throw new PSArgumentException($"User provided through the {nameof(Identity)} parameter cannot be resolved", nameof(Identity));
+            }
 
-            if (user == null)
+            LogDebug($"Looking up user provided through the {nameof(Identity)} parameter");
+            Model.AzureAD.User user = null;
+            var lookupSucceeded = true;
+            try
+            {
+                user = Identity.GetUser(AccessToken, Connection.AzureEnvironment);
+            }
+            catch (System.Exception e)
+            {
+                // Reading the user object needs a scope such as User.ReadBasic.All, which a connection holding ProfilePhoto.Read.All only does not
+                // have. The photo can still be retrieved by addressing the user through the identifier that was provided, so rather than failing,
+                // the lookup is skipped and the identifier is used instead of the id and the display name.
+                lookupSucceeded = false;
+                LogDebug($"Unable to look up the user, continuing with the identifier provided through the {nameof(Identity)} parameter: {e.Message}");
+            }
+
+            // Only a lookup which completed can tell that the user does not exist. One which could not be performed says nothing about that, so it
+            // must not be reported as an unknown user.
+            if (lookupSucceeded && user == null)
             {
                 Log.Error("Get-PnPUserProfilePhoto", $"User provided through the {nameof(Identity)} parameter could not be found");
                 throw new PSArgumentException($"User provided through the {nameof(Identity)} parameter could not be found");
             }
 
-            LogDebug($"Setting profile photo for user {user.UserPrincipalName}");
+            var userSegment = System.Uri.EscapeDataString(user?.Id?.ToString() ?? userIdentifier);
+            LogDebug($"Retrieving profile photo for user {user?.UserPrincipalName ?? userIdentifier}");
 
             if (Filename == null)
             {
                 // retrieve the metadata first to figure out the file type
-                var photoData = GraphRequestHelper.Get<PhotoMetadata>($"users/{user.Id}/photo");
+                var photoData = GraphRequestHelper.Get<PhotoMetadata>($"users/{userSegment}/photo");
                 if (photoData != null)
                 {
+                    // Falls back to the identifier that was provided when the display name could not be read, which is the case on a connection
+                    // holding ProfilePhoto.Read.All only
+                    var fileNameWithoutExtension = user?.DisplayName ?? userIdentifier;
                     switch (photoData.ContentType)
                     {
                         case "image/jpeg":
                             {
-                                Filename = $"{user.DisplayName}.jpg";
+                                Filename = $"{fileNameWithoutExtension}.jpg";
                                 break;
                             }
                         case "image/png":
                             {
-                                Filename = $"{user.DisplayName}.png";
+                                Filename = $"{fileNameWithoutExtension}.png";
                                 break;
+                            }
+                        default:
+                            {
+                                // Microsoft Graph answers with a 1x1 image/gif placeholder for a user without a photo. There is no extension to
+                                // derive a file name from in that case, so this used to fail further down on the file name still being NULL.
+                                Log.Error("Get-PnPUserProfilePhoto", $"Photo of unsupported type {photoData.ContentType} returned");
+                                throw new PSArgumentException($"Microsoft Graph returned a photo of type '{photoData.ContentType}' for the user, which typically means the user has no profile photo. Provide the {nameof(Filename)} parameter to download it regardless.");
                             }
                     }
                 }
@@ -67,7 +101,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     throw new PSArgumentException("Photo for user not found");
                 }
             }
-            
+
             if (!System.IO.Path.IsPathRooted(Filename))
             {
                 Filename = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Filename);
@@ -88,7 +122,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             if (getphoto)
             {
                 // A non successful response will throw from within GetResponse
-                using var response = GraphRequestHelper.GetResponse($"users/{user.Id}/photo/$value");
+                using var response = GraphRequestHelper.GetResponse($"users/{userSegment}/photo/$value");
                 var content = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
                 System.IO.File.WriteAllBytes(Filename, content);
                 WriteObject($"File saved as: {Filename}");

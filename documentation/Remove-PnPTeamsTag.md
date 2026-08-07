@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTeamsTag.html
 
 **Required Permissions**
 
-  * Microsoft Graph API: TeamworkTag.ReadWrite, Group.Read.All
+  * Microsoft Graph API: TeamworkTag.ReadWrite (delegated) or TeamworkTag.ReadWrite.All (application)
 
 Removes a Microsoft Teams Tag in a Team.
 

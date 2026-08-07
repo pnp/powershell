@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTeamsTag.html
 
 **Required Permissions**
 
-  * Microsoft Graph API: TeamworkTag.ReadWrite, Group.Read.All
+  * Microsoft Graph API: TeamworkTag.ReadWrite (delegated) or TeamworkTag.ReadWrite.All (application)
 
 Sets the Microsoft Teams tag in a Team.
 
