@@ -367,7 +367,11 @@ namespace PnP.PowerShell.Commands.Principals
 
         private static bool IsPrincipalNotFoundException(ServerException ex)
         {
-            return string.Equals(ex.ServerErrorTypeName, "Microsoft.SharePoint.Client.ResourceNotFoundException", StringComparison.InvariantCultureIgnoreCase);
+            // SharePoint uses 0x81020016 when a role assignment refers to a principal that no longer exists.
+            const int principalNotFoundErrorCode = -2130575338;
+
+            return string.Equals(ex.ServerErrorTypeName, "Microsoft.SharePoint.Client.ResourceNotFoundException", StringComparison.InvariantCultureIgnoreCase)
+                || (ex.ServerErrorCode == principalNotFoundErrorCode && string.Equals(ex.ServerErrorTypeName, "System.ArgumentException", StringComparison.InvariantCultureIgnoreCase));
         }
 
         private void WriteProgress(ProgressRecord record, string message, int step, int count)
