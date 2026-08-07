@@ -112,23 +112,19 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 throw new PSArgumentException($"Could not read a configuration from {source}.");
             }
 
-            WarnOnIgnoredContent<T>(json, source, logWarning);
+            InspectContent<T>(json, source, logWarning);
             return configuration;
         }
 
         /// <summary>
-        /// The configuration is deserialized leniently, so a property whose name is misspelled or misplaced and a
-        /// handler which is not recognized are both accepted and then have no effect, which reads as the
-        /// configuration being ignored. Both are reported as a warning rather than rejected, so that a
-        /// configuration holding something this version does not know about still applies the rest.
+        /// The configuration is deserialized leniently, so content which does not fit the model is accepted and
+        /// then has no effect, which reads as the configuration being ignored. Content which merely has no effect
+        /// is reported as a warning, so that a configuration holding something this version does not know about
+        /// still applies the rest. Content which would instead widen what the cmdlet does, or leave it to fail on
+        /// a dereference further in, is rejected.
         /// </summary>
-        private static void WarnOnIgnoredContent<T>(string json, string source, Action<string> logWarning)
+        private static void InspectContent<T>(string json, string source, Action<string> logWarning)
         {
-            if (logWarning == null)
-            {
-                return;
-            }
-
             JsonNode root;
             try
             {
@@ -147,9 +143,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             // A $schema reference exists for editor support and is not part of the configuration itself.
             rootObject.Remove("$schema");
 
-            foreach (var handler in UnrecognizedHandlers(rootObject))
+            RejectNullValues(rootObject, source);
+            InspectHandlers(rootObject, source, logWarning);
+
+            if (logWarning == null)
             {
-                logWarning($"Handler '{handler}' in {source} is not recognized and is ignored. Handler names are case sensitive.");
+                return;
             }
 
             try
@@ -167,23 +166,86 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         }
 
         /// <summary>
-        /// Mirrors ListEnumConverter, which drops any handler it cannot parse, case sensitively and without a word.
+        /// ListEnumConverter drops any handler it cannot parse, case sensitively and without a word. Losing every
+        /// handler is rejected rather than warned about, because an empty handler list means every handler, so a
+        /// single misspelling would otherwise quietly widen the operation to the whole template.
         /// </summary>
-        private static IEnumerable<string> UnrecognizedHandlers(JsonObject rootObject)
+        private static void InspectHandlers(JsonObject rootObject, string source, Action<string> logWarning)
         {
-            if (rootObject["handlers"] is not JsonArray handlers)
+            if (rootObject["handlers"] is not JsonArray handlers || handlers.Count == 0)
             {
-                yield break;
+                return;
             }
 
+            var unrecognized = new List<string>();
             foreach (var handler in handlers)
             {
-                if (handler is JsonValue value
-                    && value.TryGetValue<string>(out var name)
-                    && !Enum.TryParse<ConfigurationHandler>(name, out _))
+                if (!(handler is JsonValue value
+                      && value.TryGetValue<string>(out var name)
+                      && Enum.TryParse<ConfigurationHandler>(name, out _)))
                 {
-                    yield return name;
+                    unrecognized.Add(handler?.ToJsonString() ?? "null");
                 }
+            }
+
+            if (unrecognized.Count == handlers.Count)
+            {
+                throw new PSArgumentException($"None of the handlers in {source} are recognized: {string.Join(", ", unrecognized)}. Handler names are case sensitive, and leaving \"handlers\" out processes everything.");
+            }
+
+            foreach (var handler in unrecognized)
+            {
+                logWarning?.Invoke($"Handler {handler} in {source} is not recognized and is ignored. Handler names are case sensitive.");
+            }
+        }
+
+        /// <summary>
+        /// An explicit null replaces the default of the property it is given for, after which the provisioning
+        /// engine dereferences it and fails somewhere unrelated to the configuration. Leaving a property out is
+        /// how it is left unset, so a null is rejected here where it can still be pointed at.
+        /// </summary>
+        private static void RejectNullValues(JsonObject rootObject, string source)
+        {
+            var nullPaths = new List<string>();
+            CollectNullValues(rootObject, nullPaths);
+
+            if (nullPaths.Count > 0)
+            {
+                throw new PSArgumentException($"{source} holds a null at {string.Join(", ", nullPaths)}. Leave the property out instead of setting it to null.");
+            }
+        }
+
+        private static void CollectNullValues(JsonNode node, List<string> nullPaths)
+        {
+            switch (node)
+            {
+                case JsonObject jsonObject:
+                    foreach (var property in jsonObject)
+                    {
+                        if (property.Value == null)
+                        {
+                            nullPaths.Add($"{jsonObject.GetPath()}.{property.Key}");
+                        }
+                        else
+                        {
+                            CollectNullValues(property.Value, nullPaths);
+                        }
+                    }
+                    break;
+
+                case JsonArray jsonArray:
+                    for (var i = 0; i < jsonArray.Count; i++)
+                    {
+                        if (jsonArray[i] == null)
+                        {
+                            nullPaths.Add($"{jsonArray.GetPath()}[{i}]");
+                        }
+                        else
+                        {
+                            CollectNullValues(jsonArray[i], nullPaths);
+                        }
+                    }
+                    break;
             }
         }
 
