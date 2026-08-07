@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannelMessageReply")]
+    [RequiredApiApplicationPermissions("graph/ChannelMessage.Read.Group")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/ChannelMessage.Read.All")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
