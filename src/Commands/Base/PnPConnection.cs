@@ -1058,8 +1058,10 @@ namespace PnP.PowerShell.Commands.Base
                 var rsaPrivateKey = certificate.GetRSAPrivateKey();
 
 #pragma warning disable CA1416 // Validate platform compatibility, this whole block only runs on Windows
+                // Both of these are the name of the file the key lives in. For the legacy providers that is UniqueKeyContainerName, where
+                // KeyContainerName is only the logical name of the container and never matches anything on disk.
                 string uniqueKeyContainerName = (rsaPrivateKey as RSACng)?.Key?.UniqueName
-                    ?? (rsaPrivateKey as RSACryptoServiceProvider)?.CspKeyContainerInfo?.KeyContainerName;
+                    ?? (rsaPrivateKey as RSACryptoServiceProvider)?.CspKeyContainerInfo?.UniqueKeyContainerName;
 #pragma warning restore CA1416 // Validate platform compatibility
 
                 if (string.IsNullOrEmpty(uniqueKeyContainerName))

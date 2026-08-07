@@ -148,8 +148,10 @@ namespace PnP.PowerShell.Commands.Utilities
             using var fileStream = File.Open(path, fileStreamOptions);
 
             // The mode above is only applied to a file which did not exist yet. Writing over a file which is already there truncates it and leaves
-            // whatever permissions it had, so the mode is set again here, while the file is still empty, to cover that case as well.
-            File.SetUnixFileMode(path, UnixFileMode.UserRead | UnixFileMode.UserWrite);
+            // whatever permissions it had, so the mode is set again here, while the file is still empty, to cover that case as well. This is done
+            // against the handle rather than against the path, so that replacing the path in between cannot send the mode change to another file
+            // while the key is written to this one.
+            File.SetUnixFileMode(fileStream.SafeFileHandle, UnixFileMode.UserRead | UnixFileMode.UserWrite);
 
             fileStream.Write(contents, 0, contents.Length);
         }
