@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
             if (ParameterSpecified(nameof(Configuration)))
             {
-                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
+                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path, LogWarning);
             }
             else
             {

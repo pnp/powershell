@@ -1,7 +1,11 @@
+using PnP.Framework.Provisioning.Model.Configuration;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Management.Automation;
 using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -18,14 +22,20 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         /// </summary>
         private const int MaxValueInMessage = 200;
 
+        private static readonly JsonSerializerOptions StrictOptions = new()
+        {
+            UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow
+        };
+
         /// <summary>
         /// Resolves the value of a -Configuration parameter to a configuration object.
         /// </summary>
         /// <param name="value">The path to a file holding the JSON, or the JSON itself</param>
         /// <param name="currentFileSystemLocation">The location to resolve a relative path against</param>
         /// <param name="fromString">Deserializes the JSON into the configuration object</param>
+        /// <param name="logWarning">Reports parts of the configuration which are not recognized and are therefore ignored</param>
         /// <exception cref="PSArgumentException">No value was passed in, the file cannot be read, or the JSON cannot be parsed</exception>
-        internal static T Resolve<T>(string value, string currentFileSystemLocation, Func<string, T> fromString) where T : class
+        internal static T Resolve<T>(string value, string currentFileSystemLocation, Func<string, T> fromString, Action<string> logWarning = null) where T : class
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -36,7 +46,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             var path = ResolvePath(value, currentFileSystemLocation);
             if (path != null && File.Exists(path))
             {
-                return Deserialize(ReadFile(path), $"configuration file '{path}'", fromString);
+                return Deserialize(ReadFile(path), $"configuration file '{path}'", fromString, logWarning);
             }
 
             // Not an existing file, so the value itself is meant to be the JSON. A byte order mark does not
@@ -44,7 +54,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             var json = value.TrimStart('\uFEFF').TrimStart();
             if (json.StartsWith('{'))
             {
-                return Deserialize(json, "the JSON passed in", fromString);
+                return Deserialize(json, "the JSON passed in", fromString, logWarning);
             }
             if (json.StartsWith('[') || json.Equals("null", StringComparison.Ordinal))
             {
@@ -85,7 +95,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        private static T Deserialize<T>(string json, string source, Func<string, T> fromString) where T : class
+        private static T Deserialize<T>(string json, string source, Func<string, T> fromString, Action<string> logWarning) where T : class
         {
             T configuration;
             try
@@ -97,7 +107,84 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 throw new PSArgumentException($"Could not parse {source}: {ex.Message}", ex);
             }
 
-            return configuration ?? throw new PSArgumentException($"Could not read a configuration from {source}.");
+            if (configuration == null)
+            {
+                throw new PSArgumentException($"Could not read a configuration from {source}.");
+            }
+
+            WarnOnIgnoredContent<T>(json, source, logWarning);
+            return configuration;
+        }
+
+        /// <summary>
+        /// The configuration is deserialized leniently, so a property whose name is misspelled or misplaced and a
+        /// handler which is not recognized are both accepted and then have no effect, which reads as the
+        /// configuration being ignored. Both are reported as a warning rather than rejected, so that a
+        /// configuration holding something this version does not know about still applies the rest.
+        /// </summary>
+        private static void WarnOnIgnoredContent<T>(string json, string source, Action<string> logWarning)
+        {
+            if (logWarning == null)
+            {
+                return;
+            }
+
+            JsonNode root;
+            try
+            {
+                root = JsonNode.Parse(json);
+            }
+            catch (JsonException)
+            {
+                return;
+            }
+
+            if (root is not JsonObject rootObject)
+            {
+                return;
+            }
+
+            // A $schema reference exists for editor support and is not part of the configuration itself.
+            rootObject.Remove("$schema");
+
+            foreach (var handler in UnrecognizedHandlers(rootObject))
+            {
+                logWarning($"Handler '{handler}' in {source} is not recognized and is ignored. Handler names are case sensitive.");
+            }
+
+            try
+            {
+                JsonSerializer.Deserialize<T>(rootObject.ToJsonString(), StrictOptions);
+            }
+            catch (JsonException ex)
+            {
+                logWarning($"A property in {source} is not recognized and is ignored, so the setting it holds has no effect: {ex.Message}");
+            }
+            catch (NotSupportedException)
+            {
+                // Reported already by the lenient pass, which threw nothing, so there is nothing to add here.
+            }
+        }
+
+        /// <summary>
+        /// Mirrors ListEnumConverter, which drops any handler it cannot parse, case sensitively and without a word.
+        /// </summary>
+        private static IEnumerable<string> UnrecognizedHandlers(JsonObject rootObject)
+        {
+            if (rootObject["handlers"] is not JsonArray handlers)
+            {
+                yield break;
+            }
+
+            foreach (var handler in handlers)
+            {
+                if (handler is JsonValue value
+                    && value.TryGetValue<string>(out var name)
+                    && !Enum.TryParse<ConfigurationHandler>(name, out _))
+                {
+                    yield return name;
+                }
+            }
         }
 
         private static string Abbreviate(string value)

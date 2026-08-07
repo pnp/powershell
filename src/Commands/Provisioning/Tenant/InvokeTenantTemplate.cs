@@ -81,7 +81,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             var configuration = new ApplyConfiguration();
             if (ParameterSpecified(nameof(Configuration)))
             {
-                configuration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
+                configuration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path, LogWarning);
             }
 
             configuration.SiteProvisionedDelegate = (title, url) =>

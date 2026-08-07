@@ -1,4 +1,5 @@
 ﻿using PnP.Framework.Provisioning.Model.Configuration;
+using System;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -17,13 +18,13 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             objectValue = configuration;
         }
 
-        internal ApplyConfiguration GetConfiguration(string currentFileSystemLocation)
+        internal ApplyConfiguration GetConfiguration(string currentFileSystemLocation, Action<string> logWarning = null)
         {
             if (objectValue != null)
             {
                 return objectValue;
             }
-            return ConfigurationPipeBindHelper.Resolve(value, currentFileSystemLocation, ApplyConfiguration.FromString);
+            return ConfigurationPipeBindHelper.Resolve(value, currentFileSystemLocation, ApplyConfiguration.FromString, logWarning);
         }
     }
 }

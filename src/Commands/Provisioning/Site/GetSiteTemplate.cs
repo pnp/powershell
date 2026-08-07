@@ -120,7 +120,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             ExtractConfiguration extractConfiguration = null;
             if (ParameterSpecified(nameof(Configuration)))
             {
-                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
+                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path, LogWarning);
             }
             if (PersistMultiLanguageResources == false && ResourceFilePrefix != null)
             {
