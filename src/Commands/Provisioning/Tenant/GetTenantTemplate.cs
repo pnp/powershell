@@ -37,6 +37,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ASFILE)]
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ASOBJECT)]
+        [ValidateNotNull]
         public ExtractConfigurationPipeBind Configuration;
 
         protected override void ExecuteCmdlet()

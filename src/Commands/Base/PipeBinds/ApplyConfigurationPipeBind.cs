@@ -23,31 +23,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 return objectValue;
             }
-            if (!string.IsNullOrEmpty(value))
-            {
-                // is it a path?
-                try
-                {
-                    string path = value;
-                    if (!System.IO.Path.IsPathRooted(value))
-                    {
-                        path = System.IO.Path.Combine(currentFileSystemLocation, path);
-                    }
-                    if (System.IO.File.Exists(path))
-                    {
-                        return ApplyConfiguration.FromString(System.IO.File.ReadAllText(path));
-                    }
-                    else
-                    {
-                        return ApplyConfiguration.FromString(value);
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-            return null;
+            return ConfigurationPipeBindHelper.Resolve(value, currentFileSystemLocation, ApplyConfiguration.FromString);
         }
     }
 }

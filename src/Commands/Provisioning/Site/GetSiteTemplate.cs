@@ -112,6 +112,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         public List<string> ListsToExtract;
 
         [Parameter(Mandatory = false)]
+        [ValidateNotNull]
         public ExtractConfigurationPipeBind Configuration;
 
         protected override void ExecuteCmdlet()

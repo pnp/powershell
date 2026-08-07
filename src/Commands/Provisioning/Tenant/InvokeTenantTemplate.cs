@@ -71,6 +71,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
         public SwitchParameter ClearNavigation;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [ValidateNotNull]
         public ApplyConfigurationPipeBind Configuration;
 
         protected override void ExecuteCmdlet()

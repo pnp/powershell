@@ -29,6 +29,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
         public SwitchParameter Force;
 
         [Parameter(Mandatory = false)]
+        [ValidateNotNull]
         public ExtractConfigurationPipeBind Configuration;
 
         [Parameter(Mandatory = false)]
