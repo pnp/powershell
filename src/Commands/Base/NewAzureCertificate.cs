@@ -75,7 +75,7 @@ namespace PnP.PowerShell.Commands.Base
                     OutPfx = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, OutPfx);
                 }
                 byte[] certData = certificate.Export(X509ContentType.Pfx, CertificatePassword);
-                File.WriteAllBytes(OutPfx, certData);
+                CertificateHelper.WritePrivateKeyFile(OutPfx, certData);
             }
 
             if (!string.IsNullOrWhiteSpace(OutCert))

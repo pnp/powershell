@@ -169,7 +169,8 @@ namespace PnP.PowerShell.Commands.Model
 				var list = clientContext.Web.Lists.GetByTitle("DO_NOT_DELETE_SPLIST_TENANTADMIN_ALL_SITES_AGGREGATED_SITECOLLECTIONS");
 				CamlQuery query = new CamlQuery
 				{
-					ViewXml = $"<View><Query><Where><Eq><FieldRef Name='SiteUrl' /><Value Type='Text'>{Url}</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
+					// The url is escaped as it goes into the CAML as element content, where an ampersand or an angle bracket would otherwise make the query malformed
+					ViewXml = $"<View><Query><Where><Eq><FieldRef Name='SiteUrl' /><Value Type='Text'>{System.Security.SecurityElement.Escape(Url)}</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
 				};
 
 				var listItems = list.GetItems(query);

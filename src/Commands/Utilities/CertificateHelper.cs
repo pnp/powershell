@@ -126,6 +126,38 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <returns>X509Certificate2 instance</returns>
         /// <exception cref="PSArgumentException">Thrown if the certificate cannot be read</exception>
         /// <exception cref="FileNotFoundException">Thrown if the certificate cannot be found at the provided path</exception>
+        /// <summary>
+        /// Writes a file which holds private key material, ensuring that only the current user is able to read it back.
+        /// </summary>
+        /// <param name="path">Path of the file to write to.</param>
+        /// <param name="contents">Contents to write, i.e. the exported PKCS#12 bytes.</param>
+        /// <remarks>
+        /// On Linux and macOS a file is created using the default permissions of the process, which the usual umask leaves at 0644, meaning any
+        /// local account could read the private key. The file is therefore created with the restrictive mode already applied rather than being
+        /// relaxed and tightened again, so that the key is never readable by others, not even briefly. Windows has no equivalent notion and throws
+        /// on these APIs, so there the file keeps inheriting the permissions of the folder it is written to.
+        /// </remarks>
+        internal static void WritePrivateKeyFile(string path, byte[] contents)
+        {
+            // Deliberately the framework check rather than the PnP one, as that is what lets the platform compatibility analyzer see that the code
+            // below is unreachable on Windows, where setting UnixCreateMode throws
+            if (System.OperatingSystem.IsWindows())
+            {
+                File.WriteAllBytes(path, contents);
+                return;
+            }
+
+            var fileStreamOptions = new FileStreamOptions
+            {
+                Mode = FileMode.Create,
+                Access = FileAccess.Write,
+                UnixCreateMode = UnixFileMode.UserRead | UnixFileMode.UserWrite
+            };
+
+            using var fileStream = File.Open(path, fileStreamOptions);
+            fileStream.Write(contents, 0, contents.Length);
+        }
+
         internal static X509Certificate2 GetCertificateFromPath(Cmdlet cmdlet, string certificatePath, SecureString certificatePassword,
             X509KeyStorageFlags x509KeyStorageFlags =
                         X509KeyStorageFlags.Exportable |
@@ -136,14 +168,14 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 Log.Debug("CertificateHelper", $"Reading certificate from file '{certificatePath}'");
 
-                var certFile = System.IO.File.OpenRead(certificatePath);
-                if (certFile.Length == 0)
+                // Read through to a byte array in one go rather than holding the file open: the stream used to be left undisposed, which kept the
+                // certificate file locked for as long as the PowerShell session lived, and the partial read it performed could hand a truncated
+                // certificate to the constructor below and have it reported as a corrupt certificate
+                var certificateBytes = System.IO.File.ReadAllBytes(certificatePath);
+                if (certificateBytes.Length == 0)
                 {
                     throw new PSArgumentException($"The specified certificate path '{certificatePath}' points to an empty file");
                 }
-
-                var certificateBytes = new byte[certFile.Length];
-                certFile.Read(certificateBytes, 0, (int)certFile.Length);
 
                 Log.Debug("CertificateHelper", $"Opening certificate in file '{certificatePath}' {(certificatePassword == null ? "without" : "using")} a certificate password");
                 try

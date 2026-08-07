@@ -1062,28 +1062,65 @@ namespace PnP.PowerShell.Commands.Base
                 {
 #pragma warning disable CA1416 // Validate platform compatibilit
                     RSACryptoServiceProvider rsaCSP = certificate.GetRSAPrivateKey() as RSACryptoServiceProvider;
-                    uniqueKeyContainerName = rsaCSP.CspKeyContainerInfo.KeyContainerName;
+                    uniqueKeyContainerName = rsaCSP?.CspKeyContainerInfo?.KeyContainerName;
 #pragma warning restore CA1416 // Validate platform compatibility
                 }
+
+                if (string.IsNullOrEmpty(uniqueKeyContainerName))
+                {
+                    Log.Debug("PnPConnection", "Unable to remove the private key of the certificate because its key container name could not be determined.");
+                    return;
+                }
+
                 certificate.Reset();
+
+                // Certificates are loaded using X509KeyStorageFlags.UserKeySet, which puts the key container in the profile of the current user
+                // rather than in the machine wide store. Only the machine wide store used to be looked at here, so nothing was ever removed. The
+                // machine wide path is still checked last for a certificate which was loaded with MachineKeySet instead.
+                var candidatePaths = new List<string>();
+
+                var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                if (!string.IsNullOrEmpty(appDataPath))
+                {
+                    // Where a key created through Cryptography Next Generation ends up, which is what a modern certificate uses
+                    candidatePaths.Add(Path.Combine(appDataPath, "Microsoft", "Crypto", "Keys", uniqueKeyContainerName));
+
+                    // Where a key created through the legacy cryptographic service providers ends up
+#pragma warning disable CA1416 // Validate platform compatibility, this whole block only runs on Windows
+                    var currentUserSid = System.Security.Principal.WindowsIdentity.GetCurrent()?.User?.Value;
+#pragma warning restore CA1416 // Validate platform compatibility
+                    if (!string.IsNullOrEmpty(currentUserSid))
+                    {
+                        candidatePaths.Add(Path.Combine(appDataPath, "Microsoft", "Crypto", "RSA", currentUserSid, uniqueKeyContainerName));
+                    }
+                }
 
                 var programDataPath = Environment.GetEnvironmentVariable("ProgramData");
                 if (string.IsNullOrEmpty(programDataPath))
                 {
                     programDataPath = @"C:\ProgramData";
                 }
-                try
+                candidatePaths.Add(Path.Combine(programDataPath, "Microsoft", "Crypto", "RSA", "MachineKeys", uniqueKeyContainerName));
+
+                foreach (var candidatePath in candidatePaths)
                 {
-                    var temporaryCertificateFilePath = $@"{programDataPath}\Microsoft\Crypto\RSA\MachineKeys\{uniqueKeyContainerName}";
-                    if (System.IO.File.Exists(temporaryCertificateFilePath))
+                    try
                     {
-                        System.IO.File.Delete(temporaryCertificateFilePath);
+                        if (System.IO.File.Exists(candidatePath))
+                        {
+                            System.IO.File.Delete(candidatePath);
+                            Log.Debug("PnPConnection", $"Removed the private key container of the certificate at '{candidatePath}'.");
+                            return;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        // Best effort cleanup, but no longer silent so that a failure to remove the key can be diagnosed
+                        Log.Debug("PnPConnection", $"Unable to remove the private key container of the certificate at '{candidatePath}': {e.Message}");
                     }
                 }
-                catch (Exception)
-                {
-                    // best effort cleanup
-                }
+
+                Log.Debug("PnPConnection", $"The private key container '{uniqueKeyContainerName}' of the certificate was not found in any of the known locations, so nothing was removed.");
             }
         }
 
