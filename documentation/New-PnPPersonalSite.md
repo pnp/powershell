@@ -26,7 +26,10 @@ New-PnPPersonalSite [-Email] <String[]> [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 
-Creates a OneDrive For Business site for the provided user(s)
+Creates a OneDrive For Business site for the provided user(s). The site is enqueued and actually created by a Timer Job later, so it will not exist yet when this cmdlet returns. If a user already has a OneDrive for Business site, the request for that user is silently ignored.
+
+> [!NOTE]
+> • The account or application running this cmdlet must be assigned at least the SharePoint Administrator role and must have a SharePoint Online license. The users the sites are provisioned for must also have a SharePoint license assigned.<br/><br/>• This only works for users who are allowed to sign in. Requests for users whose sign in is blocked do not result in a OneDrive for Business site being created.<br/><br/>• When pre-provisioning for a large number of users, it might take multiple days for the OneDrive locations to be created.
 
 ## EXAMPLES
 

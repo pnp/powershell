@@ -28,8 +28,10 @@ Request-PnPPersonalSite -UserEmails <String[]> [-NoWait] [-Connection <PnPConnec
 
 ## DESCRIPTION
 
-The Request-PnPPersonalSite cmdlet requests that the users specified be enqueued so that a Personal Site be created for each. The actual OneDrive for Business site is created by a Timer Job later.
+The Request-PnPPersonalSite cmdlet requests that the users specified be enqueued so that a Personal Site be created for each. The actual OneDrive for Business site is created by a Timer Job later. If a user already has a Personal Site, the request for that user is silently ignored.
 
+> [!NOTE]
+> • A maximum of 200 users can be specified and none of the entries may be empty. The cmdlet stops if it encounters an empty string in the array.<br/><br/>• The account or application running this cmdlet must be assigned at least the SharePoint Administrator role and must have a SharePoint Online license. The users the sites are provisioned for must also have a SharePoint license assigned.<br/><br/>• This only works for users who are allowed to sign in. Requests for users whose sign in is blocked do not result in a Personal Site being created.<br/><br/>• This cmdlet is NOT OneDrive Multi-Geo aware. On Multi-Geo enabled tenants you must run it for users in the region their data is to be hosted in. To retrieve users with a specific PDL, use: `Get-PnPEntraIDUser | Where {$_.PreferredDataLocation -eq "EUR"}`
 
 ## EXAMPLES
 
@@ -53,7 +55,7 @@ This example requests that for the provided user a OneDrive for Business site wi
 
 Specifies one or more user logins to be enqueued for the creation of a Personal Site. The Personal site is created by a Timer Job later. You can specify between 1 and 200 users.
 > [!NOTE]
-> If you are Pre-Provisioning OneDrive for many users, it might take up to 24 hours for the OneDrive locations to be created. If a user's OneDrive isn't ready after 24 hours, please contact Support.
+> If you are pre-provisioning OneDrive for a large number of users, it might take multiple days for the OneDrive locations to be created.
 
 ```yaml
 Type: String[]
