@@ -17,9 +17,19 @@ namespace PnP.PowerShell.Commands.Utilities
     {
         private class FieldUpdateValue
         {
+            /// <summary>
+            /// Internal name of the field to update. A field can be referenced by its display name through -Values, so this is
+            /// resolved from the field rather than taken from the name that was provided, both because the item is keyed on the
+            /// internal name and because the Author and Editor handling below needs to recognize those fields either way round.
+            /// </summary>
             public string Key { get; set; }
             public object Value { get; set; }
             public string FieldTypeString { get; set; }
+
+            /// <summary>
+            /// The resolved field, carried along for the field types that are set through the field rather than through the item.
+            /// </summary>
+            public Field Field { get; set; }
 
             public FieldUpdateValue(string key, object value)
             {
@@ -82,7 +92,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                             userValues.Add(new FieldUserValue() { LookupId = userId });
                                         }
                                     }
-                                    itemValues.Add(new FieldUpdateValue(key as string, userValues.ToArray(), null));
+                                    itemValues.Add(new FieldUpdateValue(field.InternalName, userValues.ToArray(), null));
                                 }
                                 else
                                 {
@@ -93,11 +103,11 @@ namespace PnP.PowerShell.Commands.Utilities
                                         var user = web.EnsureUser(userValue);
                                         clonedContext.Load(user);
                                         clonedContext.ExecuteQueryRetry();
-                                        itemValues.Add(new FieldUpdateValue(key as string, new FieldUserValue() { LookupId = user.Id }));
+                                        itemValues.Add(new FieldUpdateValue(field.InternalName, new FieldUserValue() { LookupId = user.Id }));
                                     }
                                     else
                                     {
-                                        itemValues.Add(new FieldUpdateValue(key as string, new FieldUserValue() { LookupId = userId }));
+                                        itemValues.Add(new FieldUpdateValue(field.InternalName, new FieldUserValue() { LookupId = userId }));
                                     }
                                 }
                                 break;
@@ -150,7 +160,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                             termValuesString = termValuesString.Substring(0, termValuesString.Length - 2);
 
                                             var newTaxFieldValue = new TaxonomyFieldValueCollection(context, termValuesString, taxField);
-                                            itemValues.Add(new FieldUpdateValue(key as string, newTaxFieldValue, field.TypeAsString));
+                                            itemValues.Add(new FieldUpdateValue(field.InternalName, newTaxFieldValue, field.TypeAsString) { Field = field });
                                         }
                                     }
                                     else
@@ -191,7 +201,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                     {
                                         taxValue.TermGuid = taxonomyItem.Id.ToString();
                                         taxValue.Label = taxonomyItem.Name;
-                                        itemValues.Add(new FieldUpdateValue(key as string, taxValue, field.TypeAsString));
+                                        itemValues.Add(new FieldUpdateValue(field.InternalName, taxValue, field.TypeAsString) { Field = field });
                                     }
                                     else
                                     {
@@ -232,12 +242,12 @@ namespace PnP.PowerShell.Commands.Utilities
                                 {
                                     throw new Exception("Field " + field.InternalName + " does not support multiple values");
                                 }
-                                itemValues.Add(new FieldUpdateValue(key as string, newVals));
+                                itemValues.Add(new FieldUpdateValue(field.InternalName, newVals));
                                 break;
                             }
                         default:
                             {
-                                itemValues.Add(new FieldUpdateValue(key as string, values[key]));
+                                itemValues.Add(new FieldUpdateValue(field.InternalName, values[key]));
                                 break;
                             }
                     }
@@ -268,13 +278,9 @@ namespace PnP.PowerShell.Commands.Utilities
 
             foreach (var itemValue in itemValues)
             {
-                // A field can be referenced by its display name, which is not what the item is keyed on, so assign to the
-                // internal name of the field that was resolved rather than to the name that was provided
-                var fieldName = fields.TryGetValue(itemValue.Key, out Field resolvedField) ? resolvedField.InternalName : itemValue.Key;
-
                 if (string.IsNullOrEmpty(itemValue.FieldTypeString))
                 {
-                    item[fieldName] = itemValue.Value;
+                    item[itemValue.Key] = itemValue.Value;
                 }
                 else
                 {
@@ -282,8 +288,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         case "TaxonomyFieldTypeMulti":
                             {
-                                fields.TryGetValue(itemValue.Key, out Field field);
-                                var taxField = context.CastTo<TaxonomyField>(field);
+                                var taxField = context.CastTo<TaxonomyField>(itemValue.Field);
                                 if (itemValue.Value is TaxonomyFieldValueCollection)
                                 {
                                     taxField.SetFieldValueByValueCollection(item, itemValue.Value as TaxonomyFieldValueCollection);
@@ -296,8 +301,7 @@ namespace PnP.PowerShell.Commands.Utilities
                             }
                         case "TaxonomyFieldType":
                             {
-                                fields.TryGetValue(itemValue.Key, out Field field);
-                                var taxField = context.CastTo<TaxonomyField>(field);
+                                var taxField = context.CastTo<TaxonomyField>(itemValue.Field);
                                 taxField.SetFieldValueByValue(item, itemValue.Value as TaxonomyFieldValue);
                                 break;
                             }
