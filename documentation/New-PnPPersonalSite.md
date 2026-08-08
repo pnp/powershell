@@ -13,7 +13,10 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPPersonalSite.htm
 
 **Required Permissions**
 
-* SharePoint: Access to the SharePoint Tenant Administration site
+Access to SharePoint admin site
+
+* SharePoint: AllSites.FullControl and User.ReadWrite.All when using delegated permissions
+* SharePoint: Sites.FullControl.All and User.ReadWrite.All when using application permissions
 
 ## SYNTAX
 
@@ -24,28 +27,6 @@ New-PnPPersonalSite [-Email] <String[]> [-Connection <PnPConnection>]
 ## DESCRIPTION
 
 Creates a OneDrive For Business site for the provided user(s)
-
-If you want to use this cmdlet in an automated script not requiring manual authentication, you *must* assign the following permission to your application registration from either Azure Active Directory or done through https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx with the following permission through https://tenant-admin.sharepoint.com/_layouts/appinv.aspx:
-
-`
-<AppPermissionRequests AllowAppOnlyPolicy="true">
-  <AppPermissionRequest Scope="http://sharepoint/social/tenant" Right="FullControl" />
-</AppPermissionRequests>
-`
-
-You then *must* connect using:
-
-`
-Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -ClientId <clientid> -ClientSecret <clientsecret>
-`
-
-Authenticating using a certificate is *not* possible and will throw an unauthorized exception. It does not require assigning any permissions in Azure Active Directory.
-
-If you want to run this cmdlet using an interactive login, you *must* connect using:
-
-`
-Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -UseWebLogin
-`
 
 ## EXAMPLES
 
