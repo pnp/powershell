@@ -45,16 +45,13 @@ namespace PnP.PowerShell.Commands.Utilities
             var clonedContext = context.Clone(context.Web.Url);
             var web = clonedContext.Web;
 
-            var fields =
-                     context.LoadQuery(list.Fields.Include(f => f.InternalName, f => f.Title,
-                         f => f.TypeAsString));
-            context.ExecuteQueryRetry();
-
             Hashtable values = valuesToSet ?? new Hashtable();
+
+            var fields = LoadFields(context, list, values.Keys);
 
             foreach (var key in values.Keys)
             {
-                var field = fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
+                fields.TryGetValue(key as string ?? string.Empty, out Field field);
                 if (field != null)
                 {
                     switch (field.TypeAsString)
@@ -71,10 +68,11 @@ namespace PnP.PowerShell.Commands.Utilities
                                 {
                                     foreach (var arrayItem in value as IEnumerable)
                                     {
+                                        var userValue = UnwrapValue(arrayItem);
                                         int userId;
-                                        if (!int.TryParse(arrayItem.ToString(), out userId))
+                                        if (!int.TryParse(userValue, out userId))
                                         {
-                                            var user = web.EnsureUser(arrayItem as string);
+                                            var user = web.EnsureUser(userValue);
                                             clonedContext.Load(user);
                                             clonedContext.ExecuteQueryRetry();
                                             userValues.Add(new FieldUserValue() { LookupId = user.Id });
@@ -88,10 +86,11 @@ namespace PnP.PowerShell.Commands.Utilities
                                 }
                                 else
                                 {
+                                    var userValue = UnwrapValue(value);
                                     int userId;
-                                    if (!int.TryParse(value as string, out userId))
+                                    if (!int.TryParse(userValue, out userId))
                                     {
-                                        var user = web.EnsureUser(value as string);
+                                        var user = web.EnsureUser(userValue);
                                         clonedContext.Load(user);
                                         clonedContext.ExecuteQueryRetry();
                                         itemValues.Add(new FieldUpdateValue(key as string, new FieldUserValue() { LookupId = user.Id }));
@@ -269,9 +268,13 @@ namespace PnP.PowerShell.Commands.Utilities
 
             foreach (var itemValue in itemValues)
             {
+                // A field can be referenced by its display name, which is not what the item is keyed on, so assign to the
+                // internal name of the field that was resolved rather than to the name that was provided
+                var fieldName = fields.TryGetValue(itemValue.Key, out Field resolvedField) ? resolvedField.InternalName : itemValue.Key;
+
                 if (string.IsNullOrEmpty(itemValue.FieldTypeString))
                 {
-                    item[itemValue.Key] = itemValue.Value;
+                    item[fieldName] = itemValue.Value;
                 }
                 else
                 {
@@ -279,7 +282,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         case "TaxonomyFieldTypeMulti":
                             {
-                                var field = fields.FirstOrDefault(f => f.InternalName == itemValue.Key as string || f.Title == itemValue.Key as string);
+                                fields.TryGetValue(itemValue.Key, out Field field);
                                 var taxField = context.CastTo<TaxonomyField>(field);
                                 if (itemValue.Value is TaxonomyFieldValueCollection)
                                 {
@@ -293,7 +296,7 @@ namespace PnP.PowerShell.Commands.Utilities
                             }
                         case "TaxonomyFieldType":
                             {
-                                var field = fields.FirstOrDefault(f => f.InternalName == itemValue.Key as string || f.Title == itemValue.Key as string);
+                                fields.TryGetValue(itemValue.Key, out Field field);
                                 var taxField = context.CastTo<TaxonomyField>(field);
                                 taxField.SetFieldValueByValue(item, itemValue.Value as TaxonomyFieldValue);
                                 break;
@@ -301,6 +304,61 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns the string representation of a value provided through -Values, unwrapping a PSObject where PowerShell
+        /// wrapped one. A user field accepts both a login name and a user id, and the id can reach us as a number rather
+        /// than as a string, so casting to string instead of converting would drop it.
+        /// </summary>
+        private static string UnwrapValue(object value)
+        {
+            var unwrapped = value is PSObject psObject ? psObject.BaseObject : value;
+            return unwrapped?.ToString();
+        }
+
+        /// <summary>
+        /// Retrieves only the fields that are referenced by the provided keys, instead of the entire field collection of the list,
+        /// which is a sizeable response to pay for on every call on a list carrying a hundred or more columns.
+        /// See https://github.com/pnp/powershell/issues/4311
+        /// </summary>
+        private static Dictionary<string, Field> LoadFields(ClientContext context, List list, ICollection keys)
+        {
+            var fields = new Dictionary<string, Field>();
+
+            foreach (var key in keys)
+            {
+                if (!(key is string name) || string.IsNullOrWhiteSpace(name) || fields.ContainsKey(name)) continue;
+
+                var field = list.Fields.GetByInternalNameOrTitle(name);
+                context.Load(field, f => f.InternalName, f => f.Title, f => f.TypeAsString);
+                fields.Add(name, field);
+            }
+
+            if (fields.Count == 0) return fields;
+
+            try
+            {
+                context.ExecuteQueryRetry();
+            }
+            catch (ServerException)
+            {
+                // At least one of the provided keys does not refer to an existing field, which fails the request as a whole.
+                // Fall back to retrieving the full field collection and matching against it, so that the field which cannot
+                // be found is reported as such rather than as a server error, at the cost of one request on this path only.
+                var allFields = context.LoadQuery(list.Fields.Include(f => f.InternalName, f => f.Title, f => f.TypeAsString));
+                context.ExecuteQueryRetry();
+
+                var resolvedFields = new Dictionary<string, Field>();
+                foreach (var name in fields.Keys)
+                {
+                    var field = allFields.FirstOrDefault(f => f.InternalName == name || f.Title == name);
+                    if (field != null) resolvedFields.Add(name, field);
+                }
+                return resolvedFields;
+            }
+
+            return fields;
         }
 
         private static Core.Model.SharePoint.IFieldValue GetTaxonomyFieldValue(object value, Core.Model.SharePoint.IField field , TaxonomySession taxSession, ClientContext context, int defaultLanguage, PnPBatch batch)
@@ -380,6 +438,10 @@ namespace PnP.PowerShell.Commands.Utilities
                 var field = fields.AsRequested().FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
                 if (field != null)
                 {
+                    // A field can be referenced by its display name, which is not what the item is keyed on, so assign to the
+                    // internal name of the field that was resolved rather than to the name that was provided
+                    var fieldName = field.InternalName;
+
                     switch (field.TypeAsString)
                     {
                         case "User":
@@ -395,9 +457,9 @@ namespace PnP.PowerShell.Commands.Utilities
                                     foreach (var arrayItem in (value as IEnumerable))
                                     {
                                         int userId;
-                                        if (!int.TryParse(arrayItem.ToString(), out userId))
+                                        if (!int.TryParse(UnwrapValue(arrayItem), out userId))
                                         {
-                                            var user = list.PnPContext.Web.EnsureUser(arrayItem as string);
+                                            var user = list.PnPContext.Web.EnsureUser(UnwrapValue(arrayItem));
                                             userValueCollection.Values.Add(field.NewFieldUserValue(user));
                                         }
                                         else
@@ -420,22 +482,22 @@ namespace PnP.PowerShell.Commands.Utilities
 
                                         }
                                     }
-                                    item[key as string] = userValueCollection;
+                                    item[fieldName] = userValueCollection;
                                 }
                                 else
                                 {
                                     int userId;
-                                    if (!int.TryParse(value as string, out userId))
+                                    if (!int.TryParse(UnwrapValue(value), out userId))
                                     {
-                                        var user = list.PnPContext.Web.EnsureUser(value as string);
-                                        item[key as string] = field.NewFieldUserValue(user);
+                                        var user = list.PnPContext.Web.EnsureUser(UnwrapValue(value));
+                                        item[fieldName] = field.NewFieldUserValue(user);
                                     }
                                     else
                                     {
                                         try
                                         {
                                             var fieldUserValue = list.PnPContext.Web.GetUserById(userId);
-                                            item[key as string] = field.NewFieldUserValue(fieldUserValue);
+                                            item[fieldName] = field.NewFieldUserValue(fieldUserValue);
                                         }
                                         catch
                                         {
@@ -444,7 +506,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                             var groupItem = list.PnPContext.Web.SiteGroups.AsRequested().Where(g => g.Id == userId).FirstOrDefault();
                                             if (groupItem != null)
                                             {
-                                                item[key as string] = field.NewFieldUserValue(groupItem);
+                                                item[fieldName] = field.NewFieldUserValue(groupItem);
                                             }
                                         }
                                     }
@@ -480,17 +542,17 @@ namespace PnP.PowerShell.Commands.Utilities
                                         fieldValueCollection.Values.Add(GetTaxonomyFieldValue(arrayItem, field, taxSession, clientContext, defaultLanguage, batch));
                                     }
 
-                                    item[key as string] = fieldValueCollection;
+                                    item[fieldName] = fieldValueCollection;
                                 }
                                 else
                                 {
                                     if (value == null)
                                     {
-                                        item[key as string] = null;
+                                        item[fieldName] = null;
                                     }
                                     else
                                     {
-                                        item[key as string] = GetTaxonomyFieldValue(value, field, taxSession, clientContext, defaultLanguage, batch);
+                                        item[fieldName] = GetTaxonomyFieldValue(value, field, taxSession, clientContext, defaultLanguage, batch);
                                     }
                                 }
                                 break;
@@ -510,7 +572,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                         var arrayValue = arr[i].ToString();
                                         fieldValueCollection.Values.Add(field.NewFieldLookupValue(int.Parse(arrayValue)));
                                     }
-                                    item[key as string] = fieldValueCollection;
+                                    item[fieldName] = fieldValueCollection;
                                 }
                                 else
                                 {
@@ -523,11 +585,11 @@ namespace PnP.PowerShell.Commands.Utilities
                                         {
                                             fieldValueCollection.Values.Add(field.NewFieldLookupValue(multiValue[i]));
                                         }
-                                        item[key as string] = fieldValueCollection;
+                                        item[fieldName] = fieldValueCollection;
                                     }
                                     else
                                     {
-                                        item[key as string] = field.NewFieldLookupValue(multiValue[0]);
+                                        item[fieldName] = field.NewFieldLookupValue(multiValue[0]);
                                     }
                                 }
                                 break;
@@ -572,14 +634,14 @@ namespace PnP.PowerShell.Commands.Utilities
                                     itemValue = choices?.ToString();
                                 }
 
-                                item[key as string] = itemValue;
+                                item[fieldName] = itemValue;
                                 break;
                             }
 
                         default:
                             {
                                 object itemValue = values[key] is PSObject ? ((PSObject)values[key]).BaseObject : values[key];
-                                item[key as string] = itemValue;
+                                item[fieldName] = itemValue;
                                 break;
                             }
                     }

@@ -146,6 +146,8 @@ Accept wildcard characters: False
 ### -Fields
 The fields to retrieve. If not specified all fields will be loaded in the returned list object.
 
+SharePoint refuses a query that asks for more than 12 lookup, person or managed metadata columns, reporting `The query cannot be completed because the number of lookup columns it contains exceeds the lookup column threshold`. When used together with `-Id` the fields are retrieved individually and this limit does not apply, but with the `All Items` and `By Unique Id` parameter sets the fields become the `ViewFields` of a query and the limit does. The same holds for a `<ViewFields>` clause passed through `-Query`. Note that a Person or Group, Managed Metadata, `Created By` or `Modified By` column each count as a lookup column. Omitting `-Fields` altogether is not subject to the limit either, as SharePoint then returns the columns it can rather than refusing the query.
+
 ```yaml
 Type: String[]
 Parameter Sets: All Items, By Id, By Unique Id
