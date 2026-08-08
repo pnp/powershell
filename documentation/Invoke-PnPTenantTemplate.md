@@ -105,6 +105,8 @@ Specify a JSON configuration to configure the provisioning process. Accepts eith
 
 A value that cannot be read, such as a path that does not exist or JSON that cannot be parsed, terminates the cmdlet. Earlier versions ignored such a value without reporting an error and applied the full template instead.
 
+See [The apply configuration](https://pnp.github.io/powershell/articles/apply-configuration.html) for the available properties and worked examples.
+
 ```yaml
 Type: ApplyConfigurationPipeBind
 Parameter Sets: (All)

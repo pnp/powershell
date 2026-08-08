@@ -50,6 +50,10 @@
       href: microsoftsearch.md  
     - name: Batching in PnP PowerShell
       href: batching.md
+    - name: The extract configuration (using PnP Provisioning Engine)
+      href: extract-configuration.md
+    - name: The apply configuration (using PnP Provisioning Engine)
+      href: apply-configuration.md
     - name: Upgrading from the Legacy version
       href: upgrading.md
     - name: Dealing with the ACS deprecation
