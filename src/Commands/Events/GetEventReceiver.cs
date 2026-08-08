@@ -39,11 +39,11 @@ namespace PnP.PowerShell.Commands.Events
 
                     if (ParameterSpecified(nameof(Identity)))
                     {
-                        WriteObject(Identity.GetEventReceiverOnList(list));
+                        WriteObject(EnsureRetrievals(Identity.GetEventReceiverOnList(list)));
                     }
                     else
                     {
-                        var query = ClientContext.LoadQuery(list.EventReceivers);
+                        var query = ClientContext.LoadQuery(list.EventReceivers.IncludeWithDefaultProperties(RetrievalExpressions));
                         ClientContext.ExecuteQueryRetry();
                         WriteObject(query, true);
                     }
@@ -55,11 +55,11 @@ namespace PnP.PowerShell.Commands.Events
                         case Enums.EventReceiverScope.Site:
                             if (ParameterSpecified(nameof(Identity)))
                             {
-                                WriteObject(Identity.GetEventReceiverOnSite(ClientContext.Site));
+                                WriteObject(EnsureRetrievals(Identity.GetEventReceiverOnSite(ClientContext.Site)));
                             }
                             else
                             {
-                                var query = ClientContext.LoadQuery(ClientContext.Site.EventReceivers);
+                                var query = ClientContext.LoadQuery(ClientContext.Site.EventReceivers.IncludeWithDefaultProperties(RetrievalExpressions));
                                 ClientContext.ExecuteQueryRetry();
                                 WriteObject(query, true);
                             }
@@ -68,11 +68,11 @@ namespace PnP.PowerShell.Commands.Events
                         case Enums.EventReceiverScope.Web:
                             if (ParameterSpecified(nameof(Identity)))
                             {
-                                WriteObject(Identity.GetEventReceiverOnWeb(CurrentWeb));
+                                WriteObject(EnsureRetrievals(Identity.GetEventReceiverOnWeb(CurrentWeb)));
                             }
                             else
                             {
-                                var query = ClientContext.LoadQuery(CurrentWeb.EventReceivers);
+                                var query = ClientContext.LoadQuery(CurrentWeb.EventReceivers.IncludeWithDefaultProperties(RetrievalExpressions));
                                 ClientContext.ExecuteQueryRetry();
                                 WriteObject(query, true);
                             }
@@ -83,20 +83,20 @@ namespace PnP.PowerShell.Commands.Events
 
                             if (ParameterSpecified(nameof(Identity)))
                             {
-                                var webEventReceiver = Identity.GetEventReceiverOnWeb(CurrentWeb);
-                                var siteReventReceiver = Identity.GetEventReceiverOnSite(ClientContext.Site);
+                                var webEventReceiver = EnsureRetrievals(Identity.GetEventReceiverOnWeb(CurrentWeb));
+                                var siteReventReceiver = EnsureRetrievals(Identity.GetEventReceiverOnSite(ClientContext.Site));
 
                                 eventReceivers.Add(webEventReceiver);
                                 eventReceivers.Add(siteReventReceiver);
                             }
                             else
                             {
-                                ClientContext.Load(CurrentWeb.EventReceivers);
-                                ClientContext.Load(ClientContext.Site.EventReceivers);
+                                var webEventReceivers = ClientContext.LoadQuery(CurrentWeb.EventReceivers.IncludeWithDefaultProperties(RetrievalExpressions));
+                                var siteEventReceivers = ClientContext.LoadQuery(ClientContext.Site.EventReceivers.IncludeWithDefaultProperties(RetrievalExpressions));
                                 ClientContext.ExecuteQueryRetry();
 
-                                eventReceivers.AddRange(CurrentWeb.EventReceivers);
-                                eventReceivers.AddRange(ClientContext.Site.EventReceivers);
+                                eventReceivers.AddRange(webEventReceivers);
+                                eventReceivers.AddRange(siteEventReceivers);
                             }
                             
                             WriteObject(eventReceivers, true);
@@ -104,6 +104,18 @@ namespace PnP.PowerShell.Commands.Events
                     }
                     break;
             }
+        }
+
+        /// <summary>
+        /// Loads the properties requested through -Includes on an event receiver which has been retrieved by its id or name. Returns the event receiver so it can be used inline.
+        /// </summary>
+        private EventReceiverDefinition EnsureRetrievals(EventReceiverDefinition eventReceiver)
+        {
+            if (eventReceiver != null && RetrievalExpressions.Length > 0)
+            {
+                eventReceiver.EnsureProperties(RetrievalExpressions);
+            }
+            return eventReceiver;
         }
     }
 }

@@ -86,6 +86,13 @@ Get-PnPFolderInFolder -FolderSiteRelativeUrl "SitePages" -Recurse
 
 Returns all folders, including those located in any subfolders, in the folder SitePages which is located in the root of the current web
 
+### EXAMPLE 8
+```powershell
+Get-PnPFolderInFolder -FolderSiteRelativeUrl "Shared Documents" -Includes ParentFolder
+```
+
+Returns all folders in the 'Shared Documents' folder with their ParentFolder property populated. Note that requesting additional properties this way increases the amount of data retrieved for every folder, so combining it with -Recurse on a large folder structure can become slow.
+
 ## PARAMETERS
 
 ### -Connection
@@ -145,7 +152,7 @@ Accept wildcard characters: False
 ```
 
 ### -Includes
-Optionally allows properties to be retrieved for the returned files which are not included in the response by default
+Optionally allows properties to be retrieved for the returned folders which are not included in the response by default, i.e. ParentFolder or Properties. Requesting additional properties increases the amount of data retrieved for every folder, which is especially noticeable when combined with -Recurse.
 
 ```yaml
 Type: String[]

@@ -141,16 +141,16 @@ namespace PnP.PowerShell.Commands.Files
                 }
             }
 
-            IEnumerable<Folder> folders = null;
-            if(ExcludeSystemFolders.ToBool())
+            // Load the default properties of the folders along with any additional properties requested through -Includes
+            IEnumerable<Folder> folders = ClientContext.LoadQuery(targetFolder.Folders.IncludeWithDefaultProperties(RetrievalExpressions));
+            ClientContext.ExecuteQueryRetry();
+
+            if (ExcludeSystemFolders.ToBool())
             {
-                folders = ClientContext.LoadQuery(targetFolder.Folders.IncludeWithDefaultProperties(f => f.ListItemAllFields)).Where(f => !ExcludeSystemFolders.ToBool() || !f.ListItemAllFields.ServerObjectIsNull.GetValueOrDefault(false)).OrderBy(f => f.Name);
+                folders = folders.Where(f => !f.ListItemAllFields.ServerObjectIsNull.GetValueOrDefault(false));
             }
-            else
-            {
-                folders = ClientContext.LoadQuery(targetFolder.Folders).OrderBy(f => f.Name);
-            }
-            ClientContext.ExecuteQueryRetry();        
+
+            folders = folders.OrderBy(f => f.Name);
 
             IEnumerable<Folder> folderContent = folders;
 

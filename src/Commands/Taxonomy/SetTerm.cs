@@ -90,7 +90,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
             {
                 var termGroup = TermGroup.GetGroup(termStore);
                 var termSet = TermSet.GetTermSet(termGroup);
-                term = Identity.GetTerm(ClientContext, termStore, termSet, false, null);
+                term = Identity.GetTerm(ClientContext, termStore, termSet, false, RetrievalExpressions);
             }
 
             if (ParameterSpecified(nameof(Name)))
