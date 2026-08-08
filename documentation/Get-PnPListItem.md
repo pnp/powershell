@@ -144,9 +144,13 @@ Accept wildcard characters: False
 ```
 
 ### -Fields
-The fields to retrieve. If not specified all fields will be loaded in the returned list object.
+The fields to retrieve.
 
-SharePoint refuses a query that asks for more than 12 lookup, person or managed metadata columns, reporting `The query cannot be completed because the number of lookup columns it contains exceeds the lookup column threshold`. When used together with `-Id` the fields are retrieved individually and this limit does not apply, but with the `All Items` and `By Unique Id` parameter sets the fields become the `ViewFields` of a query and the limit does. The same holds for a `<ViewFields>` clause passed through `-Query`. Note that a Person or Group, Managed Metadata, `Created By` or `Modified By` column each count as a lookup column. Omitting `-Fields` altogether is not subject to the limit either, as SharePoint then returns the columns it can rather than refusing the query.
+If not specified, what comes back depends on the parameter set. `By Id` returns every field of the item. The `All Items`, `By Unique Id` and `By Query` parameter sets retrieve items through a CAML query which projects no fields, and SharePoint then returns at most 12 lookup columns and silently omits the rest, so on a list holding more than 12 of them those columns are absent from `FieldValues` rather than being reported as an error.
+
+Naming the columns runs into the same threshold from the other side: SharePoint refuses a query that asks for more than 12 lookup columns, reporting `The query cannot be completed because the number of lookup columns it contains exceeds the lookup column threshold`. Together with `-Id` the fields are retrieved individually and the limit does not apply, but with `All Items` and `By Unique Id` the fields become the `ViewFields` of a query and it does, as it does for a `<ViewFields>` clause passed through `-Query`. A Lookup, Person or Group, Managed Metadata, `Created By` or `Modified By` column each count as one.
+
+To read more than 12 lookup columns of a list, retrieve them in groups of 12 or fewer, or retrieve the items one at a time with `-Id`.
 
 ```yaml
 Type: String[]

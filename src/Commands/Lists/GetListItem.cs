@@ -237,12 +237,16 @@ namespace PnP.PowerShell.Commands.Lists
             var names = new HashSet<string>(projectedFields ?? Enumerable.Empty<string>(), StringComparer.OrdinalIgnoreCase);
             if (names.Count <= LookupColumnThreshold) return 0;
 
+            // A FieldRef can name its field through ID rather than Name, in braced or unbraced form, so compare on the
+            // parsed value rather than on the text
+            var ids = new HashSet<Guid>(names.Select(n => Guid.TryParse(n, out Guid id) ? id : Guid.Empty).Where(id => id != Guid.Empty));
+
             try
             {
-                var fields = ClientContext.LoadQuery(list.Fields.Include(f => f.InternalName, f => f.Title, f => f.TypeAsString));
+                var fields = ClientContext.LoadQuery(list.Fields.Include(f => f.Id, f => f.InternalName, f => f.Title, f => f.TypeAsString));
                 ClientContext.ExecuteQueryRetry();
 
-                return fields.Count(f => (names.Contains(f.InternalName) || names.Contains(f.Title))
+                return fields.Count(f => (names.Contains(f.InternalName) || names.Contains(f.Title) || ids.Contains(f.Id))
                                          && LookupColumnTypes.Contains(f.TypeAsString));
             }
             catch (Exception)
@@ -253,8 +257,9 @@ namespace PnP.PowerShell.Commands.Lists
         }
 
         /// <summary>
-        /// Returns the columns a CAML view projects, so that a refused query can be checked against the lookup column threshold.
-        /// An empty result means the query projects whatever SharePoint decides to return, which the threshold does not apply to.
+        /// Returns the columns a CAML view projects, named by internal name or, where a FieldRef uses ID instead of Name, by
+        /// field id, so that a refused query can be checked against the lookup column threshold. An empty result means the
+        /// query projects whatever SharePoint decides to return, which the threshold does not apply to.
         /// </summary>
         private static IEnumerable<string> GetProjectedFields(string viewXml)
         {
@@ -265,7 +270,7 @@ namespace PnP.PowerShell.Commands.Lists
                 return XElement.Parse(viewXml)
                     .Descendants("ViewFields")
                     .Descendants("FieldRef")
-                    .Select(f => f.Attribute("Name")?.Value)
+                    .Select(f => f.Attribute("Name")?.Value ?? f.Attribute("ID")?.Value)
                     .Where(n => !string.IsNullOrEmpty(n))
                     .ToArray();
             }
