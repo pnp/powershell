@@ -2,6 +2,7 @@ using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Management.Automation;
 using System.Net;
 using System.Net.Http;
@@ -20,8 +21,9 @@ internal static class RecycleBinUtility
     /// <param name="ctx">The client context for the SharePoint site</param>
     /// <param name="rowLimit">Optional maximum number of items to retrieve</param>
     /// <param name="recycleBinStage">The recycle bin stage to query (first stage, second stage, or both)</param>
+    /// <param name="retrievals">Optional additional properties to load on each item, on top of the ones which are returned by default</param>
     /// <returns>A list of recycle bin items</returns>
-    internal static List<RecycleBinItem> GetRecycleBinItems(ClientContext ctx, int? rowLimit = null, RecycleBinItemState recycleBinStage = RecycleBinItemState.None)
+    internal static List<RecycleBinItem> GetRecycleBinItems(ClientContext ctx, int? rowLimit = null, RecycleBinItemState recycleBinStage = RecycleBinItemState.None, Expression<Func<RecycleBinItem, object>>[] retrievals = null)
     {
         var recycleBinItems = new List<RecycleBinItem>();
         string pagingInfo = null;
@@ -53,7 +55,14 @@ internal static class RecycleBinUtility
             }
 
             items = ctx.Site.GetRecycleBinItems(pagingInfo, iterationRowLimit, false, RecycleBinOrderBy.DefaultOrderBy, recycleBinStage);
+
+            // Load with and without the retrievals so the properties which are returned by default remain available alongside the ones which have been asked for explicitly
             ctx.Load(items);
+            if (retrievals != null && retrievals.Length > 0)
+            {
+                ctx.Load(items, i => i.Include(retrievals));
+            }
+
             ctx.ExecuteQueryRetry();
             recycleBinItems.AddRange(items.ToList());
 
