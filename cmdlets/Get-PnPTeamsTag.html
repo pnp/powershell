@@ -90,7 +90,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>Microsoft Graph API : TeamWorkTag.Read, Group.Read.All</li>
+<li>Microsoft Graph API: One of TeamworkTag.Read or TeamworkTag.ReadWrite (delegated), or one of TeamworkTag.Read.All or TeamworkTag.ReadWrite.All (application). Additionally Group.Read.All when -Team is supplied as a mail nickname or display name rather than as a group id, as resolving those reads the group from Microsoft Graph.</li>
 </ul>
 <p>Gets one or all tags in a team.</p>
 <h2 id="syntax">SYNTAX</h2>

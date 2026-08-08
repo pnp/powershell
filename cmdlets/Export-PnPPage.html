@@ -105,9 +105,22 @@
 <pre><code class="lang-powershell">Export-PnPPage -Identity HR/Home.aspx -Out template.pnp
 </code></pre>
 <p>Exports the page 'Home.aspx' to a new PnP Provisioning Template</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">@'
+{
+  &quot;pages&quot;: {
+    &quot;excludeAuthorInformation&quot;: true
+  }
+}
+'@ | Out-File extract.json
+
+Export-PnPPage -Identity Home.aspx -Out template.pnp -Configuration extract.json
+</code></pre>
+<p>Exports the page 'Home.aspx' without the author information of the page. The same JSON can be passed to <code>-Configuration</code> directly instead of through a file.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-configuration">-Configuration</h3>
-<p>Specify a JSON configuration file to configure the extraction progress.</p>
+<p>Specify a JSON configuration to configure the extraction process. Accepts either the path to a file containing the JSON, or the JSON itself.</p>
+<p>A value that cannot be read, such as a path that does not exist or JSON that cannot be parsed, terminates the cmdlet. Earlier versions ignored such a value without reporting an error and exported everything instead.</p>
 <pre><code class="lang-yaml">Type: ExtractConfigurationPipeBind
 Parameter Sets: (All)
 

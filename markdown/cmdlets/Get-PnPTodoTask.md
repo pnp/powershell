@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTodoTask.html
 
 **Required Permissions**
 
-  * Microsoft Graph API : One of Tasks.Read, Tasks.ReadWrite, Tasks.Read.All
+  * Microsoft Graph API: One of Tasks.Read or Tasks.ReadWrite (delegated), or Tasks.Read.All (application)
 
 Gets one Todo task or all Todo tasks from a Todo list by list Id or display name.
 

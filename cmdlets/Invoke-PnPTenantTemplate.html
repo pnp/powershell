@@ -126,6 +126,19 @@
 </code></pre>
 <p>Applies a tenant template to the current tenant. It will populate the parameter in the template the values as specified and in the template you can refer to those values with the {parameter:<key>} token.</key></p>
 <p>For instance with the example above, specifying {parameter:ListTitle} in your template will translate to 'Projects' when applying the template. These tokens can be used in most string values in a template.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">@'
+{
+  &quot;handlers&quot;: [ &quot;Lists&quot;, &quot;Fields&quot; ],
+  &quot;parameters&quot;: {
+    &quot;ListTitle&quot;: &quot;Projects&quot;
+  }
+}
+'@ | Out-File apply.json
+
+Invoke-PnPTenantTemplate -Path myfile.pnp -Configuration apply.json
+</code></pre>
+<p>Applies only the lists and fields of the template, populating the {parameter:ListTitle} token with 'Projects'. The same JSON can be passed to <code>-Configuration</code> directly instead of through a file.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-clearnavigation">-ClearNavigation</h3>
 <p>Override the RemoveExistingNodes attribute in the Navigation elements of the template. If you specify this value the navigation nodes will always be removed before adding the nodes in the template</p>
@@ -139,7 +152,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-configuration">-Configuration</h3>
-<p>Specify a JSON configuration file to configure the extraction progress.</p>
+<p>Specify a JSON configuration to configure the provisioning process. Accepts either the path to a file containing the JSON, or the JSON itself.</p>
+<p>A value that cannot be read, such as a path that does not exist or JSON that cannot be parsed, terminates the cmdlet. Earlier versions ignored such a value without reporting an error and applied the full template instead.</p>
 <pre><code class="lang-yaml">Type: ApplyConfigurationPipeBind
 Parameter Sets: (All)
 

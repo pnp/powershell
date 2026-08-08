@@ -87,6 +87,10 @@
         <article data-uid="">
 <h1 id="add-pnpplannerroster">Add-PnPPlannerRoster</h1>
 
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: Tasks.ReadWrite (delegated) or Tasks.ReadWrite.All (application)</li>
+</ul>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Creates a new Microsoft Planner Roster</p>
 <h2 id="syntax">SYNTAX</h2>
@@ -94,6 +98,7 @@
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Creates a new Microsoft Planner Roster</p>
+<p>The Microsoft Planner Roster APIs this cmdlet uses are only available through the beta endpoint of Microsoft Graph. Microsoft can change the permissions they require without notice, so verify the permissions above against Microsoft Learn if a call is unexpectedly denied.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPPlannerRoster

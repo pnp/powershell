@@ -90,7 +90,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>Microsoft Graph API: Group.ReadWrite.All</li>
+<li>Microsoft Graph API: One of Tasks.ReadWrite or Group.ReadWrite.All (delegated), or Tasks.ReadWrite.All (application). Additionally Group.Read.All when -Group is supplied as a mail nickname or display name rather than as a group id, as resolving those reads the group from Microsoft Graph.</li>
 </ul>
 <p>Creates a new Planner plan.</p>
 <h2 id="syntax">SYNTAX</h2>

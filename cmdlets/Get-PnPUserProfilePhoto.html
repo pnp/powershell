@@ -90,14 +90,14 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>Microsoft Graph API: One of ProfilePhoto.ReadWrite.All, User.ReadWrite or User.ReadWrite.All</li>
+<li>Microsoft Graph API: One of ProfilePhoto.Read.All, User.ReadBasic.All, or User.Read.All (delegated), or one of ProfilePhoto.Read.All or User.Read.All (application)</li>
 </ul>
 <p>Gets the profile picture of a user.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPUserProfilePhoto -Identity &lt;EntraIDUserPipeBind&gt; [-Filename &lt;String&gt;]  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet downloads the user profile photo to the specified path and filename. If no filename has been specified it will default to the Display Name of the user with the either the extension .png or .jpeg depending on the format of the file.</p>
+<p>This cmdlet downloads the user profile photo to the specified path and filename. If no filename has been specified it will default to the Display Name of the user with either the extension .jpg or .png depending on the format of the photo. On a connection which can read the photo but not the user behind it, such as one holding <code>ProfilePhoto.Read.All</code> only, the identifier provided through -Identity is used in place of the display name.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPUserProfilePhoto -Identity &quot;john@contoso.onmicrosoft.com&quot;
