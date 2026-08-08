@@ -6,7 +6,7 @@ description: Reference and recipes for the JSON configuration accepted by Get-Pn
 
 # The extract configuration (using PnP Provisioning Engine)
 
-`Get-PnPSiteTemplate`, `Get-PnPTenantTemplate` and `Export-PnPPage` accept a `-Configuration` parameter which describes what to take out of a site. It gives you control the individual switches on those cmdlets do not, such as extracting one named list together with its items.
+`Get-PnPSiteTemplate`, `Get-PnPTenantTemplate` and `Export-PnPPage` accept a `-Configuration` parameter which describes what to take out of a site. It gives you control that the individual switches on those cmdlets do not, such as extracting one named list together with its items.
 
 The value is either the path to a file holding the JSON, or the JSON itself:
 

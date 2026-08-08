@@ -319,7 +319,7 @@ Accept wildcard characters: False
 ```
 
 ### -Handlers
-Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting. For possible values for this parameter visit https://pnp.github.io/pnpframework/api/PnP.Framework.Provisioning.Model.Handlers.html
+Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what you're extracting. For possible values for this parameter visit https://pnp.github.io/pnpframework/api/PnP.Framework.Provisioning.Model.Handlers.html
 
 ```yaml
 Type: Handlers

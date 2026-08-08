@@ -177,9 +177,15 @@ foreach ($article in $articles) {
         throw "$($article.File) does not hold the generated properties markers."
     }
 
-    $tables = Get-PropertyTables $article.Type
+    # AppendLine writes the newline of whichever platform this runs on, so the generated tables are put
+    # onto the newline the article already uses. Without this the whole region is rewritten, and shows up
+    # as a diff, purely because the generator moved between Windows and Linux.
+    $newline = if ($content.Contains("`r`n")) { "`r`n" } else { "`n" }
+    $tables = (Get-PropertyTables $article.Type) -replace "`r`n", "`n"
+    if ($newline -eq "`r`n") { $tables = $tables -replace "`n", "`r`n" }
+
     $newContent = $content.Substring(0, $beginIndex + $beginMarker.Length) +
-        "`r`n`r`n" + $tables + "`r`n`r`n" +
+        $newline + $newline + $tables + $newline + $newline +
         $content.Substring($endIndex)
 
     if ($newContent -eq $content) {
@@ -194,6 +200,6 @@ foreach ($article in $articles) {
     }
 }
 
-if ($outOfDate -gt 0 -and -not $PSCmdlet.ShouldProcess('', '')) {
+if ($outOfDate -gt 0 -and $WhatIfPreference) {
     Write-Host "$outOfDate article(s) are out of date" -ForegroundColor Yellow
 }
