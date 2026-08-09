@@ -99,7 +99,7 @@ cannot do the job without a shell, and add `permissionMode: plan` when it does.*
 | `docs-sync` | no | Read, Grep and Glob cover the whole sweep |
 | `permissions-auditor` | no | Reads attributes and call sites; Learn lookups go through MCP |
 | `api-surface-diff` | **yes** | `git diff origin/dev...HEAD` has no tool equivalent — plan mode compensates |
-| `issue-triage` | **yes** | `git log` and the `gh` fallback are the job — plan mode compensates |
+| `issue-triage` | **no** | Its input is untrusted issue text; the read-only GitHub MCP server covers issues, comments and commit history without exposing a shell |
 | `cmdlet-scaffolder` | **yes** | Writes files and runs `dotnet build`; not read-only by design |
 
 ### The Copilot cloud agent does not read `.vscode/mcp.json`
@@ -222,7 +222,13 @@ Re-check if a server stops responding — hosted MCP endpoints and their auth fl
   Bearer …` header in your *user* config rather than in `.mcp.json`. Microsoft Learn needs nothing.
 - **VS Code (Copilot)** — [`.vscode/mcp.json`](../.vscode/mcp.json). VS Code offers to start the
   servers when the workspace opens; manage them from the tool picker or `MCP: List Servers`.
-- **Codex** — reads `~/.codex/config.toml`, which is per-user and cannot be committed:
+- **Codex** — [`.codex/config.toml`](../.codex/config.toml) is committed and configures both servers,
+  so a contributor needs no setup for Microsoft Learn. **Project config is only read once the project
+  is trusted** — Codex prompts on first use of a directory and otherwise skips every `.codex/` layer,
+  including the agents. If `/mcp` lists nothing, check trust before debugging anything else. The
+  GitHub server still needs a credential you supply: export `GITHUB_PAT_TOKEN`, or run
+  `codex mcp login github`. To override any of it per-user, the same keys work in
+  `~/.codex/config.toml`:
 
   ```toml
   [mcp_servers.microsoft_learn]
