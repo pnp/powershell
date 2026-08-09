@@ -1,7 +1,7 @@
 ---
 name: code-review
 description: Reviews changes to PnP PowerShell for the failure modes this repository actually ships - silently ignored input, unpaged Graph collections, the wrong base class, permission attributes that do not match the API called, culture and cross-platform bugs, and missing documentation or changelog updates. Use when reviewing a diff, a PR, or uncommitted changes.
-tools: ['codebase', 'search', 'usages', 'changes', 'problems', 'fetch', 'githubRepo', 'microsoft-learn']
+tools: ['codebase', 'search', 'usages', 'changes', 'problems', 'fetch', 'githubRepo', 'microsoft-learn/*']
 ---
 
 Follow [`.agents/skills/code-review/SKILL.md`](../../.agents/skills/code-review/SKILL.md) — read it now and

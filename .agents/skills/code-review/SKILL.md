@@ -73,15 +73,23 @@ permission flavour. It compiles, and it fails in someone's tenant. The table in
 
 ### How errors reach the user
 
-`PnPConnectedCmdlet.ProcessRecord` catches everything. Under the default error action it rethrows as
-`PSInvalidOperationException` with the original as inner; under `-ErrorAction Stop` it goes through
-`LoggingUtility.Error`, which builds an `ErrorRecord` around a **new bare `Exception` carrying only
-the message**. Exception types and inner exceptions do not survive that path, so anything the user
-needs must be in the message text. Do not rely on a custom exception type being observable.
+`PnPConnectedCmdlet.ProcessRecord` rethrows `PipelineStoppedException` untouched
+(`src/Commands/Base/PnPConnectedCmdlet.cs:57-60`) and catches everything else. Two paths, and the
+difference is the finding:
 
-Related: a fatal condition signalled with `WriteWarning` and then continuing, or a bare `throw`
-where `ThrowTerminatingError` with a real `ErrorCategory` and target object would tell the user
-which object failed. Both are findings.
+- **`WriteError` / `ThrowTerminatingError`** — under `-ErrorAction Stop` these surface as a pipeline
+  stop, rethrown unchanged. The `ErrorRecord`, its `ErrorCategory` and its target object all reach
+  the user intact.
+- **A raw `throw`** — hits the generic catch. Default error action: rethrown as
+  `PSInvalidOperationException` with the original as inner. Under `-ErrorAction Stop`, `Ignore` or
+  `SilentlyContinue`: `LogError` → `LoggingUtility.Error` → `WriteError(new ErrorRecord(new
+  Exception(message), source, ErrorCategory.NotSpecified, null))`. Type, inner exception, category
+  and target object are **all discarded**, so everything the user needs must be in the message text.
+
+So a raw `throw` carrying a custom exception type the caller is meant to inspect is a finding — the
+type is not observable on that path. So is a fatal condition signalled with `WriteWarning` and then
+continuing, and a `throw` where `ThrowTerminatingError` with a real `ErrorCategory` and target object
+would have told the user which object failed.
 
 ### Cmdlet conventions
 

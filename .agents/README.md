@@ -44,6 +44,25 @@ Skill rules worth knowing before editing one:
 - `name` is lowercase letters, numbers and hyphens only. `description` must say what it does *and
   when to use it*; that text is what the model matches against a request.
 
+### Tool allowlists and MCP
+
+If you add an agent, get this right or it will fail silently. **An explicit `tools` list is an
+allowlist — MCP tools you do not name are unavailable**, even though the server is configured in
+`.mcp.json` / `.vscode/mcp.json`. The two tools spell them differently:
+
+| Tool | MCP entry in `tools` |
+|---|---|
+| **Claude Code** (`.claude/agents/*.md`) | `mcp__<server>__<tool>`, e.g. `mcp__microsoft-learn__microsoft_docs_search`. One entry per tool; there is no wildcard. |
+| **Copilot** (`.github/agents/*.agent.md`) | `<server>/<tool>`, or `<server>/*` for the whole server, e.g. `microsoft-learn/*`. |
+
+A bare server name in Copilot's list (`'microsoft-learn'`) enables **nothing**. Note also that
+`githubRepo` is Copilot's built-in repo lookup — it is not the GitHub MCP server.
+
+The Microsoft Learn server exposes exactly three tools: `microsoft_docs_search`, `microsoft_docs_fetch`
+and `microsoft_code_sample_search`. The GitHub server's tool ids vary by version, so where an agent
+needs it under Claude Code, **omit `tools` entirely** and rely on the instructions for read-only
+discipline — a static allowlist cannot name ids that are not knowable in advance.
+
 > `.github/chatmodes/*.chatmode.md` is obsolete. Custom chat modes were renamed to custom agents;
 > `.chatmode.md` files are no longer recognised and must be renamed to `.agent.md` under
 > `.github/agents/`.

@@ -1,7 +1,7 @@
 ---
 name: issue-triage
 description: Takes a PnP PowerShell GitHub issue, finds the cmdlet that owns it, traces the code path, decides whether the cause is in this repo or in PnP Framework / PnP Core SDK / the service, and produces a hypothesis with a repro for a maintainer. Use when starting work from an issue number or a bug report. Read-only - produces a diagnosis, not a fix.
-tools: ['codebase', 'search', 'usages', 'changes', 'fetch', 'githubRepo', 'microsoft-learn']
+tools: ['codebase', 'search', 'usages', 'changes', 'fetch', 'githubRepo', 'github/*', 'microsoft-learn/*']
 ---
 
 Follow [`.agents/skills/issue-triage/SKILL.md`](../../.agents/skills/issue-triage/SKILL.md) — read it now

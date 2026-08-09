@@ -158,9 +158,17 @@ public class GetSomething : PnPWebRetrievalsCmdlet<SomeType>
   `ThrowTerminatingError` for fatal errors; messages in `Resources.resx`.
 - Destructive or overwriting behaviour needs `ShouldProcess`/`ShouldContinue` and `-Force`.
 
-Note: `PnPConnectedCmdlet.ProcessRecord` catches everything, and under `-ErrorAction Stop` rebuilds
-the error around a bare `Exception` carrying only the message. Exception types and inner exceptions
-do not survive — anything the user needs must be in the message text.
+Note how errors reach the user. `PnPConnectedCmdlet.ProcessRecord` rethrows `PipelineStoppedException`
+untouched first, then catches everything else. So there are two different paths:
+
+- **`WriteError` / `ThrowTerminatingError`** — under `-ErrorAction Stop` these surface as a pipeline
+  stop, which is rethrown unchanged. The `ErrorRecord` you built, with its category and target
+  object, reaches the user intact. Prefer them.
+- **A raw `throw`** — reaches the generic catch. Under the default error action it is rethrown as
+  `PSInvalidOperationException` with the original as inner; under `-ErrorAction Stop`, `Ignore` or
+  `SilentlyContinue` it goes to `LogError`, which writes `new ErrorRecord(new Exception(message),
+  …, ErrorCategory.NotSpecified, null)`. On that path the exception type, inner exception, category
+  and target object are all lost, so everything the user needs must be in the message text.
 
 ## Code style
 
@@ -177,7 +185,11 @@ do not survive — anything the user needs must be in the message text.
 - `EnforceCodeStyleInBuild` and `EnableNETAnalyzers` are on. Build warning-clean:
   `dotnet build src/PnP.PowerShell.sln`
 
-## Every change must include
+## Every cmdlet change must include
+
+This section applies to changes that **add, remove or alter a cmdlet or its parameters**. A change
+that touches no cmdlet — build scripts, agent configuration, CI, conceptual articles — needs none of
+it; do not invent a `documentation/<Verb-PnPNoun>.md` for work that ships no cmdlet.
 
 1. **Documentation** — `documentation/<Verb-PnPNoun>.md` created, updated or deleted alongside the
    code. Front matter, `## SYNOPSIS` with the **Required Permissions** block, `## SYNTAX`,
@@ -186,8 +198,8 @@ do not survive — anything the user needs must be in the message text.
    other fenced blocks there risk the external help build. Copy the structure from a sibling page.
 2. **Changelog** — a line under `[Current nightly]` → `Added` / `Changed` / `Fixed` / `Removed`,
    naming the cmdlets in backticks and linking the PR or issue. Behaviour changes go under `Changed`
-   even when they fix a bug.
-3. **A clean build.**
+   even when they fix a bug. Non-cmdlet changes only need an entry when a user would notice them.
+3. **A clean build.** This one applies to any change touching `src/`.
 
 Conceptual documentation belongs in `pages/articles/` and must be registered in `toc.yml`.
 `documentation/` is cmdlet reference only.

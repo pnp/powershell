@@ -52,11 +52,18 @@ These come from Microsoft's cmdlet development guidelines. Violations are user-f
 
 **Errors**
 - `ThrowTerminatingError(new ErrorRecord(...))` for fatal errors, with a meaningful
-  `ErrorCategory` and the object that caused it. Prefer it over a bare `throw`.
+  `ErrorCategory` and the object that caused it. Prefer it over a bare `throw` — and this is not
+  only style, it changes what the user receives:
+  - `WriteError` and `ThrowTerminatingError` surface under `-ErrorAction Stop` as a pipeline stop,
+    which `PnPConnectedCmdlet.ProcessRecord` rethrows untouched
+    (`src/Commands/Base/PnPConnectedCmdlet.cs:57-60`). Your `ErrorRecord`, its category and its
+    target object survive intact.
+  - A raw `throw` reaches the generic catch. Under the default error action it becomes
+    `PSInvalidOperationException` with the original as inner; under `-ErrorAction Stop`, `Ignore` or
+    `SilentlyContinue` it becomes `new ErrorRecord(new Exception(message), source,
+    ErrorCategory.NotSpecified, null)` — **type, inner exception, category and target object are all
+    lost**, so everything the user needs must be in the message text.
 - Error messages belong in `Resources.resx`, referenced as `Resources.MessageName`.
-- Know that `PnPConnectedCmdlet.ProcessRecord` catches everything and, under `-ErrorAction Stop`,
-  rebuilds it as a bare `Exception` carrying only the message. **Custom exception types and inner
-  exceptions do not survive.** Anything the user needs must be in the message text.
 
 ---
 

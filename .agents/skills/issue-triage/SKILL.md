@@ -93,10 +93,13 @@ From `ExecuteCmdlet()` forward. Check, in this order — these are the causes th
    path handling that assumes Windows. Presents as "only fails on my machine / on Linux".
 7. **Null dereference.** A reference-typed parameter without `[ValidateNotNull]`, passed `$null`.
 
-Note the error path too: `PnPConnectedCmdlet.ProcessRecord` catches everything, and under
-`-ErrorAction Stop` the exception is rebuilt as a bare `Exception` carrying only the message. Types
-and inner exceptions do not survive. If the user needs to know something, it must be in the message
-text — and a report of "unhelpful error" is often exactly this.
+Note the error path too, because "the error message tells me nothing" is a common report and usually
+has one cause. `PnPConnectedCmdlet.ProcessRecord` rethrows `PipelineStoppedException` untouched
+(`src/Commands/Base/PnPConnectedCmdlet.cs:57-60`), so anything raised through `WriteError` or
+`ThrowTerminatingError` keeps its full `ErrorRecord`. A raw `throw`, however, reaches the generic
+catch, and under `-ErrorAction Stop`, `Ignore` or `SilentlyContinue` is rebuilt as a bare `Exception`
+carrying only the message — type, inner exception, category and target object all discarded. If the
+reporter is missing detail that the underlying exception clearly had, that discard is your answer.
 
 ## Step 5 — report
 
