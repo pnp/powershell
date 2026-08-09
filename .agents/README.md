@@ -100,6 +100,7 @@ cannot do the job without a shell, and add `permissionMode: plan` when it does.*
 | `permissions-auditor` | no | Reads attributes and call sites; Learn lookups go through MCP |
 | `api-surface-diff` | **yes** | `git diff origin/dev...HEAD` has no tool equivalent — plan mode compensates |
 | `issue-triage` | **no** | Its input is untrusted issue text; the read-only GitHub MCP server covers issues, comments and commit history without exposing a shell |
+| `code-review` | **yes** | Needs `git diff` to see the change under review — Copilot and Codex only; in Claude Code it is a skill, which runs with the session's own tools |
 | `cmdlet-scaffolder` | **yes** | Writes files and runs `dotnet build`; not read-only by design |
 
 ### The Copilot cloud agent does not read `.vscode/mcp.json`
@@ -188,8 +189,9 @@ Two servers are worth wiring up. Both are hosted — nothing to install.
 | **GitHub** | `https://api.githubcopilot.com/mcp/readonly` | Issue and PR context. Work here starts from an issue, and [`issue-triage`](skills/issue-triage/SKILL.md) needs the comments, not just the body. |
 | **Microsoft Learn** | `https://learn.microsoft.com/api/mcp` | Graph and SharePoint endpoints, response shapes and least-privilege permission scopes. [`permissions-auditor`](skills/permissions-auditor/SKILL.md) and [`cmdlet-scaffolder`](skills/cmdlet-scaffolder/SKILL.md) depend on it — a scope recalled from memory is exactly the defect those playbooks exist to catch. |
 
-Skip filesystem and git MCP servers. Every agent here already has file access and a shell, and the
-extra tool definitions only cost context.
+Skip filesystem and git MCP servers. Every agent already reads files through its built-in tools, the
+two that need git have a shell, and the extra tool definitions only cost context — a filesystem
+server would also hand write access back to the profiles that deliberately have none.
 
 **The GitHub URL ends in `/readonly` deliberately.** The base endpoint exposes issue creation, PR
 creation, merging and commenting once OAuth completes — exactly what
