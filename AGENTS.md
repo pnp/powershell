@@ -195,7 +195,9 @@ that touches no cmdlet — build scripts, agent configuration, CI, conceptual ar
 it; do not invent a `documentation/<Verb-PnPNoun>.md` for work that ships no cmdlet.
 
 1. **Documentation** — `documentation/<Verb-PnPNoun>.md` created, updated or deleted alongside the
-   code. Front matter, `## SYNOPSIS` with the **Required Permissions** block, `## SYNTAX`,
+   code. Front matter, `## SYNOPSIS` with the **Required Permissions** block *where the cmdlet
+   declares API permissions* — a cmdlet carrying `ApiPermissionsNotRequired` must omit it, as all ten
+   such pages do today — `## SYNTAX`,
    `## DESCRIPTION`, `## EXAMPLES`, `## PARAMETERS`, `## RELATED LINKS`. Parameters listed
    **alphabetically**; `## PARAMETERS` contains ` ```yaml ` blocks and **nothing else fenced** —
    other fenced blocks there risk the external help build. Copy the structure from a sibling page.

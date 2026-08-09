@@ -99,7 +99,10 @@ would have told the user which object failed.
   otherwise `-Param $null` is a `NullReferenceException`
 - Permission attributes must match the APIs the cmdlet actually calls, in both directions —
   over-declaring forces users to grant access the cmdlet never uses
-- Destructive or overwriting behaviour needs `ShouldProcess`/`ShouldContinue` and `-Force`
+- Destructive or overwriting behaviour needs `ShouldProcess`, with `-Force` bypassing only a
+  secondary `ShouldContinue`. **`Force || ShouldProcess(...)` is a defect**: `-Force` short-circuits
+  the `||`, `ShouldProcess` is never called, and `-Force -WhatIf` performs the operation instead of
+  simulating it. `Force || ShouldContinue(...)` is the correct, repo-standard form
 - A renamed cmdlet keeps its old name as `[Alias]`
 
 ### Cross-platform

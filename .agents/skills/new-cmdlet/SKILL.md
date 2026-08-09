@@ -114,8 +114,10 @@ A cmdlet is not finished until all of these exist in the same PR:
    renaming.
 2. **Parameters** — PipeBinds, validation attributes, deliberate `Mandatory`/`Position`/pipeline
    binding; `ParameterSpecified` where a default is meaningful.
-3. **`documentation/<Verb-PnPNoun>.md`** — full platyPS page: front matter, `## SYNOPSIS` with the
-   **Required Permissions** block, `## SYNTAX` (one block per parameter set), `## DESCRIPTION`,
+3. **`documentation/<Verb-PnPNoun>.md`** — full platyPS page: front matter, `## SYNOPSIS` — carrying
+   a **Required Permissions** block **only when the cmdlet declares API permissions**; a cmdlet
+   marked `ApiPermissionsNotRequired` must not have one, and none of the ten such pages does —
+   `## SYNTAX` (one block per parameter set), `## DESCRIPTION`,
    `## EXAMPLES` (at least one, ` ```powershell ` fenced, each with a sentence of explanation),
    `## PARAMETERS` **alphabetical, YAML blocks only**, including the standard `-Connection` and
    `-Verbose` sections, then `## RELATED LINKS`. Copy the structure from a sibling page.

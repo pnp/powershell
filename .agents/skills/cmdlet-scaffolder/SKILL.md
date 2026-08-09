@@ -72,8 +72,10 @@ attributes, PipeBind parameters with validation attributes, `ExecuteCmdlet()` ov
 
 - Front matter — `Module Name`, `title`, `schema: 2.0.0`, `applicable`, `external help file`,
   `online version` slug matching the cmdlet name exactly
-- `## SYNOPSIS` — the **Required Permissions** block, stating the same scopes as the attributes with
-  the same delegated/application split, then a one-line summary
+- `## SYNOPSIS` — a **Required Permissions** block stating the same scopes as the attributes with the
+  same delegated/application split, then a one-line summary. **Omit the block entirely** if the
+  cmdlet carries `ApiPermissionsNotRequired`; adding one there contradicts the attribute and the
+  existing pages
 - `## SYNTAX` — one ` ```powershell ` block per parameter set
 - `## DESCRIPTION`
 - `## EXAMPLES` — at least one, realistic, each followed by a sentence explaining it

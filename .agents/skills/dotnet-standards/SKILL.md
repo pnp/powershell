@@ -46,8 +46,21 @@ These come from Microsoft's cmdlet development guidelines. Violations are user-f
 
 **Safety**
 - Anything destructive or overwriting: `SupportsShouldProcess = true`, then actually call
-  `ShouldProcess`/`ShouldContinue`, plus `-Force` to bypass. Adding a prompt where none existed
-  breaks unattended scripts — see [`api-surface-diff`](../api-surface-diff/SKILL.md).
+  `ShouldProcess`. Adding a prompt where none existed breaks unattended scripts — see
+  [`api-surface-diff`](../api-surface-diff/SKILL.md).
+- **`-Force` may bypass `ShouldContinue`, never `ShouldProcess`.** `ShouldProcess` is what implements
+  `-WhatIf` and `-Confirm`, so short-circuiting it breaks simulation:
+
+  ```csharp
+  if (Force || ShouldContinue($"Remove {Identity}?", Resources.Confirm))   // correct — the repo's pattern
+  if (Force || ShouldProcess($"{target}", "Remove"))                       // WRONG — -Force -WhatIf deletes
+  ```
+
+  In the second form `-Force` short-circuits the `||`, `ShouldProcess` is never called, and
+  `-Force -WhatIf` performs the operation instead of simulating it. Where both are wanted, gate on
+  `ShouldProcess` first and use `Force ||` only on the inner `ShouldContinue`. This is a live defect
+  in `src/Commands/Apps/RemoveEntraIDServicePrincipalAppRoleAssignment.cs:52` — flag it if you touch
+  that file, and never copy that line as a model.
 - Never hardcode credentials, tenant names or endpoints.
 
 **Errors**
