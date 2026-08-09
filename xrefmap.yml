@@ -13,6 +13,12 @@ references:
 - uid: pnp.powershell.articles
   name: PnP PowerShell articles
   href: articles/index.html
+- uid: pnp.powershell.articles.apply-configuration
+  name: The apply configuration (using PnP Provisioning Engine)
+  href: articles/apply-configuration.html
+- uid: pnp.powershell.articles.extract-configuration
+  name: The extract configuration (using PnP Provisioning Engine)
+  href: articles/extract-configuration.html
 - uid: pnp.powershell.authentication
   name: Authentication
   href: articles/authentication.html

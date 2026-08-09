@@ -54,6 +54,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/apply-configuration.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/apply-configuration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/authentication.md",
       "output": {
         ".html": {
@@ -208,6 +218,16 @@
       "output": {
         ".html": {
           "relative_path": "articles/environmentvariables.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/extract-configuration.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/extract-configuration.html"
         }
       },
       "version": ""

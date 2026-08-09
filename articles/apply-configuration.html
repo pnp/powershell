@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>The apply configuration (using PnP Provisioning Engine) | PnP PowerShell </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="The apply configuration (using PnP Provisioning Engine) | PnP PowerShell ">
+      <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+      <meta name="description" content="Reference and recipes for the JSON configuration accepted by Invoke-PnPTenantTemplate.">
+      <link rel="icon" href="../images/favicon-pnp.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pnp/powershell/blob/dev/pages/articles/apply-configuration.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="PnP PowerShell">
+            PnP PowerShell
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="pnp.powershell.articles.apply-configuration">
+<h1 id="the-apply-configuration-using-pnp-provisioning-engine">The apply configuration (using PnP Provisioning Engine)</h1>
+
+<p><code>Invoke-PnPTenantTemplate</code> accepts a <code>-Configuration</code> parameter which describes how a template is applied. It covers the same ground as the individual switches on the cmdlet, and adds the template parameters.</p>
+<p>The value is either the path to a file holding the JSON, or the JSON itself:</p>
+<pre><code class="lang-powershell">Invoke-PnPTenantTemplate -Path template.pnp -Configuration .\apply.json
+Invoke-PnPTenantTemplate -Path template.pnp -Configuration '{ &quot;handlers&quot;: [ &quot;Lists&quot; ] }'
+</code></pre>
+<p>A configuration which cannot be read is an error, not something that is passed over: a path which does not exist, JSON which cannot be parsed, a null anywhere in it, or a <code>handlers</code> array in which no name is recognized will all stop the cmdlet before anything is applied. A property or a handler name which is not recognized is reported as a warning and then ignored.</p>
+<p>For extracting a template, see <a href="extract-configuration.html">The extract configuration</a>.</p>
+<h2 id="things-which-are-easy-to-get-wrong">Things which are easy to get wrong</h2>
+<p><strong>Leaving <code>handlers</code> out applies the whole template.</strong> Omit the property, or pass an empty array, and every handler runs. This matters more here than when extracting: a misspelling in <code>handlers</code> would mean applying everything to a tenant rather than the subset you intended, so a <code>handlers</code> array whose names are all unrecognized is rejected.</p>
+<p><strong>Handler names are case sensitive.</strong> <code>&quot;Lists&quot;</code> is a handler, <code>&quot;lists&quot;</code> is not.</p>
+<p><strong><code>parameters</code> feeds the <code>{parameter:key}</code> tokens in the template.</strong> Keys and values are both strings and the keys are free-form, so nothing here is validated against the template. A key the template never refers to is silently unused, and a token the template refers to but you do not supply stays unresolved.</p>
+<p><strong><code>lists.ignoreDuplicateDataRowErrors</code> is how you make a re-run survive existing rows.</strong> Applying a template holding data rows a second time will otherwise fail on the rows already there, unless the template's <code>DataRows</code> element sets a <code>KeyColumn</code>.</p>
+<h2 id="recipes">Recipes</h2>
+<h3 id="apply-only-the-lists-and-fields-of-a-template">Apply only the lists and fields of a template</h3>
+<pre><code class="lang-json">{
+  &quot;handlers&quot;: [ &quot;Lists&quot;, &quot;Fields&quot; ]
+}
+</code></pre>
+<h3 id="supply-the-templates-parameters">Supply the template's parameters</h3>
+<pre><code class="lang-json">{
+  &quot;handlers&quot;: [ &quot;Lists&quot;, &quot;Fields&quot; ],
+  &quot;parameters&quot;: {
+    &quot;ListTitle&quot;: &quot;Projects&quot;,
+    &quot;Owner&quot;: &quot;megan@contoso.onmicrosoft.com&quot;
+  }
+}
+</code></pre>
+<p>Wherever the template holds <code>{parameter:ListTitle}</code> it resolves to <code>Projects</code>.</p>
+<h3 id="re-apply-a-template-which-carries-data-rows">Re-apply a template which carries data rows</h3>
+<pre><code class="lang-json">{
+  &quot;handlers&quot;: [ &quot;Lists&quot; ],
+  &quot;lists&quot;: {
+    &quot;ignoreDuplicateDataRowErrors&quot;: true
+  }
+}
+</code></pre>
+<h3 id="apply-content-types-and-fields-down-to-the-subsites">Apply content types and fields down to the subsites</h3>
+<pre><code class="lang-json">{
+  &quot;handlers&quot;: [ &quot;ContentTypes&quot;, &quot;Fields&quot; ],
+  &quot;contentTypes&quot;: {
+    &quot;provisionContentTypesToSubWebs&quot;: true
+  },
+  &quot;fields&quot;: {
+    &quot;provisionFieldsToSubWebs&quot;: true
+  }
+}
+</code></pre>
+<h2 id="properties">Properties</h2>
+<!-- BEGIN GENERATED PROPERTIES -->
+<h3 id="section"><code>$</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>contentTypes</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>extensibility</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>handlers</code></td>
+<td>array of strings, see <a href="#configurationhandler-values">ConfigurationHandler values</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>lists</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>navigation</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>parameters</code></td>
+<td>object with free-form string keys and string values</td>
+<td></td>
+</tr>
+<tr>
+<td><code>propertyBag</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>tenant</code></td>
+<td>object</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="contenttypes"><code>$.contentTypes</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>provisionContentTypesToSubWebs</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="extensibility"><code>$.extensibility</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>handlers</code></td>
+<td>array of <code>ExtensibilityHandler</code> objects</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="fields"><code>$.fields</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>provisionFieldsToSubWebs</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="lists"><code>$.lists</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ignoreDuplicateDataRowErrors</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="navigation"><code>$.navigation</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>clearNavigation</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="propertybag"><code>$.propertyBag</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>overwriteSystemValues</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="tenant"><code>$.tenant</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>doNotWaitForSitesToBeFullyCreated</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="configurationhandler-values">ConfigurationHandler values</h3>
+<p>These names are case sensitive.</p>
+<ul>
+<li><code>AuditSettings</code></li>
+<li><code>ComposedLook</code></li>
+<li><code>CustomActions</code></li>
+<li><code>ExtensibilityProviders</code></li>
+<li><code>Features</code></li>
+<li><code>Fields</code></li>
+<li><code>Files</code></li>
+<li><code>Lists</code></li>
+<li><code>Pages</code></li>
+<li><code>Publishing</code></li>
+<li><code>RegionalSettings</code></li>
+<li><code>SearchSettings</code></li>
+<li><code>SitePolicy</code></li>
+<li><code>SupportedUILanguages</code></li>
+<li><code>Taxonomy</code></li>
+<li><code>Workflows</code></li>
+<li><code>SiteSecurity</code></li>
+<li><code>ContentTypes</code></li>
+<li><code>PropertyBagEntries</code></li>
+<li><code>WebSettings</code></li>
+<li><code>Navigation</code></li>
+<li><code>ImageRenditions</code></li>
+<li><code>ApplicationLifecycleManagement</code></li>
+<li><code>Tenant</code></li>
+<li><code>WebApiPermissions</code></li>
+<li><code>SiteHeader</code></li>
+<li><code>SiteFooter</code></li>
+<li><code>Theme</code></li>
+<li><code>SiteSettings</code></li>
+<li><code>SyntexModels</code></li>
+</ul>
+<!-- END GENERATED PROPERTIES -->
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/apply-configuration.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

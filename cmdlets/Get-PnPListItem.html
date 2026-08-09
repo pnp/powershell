@@ -172,7 +172,10 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-fields">-Fields</h3>
-<p>The fields to retrieve. If not specified all fields will be loaded in the returned list object.</p>
+<p>The fields to retrieve.</p>
+<p>If not specified, what comes back depends on the parameter set. <code>By Id</code> returns every field of the item. The <code>All Items</code>, <code>By Unique Id</code> and <code>By Query</code> parameter sets retrieve items through a CAML query which projects no fields, and SharePoint then returns at most 12 lookup columns and silently omits the rest, so on a list holding more than 12 of them those columns are absent from <code>FieldValues</code> rather than being reported as an error.</p>
+<p>Naming the columns runs into the same threshold from the other side: SharePoint refuses a query that asks for more than 12 lookup columns, reporting <code>The query cannot be completed because the number of lookup columns it contains exceeds the lookup column threshold</code>. Together with <code>-Id</code> the fields are retrieved individually and the limit does not apply, but with <code>All Items</code> and <code>By Unique Id</code> the fields become the <code>ViewFields</code> of a query and it does, as it does for a <code>&lt;ViewFields&gt;</code> clause passed through <code>-Query</code>. A Lookup, Person or Group, Managed Metadata, <code>Created By</code> or <code>Modified By</code> column each count as one.</p>
+<p>To read more than 12 lookup columns of a list, retrieve them in groups of 12 or fewer, or retrieve the items one at a time with <code>-Id</code>.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: All Items, By Id, By Unique Id
 

@@ -131,6 +131,10 @@
 <pre><code class="lang-powershell">Get-PnPFolderInFolder -FolderSiteRelativeUrl &quot;SitePages&quot; -Recurse
 </code></pre>
 <p>Returns all folders, including those located in any subfolders, in the folder SitePages which is located in the root of the current web</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Get-PnPFolderInFolder -FolderSiteRelativeUrl &quot;Shared Documents&quot; -Includes ParentFolder
+</code></pre>
+<p>Returns all folders in the 'Shared Documents' folder with their ParentFolder property populated. Note that requesting additional properties this way increases the amount of data retrieved for every folder, so combining it with -Recurse on a large folder structure can become slow.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection</p>
@@ -177,7 +181,7 @@ Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-includes">-Includes</h3>
-<p>Optionally allows properties to be retrieved for the returned files which are not included in the response by default</p>
+<p>Optionally allows properties to be retrieved for the returned folders which are not included in the response by default, i.e. ParentFolder or Properties. Requesting additional properties increases the amount of data retrieved for every folder, which is especially noticeable when combined with -Recurse.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 

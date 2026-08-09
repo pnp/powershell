@@ -201,6 +201,7 @@ Get-PnPSiteTemplate -Out template.xml -Configuration extract.json
 <h3 id="-configuration">-Configuration</h3>
 <p>Specify a JSON configuration to configure the extraction process. Accepts either the path to a file containing the JSON, or the JSON itself.</p>
 <p>A value that cannot be read, such as a path that does not exist or JSON that cannot be parsed, terminates the cmdlet. Earlier versions ignored such a value without reporting an error and extracted everything instead.</p>
+<p>See <a href="https://pnp.github.io/powershell/articles/extract-configuration.html">The extract configuration</a> for the available properties and worked examples.</p>
 <pre><code class="lang-yaml">Type: ExtractConfigurationPipeBind
 Parameter Sets: (All)
 
@@ -301,7 +302,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-handlers">-Handlers</h3>
-<p>Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting. For possible values for this parameter visit <a href="https://learn.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers">https://learn.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers</a></p>
+<p>Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what you're extracting. For possible values for this parameter visit <a href="https://pnp.github.io/pnpframework/api/PnP.Framework.Provisioning.Model.Handlers.html">https://pnp.github.io/pnpframework/api/PnP.Framework.Provisioning.Model.Handlers.html</a></p>
 <pre><code class="lang-yaml">Type: Handlers
 Parameter Sets: (All)
 Accepted values: All, ApplicationLifecycleManagement, AuditSettings, ComposedLook, ContentTypes, CustomActions, ExtensibilityProviders, Features, Fields, Files, ImageRenditions, Lists, Navigation, None, PageContents, Pages, PropertyBagEntries, Publishing, RegionalSettings, SearchSettings, SiteFooter, SiteHeader, SitePolicy, SiteSecurity, SiteSettings, SupportedUILanguages, SyntexModels, Tenant, TermGroups, Theme, WebApiPermissions, WebSettings, Workflows

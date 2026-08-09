@@ -98,6 +98,8 @@ Specify a JSON configuration to configure the extraction process. Accepts either
 
 A value that cannot be read, such as a path that does not exist or JSON that cannot be parsed, terminates the cmdlet. Earlier versions ignored such a value without reporting an error and extracted everything instead.
 
+See [The extract configuration](https://pnp.github.io/powershell/articles/extract-configuration.html) for the available properties and worked examples.
+
 ```yaml
 Type: ExtractConfigurationPipeBind
 Parameter Sets: (All)

@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>The extract configuration (using PnP Provisioning Engine) | PnP PowerShell </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="The extract configuration (using PnP Provisioning Engine) | PnP PowerShell ">
+      <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+      <meta name="description" content="Reference and recipes for the JSON configuration accepted by Get-PnPSiteTemplate, Get-PnPTenantTemplate and Export-PnPPage.">
+      <link rel="icon" href="../images/favicon-pnp.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pnp/powershell/blob/dev/pages/articles/extract-configuration.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="PnP PowerShell">
+            PnP PowerShell
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="pnp.powershell.articles.extract-configuration">
+<h1 id="the-extract-configuration-using-pnp-provisioning-engine">The extract configuration (using PnP Provisioning Engine)</h1>
+
+<p><code>Get-PnPSiteTemplate</code>, <code>Get-PnPTenantTemplate</code> and <code>Export-PnPPage</code> accept a <code>-Configuration</code> parameter which describes what to take out of a site. It gives you control that the individual switches on those cmdlets do not, such as extracting one named list together with its items.</p>
+<p>The value is either the path to a file holding the JSON, or the JSON itself:</p>
+<pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.xml -Configuration .\extract.json
+Get-PnPSiteTemplate -Out template.xml -Configuration '{ &quot;handlers&quot;: [ &quot;Lists&quot; ] }'
+</code></pre>
+<p>A configuration which cannot be read is an error, not something that is passed over: a path which does not exist, JSON which cannot be parsed, a null anywhere in it, or a <code>handlers</code> array in which no name is recognized will all stop the cmdlet. A property or a handler name which is not recognized is reported as a warning and then ignored, so a configuration written for a newer version still applies the parts this version understands.</p>
+<p>For applying a template, see <a href="apply-configuration.html">The apply configuration</a>.</p>
+<h2 id="things-which-are-easy-to-get-wrong">Things which are easy to get wrong</h2>
+<p><strong>Leaving <code>handlers</code> out is not the same as an empty list.</strong> Omit the property and every handler runs. An empty array does the same. Only a non-empty array narrows the work, and because a misspelled name is dropped, a <code>handlers</code> array whose names are all wrong would otherwise quietly widen the extract to everything. That case is rejected.</p>
+<p><strong>Handler names are case sensitive.</strong> <code>&quot;Lists&quot;</code> is a handler, <code>&quot;lists&quot;</code> is not.</p>
+<p><strong><code>includeItems</code> only produces data rows for lists.</strong> On a document library the items are the files, so they come out as <code>&lt;pnp:Files&gt;</code> in the template rather than <code>&lt;pnp:DataRows&gt;</code>. Setting <code>includeItems</code> on a library is not an error and not a no-op, it simply does not give you data rows.</p>
+<p><strong>Naming a list under <code>lists.lists</code> narrows the whole Lists handler.</strong> Once you name one, only the ones you name are extracted.</p>
+<p><strong><code>title</code> takes the list title or the list ID, not a URL.</strong> A value which parses as a GUID is matched against the list ID; anything else has to equal the list title exactly. A server relative path such as <code>Lists/Events</code> matches nothing and leaves you with an empty template.</p>
+<p><strong>Addressing a list by ID and asking for its items at the same time currently fails</strong> with an <code>Object reference not set to an instance of an object</code> from PnP Framework. Use the list title when you need <code>includeItems</code>.</p>
+<p><strong>A property name which does not exist is ignored.</strong> <code>includeItem</code> instead of <code>includeItems</code> used to leave you with a template that silently held no items. It is now reported as a warning, but the setting still has no effect, so read the warnings.</p>
+<h2 id="recipes">Recipes</h2>
+<h3 id="extract-one-list-together-with-its-items">Extract one list together with its items</h3>
+<pre><code class="lang-json">{
+  &quot;handlers&quot;: [ &quot;Lists&quot; ],
+  &quot;lists&quot;: {
+    &quot;lists&quot;: [
+      { &quot;title&quot;: &quot;Events&quot;, &quot;includeItems&quot;: true }
+    ]
+  }
+}
+</code></pre>
+<p>The <code>&lt;pnp:ListInstance&gt;</code> for Events carries a <code>&lt;pnp:DataRows&gt;</code> element, one <code>&lt;pnp:DataRow&gt;</code> per item.</p>
+<h3 id="extract-only-some-columns-of-the-items-newest-first">Extract only some columns of the items, newest first</h3>
+<pre><code class="lang-json">{
+  &quot;handlers&quot;: [ &quot;Lists&quot; ],
+  &quot;lists&quot;: {
+    &quot;lists&quot;: [
+      {
+        &quot;title&quot;: &quot;Events&quot;,
+        &quot;includeItems&quot;: true,
+        &quot;skipEmptyFields&quot;: true,
+        &quot;query&quot;: {
+          &quot;camlQuery&quot;: &quot;&lt;OrderBy&gt;&lt;FieldRef Name='Created' Ascending='FALSE' /&gt;&lt;/OrderBy&gt;&quot;,
+          &quot;viewFields&quot;: [ &quot;Title&quot;, &quot;EventDate&quot;, &quot;Location&quot; ],
+          &quot;rowLimit&quot;: 50
+        }
+      }
+    ]
+  }
+}
+</code></pre>
+<p><code>viewFields</code> limits which columns end up in each data row and <code>skipEmptyFields</code> drops the empty ones, which keeps a template readable. Without a <code>query</code> every field of every item is written out, including the system ones.</p>
+<h3 id="extract-the-pages-of-a-site-along-with-their-assets">Extract the pages of a site along with their assets</h3>
+<pre><code class="lang-json">{
+  &quot;handlers&quot;: [ &quot;Pages&quot;, &quot;Files&quot; ],
+  &quot;pages&quot;: {
+    &quot;includeAllClientSidePages&quot;: true,
+    &quot;excludeAuthorInformation&quot;: true
+  },
+  &quot;persistAssetFiles&quot;: true
+}
+</code></pre>
+<p><code>persistAssetFiles</code> is what puts the images and other files into the package, so use <code>-Out template.pnp</code> rather than <code>.xml</code> to have somewhere to put them. <code>excludeAuthorInformation</code> keeps the authors of the source site out of the template.</p>
+<h3 id="extract-a-list-by-id-rather-than-by-title">Extract a list by ID rather than by title</h3>
+<pre><code class="lang-json">{
+  &quot;handlers&quot;: [ &quot;Lists&quot; ],
+  &quot;lists&quot;: {
+    &quot;lists&quot;: [
+      { &quot;title&quot;: &quot;9f8b6c1e-3d2a-4b7c-8e5f-1a2b3c4d5e6f&quot; }
+    ]
+  }
+}
+</code></pre>
+<p>Useful when the title is localized or may change: put the list ID in <code>title</code> and a value which parses as a GUID is matched against the list ID instead. Note that this cannot be combined with <code>includeItems</code>, see above.</p>
+<h2 id="properties">Properties</h2>
+<!-- BEGIN GENERATED PROPERTIES -->
+<h3 id="section"><code>$</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>contentTypes</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>extensibility</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>handlers</code></td>
+<td>array of strings, see <a href="#configurationhandler-values">ConfigurationHandler values</a></td>
+<td></td>
+</tr>
+<tr>
+<td><code>lists</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>multiLanguage</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>navigation</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pages</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>persistAssetFiles</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>propertyBag</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>publishing</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>searchSettings</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>siteFooter</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>siteSecurity</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>syntexModels</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>taxonomy</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>tenant</code></td>
+<td>object</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="contenttypes"><code>$.contentTypes</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>excludeFromSyndication</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>groups</code></td>
+<td>array of strings</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="extensibility"><code>$.extensibility</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>handlers</code></td>
+<td>array of <code>ExtensibilityHandler</code> objects</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="lists"><code>$.lists</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>includeHiddenLists</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>lists</code></td>
+<td>array of objects</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="multilanguage"><code>$.multiLanguage</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>persistMultiLanguageResources</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>resourceFilePrefix</code></td>
+<td>string</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="navigation"><code>$.navigation</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>removeExistingNodes</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="pages"><code>$.pages</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>excludeAuthorInformation</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>includeAllClientSidePages</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="publishing"><code>$.publishing</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>includeNativePublishingFiles</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>persist</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="searchsettings"><code>$.searchSettings</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>include</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sitefooter"><code>$.siteFooter</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>removeExistingNodes</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sitesecurity"><code>$.siteSecurity</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>includeSiteGroups</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="syntexmodels"><code>$.syntexModels</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>models</code></td>
+<td>array of objects</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="taxonomy"><code>$.taxonomy</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>includeAllTermGroups</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>includeSecurity</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>includeSiteCollectionTermGroup</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="tenant"><code>$.tenant</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sequence</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>teams</code></td>
+<td>object</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="listslists"><code>$.lists.lists</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>includeItems</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>keyColumn</code></td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>query</code></td>
+<td>object</td>
+<td></td>
+</tr>
+<tr>
+<td><code>removeExistingContentTypes</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>skipEmptyFields</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>updateBehavior</code></td>
+<td><code>Overwrite</code> | <code>Skip</code></td>
+<td><code>Overwrite</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="syntexmodelsmodels"><code>$.syntexModels.models</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>excludeTrainingData</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>integer</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="tenantsequence"><code>$.tenant.sequence</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>includeJoinedSites</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>includeSubsites</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>maxSubsiteDepth</code></td>
+<td>integer</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>siteUrls</code></td>
+<td>array of strings</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="tenantteams"><code>$.tenant.teams</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>includeAllTeams</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>includeGroupId</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>includeMessages</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>teamSiteUrls</code></td>
+<td>array of strings</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="listslistsquery"><code>$.lists.lists.query</code></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>camlQuery</code></td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>includeAttachments</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>pageSize</code></td>
+<td>integer</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>rowLimit</code></td>
+<td>integer</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>viewFields</code></td>
+<td>array of strings</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="configurationhandler-values">ConfigurationHandler values</h3>
+<p>These names are case sensitive.</p>
+<ul>
+<li><code>AuditSettings</code></li>
+<li><code>ComposedLook</code></li>
+<li><code>CustomActions</code></li>
+<li><code>ExtensibilityProviders</code></li>
+<li><code>Features</code></li>
+<li><code>Fields</code></li>
+<li><code>Files</code></li>
+<li><code>Lists</code></li>
+<li><code>Pages</code></li>
+<li><code>Publishing</code></li>
+<li><code>RegionalSettings</code></li>
+<li><code>SearchSettings</code></li>
+<li><code>SitePolicy</code></li>
+<li><code>SupportedUILanguages</code></li>
+<li><code>Taxonomy</code></li>
+<li><code>Workflows</code></li>
+<li><code>SiteSecurity</code></li>
+<li><code>ContentTypes</code></li>
+<li><code>PropertyBagEntries</code></li>
+<li><code>WebSettings</code></li>
+<li><code>Navigation</code></li>
+<li><code>ImageRenditions</code></li>
+<li><code>ApplicationLifecycleManagement</code></li>
+<li><code>Tenant</code></li>
+<li><code>WebApiPermissions</code></li>
+<li><code>SiteHeader</code></li>
+<li><code>SiteFooter</code></li>
+<li><code>Theme</code></li>
+<li><code>SiteSettings</code></li>
+<li><code>SyntexModels</code></li>
+</ul>
+<!-- END GENERATED PROPERTIES -->
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/extract-configuration.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
