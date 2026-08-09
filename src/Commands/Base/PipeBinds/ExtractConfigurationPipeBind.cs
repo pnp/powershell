@@ -1,6 +1,5 @@
-﻿using System;
-using Microsoft.SharePoint.Client;
-using PnP.Framework.Provisioning.Model.Configuration;
+﻿using PnP.Framework.Provisioning.Model.Configuration;
+using System;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -19,37 +18,13 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             objectValue = configuration;
         }
 
-        internal ExtractConfiguration GetConfiguration(string currentFileSystemLocation)
+        internal ExtractConfiguration GetConfiguration(string currentFileSystemLocation, Action<string> logWarning = null)
         {
             if (objectValue != null)
             {
                 return objectValue;
             }
-            if (!string.IsNullOrEmpty(value))
-            {
-                // is it a path?
-                try
-                {
-                    string path = value;
-                    if (!System.IO.Path.IsPathRooted(value))
-                    {
-                        path = System.IO.Path.Combine(currentFileSystemLocation, path);
-                    }
-                    if (System.IO.File.Exists(path))
-                    {
-                        return ExtractConfiguration.FromString(System.IO.File.ReadAllText(path));
-                    }
-                    else
-                    {
-                        return ExtractConfiguration.FromString(value);
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-            return null;
+            return ConfigurationPipeBindHelper.Resolve(value, currentFileSystemLocation, ExtractConfiguration.FromString, logWarning);
         }
     }
 }

@@ -166,10 +166,32 @@ Get-PnPSiteTemplate -Out MyModels.pnp -Handlers SyntexModels
 
 Export all Syntex Document Understanding models in a Content Center into a single PnP template. Note that only unstructured document processing models can be imported from a PnP template.
 
+### EXAMPLE 18
+```powershell
+@'
+{
+  "handlers": [ "Lists" ],
+  "lists": {
+    "lists": [
+      { "title": "Events", "includeItems": true }
+    ]
+  }
+}
+'@ | Out-File extract.json
+
+Get-PnPSiteTemplate -Out template.xml -Configuration extract.json
+```
+
+Extracts a template holding only the "Events" list, with its list items included as `<pnp:DataRows />`. The same JSON can be passed to `-Configuration` directly instead of through a file.
+
 ## PARAMETERS
 
 ### -Configuration
-Specify a JSON configuration file to configure the extraction progress.
+Specify a JSON configuration to configure the extraction process. Accepts either the path to a file containing the JSON, or the JSON itself.
+
+A value that cannot be read, such as a path that does not exist or JSON that cannot be parsed, terminates the cmdlet. Earlier versions ignored such a value without reporting an error and extracted everything instead.
+
+See [The extract configuration](https://pnp.github.io/powershell/articles/extract-configuration.html) for the available properties and worked examples.
 
 ```yaml
 Type: ExtractConfigurationPipeBind
@@ -297,7 +319,7 @@ Accept wildcard characters: False
 ```
 
 ### -Handlers
-Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting. For possible values for this parameter visit https://learn.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers
+Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what you're extracting. For possible values for this parameter visit https://pnp.github.io/pnpframework/api/PnP.Framework.Provisioning.Model.Handlers.html
 
 ```yaml
 Type: Handlers

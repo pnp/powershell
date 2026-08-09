@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Update-PnPTodoList.html
 
 **Required Permissions**
 
-  * Microsoft Graph API : Tasks.ReadWrite
+  * Microsoft Graph API: Tasks.ReadWrite (delegated). Application permissions are not supported.
 
 Updates a new todo list.
 

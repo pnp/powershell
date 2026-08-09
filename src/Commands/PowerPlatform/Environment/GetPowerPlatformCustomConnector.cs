@@ -7,7 +7,8 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 {
     [Cmdlet(VerbsCommon.Get, "PnPPowerPlatformCustomConnector")]
-    [RequiredApiApplicationPermissions("https://management.azure.com/user_impersonation", "https://service.powerapps.com/user")]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation", "https://service.powerapps.com/user")]
+    [ApiNotAvailableUnderApplicationPermissions]
     public class GetPowerPlatformCustomConnector : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

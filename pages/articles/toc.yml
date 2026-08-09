@@ -2,12 +2,18 @@
   items:
     - name: Installation
       href: installation.md
+    - name: Command suggestions while you type (predictor)
+      href: powershellpredictor.md
     - name: Register your application
       href: registerapplication.md
     - name: Determine permissions
-      href: determinepermissions.md      
+      href: determinepermissions.md
     - name: Connecting and authenticating
       href: authentication.md
+    - name: Staying signed in between sessions
+      href: persistedlogin.md
+    - name: Storing credentials securely
+      href: credentialmanagement.md
     - name: Samples
       href: scriptsamples.md
 - name: Configure PnP PowerShell
@@ -44,12 +50,12 @@
       href: microsoftsearch.md  
     - name: Batching in PnP PowerShell
       href: batching.md
+    - name: The extract configuration (using PnP Provisioning Engine)
+      href: extract-configuration.md
+    - name: The apply configuration (using PnP Provisioning Engine)
+      href: apply-configuration.md
     - name: Upgrading from the Legacy version
       href: upgrading.md
-    - name: Credential Management
-      href: credentialmanagement.md
-    - name: Working with persisted logins
-      href: persistedlogin.md
     - name: Dealing with the ACS deprecation
       href: acsdeprecation.md
 - name: How to contribute
@@ -69,8 +75,6 @@
     - name: Working with permission attributes
       href: permissionattributes.md
 - name: Useful helper tools
-  items:      
-    - name: PnP PowerShell predictor
-      href: powershellpredictor.md
+  items:
     - name: Visual Studio Code extension
       href: vscodeextension.md

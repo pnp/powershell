@@ -3344,5 +3344,58 @@
         </TableRowEntries>
       </TableControl>
     </View>
+    <View>
+      <Name>CommandPermission</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.PowerShell.Commands.Model.CommandPermission</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>CommandName</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>PermissionSource</Label>
+                <PropertyName>PermissionSource</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>DelegatedPermissions</Label>
+                <ScriptBlock>($_.DelegatedPermissions | ForEach-Object { $_.ToString() }) -join ' OR '</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>ApplicationPermissions</Label>
+                <ScriptBlock>($_.ApplicationPermissions | ForEach-Object { $_.ToString() }) -join ' OR '</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>ResourceTypes</Label>
+                <ScriptBlock>$_.ResourceTypes -join ', '</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>DelegatedAvailable</Label>
+                <PropertyName>DelegatedAvailable</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>ApplicationAvailable</Label>
+                <PropertyName>ApplicationAvailable</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>MinimumSharePointRole</Label>
+                <PropertyName>MinimumSharePointRole</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>AdditionalRoles</Label>
+                <ScriptBlock>$_.AdditionalRoles -join '; '</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>Guidance</Label>
+                <PropertyName>Guidance</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
   </ViewDefinitions>
 </Configuration>

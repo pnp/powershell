@@ -112,6 +112,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         public List<string> ListsToExtract;
 
         [Parameter(Mandatory = false)]
+        [ValidateNotNull]
         public ExtractConfigurationPipeBind Configuration;
 
         protected override void ExecuteCmdlet()
@@ -119,7 +120,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             ExtractConfiguration extractConfiguration = null;
             if (ParameterSpecified(nameof(Configuration)))
             {
-                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
+                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path, LogWarning);
             }
             if (PersistMultiLanguageResources == false && ResourceFilePrefix != null)
             {

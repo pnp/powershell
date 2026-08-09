@@ -59,6 +59,24 @@ Get-PnPTenantTemplate -Out tenanttemplate.xml -SiteUrl https://m365x123456.share
 
 Extracts a tenant template for the site https://m365x123456.sharepoint.com/sites/HomeSite and places the schema XML into the file "tenanttemplate.xml". The xml file will be overwritten if it already exists.
 
+### EXAMPLE 4
+```powershell
+@'
+{
+  "handlers": [ "Lists" ],
+  "lists": {
+    "lists": [
+      { "title": "Events", "includeItems": true }
+    ]
+  }
+}
+'@ | Out-File extract.json
+
+Get-PnPTenantTemplate -Out tenanttemplate.xml -Configuration extract.json
+```
+
+Extracts a tenant template holding only the "Events" list, with its list items included as `<pnp:DataRows />`. The same JSON can be passed to `-Configuration` directly instead of through a file.
+
 ## PARAMETERS
 
 ### -AsInstance
@@ -76,7 +94,11 @@ Accept wildcard characters: False
 ```
 
 ### -Configuration
-Specify a JSON configuration file to configure the extraction progress.
+Specify a JSON configuration to configure the extraction process. Accepts either the path to a file containing the JSON, or the JSON itself.
+
+A value that cannot be read, such as a path that does not exist or JSON that cannot be parsed, terminates the cmdlet. Earlier versions ignored such a value without reporting an error and extracted everything instead.
+
+See [The extract configuration](https://pnp.github.io/powershell/articles/extract-configuration.html) for the available properties and worked examples.
 
 ```yaml
 Type: ExtractConfigurationPipeBind

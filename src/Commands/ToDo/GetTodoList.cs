@@ -8,8 +8,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.ToDo
 {
     [Cmdlet(VerbsCommon.Get, "PnPTodoList")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Tasks.Read")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.Read")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.ReadWrite")]
     [RequiredApiApplicationPermissions("graph/Tasks.Read.All")]
     public class GetTodoList : PnPGraphCmdlet
     {

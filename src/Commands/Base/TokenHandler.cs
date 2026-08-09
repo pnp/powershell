@@ -38,32 +38,36 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>Enum indicating the type of oAuth JWT token</returns>
         internal static Enums.IdType RetrieveTokenType(string accessToken)
         {
-            var decodedToken = new JsonWebToken(accessToken);
-
-            var idType = GetClaimValue(decodedToken, IdTypeClaimType);
-
-            if (string.IsNullOrWhiteSpace(idType)) return Enums.IdType.Unknown;
-
-            return idType.ToLowerInvariant() switch
-            {
-                "user" => Enums.IdType.Delegate,
-                "app" => Enums.IdType.Application,
-                _ => Enums.IdType.Unknown
-            };
+            return RetrieveTokenType(new JsonWebToken(accessToken));
         }
 
         private static Enums.IdType RetrieveTokenType(JsonWebToken decodedToken)
         {
             var idType = GetClaimValue(decodedToken, IdTypeClaimType);
 
-            if (string.IsNullOrWhiteSpace(idType)) return Enums.IdType.Unknown;
-
-            return idType.ToLowerInvariant() switch
+            if (!string.IsNullOrWhiteSpace(idType))
             {
-                "user" => Enums.IdType.Delegate,
-                "app" => Enums.IdType.Application,
-                _ => Enums.IdType.Unknown
-            };
+                switch (idType.ToLowerInvariant())
+                {
+                    case "user": return Enums.IdType.Delegate;
+                    case "app": return Enums.IdType.Application;
+                }
+            }
+
+            // idtyp is an optional claim which is not emitted for every token, so where it is absent the two types are told apart by the claim
+            // carrying the permissions instead. A token issued for a signed in user carries the scopes it was consented in scp and an application
+            // token carries its app roles in roles and never carries scp, so scp is decisive where both are present.
+            if (!string.IsNullOrWhiteSpace(GetClaimValue(decodedToken, ScopeClaimType)))
+            {
+                return Enums.IdType.Delegate;
+            }
+
+            if (!string.IsNullOrWhiteSpace(GetClaimValue(decodedToken, RolesClaimType)))
+            {
+                return Enums.IdType.Application;
+            }
+
+            return Enums.IdType.Unknown;
         }
 
         /// <summary>
@@ -137,12 +141,27 @@ namespace PnP.PowerShell.Commands.Base
                     or "api.apps.appsplatform.us"
                     or "service.apps.appsplatform.us" => Enums.ResourceTypeName.PowerApps,
                 "dynamics" or "admin.services.crm.dynamics.com" or "api.crm.dynamics.com" => Enums.ResourceTypeName.DynamicsCRM,
+                _ when IsDynamicsCrmAudience(sanitizedAudience) => Enums.ResourceTypeName.DynamicsCRM,
                 "gcs" or "gcs.office.com" => Enums.ResourceTypeName.Gcs,
 
                 // We assume SharePoint as the default as vanity domains cause no fixed structure to be present in the audience name
                 _ => Enums.ResourceTypeName.SharePoint
             };
             return resource;
+        }
+
+        private static bool IsDynamicsCrmAudience(string audience)
+        {
+            var hasCrmHostLabel = audience
+                .Split('.')
+                .Any(label => label.StartsWith("crm", StringComparison.Ordinal));
+
+            return hasCrmHostLabel &&
+                (audience.EndsWith(".dynamics.com", StringComparison.Ordinal) ||
+                 audience.EndsWith(".dynamics.cn", StringComparison.Ordinal) ||
+                 audience.EndsWith(".microsoftdynamics.de", StringComparison.Ordinal) ||
+                 audience.EndsWith(".microsoftdynamics.us", StringComparison.Ordinal) ||
+                 audience.EndsWith(".appsplatform.us", StringComparison.Ordinal));
         }
 
         /// <summary>

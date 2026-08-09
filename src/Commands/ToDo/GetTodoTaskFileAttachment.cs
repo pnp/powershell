@@ -8,9 +8,9 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.ToDo
 {
     [Cmdlet(VerbsCommon.Get, "PnPTodoTaskFileAttachment")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Tasks.Read")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Tasks.ReadWrite")]
-    [ApiNotAvailableUnderApplicationPermissions]
+    [RequiredApiDelegatedPermissions("graph/Tasks.Read")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiApplicationPermissions("graph/Tasks.Read.All")]
     public class GetTodoTaskFileAttachment : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true), ArgumentCompleter(typeof(TodoListCompleter))]

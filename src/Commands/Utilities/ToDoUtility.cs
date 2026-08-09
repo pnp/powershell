@@ -22,11 +22,11 @@ namespace PnP.PowerShell.Commands.Utilities
         /// Gets the Microsoft Graph To Do lists root URL for the current user or a specified user.
         /// </summary>
         /// <param name="cmdlet">Cmdlet requesting the To Do root URL.</param>
-        /// <param name="user">Optional user to target. Required for app-only connections.</param>
-        /// <returns>The Microsoft Graph To Do lists URL, or <c>null</c> if the specified user cannot be found.</returns>
+        /// <param name="user">Optional user to target. Required when the connection holds an application token.</param>
+        /// <returns>The Microsoft Graph To Do lists URL, or <c>null</c> if <paramref name="user"/> carries no identifier to address a user with.</returns>
         public static string GetTodoRootUrl(PnPGraphCmdlet cmdlet, EntraIDUserPipeBind user)
         {
-            if (cmdlet.Connection.ConnectionMethod == ConnectionMethod.AzureADAppOnly && user == null)
+            if (user == null && HoldsApplicationToken(cmdlet))
             {
                 throw new PSInvalidOperationException("Please specify the parameter User when invoking this cmdlet in app-only scenario");
             }
@@ -36,14 +36,46 @@ namespace PnP.PowerShell.Commands.Utilities
                 return "/v1.0/me/todo/lists";
             }
 
-            var graphUser = user.GetUser(cmdlet.AccessToken, cmdlet.Connection.AzureEnvironment);
-            if (graphUser == null)
+            var userIdentifier = user.User?.Id?.ToString() ?? user.UserId?.ToString() ?? user.User?.UserPrincipalName ?? user.Upn;
+            if (string.IsNullOrWhiteSpace(userIdentifier))
             {
-                cmdlet.LogWarning("Provided user not found");
+                cmdlet.LogWarning("Provided user cannot be resolved");
                 return null;
             }
 
-            return $"/v1.0/users/{graphUser.Id.Value}/todo/lists";
+            return $"/v1.0/users/{Uri.EscapeDataString(userIdentifier)}/todo/lists";
+        }
+
+        /// <summary>
+        /// Determines whether the connection of the cmdlet holds an application token, as Microsoft Graph does not resolve /me for those and a user
+        /// has to be named instead.
+        /// </summary>
+        /// <remarks>
+        /// The connection method states how the connection was made, not which type of token came out of it. A managed identity, a workload identity,
+        /// a federated identity and an application token handed to -AccessToken all yield an application token while none of them is
+        /// <see cref="ConnectionMethod.AzureADAppOnly"/>, so the token itself is what decides. Only where the token cannot be read at all does the
+        /// connection method decide, and then every method which can only produce an application token counts. -AccessToken is deliberately absent
+        /// from that list, as it accepts either type of token and therefore says nothing on its own.
+        /// </remarks>
+        private static bool HoldsApplicationToken(PnPGraphCmdlet cmdlet)
+        {
+            try
+            {
+                var tokenType = TokenHandler.RetrieveTokenType(cmdlet.AccessToken);
+                if (tokenType != Enums.IdType.Unknown)
+                {
+                    return tokenType == Enums.IdType.Application;
+                }
+            }
+            catch (Exception)
+            {
+                // The token could not be read, so the connection method is all there is to go on
+            }
+
+            return cmdlet.Connection.ConnectionMethod is ConnectionMethod.AzureADAppOnly
+                or ConnectionMethod.ManagedIdentity
+                or ConnectionMethod.AzureADWorkloadIdentity
+                or ConnectionMethod.FederatedIdentity;
         }
 
         /// <summary>

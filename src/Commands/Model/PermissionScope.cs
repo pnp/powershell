@@ -15,5 +15,12 @@ namespace PnP.PowerShell.Commands.Model
         
         [JsonIgnore]
         public string Identifier { get; set; }
+
+        /// <summary>
+        /// Whether the resource still has this permission enabled. A disabled permission can be written to an app registration, but can
+        /// never be granted to it, so disabled permissions are not offered. Must stay out of the payload sent to Microsoft Graph.
+        /// </summary>
+        [JsonIgnore]
+        public bool IsEnabled { get; set; } = true;
     }
 }

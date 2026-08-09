@@ -71,6 +71,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
         public SwitchParameter ClearNavigation;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [ValidateNotNull]
         public ApplyConfigurationPipeBind Configuration;
 
         protected override void ExecuteCmdlet()
@@ -80,7 +81,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             var configuration = new ApplyConfiguration();
             if (ParameterSpecified(nameof(Configuration)))
             {
-                configuration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
+                configuration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path, LogWarning);
             }
 
             configuration.SiteProvisionedDelegate = (title, url) =>

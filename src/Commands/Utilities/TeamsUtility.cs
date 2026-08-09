@@ -25,8 +25,27 @@ namespace PnP.PowerShell.Commands.Utilities
         private const int PageSize = 100;
         private const int TeamsAsyncOperationPollingIntervalSeconds = 30;
         private const int TeamsAsyncOperationMaxRetries = 12;
-        private const int TeamsTemplateGetTeamRetryIntervalSeconds = 5;
-        private const int TeamsTemplateGetTeamMaxRetries = 3;
+        // Reading a freshly provisioned team back. This covers the replication delay on the backing group in Microsoft Entra as
+        // well as on the team itself, so it needs enough headroom for the directory to catch up.
+        private const int TeamReadBackMaxAttempts = 5;
+        private const int TeamReadBackInitialBackoffSeconds = 2;
+        private const int TeamReadBackMaximumBackoffSeconds = 30;
+
+        // Enabling teams on a group.
+        private const int TeamifyGroupMaxAttempts = 12;
+        private const int TeamifyGroupInitialBackoffSeconds = 1;
+        private const int TeamifyGroupMaximumBackoffSeconds = 30;
+
+        // Waiting for a freshly created group to become queryable before it is turned into a team.
+        private const int GroupAvailabilityMaxAttempts = 12;
+        private const int GroupAvailabilityInitialBackoffSeconds = 5;
+        private const int GroupAvailabilityMaximumBackoffSeconds = 30;
+
+        // A team that was just created is not immediately addressable through the /teams endpoints, so adding its owners and
+        // members straight after provisioning it can fail with an HTTP 404 on the team itself.
+        private const int TeamMemberAddMaxAttempts = 5;
+        private const int TeamMemberAddInitialBackoffSeconds = 2;
+        private const int TeamMemberAddMaximumBackoffSeconds = 30;
 
         #region Team
         public static List<Group> GetGroupsWithTeam(ApiRequestHelper requestHelper, string filter = null)
@@ -136,69 +155,27 @@ namespace PnP.PowerShell.Commands.Utilities
                     return null;
                 }
             }
-            catch (ApplicationException ex)
+            catch (GraphException ex) when (ex.HttpResponse?.StatusCode == HttpStatusCode.NotFound)
             {
-                // untested change
-                if (ex.Message.StartsWith("404"))
-                {
-                    // no team, swallow
-                }
-                else
-                {
-                    throw;
-                }
+                // The group has no team, or the team is not queryable yet.
                 return null;
             }
         }
 
-        public static Team NewTeam(ApiRequestHelper requestHelper, string groupId, string displayName, string description, string classification, string mailNickname, GroupVisibility visibility, TeamCreationInformation teamCI, string[] owners, string[] members, Guid[] sensitivityLabels, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
+        public static Team NewTeam(ApiRequestHelper requestHelper, string groupId, string displayName, string description, string classification, string mailNickname, GroupVisibility visibility, TeamCreationInformation teamCI, string[] owners, string[] members, Guid[] sensitivityLabels, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null, Action<string> logWarning = null)
         {
             if (string.IsNullOrEmpty(groupId) && templateType != TeamsTemplateType.None)
             {
                 return CreateTeamFromTemplate(requestHelper, displayName, description, classification, visibility, teamCI, owners, members, templateType);
             }
 
-            Group group = null;
-            Team returnTeam = null;
-            Random random = new();
-            // Maximum number of retries
-            const int maxRetries = 12;
+            Group group;
+
             // Create the Group
             if (string.IsNullOrEmpty(groupId))
             {
                 group = CreateGroup(requestHelper, displayName, description, classification, mailNickname, visibility, owners, sensitivityLabels, resourceBehaviorOptions);
-                bool wait = true;
-                int iterations = 0;
-
-                // Initial backoff time in seconds
-                const int initialBackoffSeconds = 5;
-
-                while (wait && iterations < maxRetries)
-                {
-                    iterations++;
-
-                    try
-                    {
-                        var createdGroup = requestHelper.Get<Group>($"v1.0/groups/{group.Id}");
-                        if (!string.IsNullOrEmpty(createdGroup.DisplayName))
-                        {
-                            wait = false;
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        // Calculate exponential backoff with a minimum of initialBackoffSeconds
-                        int backoffSeconds = initialBackoffSeconds * (int)Math.Pow(2, iterations - 1);
-                        // Cap at a maximum backoff (e.g., 30 seconds)
-                        backoffSeconds = Math.Min(backoffSeconds, 30);
-
-                        // Add random jitter between 0-1 second to avoid thundering herd
-                        int jitterMs = random.Next(0, 1000);
-
-                        // Sleep for the calculated time
-                        Thread.Sleep(TimeSpan.FromSeconds(backoffSeconds) + TimeSpan.FromMilliseconds(jitterMs));
-                    }
-                }
+                WaitForGroupToBecomeAvailable(requestHelper, group.Id);
             }
             else
             {
@@ -210,54 +187,141 @@ namespace PnP.PowerShell.Commands.Utilities
                 teamCI.Visibility = group.Visibility.Value;
                 teamCI.Description = group.Description;
             }
-            if (group != null)
+
+            var returnTeam = TeamifyGroup(requestHelper, group, teamCI);
+
+            // Only add the owners and members once Microsoft Graph confirmed the team finished provisioning. Adding them
+            // before that point makes the call fail with an HTTP 404 on the team that is still being created.
+            AddTeamOwnersAndMembers(requestHelper, group.Id, owners, members, logWarning);
+
+            return returnTeam;
+        }
+
+        /// <summary>
+        /// Runs an operation, retrying it as long as <paramref name="shouldRetry"/> accepts the exception it threw and the
+        /// attempt budget has not run out. The final attempt is made outside of the retry loop so whatever it throws reaches
+        /// the caller untouched.
+        /// </summary>
+        private static T RetryWithBackoff<T>(Func<T> operation, Func<Exception, bool> shouldRetry, int maxAttempts, int initialBackoffSeconds, int maximumBackoffSeconds)
+        {
+            for (var attempt = 1; attempt < maxAttempts; attempt++)
             {
-                Team team = teamCI.ToTeam(group.Visibility.Value);
-
-                const int initialBackoffMs = 1000;
-                var retryCount = 0;
-                bool success = false;
-
-                while (!success && retryCount < maxRetries)
+                try
                 {
-                    try
-                    {
-                        var teamSettings = requestHelper.Put($"v1.0/groups/{group.Id}/team", team);
-                        if (teamSettings != null)
-                        {
-                            returnTeam = GetTeam(requestHelper, group.Id);
-                            success = true;
-                        }
-                    }
-                    catch (GraphException ge) when (ge.HttpResponse.StatusCode == System.Net.HttpStatusCode.Conflict)
-                    {
-                        // Handle conflict exceptions as if it succeeded, as it means a previous request succeeded enabling teams
-                        returnTeam = GetTeam(requestHelper, group.Id);
-                        success = true;
-                    }
-                    catch
-                    {
-                        retryCount++;
+                    return operation();
+                }
+                catch (Exception ex) when (shouldRetry(ex))
+                {
+                    Thread.Sleep(GetBackoffDelay(attempt, initialBackoffSeconds, maximumBackoffSeconds));
+                }
+            }
 
-                        if (retryCount >= maxRetries)
-                        {
-                            // If we've reached max retries, rethrow the exception
-                            throw;
-                        }
+            return operation();
+        }
 
-                        // Exponential backoff with jitter to avoid thundering herd problem
-                        int backoffMs = initialBackoffMs * (int)Math.Pow(2, retryCount - 1);
-                        // Add up to 1 second of random jitter
-                        int jitterMs = random.Next(0, 1000);
-                        // Cap at 30 seconds max
-                        int delayMs = Math.Min(backoffMs + jitterMs, 30000);
-                        Thread.Sleep(delayMs);
-                    }
+        /// <summary>
+        /// Exponential backoff with jitter, to avoid the thundering herd problem. The doubling stops as soon as the maximum is
+        /// reached so that a generous attempt budget cannot overflow the delay.
+        /// </summary>
+        private static TimeSpan GetBackoffDelay(int attempt, int initialBackoffSeconds, int maximumBackoffSeconds)
+        {
+            var backoffSeconds = initialBackoffSeconds;
+            for (var doubled = 1; doubled < attempt && backoffSeconds < maximumBackoffSeconds; doubled++)
+            {
+                backoffSeconds *= 2;
+            }
+
+            return TimeSpan.FromSeconds(Math.Min(backoffSeconds, maximumBackoffSeconds)) + TimeSpan.FromMilliseconds(Random.Shared.Next(0, 1000));
+        }
+
+        /// <summary>
+        /// Failures that can reasonably be expected to go away on their own: the resource involved has not replicated yet, the
+        /// service is temporarily unavailable, or the request never got a response at all.
+        /// </summary>
+        private static bool IsTransientFailure(Exception ex)
+        {
+            if (ex is GraphException graphException)
+            {
+                return graphException.HttpResponse?.StatusCode is HttpStatusCode.NotFound
+                    or HttpStatusCode.RequestTimeout
+                    or HttpStatusCode.TooManyRequests
+                    or HttpStatusCode.InternalServerError
+                    or HttpStatusCode.BadGateway
+                    or HttpStatusCode.ServiceUnavailable
+                    or HttpStatusCode.GatewayTimeout;
+            }
+
+            return ex is HttpRequestException || ex is System.Threading.Tasks.TaskCanceledException;
+        }
+
+        /// <summary>
+        /// Waits for a freshly created group to become queryable through Microsoft Graph. Not becoming queryable within the
+        /// attempt budget is deliberately not a hard failure here, because enabling teams on the group is retried separately.
+        /// </summary>
+        private static void WaitForGroupToBecomeAvailable(ApiRequestHelper requestHelper, string groupId)
+        {
+            for (var attempt = 1; attempt <= GroupAvailabilityMaxAttempts; attempt++)
+            {
+                if (attempt > 1)
+                {
+                    Thread.Sleep(GetBackoffDelay(attempt - 1, GroupAvailabilityInitialBackoffSeconds, GroupAvailabilityMaximumBackoffSeconds));
                 }
 
-                AddTeamOwnersAndMembers(requestHelper, group.Id, owners, members);
+                try
+                {
+                    var createdGroup = requestHelper.Get<Group>($"v1.0/groups/{groupId}");
+                    if (!string.IsNullOrEmpty(createdGroup?.DisplayName))
+                    {
+                        return;
+                    }
+                }
+                catch (Exception ex) when (IsTransientFailure(ex))
+                {
+                    // The group has not replicated yet, or the call did not get through. Retry. A failure that retrying cannot
+                    // resolve is deliberately left to surface instead of being waited out and then ignored.
+                }
             }
-            return returnTeam;
+        }
+
+        /// <summary>
+        /// Turns a group into a team and then waits, as far as its attempt budget allows, for Microsoft Graph to be able to
+        /// serve that team. Enabling teams on the group is not enough on its own: the team only becomes addressable through
+        /// the /teams endpoints a moment later, and anything done with it before that point fails with an HTTP 404.
+        /// </summary>
+        private static Team TeamifyGroup(ApiRequestHelper requestHelper, Group group, TeamCreationInformation teamCI)
+        {
+            var team = teamCI.ToTeam(group.Visibility.Value);
+
+            try
+            {
+                RetryWithBackoff(
+                    () => requestHelper.Put($"v1.0/groups/{group.Id}/team", team),
+                    // Microsoft Graph reports a group it cannot find yet as an HTTP 404 here, which the transient failures
+                    // cover. A conflict is not one of them, so it surfaces right away and is handled as a success below.
+                    IsTransientFailure,
+                    TeamifyGroupMaxAttempts,
+                    TeamifyGroupInitialBackoffSeconds,
+                    TeamifyGroupMaximumBackoffSeconds);
+            }
+            catch (GraphException ge) when (ge.HttpResponse?.StatusCode == HttpStatusCode.Conflict)
+            {
+                // A conflict means a previous request already enabled teams on this group, so treat it as a success.
+            }
+
+            // Read the team back, which doubles as the barrier that establishes it is queryable before the owners and
+            // members are added to it. Fall back to the requested values if it cannot be read yet.
+            var provisionedTeam = GetProvisionedTeam(requestHelper, group.Id);
+            if (provisionedTeam != null)
+            {
+                return provisionedTeam;
+            }
+
+            team.GroupId = group.Id;
+            team.DisplayName = group.DisplayName;
+            team.MailNickname = group.MailNickname;
+            team.Description = group.Description;
+            team.Classification = group.Classification;
+            return team;
         }
 
         private static Team CreateTeamFromTemplate(ApiRequestHelper requestHelper, string displayName, string description, string classification, GroupVisibility visibility, TeamCreationInformation teamCI, string[] owners, string[] members, TeamsTemplateType templateType)
@@ -343,15 +407,18 @@ namespace PnP.PowerShell.Commands.Utilities
             return team;
         }
 
+        /// <summary>
+        /// Reads a freshly provisioned team back. Both the backing group in Microsoft Entra and the team itself take a short
+        /// while to become queryable after being created, so this is retried. Returns null once the attempts run out, leaving
+        /// it to the caller to fall back to the values it asked for.
+        /// </summary>
         private static Team GetProvisionedTeam(ApiRequestHelper requestHelper, string groupId)
         {
-            // Right after an async provisioning operation completes, the backing group and team can take a short while
-            // to become queryable. Retry a few times before giving up and letting the caller fall back to the requested values.
-            for (var retryCount = 0; retryCount < TeamsTemplateGetTeamMaxRetries; retryCount++)
+            for (var attempt = 1; attempt <= TeamReadBackMaxAttempts; attempt++)
             {
-                if (retryCount > 0)
+                if (attempt > 1)
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(TeamsTemplateGetTeamRetryIntervalSeconds));
+                    Thread.Sleep(GetBackoffDelay(attempt - 1, TeamReadBackInitialBackoffSeconds, TeamReadBackMaximumBackoffSeconds));
                 }
 
                 try
@@ -362,9 +429,10 @@ namespace PnP.PowerShell.Commands.Utilities
                         return team;
                     }
                 }
-                catch (GraphException)
+                catch (Exception ex) when (IsTransientFailure(ex))
                 {
-                    // The team is not queryable yet, retry.
+                    // Neither the group nor the team is queryable yet, retry. A failure that retrying cannot resolve, such as
+                    // missing permissions, is deliberately left to surface instead of being reported as a team that was read.
                 }
             }
 
@@ -499,7 +567,7 @@ namespace PnP.PowerShell.Commands.Utilities
             };
         }
 
-        private static void AddTeamOwnersAndMembers(ApiRequestHelper requestHelper, string groupId, string[] owners, string[] members)
+        private static void AddTeamOwnersAndMembers(ApiRequestHelper requestHelper, string groupId, string[] owners, string[] members, Action<string> logWarning = null)
         {
             var teamOwnersAndMembers = new List<TeamChannelMember>();
             if (owners != null && owners.Length > 0)
@@ -520,11 +588,47 @@ namespace PnP.PowerShell.Commands.Utilities
 
             if (teamOwnersAndMembers.Count > 0)
             {
+                // Microsoft Graph takes up to 200 members per call and reports the outcome per member, answering with an
+                // HTTP 200 when all of them were added and an HTTP 207 when only some of them were.
                 var ownersAndMembers = GraphBatchUtility.Chunk(teamOwnersAndMembers, 200);
                 foreach (var chunk in ownersAndMembers)
                 {
-                    requestHelper.Post($"v1.0/teams/{groupId}/members/add", new { values = chunk.ToList() });
+                    var result = AddTeamMemberChunk(requestHelper, groupId, chunk.ToList());
+                    ReportFailedMemberAdditions(result, logWarning);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Adds a single chunk of owners and members to a team, retrying while Microsoft Graph reports the team itself cannot
+        /// be found. A team that has just been provisioned takes a moment to become addressable, and until it is this call
+        /// fails with an HTTP 404 naming the team that is being created.
+        /// </summary>
+        private static TeamMemberAddResultCollection AddTeamMemberChunk(ApiRequestHelper requestHelper, string groupId, List<TeamChannelMember> chunk)
+        {
+            return RetryWithBackoff(
+                () => requestHelper.Post<TeamMemberAddResultCollection>($"v1.0/teams/{groupId}/members/add", CreateJsonContent(new { values = chunk })),
+                IsTransientFailure,
+                TeamMemberAddMaxAttempts,
+                TeamMemberAddInitialBackoffSeconds,
+                TeamMemberAddMaximumBackoffSeconds);
+        }
+
+        /// <summary>
+        /// Surfaces the members Microsoft Graph could not add. These failures come back inside a successful response, so
+        /// without this they would go by unnoticed.
+        /// </summary>
+        private static void ReportFailedMemberAdditions(TeamMemberAddResultCollection result, Action<string> logWarning)
+        {
+            if (logWarning == null || result?.Value == null)
+            {
+                return;
+            }
+
+            foreach (var memberResult in result.Value.Where(r => r.Error != null))
+            {
+                var reason = !string.IsNullOrEmpty(memberResult?.Error?.Message) ? memberResult?.Error?.Message : memberResult?.Error?.Code;
+                logWarning($"Microsoft Graph could not add user {memberResult?.UserId} to the team: {reason}");
             }
         }
 
@@ -1345,7 +1449,12 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var byteArrayContent = new ByteArrayContent(bytes);
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
-            return requestHelper.PutHttpContent($"v1.0/appCatalogs/teamsApps/{appId}", byteArrayContent);
+
+            // Microsoft Learn documents this operation as POST /appCatalogs/teamsApps/{id}/appDefinitions on both v1.0 and beta, and no longer
+            // describes the PUT /appCatalogs/teamsApps/{id} which was used here before. The scopes declared on Update-PnPTeamsApp, AppCatalog.Submit
+            // in particular, are the ones documented for this POST, so calling the undocumented PUT could pass the permission check and still be
+            // denied by the service. Without the requiresReview query parameter this answers 204 just like the PUT did.
+            return requestHelper.PostHttpContent($"v1.0/appCatalogs/teamsApps/{appId}/appDefinitions", byteArrayContent);
         }
 
         public static HttpResponseMessage DeleteApp(ApiRequestHelper requestHelper, string appId)

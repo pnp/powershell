@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPTodoTaskLinkedRe
 
 **Required Permissions**
 
-  * Microsoft Graph API : Tasks.ReadWrite
+  * Microsoft Graph API: Tasks.ReadWrite (delegated). Application permissions are not supported.
 
 Creates a linked resource on a Todo task.
 

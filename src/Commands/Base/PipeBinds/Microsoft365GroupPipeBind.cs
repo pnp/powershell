@@ -45,20 +45,20 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public Guid GroupId => _groupId;
 
-        public Microsoft365Group GetGroup(ApiRequestHelper requestHelper, bool includeSite, bool includeOwners, bool detailed, bool includeSensitivityLabels)
+        public Microsoft365Group GetGroup(ApiRequestHelper requestHelper, bool includeSite, bool includeOwners, bool detailed, bool includeSensitivityLabels, bool includeExtensionAttributes = false)
         {
             Microsoft365Group group = null;
             if (Group != null)
             {
-                group = Microsoft365GroupsUtility.GetGroup(requestHelper, _group.Id.Value, includeSite, includeOwners, detailed, includeSensitivityLabels);
+                group = Microsoft365GroupsUtility.GetGroup(requestHelper, _group.Id.Value, includeSite, includeOwners, detailed, includeSensitivityLabels, includeExtensionAttributes);
             }
             else if (_groupId != Guid.Empty)
             {
-                group = Microsoft365GroupsUtility.GetGroup(requestHelper, _groupId, includeSite, includeOwners, detailed, includeSensitivityLabels);
+                group = Microsoft365GroupsUtility.GetGroup(requestHelper, _groupId, includeSite, includeOwners, detailed, includeSensitivityLabels, includeExtensionAttributes);
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                group = Microsoft365GroupsUtility.GetGroup(requestHelper, DisplayName, includeSite, includeOwners, detailed, includeSensitivityLabels);
+                group = Microsoft365GroupsUtility.GetGroup(requestHelper, DisplayName, includeSite, includeOwners, detailed, includeSensitivityLabels, includeExtensionAttributes);
             }
             return group;
         }
