@@ -162,18 +162,29 @@ Two servers are worth wiring up. Both are hosted — nothing to install.
 
 | Server | Endpoint | Why |
 |---|---|---|
-| **GitHub** | `https://api.githubcopilot.com/mcp/` | Issue and PR context. Work here starts from an issue, and [`issue-triage`](skills/issue-triage/SKILL.md) needs the comments, not just the body. |
+| **GitHub** | `https://api.githubcopilot.com/mcp/readonly` | Issue and PR context. Work here starts from an issue, and [`issue-triage`](skills/issue-triage/SKILL.md) needs the comments, not just the body. |
 | **Microsoft Learn** | `https://learn.microsoft.com/api/mcp` | Graph and SharePoint endpoints, response shapes and least-privilege permission scopes. [`permissions-auditor`](skills/permissions-auditor/SKILL.md) and [`cmdlet-scaffolder`](skills/cmdlet-scaffolder/SKILL.md) depend on it — a scope recalled from memory is exactly the defect those playbooks exist to catch. |
 
 Skip filesystem and git MCP servers. Every agent here already has file access and a shell, and the
 extra tool definitions only cost context.
+
+**The GitHub URL ends in `/readonly` deliberately.** The base endpoint exposes issue creation, PR
+creation, merging and commenting once OAuth completes — exactly what
+[Human in the loop](../AGENTS.md#human-in-the-loop) forbids. Appending `/readonly` restricts the
+toolset to read access, so the rule is enforced by the tool surface rather than by prompt text an
+agent could talk itself past. Every use of GitHub in these playbooks is read-only, so nothing is
+lost. Keep the suffix; if a future task genuinely needs a write tool, that is the maintainer running
+the command, not an agent gaining an endpoint.
+
+The Copilot cloud agent's built-in `github` server is separately read-only by default, so
+`github/*` in a `.agent.md` allowlist carries the same restriction.
 
 **Verified 2026-08-09**, both probed with an MCP `initialize` handshake:
 
 - **Microsoft Learn** — `HTTP 200`, `text/event-stream`, protocol `2025-06-18`, `Microsoft Learn MCP
   Server 1.0.0`. **No authentication.** Tools: `microsoft_docs_search`, `microsoft_docs_fetch`,
   `microsoft_code_sample_search`.
-- **GitHub** — `HTTP 401 missing required Authorization header`. Live, and requires OAuth; your
+- **GitHub** (`/readonly`) — `HTTP 401 missing required Authorization header`. Live, and requires OAuth; your
   client performs that flow on first connect.
 
 Re-check if a server stops responding — hosted MCP endpoints and their auth flows do change.
@@ -191,7 +202,7 @@ Re-check if a server stops responding — hosted MCP endpoints and their auth fl
   url = "https://learn.microsoft.com/api/mcp"
 
   [mcp_servers.github]
-  url = "https://api.githubcopilot.com/mcp/"
+  url = "https://api.githubcopilot.com/mcp/readonly"
   ```
 
   Older Codex builds support only stdio servers. If the `url` form is not recognised, bridge through
