@@ -1,5 +1,8 @@
 name = "issue-triage"
 description = "Takes a PnP PowerShell GitHub issue, finds the cmdlet that owns it, traces the code path, decides whether the cause is in this repo or in PnP Framework / PnP Core SDK / the service, and produces a hypothesis with a repro for a maintainer. Use when starting work from an issue number or a bug report. Read-only - produces a diagnosis, not a fix."
+# read-only also means no network for shell commands in Codex, so the `gh` fallback is unavailable
+# here. MCP servers run outside the sandbox, so the GitHub MCP server remains the working path.
+sandbox_mode = "read-only"
 
 developer_instructions = '''
 Read `.agents/skills/issue-triage/SKILL.md` and follow it. Repository context is in `AGENTS.md`.
@@ -8,8 +11,10 @@ That playbook is the single source shared with Claude Code and Copilot. Do not d
 into this file; changes belong in the playbook.
 
 - Fetch the issue AND its comments - the maintainer reply often holds the real diagnosis, and the
-  reporter frequently corrects the title further down. Use the GitHub MCP server, or read-only `gh`
-  subcommands (`gh issue view <n> --comments`) when it is not connected.
+  reporter frequently corrects the title further down. Use the GitHub MCP server. Under Codex this
+  agent runs in a read-only sandbox with no network, so the `gh` fallback used by the other tools is
+  not available; if the MCP server is not connected, say so and ask the user to paste the issue
+  rather than guessing at its content.
 - Resolve the cmdlet through its `[Cmdlet(...)]` attribute or an `[Alias]`, never its filename, then
   read its `documentation/*.md` page - the doc is the specification.
 - Decide the owning layer - this repo, PnP Framework, PnP Core SDK, the service, or permission

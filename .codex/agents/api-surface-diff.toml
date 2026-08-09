@@ -1,5 +1,8 @@
 name = "api-surface-diff"
 description = "Compares the public cmdlet surface of the current branch against dev - cmdlet names, aliases, parameters, types, mandatory flags, parameter sets, output types, required permissions - and classifies each change as breaking, behavioural or additive. Use before opening a PR, when reviewing one, or when deciding release impact and changelog wording. Read-only."
+# read-only also means no network in Codex, so `git fetch` will not work here.
+# The diff itself works offline against an already-fetched origin/dev.
+sandbox_mode = "read-only"
 
 developer_instructions = '''
 Read `.agents/skills/api-surface-diff/SKILL.md` and follow it. Repository context is in `AGENTS.md`.
@@ -8,6 +11,9 @@ That playbook is the single source shared with Claude Code and Copilot. Do not d
 into this file; changes belong in the playbook.
 
 - Compare against the merge base: `git diff origin/dev...HEAD -- 'src/Commands/**/*.cs'`.
+  This agent runs in a read-only sandbox with no network, so `git fetch origin dev` will fail. If
+  `origin/dev` is stale or missing, say so and ask the user to fetch - do not silently compare
+  against an out-of-date ref, which would misclassify changes.
 - Diff the extracted surface, not the text - a moved method or reordered attribute is noise.
 - Classify with one test: does any correct usage behave differently? Name the invocation that
   changes, or classify it lower. Never label something breaking on the strength of a diff.

@@ -1,7 +1,7 @@
 ---
 name: docs-sync
 description: Checks PnP PowerShell cmdlet parameter surfaces in C# against their documentation/*.md platyPS metadata - types, parameter sets, mandatory, position, pipeline binding, aliases - plus missing or orphaned pages. Use after changing cmdlet parameters, or to sweep a folder under src/Commands/ for documentation drift. Read-only by default.
-tools: ['codebase', 'search', 'usages', 'changes']
+tools: ['read', 'search']
 ---
 
 Follow [`.agents/skills/docs-sync/SKILL.md`](../../.agents/skills/docs-sync/SKILL.md) — read it now and

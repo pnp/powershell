@@ -53,15 +53,42 @@ allowlist — MCP tools you do not name are unavailable**, even though the serve
 | Tool | MCP entry in `tools` |
 |---|---|
 | **Claude Code** (`.claude/agents/*.md`) | `mcp__<server>__<tool>`, e.g. `mcp__microsoft-learn__microsoft_docs_search`. One entry per tool; there is no wildcard. |
-| **Copilot** (`.github/agents/*.agent.md`) | `<server>/<tool>`, or `<server>/*` for the whole server, e.g. `microsoft-learn/*`. |
+| **Copilot** (`.github/agents/*.agent.md`) | `<server>/<tool>`, or `<server>/*` for the whole server, e.g. `microsoft-learn/*`, `github/*`. |
 
-A bare server name in Copilot's list (`'microsoft-learn'`) enables **nothing**. Note also that
-`githubRepo` is Copilot's built-in repo lookup — it is not the GitHub MCP server.
+A bare server name in Copilot's list (`'microsoft-learn'`) enables **nothing**.
+
+**Copilot's built-in tools are portable aliases, and unrecognized names are silently ignored** — so a
+plausible-looking list can be almost entirely inert. The documented set is:
+
+| Alias | Covers |
+|---|---|
+| `read` | `Read`, `NotebookRead` |
+| `search` | `Grep`, `Glob` |
+| `edit` | `Edit`, `MultiEdit`, `Write`, `NotebookEdit` |
+| `execute` | `shell`, `Bash`, `powershell` |
+| `web` | `WebSearch`, `WebFetch` — *not available to the cloud agent* |
+| `agent` | `custom-agent`, `Task` |
+| `todo` | `TodoWrite` — *not available to the cloud agent* |
+
+Editor-specific names such as `codebase`, `usages`, `changes`, `problems`, `fetch`, `runCommands` and
+`githubRepo` are **not** in this schema and are dropped without warning. Omitting `tools` entirely
+enables everything, as does `['*']`; `[]` disables everything.
 
 The Microsoft Learn server exposes exactly three tools: `microsoft_docs_search`, `microsoft_docs_fetch`
 and `microsoft_code_sample_search`. The GitHub server's tool ids vary by version, so where an agent
 needs it under Claude Code, **omit `tools` entirely** and rely on the instructions for read-only
 discipline — a static allowlist cannot name ids that are not knowable in advance.
+
+### Codex sandboxes
+
+Codex agents inherit the parent session's sandbox unless they set one, so "read-only" in a
+`description` enforces nothing on its own. Each profile declares it explicitly:
+`sandbox_mode = "read-only"` for the five read-only agents, `"workspace-write"` for
+`cmdlet-scaffolder`.
+
+Read-only in Codex also means **no network for shell commands**, which is why `api-surface-diff`
+cannot `git fetch` and `issue-triage` cannot use the `gh` fallback under Codex. Both say so in their
+instructions. MCP servers run outside the sandbox, so they keep working.
 
 > `.github/chatmodes/*.chatmode.md` is obsolete. Custom chat modes were renamed to custom agents;
 > `.chatmode.md` files are no longer recognised and must be renamed to `.agent.md` under

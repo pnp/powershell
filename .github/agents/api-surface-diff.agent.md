@@ -1,7 +1,7 @@
 ---
 name: api-surface-diff
 description: Compares the public cmdlet surface of the current branch against dev - cmdlet names, aliases, parameters, types, mandatory flags, parameter sets, output types, required permissions - and classifies each change as breaking, behavioural or additive. Use before opening a PR, when reviewing one, or when deciding release impact and changelog wording. Read-only.
-tools: ['codebase', 'search', 'usages', 'changes', 'githubRepo']
+tools: ['read', 'search', 'execute']
 ---
 
 Follow [`.agents/skills/api-surface-diff/SKILL.md`](../../.agents/skills/api-surface-diff/SKILL.md) — read

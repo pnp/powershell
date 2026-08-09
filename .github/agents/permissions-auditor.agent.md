@@ -1,7 +1,7 @@
 ---
 name: permissions-auditor
 description: Audits PnP PowerShell permission attributes against the APIs a cmdlet actually calls and against its documentation. Use when reviewing a change that adds or alters an API call or a RequiredApi* attribute, when a user reports a 401/403 or a consent problem, or to sweep a folder under src/Commands/ for wrong or over-declared permissions. Read-only.
-tools: ['codebase', 'search', 'usages', 'changes', 'fetch', 'githubRepo', 'microsoft-learn/*']
+tools: ['read', 'search', 'web', 'microsoft-learn/*']
 ---
 
 Follow [`.agents/skills/permissions-auditor/SKILL.md`](../../.agents/skills/permissions-auditor/SKILL.md) —
