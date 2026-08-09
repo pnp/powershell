@@ -72,10 +72,11 @@ These come from Microsoft's cmdlet development guidelines. Violations are user-f
     (`src/Commands/Base/PnPConnectedCmdlet.cs:57-60`). Your `ErrorRecord`, its category and its
     target object survive intact.
   - A raw `throw` reaches the generic catch. Under the default error action it becomes
-    `PSInvalidOperationException` with the original as inner; under `-ErrorAction Stop`, `Ignore` or
+    `PSInvalidOperationException` with the original as inner; under `-ErrorAction Stop` or
     `SilentlyContinue` it becomes `new ErrorRecord(new Exception(message), source,
     ErrorCategory.NotSpecified, null)` — **type, inner exception, category and target object are all
-    lost**, so everything the user needs must be in the message text.
+    lost**, so everything the user needs must be in the message text. Under `-ErrorAction Ignore`
+    `LogError` is skipped, so nothing is written at all.
 - Error messages belong in `Resources.resx`, referenced as `Resources.MessageName`.
 
 ---

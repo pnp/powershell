@@ -48,8 +48,9 @@ The defect this repository has shipped most often is input accepted and then ign
   instead of the one list asked for
 - `System.Text.Json` ignores unknown members by default, so a misspelled property silently has no
   effect. Custom enum converters here drop values they cannot parse, case sensitively
-- An unrecognised resource prefix in a permission attribute is dropped silently, leaving a cmdlet
-  declaring no permissions at all — see [`permissions-auditor`](../permissions-auditor/SKILL.md)
+- An unrecognised resource prefix in a permission attribute is silently classified as **SharePoint**,
+  so a typo'd `"garph/…"` declares a bogus SharePoint scope while the real Graph requirement goes
+  undeclared — see [`permissions-auditor`](../permissions-auditor/SKILL.md)
 - A dropped value that *widens* what the cmdlet does deserves an error, not a warning. An empty
   handler list means "all handlers", so one unrecognised handler name would otherwise turn a scoped
   operation into a full one
@@ -81,10 +82,13 @@ difference is the finding:
   stop, rethrown unchanged. The `ErrorRecord`, its `ErrorCategory` and its target object all reach
   the user intact.
 - **A raw `throw`** — hits the generic catch. Default error action: rethrown as
-  `PSInvalidOperationException` with the original as inner. Under `-ErrorAction Stop`, `Ignore` or
+  `PSInvalidOperationException` with the original as inner. Under `-ErrorAction Stop` or
   `SilentlyContinue`: `LogError` → `LoggingUtility.Error` → `WriteError(new ErrorRecord(new
   Exception(message), source, ErrorCategory.NotSpecified, null))`. Type, inner exception, category
   and target object are **all discarded**, so everything the user needs must be in the message text.
+  Under `-ErrorAction Ignore` the `LogError` call is skipped altogether
+  (`PnPConnectedCmdlet.cs:112-119`), so the failure is **swallowed with no record at all** — worth
+  remembering when a user reports a cmdlet that "does nothing and says nothing".
 
 So a raw `throw` carrying a custom exception type the caller is meant to inspect is a finding — the
 type is not observable on that path. So is a fatal condition signalled with `WriteWarning` and then

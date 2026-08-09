@@ -77,7 +77,10 @@ Also available: `RequiredApiDelegatedOrApplicationPermissions`,
 `ApiNotAvailableUnderDelegatedPermissions`, `ApiNotAvailableUnderApplicationPermissions`,
 `ApiPermissionsNotRequired`, `ApiPermissionsDependOnResource`.
 
-**An unrecognised resource prefix is silently dropped**, leaving a cmdlet that declares nothing.
+**An unrecognised resource prefix is silently treated as SharePoint.**
+`TokenHandler.DefineResourceTypeFromAudience` defaults every audience it does not recognise to
+SharePoint (only blank input becomes `Unknown`), so `"garph/Group.Read.All"` declares a *SharePoint*
+`Group.Read.All` rather than failing. A string with no `/` at all fails the regex and is dropped.
 Declare least privilege, and verify the scope against Microsoft Learn rather than from memory. See
 [`permissions-auditor`](../permissions-auditor/SKILL.md).
 

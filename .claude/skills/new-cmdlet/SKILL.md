@@ -18,7 +18,8 @@ Supporting references:
 - [`.agents/skills/cmdlet-scaffolder/SKILL.md`](../../../.agents/skills/cmdlet-scaffolder/SKILL.md) — the
   step-by-step procedure for creating a new cmdlet
 - [`.agents/skills/permissions-auditor/SKILL.md`](../../../.agents/skills/permissions-auditor/SKILL.md) —
-  how the permission attributes are interpreted, and how a scope gets silently dropped
+  how the permission attributes are interpreted, and how a typo'd resource prefix silently becomes a
+  SharePoint scope
 - [`AGENTS.md`](../../../AGENTS.md) — repository context
 
 **Never commit, push, or open a PR** — leave the work in the tree and hand it over. See

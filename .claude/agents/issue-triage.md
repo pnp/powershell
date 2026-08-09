@@ -8,10 +8,14 @@ permissionMode: plan
 
 <!--
 `mcp__<server>__*` grants every tool from that server, so the GitHub tool ids do not have to be known
-at authoring time. Read-only is enforced three ways rather than by prose: the allowlist has no write
-tool, disallowedTools removes them from any inherited pool, and plan mode blocks edits even through
-Bash. Note that a parent session in bypassPermissions or acceptEdits overrides permissionMode, so the
-first two lines are the ones that always hold.
+at authoring time.
+
+On read-only: Write, Edit and NotebookEdit are removed by both the allowlist and disallowedTools, and
+permissionMode: plan blocks edits made through Bash. But Bash is genuinely a write-capable tool - it
+can redirect to a file or run `gh pr create` - and permissionMode is ignored when the parent session
+is in bypassPermissions or acceptEdits. So this profile is read-only by strong default, not by
+guarantee. Bash stays because triage needs `git log` and the `gh` fallback; if you need a hard
+boundary, run this agent from a session that is not in bypassPermissions.
 -->
 
 Follow **`.agents/skills/issue-triage/SKILL.md`** — read it now and apply it.

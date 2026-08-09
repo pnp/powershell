@@ -97,9 +97,12 @@ Note the error path too, because "the error message tells me nothing" is a commo
 has one cause. `PnPConnectedCmdlet.ProcessRecord` rethrows `PipelineStoppedException` untouched
 (`src/Commands/Base/PnPConnectedCmdlet.cs:57-60`), so anything raised through `WriteError` or
 `ThrowTerminatingError` keeps its full `ErrorRecord`. A raw `throw`, however, reaches the generic
-catch, and under `-ErrorAction Stop`, `Ignore` or `SilentlyContinue` is rebuilt as a bare `Exception`
-carrying only the message — type, inner exception, category and target object all discarded. If the
-reporter is missing detail that the underlying exception clearly had, that discard is your answer.
+catch, and under `-ErrorAction Stop` or `SilentlyContinue` is rebuilt as a bare `Exception` carrying
+only the message — type, inner exception, category and target object all discarded. If the reporter
+is missing detail that the underlying exception clearly had, that discard is your answer. Under
+`-ErrorAction Ignore` the error is not rebuilt but **suppressed entirely** and `$Error` stays empty
+(`PnPConnectedCmdlet.cs:112-119`); that is the explanation for "it silently did nothing", which is a
+different report from "the error is unhelpful".
 
 ## Step 5 — report
 

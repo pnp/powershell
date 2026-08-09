@@ -86,8 +86,15 @@ so a read-only agent should say so structurally rather than in prose:
 | `disallowedTools` | Denylist, applied *before* `tools`. Accepts the same `mcp__<server>` patterns; `mcp__*` removes every MCP tool. |
 | `permissionMode` | `plan` blocks edits even via Bash. **Overridden** when the parent session is in `bypassPermissions` or `acceptEdits`, so treat it as a second line of defence, not the first. |
 
-`issue-triage` uses all three: an allowlist with no write tool, `disallowedTools: Write, Edit,
+`issue-triage` uses all three: an allowlist without the edit tools, `disallowedTools: Write, Edit,
 NotebookEdit`, and `permissionMode: plan`.
+
+Be honest about what that buys. **`Bash` is itself write-capable** — a shell redirect or
+`gh pr create` bypasses every edit-tool restriction — and `permissionMode` is ignored under a parent
+in `bypassPermissions`/`acceptEdits`. Any agent holding `Bash` is read-only by strong default, not by
+guarantee. The agents that need no shell (`docs-sync`, `api-surface-diff`) would be the ones to
+tighten first if you ever want a real boundary; `issue-triage` keeps `Bash` because `git log` and the
+`gh` fallback are the job.
 
 ### The Copilot cloud agent does not read `.vscode/mcp.json`
 

@@ -150,7 +150,10 @@ public class GetSomething : PnPWebRetrievalsCmdlet<SomeType>
   `PnPOfficeManagementApiCmdlet`, `PnPGcsCmdlet`, `PnPTasksCmdlet`, `PnPConnectedCmdlet`,
   `BasePSCmdlet`. Picking the wrong one compiles and then fails in a tenant.
 - Permission attributes are `"<resource>/<scope>"`. Multiple attributes are ORed; multiple scopes
-  inside one attribute are ANDed. **An unrecognised resource prefix is silently dropped.**
+  inside one attribute are ANDed. **An unrecognised resource prefix is silently treated as
+  SharePoint** — `TokenHandler.DefineResourceTypeFromAudience` defaults anything it does not
+  recognise to SharePoint, so `"garph/Group.Read.All"` becomes a SharePoint scope, not an error. A
+  string with no `/` at all fails the regex and is dropped entirely.
 - Use PipeBind types so a name, ID or object all bind. `[ValidateNotNull]` on any reference-typed
   parameter you dereference.
 - `ParameterSpecified(nameof(X))` to tell "not supplied" from "supplied as the default".
@@ -168,10 +171,12 @@ untouched first, then catches everything else. So there are two different paths:
   stop, which is rethrown unchanged. The `ErrorRecord` you built, with its category and target
   object, reaches the user intact. Prefer them.
 - **A raw `throw`** — reaches the generic catch. Under the default error action it is rethrown as
-  `PSInvalidOperationException` with the original as inner; under `-ErrorAction Stop`, `Ignore` or
+  `PSInvalidOperationException` with the original as inner. Under `-ErrorAction Stop` or
   `SilentlyContinue` it goes to `LogError`, which writes `new ErrorRecord(new Exception(message),
-  …, ErrorCategory.NotSpecified, null)`. On that path the exception type, inner exception, category
-  and target object are all lost, so everything the user needs must be in the message text.
+  …, ErrorCategory.NotSpecified, null)` — exception type, inner exception, category and target
+  object are all lost, so everything the user needs must be in the message text. Under
+  `-ErrorAction Ignore` `LogError` is skipped entirely, so the error is **suppressed rather than
+  rebuilt** and `$Error` is not populated.
 
 ## Code style
 

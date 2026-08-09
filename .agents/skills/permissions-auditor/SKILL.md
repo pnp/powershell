@@ -56,12 +56,25 @@ Scope format is `<resource>/<scope>`, optionally `https://`-prefixed:
 
 ### The failure mode to hunt for first
 
-`RequiredApiPermissionsBase` parses each string with a regex and maps the resource through
-`TokenHandler.DefineResourceTypeFromAudience`. **If the resource does not map, it returns `null` and
-the scope is silently dropped.** A misspelled or unrecognised resource prefix therefore produces a
-cmdlet that declares *no* requirement at all, rather than an error. Grep for scope strings whose
-resource segment is not one of the recognised audiences, and for a `null` slot surviving into
-`PermissionScopes`.
+`RequiredApiPermissionsBase` parses each string with the regex
+`(?:https://)?(?<resource>[^/]*?)/(?<scope>.*)` and maps the resource through
+`TokenHandler.DefineResourceTypeFromAudience`. That method returns `Unknown` **only for blank
+input**; every other unrecognised audience falls through to
+`_ => Enums.ResourceTypeName.SharePoint` (`src/Commands/Base/TokenHandler.cs`), because vanity
+domains give SharePoint audiences no fixed shape.
+
+So there are two distinct defects, and the common one is not what it looks like:
+
+| Written | Result |
+|---|---|
+| `"garph/Group.Read.All"` | **Silently becomes a SharePoint scope** `Group.Read.All`. The cmdlet declares a permission that does not exist on SharePoint, and its real Graph requirement is undeclared. |
+| `"Group.Read.All"` (no `/`) | Regex fails, `null`, scope dropped entirely — the cmdlet declares nothing. |
+| `"/Group.Read.All"` (blank resource) | `Unknown` → `null` → dropped. |
+
+Hunt for the first one primarily: a scope whose resource segment is not one of the audiences listed
+in `DefineResourceTypeFromAudience`, and any SharePoint-classified scope whose name looks like a
+Graph permission (`*.Read.All`, `Group.*`, `User.*`, `Directory.*`) on a cmdlet whose code calls
+Graph. Then check for `null` slots in `PermissionScopes` for the slashless cases.
 
 Second failure mode: an attribute array with a **single** scope where the code demonstrably needs
 two (e.g. reads a user *and* writes a site), or the reverse — an AND list that over-declares and
