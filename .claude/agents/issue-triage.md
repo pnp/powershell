@@ -1,14 +1,17 @@
 ---
 name: issue-triage
 description: Takes a PnP PowerShell GitHub issue, finds the cmdlet that owns it, traces the code path, decides whether the cause is in this repo or in PnP Framework / PnP Core SDK / the service, and produces a hypothesis with a repro for a maintainer. Use when starting work from an issue number or a bug report. Read-only - produces a diagnosis, not a fix.
+tools: Read, Grep, Glob, Bash, WebFetch, WebSearch, mcp__github__*, mcp__microsoft-learn__*
+disallowedTools: Write, Edit, NotebookEdit
+permissionMode: plan
 ---
 
 <!--
-No `tools:` allowlist on purpose. This agent needs the GitHub MCP server, whose tool ids
-(`mcp__github__*`) depend on the server version and are not knowable at authoring time, and a static
-allowlist would silently exclude them. Omitting the field inherits the full parent toolset, so the
-MCP server configured in `.mcp.json` is actually reachable. Read-only is enforced by the
-instructions below and by `AGENTS.md` § Human in the loop, not by the tool list.
+`mcp__<server>__*` grants every tool from that server, so the GitHub tool ids do not have to be known
+at authoring time. Read-only is enforced three ways rather than by prose: the allowlist has no write
+tool, disallowedTools removes them from any inherited pool, and plan mode blocks edits even through
+Bash. Note that a parent session in bypassPermissions or acceptEdits overrides permissionMode, so the
+first two lines are the ones that always hold.
 -->
 
 Follow **`.agents/skills/issue-triage/SKILL.md`** — read it now and apply it.

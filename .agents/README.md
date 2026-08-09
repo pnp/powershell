@@ -52,7 +52,7 @@ allowlist — MCP tools you do not name are unavailable**, even though the serve
 
 | Tool | MCP entry in `tools` |
 |---|---|
-| **Claude Code** (`.claude/agents/*.md`) | `mcp__<server>__<tool>`, e.g. `mcp__microsoft-learn__microsoft_docs_search`. One entry per tool; there is no wildcard. |
+| **Claude Code** (`.claude/agents/*.md`) | `mcp__<server>__<tool>` for one tool, or `mcp__<server>__*` / `mcp__<server>` for a whole server. Prefer the wildcard — server tool ids change between versions. |
 | **Copilot** (`.github/agents/*.agent.md`) | `<server>/<tool>`, or `<server>/*` for the whole server, e.g. `microsoft-learn/*`, `github/*`. |
 
 A bare server name in Copilot's list (`'microsoft-learn'`) enables **nothing**.
@@ -74,10 +74,20 @@ Editor-specific names such as `codebase`, `usages`, `changes`, `problems`, `fetc
 `githubRepo` are **not** in this schema and are dropped without warning. Omitting `tools` entirely
 enables everything, as does `['*']`; `[]` disables everything.
 
-The Microsoft Learn server exposes exactly three tools: `microsoft_docs_search`, `microsoft_docs_fetch`
-and `microsoft_code_sample_search`. The GitHub server's tool ids vary by version, so where an agent
-needs it under Claude Code, **omit `tools` entirely** and rely on the instructions for read-only
-discipline — a static allowlist cannot name ids that are not knowable in advance.
+The Microsoft Learn server exposes three tools — `microsoft_docs_search`, `microsoft_docs_fetch` and
+`microsoft_code_sample_search` — but reference it as `mcp__microsoft-learn__*` anyway, so the
+allowlist survives the server adding a fourth.
+
+**Never omit `tools` just to reach an MCP server.** Claude Code also supports two stronger controls,
+so a read-only agent should say so structurally rather than in prose:
+
+| Field | Effect |
+|---|---|
+| `disallowedTools` | Denylist, applied *before* `tools`. Accepts the same `mcp__<server>` patterns; `mcp__*` removes every MCP tool. |
+| `permissionMode` | `plan` blocks edits even via Bash. **Overridden** when the parent session is in `bypassPermissions` or `acceptEdits`, so treat it as a second line of defence, not the first. |
+
+`issue-triage` uses all three: an allowlist with no write tool, `disallowedTools: Write, Edit,
+NotebookEdit`, and `permissionMode: plan`.
 
 ### The Copilot cloud agent does not read `.vscode/mcp.json`
 
@@ -184,15 +194,19 @@ The Copilot cloud agent's built-in `github` server is separately read-only by de
 - **Microsoft Learn** — `HTTP 200`, `text/event-stream`, protocol `2025-06-18`, `Microsoft Learn MCP
   Server 1.0.0`. **No authentication.** Tools: `microsoft_docs_search`, `microsoft_docs_fetch`,
   `microsoft_code_sample_search`.
-- **GitHub** (`/readonly`) — `HTTP 401 missing required Authorization header`. Live, and requires OAuth; your
-  client performs that flow on first connect.
+- **GitHub** (`/readonly`) — `HTTP 401 missing required Authorization header`. Live, but **it will
+  not work until your client is authenticated**, and how that happens differs per tool (below). A
+  401 in `/mcp` means credentials, not a broken URL.
 
 Re-check if a server stops responding — hosted MCP endpoints and their auth flows do change.
 
 ## Per-tool setup
 
 - **Claude Code** — [`.mcp.json`](../.mcp.json) at the repository root, picked up automatically with
-  an approval prompt the first time. Check with `/mcp`.
+  an approval prompt the first time. **Run `/mcp` and authenticate the GitHub server before relying
+  on it**; the config carries no credential deliberately, since nothing secret belongs in a committed
+  file. If your build does not offer an OAuth flow there, add a PAT through an `Authorization:
+  Bearer …` header in your *user* config rather than in `.mcp.json`. Microsoft Learn needs nothing.
 - **VS Code (Copilot)** — [`.vscode/mcp.json`](../.vscode/mcp.json). VS Code offers to start the
   servers when the workspace opens; manage them from the tool picker or `MCP: List Servers`.
 - **Codex** — reads `~/.codex/config.toml`, which is per-user and cannot be committed:
@@ -203,7 +217,13 @@ Re-check if a server stops responding — hosted MCP endpoints and their auth fl
 
   [mcp_servers.github]
   url = "https://api.githubcopilot.com/mcp/readonly"
+  bearer_token_env_var = "GITHUB_PAT_TOKEN"   # export before starting Codex; the var *name*, not the token
   ```
+
+  `bearer_token_env_var` names an environment variable — a common mistake is putting the token
+  itself there. If the server is OAuth-capable, `codex mcp login github` is the alternative and
+  stores credentials instead. Either way the GitHub server is unusable in Codex without one of them,
+  and `issue-triage` falls back to asking you for the issue text.
 
   Older Codex builds support only stdio servers. If the `url` form is not recognised, bridge through
   `mcp-remote`:
