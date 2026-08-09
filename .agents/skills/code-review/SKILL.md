@@ -1,9 +1,11 @@
 ---
 name: code-review
-description: Reviews changes to PnP PowerShell, a .NET 8 module of 750+ cmdlets for Microsoft 365. Knows the cmdlet base classes, how errors reach the user, the documentation and changelog conventions, and the failure modes this repository actually ships.
+description: Review changes to PnP PowerShell for the failure modes this repository actually ships - silently ignored input, unpaged Graph collections, the wrong base class, permission attributes that do not match the API called, culture and cross-platform bugs, and missing documentation or changelog updates. Use when reviewing a diff, a PR, or uncommitted changes.
 ---
 
-# Reviewing PnP PowerShell
+# Playbook: code-review
+
+Review changes to PnP PowerShell for the failure modes this repository actually ships.
 
 Cmdlets here run unattended, against production tenants, often with tenant-wide permissions. A cmdlet
 that quietly does the wrong thing is worse than one that fails, because nobody finds out until the
@@ -11,10 +13,18 @@ tenant is already changed. Weight findings accordingly.
 
 Verify before reporting. A claim about behaviour that nobody ran is a guess; say so when it is one.
 
+Language and API rules live in [`dotnet-standards`](../dotnet-standards/SKILL.md). This playbook is about
+what goes wrong here specifically.
+
+> Report to the user, in the session. **Never post a review, a comment, or an approval to GitHub**,
+> and never open an issue for a finding — see
+> [Human in the loop](../../../AGENTS.md#human-in-the-loop).
+
 ## Layout
 
 - `src/Commands/` — cmdlet implementations, one folder per feature area
 - `src/Commands/Base/` — base classes, `PipeBinds/` for parameter binding types
+- `src/Commands/Attributes/` — permission and behaviour attributes
 - `src/ALC/` — assembly load context that isolates private dependencies
 - `documentation/<Verb-PnPNoun>.md` — the reference page for every cmdlet, one file each
 - `pages/articles/` — conceptual articles, listed in `pages/articles/toc.yml`
@@ -38,9 +48,28 @@ The defect this repository has shipped most often is input accepted and then ign
   instead of the one list asked for
 - `System.Text.Json` ignores unknown members by default, so a misspelled property silently has no
   effect. Custom enum converters here drop values they cannot parse, case sensitively
+- An unrecognised resource prefix in a permission attribute is dropped silently, leaving a cmdlet
+  declaring no permissions at all — see [`permissions-auditor`](../permissions-auditor/SKILL.md)
 - A dropped value that *widens* what the cmdlet does deserves an error, not a warning. An empty
   handler list means "all handlers", so one unrecognised handler name would otherwise turn a scoped
   operation into a full one
+
+### Unpaged collections
+
+`GraphRequestHelper.GetResultCollection` follows `@odata.nextLink`. `GraphRequestHelper.Get` does
+not — pointed at a collection endpoint it returns the **first page only, with no error**. The same
+applies to `RequestHelper`. This presents to users as "the cmdlet misses items in large tenants",
+which is invisible in any tenant small enough to develop against. Check every new collection fetch.
+
+The CSOM equivalent: a query returning more than the list view threshold, or a loop that pages
+manually and drops the last page.
+
+### Base class
+
+Check the base class actually matches what the cmdlet does — a tenant-admin operation on
+`PnPWebCmdlet`, or a Graph call from a SharePoint cmdlet, gets the wrong context and the wrong
+permission flavour. It compiles, and it fails in someone's tenant. The table in
+[`new-cmdlet`](../new-cmdlet/SKILL.md) is the reference.
 
 ### How errors reach the user
 
@@ -50,16 +79,20 @@ The defect this repository has shipped most often is input accepted and then ign
 the message**. Exception types and inner exceptions do not survive that path, so anything the user
 needs must be in the message text. Do not rely on a custom exception type being observable.
 
+Related: a fatal condition signalled with `WriteWarning` and then continuing, or a bare `throw`
+where `ThrowTerminatingError` with a real `ErrorCategory` and target object would tell the user
+which object failed. Both are findings.
+
 ### Cmdlet conventions
 
-- `Verb-PnPNoun`, approved verbs, correct base class (`PnPWebCmdlet`,
-  `PnPSharePointOnlineAdminCmdlet`, `PnPGraphCmdlet`, …)
+- `Verb-PnPNoun`, approved verbs, correct base class
 - `ParameterSpecified(nameof(X))` distinguishes "not supplied" from "supplied as default"
 - Reference-typed parameters that are dereferenced in `ExecuteCmdlet` need `[ValidateNotNull]`,
   otherwise `-Param $null` is a `NullReferenceException`
-- Permission attributes (`RequiredApiDelegatedOrApplicationPermissions` and siblings) must match the
-  APIs the cmdlet actually calls
+- Permission attributes must match the APIs the cmdlet actually calls, in both directions —
+  over-declaring forces users to grant access the cmdlet never uses
 - Destructive or overwriting behaviour needs `ShouldProcess`/`ShouldContinue` and `-Force`
+- A renamed cmdlet keeps its old name as `[Alias]`
 
 ### Cross-platform
 
@@ -77,17 +110,19 @@ needs must be in the message text. Do not rely on a custom exception type being 
 ## Documentation and changelog
 
 A parameter added, renamed, or changed in behaviour requires its `documentation/<Cmdlet>.md` updated
-in the same PR.
+in the same PR. A new cmdlet requires a new page; a removed cmdlet requires its page deleted.
 
 - `## PARAMETERS` sections carry only the platyPS ` ```yaml ` metadata blocks. Other fenced blocks
   there risk the help build; put examples under `## EXAMPLES` with ` ```powershell ` fences
+- Parameter subsections are listed alphabetically
 - Conceptual content belongs in `pages/articles/` with front matter, registered in `toc.yml`, not in
   `documentation/`, which is cmdlet reference only
 
-`CHANGELOG.md` entries go under `[Current nightly]` in `Added`, `Changed` or `Fixed`, each linking
-its PR. A change in behaviour belongs under `Changed` even when it fixes a bug, so it appears in the
-release notes people read before upgrading. The file header says it is owner maintained; maintainers
-do add entries, so do not raise that as a blocker.
+`CHANGELOG.md` entries go under `[Current nightly]` in `Added`, `Changed`, `Fixed` or `Removed`,
+each naming the affected cmdlets in backticks and linking its PR. A change in behaviour belongs
+under `Changed` even when it fixes a bug, so it appears in the release notes people read before
+upgrading. A PR with no changelog entry is an incomplete PR — but the file header says it is owner
+maintained and maintainers do add entries, so raise it as a gap, not a blocker.
 
 ## Breaking changes
 
@@ -97,6 +132,7 @@ If only previously-broken usage changes — a configuration that was never honou
 already threw — it is a fix, and it belongs in a minor release with a `Changed` entry. Reserve a major
 release for changes that break usage which was working as documented. Say which of the two a PR is,
 and name the invocation that changes, rather than labelling it breaking on the strength of a diff.
+[`api-surface-diff`](../api-surface-diff/SKILL.md) has the full classification.
 
 ## Reporting
 

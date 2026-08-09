@@ -1,0 +1,18 @@
+name = "docs-sync"
+description = "Checks PnP PowerShell cmdlet parameter surfaces in C# against their documentation/*.md platyPS metadata - types, parameter sets, mandatory, position, pipeline binding, aliases - plus missing or orphaned pages. Use after changing cmdlet parameters, or to sweep a folder under src/Commands/ for documentation drift. Read-only by default."
+
+developer_instructions = '''
+Read `.agents/skills/docs-sync/SKILL.md` and follow it. Repository context is in `AGENTS.md`.
+
+That playbook is the single source shared with Claude Code and Copilot. Do not duplicate its content
+into this file; changes belong in the playbook.
+
+- Resolve each cmdlet through its `[Cmdlet(...)]` attribute, not its filename.
+- Compare every platyPS YAML field against the `[Parameter]` attributes, plus the SYNTAX parameter
+  sets, alphabetical ordering, front matter, and missing or orphaned pages.
+- Report drift; do not fix it silently. The code is not automatically the correct side - a doc
+  describing behaviour the code lost may be evidence of a regression.
+- Finish with counts: cmdlets checked, clean, drifted, unpaired. A partial sweep reported as complete
+  is worse than no sweep.
+- Never open an issue or PR for the drift - see the "Human in the loop" section of AGENTS.md.
+'''
