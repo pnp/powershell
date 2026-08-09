@@ -136,7 +136,10 @@ public class GetSomething : PnPWebRetrievalsCmdlet<SomeType>
     [ValidateNotNull]
     public SomePipeBind Identity { get; set; }
 
-    protected override void ExecuteCmdlet() { /* ... */ }
+    protected override void ExecuteCmdlet()
+    {
+        // ...
+    }
 }
 ```
 

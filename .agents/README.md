@@ -79,6 +79,28 @@ and `microsoft_code_sample_search`. The GitHub server's tool ids vary by version
 needs it under Claude Code, **omit `tools` entirely** and rely on the instructions for read-only
 discipline — a static allowlist cannot name ids that are not knowable in advance.
 
+### The Copilot cloud agent does not read `.vscode/mcp.json`
+
+That file is IDE-only. On github.com the cloud agent sees only its built-in servers (`github`,
+`playwright`) plus whatever the agent profile or repository settings declare — so a `microsoft-learn/*`
+entry in `tools` would be dropped and the agent would silently lose its scope lookups.
+
+The four profiles that need Learn therefore declare the server inline as well:
+
+```yaml
+tools: ['read', 'search', 'web', 'microsoft-learn/*']
+mcp-servers:
+  microsoft-learn:
+    type: 'http'
+    url: 'https://learn.microsoft.com/api/mcp'
+    tools: ['*']
+```
+
+The server block registers it; the top-level `tools` list still filters what the agent may call. This
+is additive — the IDE keeps using `.vscode/mcp.json`, and `github/*` needs no block because it is
+built in. Note that the cloud agent does **not** support MCP servers behind OAuth, which is fine here
+only because Learn is unauthenticated.
+
 ### Codex sandboxes
 
 Codex agents inherit the parent session's sandbox unless they set one, so "read-only" in a

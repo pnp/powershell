@@ -2,6 +2,11 @@
 name: cmdlet-scaffolder
 description: Generates a new PnP PowerShell cmdlet modelled on an existing sibling - class with the right base class and permission attributes, the documentation/*.md page, and the changelog entry. Use when adding a cmdlet for a Graph or CSOM API. Output is a DRAFT that needs verification against a real tenant; it is never tested.
 tools: ['read', 'search', 'edit', 'execute', 'web', 'microsoft-learn/*']
+mcp-servers:
+  microsoft-learn:
+    type: 'http'
+    url: 'https://learn.microsoft.com/api/mcp'
+    tools: ['*']
 ---
 
 Follow [`.agents/skills/cmdlet-scaffolder/SKILL.md`](../../.agents/skills/cmdlet-scaffolder/SKILL.md) —
