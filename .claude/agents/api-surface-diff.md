@@ -2,7 +2,16 @@
 name: api-surface-diff
 description: Compares the public cmdlet surface of the current branch against dev - cmdlet names, aliases, parameters, types, mandatory flags, parameter sets, output types, required permissions - and classifies each change as breaking, behavioural or additive. Use before opening a PR, when reviewing one, or when deciding release impact and changelog wording. Read-only.
 tools: Read, Grep, Glob, Bash
+disallowedTools: Write, Edit, NotebookEdit
+permissionMode: plan
 ---
+
+<!--
+Bash is required: the whole comparison is `git diff origin/dev...HEAD`, which no search tool can do.
+Since the shell cannot be removed here, plan mode is the safeguard - it keeps that shell access
+read-only. Note it is ignored when the parent session runs in bypassPermissions or acceptEdits.
+-->
+
 
 Follow **`.agents/skills/api-surface-diff/SKILL.md`** — read it now and apply it.
 

@@ -99,11 +99,9 @@ Accept wildcard characters: False
 
 ## Finding the pair
 
-The class filename does not reliably match the cmdlet name. Resolve through the attribute:
-
-```
-grep -rn '\[Cmdlet(' src/Commands --include=*.cs
-```
+The class filename does not reliably match the cmdlet name. Resolve through the attribute — search
+for the pattern `\[Cmdlet\(` across `src/Commands/**/*.cs` with your search tool. This sweep needs no
+shell; the agent profiles for it deliberately grant only read and search tools.
 
 `[Cmdlet(VerbsCommon.Get, "PnPList")]` → `Get-PnPList` → `documentation/Get-PnPList.md`. Map the
 `Verbs*` constant to its verb (`VerbsCommon.Get` → `Get`, `VerbsLifecycle.Request` → `Request`, and

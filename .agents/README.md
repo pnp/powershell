@@ -91,10 +91,16 @@ NotebookEdit`, and `permissionMode: plan`.
 
 Be honest about what that buys. **`Bash` is itself write-capable** — a shell redirect or
 `gh pr create` bypasses every edit-tool restriction — and `permissionMode` is ignored under a parent
-in `bypassPermissions`/`acceptEdits`. Any agent holding `Bash` is read-only by strong default, not by
-guarantee. The agents that need no shell (`docs-sync`, `api-surface-diff`) would be the ones to
-tighten first if you ever want a real boundary; `issue-triage` keeps `Bash` because `git log` and the
-`gh` fallback are the job.
+in `bypassPermissions`/`acceptEdits`. So the rule is: **give an agent `Bash` only when it genuinely
+cannot do the job without a shell, and add `permissionMode: plan` when it does.**
+
+| Agent | Shell | Why |
+|---|---|---|
+| `docs-sync` | no | Read, Grep and Glob cover the whole sweep |
+| `permissions-auditor` | no | Reads attributes and call sites; Learn lookups go through MCP |
+| `api-surface-diff` | **yes** | `git diff origin/dev...HEAD` has no tool equivalent — plan mode compensates |
+| `issue-triage` | **yes** | `git log` and the `gh` fallback are the job — plan mode compensates |
+| `cmdlet-scaffolder` | **yes** | Writes files and runs `dotnet build`; not read-only by design |
 
 ### The Copilot cloud agent does not read `.vscode/mcp.json`
 
