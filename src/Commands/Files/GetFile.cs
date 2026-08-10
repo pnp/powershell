@@ -75,17 +75,8 @@ namespace PnP.PowerShell.Commands.Files
 
             var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-            // The provided Url can be the literal name of the file or a URL encoded version of it.
-            // Try it as provided first so files with i.e. %20 or + in their actual name resolve,
-            // and only fall back to the decoded form so URLs copied from a browser keep working.
-            // The + character is excluded from decoding as it would otherwise turn into a space.
-            serverRelativeUrl = ToServerRelativeUrl(webUrl, Url);
-            var decodedUrl = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
-            var decodedServerRelativeUrl = ToServerRelativeUrl(webUrl, decodedUrl);
-            if (!decodedServerRelativeUrl.Equals(serverRelativeUrl, StringComparison.Ordinal) && !FileExists(serverRelativeUrl))
-            {
-                serverRelativeUrl = decodedServerRelativeUrl;
-            }
+            // Use the Url as provided when a file exists there, only fall back to its decoded form when it does not.
+            serverRelativeUrl = Utilities.FileUrlResolver.Resolve(Url, webUrl, ClientContext, CurrentWeb);
 
             switch (ParameterSetName)
             {
@@ -161,19 +152,6 @@ namespace PnP.PowerShell.Commands.Files
                     WriteObject(stream);
                     break;
             }
-        }
-
-        private static string ToServerRelativeUrl(string webUrl, string url)
-        {
-            return !url.ToLower().StartsWith(webUrl.ToLower()) ? UrlUtility.Combine(webUrl, url) : url;
-        }
-
-        private bool FileExists(string serverRelativeUrl)
-        {
-            var file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
-            ClientContext.Load(file, f => f.Exists);
-            ClientContext.ExecuteQueryRetry();
-            return file.Exists;
         }
 
         private static async Task SaveFileToLocal(IFile fileToDownload, string filePath)
