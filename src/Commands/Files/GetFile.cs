@@ -75,24 +75,15 @@ namespace PnP.PowerShell.Commands.Files
 
             var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-            // The provided Url can be the literal name of the file or a URL encoded version of it.
-            // Try it as provided first so files with i.e. %20 or + in their actual name resolve,
-            // and only fall back to the decoded form so URLs copied from a browser keep working.
-            // The + character is excluded from decoding as it would otherwise turn into a space.
-            serverRelativeUrl = ToServerRelativeUrl(webUrl, Url);
-            var decodedUrl = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
-            var decodedServerRelativeUrl = ToServerRelativeUrl(webUrl, decodedUrl);
-            if (!decodedServerRelativeUrl.Equals(serverRelativeUrl, StringComparison.Ordinal) && !FileExists(serverRelativeUrl))
-            {
-                serverRelativeUrl = decodedServerRelativeUrl;
-            }
-
+            // Every branch below uses the Url as provided when a file exists there and only falls back to its decoded
+            // form when it does not. Resolving inside the branch keeps that to a single lookup per parameter set, and
+            // the PnP Core branches have to address the file by its unique id rather than by its URL.
             switch (ParameterSetName)
             {
                 case URLTOPATH:
 
                     // Get a reference to the file to download
-                    IFile fileToDownload = Connection.PnPContext.Web.GetFileByServerRelativeUrl(serverRelativeUrl);
+                    IFile fileToDownload = Utilities.FileUrlResolver.ResolveFile(Url, webUrl, ClientContext, CurrentWeb, Connection.PnPContext);
                     string fileToDownloadName = !string.IsNullOrEmpty(Filename) ? Filename : fileToDownload.Name;
                     string fileOut = System.IO.Path.Combine(Path, fileToDownloadName);
 
@@ -107,6 +98,7 @@ namespace PnP.PowerShell.Commands.Files
 
                     break;
                 case URLASFILEOBJECT:
+                    serverRelativeUrl = Utilities.FileUrlResolver.Resolve(Url, webUrl, ClientContext, CurrentWeb);
                     var fileObject = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
                     try
                     {
@@ -123,6 +115,7 @@ namespace PnP.PowerShell.Commands.Files
                     WriteObject(fileObject);
                     break;
                 case URLASLISTITEM:
+                    serverRelativeUrl = Utilities.FileUrlResolver.Resolve(Url, webUrl, ClientContext, CurrentWeb);
                     var fileListItem = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
 
                     ClientContext.Load(fileListItem, f => f.Exists, f => f.ListItemAllFields);
@@ -141,6 +134,7 @@ namespace PnP.PowerShell.Commands.Files
                     }
                     break;
                 case URLASSTRING:
+                    serverRelativeUrl = Utilities.FileUrlResolver.Resolve(Url, webUrl, ClientContext, CurrentWeb);
                     WriteObject(CurrentWeb.GetFileAsString(serverRelativeUrl));
                     break;
                 case URLASMEMORYSTREAM:
@@ -148,32 +142,19 @@ namespace PnP.PowerShell.Commands.Files
 
                     try
                     {
-                        fileMemoryStream = Connection.PnPContext.Web.GetFileByServerRelativeUrl(ResourcePath.FromDecodedUrl(serverRelativeUrl).DecodedUrl, f => f.Author, f => f.Length, f => f.ModifiedBy, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                        fileMemoryStream = Utilities.FileUrlResolver.ResolveFile(Url, webUrl, ClientContext, CurrentWeb, Connection.PnPContext, f => f.Author, f => f.Length, f => f.ModifiedBy, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
                     }
                     catch (ServerException)
                     {
                         // Assume the cause of the exception is that a principal cannot be found and try again without:
                         // Fallback in case the creator or person having last modified the file no longer exists in the environment such that the file can still be downloaded
-                        fileMemoryStream = Connection.PnPContext.Web.GetFileByServerRelativeUrl(ResourcePath.FromDecodedUrl(serverRelativeUrl).DecodedUrl, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                        fileMemoryStream = Utilities.FileUrlResolver.ResolveFile(Url, webUrl, ClientContext, CurrentWeb, Connection.PnPContext, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
                     }
 
                     var stream = new System.IO.MemoryStream(fileMemoryStream.GetContentBytes());
                     WriteObject(stream);
                     break;
             }
-        }
-
-        private static string ToServerRelativeUrl(string webUrl, string url)
-        {
-            return !url.ToLower().StartsWith(webUrl.ToLower()) ? UrlUtility.Combine(webUrl, url) : url;
-        }
-
-        private bool FileExists(string serverRelativeUrl)
-        {
-            var file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
-            ClientContext.Load(file, f => f.Exists);
-            ClientContext.ExecuteQueryRetry();
-            return file.Exists;
         }
 
         private static async Task SaveFileToLocal(IFile fileToDownload, string filePath)

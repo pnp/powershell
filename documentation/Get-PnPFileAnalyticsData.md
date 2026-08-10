@@ -48,7 +48,7 @@ Retrieves analytics data for the last 15 days of the specified file with aggrega
 ## PARAMETERS
 
 ### -Url
-The URL (server or site relative) to the file
+The URL (server or site relative) to the file. A sequence such as `%20` in the URL is taken literally when a file of that name exists, and is decoded otherwise.
 
 ```yaml
 Type: String

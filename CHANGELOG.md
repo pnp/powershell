@@ -81,6 +81,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Set-PnPDefaultColumnValues` corrupting library defaults on invalid taxonomy values. [#5412](https://github.com/pnp/powershell/pull/5412)
 - Fixed `New-PnPTeamsTeam` sporadically failing with `Not Found (404): Resource '<id>' does not exist or one of its queried reference-property objects are not present.` while the team was in fact created. [#5426](https://github.com/pnp/powershell/pull/5426)
 - Fixed `Get-PnPFile` mangling file names containing URL encoding sequences. [#5413](https://github.com/pnp/powershell/pull/5413)
+- Fixed `Get-PnPFile -AsFile` and `-AsMemoryStream`, `Get-PnPFileVersion`, `Remove-PnPFileVersion`, `Restore-PnPFileVersion`, `Convert-PnPFile`, `Get-PnPFileAnalyticsData`, `Set-PnPFileCheckedIn`, `Set-PnPFileCheckedOut`, `Undo-PnPFileCheckedOut`, `Get-PnPFileRetentionLabel` and `Get-PnPFileSensitivityLabel` not reaching a file whose name literally holds a URL encoding sequence such as `%20`, acting on a differently named file instead. `-Url` is now taken as provided when a file exists there and only decoded when it does not. Where both names exist, the literal one wins. [#5441](https://github.com/pnp/powershell/pull/5441)
+- Fixed `Get-PnPFileRetentionLabel` and `Get-PnPFileSensitivityLabel` rejecting a `-Url` relative to the web, such as `Shared Documents/file.docx`, which they resolved and then discarded. [#5441](https://github.com/pnp/powershell/pull/5441)
 
 ### Removed
 
