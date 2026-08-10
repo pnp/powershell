@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Purview
             }
             else
             {
-                if (Connection.ConnectionMethod == Model.ConnectionMethod.AzureADAppOnly)
+                if (Base.TokenHandler.HoldsApplicationToken(AccessToken, Connection))
                 {
                     url = "/beta/security/informationProtection/sensitivityLabels";
                 }

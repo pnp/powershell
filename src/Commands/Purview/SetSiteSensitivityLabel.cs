@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Purview
                 LogDebug($"Passed in label '{Identity}' is a name, going to try to lookup its Id");
 
                 // Filtering on the label name is not among the filters the sensitivity labels API documents as supported, so we retrieve all labels and match client side
-                var url = Connection.ConnectionMethod == Model.ConnectionMethod.AzureADAppOnly ? "/beta/security/informationProtection/sensitivityLabels" : "/beta/me/security/informationProtection/sensitivityLabels";
+                var url = Base.TokenHandler.HoldsApplicationToken(GraphAccessToken, Connection) ? "/beta/security/informationProtection/sensitivityLabels" : "/beta/me/security/informationProtection/sensitivityLabels";
                 var labels = GraphRequestHelper.GetResultCollection<Model.Graph.Purview.InformationProtectionLabel>(url);
 
                 var label = labels?.FirstOrDefault(l => l.Name == Identity);

@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace PnP.PowerShell.Commands.Model.Graph.Purview
 {
     /// <summary>
-    /// Describes the information protection label that details how to properly apply a sensitivity label to information. The informationProtectionLabel resource describes the configuration of sensitivity labels that apply to a user or tenant.
+    /// Describes the sensitivity label that details how to properly apply a sensitivity label to information. The sensitivityLabel resource describes the configuration of sensitivity labels that apply to a user or tenant.
     /// </summary>
     /// <seealso cref="https://learn.microsoft.com/graph/api/resources/security-sensitivitylabel"/>
     public class InformationProtectionLabel
