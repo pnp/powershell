@@ -41,6 +41,41 @@ namespace PnP.PowerShell.Commands.Base
             return RetrieveTokenType(new JsonWebToken(accessToken));
         }
 
+        /// <summary>
+        /// Determines whether the passed in access token is an application token, which matters wherever Microsoft Graph offers a /me route, as
+        /// Graph does not resolve /me for an application token.
+        /// </summary>
+        /// <remarks>
+        /// The connection method states how the connection was made, not which type of token came out of it. A managed identity, a workload identity,
+        /// a federated identity and an application token handed to -AccessToken all yield an application token while none of them is
+        /// <see cref="ConnectionMethod.AzureADAppOnly"/>, so the token itself is what decides. Only where the token cannot be read at all does the
+        /// connection method decide, and then every method which can only produce an application token counts. -AccessToken is deliberately absent
+        /// from that list, as it accepts either type of token and therefore says nothing on its own.
+        /// </remarks>
+        /// <param name="accessToken">The Microsoft Graph access token used by the connection</param>
+        /// <param name="connection">Connection to fall back on when the token cannot be read</param>
+        /// <returns>True if the connection acts as an application, false if it acts on behalf of a signed in user</returns>
+        internal static bool HoldsApplicationToken(string accessToken, PnPConnection connection)
+        {
+            try
+            {
+                var tokenType = RetrieveTokenType(accessToken);
+                if (tokenType != Enums.IdType.Unknown)
+                {
+                    return tokenType == Enums.IdType.Application;
+                }
+            }
+            catch (Exception)
+            {
+                // The token could not be read, so the connection method is all there is to go on
+            }
+
+            return connection?.ConnectionMethod is ConnectionMethod.AzureADAppOnly
+                or ConnectionMethod.ManagedIdentity
+                or ConnectionMethod.AzureADWorkloadIdentity
+                or ConnectionMethod.FederatedIdentity;
+        }
+
         private static Enums.IdType RetrieveTokenType(JsonWebToken decodedToken)
         {
             var idType = GetClaimValue(decodedToken, IdTypeClaimType);
