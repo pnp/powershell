@@ -22,6 +22,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-IncludeExtensionAttributes` to `Get-PnPMicrosoft365Group`, which populates the `OnPremisesExtensionAttributes` property with the extension attributes 1-15 of a group. Microsoft Graph only populates these for groups that are synchronized from an on-premises Active Directory, not for cloud only groups. [#5425](https://github.com/pnp/powershell/pull/5425)
 
 ### Changed
+- Changed `Set-PnPSiteSensitivityLabel` to resolve a label name through the current Microsoft Graph sensitivity labels API instead of the deprecated information protection labels API that Microsoft has announced will stop returning data.
+- Changed `Get-PnPTenantRetentionLabel` to call the generally available v1.0 Microsoft Graph retention label endpoint instead of the beta one.
 - Changed `Set-PnPListItem`, `Add-PnPListItem`, `Add-PnPFile` and `Copy-PnPFileMetadata` to retrieve only the fields named in `-Values` instead of the full field collection of the list, when not passing `-Batch`, which retrieves the field collection once for the whole batch. [#5437](https://github.com/pnp/powershell/pull/5437)
 - Changed `Get-PnPListItem` to report what can be done about a query SharePoint refuses for projecting more than 12 lookup, person or managed metadata columns through `-Fields` or `-Query`. [#5437](https://github.com/pnp/powershell/pull/5437)
 - Changed `Get-PnPSiteTemplate`, `Get-PnPTenantTemplate`, `Invoke-PnPTenantTemplate` and `Export-PnPPage` to fail on a `-Configuration` which cannot be read, holds a null, or names no recognized handler, and to warn about a property or handler it does not recognize, instead of ignoring these and processing everything. [#5434](https://github.com/pnp/powershell/pull/5434)
@@ -30,6 +32,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Export-PnPFlow -AsZipPackage` and `Export-PnPPowerApp` to ask for confirmation before overwriting an existing file when `-OutPath` is omitted, as they already did when `-OutPath` is specified. Unattended scripts that rely on the previous silent overwrite need to specify `-Force`. [#5421](https://github.com/pnp/powershell/pull/5421)
 
 ### Fixed
+- Fixed `Get-PnPTenantRetentionLabel` returning nothing at all when any retention label in the tenant uses a value the module did not know about, such as the `relabel` action after the retention period.
+- Fixed the Microsoft Graph reference links on `Get-PnPAvailableSensitivityLabel`, `Get-PnPTenantRetentionLabel` and `New-PnPTeamsTeam` pointing at deprecated API pages.
 - Fixed `Request-PnPPersonalSite` polling the operation when `-NoWait` was specified and returning immediately when it was not, which is the opposite of what the parameter describes and of what the other cmdlets taking `-NoWait` do. [#4329](https://github.com/pnp/powershell/issues/4329)
 - Fixed `Set-PnPListItem`, `Add-PnPListItem`, `Add-PnPFile` and `Copy-PnPFileMetadata` failing with `The specified user  could not be found.` when a person column in `-Values` is given a user id as a number instead of as a string, in both the direct and the `-Batch` code path. [#5437](https://github.com/pnp/powershell/pull/5437)
 - Fixed `Set-PnPListItem`, `Add-PnPListItem`, `Add-PnPFile` and `Copy-PnPFileMetadata` failing with `Column 'x' does not exist.` when a column in `-Values` is referenced by its display name instead of its internal name, which previously only worked for managed metadata columns. [#5437](https://github.com/pnp/powershell/pull/5437)
