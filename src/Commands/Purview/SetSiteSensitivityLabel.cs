@@ -28,13 +28,17 @@ namespace PnP.PowerShell.Commands.Purview
                 // Look up the sensitivity label Guid with the provided name
                 LogDebug($"Passed in label '{Identity}' is a name, going to try to lookup its Id");
 
-                var label = GraphRequestHelper.GetResultCollection<Model.Graph.Purview.InformationProtectionLabel>($"/beta/{(Connection.ConnectionMethod == Model.ConnectionMethod.AzureADAppOnly ? "" : "me/")}informationProtection/policy/labels?$filter=name eq '{Identity}'");
-                if (label == null || label.Count() == 0)
+                // Filtering on the label name is not among the filters the sensitivity labels API documents as supported, so we retrieve all labels and match client side
+                var url = Base.TokenHandler.HoldsApplicationToken(GraphAccessToken, Connection) ? "/beta/security/informationProtection/sensitivityLabels" : "/beta/me/security/informationProtection/sensitivityLabels";
+                var labels = GraphRequestHelper.GetResultCollection<Model.Graph.Purview.InformationProtectionLabel>(url);
+
+                var label = labels?.FirstOrDefault(l => l.Name == Identity);
+                if (label == null)
                 {
                     throw new PSArgumentException($"No Microsoft Purview sensitivity label with the provided name '{Identity}' could be found", nameof(Identity));
                 }
 
-                sensitivityLabelId = label.ElementAt(0).Id?.ToString();
+                sensitivityLabelId = label.Id?.ToString();
                 LogDebug($"Microsoft Purview label with name '{Identity}' successfully resolved to Id '{sensitivityLabelId}'");
             }
             else
