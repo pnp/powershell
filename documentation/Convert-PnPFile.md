@@ -87,7 +87,7 @@ Retrieves the file and converts to PDF, and save it to the given Document librar
 ## PARAMETERS
 
 ### -Url
-The URL (server or site relative) to the file
+The URL (server or site relative) to the file. A sequence such as `%20` in the URL is taken literally when a file of that name exists, and is decoded otherwise.
 
 ```yaml
 Type: String

@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -Url
-The server relative url of the file to check out
+The server relative url of the file to check out. A sequence such as `%20` in the URL is taken literally when a file of that name exists, and is decoded otherwise.
 
 ```yaml
 Type: String

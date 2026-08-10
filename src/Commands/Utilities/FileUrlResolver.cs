@@ -1,75 +1,58 @@
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using PnP.Core.Model.SharePoint;
 using PnP.Core.Services;
 using PnP.Framework.Utilities;
 using System;
 using System.Linq.Expressions;
-using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
     /// <summary>
-    /// Resolves a file URL as provided by the user to the server relative URL of the file it points at. 
-    /// A file name can hold a sequence such as %20 literally, 
-    /// so the URL is used as provided when a file exists there and only decoded when it does not.
+    /// Resolves a file URL as provided by the user to the file it points at. A file name can hold a sequence such as
+    /// %20 literally, so the URL is used as provided when a file exists there and only decoded when it does not.
     /// </summary>
     public static class FileUrlResolver
     {
         /// <summary>
-        /// Resolves the URL using CSOM to check if a file exists at the literal URL. 
+        /// The server error code SharePoint reports when there is no file at the requested path.
+        /// </summary>
+        private const int FileNotFoundServerErrorCode = -2147024894;
+
+        /// <summary>
+        /// Resolves the URL to the server relative URL of the file it points at, for use with the CSOM APIs.
         /// Pass null as the web URL to leave a web relative URL as is.
         /// </summary>
         public static string Resolve(string url, string webServerRelativeUrl, ClientContext clientContext, Web web)
         {
-            return Resolve(url, webServerRelativeUrl, candidate =>
-            {
-                var file = web.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(candidate));
-                clientContext.Load(file, f => f.Exists);
-                clientContext.ExecuteQueryRetry();
-                return file.Exists;
-            });
+            return ResolveCore(url, webServerRelativeUrl, clientContext, web).ServerRelativeUrl;
         }
 
         /// <summary>
-        /// Returns the PnP Core file the URL points at. PnP Core turns a %20 in a URL back into a space, so a file
-        /// whose name holds one literally is addressed by its unique id, which CSOM looks up from the literal URL.
+        /// Resolves the URL to the PnP Core file it points at. PnP Core replaces a %20 in a URL with a space before it
+        /// calls SharePoint, so a path still holding one is addressed by its unique id instead.
         /// Pass null as the web URL to leave a web relative URL as is, or a null context to skip the lookup.
         /// </summary>
         public static IFile ResolveFile(string url, string webServerRelativeUrl, ClientContext clientContext, Web web, PnPContext pnpContext, params Expression<Func<IFile, object>>[] expressions)
         {
-            var literalUrl = ToServerRelativeUrl(url, webServerRelativeUrl);
+            var (serverRelativeUrl, uniqueId) = ResolveCore(url, webServerRelativeUrl, clientContext, web);
 
-            // The + character is excluded from decoding as it would otherwise turn into a space.
-            var decodedUrl = ToServerRelativeUrl(UrlUtilities.UrlDecode(url.Replace("+", "%2B")), webServerRelativeUrl);
-
-            // Nothing decoded means there is nothing PnP Core would rewrite, so the file can be addressed by its URL.
-            var uniqueId = Guid.Empty;
-            if (!decodedUrl.Equals(literalUrl, StringComparison.Ordinal) && clientContext != null && web != null)
+            // Decoding once can still leave a %20 behind, as the browser URL of a file whose name holds one literally
+            // does. Look that file up as well so it too is addressed by its unique id rather than by its URL.
+            if (uniqueId == Guid.Empty && clientContext != null && web != null && serverRelativeUrl.Contains("%20", StringComparison.Ordinal))
             {
-                try
-                {
-                    var literalFile = web.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(literalUrl));
-                    clientContext.Load(literalFile, f => f.Exists, f => f.UniqueId);
-                    clientContext.ExecuteQueryRetry();
-
-                    if (literalFile.Exists)
-                    {
-                        uniqueId = literalFile.UniqueId;
-                    }
-                }
-                catch (Exception e) when (e is not PipelineStoppedException)
-                {
-                    // The lookup only picks between two candidates, so it must never fail the cmdlet itself. Retrieving
-                    // the file itself is deliberately left outside this catch so that its errors reach the caller.
-                }
+                uniqueId = TryGetFileId(serverRelativeUrl, clientContext, web);
             }
 
             return uniqueId == Guid.Empty
-                ? pnpContext.Web.GetFileByServerRelativeUrl(decodedUrl, expressions)
+                ? pnpContext.Web.GetFileByServerRelativeUrl(serverRelativeUrl, expressions)
                 : pnpContext.Web.GetFileById(uniqueId, expressions);
         }
 
-        private static string Resolve(string url, string webServerRelativeUrl, Func<string, bool> fileExists)
+        /// <summary>
+        /// Picks between the URL as provided and its decoded form, returning the unique id of the file as well when the
+        /// lookup needed to make that choice has already established it.
+        /// </summary>
+        private static (string ServerRelativeUrl, Guid UniqueId) ResolveCore(string url, string webServerRelativeUrl, ClientContext clientContext, Web web)
         {
             var literalUrl = ToServerRelativeUrl(url, webServerRelativeUrl);
 
@@ -79,18 +62,40 @@ namespace PnP.PowerShell.Commands.Utilities
             // Nothing decoded means there are no two candidates to pick between, so no lookup is needed.
             if (decodedUrl.Equals(literalUrl, StringComparison.Ordinal))
             {
-                return literalUrl;
+                return (literalUrl, Guid.Empty);
             }
+
+            // Without a SharePoint context there is nothing to pick with, so keep the decoded form.
+            if (clientContext == null || web == null)
+            {
+                return (decodedUrl, Guid.Empty);
+            }
+
+            var uniqueId = TryGetFileId(literalUrl, clientContext, web);
+
+            return uniqueId == Guid.Empty ? (decodedUrl, Guid.Empty) : (literalUrl, uniqueId);
+        }
+
+        /// <summary>
+        /// Returns the unique id of the file at the given URL, or an empty Guid when SharePoint reports there is no file
+        /// there. Any other failure is left to surface: reading it as an absent file would let a denied or otherwise
+        /// failed lookup silently redirect the caller at a differently named sibling.
+        /// </summary>
+        private static Guid TryGetFileId(string serverRelativeUrl, ClientContext clientContext, Web web)
+        {
+            var file = web.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+            clientContext.Load(file, f => f.Exists, f => f.UniqueId);
 
             try
             {
-                return fileExists(literalUrl) ? literalUrl : decodedUrl;
+                clientContext.ExecuteQueryRetry();
             }
-            catch (Exception e) when (e is not PipelineStoppedException)
+            catch (ServerException e) when (e.ServerErrorCode == FileNotFoundServerErrorCode)
             {
-                // The lookup only picks between two candidates, so it must never fail the cmdlet itself.
-                return decodedUrl;
+                return Guid.Empty;
             }
+
+            return file.Exists ? file.UniqueId : Guid.Empty;
         }
 
         private static string ToServerRelativeUrl(string url, string webServerRelativeUrl)
