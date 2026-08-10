@@ -1,5 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Core.Model.SharePoint;
+using PnP.Framework.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -37,10 +38,21 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
+            var serverRelativeUrl = string.Empty;
+
+            // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
+            Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
+
             var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-            // Use the Url as provided when a file exists there, only fall back to its decoded form when it does not.
-            var serverRelativeUrl = Utilities.FileUrlResolver.Resolve(Url, webUrl, Connection.PnPContext);
+            if (!Url.ToLower().StartsWith(webUrl.ToLower()))
+            {
+                serverRelativeUrl = UrlUtility.Combine(webUrl, Url);
+            }
+            else
+            {
+                serverRelativeUrl = Url;
+            }
 
             IFile analyticsFile = Connection.PnPContext.Web.GetFileByServerRelativeUrl(serverRelativeUrl, p => p.VroomItemID, p => p.VroomDriveID);
 

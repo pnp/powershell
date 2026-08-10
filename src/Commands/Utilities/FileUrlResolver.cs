@@ -1,5 +1,4 @@
 using Microsoft.SharePoint.Client;
-using PnP.Core.Services;
 using PnP.Framework.Utilities;
 using System;
 using System.Management.Automation;
@@ -26,15 +25,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 clientContext.ExecuteQueryRetry();
                 return file.Exists;
             });
-        }
-
-        /// <summary>
-        /// Resolves the URL using PnP Core to check if a file exists at the literal URL. 
-        /// Pass null as the web URL to leave a web relative URL as is.
-        /// </summary>
-        public static string Resolve(string url, string webServerRelativeUrl, PnPContext pnpContext)
-        {
-            return Resolve(url, webServerRelativeUrl, candidate => pnpContext.Web.GetFileByServerRelativeUrlOrDefault(candidate) != null);
         }
 
         private static string Resolve(string url, string webServerRelativeUrl, Func<string, bool> fileExists)

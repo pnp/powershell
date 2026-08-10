@@ -11,10 +11,10 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            // Use the Url as provided when a file exists there, only fall back to its decoded form when it does not.
-            var serverRelativeUrl = Utilities.FileUrlResolver.Resolve(Url, null, Connection.PnPContext);
+            // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
+            Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
 
-            IFile file = Connection.PnPContext.Web.GetFileByServerRelativeUrl(serverRelativeUrl);
+            IFile file = Connection.PnPContext.Web.GetFileByServerRelativeUrl(Url);
             file.UndoCheckout();
 
         }
