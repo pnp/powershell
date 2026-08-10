@@ -21,31 +21,18 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            var serverRelativeUrl = string.Empty;
-
             if (Uri.IsWellFormedUriString(Url, UriKind.Absolute))
             {
                 // We can't deal with absolute URLs
                 Url = UrlUtility.MakeRelativeUrl(Url);
             }
 
-            // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
-            Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
-
             Connection.PnPContext.Web.EnsureProperties(w => w.ServerRelativeUrl);
 
             var webUrl = Connection.PnPContext.Web.ServerRelativeUrl;
 
-            if (!Url.ToLower().StartsWith(webUrl.ToLower()))
-            {
-                serverRelativeUrl = UrlUtility.Combine(webUrl, Url);
-            }
-            else
-            {
-                serverRelativeUrl = Url;
-            }
-
-            var file = Connection.PnPContext.Web.GetFileByServerRelativeUrl(serverRelativeUrl);
+            // Use the Url as provided when a file exists there, only fall back to its decoded form when it does not.
+            var file = Utilities.FileUrlResolver.ResolveFile(Url, webUrl, ClientContext, ClientContext?.Web, Connection.PnPContext);
             file.EnsureProperties(f => f.VroomDriveID, f => f.VroomItemID);
 
             var requestUrl = $"v1.0/drives/{file.VroomDriveID}/items/{file.VroomItemID}/extractSensitivityLabels";
