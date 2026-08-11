@@ -110,7 +110,7 @@
 <p>Retrieves analytics data for the last 15 days of the specified file with aggregation interval as days.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-url">-Url</h3>
-<p>The URL (server or site relative) to the file</p>
+<p>The URL (server or site relative) to the file. A sequence such as <code>%20</code> in the URL is taken literally when a file of that name exists, and is decoded otherwise.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases: ServerRelativeUrl, SiteRelativeUrl

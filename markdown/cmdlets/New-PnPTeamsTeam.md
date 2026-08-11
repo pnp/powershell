@@ -527,7 +527,7 @@ Accept wildcard characters: False
 ```
 
 ### -SensitivityLabels
-The Sensitivity label to be set to the Microsoft 365 Group and Team. To retrieve the sensitivity label you need to use the Graph API mentioned [here](https://learn.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&tabs=http). This parameter cannot be used together with Template.
+The Sensitivity label to be set to the Microsoft 365 Group and Team. To retrieve the sensitivity label you need to use the Graph API mentioned [here](https://learn.microsoft.com/en-us/graph/api/security-sensitivitylabel-get?view=graph-rest-beta&tabs=http). This parameter cannot be used together with Template.
 
 ```yaml
 Type: GUID[]

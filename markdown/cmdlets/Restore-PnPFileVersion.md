@@ -61,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -Url
-Server relative url or site relative url of the file. 
+Server relative url or site relative url of the file. A sequence such as `%20` in the URL is taken literally when a file of that name exists, and is decoded otherwise. 
 
 ```yaml
 Type: String
