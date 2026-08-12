@@ -145,6 +145,8 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-MassDeleteNotificationDisabled <Boolean>]
  [-BusinessConnectivityServiceDisabled <Boolean>]
  [-EnableSensitivityLabelForPDF <Boolean>]
+ [-EnableSensitivityLabelForOneNote <Boolean>]
+ [-EnableSensitivityLabelForVideoFiles <Boolean>]
  [-IsDataAccessInCardDesignerEnabled <Boolean>]
  [-CoreSharingCapability <SharingCapabilities>]
  [-BlockUserInfoVisibilityInOneDrive <TenantBrowseUserInfoPolicyValue>]
@@ -459,6 +461,42 @@ Allows turning on support for PDFs with sensitivity labels for the following sce
 The valid values are:
 True - Enables support for PDFs.
 False (default) - Disables support for PDFs.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableSensitivityLabelForOneNote
+Allows turning on support for sensitivity labels on OneNote files in SharePoint and OneDrive.
+
+The valid values are:
+True - Enables support for labeled OneNote files.
+False (default) - Disables support for labeled OneNote files.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableSensitivityLabelForVideoFiles
+Allows turning on support for sensitivity labels on video files in SharePoint and OneDrive.
+
+The valid values are:
+True - Enables support for labeled video files.
+False (default) - Disables support for labeled video files.
 
 ```yaml
 Type: Boolean

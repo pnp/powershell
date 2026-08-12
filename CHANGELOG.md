@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+- Added `-EnableSensitivityLabelForOneNote` and `-EnableSensitivityLabelForVideoFiles` parameters to `Set-PnPTenant`.
 - Added `Test-PnPConnectionPermission` which compares the current connection's access token claims with the permission metadata of a PnP PowerShell cmdlet. [#5428](https://github.com/pnp/powershell/pull/5428)
 - Added `ApiPermissionsDependOnResource` attribute for cmdlets of which the required permissions follow from the resource they are pointed at or from how they are invoked, and applied it to `Get-PnPGraphSubscription`, `New-PnPGraphSubscription`, `Set-PnPGraphSubscription`, `Remove-PnPGraphSubscription`, `Invoke-PnPGraphMethod`, `New-PnPSite`, `Set-PnPSiteClassification` and `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory`. [#5427](https://github.com/pnp/powershell/pull/5427)
 - Added `ApiPermissionsNotRequired` attribute for cmdlets which need no permissions on the application registration PnP PowerShell connects with, and applied it to `Get-PnPConnection`, `Get-PnPContext`, `Set-PnPContext`, `Get-PnPPowerShellTelemetryEnabled`, `Enable-PnPPowerShellTelemetry`, `Disable-PnPPowerShellTelemetry`, `Register-PnPEntraIDApp` and `Register-PnPEntraIDAppForInteractiveLogin`. [#5427](https://github.com/pnp/powershell/pull/5427)

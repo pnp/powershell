@@ -436,6 +436,12 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? EnableSensitivityLabelForPDF { get; set; }
 
         [Parameter(Mandatory = false)]
+        public bool? EnableSensitivityLabelForOneNote { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? EnableSensitivityLabelForVideoFiles { get; set; }
+
+        [Parameter(Mandatory = false)]
         public bool? IsDataAccessInCardDesignerEnabled { get; set; }
 
         [Parameter(Mandatory = false)]
@@ -1590,6 +1596,18 @@ namespace PnP.PowerShell.Commands.Admin
             if (EnableSensitivityLabelForPDF.HasValue)
             {
                 Tenant.EnableSensitivityLabelForPDF = EnableSensitivityLabelForPDF.Value;
+                modified = true;
+            }
+
+            if (EnableSensitivityLabelForOneNote.HasValue)
+            {
+                Tenant.EnableSensitivityLabelForOneNote = EnableSensitivityLabelForOneNote.Value;
+                modified = true;
+            }
+
+            if (EnableSensitivityLabelForVideoFiles.HasValue)
+            {
+                Tenant.EnableSensitivityLabelForVideoFiles = EnableSensitivityLabelForVideoFiles.Value;
                 modified = true;
             }
 
