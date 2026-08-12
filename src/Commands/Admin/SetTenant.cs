@@ -433,10 +433,10 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? BusinessConnectivityServiceDisabled { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? EnableSensitivityLabelForPDF { get; set; }
+        public bool? EnableSensitivityLabelForOneNote { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? EnableSensitivityLabelForOneNote { get; set; }
+        public bool? EnableSensitivityLabelForPDF { get; set; }
 
         [Parameter(Mandatory = false)]
         public bool? EnableSensitivityLabelForVideoFiles { get; set; }
@@ -1593,15 +1593,15 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
-            if (EnableSensitivityLabelForPDF.HasValue)
-            {
-                Tenant.EnableSensitivityLabelForPDF = EnableSensitivityLabelForPDF.Value;
-                modified = true;
-            }
-
             if (EnableSensitivityLabelForOneNote.HasValue)
             {
                 Tenant.EnableSensitivityLabelForOneNote = EnableSensitivityLabelForOneNote.Value;
+                modified = true;
+            }
+
+            if (EnableSensitivityLabelForPDF.HasValue)
+            {
+                Tenant.EnableSensitivityLabelForPDF = EnableSensitivityLabelForPDF.Value;
                 modified = true;
             }
 
