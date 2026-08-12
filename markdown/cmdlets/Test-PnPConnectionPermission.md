@@ -1,11 +1,11 @@
 ---
-schema: 2.0.0
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Test-PnPConnectionPermission.html
-external help file: PnP.PowerShell.dll-Help.xml
 title: Test-PnPConnectionPermission
 Module Name: PnP.PowerShell
+online version: https://pnp.github.io/powershell/cmdlets/Test-PnPConnectionPermission.html
+external help file: PnP.PowerShell.dll-Help.xml
+schema: 2.0.0
 tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
 ---
  
 # Test-PnPConnectionPermission
