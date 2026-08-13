@@ -1,11 +1,11 @@
 ---
-title: Get-PnPCommandPermission
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPCommandPermission.html
 external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
-tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
+Module Name: PnP.PowerShell
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPCommandPermission.html
+title: Get-PnPCommandPermission
+tags: Available in the current Nightly Release only.
 ---
    
 # Get-PnPCommandPermission
