@@ -18,11 +18,31 @@ if (!(Test-Path -LiteralPath $helpFile)) {
 	throw "External help was not generated at $helpFile"
 }
 
-$expected = @(Get-ChildItem -Path (Join-Path $DocumentationPath "*.md")).Count
-$actual = ([regex]::Matches((Get-Content -LiteralPath $helpFile -Raw), '<maml:linkText>Online Version</maml:linkText>\s*<maml:uri>\S+</maml:uri>')).Count
+$baseUri = "https://pnp.github.io/powershell/cmdlets/"
+# The documentation site publishes each page under its file name, so the page a link resolves to only
+# exists when the file name, the command name and the link agree, case included.
+$pageNames = @(Get-ChildItem -Path (Join-Path $DocumentationPath "*.md")).BaseName
+$commands = [regex]::Matches((Get-Content -LiteralPath $helpFile -Raw), '(?s)<command:command[ >].*?</command:command>')
+$problems = [System.Collections.Generic.List[string]]::new()
 
-if ($actual -ne $expected) {
-	throw "External help contains $actual online help links for $expected documentation pages. Get-Help -Online will not open the cmdlet page. Check that every page carries an 'online version' value and that Microsoft.PowerShell.PlatyPS 1.0.3 or later is used."
+foreach ($command in $commands) {
+	$name = [regex]::Match($command.Value, '<command:name>\s*([^<\s]+)\s*</command:name>').Groups[1].Value
+	# Get-Help -Online resolves the first related link, so only the first one is worth asserting on
+	$uri = [regex]::Match($command.Value, '<command:relatedLinks>\s*<maml:navigationLink>\s*<maml:linkText>[^<]*</maml:linkText>\s*<maml:uri>([^<]*)</maml:uri>').Groups[1].Value
+	if ($uri -cne "$baseUri$name.html") {
+		$problems.Add("  $name links to '$uri'")
+	}
+	elseif ($pageNames -cnotcontains $name) {
+		$problems.Add("  $name links to a page that is not published: there is no documentation/$name.md with that exact casing")
+	}
 }
 
-Write-Host "Verified $actual online help links in the generated external help" -ForegroundColor Green
+if ($commands.Count -ne $pageNames.Count) {
+	$problems.Add("  external help holds $($commands.Count) commands for $($pageNames.Count) documentation pages")
+}
+
+if ($problems.Count -gt 0) {
+	throw "Get-Help -Online will not open the cmdlet page. Every command must carry its own $($baseUri)<name>.html as the first related link. Check that the page carries an 'online version' value matching its file name and that Microsoft.PowerShell.PlatyPS 1.0.3 or later is used.`n$($problems -join "`n")"
+}
+
+Write-Host "Verified the online help link of all $($commands.Count) commands in the generated external help" -ForegroundColor Green
