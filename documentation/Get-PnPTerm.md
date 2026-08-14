@@ -16,21 +16,15 @@ Returns a Term Store Term.
 
 ### By Term Id
 ```powershell
-Get-PnPTerm
-    -Identity <Guid>
-    [-TermStore <Guid>]
-    [-IncludeChildTerms] [-Connection <PnPConnection>] [-Includes <String[]>] 
+Get-PnPTerm -Identity <TaxonomyTermPipeBind> [-TermStore <TaxonomyTermStorePipeBind>]
+ [-IncludeChildTerms] [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ### By Term Name
 ```powershell
-Get-PnPTerm
-    -Identity <Name>
-    -TermSet <Guid|Name>
-    -TermGroup <Guid|Name>
-    [-TermStore <Guid>]
-    [-Recursive] 
-    [-IncludeChildTerms][-IncludeDeprecated] [-Connection <PnPConnection>] [-Includes <String[]>] 
+Get-PnPTerm -Identity <TaxonomyTermPipeBind> -TermSet <TaxonomyTermSetPipeBind>
+ -TermGroup <TaxonomyTermGroupPipeBind> [-TermStore <TaxonomyTermStorePipeBind>] [-Recursive]
+ [-IncludeChildTerms] [-IncludeDeprecated] [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ## DESCRIPTION

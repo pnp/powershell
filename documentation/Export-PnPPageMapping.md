@@ -15,16 +15,9 @@ Get's the built-in mapping files or a custom mapping file for your publishing po
 ## SYNTAX 
 
 ```powershell
-Export-PnPPageMapping [-BuiltInWebPartMapping [<SwitchParameter>]]
-                                [-BuiltInPageLayoutMapping [<SwitchParameter>]]
-                                [-CustomPageLayoutMapping [<SwitchParameter>]]
-                                [-PublishingPage <PagePipeBind>]
-                                [-AnalyzeOOBPageLayouts [<SwitchParameter>]]
-                                [-Folder <String>]
-                                [-Overwrite [<SwitchParameter>]]
-                                [-Logging [<SwitchParameter>]]
-                                
-                                [-Connection <PnPConnection>]
+Export-PnPPageMapping [[-PublishingPage] <PagePipeBind>] [-BuiltInWebPartMapping]
+ [-BuiltInPageLayoutMapping] [-CustomPageLayoutMapping] [-AnalyzeOOBPageLayouts] [-Folder <String>]
+ [-Overwrite] [-Logging] [-Connection <PnPConnection>]
 ```
 
 ## EXAMPLES

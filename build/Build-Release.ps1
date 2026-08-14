@@ -183,10 +183,11 @@ Catch {
 
 Write-Host "Generating Documentation" -ForegroundColor Yellow
 Set-PSRepository PSGallery -InstallationPolicy Trusted
-Install-Module -Name Microsoft.PowerShell.PlatyPS -AllowPrerelease -RequiredVersion 1.0.0-preview1
+Install-Module -Name Microsoft.PowerShell.PlatyPS -RequiredVersion 1.0.3
 Write-Host "Generating external help"
 $mdFiles = Measure-PlatyPSMarkdown -Path "$PSScriptRoot/../documentation/*.md"
 $mdFiles | Import-MarkdownCommandHelp -Path {$_.FilePath} | Export-MamlCommandHelp -OutputFolder $helpfileDestinationFolder -Force
+& "$PSScriptRoot/Assert-OnlineHelpLinks.ps1" -OutputFolder $helpfileDestinationFolder -DocumentationPath "$PSScriptRoot/../documentation"
 # Install-Module Microsoft.PlatyPS -ErrorAction Stop
 # New-ExternalHelp -Path "$PSScriptRoot/../documentation" -OutputPath $destinationFolder -Force
 

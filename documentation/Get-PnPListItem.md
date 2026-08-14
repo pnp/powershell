@@ -17,7 +17,7 @@ Retrieves list items
 ### All Items (Default)
 ```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-FolderServerRelativeUrl <String>] [-Fields <String[]>]
- [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>][-IncludeContentType <SwitchParameter>][-Connection <PnPConnection>]
+ [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>] [-IncludeContentType <SwitchParameter>] [-Connection <PnPConnection>]
  
 ```
 
