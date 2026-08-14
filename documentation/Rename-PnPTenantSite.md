@@ -15,8 +15,9 @@ Starts a rename of a site on a SharePoint Online site.
 ## SYNTAX
 
 ```powershell
-Rename-PnPTenantSite [[-Identity] <SPOSitePipeBind>] [[-NewSiteUrl] <String>] [[-NewSiteTitle] <string>]
-[[-SuppressMarketplaceAppCheck] [<SwitchParameter>]] [[-SuppressWorkflow2013Check] [<SwitchParameter>]] [[-SuppressBcsCheck] [<SwitchParameter>]] [-Connection <PnPConnection>] 
+Rename-PnPTenantSite -Identity <SPOSitePipeBind> -NewSiteUrl <String> [-NewSiteTitle <String>]
+ [-SuppressMarketplaceAppCheck] [-SuppressWorkflow2013Check] [-SuppressBcsCheck] [-Wait]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -58,7 +59,7 @@ Specifies the full URL of the SharePoint Online site collection that needs to be
 Type: SPOSitePipeBind
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True

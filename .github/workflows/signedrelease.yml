@@ -116,9 +116,10 @@ jobs:
 
           # Generate external help
           Set-PSRepository PSGallery -InstallationPolicy Trusted
-          Install-Module -Name Microsoft.PowerShell.PlatyPS -AllowPrerelease -RequiredVersion 1.0.0-preview1
+          Install-Module -Name Microsoft.PowerShell.PlatyPS -RequiredVersion 1.0.3
           $mdFiles = Measure-PlatyPSMarkdown -Path ./documentation/*.md
           $mdFiles | Import-MarkdownCommandHelp -Path {$_.FilePath} | Export-MamlCommandHelp -OutputFolder ./module -Force
+          ./build/Assert-OnlineHelpLinks.ps1 -OutputFolder ./module -DocumentationPath ./documentation
 
           Write-Host "Module packaged at $moduleDir"
 

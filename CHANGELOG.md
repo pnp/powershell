@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Export-PnPFlow -AsZipPackage` and `Export-PnPPowerApp` to ask for confirmation before overwriting an existing file when `-OutPath` is omitted, as they already did when `-OutPath` is specified. Unattended scripts that rely on the previous silent overwrite need to specify `-Force`. [#5421](https://github.com/pnp/powershell/pull/5421)
 
 ### Fixed
+- Fixed `Get-Help <cmdlet> -Online` opening the PnP PowerShell landing page instead of the documentation page of the cmdlet, for every cmdlet in the module. [#5443](https://github.com/pnp/powershell/pull/5443)
 - Fixed `Get-PnPTenantRetentionLabel` returning nothing at all when any retention label in the tenant uses a value the module did not know about, such as the `relabel` action after the retention period. [#5440](https://github.com/pnp/powershell/pull/5440)
 - Fixed `Request-PnPPersonalSite` polling the operation when `-NoWait` was specified and returning immediately when it was not, which is the opposite of what the parameter describes and of what the other cmdlets taking `-NoWait` do. [#4329](https://github.com/pnp/powershell/issues/4329)
 - Fixed `Set-PnPListItem`, `Add-PnPListItem`, `Add-PnPFile` and `Copy-PnPFileMetadata` failing with `The specified user  could not be found.` when a person column in `-Values` is given a user id as a number instead of as a string, in both the direct and the `-Batch` code path. [#5437](https://github.com/pnp/powershell/pull/5437)

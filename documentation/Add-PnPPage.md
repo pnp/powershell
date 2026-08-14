@@ -18,7 +18,7 @@ Creates a new page
 Add-PnPPage [-Name] <String> [-LayoutType <PageLayoutType>]
  [-PromoteAs <PagePromoteType>] [-ContentType <ContentTypePipeBind>] [-CommentsEnabled] [-Publish]
  [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] 
- [-Translate][-TranslationLanguageCodes <Int[][]>]
+ [-Translate] [-TranslationLanguageCodes <Int[]>]
  [-Connection <PnPConnection>] 
 ```
 
