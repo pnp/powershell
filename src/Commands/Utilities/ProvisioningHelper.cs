@@ -5,7 +5,9 @@ using PnP.Framework.Provisioning.Providers.Xml;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -49,7 +51,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="templateProviderExtensions"></param>
         /// <param name="exceptionHandler"></param>
         /// <returns>Template definition</returns>
-        internal static ProvisioningTemplate LoadSiteTemplateFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
+        internal static ProvisioningTemplate LoadSiteTemplateFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler, string templateId = null)
         {
             // Prepare the File Connector
             string templateFileName = System.IO.Path.GetFileName(templatePath);
@@ -87,7 +89,9 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 try
                 {
-                    ProvisioningTemplate provisioningTemplate = provider.GetTemplate(templateFileName, templateProviderExtensions);
+                    ProvisioningTemplate provisioningTemplate = string.IsNullOrEmpty(templateId)
+                        ? provider.GetTemplate(templateFileName, templateProviderExtensions)
+                        : provider.GetTemplate(templateFileName, templateId, null, templateProviderExtensions);
                     provisioningTemplate.Connector = provider.Connector;
                     return provisioningTemplate;
                 }
@@ -166,6 +170,297 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Loads every PnP Site Provisioning Template from a stream and reports invalid package members instead of skipping them.
+        /// </summary>
+        /// <param name="stream">Stream containing the provisioning template</param>
+        /// <param name="templateId">Optional ID of the template to load</param>
+        /// <param name="templateProviderExtensions">Template provider extensions to run while loading</param>
+        /// <param name="exceptionHandler">Delegate to call for every invalid template</param>
+        /// <param name="schemaNamespaceHandler">Delegate to call with each template, its provisioning schema namespace, and its source element</param>
+        /// <param name="duplicateTemplateIdHandler">Delegate to call for every duplicate template ID</param>
+        /// <returns>Template definitions found within the stream</returns>
+        internal static List<ProvisioningTemplate> LoadSiteTemplatesFromStreamStrict(
+            Stream stream,
+            string templateId,
+            ITemplateProviderExtension[] templateProviderExtensions,
+            Action<Exception> exceptionHandler,
+            Action<ProvisioningTemplate, string, XElement> schemaNamespaceHandler,
+            Action<string, string> duplicateTemplateIdHandler)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream), "Stream must be provided");
+            }
+
+            using var memoryStream = new MemoryStream();
+            if (stream.CanSeek)
+            {
+                stream.Position = 0;
+            }
+            stream.CopyTo(memoryStream);
+            memoryStream.Position = 0;
+
+            var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(memoryStream);
+            memoryStream.Position = 0;
+
+            XMLTemplateProvider provider;
+            List<string> templateFiles;
+            if (isOpenOfficeFile)
+            {
+                // OpenXMLConnector eagerly unpacks the package, so disposing this buffer after loading is safe.
+                var openXmlConnector = new OpenXMLConnector(memoryStream);
+                provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
+                var primaryTemplateFile = openXmlConnector.Info?.Properties?.TemplateFileName;
+                templateFiles = FindTemplateFiles(openXmlConnector, primaryTemplateFile);
+            }
+            else
+            {
+                provider = new XMLStreamTemplateProvider();
+                templateFiles = [null];
+            }
+
+            var provisioningTemplates = new List<ProvisioningTemplate>();
+            var packageTemplateIdentifiers = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var templateFile in templateFiles)
+            {
+                try
+                {
+                    var (templateIdentifiers, schemaNamespace, normalizedDocument, sourceDocument) = GetTemplateIdentifiers(provider, templateFile, memoryStream, duplicateTemplateIdHandler);
+                    foreach (var currentTemplateIdentifier in templateIdentifiers.Where(identifier => !string.IsNullOrWhiteSpace(identifier)))
+                    {
+                        if (!packageTemplateIdentifiers.Add(currentTemplateIdentifier))
+                        {
+                            duplicateTemplateIdHandler?.Invoke(currentTemplateIdentifier, templateFile ?? "stream");
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(templateId))
+                    {
+                        var matchingIdentifier = templateIdentifiers.FirstOrDefault(identifier => string.Equals(identifier, templateId, StringComparison.OrdinalIgnoreCase));
+                        if (matchingIdentifier == null)
+                        {
+                            continue;
+                        }
+                        templateIdentifiers = [matchingIdentifier];
+                    }
+
+                    foreach (var templateIdentifier in templateIdentifiers)
+                    {
+                        ProvisioningTemplate provisioningTemplate;
+                        if (normalizedDocument != null)
+                        {
+                            using var normalizedStream = CreateStream(normalizedDocument);
+                            var normalizedProvider = new XMLStreamTemplateProvider();
+                            provisioningTemplate = string.IsNullOrEmpty(templateIdentifier)
+                                ? normalizedProvider.GetTemplate(normalizedStream, templateProviderExtensions)
+                                : normalizedProvider.GetTemplate(normalizedStream, templateIdentifier, null, templateProviderExtensions);
+                        }
+                        else if (templateFile == null)
+                        {
+                            memoryStream.Position = 0;
+                            provisioningTemplate = string.IsNullOrEmpty(templateIdentifier)
+                                ? provider.GetTemplate(memoryStream, templateProviderExtensions)
+                                : provider.GetTemplate(memoryStream, templateIdentifier, null, templateProviderExtensions);
+                        }
+                        else
+                        {
+                            provisioningTemplate = string.IsNullOrEmpty(templateIdentifier)
+                                ? provider.GetTemplate(templateFile, templateProviderExtensions)
+                                : provider.GetTemplate(templateFile, templateIdentifier, null, templateProviderExtensions);
+                        }
+
+                        if (provisioningTemplate != null)
+                        {
+                            provisioningTemplate.Connector = provider.Connector;
+                            provisioningTemplates.Add(provisioningTemplate);
+                            schemaNamespaceHandler?.Invoke(
+                                provisioningTemplate,
+                                schemaNamespace,
+                                GetTemplateElement(normalizedDocument ?? sourceDocument, templateIdentifier));
+                        }
+                    }
+                }
+                catch (Exception exception) when (exception is ApplicationException or System.Xml.XmlException or InvalidDataException or FileNotFoundException)
+                {
+                    if (exception.InnerException is AggregateException aggregateException)
+                    {
+                        foreach (var innerException in aggregateException.InnerExceptions)
+                        {
+                            exceptionHandler?.Invoke(innerException);
+                        }
+                    }
+                    else
+                    {
+                        exceptionHandler?.Invoke(exception);
+                    }
+                }
+            }
+
+            return provisioningTemplates;
+        }
+
+        private static List<string> FindTemplateFiles(OpenXMLConnector connector, string primaryTemplateFile)
+        {
+            var templateFiles = new List<string>();
+            if (!string.IsNullOrWhiteSpace(primaryTemplateFile))
+            {
+                templateFiles.Add(primaryTemplateFile);
+            }
+
+            foreach (var file in connector.GetFiles().Where(file => file.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)))
+            {
+                if (templateFiles.Contains(file, StringComparer.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                using var stream = connector.GetFileStream(file);
+                try
+                {
+                    using var reader = System.Xml.XmlReader.Create(stream);
+                    reader.MoveToContent();
+                    if (IsPotentialSiteTemplateRoot(reader.LocalName))
+                    {
+                        templateFiles.Add(file);
+                    }
+                }
+                catch (System.Xml.XmlException)
+                {
+                    // XML that fails before exposing its root cannot safely be distinguished from a non-template resource.
+                }
+            }
+            return templateFiles;
+        }
+
+        private static (List<string> Identifiers, string SchemaNamespace, XDocument NormalizedDocument, XDocument SourceDocument) GetTemplateIdentifiers(
+            XMLTemplateProvider provider,
+            string templateFile,
+            Stream sourceStream,
+            Action<string, string> duplicateTemplateIdHandler)
+        {
+            using var templateStream = templateFile == null
+                ? CopyStream(sourceStream)
+                : provider.Connector.GetFileStream(templateFile);
+            if (templateStream == null)
+            {
+                throw new FileNotFoundException($"Template file '{templateFile}' could not be found in the package.", templateFile);
+            }
+
+            var document = XDocument.Load(templateStream);
+            if (!IsSiteTemplateDocument(document))
+            {
+                throw new InvalidDataException($"The XML document '{templateFile ?? "stream"}' does not contain a site template.");
+            }
+
+            var schemaNamespace = document.Root.Name.NamespaceName;
+            var templateElements = document.Root.Name.LocalName == "ProvisioningTemplate"
+                ? [document.Root]
+                : document.Descendants(XName.Get("ProvisioningTemplate", schemaNamespace)).ToList();
+            var identifiers = templateElements.Select(element => (string)element.Attribute("ID")).ToList();
+
+            var duplicateIdentifiers = identifiers
+                .Where(identifier => !string.IsNullOrWhiteSpace(identifier))
+                .GroupBy(identifier => identifier, StringComparer.OrdinalIgnoreCase)
+                .Where(group => group.Count() > 1)
+                .Select(group => group.Key)
+                .ToList();
+            foreach (var duplicateIdentifier in duplicateIdentifiers)
+            {
+                duplicateTemplateIdHandler?.Invoke(duplicateIdentifier, templateFile ?? "stream");
+            }
+
+            XDocument normalizedDocument = null;
+            if (duplicateIdentifiers.Count > 0)
+            {
+                normalizedDocument = new XDocument(document);
+                var seenIdentifiers = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                var normalizedTemplateElements = normalizedDocument.Root.Name.LocalName == "ProvisioningTemplate"
+                    ? [normalizedDocument.Root]
+                    : normalizedDocument.Descendants(XName.Get("ProvisioningTemplate", schemaNamespace)).ToList();
+                foreach (var templateElement in normalizedTemplateElements.ToList())
+                {
+                    var identifier = (string)templateElement.Attribute("ID");
+                    if (!string.IsNullOrWhiteSpace(identifier) && !seenIdentifiers.Add(identifier))
+                    {
+                        templateElement.Remove();
+                    }
+                }
+            }
+
+            return (identifiers.Distinct(StringComparer.OrdinalIgnoreCase).ToList(), schemaNamespace, normalizedDocument, document);
+        }
+
+        private static XElement GetTemplateElement(XDocument document, string templateIdentifier)
+        {
+            var templateElements = document.Root.Name.LocalName == "ProvisioningTemplate"
+                ? [document.Root]
+                : document.Descendants(XName.Get("ProvisioningTemplate", document.Root.Name.NamespaceName)).ToList();
+            return string.IsNullOrEmpty(templateIdentifier)
+                ? templateElements.FirstOrDefault()
+                : templateElements.FirstOrDefault(element => string.Equals((string)element.Attribute("ID"), templateIdentifier, StringComparison.OrdinalIgnoreCase));
+        }
+
+        private static bool IsSiteTemplateDocument(XDocument document)
+        {
+            return document.Root != null &&
+                IsSiteTemplateRoot(document.Root.Name.LocalName, document.Root.Name.NamespaceName);
+        }
+
+        private static bool IsSiteTemplateRoot(string localName, string schemaNamespace)
+        {
+            return IsPotentialSiteTemplateRoot(localName) &&
+                schemaNamespace.Contains("/PnP/", StringComparison.OrdinalIgnoreCase) &&
+                schemaNamespace.EndsWith("/ProvisioningSchema", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsPotentialSiteTemplateRoot(string localName)
+        {
+            return localName == "Provisioning" || localName == "ProvisioningTemplate";
+        }
+
+        private static MemoryStream CopyStream(Stream source)
+        {
+            if (source.CanSeek)
+            {
+                source.Position = 0;
+            }
+            var copy = new MemoryStream();
+            source.CopyTo(copy);
+            copy.Position = 0;
+            return copy;
+        }
+
+        private static MemoryStream CreateStream(XDocument document)
+        {
+            var stream = new MemoryStream();
+            document.Save(stream);
+            stream.Position = 0;
+            return stream;
+        }
+
+        internal static MemoryStream CreateXmlStream(string xml)
+        {
+            var document = XDocument.Parse(xml, LoadOptions.PreserveWhitespace);
+            Encoding encoding;
+            try
+            {
+                encoding = string.IsNullOrWhiteSpace(document.Declaration?.Encoding)
+                    ? new UTF8Encoding(false)
+                    : Encoding.GetEncoding(document.Declaration.Encoding);
+            }
+            catch (ArgumentException exception)
+            {
+                throw new FormatException($"The XML declaration specifies the unsupported encoding '{document.Declaration?.Encoding}'.", exception);
+            }
+            var stream = new MemoryStream();
+            using (var writer = new StreamWriter(stream, encoding, leaveOpen: true))
+            {
+                writer.Write(xml);
+            }
+            stream.Position = 0;
+            return stream;
         }
 
         /// <summary>
