@@ -696,10 +696,10 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        // HTTP(S) URLs are resolved when the template is applied; anything else could name a file the template carries.
+        // HTTP(S) and server relative URLs are resolved when the template is applied; anything else could name a file the template carries.
         private static bool IsCheckableResourcePath(string source)
         {
-            if (string.IsNullOrWhiteSpace(source))
+            if (string.IsNullOrWhiteSpace(source) || source.StartsWith('/') || source.StartsWith('\\'))
             {
                 return false;
             }

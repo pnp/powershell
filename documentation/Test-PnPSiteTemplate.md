@@ -63,7 +63,9 @@ Server relative paths and absolute URLs are resolved at the moment the template 
 
 A resource reference that is present but empty is an error in its own right, because the provisioning engine reads every one of them without checking first. This includes a design package or a document set default document whose source path is blank, which is what `Get-PnPSiteTemplate` produces for default documents when it runs without `-PersistBrandingFiles`.
 
-When the source is a package, templates stored in a folder inside it are validated as well as those at its root, `XInclude` references are resolved first, and an issue in one member names that member in its `Location`. Passing `-TemplateId` reports only the issues belonging to the template that was asked for.
+`XInclude` references are resolved before anything else, so a template that lives in an included fragment is validated and can be selected with `-TemplateId` like any other. Each `href` is read from the root of the source, matching how the provisioning engine resolves it, and a fragment pulled in by an include is not validated a second time on its own.
+
+When the source is a package, templates stored in a folder inside it are validated as well as those at its root, and an issue in one member names that member in its `Location`. Passing `-TemplateId` reports only the issues belonging to the template that was asked for.
 
 The cmdlet never compares the template against a site, so it cannot confirm whether the content types, fields, term sets or hub sites it reports as dependencies actually exist there.
 

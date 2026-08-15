@@ -369,16 +369,14 @@ namespace PnP.PowerShell.Commands.Utilities
             }
 
             var schemaNamespace = document.Root.Name.NamespaceName;
+
+            // Templates can live inside an include, so those are pulled in before any of them are enumerated.
+            ResolveIncludes(document, provider.Connector);
+
             var templateElements = document.Root.Name.LocalName == "ProvisioningTemplate"
                 ? [document.Root]
                 : document.Descendants(XName.Get("ProvisioningTemplate", schemaNamespace)).ToList();
             var identifiers = templateElements.Select(element => (string)element.Attribute("ID")).ToList();
-
-            // Templates can live inside an XInclude, which only the provider can resolve, so leave the selection to it.
-            if (identifiers.Count == 0 && document.Descendants(XName.Get("{http://www.w3.org/2001/XInclude}include")).Any())
-            {
-                return ([null], schemaNamespace, null, document);
-            }
 
             // A template without an ID cannot be addressed individually once the document holds more than one.
             if (templateElements.Count > 1 && identifiers.Any(string.IsNullOrWhiteSpace))
@@ -450,6 +448,51 @@ namespace PnP.PowerShell.Commands.Utilities
         private static bool IsPotentialSiteTemplateRoot(string localName)
         {
             return localName == "Provisioning" || localName == "ProvisioningTemplate";
+        }
+
+        // Mirrors XMLTemplateProvider.ResolveXIncludes, which is private: each href is read from the connector root,
+        // an unresolved include falls back to its xi:fallback content, and anything still unresolved is dropped.
+        private static void ResolveIncludes(XDocument document, FileConnectorBase connector)
+        {
+            const int maximumIncludeDepth = 10;
+            var includeName = XName.Get("{http://www.w3.org/2001/XInclude}include");
+
+            for (var depth = 0; depth < maximumIncludeDepth; depth++)
+            {
+                var includes = document.Descendants(includeName).ToList();
+                if (includes.Count == 0)
+                {
+                    return;
+                }
+
+                foreach (var include in includes)
+                {
+                    var resolved = LoadIncludedElement(include, connector);
+                    if (resolved != null)
+                    {
+                        include.ReplaceWith(resolved);
+                    }
+                    else
+                    {
+                        include.Remove();
+                    }
+                }
+            }
+        }
+
+        private static XElement LoadIncludedElement(XElement include, FileConnectorBase connector)
+        {
+            var href = (string)include.Attribute("href");
+            if (connector != null && !string.IsNullOrWhiteSpace(href))
+            {
+                using var stream = connector.GetFileStream(href);
+                if (stream != null)
+                {
+                    return XElement.Load(stream);
+                }
+            }
+
+            return include.Elements(XName.Get("{http://www.w3.org/2001/XInclude}fallback")).FirstOrDefault()?.Elements().FirstOrDefault();
         }
 
         // Extensions may decrypt or rewrite the XML, so they have to run before it is parsed here.
