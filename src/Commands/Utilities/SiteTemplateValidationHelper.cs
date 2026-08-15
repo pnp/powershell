@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using PnP.Framework.Provisioning.Model;
-using PnP.Framework.Provisioning.ObjectHandlers.Utilities;
 using PnP.Framework.Provisioning.Providers.Xml;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
@@ -81,14 +80,15 @@ namespace PnP.PowerShell.Commands.Utilities
                     issues.Add(CreateIssue("MissingContentTypeFieldRefId", "A content type field reference does not define an ID.", location));
                 }
 
-                foreach (var fieldRef in contentType.FieldRefs.Where(fieldRef => fieldRef.Id != Guid.Empty && !siteFieldIds.Contains(fieldRef.Id)))
-                {
-                    issues.Add(CreateIssue(
-                        "UnresolvedContentTypeFieldRef",
-                        $"Field reference '{fieldRef.Id}' is not defined in the template and must exist on the target site.",
-                        location,
-                        SiteTemplateValidationSeverity.Warning));
-                }
+                AddExternalDependencyIssue(
+                    issues,
+                    "UnresolvedContentTypeFieldRef",
+                    location,
+                    "field references",
+                    "must already exist on the target site",
+                    contentType.FieldRefs
+                        .Where(fieldRef => fieldRef.Id != Guid.Empty && !siteFieldIds.Contains(fieldRef.Id))
+                        .Select(fieldRef => fieldRef.Id.ToString()));
 
                 AddDuplicateIssues(
                     contentType.FieldRefs.Where(fieldRef => fieldRef.Id != Guid.Empty),
@@ -125,16 +125,15 @@ namespace PnP.PowerShell.Commands.Utilities
                     issues.Add(CreateIssue("MissingContentTypeBindingId", "A list content type binding does not define a content type ID.", location));
                 }
 
-                foreach (var binding in list.ContentTypeBindings.Where(binding =>
-                    !string.IsNullOrWhiteSpace(binding.ContentTypeId) &&
-                    !contentTypeIds.Contains(binding.ContentTypeId)))
-                {
-                    issues.Add(CreateIssue(
-                        "UnresolvedContentTypeBinding",
-                        $"Content type '{binding.ContentTypeId}' is not defined in the template and must exist on the target site.",
-                        location,
-                        SiteTemplateValidationSeverity.Warning));
-                }
+                AddExternalDependencyIssue(
+                    issues,
+                    "UnresolvedContentTypeBinding",
+                    location,
+                    "content types",
+                    "must already exist on the target site",
+                    list.ContentTypeBindings
+                        .Where(binding => !string.IsNullOrWhiteSpace(binding.ContentTypeId) && !contentTypeIds.Contains(binding.ContentTypeId))
+                        .Select(binding => binding.ContentTypeId));
 
                 var listFieldIds = ValidateFields(list.Fields, $"{location}.Fields", issues);
 
@@ -143,17 +142,15 @@ namespace PnP.PowerShell.Commands.Utilities
                     issues.Add(CreateIssue("MissingListFieldRefId", "A list field reference does not define an ID.", location));
                 }
 
-                foreach (var fieldRef in list.FieldRefs.Where(fieldRef =>
-                    fieldRef.Id != Guid.Empty &&
-                    !siteFieldIds.Contains(fieldRef.Id) &&
-                    !listFieldIds.Contains(fieldRef.Id)))
-                {
-                    issues.Add(CreateIssue(
-                        "UnresolvedListFieldRef",
-                        $"Field reference '{fieldRef.Id}' is not defined in the template and must exist on the target site.",
-                        location,
-                        SiteTemplateValidationSeverity.Warning));
-                }
+                AddExternalDependencyIssue(
+                    issues,
+                    "UnresolvedListFieldRef",
+                    location,
+                    "field references",
+                    "must already exist on the target site",
+                    list.FieldRefs
+                        .Where(fieldRef => fieldRef.Id != Guid.Empty && !siteFieldIds.Contains(fieldRef.Id) && !listFieldIds.Contains(fieldRef.Id))
+                        .Select(fieldRef => fieldRef.Id.ToString()));
 
                 AddDuplicateIssues(
                     list.ContentTypeBindings.Where(binding => !string.IsNullOrWhiteSpace(binding.ContentTypeId)),
@@ -222,13 +219,26 @@ namespace PnP.PowerShell.Commands.Utilities
                 .Select(termSet => termSet.Id)
                 .ToHashSet();
 
-            ValidateTermSetDependencies(template.SiteFields, "SiteFields", template, termSetIds, issues);
+            var externalTermSets = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+
+            CollectTermSetDependencies(template.SiteFields, "SiteFields", template, termSetIds, externalTermSets, issues);
             foreach (var list in template.Lists)
             {
-                ValidateTermSetDependencies(list.Fields, $"Lists[{list.Title ?? list.Url ?? "unknown"}].Fields", template, termSetIds, issues);
+                CollectTermSetDependencies(list.Fields, $"Lists[{list.Title ?? list.Url ?? "unknown"}].Fields", template, termSetIds, externalTermSets, issues);
             }
-            ValidateTermSetDependency(template.Navigation?.GlobalNavigation?.ManagedNavigation?.TermSetId, "Navigation.GlobalNavigation", template, termSetIds, issues);
-            ValidateTermSetDependency(template.Navigation?.CurrentNavigation?.ManagedNavigation?.TermSetId, "Navigation.CurrentNavigation", template, termSetIds, issues);
+            CollectTermSetDependency(template.Navigation?.GlobalNavigation?.ManagedNavigation?.TermSetId, "Navigation.GlobalNavigation", template, termSetIds, externalTermSets);
+            CollectTermSetDependency(template.Navigation?.CurrentNavigation?.ManagedNavigation?.TermSetId, "Navigation.CurrentNavigation", template, termSetIds, externalTermSets);
+
+            foreach (var externalTermSet in externalTermSets)
+            {
+                AddExternalDependencyIssue(
+                    issues,
+                    "ExternalTermSetDependency",
+                    externalTermSet.Key,
+                    "term sets",
+                    "must already exist in the target term store",
+                    externalTermSet.Value);
+            }
 
             if (!string.IsNullOrWhiteSpace(template.WebSettings?.HubSiteUrl))
             {
@@ -236,15 +246,16 @@ namespace PnP.PowerShell.Commands.Utilities
                     "ExternalHubSiteDependency",
                     $"Hub site '{template.WebSettings.HubSiteUrl}' must exist and be accessible when the template is applied.",
                     "WebSettings.HubSiteUrl",
-                    SiteTemplateValidationSeverity.Warning));
+                    SiteTemplateValidationSeverity.Information));
             }
         }
 
-        private static void ValidateTermSetDependencies(
+        private static void CollectTermSetDependencies(
             IEnumerable<Field> fields,
             string location,
             ProvisioningTemplate template,
             HashSet<Guid> termSetIds,
+            Dictionary<string, List<string>> externalTermSets,
             List<SiteTemplateValidationIssue> issues)
         {
             foreach (var field in fields.Where(field => !string.IsNullOrWhiteSpace(field.SchemaXml)))
@@ -282,16 +293,16 @@ namespace PnP.PowerShell.Commands.Utilities
                         SiteTemplateValidationSeverity.Warning));
                     continue;
                 }
-                ValidateTermSetDependency(termSetReference, location, template, termSetIds, issues);
+                CollectTermSetDependency(termSetReference, location, template, termSetIds, externalTermSets);
             }
         }
 
-        private static void ValidateTermSetDependency(
+        private static void CollectTermSetDependency(
             string termSetReference,
             string location,
             ProvisioningTemplate template,
             HashSet<Guid> termSetIds,
-            List<SiteTemplateValidationIssue> issues)
+            Dictionary<string, List<string>> externalTermSets)
         {
             if (string.IsNullOrWhiteSpace(termSetReference))
             {
@@ -302,7 +313,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 if (!termSetIds.Contains(termSetId))
                 {
-                    AddExternalTermSetIssue(termSetReference, location, issues);
+                    AddExternalTermSet(termSetReference, location, externalTermSets);
                 }
                 return;
             }
@@ -314,7 +325,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     group.TermSets.Any(termSet => string.Equals(termSet.Name, termSetName, StringComparison.OrdinalIgnoreCase)));
                 if (!isDefined)
                 {
-                    AddExternalTermSetIssue(termSetReference, location, issues);
+                    AddExternalTermSet(termSetReference, location, externalTermSets);
                 }
             }
             else if (TryParseSiteCollectionTermSetToken(termSetReference, out termSetName))
@@ -324,12 +335,12 @@ namespace PnP.PowerShell.Commands.Utilities
                     group.TermSets.Any(termSet => string.Equals(termSet.Name, termSetName, StringComparison.OrdinalIgnoreCase)));
                 if (!isDefined)
                 {
-                    AddExternalTermSetIssue(termSetReference, location, issues);
+                    AddExternalTermSet(termSetReference, location, externalTermSets);
                 }
             }
             else
             {
-                AddExternalTermSetIssue(termSetReference, location, issues);
+                AddExternalTermSet(termSetReference, location, externalTermSets);
             }
         }
 
@@ -367,13 +378,47 @@ namespace PnP.PowerShell.Commands.Utilities
             return !string.IsNullOrWhiteSpace(termSetName);
         }
 
-        private static void AddExternalTermSetIssue(string termSetReference, string location, List<SiteTemplateValidationIssue> issues)
+        private static void AddExternalTermSet(string termSetReference, string location, Dictionary<string, List<string>> externalTermSets)
         {
+            if (!externalTermSets.TryGetValue(location, out var references))
+            {
+                references = [];
+                externalTermSets[location] = references;
+            }
+            references.Add(termSetReference);
+        }
+
+        /// <summary>Reports the references a template does not define as one informational issue per location.</summary>
+        private static void AddExternalDependencyIssue(
+            List<SiteTemplateValidationIssue> issues,
+            string code,
+            string location,
+            string subject,
+            string requirement,
+            IEnumerable<string> references)
+        {
+            const int maximumListedReferences = 10;
+
+            var distinctReferences = references
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(reference => reference, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+            if (distinctReferences.Count == 0)
+            {
+                return;
+            }
+
+            var listedReferences = string.Join(", ", distinctReferences.Take(maximumListedReferences));
+            if (distinctReferences.Count > maximumListedReferences)
+            {
+                listedReferences += $" and {distinctReferences.Count - maximumListedReferences} more";
+            }
+
             issues.Add(CreateIssue(
-                "ExternalTermSetDependency",
-                $"Term set '{termSetReference}' is not defined in the template and must exist in the target term store.",
+                code,
+                $"{distinctReferences.Count} {subject} not defined in the template {requirement}: {listedReferences}.",
                 location,
-                SiteTemplateValidationSeverity.Warning));
+                SiteTemplateValidationSeverity.Information));
         }
 
         private static void ValidateDeprecatedElements(XElement sourceElement, List<SiteTemplateValidationIssue> issues)
@@ -383,16 +428,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 return;
             }
 
-            foreach (var attribute in sourceElement.DescendantsAndSelf().Attributes().Where(attribute =>
-                attribute.Name.LocalName == "Private" && attribute.Parent?.Name.LocalName == "Channel"))
-            {
-                issues.Add(CreateIssue(
-                    "DeprecatedElement",
-                    "The 'Private' Teams channel attribute is deprecated. Use 'MembershipType' instead.",
-                    GetElementLocation(attribute.Parent),
-                    SiteTemplateValidationSeverity.Warning));
-            }
-
+            // Teams channels sit under the Provisioning root, outside any site template, so they are out of scope here.
             foreach (var attribute in sourceElement.DescendantsAndSelf().Attributes().Where(attribute =>
                 attribute.Name.LocalName == "ClientSideHostProperties" && attribute.Parent?.Name.LocalName == "CustomAction"))
             {
@@ -461,12 +497,12 @@ namespace PnP.PowerShell.Commands.Utilities
                 return;
             }
 
-            foreach (var file in template.Files.Where(file => !string.IsNullOrWhiteSpace(file.Src)))
+            foreach (var file in template.Files.Where(file => IsConnectorRelativePath(file.Src)))
             {
                 ValidateResource(() => FrameworkFileUtilities.GetFileStream(template, file), file.Src, $"Files[{file.Src}]", issues);
             }
 
-            foreach (var localization in template.Localizations.Where(localization => !string.IsNullOrWhiteSpace(localization.ResourceFile)))
+            foreach (var localization in template.Localizations.Where(localization => IsConnectorRelativePath(localization.ResourceFile)))
             {
                 ValidateResource(
                     () => FrameworkFileUtilities.GetFileStream(template, localization.ResourceFile),
@@ -476,10 +512,10 @@ namespace PnP.PowerShell.Commands.Utilities
                     SiteTemplateValidationSeverity.Warning);
             }
 
-            foreach (var directory in template.Directories.Where(directory => !string.IsNullOrWhiteSpace(directory.Src)))
+            foreach (var directory in template.Directories.Where(directory => IsConnectorRelativePath(directory.Src)))
             {
                 ValidateDirectory(template, directory, issues);
-                if (!string.IsNullOrWhiteSpace(directory.MetadataMappingFile))
+                if (IsConnectorRelativePath(directory.MetadataMappingFile))
                 {
                     ValidateResource(
                         () => FrameworkFileUtilities.GetFileStream(template, directory.MetadataMappingFile),
@@ -492,7 +528,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             foreach (var list in template.Lists)
             {
-                foreach (var attachment in list.DataRows.SelectMany(dataRow => dataRow.Attachments).Where(attachment => !string.IsNullOrWhiteSpace(attachment.Src)))
+                foreach (var attachment in list.DataRows.SelectMany(dataRow => dataRow.Attachments).Where(attachment => IsConnectorRelativePath(attachment.Src)))
                 {
                     ValidateResource(
                         () => FrameworkFileUtilities.GetFileStream(template, attachment.Src),
@@ -502,12 +538,10 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
 
-            if (template.WebSettings != null &&
-                !string.IsNullOrWhiteSpace(template.WebSettings.SiteLogo) &&
-                !Uri.TryCreate(template.WebSettings.SiteLogo, UriKind.Absolute, out _))
+            if (template.WebSettings != null && IsConnectorRelativePath(template.WebSettings.SiteLogo))
             {
                 ValidateResource(
-                    () => OpenEngineResource(template, template.WebSettings.SiteLogo),
+                    () => FrameworkFileUtilities.GetFileStream(template, template.WebSettings.SiteLogo),
                     template.WebSettings.SiteLogo,
                     "WebSettings.SiteLogo",
                     issues,
@@ -516,17 +550,17 @@ namespace PnP.PowerShell.Commands.Utilities
 
             if (template.Tenant?.AppCatalog?.Packages != null)
             {
-                foreach (var package in template.Tenant.AppCatalog.Packages.Where(package => !string.IsNullOrWhiteSpace(package.Src)))
+                foreach (var package in template.Tenant.AppCatalog.Packages.Where(package => IsConnectorRelativePath(package.Src)))
                 {
-                    ValidateResource(() => OpenEngineResource(template, package.Src), package.Src, $"Tenant.AppCatalog.Packages[{package.Src}]", issues);
+                    ValidateResource(() => FrameworkFileUtilities.GetFileStream(template, package.Src), package.Src, $"Tenant.AppCatalog.Packages[{package.Src}]", issues);
                 }
             }
 
             if (template.Tenant?.SiteScripts != null)
             {
-                foreach (var siteScript in template.Tenant.SiteScripts.Where(siteScript => !string.IsNullOrWhiteSpace(siteScript.JsonFilePath)))
+                foreach (var siteScript in template.Tenant.SiteScripts.Where(siteScript => IsConnectorRelativePath(siteScript.JsonFilePath)))
                 {
-                    ValidateResource(() => OpenEngineResource(template, siteScript.JsonFilePath), siteScript.JsonFilePath, $"Tenant.SiteScripts[{siteScript.JsonFilePath}]", issues);
+                    ValidateResource(() => FrameworkFileUtilities.GetFileStream(template, siteScript.JsonFilePath), siteScript.JsonFilePath, $"Tenant.SiteScripts[{siteScript.JsonFilePath}]", issues);
                 }
             }
         }
@@ -556,6 +590,15 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+        // Only a connector relative path is read from the template; tokens, API and absolute URLs are resolved when the template is applied.
+        private static bool IsConnectorRelativePath(string source)
+        {
+            return !string.IsNullOrWhiteSpace(source) &&
+                !source.Contains('{') &&
+                !source.Contains("_api/", StringComparison.OrdinalIgnoreCase) &&
+                !Uri.TryCreate(source, UriKind.Absolute, out _);
+        }
+
         private static IEnumerable<string> GetResourcePathCandidates(string source)
         {
             var decodedSource = Uri.UnescapeDataString(source);
@@ -567,11 +610,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 decodedSource.Replace('\\', '/'),
                 decodedSource.Replace('/', '\\')
             }.Distinct(StringComparer.OrdinalIgnoreCase);
-        }
-
-        private static MemoryStream OpenEngineResource(ProvisioningTemplate template, string source)
-        {
-            return new MemoryStream(ConnectorFileHelper.GetFileBytes(template.Connector, source), writable: false);
         }
 
         private static void ValidateResource(
@@ -599,7 +637,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             catch (ArgumentException)
             {
-                issues.Add(CreateIssue("MissingResource", $"Referenced resource '{source}' could not be found.", location, severity));
+                issues.Add(CreateIssue("InvalidResourcePath", $"Referenced resource '{source}' does not resolve to a file name.", location, severity));
             }
         }
 

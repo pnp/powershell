@@ -55,6 +55,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         protected override void ExecuteCmdlet()
         {
+            _schemaNamespaces.Clear();
+            _sourceElements.Clear();
             ResolveAndValidatePath();
 
             using var bufferedStream = ParameterSetName == ParameterSetStream ? BufferStream(Stream) : null;
@@ -75,7 +77,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
             catch (Exception exception) when (
                 exception is System.Xml.XmlException or InvalidDataException or FormatException or PnP.Framework.Provisioning.Connectors.OpenXML.PnPPackageFormatException or FileFormatException ||
-                _isPackage && exception is FileNotFoundException)
+                _isPackage && exception is FileNotFoundException or InvalidOperationException)
             {
                 schemaIssues.Add(_isPackage
                     ? SiteTemplateValidationHelper.CreateIssue("InvalidPackage", exception.Message, "Package")
@@ -101,6 +103,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 {
                     TemplateId = TemplateId,
                     SchemaVersion = sourceSchemaNamespace,
+                    SchemaChecked = ParameterSetName != ParameterSetTemplate,
                     Issues = schemaIssues
                 });
                 return;
@@ -121,7 +124,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 {
                     TemplateId = template.Id,
                     SchemaVersion = schemaNamespace,
-                    ResourcesValidated = template.Connector != null,
+                    ResourcesChecked = template.Connector != null,
+                    SchemaChecked = _sourceElements.ContainsKey(template),
                     Issues = issues
                 });
             }
@@ -134,6 +138,11 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 SiteTemplateValidationHelper.CreateIssue(
                     "DuplicateTemplateId",
                     $"Template ID '{duplicateId}' occurs more than once in '{templateFile}'.",
+                    "ProvisioningTemplate"));
+            Action<string> unaddressableTemplateHandler = templateFile => schemaIssues.Add(
+                SiteTemplateValidationHelper.CreateIssue(
+                    "MissingTemplateId",
+                    $"'{templateFile}' contains several templates of which at least one has no ID, so it cannot be validated separately.",
                     "ProvisioningTemplate"));
 
             switch (ParameterSetName)
@@ -150,7 +159,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                             TemplateProviderExtensions,
                             exceptionHandler,
                             AddSchemaNamespace,
-                            duplicateTemplateIdHandler);
+                            duplicateTemplateIdHandler,
+                            unaddressableTemplateHandler);
                         if (!isPackage)
                         {
                             var connector = new PnP.Framework.Provisioning.Connectors.FileSystemConnector(
@@ -165,7 +175,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     }
                 case ParameterSetStream:
                     _isPackage = IsPackageStream();
-                    return ProvisioningHelper.LoadSiteTemplatesFromStreamStrict(_validationStream, TemplateId, TemplateProviderExtensions, exceptionHandler, AddSchemaNamespace, duplicateTemplateIdHandler);
+                    return ProvisioningHelper.LoadSiteTemplatesFromStreamStrict(_validationStream, TemplateId, TemplateProviderExtensions, exceptionHandler, AddSchemaNamespace, duplicateTemplateIdHandler, unaddressableTemplateHandler);
                 case ParameterSetXml:
                     using (var xmlStream = ProvisioningHelper.CreateXmlStream(Xml))
                     {
@@ -175,7 +185,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                             TemplateProviderExtensions,
                             exceptionHandler,
                             AddSchemaNamespace,
-                            duplicateTemplateIdHandler);
+                            duplicateTemplateIdHandler,
+                            unaddressableTemplateHandler);
                     }
                 case ParameterSetTemplate:
                     return [Template];

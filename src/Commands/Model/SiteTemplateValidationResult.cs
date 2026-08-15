@@ -20,9 +20,14 @@ namespace PnP.PowerShell.Commands.Model
         public string SchemaVersion { get; init; }
 
         /// <summary>
-        /// Indicates whether referenced package or file-system resources were checked.
+        /// Indicates whether the template had a file connector, so referenced resources could be checked.
         /// </summary>
-        public bool ResourcesValidated { get; init; }
+        public bool ResourcesChecked { get; init; }
+
+        /// <summary>
+        /// Indicates whether the source XML was available, so the schema version and deprecated element checks could run.
+        /// </summary>
+        public bool SchemaChecked { get; init; }
 
         /// <summary>
         /// Issues found while validating the template.

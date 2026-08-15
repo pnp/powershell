@@ -38,11 +38,28 @@ Test-PnPSiteTemplate [-Template] <ProvisioningTemplate>
 
 ## DESCRIPTION
 
-Validates the provisioning schema and the internal structure of a PnP site template without applying it or making a request to SharePoint.
+Validates a PnP site template without applying it and without making a request to SharePoint. Use it to catch structural problems in a template, for example in a pull request or a release pipeline, before it ever reaches a site.
 
-The cmdlet checks for missing or duplicate content type, field, list and binding identifiers. It warns when field, content type or term set references are not defined in the template because those dependencies must already exist on the target site or in its term store. Hub associations are also reported as external dependencies. When validating XML or package input, the cmdlet warns about provisioning elements that have been removed from the latest schema. When the template has a file connector, the cmdlet also checks referenced files, localizations, directories, app packages, site scripts and relative site logos. Missing optional localizations and unresolved directory or logo resources are warnings.
+One result is returned per template found in the source. Every finding is a structured issue carrying a `Code`, `Severity`, `Message` and `Location`, at one of three severities.
 
-Each result contains `IsValid`, `ResourcesValidated` and a collection of structured issues with a code, severity, message and location. `ResourcesValidated` is `$false` when an in-memory template has no connector. The cmdlet does not compare the template with a site, so it cannot confirm whether warned-about content types, fields, term sets or hub associations exist there.
+| Severity | Meaning |
+|---|---|
+| `Error` | The template is broken and should not be applied, for example a duplicate identifier, an unreadable package, or a referenced file that is not present. This is the only severity that sets `IsValid` to `$false`. |
+| `Warning` | The template can be applied but may not behave as intended, for example an older provisioning schema, or an attribute that has been removed from the latest schema. |
+| `Information` | Something the target site or term store has to provide. Out of the box content types and site columns are never declared inside a template, so these appear on almost every template and are grouped into a single issue per location. |
+
+How much can be checked depends on what the source provides, which the result states explicitly rather than leaving you to guess.
+
+| Property | Meaning |
+|---|---|
+| `IsValid` | `$false` only when an `Error` severity issue was found. |
+| `ResourcesChecked` | `$true` when the template carried a file connector, so referenced files, localizations, directories, data row attachments, app packages, site scripts and relative site logos could be resolved. `$false` for an in-memory template without a connector, meaning none of those were looked at. |
+| `SchemaChecked` | `$true` when the source XML was available, so the schema version and removed-element checks could run. `$false` for a template received through the pipeline. |
+| `SchemaVersion` | The provisioning schema namespace found in the source, when available. |
+
+Site logos and file sources that are tokens, `_api` URLs or absolute URLs are resolved at the moment the template is applied, so they are not looked for among the template's own files.
+
+The cmdlet never compares the template against a site, so it cannot confirm whether the content types, fields, term sets or hub sites it reports as dependencies actually exist there.
 
 ## EXAMPLES
 
@@ -58,7 +75,7 @@ Validates every template found in a PnP site template package and returns one va
 Read-PnPSiteTemplate -Path ./template.xml | Test-PnPSiteTemplate
 ```
 
-Validates an in-memory provisioning template received through the pipeline.
+Validates an in-memory provisioning template received through the pipeline. `SchemaChecked` is `$false` on the result because the source XML is no longer available, so the schema version and removed-element checks are skipped.
 
 ### EXAMPLE 3
 ```powershell
@@ -69,9 +86,19 @@ if ($result | Where-Object { -not $_.IsValid }) {
 }
 ```
 
-Stops a script when the template contains an error-severity validation issue.
+Stops a script when the template contains an error-severity validation issue. Use `Where-Object` rather than `$result.IsValid`, because a source holding several templates returns one result for each.
 
 ### EXAMPLE 4
+```powershell
+Test-PnPSiteTemplate -Path ./template.pnp |
+    Select-Object -ExpandProperty Issues |
+    Where-Object Severity -ne Information |
+    Format-Table Severity, Code, Location, Message
+```
+
+Shows only the errors and warnings, hiding the informational dependencies that a template is expected to have on its target site.
+
+### EXAMPLE 5
 ```powershell
 Test-PnPSiteTemplate -Path ./templates.pnp -TemplateId TeamSite
 ```

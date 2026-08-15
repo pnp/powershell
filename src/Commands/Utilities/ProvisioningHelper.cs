@@ -51,7 +51,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="templateProviderExtensions"></param>
         /// <param name="exceptionHandler"></param>
         /// <returns>Template definition</returns>
-        internal static ProvisioningTemplate LoadSiteTemplateFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler, string templateId = null)
+        internal static ProvisioningTemplate LoadSiteTemplateFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
         {
             // Prepare the File Connector
             string templateFileName = System.IO.Path.GetFileName(templatePath);
@@ -89,9 +89,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 try
                 {
-                    ProvisioningTemplate provisioningTemplate = string.IsNullOrEmpty(templateId)
-                        ? provider.GetTemplate(templateFileName, templateProviderExtensions)
-                        : provider.GetTemplate(templateFileName, templateId, null, templateProviderExtensions);
+                    ProvisioningTemplate provisioningTemplate = provider.GetTemplate(templateFileName, templateProviderExtensions);
                     provisioningTemplate.Connector = provider.Connector;
                     return provisioningTemplate;
                 }
@@ -181,6 +179,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="exceptionHandler">Delegate to call for every invalid template</param>
         /// <param name="schemaNamespaceHandler">Delegate to call with each template, its provisioning schema namespace, and its source element</param>
         /// <param name="duplicateTemplateIdHandler">Delegate to call for every duplicate template ID</param>
+        /// <param name="unaddressableTemplateHandler">Delegate to call for a source holding several templates of which one has no ID</param>
         /// <returns>Template definitions found within the stream</returns>
         internal static List<ProvisioningTemplate> LoadSiteTemplatesFromStreamStrict(
             Stream stream,
@@ -188,7 +187,8 @@ namespace PnP.PowerShell.Commands.Utilities
             ITemplateProviderExtension[] templateProviderExtensions,
             Action<Exception> exceptionHandler,
             Action<ProvisioningTemplate, string, XElement> schemaNamespaceHandler,
-            Action<string, string> duplicateTemplateIdHandler)
+            Action<string, string> duplicateTemplateIdHandler,
+            Action<string> unaddressableTemplateHandler)
         {
             if (stream == null)
             {
@@ -228,7 +228,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 try
                 {
-                    var (templateIdentifiers, schemaNamespace, normalizedDocument, sourceDocument) = GetTemplateIdentifiers(provider, templateFile, memoryStream, duplicateTemplateIdHandler);
+                    var (templateIdentifiers, schemaNamespace, normalizedDocument, sourceDocument) = GetTemplateIdentifiers(provider, templateFile, memoryStream, duplicateTemplateIdHandler, unaddressableTemplateHandler);
                     foreach (var currentTemplateIdentifier in templateIdentifiers.Where(identifier => !string.IsNullOrWhiteSpace(identifier)))
                     {
                         if (!packageTemplateIdentifiers.Add(currentTemplateIdentifier))
@@ -321,7 +321,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     using var reader = System.Xml.XmlReader.Create(stream);
                     reader.MoveToContent();
-                    if (IsPotentialSiteTemplateRoot(reader.LocalName))
+                    if (IsSiteTemplateRoot(reader.LocalName, reader.NamespaceURI))
                     {
                         templateFiles.Add(file);
                     }
@@ -338,7 +338,8 @@ namespace PnP.PowerShell.Commands.Utilities
             XMLTemplateProvider provider,
             string templateFile,
             Stream sourceStream,
-            Action<string, string> duplicateTemplateIdHandler)
+            Action<string, string> duplicateTemplateIdHandler,
+            Action<string> unaddressableTemplateHandler)
         {
             using var templateStream = templateFile == null
                 ? CopyStream(sourceStream)
@@ -359,6 +360,13 @@ namespace PnP.PowerShell.Commands.Utilities
                 ? [document.Root]
                 : document.Descendants(XName.Get("ProvisioningTemplate", schemaNamespace)).ToList();
             var identifiers = templateElements.Select(element => (string)element.Attribute("ID")).ToList();
+
+            // A template without an ID cannot be addressed individually once the document holds more than one.
+            if (templateElements.Count > 1 && identifiers.Any(string.IsNullOrWhiteSpace))
+            {
+                unaddressableTemplateHandler?.Invoke(templateFile ?? "stream");
+                identifiers = identifiers.Where(identifier => !string.IsNullOrWhiteSpace(identifier)).ToList();
+            }
 
             var duplicateIdentifiers = identifiers
                 .Where(identifier => !string.IsNullOrWhiteSpace(identifier))
@@ -443,21 +451,16 @@ namespace PnP.PowerShell.Commands.Utilities
         internal static MemoryStream CreateXmlStream(string xml)
         {
             var document = XDocument.Parse(xml, LoadOptions.PreserveWhitespace);
-            Encoding encoding;
-            try
+            // The XML arrives already decoded, so the declared encoding is restated as the one actually written.
+            if (document.Declaration != null)
             {
-                encoding = string.IsNullOrWhiteSpace(document.Declaration?.Encoding)
-                    ? new UTF8Encoding(false)
-                    : Encoding.GetEncoding(document.Declaration.Encoding);
+                document.Declaration.Encoding = "utf-8";
             }
-            catch (ArgumentException exception)
-            {
-                throw new FormatException($"The XML declaration specifies the unsupported encoding '{document.Declaration?.Encoding}'.", exception);
-            }
+
             var stream = new MemoryStream();
-            using (var writer = new StreamWriter(stream, encoding, leaveOpen: true))
+            using (var writer = new StreamWriter(stream, new UTF8Encoding(false), leaveOpen: true))
             {
-                writer.Write(xml);
+                document.Save(writer, SaveOptions.DisableFormatting);
             }
             stream.Position = 0;
             return stream;
