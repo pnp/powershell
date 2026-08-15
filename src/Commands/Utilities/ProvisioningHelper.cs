@@ -176,17 +176,19 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="stream">Stream containing the provisioning template</param>
         /// <param name="templateId">Optional ID of the template to load</param>
         /// <param name="templateProviderExtensions">Template provider extensions to run while loading</param>
-        /// <param name="exceptionHandler">Delegate to call for every invalid template</param>
-        /// <param name="schemaNamespaceHandler">Delegate to call with each template, its provisioning schema namespace, and its source element</param>
+        /// <param name="connector">Connector used to resolve includes when the source is not a package</param>
+        /// <param name="exceptionHandler">Delegate to call for every invalid template, with the package member it came from</param>
+        /// <param name="schemaNamespaceHandler">Delegate to call with each template, its package member, its provisioning schema namespace, and its source element</param>
         /// <param name="duplicateTemplateIdHandler">Delegate to call for every duplicate template ID</param>
         /// <param name="unaddressableTemplateHandler">Delegate to call for a source holding several templates of which one has no ID</param>
         /// <returns>Template definitions found within the stream</returns>
         internal static List<ProvisioningTemplate> LoadSiteTemplatesFromStreamStrict(
             Stream stream,
             string templateId,
+            FileConnectorBase connector,
             ITemplateProviderExtension[] templateProviderExtensions,
-            Action<Exception> exceptionHandler,
-            Action<ProvisioningTemplate, string, XElement> schemaNamespaceHandler,
+            Action<Exception, string> exceptionHandler,
+            Action<ProvisioningTemplate, string, string, XElement> schemaNamespaceHandler,
             Action<string, string> duplicateTemplateIdHandler,
             Action<string> unaddressableTemplateHandler)
         {
@@ -218,7 +220,8 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             else
             {
-                provider = new XMLStreamTemplateProvider();
+                // The connector lets the provider resolve XInclude references the same way Read-PnPSiteTemplate does.
+                provider = new XMLStreamTemplateProvider { Connector = connector };
                 templateFiles = [null];
             }
 
@@ -250,30 +253,13 @@ namespace PnP.PowerShell.Commands.Utilities
 
                     foreach (var templateIdentifier in templateIdentifiers)
                     {
-                        ProvisioningTemplate provisioningTemplate;
-                        if (normalizedDocument != null)
-                        {
-                            // This XML has already been pre-processed, so the extensions only run their post-processing here.
-                            using var normalizedStream = CreateStream(normalizedDocument);
-                            var normalizedProvider = new XMLStreamTemplateProvider();
-                            provisioningTemplate = string.IsNullOrEmpty(templateIdentifier)
-                                ? normalizedProvider.GetTemplate(normalizedStream, (ITemplateProviderExtension[])null)
-                                : normalizedProvider.GetTemplate(normalizedStream, templateIdentifier, null, null);
-                            provisioningTemplate = ApplyPostProcessing(provisioningTemplate, templateProviderExtensions);
-                        }
-                        else if (templateFile == null)
-                        {
-                            memoryStream.Position = 0;
-                            provisioningTemplate = string.IsNullOrEmpty(templateIdentifier)
-                                ? provider.GetTemplate(memoryStream, templateProviderExtensions)
-                                : provider.GetTemplate(memoryStream, templateIdentifier, null, templateProviderExtensions);
-                        }
-                        else
-                        {
-                            provisioningTemplate = string.IsNullOrEmpty(templateIdentifier)
-                                ? provider.GetTemplate(templateFile, templateProviderExtensions)
-                                : provider.GetTemplate(templateFile, templateIdentifier, null, templateProviderExtensions);
-                        }
+                        // This XML was already pre-processed while reading it, so the provider only resolves includes
+                        // and deserializes here, and the extensions contribute their post-processing afterwards.
+                        using var templateStream = CreateStream(normalizedDocument ?? sourceDocument);
+                        var provisioningTemplate = string.IsNullOrEmpty(templateIdentifier)
+                            ? provider.GetTemplate(templateStream, (ITemplateProviderExtension[])null)
+                            : provider.GetTemplate(templateStream, templateIdentifier, null, null);
+                        provisioningTemplate = ApplyPostProcessing(provisioningTemplate, templateProviderExtensions);
 
                         if (provisioningTemplate != null)
                         {
@@ -281,6 +267,7 @@ namespace PnP.PowerShell.Commands.Utilities
                             provisioningTemplates.Add(provisioningTemplate);
                             schemaNamespaceHandler?.Invoke(
                                 provisioningTemplate,
+                                templateFile,
                                 schemaNamespace,
                                 GetTemplateElement(normalizedDocument ?? sourceDocument, templateIdentifier));
                         }
@@ -292,12 +279,12 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         foreach (var innerException in aggregateException.InnerExceptions)
                         {
-                            exceptionHandler?.Invoke(innerException);
+                            exceptionHandler?.Invoke(innerException, templateFile);
                         }
                     }
                     else
                     {
-                        exceptionHandler?.Invoke(exception);
+                        exceptionHandler?.Invoke(exception, templateFile);
                     }
                 }
             }
@@ -376,6 +363,12 @@ namespace PnP.PowerShell.Commands.Utilities
                 ? [document.Root]
                 : document.Descendants(XName.Get("ProvisioningTemplate", schemaNamespace)).ToList();
             var identifiers = templateElements.Select(element => (string)element.Attribute("ID")).ToList();
+
+            // Templates can live inside an XInclude, which only the provider can resolve, so leave the selection to it.
+            if (identifiers.Count == 0 && document.Descendants(XName.Get("{http://www.w3.org/2001/XInclude}include")).Any())
+            {
+                return ([null], schemaNamespace, null, document);
+            }
 
             // A template without an ID cannot be addressed individually once the document holds more than one.
             if (templateElements.Count > 1 && identifiers.Any(string.IsNullOrWhiteSpace))

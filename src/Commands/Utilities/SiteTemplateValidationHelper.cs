@@ -39,12 +39,14 @@ namespace PnP.PowerShell.Commands.Utilities
             return XDocument.Parse(xml).Root?.Name.NamespaceName;
         }
 
-        internal static SiteTemplateValidationIssue CreateSchemaIssue(Exception exception)
+        internal static SiteTemplateValidationIssue CreateSchemaIssue(Exception exception, string templateFile = null)
         {
-            var location = "Schema";
+            var location = templateFile ?? "Schema";
             if (exception is System.Xml.Schema.XmlSchemaException schemaException && schemaException.LineNumber > 0)
             {
-                location = $"Line {schemaException.LineNumber}, position {schemaException.LinePosition}";
+                location = templateFile == null
+                    ? $"Line {schemaException.LineNumber}, position {schemaException.LinePosition}"
+                    : $"{templateFile} line {schemaException.LineNumber}, position {schemaException.LinePosition}";
             }
 
             return CreateIssue("SchemaValidationFailed", exception.Message, location);
@@ -525,12 +527,12 @@ namespace PnP.PowerShell.Commands.Utilities
                 return;
             }
 
-            foreach (var file in template.Files.Where(file => IsConnectorRelativePath(file.Src)))
+            foreach (var file in template.Files.Where(file => IsCheckableResourcePath(file.Src)))
             {
                 ValidateResource(() => FrameworkFileUtilities.GetFileStream(template, file), file.Src, $"Files[{file.Src}]", issues);
             }
 
-            foreach (var localization in template.Localizations.Where(localization => IsConnectorRelativePath(localization.ResourceFile)))
+            foreach (var localization in template.Localizations.Where(localization => IsCheckableResourcePath(localization.ResourceFile)))
             {
                 ValidateResource(
                     () => FrameworkFileUtilities.GetFileStream(template, localization.ResourceFile),
@@ -540,10 +542,10 @@ namespace PnP.PowerShell.Commands.Utilities
                     SiteTemplateValidationSeverity.Warning);
             }
 
-            foreach (var directory in template.Directories.Where(directory => IsConnectorRelativePath(directory.Src)))
+            foreach (var directory in template.Directories.Where(directory => IsCheckableResourcePath(directory.Src)))
             {
                 ValidateDirectory(template, directory, issues);
-                if (IsConnectorRelativePath(directory.MetadataMappingFile))
+                if (IsCheckableResourcePath(directory.MetadataMappingFile))
                 {
                     ValidateResource(
                         () => FrameworkFileUtilities.GetFileStream(template, directory.MetadataMappingFile),
@@ -556,7 +558,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             foreach (var list in template.Lists)
             {
-                foreach (var attachment in list.DataRows.SelectMany(dataRow => dataRow.Attachments).Where(attachment => IsConnectorRelativePath(attachment.Src)))
+                foreach (var attachment in list.DataRows.SelectMany(dataRow => dataRow.Attachments).Where(attachment => IsCheckableResourcePath(attachment.Src)))
                 {
                     ValidateResource(
                         () => FrameworkFileUtilities.GetFileStream(template, attachment.Src),
@@ -581,7 +583,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             if (template.Workflows?.WorkflowDefinitions != null)
             {
-                foreach (var definition in template.Workflows.WorkflowDefinitions.Where(definition => IsConnectorRelativePath(definition.XamlPath)))
+                foreach (var definition in template.Workflows.WorkflowDefinitions.Where(definition => IsCheckableResourcePath(definition.XamlPath)))
                 {
                     ValidateResource(
                         () => FrameworkFileUtilities.GetFileStream(template, definition.XamlPath),
@@ -593,7 +595,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             if (template.Tenant?.AppCatalog?.Packages != null)
             {
-                foreach (var package in template.Tenant.AppCatalog.Packages.Where(package => IsConnectorRelativePath(package.Src)))
+                foreach (var package in template.Tenant.AppCatalog.Packages.Where(package => IsCheckableResourcePath(package.Src)))
                 {
                     ValidateResource(() => FrameworkFileUtilities.GetFileStream(template, package.Src), package.Src, $"Tenant.AppCatalog.Packages[{package.Src}]", issues);
                 }
@@ -601,7 +603,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             if (template.Tenant?.SiteScripts != null)
             {
-                foreach (var siteScript in template.Tenant.SiteScripts.Where(siteScript => IsConnectorRelativePath(siteScript.JsonFilePath)))
+                foreach (var siteScript in template.Tenant.SiteScripts.Where(siteScript => IsCheckableResourcePath(siteScript.JsonFilePath)))
                 {
                     ValidateResource(() => FrameworkFileUtilities.GetFileStream(template, siteScript.JsonFilePath), siteScript.JsonFilePath, $"Tenant.SiteScripts[{siteScript.JsonFilePath}]", issues);
                 }
@@ -633,13 +635,18 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        // Only a connector relative path is read from the template; tokens and URLs are resolved when the template is applied.
-        private static bool IsConnectorRelativePath(string source)
+        // URLs are resolved when the template is applied; anything else could name a file the template carries.
+        private static bool IsCheckableResourcePath(string source)
         {
             return !string.IsNullOrWhiteSpace(source) &&
-                !IsTokenizedPath(source) &&
                 !source.StartsWith('/') &&
                 !Uri.TryCreate(source, UriKind.Absolute, out _);
+        }
+
+        // The site logo is frequently a URL or a token rather than a packaged file, so it is only checked when it is neither.
+        private static bool IsConnectorRelativePath(string source)
+        {
+            return IsCheckableResourcePath(source) && !IsTokenizedPath(source);
         }
 
         // Path tokens lead the value or name a parameter; a brace elsewhere is part of a literal folder or file name.
@@ -668,25 +675,45 @@ namespace PnP.PowerShell.Commands.Utilities
             List<SiteTemplateValidationIssue> issues,
             SiteTemplateValidationSeverity severity = SiteTemplateValidationSeverity.Error)
         {
+            // A token can only be expanded against a live site, so an unresolved one is reported as unverified rather than missing.
+            void AddUnresolvedIssue(string code, string message)
+            {
+                issues.Add(IsTokenizedPath(source)
+                    ? CreateIssue(
+                        "UnverifiedResourcePath",
+                        $"Referenced resource '{source}' contains a token, so it could only be checked once the template is applied.",
+                        location,
+                        SiteTemplateValidationSeverity.Information)
+                    : CreateIssue(code, message, location, severity));
+            }
+
             try
             {
                 using var stream = openResource();
                 if (stream == null)
                 {
-                    issues.Add(CreateIssue("MissingResource", $"Referenced resource '{source}' could not be found.", location, severity));
+                    AddUnresolvedIssue("MissingResource", $"Referenced resource '{source}' could not be found.");
                 }
             }
             catch (FileNotFoundException)
             {
-                issues.Add(CreateIssue("MissingResource", $"Referenced resource '{source}' could not be found.", location, severity));
+                AddUnresolvedIssue("MissingResource", $"Referenced resource '{source}' could not be found.");
             }
             catch (DirectoryNotFoundException)
             {
-                issues.Add(CreateIssue("MissingResource", $"Referenced resource '{source}' could not be found.", location, severity));
+                AddUnresolvedIssue("MissingResource", $"Referenced resource '{source}' could not be found.");
             }
             catch (ArgumentException)
             {
-                issues.Add(CreateIssue("InvalidResourcePath", $"Referenced resource '{source}' does not resolve to a file name.", location, severity));
+                AddUnresolvedIssue("InvalidResourcePath", $"Referenced resource '{source}' does not resolve to a file name.");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                AddUnresolvedIssue("InvalidResourcePath", $"Referenced resource '{source}' could not be read as a file.");
+            }
+            catch (IOException exception)
+            {
+                AddUnresolvedIssue("InvalidResourcePath", $"Referenced resource '{source}' could not be read. {exception.Message}");
             }
         }
 

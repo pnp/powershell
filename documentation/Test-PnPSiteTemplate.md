@@ -46,7 +46,7 @@ One result is returned per template found in the source. Every finding is a stru
 |---|---|
 | `Error` | The template is broken and should not be applied, for example a duplicate identifier, an unreadable package, an unsupported schema, or a referenced file that is not present. This is the only severity that sets `IsValid` to `$false`. |
 | `Warning` | The template can be applied but may not behave as intended, for example an older provisioning schema, or an attribute that has been removed from the latest schema. |
-| `Information` | Something the target site or term store has to provide. Out of the box content types and site columns are never declared inside a template, so these appear on almost every template and are grouped into a single issue per location. |
+| `Information` | Something the target site or term store has to provide, or something that could not be checked in advance. Out of the box content types and site columns are never declared inside a template, so these appear on almost every template and are grouped into a single issue per location. |
 
 How much can be checked depends on what the source provides, which the result states explicitly rather than leaving you to guess.
 
@@ -59,9 +59,9 @@ How much can be checked depends on what the source provides, which the result st
 
 The provisioning schema versions 2019/03 through 2022/09 are recognised. Anything else is reported as an `UnsupportedSchema` error, because the provisioning engine falls back to the latest deserializer for a namespace it does not know, which quietly produces an empty template rather than failing.
 
-Site logos and file sources that are tokens, server relative paths or absolute URLs are resolved at the moment the template is applied, so they are not looked for among the template's own files. A path counts as tokenized when it starts with a token or names a parameter, so a source that merely contains `_api` or a brace in a folder name is still checked normally.
+Server relative paths and absolute URLs are resolved at the moment the template is applied, so they are not looked for among the template's own files. A path counts as tokenized when it starts with a token or names a parameter, and one that cannot be found is then reported as `UnverifiedResourcePath` at `Information` severity rather than as missing, because only the target site can expand it. A source that merely contains `_api` or a brace in a folder name is checked normally.
 
-When the source is a package, templates stored in a folder inside it are validated as well as those at its root.
+When the source is a package, templates stored in a folder inside it are validated as well as those at its root, `XInclude` references are resolved first, and an issue in one member names that member in its `Location`. Passing `-TemplateId` reports only the issues belonging to the template that was asked for.
 
 The cmdlet never compares the template against a site, so it cannot confirm whether the content types, fields, term sets or hub sites it reports as dependencies actually exist there.
 

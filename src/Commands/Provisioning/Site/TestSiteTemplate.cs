@@ -25,6 +25,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         private Stream _validationStream;
         private readonly Dictionary<ProvisioningTemplate, string> _schemaNamespaces = new(ReferenceEqualityComparer.Instance);
         private readonly Dictionary<ProvisioningTemplate, XElement> _sourceElements = new(ReferenceEqualityComparer.Instance);
+        private readonly Dictionary<ProvisioningTemplate, string> _templateFiles = new(ReferenceEqualityComparer.Instance);
         private bool _isPackage;
 
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSetPath)]
@@ -57,6 +58,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         {
             _schemaNamespaces.Clear();
             _sourceElements.Clear();
+            _templateFiles.Clear();
             // A null element would otherwise be dereferenced while pre-processing.
             TemplateProviderExtensions = TemplateProviderExtensions?.Where(extension => extension != null).ToArray();
             ResolveAndValidatePath();
@@ -64,7 +66,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             using var bufferedStream = ParameterSetName == ParameterSetStream ? BufferStream(Stream) : null;
             _validationStream = bufferedStream;
 
-            var schemaIssues = new List<SiteTemplateValidationIssue>();
+            var schemaIssues = new List<(SiteTemplateValidationIssue Issue, string TemplateFile)>();
             string sourceSchemaNamespace = null;
             List<ProvisioningTemplate> templates;
             try
@@ -81,9 +83,9 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 exception is System.Xml.XmlException or InvalidDataException or FormatException or PnP.Framework.Provisioning.Connectors.OpenXML.PnPPackageFormatException or FileFormatException ||
                 _isPackage && exception is FileNotFoundException or InvalidOperationException)
             {
-                schemaIssues.Add(_isPackage
+                schemaIssues.Add((_isPackage
                     ? SiteTemplateValidationHelper.CreateIssue("InvalidPackage", exception.Message, "Package")
-                    : SiteTemplateValidationHelper.CreateSchemaIssue(exception));
+                    : SiteTemplateValidationHelper.CreateSchemaIssue(exception), null));
                 templates = [];
             }
 
@@ -96,9 +98,9 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 if (schemaIssues.Count == 0)
                 {
-                    schemaIssues.Add(ParameterSpecified(nameof(TemplateId))
+                    schemaIssues.Add((ParameterSpecified(nameof(TemplateId))
                         ? SiteTemplateValidationHelper.CreateIssue("TemplateNotFound", $"The source does not contain a template with ID '{TemplateId}'.", "ProvisioningTemplate")
-                        : SiteTemplateValidationHelper.CreateSchemaIssue(new InvalidDataException("The source does not contain a site template.")));
+                        : SiteTemplateValidationHelper.CreateSchemaIssue(new InvalidDataException("The source does not contain a site template.")), null));
                 }
 
                 WriteObject(new SiteTemplateValidationResult
@@ -106,14 +108,21 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     TemplateId = TemplateId,
                     SchemaVersion = sourceSchemaNamespace,
                     SchemaChecked = ParameterSetName != ParameterSetTemplate,
-                    Issues = schemaIssues
+                    Issues = schemaIssues.Select(schemaIssue => schemaIssue.Issue).ToList()
                 });
                 return;
             }
 
             foreach (var template in templates)
             {
-                var issues = new List<SiteTemplateValidationIssue>(schemaIssues);
+                // When one template was asked for it does not answer for a member that failed elsewhere, but an
+                // unfiltered run still has to report those failures somewhere, so they stay on every result.
+                var templateFile = _templateFiles.GetValueOrDefault(template);
+                var scopeToTemplateFile = ParameterSpecified(nameof(TemplateId));
+                var issues = schemaIssues
+                    .Where(schemaIssue => !scopeToTemplateFile || schemaIssue.TemplateFile == null || schemaIssue.TemplateFile == templateFile)
+                    .Select(schemaIssue => schemaIssue.Issue)
+                    .ToList();
                 var schemaNamespace = _schemaNamespaces.GetValueOrDefault(template);
                 var schemaVersionIssue = SiteTemplateValidationHelper.CreateSchemaVersionIssue(schemaNamespace);
                 if (schemaVersionIssue != null)
@@ -133,19 +142,20 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
         }
 
-        private List<ProvisioningTemplate> LoadTemplates(List<SiteTemplateValidationIssue> schemaIssues)
+        private List<ProvisioningTemplate> LoadTemplates(List<(SiteTemplateValidationIssue Issue, string TemplateFile)> schemaIssues)
         {
-            Action<Exception> exceptionHandler = exception => schemaIssues.Add(SiteTemplateValidationHelper.CreateSchemaIssue(exception));
+            Action<Exception, string> exceptionHandler = (exception, templateFile) => schemaIssues.Add(
+                (SiteTemplateValidationHelper.CreateSchemaIssue(exception, templateFile), templateFile));
             Action<string, string> duplicateTemplateIdHandler = (duplicateId, templateFile) => schemaIssues.Add(
-                SiteTemplateValidationHelper.CreateIssue(
+                (SiteTemplateValidationHelper.CreateIssue(
                     "DuplicateTemplateId",
                     $"Template ID '{duplicateId}' occurs more than once in '{templateFile}'.",
-                    "ProvisioningTemplate"));
+                    "ProvisioningTemplate"), templateFile));
             Action<string> unaddressableTemplateHandler = templateFile => schemaIssues.Add(
-                SiteTemplateValidationHelper.CreateIssue(
+                (SiteTemplateValidationHelper.CreateIssue(
                     "MissingTemplateId",
                     $"'{templateFile}' contains several templates of which at least one has no ID, so it cannot be validated separately.",
-                    "ProvisioningTemplate"));
+                    "ProvisioningTemplate"), templateFile));
 
             switch (ParameterSetName)
             {
@@ -155,34 +165,25 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                         var isPackage = FileUtilities.IsOpenOfficeFile(fileStream);
                         fileStream.Position = 0;
                         _isPackage = isPackage;
-                        var templates = ProvisioningHelper.LoadSiteTemplatesFromStreamStrict(
+                        return ProvisioningHelper.LoadSiteTemplatesFromStreamStrict(
                             fileStream,
                             TemplateId,
+                            isPackage ? null : new PnP.Framework.Provisioning.Connectors.FileSystemConnector(System.IO.Path.GetDirectoryName(Path), string.Empty),
                             TemplateProviderExtensions,
                             exceptionHandler,
                             AddSchemaNamespace,
                             duplicateTemplateIdHandler,
                             unaddressableTemplateHandler);
-                        if (!isPackage)
-                        {
-                            var connector = new PnP.Framework.Provisioning.Connectors.FileSystemConnector(
-                                System.IO.Path.GetDirectoryName(Path),
-                                string.Empty);
-                            foreach (var template in templates)
-                            {
-                                template.Connector = connector;
-                            }
-                        }
-                        return templates;
                     }
                 case ParameterSetStream:
                     _isPackage = IsPackageStream();
-                    return ProvisioningHelper.LoadSiteTemplatesFromStreamStrict(_validationStream, TemplateId, TemplateProviderExtensions, exceptionHandler, AddSchemaNamespace, duplicateTemplateIdHandler, unaddressableTemplateHandler);
+                    return ProvisioningHelper.LoadSiteTemplatesFromStreamStrict(_validationStream, TemplateId, null, TemplateProviderExtensions, exceptionHandler, AddSchemaNamespace, duplicateTemplateIdHandler, unaddressableTemplateHandler);
                 case ParameterSetXml:
                     using (var xmlStream = ProvisioningHelper.CreateXmlStream(Xml))
                     {
                         return ProvisioningHelper.LoadSiteTemplatesFromStreamStrict(
                             xmlStream,
+                            null,
                             null,
                             TemplateProviderExtensions,
                             exceptionHandler,
@@ -253,9 +254,13 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             return isPackage;
         }
 
-        private void AddSchemaNamespace(ProvisioningTemplate template, string schemaNamespace, XElement sourceElement)
+        private void AddSchemaNamespace(ProvisioningTemplate template, string templateFile, string schemaNamespace, XElement sourceElement)
         {
             _schemaNamespaces[template] = schemaNamespace;
+            if (templateFile != null)
+            {
+                _templateFiles[template] = templateFile;
+            }
             if (sourceElement != null)
             {
                 _sourceElements[template] = sourceElement;
