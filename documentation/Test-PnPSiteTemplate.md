@@ -53,13 +53,15 @@ How much can be checked depends on what the source provides, which the result st
 | Property | Meaning |
 |---|---|
 | `IsValid` | `$false` only when an `Error` severity issue was found. |
-| `ResourcesChecked` | `$true` when the template carried a file connector, so referenced files, localizations, directories, data row attachments, app packages, site scripts and relative site logos could be resolved. `$false` for an in-memory template without a connector, meaning none of those were looked at. |
+| `ResourcesChecked` | `$true` when the template carried a file connector, so referenced files, localizations, directories, data row attachments, workflow definitions, app packages, site scripts and relative site logos could be resolved. `$false` for an in-memory template without a connector, meaning none of those were looked at. |
 | `SchemaChecked` | `$true` when the source XML was available, so the schema version and removed-element checks could run. `$false` for a template received through the pipeline. |
 | `SchemaVersion` | The provisioning schema namespace found in the source, when available. |
 
 The provisioning schema versions 2019/03 through 2022/09 are recognised. Anything else is reported as an `UnsupportedSchema` error, because the provisioning engine falls back to the latest deserializer for a namespace it does not know, which quietly produces an empty template rather than failing.
 
-Site logos and file sources that are tokens, server relative paths or absolute URLs are resolved at the moment the template is applied, so they are not looked for among the template's own files. A source that merely contains `_api` as a folder name is still checked normally.
+Site logos and file sources that are tokens, server relative paths or absolute URLs are resolved at the moment the template is applied, so they are not looked for among the template's own files. A path counts as tokenized when it starts with a token or names a parameter, so a source that merely contains `_api` or a brace in a folder name is still checked normally.
+
+When the source is a package, templates stored in a folder inside it are validated as well as those at its root.
 
 The cmdlet never compares the template against a site, so it cannot confirm whether the content types, fields, term sets or hub sites it reports as dependencies actually exist there.
 

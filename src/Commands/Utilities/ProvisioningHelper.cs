@@ -228,10 +228,12 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 try
                 {
-                    var (templateIdentifiers, schemaNamespace, normalizedDocument, sourceDocument) = GetTemplateIdentifiers(provider, templateFile, memoryStream, templateProviderExtensions, duplicateTemplateIdHandler, unaddressableTemplateHandler);
+                    var (templateIdentifiers, schemaNamespace, normalizedDocument, sourceDocument) = GetTemplateIdentifiers(provider, templateFile, memoryStream, templateId, templateProviderExtensions, duplicateTemplateIdHandler, unaddressableTemplateHandler);
                     foreach (var currentTemplateIdentifier in templateIdentifiers.Where(identifier => !string.IsNullOrWhiteSpace(identifier)))
                     {
-                        if (!packageTemplateIdentifiers.Add(currentTemplateIdentifier))
+                        // A duplicate elsewhere in the source says nothing about the template that was asked for.
+                        if (!packageTemplateIdentifiers.Add(currentTemplateIdentifier) &&
+                            (string.IsNullOrEmpty(templateId) || string.Equals(currentTemplateIdentifier, templateId, StringComparison.OrdinalIgnoreCase)))
                         {
                             duplicateTemplateIdHandler?.Invoke(currentTemplateIdentifier, templateFile ?? "stream");
                         }
@@ -251,11 +253,13 @@ namespace PnP.PowerShell.Commands.Utilities
                         ProvisioningTemplate provisioningTemplate;
                         if (normalizedDocument != null)
                         {
+                            // This XML has already been pre-processed, so the extensions only run their post-processing here.
                             using var normalizedStream = CreateStream(normalizedDocument);
                             var normalizedProvider = new XMLStreamTemplateProvider();
                             provisioningTemplate = string.IsNullOrEmpty(templateIdentifier)
-                                ? normalizedProvider.GetTemplate(normalizedStream, templateProviderExtensions)
-                                : normalizedProvider.GetTemplate(normalizedStream, templateIdentifier, null, templateProviderExtensions);
+                                ? normalizedProvider.GetTemplate(normalizedStream, (ITemplateProviderExtension[])null)
+                                : normalizedProvider.GetTemplate(normalizedStream, templateIdentifier, null, null);
+                            provisioningTemplate = ApplyPostProcessing(provisioningTemplate, templateProviderExtensions);
                         }
                         else if (templateFile == null)
                         {
@@ -309,26 +313,34 @@ namespace PnP.PowerShell.Commands.Utilities
                 templateFiles.Add(primaryTemplateFile);
             }
 
-            foreach (var file in connector.GetFiles().Where(file => file.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)))
-            {
-                if (templateFiles.Contains(file, StringComparer.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
+            // GetFolders lists every nested folder, so templates below the package root are found too.
+            var containers = new List<string> { string.Empty };
+            containers.AddRange(connector.GetFolders().Distinct(StringComparer.OrdinalIgnoreCase));
 
-                using var stream = ApplyPreProcessing(connector.GetFileStream(file), templateProviderExtensions);
-                try
+            foreach (var container in containers)
+            {
+                foreach (var file in connector.GetFiles(container).Where(file => file.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)))
                 {
-                    using var reader = System.Xml.XmlReader.Create(stream);
-                    reader.MoveToContent();
-                    if (IsSiteTemplateRoot(reader.LocalName, reader.NamespaceURI))
+                    var templateFile = string.IsNullOrEmpty(container) ? file : $"{container.Replace('\\', '/').Trim('/')}/{file}";
+                    if (templateFiles.Contains(templateFile, StringComparer.OrdinalIgnoreCase))
                     {
-                        templateFiles.Add(file);
+                        continue;
                     }
-                }
-                catch (System.Xml.XmlException)
-                {
-                    // XML that fails before exposing its root cannot safely be distinguished from a non-template resource.
+
+                    using var stream = ApplyPreProcessing(connector.GetFileStream(file, container), templateProviderExtensions);
+                    try
+                    {
+                        using var reader = System.Xml.XmlReader.Create(stream);
+                        reader.MoveToContent();
+                        if (IsSiteTemplateRoot(reader.LocalName, reader.NamespaceURI))
+                        {
+                            templateFiles.Add(templateFile);
+                        }
+                    }
+                    catch (System.Xml.XmlException)
+                    {
+                        // XML that fails before exposing its root cannot safely be distinguished from a non-template resource.
+                    }
                 }
             }
             return templateFiles;
@@ -338,6 +350,7 @@ namespace PnP.PowerShell.Commands.Utilities
             XMLTemplateProvider provider,
             string templateFile,
             Stream sourceStream,
+            string templateId,
             ITemplateProviderExtension[] templateProviderExtensions,
             Action<string, string> duplicateTemplateIdHandler,
             Action<string> unaddressableTemplateHandler)
@@ -367,7 +380,10 @@ namespace PnP.PowerShell.Commands.Utilities
             // A template without an ID cannot be addressed individually once the document holds more than one.
             if (templateElements.Count > 1 && identifiers.Any(string.IsNullOrWhiteSpace))
             {
-                unaddressableTemplateHandler?.Invoke(templateFile ?? "stream");
+                if (string.IsNullOrEmpty(templateId))
+                {
+                    unaddressableTemplateHandler?.Invoke(templateFile ?? "stream");
+                }
                 identifiers = identifiers.Where(identifier => !string.IsNullOrWhiteSpace(identifier)).ToList();
             }
 
@@ -377,7 +393,9 @@ namespace PnP.PowerShell.Commands.Utilities
                 .Where(group => group.Count() > 1)
                 .Select(group => group.Key)
                 .ToList();
-            foreach (var duplicateIdentifier in duplicateIdentifiers)
+            // A duplicate elsewhere in the document says nothing about the template that was asked for.
+            foreach (var duplicateIdentifier in duplicateIdentifiers.Where(identifier =>
+                string.IsNullOrEmpty(templateId) || string.Equals(identifier, templateId, StringComparison.OrdinalIgnoreCase)))
             {
                 duplicateTemplateIdHandler?.Invoke(duplicateIdentifier, templateFile ?? "stream");
             }
@@ -439,6 +457,15 @@ namespace PnP.PowerShell.Commands.Utilities
                 stream = extension.PreProcessGetTemplate(stream);
             }
             return stream;
+        }
+
+        private static ProvisioningTemplate ApplyPostProcessing(ProvisioningTemplate template, ITemplateProviderExtension[] templateProviderExtensions)
+        {
+            foreach (var extension in templateProviderExtensions?.Where(extension => extension.SupportsGetTemplatePostProcessing) ?? [])
+            {
+                template = extension.PostProcessGetTemplate(template);
+            }
+            return template;
         }
 
         private static MemoryStream CopyStream(Stream source)

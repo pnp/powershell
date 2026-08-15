@@ -57,6 +57,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         {
             _schemaNamespaces.Clear();
             _sourceElements.Clear();
+            // A null element would otherwise be dereferenced while pre-processing.
+            TemplateProviderExtensions = TemplateProviderExtensions?.Where(extension => extension != null).ToArray();
             ResolveAndValidatePath();
 
             using var bufferedStream = ParameterSetName == ParameterSetStream ? BufferStream(Stream) : null;

@@ -493,6 +493,14 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
 
+            if (template.Workflows?.WorkflowDefinitions != null)
+            {
+                foreach (var definition in template.Workflows.WorkflowDefinitions.Where(definition => string.IsNullOrWhiteSpace(definition.XamlPath)))
+                {
+                    issues.Add(CreateIssue("MissingWorkflowXamlPath", "A workflow definition does not define a XAML path.", "Workflows.WorkflowDefinitions"));
+                }
+            }
+
             if (template.Tenant?.AppCatalog?.Packages != null)
             {
                 foreach (var package in template.Tenant.AppCatalog.Packages.Where(package => string.IsNullOrWhiteSpace(package.Src)))
@@ -571,6 +579,18 @@ namespace PnP.PowerShell.Commands.Utilities
                     SiteTemplateValidationSeverity.Warning);
             }
 
+            if (template.Workflows?.WorkflowDefinitions != null)
+            {
+                foreach (var definition in template.Workflows.WorkflowDefinitions.Where(definition => IsConnectorRelativePath(definition.XamlPath)))
+                {
+                    ValidateResource(
+                        () => FrameworkFileUtilities.GetFileStream(template, definition.XamlPath),
+                        definition.XamlPath,
+                        $"Workflows.WorkflowDefinitions[{definition.DisplayName ?? definition.XamlPath}]",
+                        issues);
+                }
+            }
+
             if (template.Tenant?.AppCatalog?.Packages != null)
             {
                 foreach (var package in template.Tenant.AppCatalog.Packages.Where(package => IsConnectorRelativePath(package.Src)))
@@ -617,9 +637,15 @@ namespace PnP.PowerShell.Commands.Utilities
         private static bool IsConnectorRelativePath(string source)
         {
             return !string.IsNullOrWhiteSpace(source) &&
-                !source.Contains('{') &&
+                !IsTokenizedPath(source) &&
                 !source.StartsWith('/') &&
                 !Uri.TryCreate(source, UriKind.Absolute, out _);
+        }
+
+        // Path tokens lead the value or name a parameter; a brace elsewhere is part of a literal folder or file name.
+        private static bool IsTokenizedPath(string source)
+        {
+            return source.StartsWith('{') || source.Contains("{parameter:", StringComparison.OrdinalIgnoreCase);
         }
 
         private static IEnumerable<string> GetResourcePathCandidates(string source)
