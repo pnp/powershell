@@ -23,7 +23,7 @@ Creates a new List Design on the current tenant
 
 ```powershell
 Add-PnPListDesign -Title <String> -SiteScript <TenantSiteScriptPipeBind> [-Description <String>] 
- [-ListColor<TenantListDesignIcon>] [-ListIcon <TenantListDesignColor>] [-ThumbnailUrl <String>] 
+ [-ListIcon <TenantListDesignIcon>] [-ListColor <TenantListDesignColor>] [-ThumbnailUrl <String>] 
  [-Connection <PnPConnection>]
 ```
 
@@ -31,7 +31,7 @@ Add-PnPListDesign -Title <String> -SiteScript <TenantSiteScriptPipeBind> [-Descr
 
 ```powershell
 Add-PnPListDesign -Title <String> -SiteScriptIds <Guid[]> [-Description <String>] 
- [-ListColor<TenantListDesignIcon>] [-ListIcon <TenantListDesignColor>] [-ThumbnailUrl <String>] 
+ [-ListIcon <TenantListDesignIcon>] [-ListColor <TenantListDesignColor>] [-ThumbnailUrl <String>] 
  [-Connection <PnPConnection>]
 ```
 

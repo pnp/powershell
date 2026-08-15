@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>New-PnpProfileCardProperty | PnP PowerShell </title>
+      <title>Get-PnPAvailablePageComponents | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="New-PnpProfileCardProperty | PnP PowerShell ">
+      <meta name="title" content="Get-PnPAvailablePageComponents | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,83 +85,62 @@
         </div>
 
         <article data-uid="">
-<h1 id="new-pnpprofilecardproperty">New-PnpProfileCardProperty</h1>
+<h1 id="get-pnpavailablepagecomponents">Get-PnPAvailablePageComponents</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>Microsoft Graph API : PeopleSettings.ReadWrite.All</li>
-</ul>
-<p>Adds a property to user profile card</p>
+<p>Retrieves the page components that can be added to a page</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">New-PnpProfileCardProperty -PropertyName &lt;ProfileCardPropertyName&gt; -DisplayName &lt;String&gt; [-Localizations &lt;Hashtable&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPAvailablePageComponents [-Page] &lt;PagePipeBind&gt; [-Component &lt;PageComponentPipeBind&gt;] 
+ [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet may be used to add a property to user profile card. Please note that it may take up to 24 hours to reflect the changes.</p>
+<p>This cmdlet returns the client side web parts that are available to be added to the specified page, which includes the web parts deployed to the site through the app catalog. Use it to look up the identifier of a component before adding it with <a href="Add-PnPPageWebPart.html">Add-PnPPageWebPart</a>.</p>
+<p>To retrieve the components that are already placed on a page instead, use <a href="Get-PnPPageComponent.html">Get-PnPPageComponent</a>.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">New-PnpProfileCardProperty -PropertyName CustomAttribute1 -DisplayName &quot;Cost Centre&quot;
+<pre><code class="lang-powershell">Get-PnPAvailablePageComponents -Page Home
 </code></pre>
-<p>This cmdlet will add a property with a display name to user profile card.</p>
+<p>Returns all the page components that can be added to the page named 'Home'.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">$localizations = @{ &quot;pl&quot; = &quot;Centrum kosztów&quot;; &quot;de&quot; = &quot;Kostenstelle&quot; }
-New-PnpProfileCardProperty -PropertyName CustomAttribute1 -DisplayName &quot;Cost Centre&quot; -Localizations $localizations
+<pre><code class="lang-powershell">Get-PnPAvailablePageComponents -Page Home -Component &quot;HelloWorld&quot;
 </code></pre>
-<p>This cmdlet will add a property with a display name and specified localizations to user profile card.</p>
+<p>Returns the page component named 'HelloWorld' that can be added to the page named 'Home'.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing <a href="Get-PnPConnection.html">Get-PnPConnection</a>.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-propertyname">-PropertyName</h3>
-<p>Name of a property to be added</p>
-<pre><code class="lang-yaml">Type: Commands.Enums.ProfileCardPropertyName
-Parameter Sets: (All)
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-displayname">-DisplayName</h3>
-<p>The display name of the property.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-Required: True
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-localizations">-Localizations</h3>
-<p>List of display name localizations</p>
-<pre><code class="lang-yaml">Type: Hashtable
-Parameter Sets: (All)
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-verbose">-Verbose</h3>
-<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
+<h3 id="-component">-Component</h3>
+<p>The name or id of a specific component to return. If not provided, all available components are returned.</p>
+<pre><code class="lang-yaml">Type: PageComponentPipeBind
 Parameter Sets: (All)
 
 Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-page">-Page</h3>
+<p>The name of the page to retrieve the available components for.</p>
+<pre><code class="lang-yaml">Type: PagePipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
-<a href="https://learn.microsoft.com/en-us/graph/add-properties-profilecard">Microsoft Graph documentation</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>
 

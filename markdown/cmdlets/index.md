@@ -6,7 +6,7 @@ description: Full cmdlet reference for PnP PowerShell.
 
 # PnP PowerShell cmdlets
 
-PnP PowerShell exists out of 849 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
+PnP PowerShell exists out of 851 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
  
 <sup>1</sup>: Only available in the latest nightly build. All the others can also be used using the latest stable release.  
 <sup>2</sup>: Cmdlet is an alias of another cmdlet, used to provide backwards compatibility.
@@ -98,7 +98,7 @@ PnP PowerShell exists out of 849 cmdlets which can help you in setting up, confi
 - [Add-PnPStoredCredential](Add-PnPStoredCredential.md)
 - [Add-PnPTaxonomyField](Add-PnPTaxonomyField.md)
 - [Add-PnPTeamsChannel](Add-PnPTeamsChannel.md)
-- [Add-PnpTeamsChannelUser](Add-PnpTeamsChannelUser.md)
+- [Add-PnPTeamsChannelUser](Add-PnPTeamsChannelUser.md)
 - [Add-PnPTeamsTab](Add-PnPTeamsTab.md)
 - [Add-PnPTeamsTeam](Add-PnPTeamsTeam.md)
 - [Add-PnPTeamsUser](Add-PnPTeamsUser.md)
@@ -129,7 +129,7 @@ PnP PowerShell exists out of 849 cmdlets which can help you in setting up, confi
 - [Clear-PnPListItemAsRecord](Clear-PnPListItemAsRecord.md)
 - [Clear-PnPMicrosoft365GroupMember](Clear-PnPMicrosoft365GroupMember.md)
 - [Clear-PnPMicrosoft365GroupOwner](Clear-PnPMicrosoft365GroupOwner.md)
-- [Clear-PnpRecycleBinItem](Clear-PnpRecycleBinItem.md)
+- [Clear-PnPRecycleBinItem](Clear-PnPRecycleBinItem.md)
 - [Clear-PnPTenantAppCatalogUrl](Clear-PnPTenantAppCatalogUrl.md)
 - [Clear-PnPTenantRecycleBinItem](Clear-PnPTenantRecycleBinItem.md)
 - [Clear-PnPTraceLog](Clear-PnPTraceLog.md)
@@ -184,6 +184,8 @@ PnP PowerShell exists out of 849 cmdlets which can help you in setting up, confi
 - [Export-PnPUserProfile](Export-PnPUserProfile.md)
 ## Find
 - [Find-PnPFile](Find-PnPFile.md)
+## Format
+- [Format-PnPTraceLog](Format-PnPTraceLog.md)
 ## Get
 - [Get-PnPAccessToken](Get-PnPAccessToken.md)
 - [Get-PnPAlert](Get-PnPAlert.md)
@@ -194,6 +196,7 @@ PnP PowerShell exists out of 849 cmdlets which can help you in setting up, confi
 - [Get-PnPAuditing](Get-PnPAuditing.md)
 - [Get-PnPAuthenticationRealm](Get-PnPAuthenticationRealm.md)
 - [Get-PnPAvailableLanguage](Get-PnPAvailableLanguage.md)
+- [Get-PnPAvailablePageComponents](Get-PnPAvailablePageComponents.md)
 - [Get-PnPAvailableSensitivityLabel](Get-PnPAvailableSensitivityLabel.md)
 - [Get-PnPAvailableSiteClassification](Get-PnPAvailableSiteClassification.md)
 - [Get-PnPAzureACSPrincipal](Get-PnPAzureACSPrincipal.md)
@@ -522,7 +525,7 @@ PnP PowerShell exists out of 849 cmdlets which can help you in setting up, confi
 - [Move-PnPListItemToRecycleBin](Move-PnPListItemToRecycleBin.md)
 - [Move-PnPPage](Move-PnPPage.md)
 - [Move-PnPPageComponent](Move-PnPPageComponent.md)
-- [Move-PnpRecycleBinItem](Move-PnpRecycleBinItem.md)
+- [Move-PnPRecycleBinItem](Move-PnPRecycleBinItem.md)
 - [Move-PnPTerm](Move-PnPTerm.md)
 - [Move-PnPTermSet](Move-PnPTermSet.md)
 ## New
@@ -543,7 +546,7 @@ PnP PowerShell exists out of 849 cmdlets which can help you in setting up, confi
 - [New-PnPMicrosoft365GroupSettings](New-PnPMicrosoft365GroupSettings.md)
 - [New-PnPPersonalSite](New-PnPPersonalSite.md)
 - [New-PnPPlannerPlan](New-PnPPlannerPlan.md)
-- [New-PnpProfileCardProperty](New-PnpProfileCardProperty.md)
+- [New-PnPProfileCardProperty](New-PnPProfileCardProperty.md)
 - [New-PnPSdnProvider](New-PnPSdnProvider.md)
 - [New-PnPSearchExternalConnection](New-PnPSearchExternalConnection.md)
 - [New-PnPSearchResultType](New-PnPSearchResultType.md)
@@ -877,7 +880,7 @@ PnP PowerShell exists out of 849 cmdlets which can help you in setting up, confi
 - [Set-PnPTaxonomyFieldValue](Set-PnPTaxonomyFieldValue.md)
 - [Set-PnPTeamifyPromptHidden](Set-PnPTeamifyPromptHidden.md)
 - [Set-PnPTeamsChannel](Set-PnPTeamsChannel.md)
-- [Set-PnpTeamsChannelUser](Set-PnpTeamsChannelUser.md)
+- [Set-PnPTeamsChannelUser](Set-PnPTeamsChannelUser.md)
 - [Set-PnPTeamsTab](Set-PnPTeamsTab.md)
 - [Set-PnPTeamsTag](Set-PnPTeamsTag.md)
 - [Set-PnPTeamsTeam](Set-PnPTeamsTeam.md)

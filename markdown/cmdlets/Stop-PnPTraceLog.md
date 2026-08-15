@@ -4,10 +4,10 @@ title: Stop-PnPTraceLog
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTraceLog.html
+online version: https://pnp.github.io/powershell/cmdlets/Stop-PnPTraceLog.html
 ---
  
-# Stops-PnPTraceLog
+# Stop-PnPTraceLog
 
 ## SYNOPSIS
 Stops all log tracing and flushes the log buffer if any items in there.

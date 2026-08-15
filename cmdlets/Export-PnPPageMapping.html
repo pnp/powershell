@@ -90,16 +90,9 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Get's the built-in mapping files or a custom mapping file for your publishing portal page layouts. These mapping files are used to tailor the page transformation experience.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Export-PnPPageMapping [-BuiltInWebPartMapping [&lt;SwitchParameter&gt;]]
-                                [-BuiltInPageLayoutMapping [&lt;SwitchParameter&gt;]]
-                                [-CustomPageLayoutMapping [&lt;SwitchParameter&gt;]]
-                                [-PublishingPage &lt;PagePipeBind&gt;]
-                                [-AnalyzeOOBPageLayouts [&lt;SwitchParameter&gt;]]
-                                [-Folder &lt;String&gt;]
-                                [-Overwrite [&lt;SwitchParameter&gt;]]
-                                [-Logging [&lt;SwitchParameter&gt;]]
-                                
-                                [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Export-PnPPageMapping [[-PublishingPage] &lt;ClassicPagePipeBind&gt;] [-BuiltInWebPartMapping]
+ [-BuiltInPageLayoutMapping] [-CustomPageLayoutMapping] [-AnalyzeOOBPageLayouts] [-Folder &lt;String&gt;]
+ [-Overwrite] [-Logging] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
@@ -180,7 +173,7 @@ Accept pipeline input: False
 </code></pre>
 <h3 id="-publishingpage">-PublishingPage</h3>
 <p>The name of the publishing page to export a page layout mapping file for</p>
-<pre><code class="lang-yaml">Type: PagePipeBind
+<pre><code class="lang-yaml">Type: ClassicPagePipeBind
 Parameter Sets: (All)
 
 Required: False

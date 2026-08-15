@@ -90,52 +90,19 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Converts a classic page (wiki or web part page) into a modern page</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">ConvertTo-PnPPage -Identity &lt;PagePipeBind&gt;
-                            [-Library &lt;String&gt;]
-                            [-Folder &lt;String&gt;]
-                            [-WebPartMappingFile &lt;String&gt;]
-                            [-Overwrite [&lt;SwitchParameter&gt;]]
-                            [-TakeSourcePageName [&lt;SwitchParameter&gt;]]
-                            [-ReplaceHomePageWithDefault [&lt;SwitchParameter&gt;]]
-                            [-AddPageAcceptBanner [&lt;SwitchParameter&gt;]]
-                            [-SkipItemLevelPermissionCopyToClientSidePage [&lt;SwitchParameter&gt;]]
-                            [-SkipUrlRewriting [&lt;SwitchParameter&gt;]]
-                            [-SkipDefaultUrlRewriting [&lt;SwitchParameter&gt;]]
-                            [-UrlMappingFile &lt;String&gt;]
-                            [-ClearCache [&lt;SwitchParameter&gt;]]
-                            [-CopyPageMetadata [&lt;SwitchParameter&gt;]]
-                            [-AddTableListImageAsImageWebPart [&lt;SwitchParameter&gt;]]
-                            [-UseCommunityScriptEditor [&lt;SwitchParameter&gt;]]
-                            [-SummaryLinksToHtml [&lt;SwitchParameter&gt;]]
-                            [-TargetWebUrl &lt;String&gt;]
-                            [-LogType &lt;PageTransformatorLogType&gt;]
-                            [-LogFolder &lt;String&gt;]
-                            [-LogSkipFlush [&lt;SwitchParameter&gt;]]
-                            [-LogVerbose [&lt;SwitchParameter&gt;]]
-                            [-DontPublish [&lt;SwitchParameter&gt;]]
-                            [-KeepPageCreationModificationInformation [&lt;SwitchParameter&gt;]]
-                            [-SetAuthorInPageHeader [&lt;SwitchParameter&gt;]]
-                            [-PostAsNews [&lt;SwitchParameter&gt;]]
-                            [-DisablePageComments [&lt;SwitchParameter&gt;]]
-                            [-PublishingPage [&lt;SwitchParameter&gt;]]
-                            [-BlogPage [&lt;SwitchParameter&gt;]]
-                            [-DelveBlogPage [&lt;SwitchParameter&gt;]]
-                            [-DelveKeepSubTitle [&lt;SwitchParameter&gt;]]
-                            [-PageLayoutMapping &lt;String&gt;]
-                            [-PublishingTargetPageName &lt;String&gt;]
-                            [-TargetPageName &lt;String&gt;]
-                            [-TargetPageFolder &lt;String&gt;]
-                            [-TargetPageFolderOverridesDefaultFolder [&lt;SwitchParameter&gt;]]
-                            [-RemoveEmptySectionsAndColumns [&lt;SwitchParameter&gt;]]
-                            [-TargetConnection &lt;PnPConnection&gt;]
-                            [-SkipUserMapping [&lt;SwitchParameter&gt;]]
-                            [-UserMappingFile &lt;String&gt;]
-                            [-TermMappingFile &lt;String&gt;]
-                            [-SkipTermStoreMapping [&lt;SwitchParameter&gt;]]
-                            [-LDAPConnectionString &lt;String&gt;]
-                            [-SkipHiddenWebParts [&lt;SwitchParameter&gt;]]
-
-                            [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">ConvertTo-PnPPage [-Identity] &lt;ClassicPagePipeBind&gt; [-Library &lt;String&gt;] [-Folder &lt;String&gt;]
+ [-WebPartMappingFile &lt;String&gt;] [-Overwrite] [-TakeSourcePageName] [-ReplaceHomePageWithDefault]
+ [-AddPageAcceptBanner] [-SkipItemLevelPermissionCopyToClientSidePage] [-SkipUrlRewriting]
+ [-SkipDefaultUrlRewriting] [-UrlMappingFile &lt;String&gt;] [-ClearCache] [-CopyPageMetadata]
+ [-AddTableListImageAsImageWebPart] [-UseCommunityScriptEditor] [-SummaryLinksToHtml]
+ [-TargetWebUrl &lt;String&gt;] [-LogType &lt;PageTransformatorLogType&gt;] [-LogFolder &lt;String&gt;] [-LogSkipFlush]
+ [-LogVerbose] [-DontPublish] [-KeepPageCreationModificationInformation] [-SetAuthorInPageHeader]
+ [-PostAsNews] [-DisablePageComments] [-PublishingPage] [-BlogPage] [-DelveBlogPage]
+ [-DelveKeepSubTitle] [-PageLayoutMapping &lt;String&gt;] [-PublishingTargetPageName &lt;String&gt;]
+ [-TargetPageName &lt;String&gt;] [-TargetPageFolder &lt;String&gt;] [-TargetPageFolderOverridesDefaultFolder]
+ [-RemoveEmptySectionsAndColumns] [-TargetConnection &lt;PnPConnection&gt;] [-SkipUserMapping]
+ [-UserMappingFile &lt;String&gt;] [-TermMappingFile &lt;String&gt;] [-SkipTermStoreMapping]
+ [-LDAPConnectionString &lt;String&gt;] [-SkipHiddenWebParts] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
@@ -287,7 +254,7 @@ Accept pipeline input: True
 </code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>The name of the page to convert</p>
-<pre><code class="lang-yaml">Type: PagePipeBind
+<pre><code class="lang-yaml">Type: ClassicPagePipeBind
 Parameter Sets: (All)
 
 Required: True

@@ -91,19 +91,14 @@
 <p>Returns a Term Store Term.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-term-id">By Term Id</h3>
-<pre><code class="lang-powershell">Get-PnPTerm
-    -Identity &lt;Guid&gt;
-    [-TermStore &lt;Guid&gt;]
-    [-IncludeChildTerms] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] 
+<pre><code class="lang-powershell">Get-PnPTerm -Identity &lt;TaxonomyTermPipeBind&gt; [-TermStore &lt;TaxonomyTermStorePipeBind&gt;]
+ [-IncludeChildTerms] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] 
 </code></pre>
 <h3 id="by-term-name">By Term Name</h3>
-<pre><code class="lang-powershell">Get-PnPTerm
-    -Identity &lt;Name&gt;
-    -TermSet &lt;Guid|Name&gt;
-    -TermGroup &lt;Guid|Name&gt;
-    [-TermStore &lt;Guid&gt;]
-    [-Recursive] 
-    [-IncludeChildTerms][-IncludeDeprecated] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] 
+<pre><code class="lang-powershell">Get-PnPTerm -TermSet &lt;TaxonomyTermSetPipeBind&gt; -TermGroup &lt;TaxonomyTermGroupPipeBind&gt;
+ [-Identity &lt;TaxonomyTermPipeBind&gt;] [-TermStore &lt;TaxonomyTermStorePipeBind&gt;] [-Recursive]
+ [-IncludeChildTerms] [-ParentTerm &lt;TaxonomyTermPipeBind&gt;] [-IncludeDeprecated]
+ [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Retries a Term Store Term.</p>
@@ -147,10 +142,19 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>The Id or Name of a Term</p>
-<pre><code class="lang-yaml">Type: GenericObjectNameIdPipeBind&lt;Microsoft.SharePoint.Client.Taxonomy.Term&gt;
-Parameter Sets: All
+<pre><code class="lang-yaml">Type: TaxonomyTermPipeBind
+Parameter Sets: By Term Id
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<pre><code class="lang-yaml">Type: TaxonomyTermPipeBind
+Parameter Sets: By Term Name
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -180,8 +184,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-termgroup">-TermGroup</h3>
 <p>Name of the termgroup to check.</p>
-<pre><code class="lang-yaml">Type: TermGroupPipeBind
-Parameter Sets: By Termset
+<pre><code class="lang-yaml">Type: TaxonomyTermGroupPipeBind
+Parameter Sets: By Term Name
 
 Required: True
 Position: 0
@@ -191,8 +195,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-termset">-TermSet</h3>
 <p>Name of the termset to check.</p>
-<pre><code class="lang-yaml">Type: TaxonomyItemPipeBind&lt;TermSet&gt;
-Parameter Sets: By Termset
+<pre><code class="lang-yaml">Type: TaxonomyTermSetPipeBind
+Parameter Sets: By Term Name
 
 Required: True
 Position: 0
@@ -202,8 +206,19 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-termstore">-TermStore</h3>
 <p>Term store to use; if not specified the default term store is used.</p>
-<pre><code class="lang-yaml">Type: GenericObjectNameIdPipeBind&lt;TermStore&gt;
+<pre><code class="lang-yaml">Type: TaxonomyTermStorePipeBind
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-parentterm">-ParentTerm</h3>
+<p>The Id or Name of the term to look for the term specified through -Identity under. Use this to retrieve a child term by its name when that name is not unique within the term set. Only taken into account when -Identity is also specified.</p>
+<pre><code class="lang-yaml">Type: TaxonomyTermPipeBind
+Parameter Sets: By Term Name
 
 Required: False
 Position: Named
@@ -214,7 +229,7 @@ Accept wildcard characters: False
 <h3 id="-includedeprecated">-IncludeDeprecated</h3>
 <p>Includes the deprecated terms if available.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: By Term name
+Parameter Sets: By Term Name
 
 Required: False
 Position: Named

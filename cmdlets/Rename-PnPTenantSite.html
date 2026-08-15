@@ -90,8 +90,9 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Starts a rename of a site on a SharePoint Online site.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Rename-PnPTenantSite [[-Identity] &lt;SPOSitePipeBind&gt;] [[-NewSiteUrl] &lt;String&gt;] [[-NewSiteTitle] &lt;string&gt;]
-[[-SuppressMarketplaceAppCheck] [&lt;SwitchParameter&gt;]] [[-SuppressWorkflow2013Check] [&lt;SwitchParameter&gt;]] [[-SuppressBcsCheck] [&lt;SwitchParameter&gt;]] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Rename-PnPTenantSite -Identity &lt;SPOSitePipeBind&gt; -NewSiteUrl &lt;String&gt; [-NewSiteTitle &lt;String&gt;]
+ [-SuppressMarketplaceAppCheck] [-SuppressWorkflow2013Check] [-SuppressBcsCheck] [-Wait]
+ [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet starts a rename of a site on a SharePoint Online site. You can change the URL, and optionally the site title along with changing the URL.</p>
@@ -120,7 +121,7 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: SPOSitePipeBind
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True

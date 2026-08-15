@@ -16,21 +16,16 @@ Returns a Term Store Term.
 
 ### By Term Id
 ```powershell
-Get-PnPTerm
-    -Identity <Guid>
-    [-TermStore <Guid>]
-    [-IncludeChildTerms] [-Connection <PnPConnection>] [-Includes <String[]>] 
+Get-PnPTerm -Identity <TaxonomyTermPipeBind> [-TermStore <TaxonomyTermStorePipeBind>]
+ [-IncludeChildTerms] [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ### By Term Name
 ```powershell
-Get-PnPTerm
-    -Identity <Name>
-    -TermSet <Guid|Name>
-    -TermGroup <Guid|Name>
-    [-TermStore <Guid>]
-    [-Recursive] 
-    [-IncludeChildTerms][-IncludeDeprecated] [-Connection <PnPConnection>] [-Includes <String[]>] 
+Get-PnPTerm -TermSet <TaxonomyTermSetPipeBind> -TermGroup <TaxonomyTermGroupPipeBind>
+ [-Identity <TaxonomyTermPipeBind>] [-TermStore <TaxonomyTermStorePipeBind>] [-Recursive]
+ [-IncludeChildTerms] [-ParentTerm <TaxonomyTermPipeBind>] [-IncludeDeprecated]
+ [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ## DESCRIPTION
@@ -101,10 +96,21 @@ Accept wildcard characters: False
 The Id or Name of a Term
 
 ```yaml
-Type: GenericObjectNameIdPipeBind<Microsoft.SharePoint.Client.Taxonomy.Term>
-Parameter Sets: All
+Type: TaxonomyTermPipeBind
+Parameter Sets: By Term Id
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+```yaml
+Type: TaxonomyTermPipeBind
+Parameter Sets: By Term Name
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -143,8 +149,8 @@ Accept wildcard characters: False
 Name of the termgroup to check.
 
 ```yaml
-Type: TermGroupPipeBind
-Parameter Sets: By Termset
+Type: TaxonomyTermGroupPipeBind
+Parameter Sets: By Term Name
 
 Required: True
 Position: 0
@@ -157,8 +163,8 @@ Accept wildcard characters: False
 Name of the termset to check.
 
 ```yaml
-Type: TaxonomyItemPipeBind<TermSet>
-Parameter Sets: By Termset
+Type: TaxonomyTermSetPipeBind
+Parameter Sets: By Term Name
 
 Required: True
 Position: 0
@@ -171,8 +177,22 @@ Accept wildcard characters: False
 Term store to use; if not specified the default term store is used.
 
 ```yaml
-Type: GenericObjectNameIdPipeBind<TermStore>
+Type: TaxonomyTermStorePipeBind
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ParentTerm
+The Id or Name of the term to look for the term specified through -Identity under. Use this to retrieve a child term by its name when that name is not unique within the term set. Only taken into account when -Identity is also specified.
+
+```yaml
+Type: TaxonomyTermPipeBind
+Parameter Sets: By Term Name
 
 Required: False
 Position: Named
@@ -186,7 +206,7 @@ Includes the deprecated terms if available.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: By Term name
+Parameter Sets: By Term Name
 
 Required: False
 Position: Named

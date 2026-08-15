@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Set-PnPBrowserIdleSignOut | PnP PowerShell </title>
+      <title>Set-PnPBrowserIdleSignout | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Set-PnPBrowserIdleSignOut | PnP PowerShell ">
+      <meta name="title" content="Set-PnPBrowserIdleSignout | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,37 +85,37 @@
         </div>
 
         <article data-uid="">
-<h1 id="set-pnpbrowseridlesignout">Set-PnPBrowserIdleSignOut</h1>
+<h1 id="set-pnpbrowseridlesignout">Set-PnPBrowserIdleSignout</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Sets the current configuration values for Idle session sign-out policy.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="enable">Enable</h3>
-<pre><code class="lang-powershell">Set-PnPBrowserIdleSignOut -Enabled:$true -WarnAfter &lt;TimeSpan&gt; -SignOutAfter &lt;TimeSpan&gt;
+<pre><code class="lang-powershell">Set-PnPBrowserIdleSignout -Enabled:$true -WarnAfter &lt;TimeSpan&gt; -SignoutAfter &lt;TimeSpan&gt;
 </code></pre>
 <h3 id="disable">Disable</h3>
-<pre><code class="lang-powershell">Set-PnPBrowserIdleSignOut -Enabled:$false
+<pre><code class="lang-powershell">Set-PnPBrowserIdleSignout -Enabled:$false
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Use this cmdlet to set the current configuration values for Idle session sign-out, the time at which users are warned and subsequently signed out of Microsoft 365 after a period of browser inactivity in SharePoint Online and OneDrive.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPBrowserIdleSignOut -Enabled:$true -WarnAfter &quot;0.00:45:00&quot; -SignOutAfter &quot;0.01:00:00&quot;
+<pre><code class="lang-powershell">Set-PnPBrowserIdleSignout -Enabled:$true -WarnAfter &quot;0.00:45:00&quot; -SignoutAfter &quot;0.01:00:00&quot;
 </code></pre>
 <p>This example enables the browser idle sign-out policy, sets a warning at 45 minutes and signs out users after a period of 60 minutes of browser inactivity.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPBrowserIdleSignOut -Enabled:$true -WarnAfter (New-TimeSpan -Minutes 45) -SignOutAfter (New-TimeSpan -Hours 1)
+<pre><code class="lang-powershell">Set-PnPBrowserIdleSignout -Enabled:$true -WarnAfter (New-TimeSpan -Minutes 45) -SignoutAfter (New-TimeSpan -Hours 1)
 </code></pre>
 <p>This example enables the browser idle sign-out policy, sets a warning at 45 minutes and signs out users after a period of 60 minutes of browser inactivity.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Set-PnPBrowserIdleSignOut -Enabled:$false
+<pre><code class="lang-powershell">Set-PnPBrowserIdleSignout -Enabled:$false
 </code></pre>
 <p>This example disables the browser idle sign-out policy.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-enabled">-Enabled</h3>
 <p>Enables the browser idle sign-out policy.</p>
 <pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: DisableBrowserIdleSignOut, EnableBrowserIdleSignOut
+Parameter Sets: DisableBrowserIdleSignout, EnableBrowserIdleSignout
 
 Required: True
 Position: Named
@@ -123,9 +123,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-signoutafter">-SignOutAfter</h3>
+<h3 id="-signoutafter">-SignoutAfter</h3>
 <p>Specifies a time interval.
-This parameter is used to specify a time value for <strong>Get-PnPBrowserIdleSignOut</strong> parameters such as <em>SignOutAfter</em>.
+This parameter is used to specify a time value for <strong>Get-PnPBrowserIdleSignout</strong> parameters such as <em>SignoutAfter</em>.
 Specify the time interval in the following format:</p>
 <p>[-]D.H:M:S.F</p>
 <p>where:</p>
@@ -137,7 +137,7 @@ Specify the time interval in the following format:</p>
 <li>F = Fractions of a second (0 to 9999999)</li>
 </ul>
 <pre><code class="lang-yaml">Type: TimeSpan
-Parameter Sets: EnableBrowserIdleSignOut
+Parameter Sets: EnableBrowserIdleSignout
 
 Required: True
 Position: Named
@@ -147,7 +147,7 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-warnafter">-WarnAfter</h3>
 <p>Specifies a time interval.
-This parameter is used to specify a time value for <strong>Get-PnPBrowserIdleSignOut</strong> parameters such as <em>WarnAfter</em>.
+This parameter is used to specify a time value for <strong>Get-PnPBrowserIdleSignout</strong> parameters such as <em>WarnAfter</em>.
 Specify the time interval in the following format:</p>
 <p>[-]D.H:M:S.F</p>
 <p>where:</p>
@@ -159,7 +159,7 @@ Specify the time interval in the following format:</p>
 <li>F = Fractions of a second (0 to 9999999)</li>
 </ul>
 <pre><code class="lang-yaml">Type: TimeSpan
-Parameter Sets: EnableBrowserIdleSignOut
+Parameter Sets: EnableBrowserIdleSignout
 
 Required: True
 Position: Named

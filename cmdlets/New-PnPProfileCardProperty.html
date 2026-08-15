@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Stop-PnPTraceLog | PnP PowerShell </title>
+      <title>New-PnPProfileCardProperty | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Stop-PnPTraceLog | PnP PowerShell ">
+      <meta name="title" content="New-PnPProfileCardProperty | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,63 +85,83 @@
         </div>
 
         <article data-uid="">
-<h1 id="stop-pnptracelog">Stop-PnPTraceLog</h1>
+<h1 id="new-pnpprofilecardproperty">New-PnPProfileCardProperty</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Stops all log tracing and flushes the log buffer if any items in there.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API : PeopleSettings.ReadWrite.All</li>
+</ul>
+<p>Adds a property to user profile card</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Stop-PnPTraceLog [-StopFileLogging &lt;SwitchParameter&gt;] [-StopConsoleLogging &lt;SwitchParameter&gt;] [-StopLogStreamLogging &lt;SwitchParameter&gt;] [-Verbose]
+<pre><code class="lang-powershell">New-PnPProfileCardProperty -PropertyName &lt;ProfileCardPropertyName&gt; -DisplayName &lt;String&gt; [-Localizations &lt;Hashtable&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Stops PnP PowerShell tracelogging to specific targets. By default, all logging is stopped. You can use the parameters to stop specific logging targets only.</p>
-<p>You can turn on the trace log with <a href="Start-PnPTraceLog.html">Start-PnPTraceLog</a>.
-You can look at the logged data using <a href="Get-PnPTraceLog.html">Get-PnPTraceLog</a>.</p>
+<p>This cmdlet may be used to add a property to user profile card. Please note that it may take up to 24 hours to reflect the changes.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Stop-PnPTraceLog
+<pre><code class="lang-powershell">New-PnPProfileCardProperty -PropertyName CustomAttribute1 -DisplayName &quot;Cost Centre&quot;
 </code></pre>
-<p>This turns off all trace logging</p>
-<h2 id="examples-1">EXAMPLES</h2>
+<p>This cmdlet will add a property with a display name to user profile card.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Stop-PnPTraceLog -StopFileLogging -StopConsoleLogging
+<pre><code class="lang-powershell">$localizations = @{ &quot;pl&quot; = &quot;Centrum kosztów&quot;; &quot;de&quot; = &quot;Kostenstelle&quot; }
+New-PnPProfileCardProperty -PropertyName CustomAttribute1 -DisplayName &quot;Cost Centre&quot; -Localizations $localizations
 </code></pre>
-<p>This turns off trace logging to file and console, but keeps the other logging options active.</p>
+<p>This cmdlet will add a property with a display name and specified localizations to user profile card.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-stopconsolelogging">-StopConsoleLogging</h3>
-<p>Allows you to specifically stop logging to the console while keeping the other logging options active.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing <a href="Get-PnPConnection.html">Get-PnPConnection</a>.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-
 Required: False
 Position: Named
-Default value: True
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-stopfilelogging">-StopFileLogging</h3>
-<p>Allows you to specifically stop logging to a file while keeping the other logging options active.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
+<h3 id="-propertyname">-PropertyName</h3>
+<p>Name of a property to be added</p>
+<pre><code class="lang-yaml">Type: Commands.Enums.ProfileCardPropertyName
 Parameter Sets: (All)
-
-Required: False
+Required: True
 Position: Named
-Default value: True
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-stoplogstreamlogging">-StopLogStreamLogging</h3>
-<p>Allows you to specifically stop logging to the in memory log stream while keeping the other logging options active.</p>
+<h3 id="-displayname">-DisplayName</h3>
+<p>The display name of the property.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Required: True
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-localizations">-Localizations</h3>
+<p>List of display name localizations</p>
+<pre><code class="lang-yaml">Type: Hashtable
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: True
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://learn.microsoft.com/en-us/graph/add-properties-profilecard">Microsoft Graph documentation</a></p>
 
 </article>
 

@@ -356,11 +356,11 @@
       "type": "Toc",
       "source_relative_path": "articles/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "articles/toc.html"
-        },
         ".json": {
           "relative_path": "articles/toc.json"
+        },
+        ".html": {
+          "relative_path": "articles/toc.html"
         }
       },
       "version": ""
@@ -1257,6 +1257,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPTeamsChannelUser.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPTeamsChannelUser.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPTeamsTab.md",
       "output": {
         ".html": {
@@ -1447,16 +1457,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Add-PnpTeamsChannelUser.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Add-PnpTeamsChannelUser.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Approve-PnPTenantServicePrincipalPermissionRequest.md",
       "output": {
         ".html": {
@@ -1547,6 +1547,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Clear-PnPRecycleBinItem.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Clear-PnPRecycleBinItem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Clear-PnPTenantAppCatalogUrl.md",
       "output": {
         ".html": {
@@ -1571,16 +1581,6 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Clear-PnPTraceLog.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Clear-PnpRecycleBinItem.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Clear-PnpRecycleBinItem.html"
         }
       },
       "version": ""
@@ -1997,6 +1997,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Format-PnPTraceLog.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Format-PnPTraceLog.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPAccessToken.md",
       "output": {
         ".html": {
@@ -2081,6 +2091,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPAvailableLanguage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPAvailablePageComponents.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPAvailablePageComponents.html"
         }
       },
       "version": ""
@@ -5297,6 +5317,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Move-PnPRecycleBinItem.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Move-PnPRecycleBinItem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Move-PnPTerm.md",
       "output": {
         ".html": {
@@ -5311,16 +5341,6 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Move-PnPTermSet.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Move-PnpRecycleBinItem.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Move-PnpRecycleBinItem.html"
         }
       },
       "version": ""
@@ -5491,6 +5511,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/New-PnPPlannerPlan.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPProfileCardProperty.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPProfileCardProperty.html"
         }
       },
       "version": ""
@@ -5831,16 +5861,6 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/New-PnPWeb.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/New-PnpProfileCardProperty.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/New-PnpProfileCardProperty.html"
         }
       },
       "version": ""
@@ -8677,6 +8697,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPTeamsChannelUser.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPTeamsChannelUser.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPTeamsTab.md",
       "output": {
         ".html": {
@@ -8981,16 +9011,6 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPWikiPageContent.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Set-PnpTeamsChannelUser.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Set-PnpTeamsChannelUser.html"
         }
       },
       "version": ""
@@ -9399,11 +9419,11 @@
       "type": "Toc",
       "source_relative_path": "cmdlets/toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "cmdlets/toc.html"
-        },
         ".json": {
           "relative_path": "cmdlets/toc.json"
+        },
+        ".html": {
+          "relative_path": "cmdlets/toc.html"
         }
       },
       "version": ""
@@ -11302,11 +11322,11 @@
       "type": "Toc",
       "source_relative_path": "toc.yml",
       "output": {
-        ".html": {
-          "relative_path": "toc.html"
-        },
         ".json": {
           "relative_path": "toc.json"
+        },
+        ".html": {
+          "relative_path": "toc.html"
         }
       },
       "version": ""
