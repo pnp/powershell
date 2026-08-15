@@ -506,6 +506,23 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
 
+            if (template.Publishing?.DesignPackage != null && string.IsNullOrWhiteSpace(template.Publishing.DesignPackage.DesignPackagePath))
+            {
+                issues.Add(CreateIssue("MissingDesignPackagePath", "The design package does not define a source path.", "Publishing.DesignPackage"));
+            }
+
+            // The engine reads every default document when applying a content type, so an empty path fails there.
+            foreach (var contentType in template.ContentTypes.Where(contentType => contentType.DocumentSetTemplate != null))
+            {
+                foreach (var defaultDocument in contentType.DocumentSetTemplate.DefaultDocuments.Where(defaultDocument => string.IsNullOrWhiteSpace(defaultDocument.FileSourcePath)))
+                {
+                    issues.Add(CreateIssue(
+                        "MissingDefaultDocumentSource",
+                        "A document set default document does not define a source path.",
+                        $"ContentTypes[{contentType.Name ?? contentType.Id}].DocumentSetTemplate.DefaultDocuments[{defaultDocument.Name ?? "unknown"}]"));
+                }
+            }
+
             if (template.Tenant?.AppCatalog?.Packages != null)
             {
                 foreach (var package in template.Tenant.AppCatalog.Packages.Where(package => string.IsNullOrWhiteSpace(package.Src)))

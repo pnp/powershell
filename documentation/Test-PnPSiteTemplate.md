@@ -61,6 +61,8 @@ The provisioning schema versions 2019/03 through 2022/09 are recognised. Anythin
 
 Server relative paths and absolute URLs are resolved at the moment the template is applied, so they are not looked for among the template's own files. A path counts as tokenized when it starts with a token or names a parameter, and one that cannot be found is then reported as `UnverifiedResourcePath` at `Information` severity rather than as missing, because only the target site can expand it. A source that merely contains `_api` or a brace in a folder name is checked normally.
 
+A resource reference that is present but empty is an error in its own right, because the provisioning engine reads every one of them without checking first. This includes a design package or a document set default document whose source path is blank, which is what `Get-PnPSiteTemplate` produces for default documents when it runs without `-PersistBrandingFiles`.
+
 When the source is a package, templates stored in a folder inside it are validated as well as those at its root, `XInclude` references are resolved first, and an issue in one member names that member in its `Location`. Passing `-TemplateId` reports only the issues belonging to the template that was asked for.
 
 The cmdlet never compares the template against a site, so it cannot confirm whether the content types, fields, term sets or hub sites it reports as dependencies actually exist there.
