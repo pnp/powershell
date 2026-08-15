@@ -50,12 +50,32 @@ namespace PnP.PowerShell.Commands.Utilities
             return CreateIssue("SchemaValidationFailed", exception.Message, location);
         }
 
-        internal static SiteTemplateValidationIssue CreateLegacySchemaIssue(string schemaNamespace)
+#pragma warning disable CS0618 // The 2019/03 schema is deprecated but the framework still deserializes it.
+        private static readonly HashSet<string> SupportedSchemaNamespaces = new(StringComparer.OrdinalIgnoreCase)
+        {
+            XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_03,
+            XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_09,
+            XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2020_02,
+            XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2021_03,
+            XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2022_09
+        };
+#pragma warning restore CS0618
+
+        internal static SiteTemplateValidationIssue CreateSchemaVersionIssue(string schemaNamespace)
         {
             if (string.IsNullOrWhiteSpace(schemaNamespace) ||
                 schemaNamespace.Equals(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2022_09, StringComparison.OrdinalIgnoreCase))
             {
                 return null;
+            }
+
+            // An unknown namespace falls back to the latest deserializer, which silently matches nothing and yields an empty template.
+            if (!SupportedSchemaNamespaces.Contains(schemaNamespace))
+            {
+                return CreateIssue(
+                    "UnsupportedSchema",
+                    $"The template uses the unsupported provisioning schema '{schemaNamespace}'. Its contents cannot be read and are ignored, so nothing in it has been validated.",
+                    "ProvisioningTemplate");
             }
 
             return CreateIssue(
@@ -538,7 +558,10 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
 
-            if (template.WebSettings != null && IsConnectorRelativePath(template.WebSettings.SiteLogo))
+            // The engine only reads the logo from the connector for group sites, and never for the group image endpoint.
+            if (template.WebSettings != null &&
+                IsConnectorRelativePath(template.WebSettings.SiteLogo) &&
+                !template.WebSettings.SiteLogo.Contains("_api/groupservice/getgroupimage", StringComparison.OrdinalIgnoreCase))
             {
                 ValidateResource(
                     () => FrameworkFileUtilities.GetFileStream(template, template.WebSettings.SiteLogo),
@@ -590,12 +613,12 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        // Only a connector relative path is read from the template; tokens, API and absolute URLs are resolved when the template is applied.
+        // Only a connector relative path is read from the template; tokens and URLs are resolved when the template is applied.
         private static bool IsConnectorRelativePath(string source)
         {
             return !string.IsNullOrWhiteSpace(source) &&
                 !source.Contains('{') &&
-                !source.Contains("_api/", StringComparison.OrdinalIgnoreCase) &&
+                !source.StartsWith('/') &&
                 !Uri.TryCreate(source, UriKind.Absolute, out _);
         }
 

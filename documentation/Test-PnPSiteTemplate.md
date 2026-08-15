@@ -44,7 +44,7 @@ One result is returned per template found in the source. Every finding is a stru
 
 | Severity | Meaning |
 |---|---|
-| `Error` | The template is broken and should not be applied, for example a duplicate identifier, an unreadable package, or a referenced file that is not present. This is the only severity that sets `IsValid` to `$false`. |
+| `Error` | The template is broken and should not be applied, for example a duplicate identifier, an unreadable package, an unsupported schema, or a referenced file that is not present. This is the only severity that sets `IsValid` to `$false`. |
 | `Warning` | The template can be applied but may not behave as intended, for example an older provisioning schema, or an attribute that has been removed from the latest schema. |
 | `Information` | Something the target site or term store has to provide. Out of the box content types and site columns are never declared inside a template, so these appear on almost every template and are grouped into a single issue per location. |
 
@@ -57,7 +57,9 @@ How much can be checked depends on what the source provides, which the result st
 | `SchemaChecked` | `$true` when the source XML was available, so the schema version and removed-element checks could run. `$false` for a template received through the pipeline. |
 | `SchemaVersion` | The provisioning schema namespace found in the source, when available. |
 
-Site logos and file sources that are tokens, `_api` URLs or absolute URLs are resolved at the moment the template is applied, so they are not looked for among the template's own files.
+The provisioning schema versions 2019/03 through 2022/09 are recognised. Anything else is reported as an `UnsupportedSchema` error, because the provisioning engine falls back to the latest deserializer for a namespace it does not know, which quietly produces an empty template rather than failing.
+
+Site logos and file sources that are tokens, server relative paths or absolute URLs are resolved at the moment the template is applied, so they are not looked for among the template's own files. A source that merely contains `_api` as a folder name is still checked normally.
 
 The cmdlet never compares the template against a site, so it cannot confirm whether the content types, fields, term sets or hub sites it reports as dependencies actually exist there.
 

@@ -214,7 +214,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var openXmlConnector = new OpenXMLConnector(memoryStream);
                 provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
                 var primaryTemplateFile = openXmlConnector.Info?.Properties?.TemplateFileName;
-                templateFiles = FindTemplateFiles(openXmlConnector, primaryTemplateFile);
+                templateFiles = FindTemplateFiles(openXmlConnector, primaryTemplateFile, templateProviderExtensions);
             }
             else
             {
@@ -228,7 +228,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 try
                 {
-                    var (templateIdentifiers, schemaNamespace, normalizedDocument, sourceDocument) = GetTemplateIdentifiers(provider, templateFile, memoryStream, duplicateTemplateIdHandler, unaddressableTemplateHandler);
+                    var (templateIdentifiers, schemaNamespace, normalizedDocument, sourceDocument) = GetTemplateIdentifiers(provider, templateFile, memoryStream, templateProviderExtensions, duplicateTemplateIdHandler, unaddressableTemplateHandler);
                     foreach (var currentTemplateIdentifier in templateIdentifiers.Where(identifier => !string.IsNullOrWhiteSpace(identifier)))
                     {
                         if (!packageTemplateIdentifiers.Add(currentTemplateIdentifier))
@@ -301,7 +301,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return provisioningTemplates;
         }
 
-        private static List<string> FindTemplateFiles(OpenXMLConnector connector, string primaryTemplateFile)
+        private static List<string> FindTemplateFiles(OpenXMLConnector connector, string primaryTemplateFile, ITemplateProviderExtension[] templateProviderExtensions)
         {
             var templateFiles = new List<string>();
             if (!string.IsNullOrWhiteSpace(primaryTemplateFile))
@@ -316,7 +316,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     continue;
                 }
 
-                using var stream = connector.GetFileStream(file);
+                using var stream = ApplyPreProcessing(connector.GetFileStream(file), templateProviderExtensions);
                 try
                 {
                     using var reader = System.Xml.XmlReader.Create(stream);
@@ -338,16 +338,19 @@ namespace PnP.PowerShell.Commands.Utilities
             XMLTemplateProvider provider,
             string templateFile,
             Stream sourceStream,
+            ITemplateProviderExtension[] templateProviderExtensions,
             Action<string, string> duplicateTemplateIdHandler,
             Action<string> unaddressableTemplateHandler)
         {
-            using var templateStream = templateFile == null
+            var sourceTemplateStream = templateFile == null
                 ? CopyStream(sourceStream)
                 : provider.Connector.GetFileStream(templateFile);
-            if (templateStream == null)
+            if (sourceTemplateStream == null)
             {
                 throw new FileNotFoundException($"Template file '{templateFile}' could not be found in the package.", templateFile);
             }
+
+            using var templateStream = ApplyPreProcessing(sourceTemplateStream, templateProviderExtensions);
 
             var document = XDocument.Load(templateStream);
             if (!IsSiteTemplateDocument(document))
@@ -426,6 +429,16 @@ namespace PnP.PowerShell.Commands.Utilities
         private static bool IsPotentialSiteTemplateRoot(string localName)
         {
             return localName == "Provisioning" || localName == "ProvisioningTemplate";
+        }
+
+        // Extensions may decrypt or rewrite the XML, so they have to run before it is parsed here.
+        private static Stream ApplyPreProcessing(Stream stream, ITemplateProviderExtension[] templateProviderExtensions)
+        {
+            foreach (var extension in templateProviderExtensions?.Where(extension => extension.SupportsGetTemplatePreProcessing) ?? [])
+            {
+                stream = extension.PreProcessGetTemplate(stream);
+            }
+            return stream;
         }
 
         private static MemoryStream CopyStream(Stream source)

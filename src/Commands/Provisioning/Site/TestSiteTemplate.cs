@@ -113,10 +113,10 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 var issues = new List<SiteTemplateValidationIssue>(schemaIssues);
                 var schemaNamespace = _schemaNamespaces.GetValueOrDefault(template);
-                var legacySchemaIssue = SiteTemplateValidationHelper.CreateLegacySchemaIssue(schemaNamespace);
-                if (legacySchemaIssue != null)
+                var schemaVersionIssue = SiteTemplateValidationHelper.CreateSchemaVersionIssue(schemaNamespace);
+                if (schemaVersionIssue != null)
                 {
-                    issues.Add(legacySchemaIssue);
+                    issues.Add(schemaVersionIssue);
                 }
                 issues.AddRange(SiteTemplateValidationHelper.Validate(template, _sourceElements.GetValueOrDefault(template)));
 
