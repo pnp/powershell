@@ -295,6 +295,7 @@ namespace PnP.PowerShell.Commands.Utilities
         private static List<string> FindTemplateFiles(OpenXMLConnector connector, string primaryTemplateFile, ITemplateProviderExtension[] templateProviderExtensions)
         {
             var templateFiles = new List<string>();
+            var includedTemplateFiles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             if (!string.IsNullOrWhiteSpace(primaryTemplateFile))
             {
                 templateFiles.Add(primaryTemplateFile);
@@ -309,19 +310,24 @@ namespace PnP.PowerShell.Commands.Utilities
                 foreach (var file in connector.GetFiles(container).Where(file => file.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)))
                 {
                     var templateFile = string.IsNullOrEmpty(container) ? file : $"{container.Replace('\\', '/').Trim('/')}/{file}";
-                    if (templateFiles.Contains(templateFile, StringComparer.OrdinalIgnoreCase))
-                    {
-                        continue;
-                    }
-
                     using var stream = ApplyPreProcessing(connector.GetFileStream(file, container), templateProviderExtensions);
                     try
                     {
-                        using var reader = System.Xml.XmlReader.Create(stream);
-                        reader.MoveToContent();
-                        if (IsSiteTemplateRoot(reader.LocalName, reader.NamespaceURI))
+                        var document = XDocument.Load(stream);
+                        if (IsSiteTemplateDocument(document))
                         {
-                            templateFiles.Add(templateFile);
+                            if (!templateFiles.Contains(templateFile, StringComparer.OrdinalIgnoreCase))
+                            {
+                                templateFiles.Add(templateFile);
+                            }
+                            foreach (var include in document.Descendants(XName.Get("{http://www.w3.org/2001/XInclude}include")))
+                            {
+                                var href = (string)include.Attribute("href");
+                                if (!string.IsNullOrWhiteSpace(href))
+                                {
+                                    includedTemplateFiles.Add(href.Replace('\\', '/').TrimStart('/'));
+                                }
+                            }
                         }
                     }
                     catch (System.Xml.XmlException)
@@ -330,7 +336,11 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 }
             }
-            return templateFiles;
+            return templateFiles
+                .Where(templateFile =>
+                    string.Equals(templateFile, primaryTemplateFile, StringComparison.OrdinalIgnoreCase) ||
+                    !includedTemplateFiles.Contains(templateFile.Replace('\\', '/').TrimStart('/')))
+                .ToList();
         }
 
         private static (List<string> Identifiers, string SchemaNamespace, XDocument NormalizedDocument, XDocument SourceDocument) GetTemplateIdentifiers(

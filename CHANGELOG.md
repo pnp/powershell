@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
-- Added `Test-PnPSiteTemplate` to validate the schema, internal structure and packaged resources of a PnP site template without applying it.
+- Added `Test-PnPSiteTemplate` to validate the schema, internal structure and packaged resources of a PnP site template without applying it. [#5444](https://github.com/pnp/powershell/pull/5444)
 - Added `-EnableSensitivityLabelForOneNote` and `-EnableSensitivityLabelForVideoFiles` parameters to `Set-PnPTenant`. [#5442](https://github.com/pnp/powershell/pull/5442)
 - Added `Test-PnPConnectionPermission` which compares the current connection's access token claims with the permission metadata of a PnP PowerShell cmdlet. [#5428](https://github.com/pnp/powershell/pull/5428)
 - Added `ApiPermissionsDependOnResource` attribute for cmdlets of which the required permissions follow from the resource they are pointed at or from how they are invoked, and applied it to `Get-PnPGraphSubscription`, `New-PnPGraphSubscription`, `Set-PnPGraphSubscription`, `Remove-PnPGraphSubscription`, `Invoke-PnPGraphMethod`, `New-PnPSite`, `Set-PnPSiteClassification` and `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory`. [#5427](https://github.com/pnp/powershell/pull/5427)

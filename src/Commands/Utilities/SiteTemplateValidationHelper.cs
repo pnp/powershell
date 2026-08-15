@@ -653,6 +653,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         private static void ValidateDirectory(ProvisioningTemplate template, PnP.Framework.Provisioning.Model.Directory directory, List<SiteTemplateValidationIssue> issues)
         {
+            Exception connectorException = null;
             var hasResource = GetResourcePathCandidates(directory.Src).Any(source =>
             {
                 try
@@ -660,28 +661,52 @@ namespace PnP.PowerShell.Commands.Utilities
                     return template.Connector.GetFiles(source)?.Any() == true ||
                         directory.Recursive && template.Connector.GetFolders(source)?.Any() == true;
                 }
-                catch (DirectoryNotFoundException)
+                catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or ArgumentException)
                 {
+                    connectorException ??= exception;
                     return false;
                 }
             });
 
             if (!hasResource)
             {
+                var code = "EmptyOrMissingDirectoryResource";
+                var message = $"Directory resource '{directory.Src}' is empty or could not be found.";
+                if (connectorException is ArgumentException)
+                {
+                    code = "InvalidDirectoryResourcePath";
+                    message = $"Directory resource '{directory.Src}' does not resolve to a directory name.";
+                }
+                else if (connectorException is UnauthorizedAccessException)
+                {
+                    code = "UnreadableDirectoryResource";
+                    message = $"Directory resource '{directory.Src}' could not be read.";
+                }
+                else if (connectorException is IOException and not DirectoryNotFoundException)
+                {
+                    code = "UnreadableDirectoryResource";
+                    message = $"Directory resource '{directory.Src}' could not be read. {connectorException.Message}";
+                }
+
                 issues.Add(CreateIssue(
-                    "EmptyOrMissingDirectoryResource",
-                    $"Directory resource '{directory.Src}' is empty or could not be found.",
+                    code,
+                    message,
                     $"Directories[{directory.Src}]",
                     SiteTemplateValidationSeverity.Warning));
             }
         }
 
-        // URLs are resolved when the template is applied; anything else could name a file the template carries.
+        // HTTP(S) URLs are resolved when the template is applied; anything else could name a file the template carries.
         private static bool IsCheckableResourcePath(string source)
         {
-            return !string.IsNullOrWhiteSpace(source) &&
-                !source.StartsWith('/') &&
-                !Uri.TryCreate(source, UriKind.Absolute, out _);
+            if (string.IsNullOrWhiteSpace(source))
+            {
+                return false;
+            }
+
+            return !Uri.TryCreate(source, UriKind.Absolute, out var uri) ||
+                !uri.Scheme.Equals(Uri.UriSchemeHttp, StringComparison.OrdinalIgnoreCase) &&
+                !uri.Scheme.Equals(Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase);
         }
 
         // The site logo is frequently a URL or a token rather than a packaged file, so it is only checked when it is neither.

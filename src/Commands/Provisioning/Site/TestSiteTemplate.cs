@@ -80,7 +80,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 return;
             }
             catch (Exception exception) when (
-                exception is System.Xml.XmlException or InvalidDataException or FormatException or PnP.Framework.Provisioning.Connectors.OpenXML.PnPPackageFormatException or FileFormatException ||
+                exception is System.Xml.XmlException or InvalidDataException or FormatException or PnP.Framework.Provisioning.Connectors.OpenXML.PnPPackageFormatException ||
                 _isPackage && exception is FileNotFoundException or InvalidOperationException)
             {
                 schemaIssues.Add((_isPackage
@@ -129,11 +129,18 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 {
                     issues.Add(schemaVersionIssue);
                 }
-                issues.AddRange(SiteTemplateValidationHelper.Validate(template, _sourceElements.GetValueOrDefault(template)));
+                var sourceElement = _sourceElements.GetValueOrDefault(template);
+                issues.AddRange(SiteTemplateValidationHelper.Validate(template, sourceElement));
+                var sourceTemplateId = (string)sourceElement?.Attribute("ID");
+                var resultTemplateId = !string.IsNullOrWhiteSpace(template.Id)
+                    ? template.Id
+                    : !string.IsNullOrWhiteSpace(sourceTemplateId)
+                        ? sourceTemplateId
+                        : ParameterSpecified(nameof(TemplateId)) ? TemplateId : null;
 
                 WriteObject(new SiteTemplateValidationResult
                 {
-                    TemplateId = template.Id,
+                    TemplateId = resultTemplateId,
                     SchemaVersion = schemaNamespace,
                     ResourcesChecked = template.Connector != null,
                     SchemaChecked = _sourceElements.ContainsKey(template),
