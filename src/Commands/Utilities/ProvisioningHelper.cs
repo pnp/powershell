@@ -5,7 +5,9 @@ using PnP.Framework.Provisioning.Providers.Xml;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -166,6 +168,388 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Loads every PnP Site Provisioning Template from a stream and reports invalid package members instead of skipping them.
+        /// </summary>
+        /// <param name="stream">Stream containing the provisioning template</param>
+        /// <param name="templateId">Optional ID of the template to load</param>
+        /// <param name="templateProviderExtensions">Template provider extensions to run while loading</param>
+        /// <param name="connector">Connector used to resolve includes when the source is not a package</param>
+        /// <param name="exceptionHandler">Delegate to call for every invalid template, with the package member it came from</param>
+        /// <param name="schemaNamespaceHandler">Delegate to call with each template, its package member, its provisioning schema namespace, and its source element</param>
+        /// <param name="duplicateTemplateIdHandler">Delegate to call for every duplicate template ID</param>
+        /// <param name="unaddressableTemplateHandler">Delegate to call for a source holding several templates of which one has no ID</param>
+        /// <returns>Template definitions found within the stream</returns>
+        internal static List<ProvisioningTemplate> LoadSiteTemplatesFromStreamStrict(
+            Stream stream,
+            string templateId,
+            FileConnectorBase connector,
+            ITemplateProviderExtension[] templateProviderExtensions,
+            Action<Exception, string> exceptionHandler,
+            Action<ProvisioningTemplate, string, string, XElement> schemaNamespaceHandler,
+            Action<string, string> duplicateTemplateIdHandler,
+            Action<string> unaddressableTemplateHandler)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream), "Stream must be provided");
+            }
+
+            using var memoryStream = new MemoryStream();
+            if (stream.CanSeek)
+            {
+                stream.Position = 0;
+            }
+            stream.CopyTo(memoryStream);
+            memoryStream.Position = 0;
+
+            var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(memoryStream);
+            memoryStream.Position = 0;
+
+            XMLTemplateProvider provider;
+            List<string> templateFiles;
+            if (isOpenOfficeFile)
+            {
+                // OpenXMLConnector eagerly unpacks the package, so disposing this buffer after loading is safe.
+                var openXmlConnector = new OpenXMLConnector(memoryStream);
+                provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
+                var primaryTemplateFile = openXmlConnector.Info?.Properties?.TemplateFileName;
+                templateFiles = FindTemplateFiles(openXmlConnector, primaryTemplateFile, templateProviderExtensions);
+            }
+            else
+            {
+                // The connector lets the provider resolve XInclude references the same way Read-PnPSiteTemplate does.
+                provider = new XMLStreamTemplateProvider { Connector = connector };
+                templateFiles = [null];
+            }
+
+            var provisioningTemplates = new List<ProvisioningTemplate>();
+            var packageTemplateIdentifiers = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var templateFile in templateFiles)
+            {
+                try
+                {
+                    var (templateIdentifiers, schemaNamespace, normalizedDocument, sourceDocument) = GetTemplateIdentifiers(provider, templateFile, memoryStream, templateId, templateProviderExtensions, duplicateTemplateIdHandler, unaddressableTemplateHandler);
+                    foreach (var currentTemplateIdentifier in templateIdentifiers.Where(identifier => !string.IsNullOrWhiteSpace(identifier)))
+                    {
+                        // A duplicate elsewhere in the source says nothing about the template that was asked for.
+                        if (!packageTemplateIdentifiers.Add(currentTemplateIdentifier) &&
+                            (string.IsNullOrEmpty(templateId) || string.Equals(currentTemplateIdentifier, templateId, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            duplicateTemplateIdHandler?.Invoke(currentTemplateIdentifier, templateFile ?? "stream");
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(templateId))
+                    {
+                        var matchingIdentifier = templateIdentifiers.FirstOrDefault(identifier => string.Equals(identifier, templateId, StringComparison.OrdinalIgnoreCase));
+                        if (matchingIdentifier == null)
+                        {
+                            continue;
+                        }
+                        templateIdentifiers = [matchingIdentifier];
+                    }
+
+                    foreach (var templateIdentifier in templateIdentifiers)
+                    {
+                        // This XML was already pre-processed while reading it, so the provider only resolves includes
+                        // and deserializes here, and the extensions contribute their post-processing afterwards.
+                        using var templateStream = CreateStream(normalizedDocument ?? sourceDocument);
+                        var provisioningTemplate = string.IsNullOrEmpty(templateIdentifier)
+                            ? provider.GetTemplate(templateStream, (ITemplateProviderExtension[])null)
+                            : provider.GetTemplate(templateStream, templateIdentifier, null, null);
+                        provisioningTemplate = ApplyPostProcessing(provisioningTemplate, templateProviderExtensions);
+
+                        if (provisioningTemplate != null)
+                        {
+                            provisioningTemplate.Connector = provider.Connector;
+                            provisioningTemplates.Add(provisioningTemplate);
+                            schemaNamespaceHandler?.Invoke(
+                                provisioningTemplate,
+                                templateFile,
+                                schemaNamespace,
+                                GetTemplateElement(normalizedDocument ?? sourceDocument, templateIdentifier));
+                        }
+                    }
+                }
+                catch (Exception exception) when (exception is ApplicationException or System.Xml.XmlException or InvalidDataException or FileNotFoundException)
+                {
+                    if (exception.InnerException is AggregateException aggregateException)
+                    {
+                        foreach (var innerException in aggregateException.InnerExceptions)
+                        {
+                            exceptionHandler?.Invoke(innerException, templateFile);
+                        }
+                    }
+                    else
+                    {
+                        exceptionHandler?.Invoke(exception, templateFile);
+                    }
+                }
+            }
+
+            return provisioningTemplates;
+        }
+
+        private static List<string> FindTemplateFiles(OpenXMLConnector connector, string primaryTemplateFile, ITemplateProviderExtension[] templateProviderExtensions)
+        {
+            var templateFiles = new List<string>();
+            var includedTemplateFiles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (!string.IsNullOrWhiteSpace(primaryTemplateFile))
+            {
+                templateFiles.Add(primaryTemplateFile);
+            }
+
+            // GetFolders lists every nested folder, so templates below the package root are found too.
+            var containers = new List<string> { string.Empty };
+            containers.AddRange(connector.GetFolders().Distinct(StringComparer.OrdinalIgnoreCase));
+
+            foreach (var container in containers)
+            {
+                foreach (var file in connector.GetFiles(container).Where(file => file.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)))
+                {
+                    var templateFile = string.IsNullOrEmpty(container) ? file : $"{container.Replace('\\', '/').Trim('/')}/{file}";
+                    using var stream = ApplyPreProcessing(connector.GetFileStream(file, container), templateProviderExtensions);
+                    try
+                    {
+                        var document = XDocument.Load(stream);
+                        if (IsSiteTemplateDocument(document))
+                        {
+                            if (!templateFiles.Contains(templateFile, StringComparer.OrdinalIgnoreCase))
+                            {
+                                templateFiles.Add(templateFile);
+                            }
+                            foreach (var include in document.Descendants(XName.Get("{http://www.w3.org/2001/XInclude}include")))
+                            {
+                                var href = (string)include.Attribute("href");
+                                if (!string.IsNullOrWhiteSpace(href))
+                                {
+                                    includedTemplateFiles.Add(href.Replace('\\', '/').TrimStart('/'));
+                                }
+                            }
+                        }
+                    }
+                    catch (System.Xml.XmlException)
+                    {
+                        // XML that fails before exposing its root cannot safely be distinguished from a non-template resource.
+                    }
+                }
+            }
+            return templateFiles
+                .Where(templateFile =>
+                    string.Equals(templateFile, primaryTemplateFile, StringComparison.OrdinalIgnoreCase) ||
+                    !includedTemplateFiles.Contains(templateFile.Replace('\\', '/').TrimStart('/')))
+                .ToList();
+        }
+
+        private static (List<string> Identifiers, string SchemaNamespace, XDocument NormalizedDocument, XDocument SourceDocument) GetTemplateIdentifiers(
+            XMLTemplateProvider provider,
+            string templateFile,
+            Stream sourceStream,
+            string templateId,
+            ITemplateProviderExtension[] templateProviderExtensions,
+            Action<string, string> duplicateTemplateIdHandler,
+            Action<string> unaddressableTemplateHandler)
+        {
+            var sourceTemplateStream = templateFile == null
+                ? CopyStream(sourceStream)
+                : provider.Connector.GetFileStream(templateFile);
+            if (sourceTemplateStream == null)
+            {
+                throw new FileNotFoundException($"Template file '{templateFile}' could not be found in the package.", templateFile);
+            }
+
+            using var templateStream = ApplyPreProcessing(sourceTemplateStream, templateProviderExtensions);
+
+            var document = XDocument.Load(templateStream);
+            if (!IsSiteTemplateDocument(document))
+            {
+                throw new InvalidDataException($"The XML document '{templateFile ?? "stream"}' does not contain a site template.");
+            }
+
+            var schemaNamespace = document.Root.Name.NamespaceName;
+
+            // Templates can live inside an include, so those are pulled in before any of them are enumerated.
+            ResolveIncludes(document, provider.Connector);
+
+            var templateElements = document.Root.Name.LocalName == "ProvisioningTemplate"
+                ? [document.Root]
+                : document.Descendants(XName.Get("ProvisioningTemplate", schemaNamespace)).ToList();
+            var identifiers = templateElements.Select(element => (string)element.Attribute("ID")).ToList();
+
+            // A template without an ID cannot be addressed individually once the document holds more than one.
+            if (templateElements.Count > 1 && identifiers.Any(string.IsNullOrWhiteSpace))
+            {
+                if (string.IsNullOrEmpty(templateId))
+                {
+                    unaddressableTemplateHandler?.Invoke(templateFile ?? "stream");
+                }
+                identifiers = identifiers.Where(identifier => !string.IsNullOrWhiteSpace(identifier)).ToList();
+            }
+
+            var duplicateIdentifiers = identifiers
+                .Where(identifier => !string.IsNullOrWhiteSpace(identifier))
+                .GroupBy(identifier => identifier, StringComparer.OrdinalIgnoreCase)
+                .Where(group => group.Count() > 1)
+                .Select(group => group.Key)
+                .ToList();
+            // A duplicate elsewhere in the document says nothing about the template that was asked for.
+            foreach (var duplicateIdentifier in duplicateIdentifiers.Where(identifier =>
+                string.IsNullOrEmpty(templateId) || string.Equals(identifier, templateId, StringComparison.OrdinalIgnoreCase)))
+            {
+                duplicateTemplateIdHandler?.Invoke(duplicateIdentifier, templateFile ?? "stream");
+            }
+
+            XDocument normalizedDocument = null;
+            if (duplicateIdentifiers.Count > 0)
+            {
+                normalizedDocument = new XDocument(document);
+                var seenIdentifiers = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                var normalizedTemplateElements = normalizedDocument.Root.Name.LocalName == "ProvisioningTemplate"
+                    ? [normalizedDocument.Root]
+                    : normalizedDocument.Descendants(XName.Get("ProvisioningTemplate", schemaNamespace)).ToList();
+                foreach (var templateElement in normalizedTemplateElements.ToList())
+                {
+                    var identifier = (string)templateElement.Attribute("ID");
+                    if (!string.IsNullOrWhiteSpace(identifier) && !seenIdentifiers.Add(identifier))
+                    {
+                        templateElement.Remove();
+                    }
+                }
+            }
+
+            return (identifiers.Distinct(StringComparer.OrdinalIgnoreCase).ToList(), schemaNamespace, normalizedDocument, document);
+        }
+
+        private static XElement GetTemplateElement(XDocument document, string templateIdentifier)
+        {
+            var templateElements = document.Root.Name.LocalName == "ProvisioningTemplate"
+                ? [document.Root]
+                : document.Descendants(XName.Get("ProvisioningTemplate", document.Root.Name.NamespaceName)).ToList();
+            return string.IsNullOrEmpty(templateIdentifier)
+                ? templateElements.FirstOrDefault()
+                : templateElements.FirstOrDefault(element => string.Equals((string)element.Attribute("ID"), templateIdentifier, StringComparison.OrdinalIgnoreCase));
+        }
+
+        private static bool IsSiteTemplateDocument(XDocument document)
+        {
+            return document.Root != null &&
+                IsSiteTemplateRoot(document.Root.Name.LocalName, document.Root.Name.NamespaceName);
+        }
+
+        private static bool IsSiteTemplateRoot(string localName, string schemaNamespace)
+        {
+            return IsPotentialSiteTemplateRoot(localName) &&
+                schemaNamespace.Contains("/PnP/", StringComparison.OrdinalIgnoreCase) &&
+                schemaNamespace.EndsWith("/ProvisioningSchema", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsPotentialSiteTemplateRoot(string localName)
+        {
+            return localName == "Provisioning" || localName == "ProvisioningTemplate";
+        }
+
+        // Mirrors XMLTemplateProvider.ResolveXIncludes, which is private: each href is read from the connector root,
+        // an unresolved include falls back to its xi:fallback content, and anything still unresolved is dropped.
+        private static void ResolveIncludes(XDocument document, FileConnectorBase connector)
+        {
+            const int maximumIncludeDepth = 10;
+            var includeName = XName.Get("{http://www.w3.org/2001/XInclude}include");
+
+            for (var depth = 0; depth < maximumIncludeDepth; depth++)
+            {
+                var includes = document.Descendants(includeName).ToList();
+                if (includes.Count == 0)
+                {
+                    return;
+                }
+
+                foreach (var include in includes)
+                {
+                    var resolved = LoadIncludedElement(include, connector);
+                    if (resolved != null)
+                    {
+                        include.ReplaceWith(resolved);
+                    }
+                    else
+                    {
+                        include.Remove();
+                    }
+                }
+            }
+        }
+
+        private static XElement LoadIncludedElement(XElement include, FileConnectorBase connector)
+        {
+            var href = (string)include.Attribute("href");
+            if (connector != null && !string.IsNullOrWhiteSpace(href))
+            {
+                using var stream = connector.GetFileStream(href);
+                if (stream != null)
+                {
+                    return XElement.Load(stream);
+                }
+            }
+
+            return include.Elements(XName.Get("{http://www.w3.org/2001/XInclude}fallback")).FirstOrDefault()?.Elements().FirstOrDefault();
+        }
+
+        // Extensions may decrypt or rewrite the XML, so they have to run before it is parsed here.
+        private static Stream ApplyPreProcessing(Stream stream, ITemplateProviderExtension[] templateProviderExtensions)
+        {
+            foreach (var extension in templateProviderExtensions?.Where(extension => extension.SupportsGetTemplatePreProcessing) ?? [])
+            {
+                stream = extension.PreProcessGetTemplate(stream);
+            }
+            return stream;
+        }
+
+        private static ProvisioningTemplate ApplyPostProcessing(ProvisioningTemplate template, ITemplateProviderExtension[] templateProviderExtensions)
+        {
+            foreach (var extension in templateProviderExtensions?.Where(extension => extension.SupportsGetTemplatePostProcessing) ?? [])
+            {
+                template = extension.PostProcessGetTemplate(template);
+            }
+            return template;
+        }
+
+        private static MemoryStream CopyStream(Stream source)
+        {
+            if (source.CanSeek)
+            {
+                source.Position = 0;
+            }
+            var copy = new MemoryStream();
+            source.CopyTo(copy);
+            copy.Position = 0;
+            return copy;
+        }
+
+        private static MemoryStream CreateStream(XDocument document)
+        {
+            var stream = new MemoryStream();
+            document.Save(stream);
+            stream.Position = 0;
+            return stream;
+        }
+
+        internal static MemoryStream CreateXmlStream(string xml)
+        {
+            var document = XDocument.Parse(xml, LoadOptions.PreserveWhitespace);
+            // The XML arrives already decoded, so the declared encoding is restated as the one actually written.
+            if (document.Declaration != null)
+            {
+                document.Declaration.Encoding = "utf-8";
+            }
+
+            var stream = new MemoryStream();
+            using (var writer = new StreamWriter(stream, new UTF8Encoding(false), leaveOpen: true))
+            {
+                document.Save(writer, SaveOptions.DisableFormatting);
+            }
+            stream.Position = 0;
+            return stream;
         }
 
         /// <summary>
