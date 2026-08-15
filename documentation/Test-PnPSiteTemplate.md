@@ -53,7 +53,7 @@ How much can be checked depends on what the source provides, which the result st
 | Property | Meaning |
 |---|---|
 | `IsValid` | `$false` only when an `Error` severity issue was found. |
-| `ResourcesChecked` | `$true` when the template carried a file connector, so referenced files, localizations, directories, data row attachments, workflow definitions, app packages, site scripts and relative site logos could be resolved. `$false` for an in-memory template without a connector, meaning none of those were looked at. |
+| `ResourcesChecked` | `$true` when the template carried a file connector, so referenced files, localizations, directories, data row attachments, workflow definitions, publishing design packages, document set default documents, app packages, site scripts and relative site logos could be resolved. `$false` for an in-memory template without a connector, meaning none of those were looked at. |
 | `SchemaChecked` | `$true` when the source XML was available, so the schema version and removed-element checks could run. `$false` for a template received through the pipeline. |
 | `SchemaVersion` | The provisioning schema namespace found in the source, when available. |
 

@@ -213,7 +213,10 @@ namespace PnP.PowerShell.Commands.Utilities
                     var idAttribute = fieldElement.Attribute("ID")?.Value;
                     if (!Guid.TryParse(idAttribute, out var fieldId))
                     {
-                        issues.Add(CreateIssue("InvalidFieldId", $"Field ID '{idAttribute}' is not a valid GUID.", location));
+                        issues.Add(CreateIssue(
+                            "InvalidFieldId",
+                            idAttribute == null ? "A field does not define an ID." : $"Field ID '{idAttribute}' is not a valid GUID.",
+                            location));
                         continue;
                     }
                     fieldIds.Add(fieldId);
@@ -589,6 +592,27 @@ namespace PnP.PowerShell.Commands.Utilities
                         () => FrameworkFileUtilities.GetFileStream(template, definition.XamlPath),
                         definition.XamlPath,
                         $"Workflows.WorkflowDefinitions[{definition.DisplayName ?? definition.XamlPath}]",
+                        issues);
+                }
+            }
+
+            if (template.Publishing?.DesignPackage != null && IsCheckableResourcePath(template.Publishing.DesignPackage.DesignPackagePath))
+            {
+                ValidateResource(
+                    () => FrameworkFileUtilities.GetFileStream(template, template.Publishing.DesignPackage.DesignPackagePath),
+                    template.Publishing.DesignPackage.DesignPackagePath,
+                    "Publishing.DesignPackage",
+                    issues);
+            }
+
+            foreach (var contentType in template.ContentTypes.Where(contentType => contentType.DocumentSetTemplate != null))
+            {
+                foreach (var defaultDocument in contentType.DocumentSetTemplate.DefaultDocuments.Where(defaultDocument => IsCheckableResourcePath(defaultDocument.FileSourcePath)))
+                {
+                    ValidateResource(
+                        () => FrameworkFileUtilities.GetFileStream(template, defaultDocument.FileSourcePath),
+                        defaultDocument.FileSourcePath,
+                        $"ContentTypes[{contentType.Name ?? contentType.Id}].DocumentSetTemplate.DefaultDocuments[{defaultDocument.Name ?? defaultDocument.FileSourcePath}]",
                         issues);
                 }
             }
