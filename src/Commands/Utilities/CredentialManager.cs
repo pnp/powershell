@@ -1,6 +1,7 @@
 ﻿using Microsoft.Identity.Client.Extensions.Msal;
 using Microsoft.Win32.SafeHandles;
 using PnP.Framework.Modernization.Cache;
+using PnP.PowerShell.Commands.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,6 +16,7 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 [assembly: InternalsVisibleTo("PnP.PowerShell.Tests")]
@@ -29,6 +31,20 @@ namespace PnP.PowerShell.Commands.Utilities
         private const string LinuxCredentialSchemaName = "pnp.powershell.credential";
         private const string LinuxCredentialSecretLabel = "PnP PowerShell credential";
 
+        /// <summary>The prefix every credential is stored under in the credential store native to the operating system.</summary>
+        private const string CredentialNamePrefix = "PnPPS:";
+
+        /// <summary>The attribute secret-tool prints the name of a stored credential under.</summary>
+        private const string LinuxNameAttributePrefix = "attribute.Name";
+
+        /// <summary>How long an external credential store command may take before it is killed.</summary>
+        private const int ProcessTimeoutMilliseconds = 30000;
+
+        /// <summary>How many lines of a failing command's error output are kept to explain the failure.</summary>
+        private const int MaximumDiagnosticLines = 3;
+
+        /// <summary>The Windows ERROR_NOT_FOUND, which CredEnumerate returns when no entry matches the filter.</summary>
+        private const int ErrorNotFound = 1168;
 
         public static bool AddCredential(string name, string username, SecureString password, bool overwrite)
         {
@@ -127,30 +143,50 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        public static List<string> ListCredentials()
+        /// <summary>Enumerates the names credentials are stored under. An empty result only means "nothing is stored" when
+        /// <see cref="StoredCredentialList.Warning"/> is not set.</summary>
+        public static StoredCredentialList ListCredentials()
         {
+            var result = new StoredCredentialList();
+
             var defaultVault = GetDefaultVaultIfAvailable();
             if (!string.IsNullOrEmpty(defaultVault))
             {
-                return GetVaultCredentialNames(defaultVault);
+                result.Source = $"the Microsoft.PowerShell.SecretManagement default vault '{defaultVault}'";
+                // A vault can hold two secrets whose names differ only in case, unlike the native stores
+                result.NameComparer = StringComparer.Ordinal;
+                AddVaultCredentialNames(defaultVault, result);
             }
-
-            if (OperatingSystem.IsWindows())
+            else if (OperatingSystem.IsWindows())
             {
-                return ListWindowsCredentialManagerEntries();
+                result.Source = "the Windows Credential Manager";
+                AddWindowsCredentialManagerEntries(result);
             }
-
-            if (OperatingSystem.IsMacOS())
+            else if (OperatingSystem.IsMacOS())
             {
-                return ListMacOSKeyChainEntries();
+                result.Source = "the macOS Keychain";
+                AddMacOSKeyChainEntries(result);
             }
-
-            if (OperatingSystem.IsLinux())
+            else if (OperatingSystem.IsLinux())
             {
-                return ListLinuxCredentialEntries();
+                result.Source = "the Linux Secret Service";
+                AddLinuxCredentialEntries(result);
+            }
+            else
+            {
+                result.Warning = "Listing stored credentials is not supported on this operating system. Register a default vault through Microsoft.PowerShell.SecretManagement to be able to list stored credentials.";
             }
 
-            return new List<string>();
+            // De-duplicate by what the store itself considers the same name, but always order for display
+            var names = result.Names
+                .Distinct(result.NameComparer)
+                .OrderBy(name => name, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            result.Names.Clear();
+            result.Names.AddRange(names);
+
+            return result;
         }
 
         public static string GetAppId(string name)
@@ -396,10 +432,8 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        private static List<string> GetVaultCredentialNames(string vaultName)
+        private static void AddVaultCredentialNames(string vaultName, StoredCredentialList result)
         {
-            var names = new List<string>();
-
             InitialSessionState iss = InitialSessionState.CreateDefault();
             using (Runspace myRunSpace = RunspaceFactory.CreateRunspace(iss))
             {
@@ -412,9 +446,11 @@ namespace PnP.PowerShell.Commands.Utilities
 
                     try
                     {
-                        foreach (var result in powershell.Invoke())
+                        var skippedByType = 0;
+
+                        foreach (var secretInfo in powershell.Invoke())
                         {
-                            var name = result.Properties["Name"]?.Value?.ToString();
+                            var name = secretInfo.Properties["Name"]?.Value?.ToString();
                             if (string.IsNullOrWhiteSpace(name))
                             {
                                 continue;
@@ -425,29 +461,51 @@ namespace PnP.PowerShell.Commands.Utilities
                                 continue;
                             }
 
-                            names.Add(name);
+                            // Nothing marks which vault secrets PnP wrote, so leave out types this cmdlet could never hand back.
+                            // An unreported type is kept, as dropping those would hide usable credentials
+                            var secretType = secretInfo.Properties["Type"]?.Value?.ToString();
+                            if (!string.IsNullOrEmpty(secretType) &&
+                                !secretType.Equals("PSCredential", StringComparison.OrdinalIgnoreCase) &&
+                                !secretType.Equals("Unknown", StringComparison.OrdinalIgnoreCase))
+                            {
+                                skippedByType++;
+                                continue;
+                            }
+
+                            result.Names.Add(name);
+                        }
+
+                        if (powershell.Streams.Error.Count > 0)
+                        {
+                            result.Warning = $"The default vault '{vaultName}' reported an error while listing secrets, so the list may be incomplete: {powershell.Streams.Error[0]}";
+                        }
+                        else if (result.Names.Count == 0 && skippedByType > 0)
+                        {
+                            // Never let the type filter present "the vault holds nothing of ours" as "the vault is empty"
+                            result.Warning = $"The default vault '{vaultName}' holds {skippedByType} secret(s), none of them stored as a PSCredential, which is the only type this cmdlet can return. A credential stored there by another tool can still be retrieved with -Name.";
                         }
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // Best effort: some SecretManagement implementations do not support Get-SecretInfo.
+                        result.Warning = $"The default vault '{vaultName}' could not be enumerated: {ex.Message}";
                     }
                 }
                 myRunSpace.Close();
             }
-
-            return names.Distinct(StringComparer.OrdinalIgnoreCase)
-                .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
-                .ToList();
         }
 
-        private static List<string> ListWindowsCredentialManagerEntries()
+        private static void AddWindowsCredentialManagerEntries(StoredCredentialList result)
         {
-            var names = new List<string>();
-
-            if (!CredEnumerate(null, 0, out int count, out IntPtr credentials))
+            // Filtering on the prefix in the API rather than afterwards keeps the credentials of other applications - and the secrets
+            // CredEnumerate hands back with them - out of this process altogether
+            if (!CredEnumerate($"{CredentialNamePrefix}*", 0, out int count, out IntPtr credentials))
             {
-                return names;
+                var lastError = Marshal.GetLastWin32Error();
+                if (lastError != ErrorNotFound)
+                {
+                    result.Warning = $"The Windows Credential Manager could not be enumerated. CredEnumerate failed with error code {lastError}.";
+                }
+                return;
             }
 
             try
@@ -463,20 +521,15 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
 
                     var credential = (NativeCredential)Marshal.PtrToStructure(credentialPointer, typeof(NativeCredential));
+                    if (credential.Type != CRED_TYPE.GENERIC)
+                    {
+                        continue;
+                    }
+
                     var targetName = Marshal.PtrToStringUni(credential.TargetName);
-                    if (string.IsNullOrWhiteSpace(targetName))
+                    if (!string.IsNullOrWhiteSpace(targetName) && targetName.StartsWith(CredentialNamePrefix, StringComparison.OrdinalIgnoreCase))
                     {
-                        continue;
-                    }
-
-                    if (targetName.StartsWith("PnPPSAppId:", StringComparison.OrdinalIgnoreCase))
-                    {
-                        continue;
-                    }
-
-                    if (targetName.StartsWith("PnPPS:", StringComparison.OrdinalIgnoreCase))
-                    {
-                        names.Add(targetName.Substring("PnPPS:".Length));
+                        result.Names.Add(targetName.Substring(CredentialNamePrefix.Length));
                     }
                 }
             }
@@ -487,132 +540,62 @@ namespace PnP.PowerShell.Commands.Utilities
                     CredFree(credentials);
                 }
             }
-
-            return names.Distinct(StringComparer.OrdinalIgnoreCase)
-                .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
-                .ToList();
         }
 
-        private static List<string> ListMacOSKeyChainEntries()
+        private static void AddMacOSKeyChainEntries(StoredCredentialList result)
         {
-            var names = new List<string>();
-
             try
             {
-                var output = RunProcess("/usr/bin/security", "dump-keychain -d");
-                if (string.IsNullOrWhiteSpace(output))
+                foreach (var serviceName in new MacOSKeychain().EnumerateServiceNames())
                 {
-                    return names;
-                }
-
-                foreach (var line in output.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    var trimmed = line.Trim();
-                    if (!trimmed.StartsWith("svce", StringComparison.OrdinalIgnoreCase))
+                    if (serviceName.StartsWith(CredentialNamePrefix, StringComparison.OrdinalIgnoreCase))
                     {
-                        continue;
-                    }
-
-                    var serviceName = ExtractQuotedValue(trimmed, "svce");
-                    if (string.IsNullOrWhiteSpace(serviceName))
-                    {
-                        continue;
-                    }
-
-                    if (serviceName.StartsWith("PnPPSAppId:", StringComparison.OrdinalIgnoreCase))
-                    {
-                        continue;
-                    }
-
-                    if (serviceName.StartsWith("PnPPS:", StringComparison.OrdinalIgnoreCase))
-                    {
-                        names.Add(serviceName.Substring("PnPPS:".Length));
+                        result.Names.Add(serviceName.Substring(CredentialNamePrefix.Length));
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // Best effort: the keychain may be unavailable or the command may not exist.
+                result.Warning = $"The macOS Keychain could not be enumerated: {ex.Message}";
             }
-
-            return names.Distinct(StringComparer.OrdinalIgnoreCase)
-                .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
-                .ToList();
         }
 
-        private static List<string> ListLinuxCredentialEntries()
+        private static void AddLinuxCredentialEntries(StoredCredentialList result)
         {
-            var names = new List<string>();
-
-            try
+            // secret-tool splits its output: measured on libsecret 0.21.4 the attributes go to stderr and the secrets to stdout.
+            // Both streams are filtered down to the attribute lines as they arrive, so the names are found and no secret is retained
+            if (!TryRunProcess("secret-tool", "search --all Product PnPPowerShell",
+                               line => line.TrimStart().StartsWith(LinuxNameAttributePrefix, StringComparison.Ordinal),
+                               out var lines, out var error))
             {
-                var output = RunProcess("secret-tool", "search Product PnPPowerShell");
-                if (string.IsNullOrWhiteSpace(output))
+                result.Warning = $"The Linux Secret Service could not be enumerated: {error} Ensure that secret-tool (libsecret-tools) is installed and that a Secret Service provider such as GNOME Keyring or KWallet is installed and unlocked.";
+                return;
+            }
+
+            foreach (var line in lines)
+            {
+                // secret-tool prints attributes as "attribute.<key> = <value>"
+                var separatorIndex = line.IndexOf('=');
+                if (separatorIndex < 0)
                 {
-                    return names;
+                    continue;
                 }
 
-                foreach (var line in output.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+                var name = line.Substring(separatorIndex + 1).Trim();
+                if (name.StartsWith(CredentialNamePrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    var trimmed = line.Trim();
-                    if (!trimmed.StartsWith("Name:", StringComparison.OrdinalIgnoreCase) &&
-                        !trimmed.StartsWith("label:", StringComparison.OrdinalIgnoreCase))
-                    {
-                        continue;
-                    }
-
-                    var name = trimmed.Substring(trimmed.IndexOf(':') + 1).Trim();
-                    if (string.IsNullOrWhiteSpace(name))
-                    {
-                        continue;
-                    }
-
-                    if (name.StartsWith("PnPPSAppId:", StringComparison.OrdinalIgnoreCase))
-                    {
-                        continue;
-                    }
-
-                    if (name.StartsWith("PnPPS:", StringComparison.OrdinalIgnoreCase))
-                    {
-                        names.Add(name.Substring("PnPPS:".Length));
-                    }
+                    result.Names.Add(name.Substring(CredentialNamePrefix.Length));
                 }
             }
-            catch
-            {
-                // Best effort: the secret service tooling may not be installed.
-            }
-
-            return names.Distinct(StringComparer.OrdinalIgnoreCase)
-                .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
-                .ToList();
         }
 
-        private static string ExtractQuotedValue(string input, string key)
+        /// <summary>Runs a command and returns the lines of either stream passing <paramref name="lineFilter"/>, discarding the rest as
+        /// they arrive so secrets are never accumulated. Both streams are read concurrently to avoid deadlock, and it is killed on timeout.</summary>
+        private static bool TryRunProcess(string fileName, string arguments, Func<string, bool> lineFilter, out List<string> lines, out string error)
         {
-            var keyIndex = input.IndexOf(key, StringComparison.OrdinalIgnoreCase);
-            if (keyIndex < 0)
-            {
-                return null;
-            }
+            lines = new List<string>();
+            error = null;
 
-            var valueStart = input.IndexOf('"', keyIndex);
-            if (valueStart < 0)
-            {
-                return null;
-            }
-
-            var valueEnd = input.IndexOf('"', valueStart + 1);
-            if (valueEnd < 0)
-            {
-                return null;
-            }
-
-            return input.Substring(valueStart + 1, valueEnd - valueStart - 1);
-        }
-
-        private static string RunProcess(string fileName, string arguments)
-        {
             var processStartInfo = new ProcessStartInfo
             {
                 FileName = fileName,
@@ -623,15 +606,104 @@ namespace PnP.PowerShell.Commands.Utilities
                 CreateNoWindow = true
             };
 
-            using var process = Process.Start(processStartInfo);
-            if (process == null)
+            Process process;
+            try
             {
-                return string.Empty;
+                process = Process.Start(processStartInfo);
+            }
+            catch (Exception ex)
+            {
+                error = $"the command '{fileName}' could not be started: {ex.Message}.";
+                return false;
             }
 
-            var stdOut = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-            return stdOut;
+            if (process == null)
+            {
+                error = $"the command '{fileName}' could not be started.";
+                return false;
+            }
+
+            using (process)
+            {
+                var collectedLines = new List<string>();
+                var diagnosticLines = new List<string>();
+                var collected = new object();
+
+                void ReadStream(StreamReader reader, bool isErrorStream)
+                {
+                    try
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            var isWanted = lineFilter == null || lineFilter(line);
+                            lock (collected)
+                            {
+                                if (isWanted)
+                                {
+                                    collectedLines.Add(line);
+                                }
+                                else if (isErrorStream && diagnosticLines.Count < MaximumDiagnosticLines && !line.TrimStart().StartsWith("secret", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    // Kept only to explain a non-zero exit code. Anything that looks like a secret is left out
+                                    diagnosticLines.Add(line.Trim());
+                                }
+                            }
+                        }
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        // Killing the process on a timeout tears the stream down underneath this loop, which is the intent
+                    }
+                }
+
+                var readers = new[]
+                {
+                    Task.Run(() => ReadStream(process.StandardOutput, false)),
+                    Task.Run(() => ReadStream(process.StandardError, true))
+                };
+
+                try
+                {
+                    if (!Task.WaitAll(readers, ProcessTimeoutMilliseconds) || !process.WaitForExit(ProcessTimeoutMilliseconds))
+                    {
+                        KillProcess(process);
+                        error = $"the command '{fileName}' did not complete in time.";
+                        return false;
+                    }
+                }
+                catch (AggregateException ex)
+                {
+                    KillProcess(process);
+                    error = $"the output of the command '{fileName}' could not be read: {ex.GetBaseException().Message}.";
+                    return false;
+                }
+
+                if (process.ExitCode != 0)
+                {
+                    var reason = diagnosticLines.Count > 0 ? $": {string.Join(" ", diagnosticLines)}" : ".";
+                    error = $"the command '{fileName}' exited with code {process.ExitCode}{reason}";
+                    return false;
+                }
+
+                lines = collectedLines;
+                return true;
+            }
+        }
+
+        private static void KillProcess(Process process)
+        {
+            try
+            {
+                if (!process.HasExited)
+                {
+                    process.Kill(entireProcessTree: true);
+                }
+            }
+            catch
+            {
+                // The process may have exited on its own in the meantime, which is the outcome this is after anyway
+            }
         }
 
         private static void AddVaultCredential(string vaultName, string name, string username, SecureString password)
