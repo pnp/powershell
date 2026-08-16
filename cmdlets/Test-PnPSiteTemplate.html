@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Test-PnPSiteTemplate | PnP PowerShell </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Test-PnPSiteTemplate | PnP PowerShell ">
+      <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+      
+      <link rel="icon" href="../images/favicon-pnp.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pnp/powershell/blob/dev/documentation/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="PnP PowerShell">
+            PnP PowerShell
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="test-pnpsitetemplate">Test-PnPSiteTemplate</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Validates a PnP site template without applying it.</p>
+<h2 id="syntax">SYNTAX</h2>
+<h3 id="by-path">By Path</h3>
+<pre><code class="lang-powershell">Test-PnPSiteTemplate [-Path] &lt;String&gt; [-TemplateId &lt;String&gt;]
+ [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;]
+</code></pre>
+<h3 id="by-stream">By Stream</h3>
+<pre><code class="lang-powershell">Test-PnPSiteTemplate [-Stream] &lt;Stream&gt; [-TemplateId &lt;String&gt;]
+ [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;]
+</code></pre>
+<h3 id="by-xml">By XML</h3>
+<pre><code class="lang-powershell">Test-PnPSiteTemplate [-Xml] &lt;String&gt; [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;]
+</code></pre>
+<h3 id="by-template">By Template</h3>
+<pre><code class="lang-powershell">Test-PnPSiteTemplate [-Template] &lt;ProvisioningTemplate&gt;
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Validates a PnP site template without applying it and without making a request to SharePoint. Use it to catch structural problems in a template, for example in a pull request or a release pipeline, before it ever reaches a site.</p>
+<p>One result is returned per template found in the source. Every finding is a structured issue carrying a <code>Code</code>, <code>Severity</code>, <code>Message</code> and <code>Location</code>, at one of three severities.</p>
+<table>
+<thead>
+<tr>
+<th>Severity</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Error</code></td>
+<td>The template is broken and should not be applied, for example a duplicate identifier, an unreadable package, an unsupported schema, or a referenced file that is not present. This is the only severity that sets <code>IsValid</code> to <code>$false</code>.</td>
+</tr>
+<tr>
+<td><code>Warning</code></td>
+<td>The template can be applied but may not behave as intended, for example an older provisioning schema, or an attribute that has been removed from the latest schema.</td>
+</tr>
+<tr>
+<td><code>Information</code></td>
+<td>Something the target site or term store has to provide, or something that could not be checked in advance. Out of the box content types and site columns are never declared inside a template, so these appear on almost every template and are grouped into a single issue per location.</td>
+</tr>
+</tbody>
+</table>
+<p>How much can be checked depends on what the source provides, which the result states explicitly rather than leaving you to guess.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IsValid</code></td>
+<td><code>$false</code> only when an <code>Error</code> severity issue was found.</td>
+</tr>
+<tr>
+<td><code>ResourcesChecked</code></td>
+<td><code>$true</code> when the template carried a file connector, so referenced files, localizations, directories, data row attachments, workflow definitions, publishing design packages, document set default documents, app packages, site scripts and relative site logos could be resolved. <code>$false</code> for an in-memory template without a connector, meaning none of those were looked at.</td>
+</tr>
+<tr>
+<td><code>SchemaChecked</code></td>
+<td><code>$true</code> when the source XML was available, so the schema version and removed-element checks could run. <code>$false</code> for a template received through the pipeline.</td>
+</tr>
+<tr>
+<td><code>SchemaVersion</code></td>
+<td>The provisioning schema namespace found in the source, when available.</td>
+</tr>
+</tbody>
+</table>
+<p>The provisioning schema versions 2019/03 through 2022/09 are recognised. Anything else is reported as an <code>UnsupportedSchema</code> error, because the provisioning engine falls back to the latest deserializer for a namespace it does not know, which quietly produces an empty template rather than failing.</p>
+<p>Server relative paths and absolute URLs are resolved at the moment the template is applied, so they are not looked for among the template's own files. A path counts as tokenized when it starts with a token or names a parameter, and one that cannot be found is then reported as <code>UnverifiedResourcePath</code> at <code>Information</code> severity rather than as missing, because only the target site can expand it. A source that merely contains <code>_api</code> or a brace in a folder name is checked normally.</p>
+<p>A resource reference that is present but empty is an error in its own right, because the provisioning engine reads every one of them without checking first. This includes a design package or a document set default document whose source path is blank, which is what <code>Get-PnPSiteTemplate</code> produces for default documents when it runs without <code>-PersistBrandingFiles</code>.</p>
+<p><code>XInclude</code> references are resolved before anything else, so a template that lives in an included fragment is validated and can be selected with <code>-TemplateId</code> like any other. Each <code>href</code> is read from the root of the source, matching how the provisioning engine resolves it, and a fragment pulled in by an include is not validated a second time on its own.</p>
+<p>When the source is a package, templates stored in a folder inside it are validated as well as those at its root, and an issue in one member names that member in its <code>Location</code>. Passing <code>-TemplateId</code> reports only the issues belonging to the template that was asked for.</p>
+<p>The cmdlet never compares the template against a site, so it cannot confirm whether the content types, fields, term sets or hub sites it reports as dependencies actually exist there.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Test-PnPSiteTemplate -Path ./template.pnp
+</code></pre>
+<p>Validates every template found in a PnP site template package and returns one validation result for each template.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Read-PnPSiteTemplate -Path ./template.xml | Test-PnPSiteTemplate
+</code></pre>
+<p>Validates an in-memory provisioning template received through the pipeline. <code>SchemaChecked</code> is <code>$false</code> on the result because the source XML is no longer available, so the schema version and removed-element checks are skipped.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">$result = Test-PnPSiteTemplate -Path ./template.xml
+if ($result | Where-Object { -not $_.IsValid }) {
+    $result.Issues | Format-Table Code, Severity, Location, Message
+    throw &quot;The site template is invalid.&quot;
+}
+</code></pre>
+<p>Stops a script when the template contains an error-severity validation issue. Use <code>Where-Object</code> rather than <code>$result.IsValid</code>, because a source holding several templates returns one result for each.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Test-PnPSiteTemplate -Path ./template.pnp |
+    Select-Object -ExpandProperty Issues |
+    Where-Object Severity -ne Information |
+    Format-Table Severity, Code, Location, Message
+</code></pre>
+<p>Shows only the errors and warnings, hiding the informational dependencies that a template is expected to have on its target site.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Test-PnPSiteTemplate -Path ./templates.pnp -TemplateId TeamSite
+</code></pre>
+<p>Validates only the template with ID <code>TeamSite</code> from a package containing multiple templates.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-path">-Path</h3>
+<p>Path to an XML site template or a PnP site template package.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: By Path
+
+Required: True
+Position: 0
+Default value: None
+Aliases: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-stream">-Stream</h3>
+<p>Stream containing an XML site template or a PnP site template package.</p>
+<pre><code class="lang-yaml">Type: Stream
+Parameter Sets: By Stream
+
+Required: True
+Position: 0
+Default value: None
+Aliases: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-template">-Template</h3>
+<p>In-memory provisioning template to validate.</p>
+<pre><code class="lang-yaml">Type: ProvisioningTemplate
+Parameter Sets: By Template
+
+Required: True
+Position: 0
+Default value: None
+Aliases: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-templateid">-TemplateId</h3>
+<p>ID of the template to validate when an XML file or package contains multiple templates.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: By Path, By Stream
+
+Required: False
+Position: Named
+Default value: None
+Aliases: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-templateproviderextensions">-TemplateProviderExtensions</h3>
+<p>Template provider extensions to execute while loading the template.</p>
+<pre><code class="lang-yaml">Type: ITemplateProviderExtension[]
+Parameter Sets: By Path, By Stream, By XML
+
+Required: False
+Position: Named
+Default value: None
+Aliases: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-xml">-Xml</h3>
+<p>XML text containing a provisioning template.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: By XML
+
+Required: True
+Position: 0
+Default value: None
+Aliases: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://pnp.github.io/powershell/cmdlets/Read-PnPSiteTemplate.html">Read-PnPSiteTemplate</a></p>
+<p><a href="https://pnp.github.io/powershell/cmdlets/Invoke-PnPSiteTemplate.html">Invoke-PnPSiteTemplate</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

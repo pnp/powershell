@@ -6,7 +6,7 @@ description: Full cmdlet reference for PnP PowerShell.
 
 # PnP PowerShell cmdlets
 
-PnP PowerShell exists out of 851 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
+PnP PowerShell exists out of 852 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
  
 <sup>1</sup>: Only available in the latest nightly build. All the others can also be used using the latest stable release.  
 <sup>2</sup>: Cmdlet is an alias of another cmdlet, used to provide backwards compatibility.
@@ -935,6 +935,7 @@ PnP PowerShell exists out of 851 cmdlets which can help you in setting up, confi
 - [Test-PnPListItemIsRecord](Test-PnPListItemIsRecord.md)
 - [Test-PnPMicrosoft365GroupAliasIsUsed](Test-PnPMicrosoft365GroupAliasIsUsed.md)
 - [Test-PnPSite](Test-PnPSite.md)
+- [Test-PnPSiteTemplate](Test-PnPSiteTemplate.md) <sup>1</sup>
 - [Test-PnPTenantTemplate](Test-PnPTenantTemplate.md)
 ## Undo
 - [Undo-PnPFileCheckedOut](Undo-PnPFileCheckedOut.md)
