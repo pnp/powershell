@@ -3,6 +3,7 @@ using Microsoft.Win32.SafeHandles;
 using PnP.Framework.Modernization.Cache;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
@@ -124,6 +125,32 @@ namespace PnP.PowerShell.Commands.Utilities
                 return cred;
             }
             return null;
+        }
+
+        public static List<string> ListCredentials()
+        {
+            var defaultVault = GetDefaultVaultIfAvailable();
+            if (!string.IsNullOrEmpty(defaultVault))
+            {
+                return GetVaultCredentialNames(defaultVault);
+            }
+
+            if (OperatingSystem.IsWindows())
+            {
+                return ListWindowsCredentialManagerEntries();
+            }
+
+            if (OperatingSystem.IsMacOS())
+            {
+                return ListMacOSKeyChainEntries();
+            }
+
+            if (OperatingSystem.IsLinux())
+            {
+                return ListLinuxCredentialEntries();
+            }
+
+            return new List<string>();
         }
 
         public static string GetAppId(string name)
@@ -369,6 +396,243 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
+        private static List<string> GetVaultCredentialNames(string vaultName)
+        {
+            var names = new List<string>();
+
+            InitialSessionState iss = InitialSessionState.CreateDefault();
+            using (Runspace myRunSpace = RunspaceFactory.CreateRunspace(iss))
+            {
+                myRunSpace.Open();
+                using (var powershell = System.Management.Automation.PowerShell.Create())
+                {
+                    powershell.Runspace = myRunSpace;
+                    powershell.AddCommand("get-secretinfo")
+                    .AddParameter("Vault", vaultName);
+
+                    try
+                    {
+                        foreach (var result in powershell.Invoke())
+                        {
+                            var name = result.Properties["Name"]?.Value?.ToString();
+                            if (string.IsNullOrWhiteSpace(name))
+                            {
+                                continue;
+                            }
+
+                            if (name.StartsWith("PnPPSAppId:", StringComparison.OrdinalIgnoreCase))
+                            {
+                                continue;
+                            }
+
+                            names.Add(name);
+                        }
+                    }
+                    catch
+                    {
+                        // Best effort: some SecretManagement implementations do not support Get-SecretInfo.
+                    }
+                }
+                myRunSpace.Close();
+            }
+
+            return names.Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
+
+        private static List<string> ListWindowsCredentialManagerEntries()
+        {
+            var names = new List<string>();
+
+            if (!CredEnumerate(null, 0, out int count, out IntPtr credentials))
+            {
+                return names;
+            }
+
+            try
+            {
+                IntPtr[] credentialPointers = new IntPtr[count];
+                Marshal.Copy(credentials, credentialPointers, 0, count);
+
+                foreach (var credentialPointer in credentialPointers)
+                {
+                    if (credentialPointer == IntPtr.Zero)
+                    {
+                        continue;
+                    }
+
+                    var credential = (NativeCredential)Marshal.PtrToStructure(credentialPointer, typeof(NativeCredential));
+                    var targetName = Marshal.PtrToStringUni(credential.TargetName);
+                    if (string.IsNullOrWhiteSpace(targetName))
+                    {
+                        continue;
+                    }
+
+                    if (targetName.StartsWith("PnPPSAppId:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    if (targetName.StartsWith("PnPPS:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        names.Add(targetName.Substring("PnPPS:".Length));
+                    }
+                }
+            }
+            finally
+            {
+                if (credentials != IntPtr.Zero)
+                {
+                    CredFree(credentials);
+                }
+            }
+
+            return names.Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
+
+        private static List<string> ListMacOSKeyChainEntries()
+        {
+            var names = new List<string>();
+
+            try
+            {
+                var output = RunProcess("/usr/bin/security", "dump-keychain -d");
+                if (string.IsNullOrWhiteSpace(output))
+                {
+                    return names;
+                }
+
+                foreach (var line in output.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    var trimmed = line.Trim();
+                    if (!trimmed.StartsWith("svce", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    var serviceName = ExtractQuotedValue(trimmed, "svce");
+                    if (string.IsNullOrWhiteSpace(serviceName))
+                    {
+                        continue;
+                    }
+
+                    if (serviceName.StartsWith("PnPPSAppId:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    if (serviceName.StartsWith("PnPPS:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        names.Add(serviceName.Substring("PnPPS:".Length));
+                    }
+                }
+            }
+            catch
+            {
+                // Best effort: the keychain may be unavailable or the command may not exist.
+            }
+
+            return names.Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
+
+        private static List<string> ListLinuxCredentialEntries()
+        {
+            var names = new List<string>();
+
+            try
+            {
+                var output = RunProcess("secret-tool", "search Product PnPPowerShell");
+                if (string.IsNullOrWhiteSpace(output))
+                {
+                    return names;
+                }
+
+                foreach (var line in output.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    var trimmed = line.Trim();
+                    if (!trimmed.StartsWith("Name:", StringComparison.OrdinalIgnoreCase) &&
+                        !trimmed.StartsWith("label:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    var name = trimmed.Substring(trimmed.IndexOf(':') + 1).Trim();
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        continue;
+                    }
+
+                    if (name.StartsWith("PnPPSAppId:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    if (name.StartsWith("PnPPS:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        names.Add(name.Substring("PnPPS:".Length));
+                    }
+                }
+            }
+            catch
+            {
+                // Best effort: the secret service tooling may not be installed.
+            }
+
+            return names.Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
+
+        private static string ExtractQuotedValue(string input, string key)
+        {
+            var keyIndex = input.IndexOf(key, StringComparison.OrdinalIgnoreCase);
+            if (keyIndex < 0)
+            {
+                return null;
+            }
+
+            var valueStart = input.IndexOf('"', keyIndex);
+            if (valueStart < 0)
+            {
+                return null;
+            }
+
+            var valueEnd = input.IndexOf('"', valueStart + 1);
+            if (valueEnd < 0)
+            {
+                return null;
+            }
+
+            return input.Substring(valueStart + 1, valueEnd - valueStart - 1);
+        }
+
+        private static string RunProcess(string fileName, string arguments)
+        {
+            var processStartInfo = new ProcessStartInfo
+            {
+                FileName = fileName,
+                Arguments = arguments,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using var process = Process.Start(processStartInfo);
+            if (process == null)
+            {
+                return string.Empty;
+            }
+
+            var stdOut = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+            return stdOut;
+        }
 
         private static void AddVaultCredential(string vaultName, string name, string username, SecureString password)
         {
@@ -857,6 +1121,9 @@ namespace PnP.PowerShell.Commands.Utilities
 
         [DllImport("Advapi32.dll", EntryPoint = "CredFree", SetLastError = true)]
         private static extern bool CredFree([In] IntPtr cred);
+
+        [DllImport("Advapi32.dll", EntryPoint = "CredEnumerateW", CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern bool CredEnumerate(string filter, int flags, out int count, out IntPtr credentials);
 
         [DllImport("Advapi32.dll", EntryPoint = "CredDeleteW", CharSet = CharSet.Unicode, SetLastError = true)]
         internal static extern bool CredDelete(string target, CRED_TYPE type, int reservedFlag);
