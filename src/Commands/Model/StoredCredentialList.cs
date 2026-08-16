@@ -15,8 +15,5 @@ namespace PnP.PowerShell.Commands.Model
 
         /// <summary>Set when the store could not be read. When set, an empty <see cref="Names"/> does not mean nothing is stored.</summary>
         public string Warning { get; set; }
-
-        /// <summary>How names are compared when de-duplicating. Native stores are case insensitive, a vault is not.</summary>
-        public IEqualityComparer<string> NameComparer { get; set; } = System.StringComparer.OrdinalIgnoreCase;
     }
 }

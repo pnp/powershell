@@ -375,12 +375,13 @@ namespace Microsoft.Identity.Client.Extensions.Msal
                 {
                     if (CFGetTypeID(value) == CFStringGetTypeID())
                     {
-                        int stringLength = (int)CFStringGetLength(value);
-                        int bufferSize = stringLength + 1;
-                        buffer = Marshal.AllocHGlobal(bufferSize);
+                        // UTF-8 takes more than one byte per UTF-16 unit, so the buffer is sized for the encoding rather than
+                        // the length. Sizing it by the length makes CFStringGetCString fail on any non-ASCII name
+                        long bufferSize = CFStringGetMaximumSizeForEncoding(CFStringGetLength(value), CFStringEncoding.kCFStringEncodingUTF8) + 1;
+                        buffer = Marshal.AllocHGlobal((int)bufferSize);
                         if (CFStringGetCString(value, buffer, bufferSize, CFStringEncoding.kCFStringEncodingUTF8))
                         {
-                            return Marshal.PtrToStringAuto(buffer, stringLength);
+                            return Marshal.PtrToStringUTF8(buffer);
                         }
                     }
 

@@ -153,8 +153,6 @@ namespace PnP.PowerShell.Commands.Utilities
             if (!string.IsNullOrEmpty(defaultVault))
             {
                 result.Source = $"the Microsoft.PowerShell.SecretManagement default vault '{defaultVault}'";
-                // A vault can hold two secrets whose names differ only in case, unlike the native stores
-                result.NameComparer = StringComparer.Ordinal;
                 AddVaultCredentialNames(defaultVault, result);
             }
             else if (OperatingSystem.IsWindows())
@@ -177,9 +175,10 @@ namespace PnP.PowerShell.Commands.Utilities
                 result.Warning = "Listing stored credentials is not supported on this operating system. Register a default vault through Microsoft.PowerShell.SecretManagement to be able to list stored credentials.";
             }
 
-            // De-duplicate by what the store itself considers the same name, but always order for display
+            // Ordinal, because the Secret Service and the Keychain both hold names differing only in case as separate credentials.
+            // Stores that instead treat them as one, such as the Credential Manager, never hand back the pair to begin with
             var names = result.Names
-                .Distinct(result.NameComparer)
+                .Distinct(StringComparer.Ordinal)
                 .OrderBy(name => name, StringComparer.OrdinalIgnoreCase)
                 .ToList();
 
@@ -456,16 +455,19 @@ namespace PnP.PowerShell.Commands.Utilities
                                 continue;
                             }
 
-                            if (name.StartsWith("PnPPSAppId:", StringComparison.OrdinalIgnoreCase))
+                            var secretType = secretInfo.Properties["Type"]?.Value?.ToString();
+                            var isCredential = "PSCredential".Equals(secretType, StringComparison.OrdinalIgnoreCase);
+
+                            // Managed app ids are stored as plain strings. A vault keeps the name given verbatim, so a real
+                            // credential may legitimately carry this prefix - only skip it when the secret is not a credential
+                            if (!isCredential && name.StartsWith("PnPPSAppId:", StringComparison.OrdinalIgnoreCase))
                             {
                                 continue;
                             }
 
                             // Nothing marks which vault secrets PnP wrote, so leave out types this cmdlet could never hand back.
                             // An unreported type is kept, as dropping those would hide usable credentials
-                            var secretType = secretInfo.Properties["Type"]?.Value?.ToString();
-                            if (!string.IsNullOrEmpty(secretType) &&
-                                !secretType.Equals("PSCredential", StringComparison.OrdinalIgnoreCase) &&
+                            if (!string.IsNullOrEmpty(secretType) && !isCredential &&
                                 !secretType.Equals("Unknown", StringComparison.OrdinalIgnoreCase))
                             {
                                 skippedByType++;

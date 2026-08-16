@@ -62,6 +62,9 @@ namespace PnP.PowerShell.Extensions.Mac
         public static extern long CFStringGetLength(IntPtr theString);
 
         [DllImport(CoreFoundationFrameworkLib, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        public static extern long CFStringGetMaximumSizeForEncoding(long length, CFStringEncoding encoding);
+
+        [DllImport(CoreFoundationFrameworkLib, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool CFStringGetCString(IntPtr theString, IntPtr buffer, long bufferSize, CFStringEncoding encoding);
 
         [DllImport(CoreFoundationFrameworkLib, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
