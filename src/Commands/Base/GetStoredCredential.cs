@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -28,7 +29,17 @@ namespace PnP.PowerShell.Commands.Base
                     WriteVerbose($"Listing the credentials stored in {storedCredentials.Source}.");
                 }
 
-                // An empty result must never be reported as "nothing is stored" when the credential store could not be read
+                // A store that could not be read is a failed request, not an empty one. It has to reach the error stream, or
+                // -ErrorAction Stop and $? cannot tell the two apart and suppressing warnings would erase the only signal
+                if (!string.IsNullOrEmpty(storedCredentials.Failure))
+                {
+                    ThrowTerminatingError(new ErrorRecord(
+                        new InvalidOperationException(storedCredentials.Failure),
+                        "StoredCredentialsNotEnumerable",
+                        ErrorCategory.ResourceUnavailable,
+                        storedCredentials.Source));
+                }
+
                 if (!string.IsNullOrEmpty(storedCredentials.Warning))
                 {
                     WriteWarning(storedCredentials.Warning);

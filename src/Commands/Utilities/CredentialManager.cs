@@ -33,6 +33,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>The prefix every credential is stored under in the credential store native to the operating system.</summary>
         private const string CredentialNamePrefix = "PnPPS:";
 
+        /// <summary>The prefix every managed app id is stored under, in every store including a vault.</summary>
+        private const string AppIdNamePrefix = "PnPPSAppId:";
+
         /// <summary>The Secret Service attributes every entry is written with, and read back by to enumerate them.</summary>
         private const string LinuxProductAttributeName = "Product";
         private const string LinuxProductAttributeValue = "PnPPowerShell";
@@ -50,9 +53,9 @@ namespace PnP.PowerShell.Commands.Utilities
                 return true;
             }
 
-            if (!name.StartsWith("PnPPS:"))
+            if (!name.StartsWith(CredentialNamePrefix))
             {
-                name = $"PnPPS:{name}";
+                name = $"{CredentialNamePrefix}{name}";
             }
             if (OperatingSystem.IsWindows())
             {
@@ -71,9 +74,9 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static bool AddAppId(string name, string appid, bool overwrite)
         {
-            if (!name.StartsWith("PnPPSAppId:"))
+            if (!name.StartsWith(AppIdNamePrefix))
             {
-                name = $"PnPPSAppId:{name}";
+                name = $"{AppIdNamePrefix}{name}";
             }
 
             var defaultVault = GetDefaultVaultIfAvailable();
@@ -113,7 +116,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var cred = ReadWindowsCredentialManagerEntry(name);
                 if (cred == null)
                 {
-                    cred = ReadWindowsCredentialManagerEntry($"PnPPS:{name}");
+                    cred = ReadWindowsCredentialManagerEntry($"{CredentialNamePrefix}{name}");
                 }
                 return cred;
             }
@@ -122,7 +125,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var cred = ReadMacOSKeyChainEntry(name);
                 if (cred == null)
                 {
-                    cred = ReadMacOSKeyChainEntry($"PnPPS:{name}");
+                    cred = ReadMacOSKeyChainEntry($"{CredentialNamePrefix}{name}");
                 }
                 return cred;
             }
@@ -131,15 +134,15 @@ namespace PnP.PowerShell.Commands.Utilities
                 var cred = ReadLinuxCredentialEntry(name);
                 if (cred == null)
                 {
-                    cred = ReadLinuxCredentialEntry($"PnPPS:{name}");
+                    cred = ReadLinuxCredentialEntry($"{CredentialNamePrefix}{name}");
                 }
                 return cred;
             }
             return null;
         }
 
-        /// <summary>Enumerates the names credentials are stored under. An empty result only means "nothing is stored" when
-        /// <see cref="StoredCredentialList.Warning"/> is not set.</summary>
+        /// <summary>Enumerates the names credentials are stored under. An empty result only means "nothing is stored" when neither
+        /// <see cref="StoredCredentialList.Failure"/> nor <see cref="StoredCredentialList.Warning"/> is set.</summary>
         public static StoredCredentialList ListCredentials()
         {
             var result = new StoredCredentialList();
@@ -167,7 +170,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             else
             {
-                result.Warning = "Listing stored credentials is not supported on this operating system. Register a default vault through Microsoft.PowerShell.SecretManagement to be able to list stored credentials.";
+                result.Failure = "Listing stored credentials is not supported on this operating system. Register a default vault through Microsoft.PowerShell.SecretManagement to be able to list stored credentials.";
             }
 
             // Ordinal, because the Secret Service and the Keychain both hold names differing only in case as separate credentials.
@@ -185,9 +188,9 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static string GetAppId(string name)
         {
-            if (!name.StartsWith("PnPPSAppId:"))
+            if (!name.StartsWith(AppIdNamePrefix))
             {
-                name = $"PnPPSAppId:{name}";
+                name = $"{AppIdNamePrefix}{name}";
             }
             // check if Microsoft.PowerShell.SecretManagement is available
             var defaultVault = GetDefaultVaultIfAvailable();
@@ -235,7 +238,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 success = DeleteWindowsCredentialManagerEntry(name);
                 if (!success)
                 {
-                    success = DeleteWindowsCredentialManagerEntry($"PnPPS:{name}");
+                    success = DeleteWindowsCredentialManagerEntry($"{CredentialNamePrefix}{name}");
                 }
                 return success;
             }
@@ -244,7 +247,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 success = DeleteMacOSKeyChainEntry(name);
                 if (!success)
                 {
-                    success = DeleteMacOSKeyChainEntry($"PnPPS:{name}");
+                    success = DeleteMacOSKeyChainEntry($"{CredentialNamePrefix}{name}");
                 }
                 return success;
             }
@@ -253,7 +256,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 success = DeleteLinuxCredentialEntry(name);
                 if (!success)
                 {
-                    success = DeleteLinuxCredentialEntry($"PnPPS:{name}");
+                    success = DeleteLinuxCredentialEntry($"{CredentialNamePrefix}{name}");
                 }
                 return success;
             }
@@ -262,9 +265,9 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static bool RemoveAppid(string name)
         {
-            if (!name.StartsWith("PnPPSAppId:"))
+            if (!name.StartsWith(AppIdNamePrefix))
             {
-                name = $"PnPPSAppId:{name}";
+                name = $"{AppIdNamePrefix}{name}";
             }
             bool success = false;
 
@@ -387,9 +390,13 @@ namespace PnP.PowerShell.Commands.Utilities
 
                     foreach (var result in powershell.Invoke())
                     {
-                        var username = result.Properties["Username"].Value.ToString();
-                        var password = result.Properties["Password"].Value;
-                        creds = new PSCredential(username, (SecureString)password);
+                        // A vault holds secrets of other shapes too, and an extension need not report their type. Hand back
+                        // nothing rather than throwing when the secret under this name is not a credential
+                        var username = result.Properties["Username"]?.Value?.ToString();
+                        if (username != null && result.Properties["Password"]?.Value is SecureString password)
+                        {
+                            creds = new PSCredential(username, password);
+                        }
                     }
 
                 }
@@ -455,7 +462,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
                             // Managed app ids are stored as plain strings. A vault keeps the name given verbatim, so a real
                             // credential may legitimately carry this prefix - only skip it when the secret is not a credential
-                            if (!isCredential && name.StartsWith("PnPPSAppId:", StringComparison.OrdinalIgnoreCase))
+                            if (!isCredential && name.StartsWith(AppIdNamePrefix, StringComparison.OrdinalIgnoreCase))
                             {
                                 continue;
                             }
@@ -479,12 +486,12 @@ namespace PnP.PowerShell.Commands.Utilities
                         else if (result.Names.Count == 0 && skippedByType > 0)
                         {
                             // Never let the type filter present "the vault holds nothing of ours" as "the vault is empty"
-                            result.Warning = $"The default vault '{vaultName}' holds {skippedByType} secret(s), none of them stored as a PSCredential, which is the only type this cmdlet can return. A credential stored there by another tool can still be retrieved with -Name.";
+                            result.Warning = $"The default vault '{vaultName}' holds {skippedByType} secret(s) of other types, which this cmdlet cannot return. Only secrets stored as a PSCredential are listed.";
                         }
                     }
                     catch (Exception ex)
                     {
-                        result.Warning = $"The default vault '{vaultName}' could not be enumerated: {ex.Message}";
+                        result.Failure = $"The default vault '{vaultName}' could not be enumerated: {ex.Message}";
                     }
                 }
                 myRunSpace.Close();
@@ -500,7 +507,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var lastError = Marshal.GetLastWin32Error();
                 if (lastError != ErrorNotFound)
                 {
-                    result.Warning = $"The Windows Credential Manager could not be enumerated. CredEnumerate failed with error code {lastError}.";
+                    result.Failure = $"The Windows Credential Manager could not be enumerated. CredEnumerate failed with error code {lastError}.";
                 }
                 return;
             }
@@ -553,7 +560,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             catch (Exception ex)
             {
-                result.Warning = $"The macOS Keychain could not be enumerated: {ex.Message}";
+                result.Failure = $"The macOS Keychain could not be enumerated: {ex.Message}";
             }
         }
 
@@ -573,7 +580,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             catch (Exception ex)
             {
-                result.Warning = $"The Linux Secret Service could not be enumerated: {ex.Message} Ensure a Secret Service provider such as GNOME Keyring or KWallet is installed and unlocked.";
+                result.Failure = $"The Linux Secret Service could not be enumerated: {ex.Message} Ensure a Secret Service provider such as GNOME Keyring or KWallet is installed and unlocked.";
             }
         }
 
