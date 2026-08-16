@@ -50,7 +50,7 @@ Returns the names credentials are stored under, in the same credential store `-N
 
 When the credentials are held in the credential store native to the operating system, only the entries written by PnP PowerShell are returned. When a default vault has been registered through `Microsoft.PowerShell.SecretManagement`, the vault is a general purpose secret store and nothing marks the secrets that PnP PowerShell wrote, so the result may also include credentials in that vault that were stored by something else.
 
-Listing on Linux requires `secret-tool` (the `libsecret-tools` package). If the credential store cannot be read, a warning is written explaining why, so that an empty result is never mistaken for an empty credential store.
+Only the names are read, never the stored secrets themselves. If the credential store cannot be read, a warning is written explaining why, so that an empty result is never mistaken for an empty credential store.
 
 ```yaml
 Type: SwitchParameter

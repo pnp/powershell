@@ -2,9 +2,9 @@
 using Microsoft.Win32.SafeHandles;
 using PnP.Framework.Modernization.Cache;
 using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Extensions.Linux;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
@@ -16,7 +16,6 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 [assembly: InternalsVisibleTo("PnP.PowerShell.Tests")]
@@ -34,14 +33,10 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>The prefix every credential is stored under in the credential store native to the operating system.</summary>
         private const string CredentialNamePrefix = "PnPPS:";
 
-        /// <summary>The attribute secret-tool prints the name of a stored credential under.</summary>
-        private const string LinuxNameAttributePrefix = "attribute.Name";
-
-        /// <summary>How long an external credential store command may take before it is killed.</summary>
-        private const int ProcessTimeoutMilliseconds = 30000;
-
-        /// <summary>How many lines of a failing command's error output are kept to explain the failure.</summary>
-        private const int MaximumDiagnosticLines = 3;
+        /// <summary>The Secret Service attributes every entry is written with, and read back by to enumerate them.</summary>
+        private const string LinuxProductAttributeName = "Product";
+        private const string LinuxProductAttributeValue = "PnPPowerShell";
+        private const string LinuxNameAttributeName = "Name";
 
         /// <summary>The Windows ERROR_NOT_FOUND, which CredEnumerate returns when no entry matches the filter.</summary>
         private const int ErrorNotFound = 1168;
@@ -564,147 +559,21 @@ namespace PnP.PowerShell.Commands.Utilities
 
         private static void AddLinuxCredentialEntries(StoredCredentialList result)
         {
-            // secret-tool splits its output: measured on libsecret 0.21.4 the attributes go to stderr and the secrets to stdout.
-            // Both streams are filtered down to the attribute lines as they arrive, so the names are found and no secret is retained
-            if (!TryRunProcess("secret-tool", "search --all Product PnPPowerShell",
-                               line => line.TrimStart().StartsWith(LinuxNameAttributePrefix, StringComparison.Ordinal),
-                               out var lines, out var error))
-            {
-                result.Warning = $"The Linux Secret Service could not be enumerated: {error} Ensure that secret-tool (libsecret-tools) is installed and that a Secret Service provider such as GNOME Keyring or KWallet is installed and unlocked.";
-                return;
-            }
-
-            foreach (var line in lines)
-            {
-                // secret-tool prints attributes as "attribute.<key> = <value>"
-                var separatorIndex = line.IndexOf('=');
-                if (separatorIndex < 0)
-                {
-                    continue;
-                }
-
-                var name = line.Substring(separatorIndex + 1).Trim();
-                if (name.StartsWith(CredentialNamePrefix, StringComparison.OrdinalIgnoreCase))
-                {
-                    result.Names.Add(name.Substring(CredentialNamePrefix.Length));
-                }
-            }
-        }
-
-        /// <summary>Runs a command and returns the lines of either stream passing <paramref name="lineFilter"/>, discarding the rest as
-        /// they arrive so secrets are never accumulated. Both streams are read concurrently to avoid deadlock, and it is killed on timeout.</summary>
-        private static bool TryRunProcess(string fileName, string arguments, Func<string, bool> lineFilter, out List<string> lines, out string error)
-        {
-            lines = new List<string>();
-            error = null;
-
-            var processStartInfo = new ProcessStartInfo
-            {
-                FileName = fileName,
-                Arguments = arguments,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            Process process;
             try
             {
-                process = Process.Start(processStartInfo);
+                // Reads item attributes straight from libsecret. Listing names must not decrypt secrets, which is what shelling
+                // out to secret-tool would do - its search always loads the secret of every item it matches
+                foreach (var name in LinuxSecretService.GetItemAttributeValues(LinuxProductAttributeName, LinuxProductAttributeValue, LinuxNameAttributeName))
+                {
+                    if (name.StartsWith(CredentialNamePrefix, StringComparison.OrdinalIgnoreCase))
+                    {
+                        result.Names.Add(name.Substring(CredentialNamePrefix.Length));
+                    }
+                }
             }
             catch (Exception ex)
             {
-                error = $"the command '{fileName}' could not be started: {ex.Message}.";
-                return false;
-            }
-
-            if (process == null)
-            {
-                error = $"the command '{fileName}' could not be started.";
-                return false;
-            }
-
-            using (process)
-            {
-                var collectedLines = new List<string>();
-                var diagnosticLines = new List<string>();
-                var collected = new object();
-
-                void ReadStream(StreamReader reader, bool isErrorStream)
-                {
-                    try
-                    {
-                        string line;
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            var isWanted = lineFilter == null || lineFilter(line);
-                            lock (collected)
-                            {
-                                if (isWanted)
-                                {
-                                    collectedLines.Add(line);
-                                }
-                                else if (isErrorStream && diagnosticLines.Count < MaximumDiagnosticLines && !line.TrimStart().StartsWith("secret", StringComparison.OrdinalIgnoreCase))
-                                {
-                                    // Kept only to explain a non-zero exit code. Anything that looks like a secret is left out
-                                    diagnosticLines.Add(line.Trim());
-                                }
-                            }
-                        }
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                        // Killing the process on a timeout tears the stream down underneath this loop, which is the intent
-                    }
-                }
-
-                var readers = new[]
-                {
-                    Task.Run(() => ReadStream(process.StandardOutput, false)),
-                    Task.Run(() => ReadStream(process.StandardError, true))
-                };
-
-                try
-                {
-                    if (!Task.WaitAll(readers, ProcessTimeoutMilliseconds) || !process.WaitForExit(ProcessTimeoutMilliseconds))
-                    {
-                        KillProcess(process);
-                        error = $"the command '{fileName}' did not complete in time.";
-                        return false;
-                    }
-                }
-                catch (AggregateException ex)
-                {
-                    KillProcess(process);
-                    error = $"the output of the command '{fileName}' could not be read: {ex.GetBaseException().Message}.";
-                    return false;
-                }
-
-                if (process.ExitCode != 0)
-                {
-                    var reason = diagnosticLines.Count > 0 ? $": {string.Join(" ", diagnosticLines)}" : ".";
-                    error = $"the command '{fileName}' exited with code {process.ExitCode}{reason}";
-                    return false;
-                }
-
-                lines = collectedLines;
-                return true;
-            }
-        }
-
-        private static void KillProcess(Process process)
-        {
-            try
-            {
-                if (!process.HasExited)
-                {
-                    process.Kill(entireProcessTree: true);
-                }
-            }
-            catch
-            {
-                // The process may have exited on its own in the meantime, which is the outcome this is after anyway
+                result.Warning = $"The Linux Secret Service could not be enumerated: {ex.Message} Ensure a Secret Service provider such as GNOME Keyring or KWallet is installed and unlocked.";
             }
         }
 
@@ -890,8 +759,8 @@ namespace PnP.PowerShell.Commands.Utilities
                     schemaName: schemaName,
                     collection: MsalCacheHelper.LinuxKeyRingDefaultCollection,
                     secretLabel: secretLabel,
-                    attribute1: new KeyValuePair<string, string>("Product", "PnPPowerShell"),
-                    attribute2: new KeyValuePair<string, string>("Name", name))
+                    attribute1: new KeyValuePair<string, string>(LinuxProductAttributeName, LinuxProductAttributeValue),
+                    attribute2: new KeyValuePair<string, string>(LinuxNameAttributeName, name))
                 .Build();
 
             return Storage.Create(properties);
