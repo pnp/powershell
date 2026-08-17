@@ -433,6 +433,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="clientId">The client Id of the Federated Identity application</param>
         /// <param name="tenant">The tenant Id of the Federated Identity application</param>
         /// <param name="requiredScope">The permission scope to be requested, in the format https://<resource>/<scope>, i.e. https://graph.microsoft.com/Group.Read.All</param>
+        /// <param name="azureEnvironment">The cloud to authenticate against, which selects the Entra ID login endpoint and the audience requested for the CI/CD id token</param>
         /// <returns>Access token</returns>
         /// <exception cref="PSInvalidOperationException">Thrown if unable to retrieve an access token through a managed identity</exception>
         internal static async Task<string> GetFederatedIdentityTokenAsync(string clientId, string tenant, string requiredScope, Framework.AzureEnvironment azureEnvironment)

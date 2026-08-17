@@ -716,6 +716,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="tenantAdminUrl">Url to the SharePoint Online Admin Center site to connect to</param>
         /// <param name="appClientId">The Client ID of the Federated Identity application</param>
         /// <param name="tenantId">The Tenant ID of the Federated Identity application</param>
+        /// <param name="azureEnvironment">The cloud to connect to, which selects the Entra ID login endpoint, the Microsoft Graph endpoint and the audience requested for the CI/CD id token</param>
         /// <returns>Instantiated PnPConnection</returns>
         /// <remarks>
         /// This method is used to create a PnPConnection using a Federated Identity, which allows for authentication without the need for a client secret.
