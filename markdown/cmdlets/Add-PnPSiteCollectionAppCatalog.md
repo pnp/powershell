@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Add-PnPSiteCollectionAppCatalog.html
+schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
 title: Add-PnPSiteCollectionAppCatalog
+Module Name: PnP.PowerShell
 ---
-  
+   
 # Add-PnPSiteCollectionAppCatalog
 
 ## SYNOPSIS
@@ -77,3 +78,4 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Microsoft Graph documentation](https://learn.microsoft.com/sharepoint/dev/general-development/site-collection-app-catalog#configure-and-manage-site-collection-app-catalogs)
+

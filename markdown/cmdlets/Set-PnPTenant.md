@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Set-PnPTenant
-schema: 2.0.0
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTenant.html
+schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPTenant
+Module Name: PnP.PowerShell
 ---
- 
+  
 # Set-PnPTenant
 
 ## SYNOPSIS
@@ -3526,3 +3527,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

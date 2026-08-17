@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Disable-PnPFeature.html
+schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
 title: Disable-PnPFeature
+Module Name: PnP.PowerShell
 ---
-  
+   
 # Disable-PnPFeature
 
 ## SYNOPSIS
@@ -109,5 +110,6 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 
 

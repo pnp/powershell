@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Sync-PnPAppToTeams
-schema: 2.0.0
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Sync-PnPAppToTeams.html
+schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
+title: Sync-PnPAppToTeams
+Module Name: PnP.PowerShell
 ---
- 
+  
 # Sync-PnPAppToTeams
 
 ## SYNOPSIS
@@ -64,4 +65,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 

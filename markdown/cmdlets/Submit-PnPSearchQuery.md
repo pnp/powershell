@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Submit-PnPSearchQuery
-schema: 2.0.0
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Submit-PnPSearchQuery.html
+schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
+title: Submit-PnPSearchQuery
+Module Name: PnP.PowerShell
 ---
- 
+  
 # Submit-PnPSearchQuery
 
 ## SYNOPSIS
@@ -476,3 +477,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

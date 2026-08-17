@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Remove-PnPManagedAppId
-schema: 2.0.0
+tags: Available in the current Nightly Release only.
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPManagedAppId.html
+schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
+title: Remove-PnPManagedAppId
+Module Name: PnP.PowerShell
 ---
- 
+  
 # Remove-PnPManagedAppId
 
 ## SYNOPSIS
@@ -63,4 +64,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 
