@@ -90,11 +90,6 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public InitializationType InitializationType { get; protected set; }
 
-        /// <summary>
-        /// used to retrieve a new token in case the current token expires
-        /// </summary>
-        public string[] Scopes { get; internal set; }
-
         public PSCredential PSCredential { get; protected set; }
 
         /// <summary>
@@ -725,7 +720,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <remarks>
         /// This method is used to create a PnPConnection using a Federated Identity, which allows for authentication without the need for a client secret.
         /// </remarks>
-        internal static PnPConnection CreateWithFederatedIdentity(string url, string tenantAdminUrl, string appClientId, string tenantId)
+        internal static PnPConnection CreateWithFederatedIdentity(string url, string tenantAdminUrl, string appClientId, string tenantId, AzureEnvironment azureEnvironment)
         {
             string defaultResource = "https://graph.microsoft.com/.default";
             if (url != null)
@@ -735,7 +730,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             Log.Debug("PnPConnection", "Acquiring token for resource " + defaultResource);
-            var accessToken = TokenHandler.GetFederatedIdentityTokenAsync(appClientId, tenantId, defaultResource).GetAwaiter().GetResult();
+            var accessToken = TokenHandler.GetFederatedIdentityTokenAsync(appClientId, tenantId, defaultResource, azureEnvironment).GetAwaiter().GetResult();
 
             // Set up the AuthenticationManager in PnP Framework to use a Federated Identity context
             using (var authManager = new Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
@@ -747,9 +742,14 @@ namespace PnP.PowerShell.Commands.Base
                     context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                     context.ApplicationName = Resources.ApplicationName;
                     context.DisableReturnValueCache = true;
+
+                    // PnP.Framework's handler injects the token acquired above, which expires, so this one overrides it with a fresh MSAL-cached token per request.
+                    var capturedDefaultResource = defaultResource;
                     context.ExecutingWebRequest += (sender, e) =>
                     {
                         e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                        var freshToken = TokenHandler.GetFederatedIdentityTokenAsync(appClientId, tenantId, capturedDefaultResource, azureEnvironment).GetAwaiter().GetResult();
+                        e.WebRequestExecutor.RequestHeaders["Authorization"] = $"Bearer {freshToken}";
                     };
                     if (IsTenantAdminSite(context))
                     {
@@ -760,6 +760,7 @@ namespace PnP.PowerShell.Commands.Base
                 var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.FederatedIdentity);
                 connection.ClientId = appClientId ?? Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_CLIENT_ID");
                 connection.Tenant = tenantId ?? Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_TENANT_ID");
+                connection.AzureEnvironment = azureEnvironment;
                 return connection;
             }
         }

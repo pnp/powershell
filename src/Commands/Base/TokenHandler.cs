@@ -31,6 +31,24 @@ namespace PnP.PowerShell.Commands.Base
         // without rebuilding the HTTP client, authority metadata, and builder overhead on every call.
         private static readonly ConcurrentDictionary<string, IConfidentialClientApplication> _confidentialClientAppCache = new();
 
+        // One app per federated identity configuration and cloud, so MSAL owns the access token cache and its renewal.
+        private static readonly ConcurrentDictionary<string, IConfidentialClientApplication> _federatedIdentityClientAppCache = new();
+
+        private enum FederatedIdentityProvider
+        {
+            GitHubActions,
+            AzureDevOps,
+            GitLabCI
+        }
+
+        private sealed class FederatedIdentityConfiguration
+        {
+            internal string ClientId { get; init; }
+            internal string Tenant { get; init; }
+            internal FederatedIdentityProvider Provider { get; init; }
+            internal Func<Task<string>> FederationTokenFactory { get; init; }
+        }
+
         /// <summary>
         /// Returns the type of oAuth JWT token being passed in (Delegate/AppOnly)
         /// </summary>
@@ -278,7 +296,7 @@ namespace PnP.PowerShell.Commands.Base
             else if (connection.ConnectionMethod == ConnectionMethod.FederatedIdentity)
             {
                 PnP.Framework.Diagnostics.Log.Debug("TokenHandler", $"Acquiring token for resource {requestedAudience} using Federated Identity");
-                accessToken = GetFederatedIdentityTokenAsync(connection.ClientId, connection.Tenant, requestedAudience).GetAwaiter().GetResult();
+                accessToken = GetFederatedIdentityTokenAsync(connection.ClientId, connection.Tenant, requestedAudience, connection.AzureEnvironment).GetAwaiter().GetResult();
             }
             else
             {
@@ -417,13 +435,110 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="requiredScope">The permission scope to be requested, in the format https://<resource>/<scope>, i.e. https://graph.microsoft.com/Group.Read.All</param>
         /// <returns>Access token</returns>
         /// <exception cref="PSInvalidOperationException">Thrown if unable to retrieve an access token through a managed identity</exception>
-        internal static async Task<string> GetFederatedIdentityTokenAsync(string clientId, string tenant, string requiredScope)
+        internal static async Task<string> GetFederatedIdentityTokenAsync(string clientId, string tenant, string requiredScope, Framework.AzureEnvironment azureEnvironment)
         {
             if (string.IsNullOrWhiteSpace(requiredScope))
             {
                 throw new PSInvalidOperationException("A required scope must be provided to acquire an access token using Federated Identity.");
             }
 
+            var configuration = ResolveFederatedIdentityConfiguration(clientId, tenant, azureEnvironment);
+
+            // Trailing slash matters: MSAL appends the tenant to this as a relative Uri, which would otherwise drop the last segment.
+            var loginEndPoint = $"{GetAzureADLoginEndPoint(azureEnvironment).TrimEnd('/')}/";
+
+            var normalizedClientId = configuration.ClientId.Trim();
+            var normalizedTenant = configuration.Tenant.Trim();
+
+            var cacheKey = $"{normalizedClientId.ToLowerInvariant()}:{normalizedTenant.ToLowerInvariant()}:{configuration.Provider}:{loginEndPoint.ToLowerInvariant()}";
+            var confidentialClientApp = _federatedIdentityClientAppCache.GetOrAdd(cacheKey, _ =>
+                ConfidentialClientApplicationBuilder.Create(normalizedClientId)
+                    .WithAuthority(loginEndPoint, normalizedTenant)
+                    // Minted per acquisition so a rotated CI/CD id token is followed; MSAL caches the access token it exchanges for.
+                    .WithClientAssertion((AssertionRequestOptions assertionOptions) => configuration.FederationTokenFactory())
+                    // The authority comes from the selected cloud, not from an untrusted response, 
+                    // so skip the discovery call to login.microsoftonline.com which a sovereign or air-gapped cloud cannot reach.
+                    .WithInstanceDiscovery(false)
+                    .WithCacheOptions(CacheOptions.EnableSharedCacheOptions)
+                    .Build());
+
+            AuthenticationResult result;
+            try
+            {
+                result = await confidentialClientApp
+                            .AcquireTokenForClient(new string[] { requiredScope })
+                            .ExecuteAsync()
+                            .ConfigureAwait(false);
+            }
+            catch (MsalServiceException ex) when (ex.Message.Contains("AADSTS70011", StringComparison.OrdinalIgnoreCase) || string.Equals(ex.ErrorCode, "invalid_scope", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new PSInvalidOperationException($"Unable to acquire a Federated Identity access token because the requested scope '{requiredScope}' is invalid. The scope must be in the form 'https://resourceurl/.default'. {ex.Message}", ex);
+            }
+            catch (MsalException ex)
+            {
+                var innerPowerShellException = GetInnerException<PSInvalidOperationException>(ex);
+                if (innerPowerShellException != null)
+                {
+                    throw new PSInvalidOperationException(innerPowerShellException.Message, innerPowerShellException);
+                }
+
+                throw new PSInvalidOperationException(FormatMsalErrorMessage("Unable to acquire a Federated Identity access token", ex), ex);
+            }
+
+            if (string.IsNullOrWhiteSpace(result?.AccessToken))
+            {
+                throw new PSInvalidOperationException("Unable to acquire a Federated Identity access token because the identity provider response did not contain an access token.");
+            }
+
+            return result.AccessToken;
+        }
+
+        /// <summary>
+        /// Returns the Entra ID login endpoint of the provided cloud, so that federated identity works outside of the commercial cloud too
+        /// </summary>
+        private static string GetAzureADLoginEndPoint(Framework.AzureEnvironment azureEnvironment)
+        {
+            if (azureEnvironment != Framework.AzureEnvironment.Custom)
+            {
+                return Framework.AuthenticationManager.GetAzureADLoginEndPointStatic(azureEnvironment);
+            }
+
+            // Custom clouds carry their endpoint in configuration, which Connect-PnPOnline -AzureADLoginEndPoint writes.
+            using var authManager = new Framework.AuthenticationManager();
+            return authManager.GetAzureAdLoginEndPointForCustomAzureEnvironmentConfiguration();
+        }
+
+        /// <summary>
+        /// Returns the audience Entra ID expects in the incoming CI/CD id token, which differs per Entra service and must match the audience on the federated identity credential
+        /// </summary>
+        /// <remarks>
+        /// Only three values are published: api://AzureADTokenExchange for the global service, api://AzureADTokenExchangeUSGov for Entra ID for US Government and
+        /// api://AzureADTokenExchangeChina for Entra China operated by 21Vianet. Note that US Government Community Cloud (moderate) runs on the global service, so
+        /// only the GCC High and DoD environments take the US Government audience. Clouds without a published value fall back to the global one and can be
+        /// overridden through the PNPPOWERSHELL_FEDERATEDIDENTITY_AUDIENCE environment variable.
+        /// </remarks>
+        private static string GetFederatedIdentityAudience(Framework.AzureEnvironment azureEnvironment)
+        {
+            var configuredAudience = Environment.GetEnvironmentVariable("PNPPOWERSHELL_FEDERATEDIDENTITY_AUDIENCE");
+            if (!string.IsNullOrWhiteSpace(configuredAudience))
+            {
+                return configuredAudience.Trim();
+            }
+
+            return azureEnvironment switch
+            {
+                Framework.AzureEnvironment.USGovernmentHigh or Framework.AzureEnvironment.USGovernmentDoD => "api://AzureADTokenExchangeUSGov",
+                Framework.AzureEnvironment.China => "api://AzureADTokenExchangeChina",
+                _ => "api://AzureADTokenExchange"
+            };
+        }
+
+        /// <summary>
+        /// Determines which CI/CD platform is hosting this run and returns the client Id, tenant and federation token factory to use for it.
+        /// </summary>
+        /// <remarks>The factory re-reads the environment variables so a refreshed id token is followed, not pinned to the first acquisition.</remarks>
+        private static FederatedIdentityConfiguration ResolveFederatedIdentityConfiguration(string clientId, string tenant, Framework.AzureEnvironment azureEnvironment)
+        {
             var actionsIdTokenRequestUrl = Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_URL");
             var actionsIdTokenRequestToken = Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_TOKEN");
             var systemOidcRequestUri = Environment.GetEnvironmentVariable("SYSTEM_OIDCREQUESTURI");
@@ -439,8 +554,16 @@ namespace PnP.PowerShell.Commands.Base
 
                 Framework.Diagnostics.Log.Debug("TokenHandler", "ACTIONS_ID_TOKEN_REQUEST_URL and ACTIONS_ID_TOKEN_REQUEST_TOKEN env variables found. The context is GitHub Actions...");
 
-                var federationToken = await GetFederationTokenFromGithubAsync(actionsIdTokenRequestUrl, actionsIdTokenRequestToken);
-                return await GetAccessTokenWithFederatedTokenAsync(clientId, tenant, requiredScope, federationToken);
+                return new FederatedIdentityConfiguration
+                {
+                    ClientId = clientId,
+                    Tenant = tenant,
+                    Provider = FederatedIdentityProvider.GitHubActions,
+                    FederationTokenFactory = () => GetFederationTokenFromGithubAsync(
+                        Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_URL"),
+                        Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_TOKEN"),
+                        GetFederatedIdentityAudience(azureEnvironment))
+                };
             }
             else if (!string.IsNullOrWhiteSpace(systemOidcRequestUri))
             {
@@ -466,8 +589,16 @@ namespace PnP.PowerShell.Commands.Base
 
                 Framework.Diagnostics.Log.Debug("TokenHandler", $"Using service connection '{serviceConnectionId}' with app Id '{serviceConnectionAppId}' and tenant Id '{serviceConnectionTenantId}'...");
 
-                var federationToken = await GetFederationTokenFromAzureDevOpsAsync(systemOidcRequestUri, systemAccessToken, serviceConnectionId);
-                return await GetAccessTokenWithFederatedTokenAsync(serviceConnectionAppId, serviceConnectionTenantId, requiredScope, federationToken);
+                return new FederatedIdentityConfiguration
+                {
+                    ClientId = serviceConnectionAppId,
+                    Tenant = serviceConnectionTenantId,
+                    Provider = FederatedIdentityProvider.AzureDevOps,
+                    FederationTokenFactory = () => GetFederationTokenFromAzureDevOpsAsync(
+                        Environment.GetEnvironmentVariable("SYSTEM_OIDCREQUESTURI"),
+                        Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN"),
+                        Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_SERVICE_CONNECTION_ID"))
+                };
             }
             else if (!string.IsNullOrWhiteSpace(gitlabCi) && !string.IsNullOrWhiteSpace(gitlabOidcToken))
             {
@@ -480,7 +611,13 @@ namespace PnP.PowerShell.Commands.Base
 
                 // GitLab's id_tokens feature mints the OIDC JWT directly into the configured job variable, so no
                 // separate request to GitLab is needed to obtain the federation token before exchanging it with Entra ID.
-                return await GetAccessTokenWithFederatedTokenAsync(clientId, tenant, requiredScope, gitlabOidcToken);
+                return new FederatedIdentityConfiguration
+                {
+                    ClientId = clientId,
+                    Tenant = tenant,
+                    Provider = FederatedIdentityProvider.GitLabCI,
+                    FederationTokenFactory = () => Task.FromResult(Environment.GetEnvironmentVariable("GITLAB_OIDC_TOKEN"))
+                };
             }
             else
             {
@@ -488,13 +625,13 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private static async Task<string> GetFederationTokenFromGithubAsync(string requestUrlBase, string requestToken)
+        private static async Task<string> GetFederationTokenFromGithubAsync(string requestUrlBase, string requestToken, string audience)
         {
             try
             {
-                Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving GitHub federation token...");
+                Framework.Diagnostics.Log.Debug("TokenHandler", $"Retrieving GitHub federation token for audience {audience}...");
 
-                var requestUrl = $"{requestUrlBase}&audience={UrlUtilities.UrlEncode("api://AzureADTokenExchange")}";
+                var requestUrl = $"{requestUrlBase}&audience={UrlUtilities.UrlEncode(audience)}";
 
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
@@ -564,57 +701,6 @@ namespace PnP.PowerShell.Commands.Base
             {
                 Framework.Diagnostics.Log.Error("TokenHandler AzureDevOps", ex.Message);
                 throw new PSInvalidOperationException($"Failed to retrieve Azure DevOps federation token: {ex.Message}", ex);
-            }
-        }
-
-        private static async Task<string> GetAccessTokenWithFederatedTokenAsync(string clientId, string tenant, string resource, string federatedToken)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(clientId)) throw new PSInvalidOperationException("A client Id must be provided to acquire a federated access token.");
-                if (string.IsNullOrWhiteSpace(tenant)) throw new PSInvalidOperationException("A tenant Id must be provided to acquire a federated access token.");
-                if (string.IsNullOrWhiteSpace(resource)) throw new PSInvalidOperationException("A resource scope must be provided to acquire a federated access token.");
-                if (string.IsNullOrWhiteSpace(federatedToken)) throw new PSInvalidOperationException("A federation token must be provided to acquire a federated access token.");
-
-                Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving Entra ID access token with federated token...");
-                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-
-                var requestData = new Dictionary<string, string>
-                {
-                    ["grant_type"] = "client_credentials",
-                    ["scope"] = resource,
-                    ["client_id"] = clientId,
-                    ["client_assertion_type"] = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-                    ["client_assertion"] = federatedToken
-                };
-
-                var requestUrl = $"https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token";
-
-                using var request = new HttpRequestMessage(HttpMethod.Post, requestUrl);
-                request.Content = new FormUrlEncodedContent(requestData);
-                request.Headers.Add("Accept", "application/json");
-                request.Headers.Add("x-anonymous", "true");
-
-                using var response = await httpClient.SendAsync(request);
-
-                var responseContent = await response.Content.ReadAsStringAsync();
-                if (!response.IsSuccessStatusCode)
-                {
-                    responseContent = responseContent.Replace("{", "{{").Replace("}", "}}");
-                    throw new HttpRequestException($"Failed to retrieve federated access token. HTTP Error {response.StatusCode}: {responseContent}");
-                }
-
-                Framework.Diagnostics.Log.Debug("TokenHandler", "Successfully retrieved federated access token...");
-                return GetRequiredJsonStringProperty(responseContent, "access_token", "Entra ID access token response");
-            }
-            catch (PSInvalidOperationException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Framework.Diagnostics.Log.Error("TokenHandler", ex.Message);
-                throw new PSInvalidOperationException($"Failed to retrieve federated access token: {ex.Message}", ex);
             }
         }
 
