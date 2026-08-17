@@ -722,7 +722,8 @@ namespace PnP.PowerShell.Commands.Base
         /// </remarks>
         internal static PnPConnection CreateWithFederatedIdentity(string url, string tenantAdminUrl, string appClientId, string tenantId, AzureEnvironment azureEnvironment)
         {
-            string defaultResource = "https://graph.microsoft.com/.default";
+            var graphEndPoint = GetGraphEndPoint(azureEnvironment);
+            string defaultResource = $"https://{graphEndPoint}/.default";
             if (url != null)
             {
                 var resourceUri = new Uri(url);
@@ -761,8 +762,25 @@ namespace PnP.PowerShell.Commands.Base
                 connection.ClientId = appClientId ?? Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_CLIENT_ID");
                 connection.Tenant = tenantId ?? Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_TENANT_ID");
                 connection.AzureEnvironment = azureEnvironment;
+                // The token only AuthenticationManager backing this context carries no cloud, so its Graph endpoint would otherwise resolve to the commercial one.
+                connection._graphEndPoint = graphEndPoint;
                 return connection;
             }
+        }
+
+        /// <summary>
+        /// Returns the Microsoft Graph endpoint without protocol of the provided cloud
+        /// </summary>
+        private static string GetGraphEndPoint(AzureEnvironment azureEnvironment)
+        {
+            if (azureEnvironment != AzureEnvironment.Custom)
+            {
+                return Framework.AuthenticationManager.GetGraphEndPoint(azureEnvironment);
+            }
+
+            // Custom clouds carry their endpoint in configuration, which Connect-PnPOnline -MicrosoftGraphEndPoint writes.
+            using var authManager = new Framework.AuthenticationManager();
+            return authManager.GetGraphEndPointForCustomAzureEnvironmentConfiguration();
         }
         #endregion
 
