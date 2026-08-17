@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands
                     {
                         var resourceUri = new Uri(Connection.Url);
                         var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
-                        return TokenHandler.GetFederatedIdentityTokenAsync(Connection.ClientId, Connection.Tenant, defaultResource).GetAwaiter().GetResult();
+                        return TokenHandler.GetFederatedIdentityTokenAsync(Connection.ClientId, Connection.Tenant, defaultResource, Connection.AzureEnvironment).GetAwaiter().GetResult();
                     }
                     else
                     {
@@ -103,7 +103,7 @@ namespace PnP.PowerShell.Commands
                 }
                 else if (Connection?.ConnectionMethod == ConnectionMethod.FederatedIdentity)
                 {
-                    return TokenHandler.GetFederatedIdentityTokenAsync(Connection.ClientId, Connection.Tenant, $"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
+                    return TokenHandler.GetFederatedIdentityTokenAsync(Connection.ClientId, Connection.Tenant, $"https://{Connection.GraphEndPoint}/.default", Connection.AzureEnvironment).GetAwaiter().GetResult();
                 }
                 else
                 {

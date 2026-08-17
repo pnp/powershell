@@ -90,11 +90,6 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public InitializationType InitializationType { get; protected set; }
 
-        /// <summary>
-        /// used to retrieve a new token in case the current token expires
-        /// </summary>
-        public string[] Scopes { get; internal set; }
-
         public PSCredential PSCredential { get; protected set; }
 
         /// <summary>
@@ -721,13 +716,15 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="tenantAdminUrl">Url to the SharePoint Online Admin Center site to connect to</param>
         /// <param name="appClientId">The Client ID of the Federated Identity application</param>
         /// <param name="tenantId">The Tenant ID of the Federated Identity application</param>
+        /// <param name="azureEnvironment">The cloud to connect to, which selects the Entra ID login endpoint, the Microsoft Graph endpoint and the audience requested for the CI/CD id token</param>
         /// <returns>Instantiated PnPConnection</returns>
         /// <remarks>
         /// This method is used to create a PnPConnection using a Federated Identity, which allows for authentication without the need for a client secret.
         /// </remarks>
-        internal static PnPConnection CreateWithFederatedIdentity(string url, string tenantAdminUrl, string appClientId, string tenantId)
+        internal static PnPConnection CreateWithFederatedIdentity(string url, string tenantAdminUrl, string appClientId, string tenantId, AzureEnvironment azureEnvironment)
         {
-            string defaultResource = "https://graph.microsoft.com/.default";
+            var graphEndPoint = GetGraphEndPoint(azureEnvironment);
+            string defaultResource = $"https://{graphEndPoint}/.default";
             if (url != null)
             {
                 var resourceUri = new Uri(url);
@@ -735,7 +732,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             Log.Debug("PnPConnection", "Acquiring token for resource " + defaultResource);
-            var accessToken = TokenHandler.GetFederatedIdentityTokenAsync(appClientId, tenantId, defaultResource).GetAwaiter().GetResult();
+            var accessToken = TokenHandler.GetFederatedIdentityTokenAsync(appClientId, tenantId, defaultResource, azureEnvironment).GetAwaiter().GetResult();
 
             // Set up the AuthenticationManager in PnP Framework to use a Federated Identity context
             using (var authManager = new Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
@@ -747,9 +744,14 @@ namespace PnP.PowerShell.Commands.Base
                     context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                     context.ApplicationName = Resources.ApplicationName;
                     context.DisableReturnValueCache = true;
+
+                    // PnP.Framework's handler injects the token acquired above, which expires, so this one overrides it with a fresh MSAL-cached token per request.
+                    var capturedDefaultResource = defaultResource;
                     context.ExecutingWebRequest += (sender, e) =>
                     {
                         e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                        var freshToken = TokenHandler.GetFederatedIdentityTokenAsync(appClientId, tenantId, capturedDefaultResource, azureEnvironment).GetAwaiter().GetResult();
+                        e.WebRequestExecutor.RequestHeaders["Authorization"] = $"Bearer {freshToken}";
                     };
                     if (IsTenantAdminSite(context))
                     {
@@ -760,8 +762,26 @@ namespace PnP.PowerShell.Commands.Base
                 var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.FederatedIdentity);
                 connection.ClientId = appClientId ?? Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_CLIENT_ID");
                 connection.Tenant = tenantId ?? Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_TENANT_ID");
+                connection.AzureEnvironment = azureEnvironment;
+                // The token only AuthenticationManager backing this context carries no cloud, so its Graph endpoint would otherwise resolve to the commercial one.
+                connection._graphEndPoint = graphEndPoint;
                 return connection;
             }
+        }
+
+        /// <summary>
+        /// Returns the Microsoft Graph endpoint without protocol of the provided cloud
+        /// </summary>
+        private static string GetGraphEndPoint(AzureEnvironment azureEnvironment)
+        {
+            if (azureEnvironment != AzureEnvironment.Custom)
+            {
+                return Framework.AuthenticationManager.GetGraphEndPoint(azureEnvironment);
+            }
+
+            // Custom clouds carry their endpoint in configuration, which Connect-PnPOnline -MicrosoftGraphEndPoint writes.
+            using var authManager = new Framework.AuthenticationManager();
+            return authManager.GetGraphEndPointForCustomAzureEnvironmentConfiguration();
         }
         #endregion
 

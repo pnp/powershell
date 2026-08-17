@@ -946,7 +946,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             LogDebug("Connecting using Federated Identity Credentials");
 
-            return PnPConnection.CreateWithFederatedIdentity(Url, TenantAdminUrl, ClientId, Tenant);
+            return PnPConnection.CreateWithFederatedIdentity(Url, TenantAdminUrl, ClientId, Tenant, AzureEnvironment);
         }
         #endregion
 
