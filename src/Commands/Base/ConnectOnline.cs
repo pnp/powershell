@@ -1016,48 +1016,41 @@ namespace PnP.PowerShell.Commands.Base
         private string GetAppId()
         {
             var connectionUri = new Uri(Url);
-            // Try to get the credentials by full url
-            string appId = PnPConnection.GetCacheClientId(connectionUri.ToString()) ?? Utilities.CredentialManager.GetAppId(connectionUri.ToString());
-            if (appId == null)
+
+            // An app id stored with Set-PnPManagedAppId is chosen deliberately for this URL, so it outranks the persisted login cache, which holds an entry per application that has persisted login and is matched on URL alone.
+            return GetStoredAppId(connectionUri) ?? PnPConnection.GetCacheClientId(connectionUri.ToString());
+        }
+
+        /// <summary>Reads the app id stored for the URL, retrying with ever less specific forms of it.</summary>
+        private static string GetStoredAppId(Uri connectionUri)
+        {
+            // Try to get the app id by full url
+            var appId = Utilities.CredentialManager.GetAppId(connectionUri.ToString());
+            if (appId != null)
             {
-                // Try to get the credentials by splitting up the path
-                var pathString = $"{connectionUri.Scheme}://{(connectionUri.IsDefaultPort ? connectionUri.Host : $"{connectionUri.Host}:{connectionUri.Port}")}";
-                var path = connectionUri.AbsolutePath;
-                while (path.IndexOf('/') != -1)
-                {
-                    path = path.Substring(0, path.LastIndexOf('/'));
-                    if (!string.IsNullOrEmpty(path))
-                    {
-                        var pathUrl = $"{pathString}{path}";
-                        appId = PnPConnection.GetCacheClientId(connectionUri.ToString()) ?? Utilities.CredentialManager.GetAppId(pathUrl);
-                        if (appId != null)
-                        {
-                            break;
-                        }
-                    }
-                }
-
-                if (appId == null)
-                {
-                    // Try to find the credentials by schema and hostname
-                    appId = PnPConnection.GetCacheClientId(connectionUri.ToString()) ?? Utilities.CredentialManager.GetAppId(connectionUri.Scheme + "://" + connectionUri.Host);
-
-                    if (appId == null)
-                    {
-                        // Maybe added with an extra slash?
-                        appId = PnPConnection.GetCacheClientId(connectionUri.ToString()) ?? Utilities.CredentialManager.GetAppId(connectionUri.Scheme + "://" + connectionUri.Host + "/");
-
-                        if (appId == null)
-                        {
-                            // try to find the credentials by hostname
-                            appId = PnPConnection.GetCacheClientId(connectionUri.ToString()) ?? Utilities.CredentialManager.GetAppId(connectionUri.Host);
-                        }
-                    }
-                }
-
+                return appId;
             }
 
-            return appId;
+            // Try to get the app id by splitting up the path
+            var pathString = $"{connectionUri.Scheme}://{(connectionUri.IsDefaultPort ? connectionUri.Host : $"{connectionUri.Host}:{connectionUri.Port}")}";
+            var path = connectionUri.AbsolutePath;
+            while (path.IndexOf('/') != -1)
+            {
+                path = path.Substring(0, path.LastIndexOf('/'));
+                if (!string.IsNullOrEmpty(path))
+                {
+                    appId = Utilities.CredentialManager.GetAppId($"{pathString}{path}");
+                    if (appId != null)
+                    {
+                        return appId;
+                    }
+                }
+            }
+
+            // Try by schema and hostname, then with an extra slash, then by hostname alone
+            return Utilities.CredentialManager.GetAppId($"{connectionUri.Scheme}://{connectionUri.Host}")
+                ?? Utilities.CredentialManager.GetAppId($"{connectionUri.Scheme}://{connectionUri.Host}/")
+                ?? Utilities.CredentialManager.GetAppId(connectionUri.Host);
         }
 
         private bool IsSameOrAdminHost(Uri currentUri, Uri previousUri)

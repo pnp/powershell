@@ -1198,30 +1198,15 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static bool CacheEnabled(string url, string clientid)
         {
-            var settings = Settings.Current;
-
-            var cacheEntries = settings.Cache;
             var urls = GetCheckUrls(url);
-            var entry = settings.Cache?.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
-            if (entry != null && entry.Enabled)
-            {
-                return true;
-            }
-            return false;
+            return Settings.Current.Cache?.Any(c => urls.Contains(c.Url) && c.ClientId == clientid && c.Enabled) == true;
         }
 
         internal static string GetCacheClientId(string url)
         {
-            var settings = Settings.Current;
-
-            var cacheEntries = settings.Cache;
             var urls = GetCheckUrls(url);
-            var entry = settings.Cache?.FirstOrDefault(c => urls.Contains(c.Url));
-            if (entry != null && entry.Enabled)
-            {
-                return entry.ClientId;
-            }
-            return null;
+            // Enabled belongs in the match: the cache holds an entry per application, so a disabled entry for a URL must not hide an enabled one for the same URL.
+            return Settings.Current.Cache?.FirstOrDefault(c => urls.Contains(c.Url) && c.Enabled)?.ClientId;
         }
 
         private static List<string> GetCheckUrls(string url)

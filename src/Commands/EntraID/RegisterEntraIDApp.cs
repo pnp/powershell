@@ -153,6 +153,12 @@ namespace PnP.PowerShell.Commands.EntraID
                 OutPath = SessionState.Path.CurrentFileSystemLocation.Path;
             }
 
+            // Checked before authenticating: the certificate is only written when the folder already exists, so a folder that does not would leave a registered and consented application whose key material exists nowhere.
+            if (!SkipCertCreation && !Directory.Exists(OutPath))
+            {
+                throw new PSArgumentException($"The folder {OutPath} does not exist, so the certificate would not be written anywhere and nothing could authenticate as the application. Create the folder, or pass one that exists.", nameof(OutPath));
+            }
+
             var redirectUri = "http://localhost";
             // if (ParameterSpecified(nameof(DeviceLogin)) || OperatingSystem.IsMacOS())
             if (ParameterSpecified(nameof(DeviceLogin)) || OperatingSystem.IsMacOS())
