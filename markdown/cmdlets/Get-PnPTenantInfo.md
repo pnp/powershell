@@ -1,13 +1,12 @@
 ---
-tags: Available in the current Nightly Release only.
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantInfo.html
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPTenantInfo
 Module Name: PnP.PowerShell
+title: Get-PnPTenantInfo
+schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantInfo.html
 ---
-  
+ 
 # Get-PnPTenantInfo
 
 ## SYNOPSIS
@@ -128,4 +127,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

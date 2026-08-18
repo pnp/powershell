@@ -1,13 +1,12 @@
 ---
-tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Add-PnPTenantRestrictedSearchAllowedList.html
-schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
 title: Add-PnPTenantRestrictedSearchAllowedList
-Module Name: PnP.PowerShell
 ---
-   
+  
 # Add-PnPTenantRestrictedSearchAllowedList
 
 ## SYNOPSIS
@@ -120,4 +119,3 @@ Accept wildcard characters: False
 
 [How does Restricted SharePoint Search work?](https://learn.microsoft.com/sharepoint/restricted-sharepoint-search)
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

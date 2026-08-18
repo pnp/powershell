@@ -1,13 +1,12 @@
 ---
-tags: Available in the current Nightly Release only.
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Publish-PnPApp.html
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
-title: Publish-PnPApp
 Module Name: PnP.PowerShell
+title: Publish-PnPApp
+schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Publish-PnPApp.html
 ---
-  
+ 
 # Publish-PnPApp
 
 ## SYNOPSIS
@@ -114,5 +113,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 

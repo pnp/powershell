@@ -1,13 +1,12 @@
 ---
-tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPFileRetentionLabel.html
-schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
 title: Set-PnPFileRetentionLabel
-Module Name: PnP.PowerShell
 ---
- 
+
 # Set-PnPFileRetentionLabel
 
 ## SYNOPSIS
@@ -105,4 +104,3 @@ Accept wildcard characters: False
 [Setting a retention label through Microsoft Graph](https://learn.microsoft.com/graph/api/driveitem-setretentionlabel)
 [Removing a retention label through Microsoft Graph](https://learn.microsoft.com/graph/api/driveitem-removeretentionlabel)
 [Locking or unlocking a file through Microsoft Graph](https://learn.microsoft.com/graph/api/driveitem-lockorunlockrecord)
-

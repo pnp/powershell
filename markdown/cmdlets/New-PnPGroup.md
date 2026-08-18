@@ -1,13 +1,12 @@
 ---
-tags: Available in the current Nightly Release only.
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPGroup.html
-schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
-title: New-PnPGroup
 Module Name: PnP.PowerShell
+title: New-PnPGroup
+schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/New-PnPGroup.html
 ---
-  
+ 
 # New-PnPGroup
 
 ## SYNOPSIS
@@ -181,5 +180,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 

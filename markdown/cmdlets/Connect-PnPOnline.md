@@ -1,13 +1,12 @@
 ---
-tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html
-schema: 2.0.0
 external help file: PnP.PowerShell.dll-Help.xml
 title: Connect-PnPOnline
-Module Name: PnP.PowerShell
 ---
- 
+
 # Connect-PnPOnline
 
 ## SYNOPSIS
@@ -314,7 +313,7 @@ Connect to SharePoint/Microsoft Graph using federated identity credentials in Az
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentity
 ```
 
-Connect to SharePoint/Microsoft Graph using federated identity credentials in GitLab CI/CD. This requires the job to request an ID token named `GITLAB_OIDC_TOKEN` with audience `api://AzureADTokenExchange`, for example:
+Connect to SharePoint/Microsoft Graph using federated identity credentials in GitLab CI/CD. This requires the job to request an ID token named `GITLAB_OIDC_TOKEN` with the audience of the Entra ID service your cloud runs on, which is `api://AzureADTokenExchange` for the commercial cloud, for example:
 
 ```yaml
 job:
@@ -323,7 +322,7 @@ job:
       aud: api://AzureADTokenExchange
 ```
 
-The corresponding federated credential on the Entra ID app registration must have issuer `https://gitlab.com` (or your self-managed GitLab instance URL) and a subject matching the GitLab OIDC claim for the job, e.g. `project_path:<group>/<project>:ref_type:branch:ref:<branch>`.
+The corresponding federated credential on the Entra ID app registration must have issuer `https://gitlab.com` (or your self-managed GitLab instance URL), the same audience, and a subject matching the GitLab OIDC claim for the job, e.g. `project_path:<group>/<project>:ref_type:branch:ref:<branch>`.
 
 ## PARAMETERS
 
@@ -898,6 +897,10 @@ Accept wildcard characters: False
 
 Connects using Federated Identity. Use this option for GitHub Actions, Azure DevOps and GitLab CI/CD pipelines. For Azure workload identity environments that provide `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_AUTHORITY_HOST`, and `AZURE_FEDERATED_TOKEN_FILE`, use `-AzureADWorkloadIdentity` instead. For more information on this, you can visit [this link](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest).
 
+The Entra ID login endpoint and the Microsoft Graph endpoint follow `-AzureEnvironment` on every platform. The audience of the id token which is exchanged for an access token must match the Entra ID service your cloud runs on as well: `api://AzureADTokenExchangeUSGov` for `USGovernmentHigh` and `USGovernmentDoD`, `api://AzureADTokenExchangeChina` for `China` and `api://AzureADTokenExchange` for every other cloud, including `USGovernment`, as US Government Community Cloud (moderate) runs on the global Entra ID service. The federated credential on the Entra ID app registration must be configured with that same audience.
+
+Only on GitHub Actions is the id token requested for you, so only there does `-AzureEnvironment` pick the audience. On Azure DevOps it comes from the service connection and on GitLab CI/CD from the `aud` of the `GITLAB_OIDC_TOKEN` id token, so on those platforms set it to the value for your cloud yourself. Set the `PNPPOWERSHELL_FEDERATEDIDENTITY_AUDIENCE` environment variable to override what is requested on GitHub Actions, for example in a cloud for which Microsoft publishes no audience of its own.
+
 This option is available from version 3.1.51-nightly onwards.
 
 ```yaml
@@ -915,4 +918,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
