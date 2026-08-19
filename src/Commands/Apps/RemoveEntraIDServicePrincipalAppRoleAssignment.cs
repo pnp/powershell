@@ -10,7 +10,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPEntraIDServicePrincipalAppRoleAssignment", DefaultParameterSetName = ParameterSet_USER, SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPEntraIDServicePrincipalAppRoleAssignment", DefaultParameterSetName = ParameterSet_USER, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.None)]
     [RequiredApiDelegatedOrApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All")]
     [OutputType(typeof(void))]
     [Alias("Remove-PnPAzureADServicePrincipalAppRoleAssignment")]
@@ -43,8 +43,36 @@ namespace PnP.PowerShell.Commands.Apps
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
-        // Passing -Confirm either way leaves the asking to ShouldProcess, so the prompt below would be a second one for the same removal
-        private bool ConfirmHandledByShouldProcess => MyInvocation.BoundParameters.ContainsKey("Confirm");
+        // -Confirm binds per invocation and does not reach $ConfirmPreference from a compiled cmdlet, so both are read
+        private bool ConfirmSuppressed
+        {
+            get
+            {
+                if (MyInvocation.BoundParameters.TryGetValue("Confirm", out var confirm) && confirm is SwitchParameter confirmSwitch)
+                {
+                    return !confirmSwitch.ToBool();
+                }
+
+                return EffectiveConfirmPreference() == ConfirmImpact.None;
+            }
+        }
+
+        private ConfirmImpact EffectiveConfirmPreference()
+        {
+            var value = GetVariableValue("ConfirmPreference");
+
+            if (value is PSObject psObject)
+            {
+                value = psObject.BaseObject;
+            }
+
+            if (value is ConfirmImpact preference)
+            {
+                return preference;
+            }
+
+            return Enum.TryParse<ConfirmImpact>(value?.ToString(), true, out var parsed) ? parsed : ConfirmImpact.High;
+        }
 
         protected override void ExecuteCmdlet()
         {
@@ -57,7 +85,7 @@ namespace PnP.PowerShell.Commands.Apps
                     return;
                 }
 
-                if (!Force && !ConfirmHandledByShouldProcess && !ShouldContinue($"Remove app role assignment {target} on {resourceName}?", Properties.Resources.Confirm))
+                if (!Force && !ConfirmSuppressed && !ShouldContinue($"Remove app role assignment {target} on {resourceName}?", Properties.Resources.Confirm))
                 {
                     return;
                 }
@@ -101,7 +129,7 @@ namespace PnP.PowerShell.Commands.Apps
                 return;
             }
 
-            if (!Force && !ConfirmHandledByShouldProcess && !ShouldContinue($"Remove {description}?", Properties.Resources.Confirm))
+            if (!Force && !ConfirmSuppressed && !ShouldContinue($"Remove {description}?", Properties.Resources.Confirm))
             {
                 return;
             }
