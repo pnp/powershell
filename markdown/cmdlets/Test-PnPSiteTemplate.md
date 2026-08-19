@@ -1,11 +1,11 @@
 ---
 Module Name: PnP.PowerShell
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-online version: https://pnp.github.io/powershell/cmdlets/Test-PnPSiteTemplate.html
-external help file: PnP.PowerShell.dll-Help.xml
-schema: 2.0.0
 title: Test-PnPSiteTemplate
+online version: https://pnp.github.io/powershell/cmdlets/Test-PnPSiteTemplate.html
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
+schema: 2.0.0
 ---
  
 # Test-PnPSiteTemplate
