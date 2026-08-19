@@ -15,52 +15,19 @@ Converts a classic page (wiki or web part page) into a modern page
 ## SYNTAX 
 
 ```powershell
-ConvertTo-PnPPage -Identity <PagePipeBind>
-                            [-Library <String>]
-                            [-Folder <String>]
-                            [-WebPartMappingFile <String>]
-                            [-Overwrite [<SwitchParameter>]]
-                            [-TakeSourcePageName [<SwitchParameter>]]
-                            [-ReplaceHomePageWithDefault [<SwitchParameter>]]
-                            [-AddPageAcceptBanner [<SwitchParameter>]]
-                            [-SkipItemLevelPermissionCopyToClientSidePage [<SwitchParameter>]]
-                            [-SkipUrlRewriting [<SwitchParameter>]]
-                            [-SkipDefaultUrlRewriting [<SwitchParameter>]]
-                            [-UrlMappingFile <String>]
-                            [-ClearCache [<SwitchParameter>]]
-                            [-CopyPageMetadata [<SwitchParameter>]]
-                            [-AddTableListImageAsImageWebPart [<SwitchParameter>]]
-                            [-UseCommunityScriptEditor [<SwitchParameter>]]
-                            [-SummaryLinksToHtml [<SwitchParameter>]]
-                            [-TargetWebUrl <String>]
-                            [-LogType <PageTransformatorLogType>]
-                            [-LogFolder <String>]
-                            [-LogSkipFlush [<SwitchParameter>]]
-                            [-LogVerbose [<SwitchParameter>]]
-                            [-DontPublish [<SwitchParameter>]]
-                            [-KeepPageCreationModificationInformation [<SwitchParameter>]]
-                            [-SetAuthorInPageHeader [<SwitchParameter>]]
-                            [-PostAsNews [<SwitchParameter>]]
-                            [-DisablePageComments [<SwitchParameter>]]
-                            [-PublishingPage [<SwitchParameter>]]
-                            [-BlogPage [<SwitchParameter>]]
-                            [-DelveBlogPage [<SwitchParameter>]]
-                            [-DelveKeepSubTitle [<SwitchParameter>]]
-                            [-PageLayoutMapping <String>]
-                            [-PublishingTargetPageName <String>]
-                            [-TargetPageName <String>]
-                            [-TargetPageFolder <String>]
-                            [-TargetPageFolderOverridesDefaultFolder [<SwitchParameter>]]
-                            [-RemoveEmptySectionsAndColumns [<SwitchParameter>]]
-                            [-TargetConnection <PnPConnection>]
-                            [-SkipUserMapping [<SwitchParameter>]]
-                            [-UserMappingFile <String>]
-                            [-TermMappingFile <String>]
-                            [-SkipTermStoreMapping [<SwitchParameter>]]
-                            [-LDAPConnectionString <String>]
-                            [-SkipHiddenWebParts [<SwitchParameter>]]
-
-                            [-Connection <PnPConnection>]
+ConvertTo-PnPPage [-Identity] <ClassicPagePipeBind> [-Library <String>] [-Folder <String>]
+ [-WebPartMappingFile <String>] [-Overwrite] [-TakeSourcePageName] [-ReplaceHomePageWithDefault]
+ [-AddPageAcceptBanner] [-SkipItemLevelPermissionCopyToClientSidePage] [-SkipUrlRewriting]
+ [-SkipDefaultUrlRewriting] [-UrlMappingFile <String>] [-ClearCache] [-CopyPageMetadata]
+ [-AddTableListImageAsImageWebPart] [-UseCommunityScriptEditor] [-SummaryLinksToHtml]
+ [-TargetWebUrl <String>] [-LogType <PageTransformatorLogType>] [-LogFolder <String>] [-LogSkipFlush]
+ [-LogVerbose] [-DontPublish] [-KeepPageCreationModificationInformation] [-SetAuthorInPageHeader]
+ [-PostAsNews] [-DisablePageComments] [-PublishingPage] [-BlogPage] [-DelveBlogPage]
+ [-DelveKeepSubTitle] [-PageLayoutMapping <String>] [-PublishingTargetPageName <String>]
+ [-TargetPageName <String>] [-TargetPageFolder <String>] [-TargetPageFolderOverridesDefaultFolder]
+ [-RemoveEmptySectionsAndColumns] [-TargetConnection <PnPConnection>] [-SkipUserMapping]
+ [-UserMappingFile <String>] [-TermMappingFile <String>] [-SkipTermStoreMapping]
+ [-LDAPConnectionString <String>] [-SkipHiddenWebParts] [-Connection <PnPConnection>]
 ```
 
 ## EXAMPLES
@@ -289,7 +256,7 @@ Accept pipeline input: True
 The name of the page to convert
 
 ```yaml
-Type: PagePipeBind
+Type: ClassicPagePipeBind
 Parameter Sets: (All)
 
 Required: True

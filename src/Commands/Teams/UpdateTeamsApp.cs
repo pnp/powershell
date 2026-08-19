@@ -8,7 +8,10 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsData.Update, "PnPTeamsApp")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedPermissions("graph/AppCatalog.Submit")]
+    [RequiredApiDelegatedPermissions("graph/AppCatalog.ReadWrite.All")]
+    [RequiredApiDelegatedPermissions("graph/Directory.ReadWrite.All")]
+    [ApiNotAvailableUnderApplicationPermissions]
     public class UpdateTeamsApp : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

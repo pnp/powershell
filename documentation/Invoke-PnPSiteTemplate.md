@@ -195,7 +195,7 @@ Accept wildcard characters: False
 ```
 
 ### -Handlers
-Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying. Visit https://learn.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers for possible values.
+Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what you're applying. Visit https://pnp.github.io/pnpframework/api/PnP.Framework.Provisioning.Model.Handlers.html for possible values.
 
 ```yaml
 Type: Handlers

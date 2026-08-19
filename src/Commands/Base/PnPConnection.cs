@@ -90,11 +90,6 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public InitializationType InitializationType { get; protected set; }
 
-        /// <summary>
-        /// used to retrieve a new token in case the current token expires
-        /// </summary>
-        public string[] Scopes { get; internal set; }
-
         public PSCredential PSCredential { get; protected set; }
 
         /// <summary>
@@ -721,13 +716,15 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="tenantAdminUrl">Url to the SharePoint Online Admin Center site to connect to</param>
         /// <param name="appClientId">The Client ID of the Federated Identity application</param>
         /// <param name="tenantId">The Tenant ID of the Federated Identity application</param>
+        /// <param name="azureEnvironment">The cloud to connect to, which selects the Entra ID login endpoint, the Microsoft Graph endpoint and the audience requested for the CI/CD id token</param>
         /// <returns>Instantiated PnPConnection</returns>
         /// <remarks>
         /// This method is used to create a PnPConnection using a Federated Identity, which allows for authentication without the need for a client secret.
         /// </remarks>
-        internal static PnPConnection CreateWithFederatedIdentity(string url, string tenantAdminUrl, string appClientId, string tenantId)
+        internal static PnPConnection CreateWithFederatedIdentity(string url, string tenantAdminUrl, string appClientId, string tenantId, AzureEnvironment azureEnvironment)
         {
-            string defaultResource = "https://graph.microsoft.com/.default";
+            var graphEndPoint = GetGraphEndPoint(azureEnvironment);
+            string defaultResource = $"https://{graphEndPoint}/.default";
             if (url != null)
             {
                 var resourceUri = new Uri(url);
@@ -735,7 +732,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             Log.Debug("PnPConnection", "Acquiring token for resource " + defaultResource);
-            var accessToken = TokenHandler.GetFederatedIdentityTokenAsync(appClientId, tenantId, defaultResource).GetAwaiter().GetResult();
+            var accessToken = TokenHandler.GetFederatedIdentityTokenAsync(appClientId, tenantId, defaultResource, azureEnvironment).GetAwaiter().GetResult();
 
             // Set up the AuthenticationManager in PnP Framework to use a Federated Identity context
             using (var authManager = new Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
@@ -747,9 +744,14 @@ namespace PnP.PowerShell.Commands.Base
                     context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                     context.ApplicationName = Resources.ApplicationName;
                     context.DisableReturnValueCache = true;
+
+                    // PnP.Framework's handler injects the token acquired above, which expires, so this one overrides it with a fresh MSAL-cached token per request.
+                    var capturedDefaultResource = defaultResource;
                     context.ExecutingWebRequest += (sender, e) =>
                     {
                         e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                        var freshToken = TokenHandler.GetFederatedIdentityTokenAsync(appClientId, tenantId, capturedDefaultResource, azureEnvironment).GetAwaiter().GetResult();
+                        e.WebRequestExecutor.RequestHeaders["Authorization"] = $"Bearer {freshToken}";
                     };
                     if (IsTenantAdminSite(context))
                     {
@@ -760,8 +762,26 @@ namespace PnP.PowerShell.Commands.Base
                 var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.FederatedIdentity);
                 connection.ClientId = appClientId ?? Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_CLIENT_ID");
                 connection.Tenant = tenantId ?? Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_TENANT_ID");
+                connection.AzureEnvironment = azureEnvironment;
+                // The token only AuthenticationManager backing this context carries no cloud, so its Graph endpoint would otherwise resolve to the commercial one.
+                connection._graphEndPoint = graphEndPoint;
                 return connection;
             }
+        }
+
+        /// <summary>
+        /// Returns the Microsoft Graph endpoint without protocol of the provided cloud
+        /// </summary>
+        private static string GetGraphEndPoint(AzureEnvironment azureEnvironment)
+        {
+            if (azureEnvironment != AzureEnvironment.Custom)
+            {
+                return Framework.AuthenticationManager.GetGraphEndPoint(azureEnvironment);
+            }
+
+            // Custom clouds carry their endpoint in configuration, which Connect-PnPOnline -MicrosoftGraphEndPoint writes.
+            using var authManager = new Framework.AuthenticationManager();
+            return authManager.GetGraphEndPointForCustomAzureEnvironmentConfiguration();
         }
         #endregion
 
@@ -1052,38 +1072,83 @@ namespace PnP.PowerShell.Commands.Base
 
             if (Utilities.OperatingSystem.IsWindows())
             {
-                var privateKey = (certificate.GetRSAPrivateKey() as RSACng)?.Key;
-                // var privateKey = (certificate.PrivateKey as RSACng)?.Key;
-                if (privateKey == null)
-                    return;
-
-                string uniqueKeyContainerName = privateKey.UniqueName;
-                if (uniqueKeyContainerName == null)
+                // The private key is asked for once and then offered to both providers. Returning early when it is not a Cryptography Next Generation
+                // key would make the legacy cryptographic service provider branch below unreachable, which is what used to leave the key containers
+                // of such a certificate behind. It is a caller owned object, so it is disposed again right away rather than being left to the garbage
+                // collector, as the handle it holds on the key would otherwise still be open while the file behind it is deleted further down.
+                string uniqueKeyContainerName;
+                using (var rsaPrivateKey = certificate.GetRSAPrivateKey())
                 {
-#pragma warning disable CA1416 // Validate platform compatibilit
-                    RSACryptoServiceProvider rsaCSP = certificate.GetRSAPrivateKey() as RSACryptoServiceProvider;
-                    uniqueKeyContainerName = rsaCSP.CspKeyContainerInfo.KeyContainerName;
+#pragma warning disable CA1416 // Validate platform compatibility, this whole block only runs on Windows
+                    // Both of these are the name of the file the key lives in. For the legacy providers that is UniqueKeyContainerName, where
+                    // KeyContainerName is only the logical name of the container and never matches anything on disk.
+                    uniqueKeyContainerName = (rsaPrivateKey as RSACng)?.Key?.UniqueName
+                        ?? (rsaPrivateKey as RSACryptoServiceProvider)?.CspKeyContainerInfo?.UniqueKeyContainerName;
 #pragma warning restore CA1416 // Validate platform compatibility
                 }
+
+                if (string.IsNullOrEmpty(uniqueKeyContainerName))
+                {
+                    Log.Debug("PnPConnection", "Unable to remove the private key of the certificate because its key container name could not be determined.");
+                    return;
+                }
+
                 certificate.Reset();
 
+                // Certificates are loaded using X509KeyStorageFlags.UserKeySet, which puts the key container in the profile of the current user
+                // rather than in the machine wide store. Only the machine wide store used to be looked at here, so nothing was ever removed. The
+                // machine wide path is still checked last for a certificate which was loaded with MachineKeySet instead.
+                var candidatePaths = new List<string>();
+
+                var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                if (!string.IsNullOrEmpty(appDataPath))
+                {
+                    // Where a key created through Cryptography Next Generation ends up, which is what a modern certificate uses
+                    candidatePaths.Add(Path.Combine(appDataPath, "Microsoft", "Crypto", "Keys", uniqueKeyContainerName));
+
+                    // Where a key created through the legacy cryptographic service providers ends up
+#pragma warning disable CA1416 // Validate platform compatibility, this whole block only runs on Windows
+                    var currentUserSid = System.Security.Principal.WindowsIdentity.GetCurrent()?.User?.Value;
+#pragma warning restore CA1416 // Validate platform compatibility
+                    if (!string.IsNullOrEmpty(currentUserSid))
+                    {
+                        candidatePaths.Add(Path.Combine(appDataPath, "Microsoft", "Crypto", "RSA", currentUserSid, uniqueKeyContainerName));
+                    }
+                }
+
+                // A certificate loaded with X509KeyStorageFlags.MachineKeySet, which -X509KeyStorageFlags accepts and the documentation of
+                // Connect-PnPOnline shows, ends up machine wide instead of in the profile of the user
                 var programDataPath = Environment.GetEnvironmentVariable("ProgramData");
                 if (string.IsNullOrEmpty(programDataPath))
                 {
                     programDataPath = @"C:\ProgramData";
                 }
-                try
+
+                // Where a machine wide key created through Cryptography Next Generation ends up
+                candidatePaths.Add(Path.Combine(programDataPath, "Microsoft", "Crypto", "Keys", uniqueKeyContainerName));
+
+                // Where a machine wide key created through the legacy cryptographic service providers ends up
+                candidatePaths.Add(Path.Combine(programDataPath, "Microsoft", "Crypto", "RSA", "MachineKeys", uniqueKeyContainerName));
+
+                foreach (var candidatePath in candidatePaths)
                 {
-                    var temporaryCertificateFilePath = $@"{programDataPath}\Microsoft\Crypto\RSA\MachineKeys\{uniqueKeyContainerName}";
-                    if (System.IO.File.Exists(temporaryCertificateFilePath))
+                    try
                     {
-                        System.IO.File.Delete(temporaryCertificateFilePath);
+                        if (System.IO.File.Exists(candidatePath))
+                        {
+                            System.IO.File.Delete(candidatePath);
+                            Log.Debug("PnPConnection", $"Removed the private key container of the certificate at '{candidatePath}'.");
+                            return;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        // Best effort cleanup, but no longer silent so that a failure to remove the key can be diagnosed
+                        Log.Debug("PnPConnection", $"Unable to remove the private key container of the certificate at '{candidatePath}': {e.Message}");
                     }
                 }
-                catch (Exception)
-                {
-                    // best effort cleanup
-                }
+
+                Log.Debug("PnPConnection", $"The private key container '{uniqueKeyContainerName}' of the certificate was not found in any of the known locations, so nothing was removed.");
             }
         }
 
@@ -1205,7 +1270,24 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (connection.AuthenticationManager != null)
             {
-                connection.AuthenticationManager.ClearTokenCache();
+                // Clearing the MSAL token cache can hang when the connection uses the WAM broker: the underlying
+                // GetAccountsAsync/RemoveAsync calls go into the native broker, which can block waiting for a window
+                // handle or message pump (most visibly when debugging in Visual Studio with F5). Run it off the
+                // pipeline thread and bound the wait so Disconnect-PnPOnline -ClearPersistedLogin always returns.
+                // The PnP-level persisted cache entry has already been removed above, so the persisted login is
+                // cleared regardless of whether the broker account purge completes in time.
+                try
+                {
+                    var clearCacheTask = Task.Run(() => connection.AuthenticationManager.ClearTokenCache());
+                    if (!clearCacheTask.Wait(TimeSpan.FromSeconds(15)))
+                    {
+                        PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Clearing the MSAL token cache timed out (the authentication broker may be unavailable). Continuing disconnect.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    PnP.Framework.Diagnostics.Log.Debug("PnPConnection", $"Clearing the MSAL token cache failed: {ex.Message}");
+                }
             }
         }
         #endregion

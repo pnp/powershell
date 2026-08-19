@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.ToDo
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTodoList")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.ReadWrite")]
     [ApiNotAvailableUnderApplicationPermissions]
     public class RemoveTodoList : PnPGraphCmdlet
     {

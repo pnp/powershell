@@ -29,6 +29,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
         public SwitchParameter Force;
 
         [Parameter(Mandatory = false)]
+        [ValidateNotNull]
         public ExtractConfigurationPipeBind Configuration;
 
         [Parameter(Mandatory = false)]
@@ -41,7 +42,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             ExtractConfiguration extractConfiguration = null;
             if (ParameterSpecified(nameof(Configuration)))
             {
-                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
+                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path, LogWarning);
             }
 
             if (!string.IsNullOrEmpty(Out))

@@ -9,7 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.ToDo
 {
     [Cmdlet(VerbsData.Update, "PnPTodoTaskChecklistItem")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.ReadWrite")]
     [ApiNotAvailableUnderApplicationPermissions]
     public class UpdateTodoTaskChecklistItem : PnPGraphCmdlet
     {

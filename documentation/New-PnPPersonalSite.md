@@ -13,7 +13,10 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPPersonalSite.htm
 
 **Required Permissions**
 
-* SharePoint: Access to the SharePoint Tenant Administration site
+Access to SharePoint admin site
+
+* SharePoint: AllSites.FullControl and User.ReadWrite.All when using delegated permissions
+* SharePoint: Sites.FullControl.All and User.ReadWrite.All when using application permissions
 
 ## SYNTAX
 
@@ -23,29 +26,10 @@ New-PnPPersonalSite [-Email] <String[]> [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 
-Creates a OneDrive For Business site for the provided user(s)
+Creates a OneDrive For Business site for the provided user(s). The site is enqueued and actually created by a Timer Job later, so it will not exist yet when this cmdlet returns. If a user already has a OneDrive for Business site, the request for that user is silently ignored.
 
-If you want to use this cmdlet in an automated script not requiring manual authentication, you *must* assign the following permission to your application registration from either Azure Active Directory or done through https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx with the following permission through https://tenant-admin.sharepoint.com/_layouts/appinv.aspx:
-
-`
-<AppPermissionRequests AllowAppOnlyPolicy="true">
-  <AppPermissionRequest Scope="http://sharepoint/social/tenant" Right="FullControl" />
-</AppPermissionRequests>
-`
-
-You then *must* connect using:
-
-`
-Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -ClientId <clientid> -ClientSecret <clientsecret>
-`
-
-Authenticating using a certificate is *not* possible and will throw an unauthorized exception. It does not require assigning any permissions in Azure Active Directory.
-
-If you want to run this cmdlet using an interactive login, you *must* connect using:
-
-`
-Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -UseWebLogin
-`
+> [!NOTE]
+> • The account or application running this cmdlet must be assigned at least the SharePoint Administrator role and must have a SharePoint Online license. The users the sites are provisioned for must also have a SharePoint license assigned.<br/><br/>• This only works for users who are allowed to sign in. Requests for users whose sign in is blocked do not result in a OneDrive for Business site being created.<br/><br/>• When pre-provisioning for a large number of users, it might take multiple days for the OneDrive locations to be created.
 
 ## EXAMPLES
 

@@ -1,140 +1,121 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
+using System.Threading;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    public class PnPPowerShellModuleInitializer : IModuleAssemblyInitializer
+    /// <summary>
+    /// Bootstraps PnP PowerShell's dependency isolation.
+    ///
+    /// PnP.PowerShell.dll (this assembly, containing all cmdlets) is loaded by PowerShell into the
+    /// default <see cref="AssemblyLoadContext"/> so its cmdlet types remain discoverable. Every other
+    /// assembly we ship lives in the sibling "Common" folder and is loaded into a dedicated, fully
+    /// isolated <see cref="PnPAssemblyLoadContext"/>. A single <see cref="AssemblyLoadContext.Resolving"/>
+    /// handler on the default context routes any assembly we ship into that private context; from there the
+    /// private context resolves the entire transitive graph internally, so our Microsoft.Extensions.* (and
+    /// friends) can never bind against a version the host process already loaded.
+    ///
+    /// The handler MUST be registered before PowerShell reflects over this assembly to discover cmdlets,
+    /// because the cmdlet base types statically reference PnP.Framework/PnP.Core and reflection therefore
+    /// forces those dependencies to load. Neither <see cref="ModuleInitializerAttribute"/> nor
+    /// <see cref="IModuleAssemblyInitializer.OnImport"/> run early enough (they fire only once code in this
+    /// assembly executes, which is after discovery). The module manifest therefore uses <c>ScriptsToProcess</c>
+    /// - which the module system runs before <c>NestedModules</c> - to load this assembly by path and call
+    /// <see cref="EnsureDependencyResolverRegistered"/> up front. The module initializer and OnImport are kept
+    /// as idempotent, defense-in-depth fallbacks. Registration is idempotent.
+    /// </summary>
+    public sealed class PnPPowerShellModuleInitializer : IModuleAssemblyInitializer
     {
-        private static readonly string s_binBasePath;
-        private static readonly string s_binCommonPath;
-        private static readonly HashSet<string> s_dependencies;
-        private static readonly HashSet<string> s_psEditionDependencies;
-        private static readonly AssemblyLoadContext s_proxy;
+        /// <summary>
+        /// The private context that owns the shipped dependency graph. Created once, lives for the process
+        /// lifetime (the module's binaries cannot meaningfully be unloaded from the default context anyway).
+        /// </summary>
+        private static readonly PnPAssemblyLoadContext s_dependencyContext;
+
+        /// <summary>
+        /// Absolute path to the folder holding the private dependency graph.
+        /// </summary>
+        private static readonly string s_dependencyPath;
+
+        /// <summary>
+        /// Guards against registering the resolver more than once (module initializer + OnImport + re-import).
+        /// </summary>
+        private static int s_resolverRegistered;
+
+        /// <summary>
+        /// Whether dependency isolation is active. Disabled for in-IDE (Visual Studio F5) debugging.
+        /// </summary>
+        private static readonly bool s_isolationEnabled;
 
         static PnPPowerShellModuleInitializer()
         {
-            s_binBasePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));
-            s_binCommonPath = Path.Combine(Path.GetDirectoryName(s_binBasePath), "Common");
-            if (Environment.GetEnvironmentVariable("PNP_PS_DEBUG_IN_VISUAL_STUDIO") == "True")
-            {
-                s_binCommonPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "..", "..", "..", "..", "..", "src", "ALC", "bin", "Debug", "net8.0"));
-            }
+            // This assembly (PnP.PowerShell.dll) ships in "<module>/Core"; the private dependency graph ships
+            // in the sibling "<module>/Common" folder.
+            string executingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            s_dependencyPath = Path.GetFullPath(Path.Combine(executingDirectory, "..", "Common"));
 
-            s_dependencies = new HashSet<string>(StringComparer.Ordinal);
-            s_psEditionDependencies = new HashSet<string>(StringComparer.Ordinal);
-            s_proxy = new AssemblyLoadContext("pnp-powershell-load-context");
+            // In-IDE (Visual Studio F5) debugging imports the raw build output, where every dependency sits in
+            // the same folder as this assembly. PowerShell's own directory probing already resolves that whole
+            // graph into the default context, so engaging our private context on top of it only creates split
+            // assembly identities (the same DLL loaded into two contexts - e.g. Microsoft.SharePoint.Client.Runtime -
+            // which breaks cmdlets such as Get-PnPList). Isolation is unnecessary there anyway (there is no
+            // conflicting host), so we disable it in that mode. Isolation applies to the packaged Core/Common
+            // layout produced by the build scripts.
+            s_isolationEnabled = Environment.GetEnvironmentVariable("PNP_PS_DEBUG_IN_VISUAL_STUDIO") != "True";
 
-            // Add shared dependencies.
-            foreach (string filePath in Directory.EnumerateFiles(s_binBasePath, "*.dll"))
-            {
-                try
-                {
-                    s_dependencies.Add(AssemblyName.GetAssemblyName(filePath).FullName);
-                }
-                catch (BadImageFormatException)
-                {
-                    // Skip files without metadata.
-                    continue;
-                }
-            }
+            s_dependencyContext = s_isolationEnabled ? new PnPAssemblyLoadContext(s_dependencyPath) : null;
+        }
 
-            // Add the dependencies for the current PowerShell edition. Can be either Desktop (PS 5.1) or Core (PS 7+).
-            foreach (string filePath in Directory.EnumerateFiles(s_binCommonPath, "*.dll"))
+        /// <summary>
+        /// Registers the default-context dependency resolver. This is the public entry point invoked by the
+        /// module manifest's <c>ScriptsToProcess</c> script before the binary module is processed, so the
+        /// resolver is active before cmdlet discovery forces PnP.Framework/PnP.Core to load. Also wired as a
+        /// <see cref="ModuleInitializerAttribute"/> for defense in depth. Safe to call multiple times.
+        /// </summary>
+        [ModuleInitializer]
+        public static void EnsureDependencyResolverRegistered()
+        {
+            if (Interlocked.Exchange(ref s_resolverRegistered, 1) == 0)
             {
-                try
-                {
-                    s_psEditionDependencies.Add(AssemblyName.GetAssemblyName(filePath).FullName);
-                }
-                catch (BadImageFormatException)
-                {
-                    // Skip files without metadata.
-                    continue;
-                }
+                AssemblyLoadContext.Default.Resolving += ResolveDependency;
             }
         }
 
+        /// <summary>
+        /// Defensive fallback registration for hosts that defer <see cref="ModuleInitializerAttribute"/> methods.
+        /// </summary>
         public void OnImport()
         {
-            AssemblyLoadContext.Default.Resolving += ResolveAssembly_NetCore;
+            EnsureDependencyResolverRegistered();
         }
 
-
-        private static Assembly ResolveAssembly_NetCore(
-            AssemblyLoadContext assemblyLoadContext,
-            AssemblyName assemblyName)
+        /// <summary>
+        /// Default-context resolver. When the default context cannot satisfy an assembly, we check whether we
+        /// ship it. If so, we hand it to the private context; otherwise we return <c>null</c> and let the runtime
+        /// continue its normal resolution (shared framework, PowerShell, host).
+        /// </summary>
+        private static Assembly ResolveDependency(AssemblyLoadContext defaultContext, AssemblyName assemblyName)
         {
-            if (assemblyName.Name.Equals("PnP.PowerShell.ALC"))
+            if (string.IsNullOrEmpty(assemblyName?.Name))
             {
-                string filePath = GetRequiredAssemblyPath(assemblyName);
-                if (!string.IsNullOrEmpty(filePath))
-                {
-                    // - In .NET, load the assembly into the custom assembly load context.                    
-                    return s_proxy.LoadFromAssemblyPath(filePath);
-                }
+                return null;
             }
 
-            if (IsAssemblyMatching(assemblyName))
+            string candidate = Path.Combine(s_dependencyPath, assemblyName.Name + ".dll");
+            if (!File.Exists(candidate))
             {
-                string filePath = GetRequiredAssemblyPath(assemblyName);
-                if (!string.IsNullOrEmpty(filePath))
-                {
-                    // - In .NET, load the assembly into the custom assembly load context.                    
-                    return s_proxy.LoadFromAssemblyPath(filePath);
-                }
+                // Not ours - let the default resolution logic (shared framework / PowerShell / host) handle it.
+                return null;
             }
-            return null;
-        }
 
-        /// <summary>
-        /// Checks to see if the assembly is present in the shared or PSEdition dependencies folder.
-        /// Check is done by first matching the assembly by its full name; otherwise, we match using the assembly name.
-        /// </summary>
-        /// <param name="assemblyName"><see cref="AssemblyName"/> to match.</param>
-        /// <returns>True if assembly is present in dependencies folder; otherwise False.</returns>
-        private static bool IsAssemblyPresent(AssemblyName assemblyName)
-        {
-            return s_binBasePath.Contains(assemblyName.FullName) || s_binCommonPath.Contains(assemblyName.FullName)
-                ? true
-                : !string.IsNullOrEmpty(s_dependencies.SingleOrDefault((x) => x.StartsWith($"{assemblyName.Name},"))) || !string.IsNullOrEmpty(s_psEditionDependencies.SingleOrDefault((x) => x.StartsWith($"{assemblyName.Name},")));
-        }
-
-        /// <summary>
-        /// Checks to see if the requested assembly matches the assemblies in our dependencies folder.
-        /// The requesting assembly is always available in .NET, but could be null in .NET Framework.
-        /// - When the requesting assembly is available, we check whether the loading request came from this
-        ///   module (the 'Microsoft.Graph*' assembly in this case), so as to make sure we only act on the request
-        ///   from this module.
-        /// - When the requesting assembly is not available, we just have to depend on the assembly name only.
-        /// </summary>
-        /// <param name="assemblyName"><see cref="AssemblyName"/> being requested.</param>
-        /// <param name="requestingAssembly">The requesting <see cref="Assembly"/>.</param>
-        /// <returns>True if assembly is present and matches in dependencies folder; otherwise False.</returns>
-        private static bool IsAssemblyMatching(AssemblyName assemblyName)
-        {
-            return assemblyName != null
-                ? (assemblyName.FullName.StartsWith("Microsoft") || assemblyName.FullName.StartsWith("Azure.Identity")) && IsAssemblyPresent(assemblyName)
-                : IsAssemblyPresent(assemblyName);
-        }
-
-        /// <summary>
-        /// Gets the full path of the assembly from the dependencies folder.
-        /// </summary>
-        /// <param name="assemblyName"><see cref="AssemblyName"/> to find.</param>
-        /// <returns>A <see cref="string"/> representing the full path of the assembly from the dependencies folder; otherwise <see cref="null"/>.</returns>
-        private static string GetRequiredAssemblyPath(AssemblyName assemblyName)
-        {
-            string fileName = assemblyName.Name + ".dll";
-            string filePath = Path.Combine(s_binBasePath, fileName);
-            if (File.Exists(filePath))
-                return filePath;
-
-            filePath = Path.Combine(s_binCommonPath, fileName);
-            return File.Exists(filePath) ? filePath : null;
+            // Route the assembly into the private context. Because that context overrides Load() to probe the
+            // same folder, this assembly and its entire transitive dependency graph resolve to our shipped
+            // copies, isolated from whatever the host already loaded into the default context.
+            return s_dependencyContext.LoadFromAssemblyName(assemblyName);
         }
     }
 }

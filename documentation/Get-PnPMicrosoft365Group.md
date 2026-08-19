@@ -20,7 +20,7 @@ Gets one Microsoft 365 Group or a list of Microsoft 365 Groups
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [-IncludeSiteUrl] [-IncludeOwners] [-Detailed] [-Filter <string>] [-IncludeSensitivityLabels]
+Get-PnPMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [-IncludeSiteUrl] [-IncludeOwners] [-Detailed] [-Filter <string>] [-IncludeSensitivityLabels] [-IncludeExtensionAttributes]
 ```
 
 ## DESCRIPTION
@@ -85,6 +85,21 @@ $groups = Get-PnPMicrosoft365Group -Filter "startswith(description, 'contoso')"
 ```
 
 Retrieves all Microsoft 365 Groups in this tenant with description starting with Contoso. This example demonstrates using Advanced Query capabilities (see: https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties).
+
+### EXAMPLE 9
+```powershell
+Get-PnPMicrosoft365Group -Identity $groupId | Select-Object DisplayName, PreferredDataLocation
+```
+
+Retrieves a specific Microsoft 365 Group and returns its preferred data location.
+
+### EXAMPLE 10
+```powershell
+$group = Get-PnPMicrosoft365Group -Identity $groupId -IncludeExtensionAttributes
+$group.OnPremisesExtensionAttributes.ExtensionAttribute1
+```
+
+Retrieves a specific Microsoft 365 Group including its extension attributes and returns the first one. Note that Microsoft Graph only populates these for groups that are synchronized from an on-premises Active Directory, see the `-IncludeExtensionAttributes` parameter.
 
 ## PARAMETERS
 
@@ -177,8 +192,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -IncludeExtensionAttributes
+
+Include fetching the extension attributes 1-15 of the group. They are returned in the `OnPremisesExtensionAttributes` property of the returned group. Microsoft Graph only returns these attributes when they are explicitly requested, so providing this flag causes an extra call to be made to Microsoft Graph. This slows down large listings.
+
+Microsoft Graph only populates these attributes for groups that are synchronized from an on-premises Active Directory. For a cloud only group they are always empty, also when the equivalent `CustomAttribute1-15` properties do hold a value in Exchange Online, as Microsoft Graph does not expose the values that Exchange Online stores. Use `Get-UnifiedGroup` from the Exchange Online PowerShell module to read those.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 

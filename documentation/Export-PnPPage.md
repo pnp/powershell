@@ -40,10 +40,29 @@ Export-PnPPage -Identity HR/Home.aspx -Out template.pnp
 
 Exports the page 'Home.aspx' to a new PnP Provisioning Template
 
+### EXAMPLE 3
+```powershell
+@'
+{
+  "pages": {
+    "excludeAuthorInformation": true
+  }
+}
+'@ | Out-File extract.json
+
+Export-PnPPage -Identity Home.aspx -Out template.pnp -Configuration extract.json
+```
+
+Exports the page 'Home.aspx' without the author information of the page. The same JSON can be passed to `-Configuration` directly instead of through a file.
+
 ## PARAMETERS
 
 ### -Configuration
-Specify a JSON configuration file to configure the extraction progress.
+Specify a JSON configuration to configure the extraction process. Accepts either the path to a file containing the JSON, or the JSON itself.
+
+A value that cannot be read, such as a path that does not exist or JSON that cannot be parsed, terminates the cmdlet. Earlier versions ignored such a value without reporting an error and exported everything instead.
+
+See [The extract configuration](https://pnp.github.io/powershell/articles/extract-configuration.html) for the available properties and worked examples.
 
 ```yaml
 Type: ExtractConfigurationPipeBind

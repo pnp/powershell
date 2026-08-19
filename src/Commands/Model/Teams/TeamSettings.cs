@@ -23,6 +23,9 @@ namespace PnP.PowerShell.Commands.Model.Teams
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public TeamGiphyContentRating GiphyContentRating { get; set; }
 
+        [JsonIgnore]
+        public bool GiphyContentRatingSpecified { get; set; }
+
         public bool? AllowStickersAndMemes { get; set; }
 
         public bool? AllowCustomMemes { get; set; }
@@ -69,6 +72,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
             Classification = team.Classification;
             AllowGiphy = team.FunSettings.AllowGiphy;
             GiphyContentRating = team.FunSettings.GiphyContentRating;
+            GiphyContentRatingSpecified = true;
             AllowStickersAndMemes = team.FunSettings.AllowStickersAndMemes;
             AllowCustomMemes = team.FunSettings.AllowCustomMemes;
             AllowGuestCreateUpdateChannels = team.GuestSettings.AllowCreateUpdateChannels;

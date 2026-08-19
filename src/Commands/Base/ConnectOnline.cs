@@ -650,7 +650,8 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     ReuseAuthenticationManager();
                 }
-                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
+                // The key container behind this certificate was created by loading the bytes above, so it is ours to remove again on disconnect
+                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
             }
             else if (ParameterSpecified(nameof(Thumbprint)))
             {
@@ -945,7 +946,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             LogDebug("Connecting using Federated Identity Credentials");
 
-            return PnPConnection.CreateWithFederatedIdentity(Url, TenantAdminUrl, ClientId, Tenant);
+            return PnPConnection.CreateWithFederatedIdentity(Url, TenantAdminUrl, ClientId, Tenant, AzureEnvironment);
         }
         #endregion
 

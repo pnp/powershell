@@ -19,7 +19,7 @@ Set-PnPPage -Identity <PagePipeBind> [-Name <String>] [-Title <String>]
  [-LayoutType <PageLayoutType>] [-PromoteAs <PagePromoteType>] [-CommentsEnabled]
  [-Publish] [-HeaderType <PageHeaderType>] [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] 
  [-RemoveScheduledPublish] [-ContentType <ContentTypePipeBind>] [-ThumbnailUrl <String>] [-ShowPublishDate <Boolean>]
- [-Translate][-TranslationLanguageCodes <Int[][]>]
+ [-Translate] [-TranslationLanguageCodes <Int[]>]
  [-Connection <PnPConnection>] 
 ```
 

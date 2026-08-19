@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Text.Json.Serialization;
-/// <summary>
-/// Describes the retention label that details how to Represents how customers can manage their data, including whether and for how long to retain or delete it."
-/// </summary>
-/// <seealso cref="https://learn.microsoft.com/en-gb/graph/api/resources/security-retentionlabel"/>
+
 namespace PnP.PowerShell.Commands.Model.Graph.Purview
 {
+    /// <summary>
+    /// Represents how customers can manage their data at an item level, including whether and for how long to retain or delete it.
+    /// </summary>
+    /// <seealso cref="https://learn.microsoft.com/graph/api/resources/security-retentionlabel"/>
     public class RetentionLabel
     {
         /// <summary>
@@ -63,7 +64,7 @@ namespace PnP.PowerShell.Commands.Model.Graph.Purview
         /// <summary>
         /// Date and time when the label was created.
         /// </summary>
-        public DateTimeOffset CreatedDateTime { get; set; }
+        public DateTimeOffset? CreatedDateTime { get; set; }
 
         /// <summary>
         /// Information about the last modifier.
@@ -74,7 +75,7 @@ namespace PnP.PowerShell.Commands.Model.Graph.Purview
         /// <summary>
         /// Date and time when the label was last modified.
         /// </summary>
-        public DateTimeOffset LastModifiedDateTime { get; set; }
+        public DateTimeOffset? LastModifiedDateTime { get; set; }
 
         /// <summary>
         /// The label to be applied. Specifies the replacement label to be applied automatically after the retention period of the current label ends.
@@ -84,22 +85,29 @@ namespace PnP.PowerShell.Commands.Model.Graph.Purview
         /// <summary>
         /// Default record behavior.Specifies the locked or unlocked state of a record label when it is created.The possible values are: startLocked, startUnlocked, unknownFutureValue.
         /// </summary>
-        public DefaultRecordBehavior DefaultRecordBehavior { get; set; }
+        public DefaultRecordBehavior? DefaultRecordBehavior { get; set; }
     }
+
+    // Microsoft Graph returns these as strings and deserialization of the whole response fails on a value that is not
+    // listed here, so every documented value including unknownFutureValue must be present.
 
     public enum BehaviorDuringRetentionPeriod
     {
         DoNotRetain,
         Retain,
         RetainAsRecord,
-        RetainAsRegulatoryRecord
+        RetainAsRegulatoryRecord,
+        UnknownFutureValue
     }
 
     public enum ActionAfterRetentionPeriod
     {
         None,
         Delete,
-        StartDispositionReview
+        // Returned for labels that use LabelToBeApplied. Documented in the response examples rather than in the property table.
+        Relabel,
+        StartDispositionReview,
+        UnknownFutureValue
     }
 
     public enum RetentionTrigger
@@ -107,12 +115,14 @@ namespace PnP.PowerShell.Commands.Model.Graph.Purview
         DateLabeled,
         DateCreated,
         DateModified,
-        DateOfEvent
+        DateOfEvent,
+        UnknownFutureValue
     }
 
     public enum DefaultRecordBehavior
     {
         StartLocked,
-        StartUnlocked
+        StartUnlocked,
+        UnknownFutureValue
     }
 }

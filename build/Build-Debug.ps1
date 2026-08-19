@@ -106,8 +106,6 @@ if ($LASTEXITCODE -eq 0) {
 	$corePath = "$destinationFolder/Core"
 	$commonPath = "$destinationFolder/Common"
 
-	$assemblyExceptions = @("System.Memory.dll")
-	
 	Try {
 		# Module folder there?
 		if (Test-Path $destinationFolder) {
@@ -126,14 +124,40 @@ if ($LASTEXITCODE -eq 0) {
 		Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
 
 		$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
+		# The module assembly itself stays in Core (loaded into the default ALC so its cmdlets are discoverable).
+		# The CSOM client libraries (Microsoft.SharePoint.Client.* / Microsoft.Online.SharePoint.Client.*) also
+		# stay in Core: PowerShell probes the imported binary module's own directory (Core), so placing them there
+		# loads them into the default ALC. That keeps their types resolvable by PowerShell's [TypeName] resolver in
+		# user scripts (e.g. [Microsoft.SharePoint.Client.ScriptSafeDomainEntityData]), which only sees the default
+		# context. CSOM has no Microsoft.Extensions.* dependency, so sharing it in the default context does not
+		# weaken the isolation that fixes the Azure Functions dependency conflict (#5350).
+		# Every other assembly is a private dependency and goes to Common, the module's isolated ALC probe path.
+		$moduleAssemblies = @('PnP.PowerShell.dll', 'PnP.PowerShell.pdb')
 		Copy-Item -Path "$PSScriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
-		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Debug/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }; Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
-		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/$configuration" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
+		# ScriptsToProcess bootstrap that registers the isolated-dependency resolver before the binary module loads.
+		Copy-Item -Path "$PSScriptRoot/../resources/RegisterPnPAssemblyResolver.ps1" -Destination "$destinationFolder"
+		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Debug/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/$configuration" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object {
+			if ($moduleAssemblies -contains $_.Name -or $_.Name -like 'Microsoft.SharePoint.Client*' -or $_.Name -like 'Microsoft.Online.SharePoint.Client*') {
+				Copy-Item -LiteralPath $_.FullName -Destination $corePath
+			}
+			elseif (-not $commonFiles.Contains($_.Name)) {
+				[void]$commonFiles.Add($_.Name)
+				Copy-Item -LiteralPath $_.FullName -Destination $commonPath
+			}
+		}
+
+		# Native dependencies (e.g. msalruntime for the WAM broker) travel with their managed assemblies.
+		$sourceRuntimeBase = "$PSScriptRoot/../src/Commands/bin/Debug/$configuration/runtimes"
+		if (Test-Path $sourceRuntimeBase) {
+			Copy-Item -Path $sourceRuntimeBase -Destination "$commonPath/runtimes" -Recurse -Force
+		}
 
 		if ($LocalPnPCore) {
 			# Ensure the local PnP.Core SDK is copied to the module folder or else debugging will not work. This assembly otherwises comes in through PnP Framework and will still use the NuGet version instead of the local build.
+			# It is a private dependency, so it belongs in Common (the isolated ALC probe path), not Core.
 			Write-Host "  Copying local PnP.Core SDK assembly" -ForegroundColor Yellow
-			Copy-Item -Path $pnpCoreAssembly -Destination "$destinationFolder\Core" -Force
+			Copy-Item -Path $pnpCoreAssembly -Destination "$destinationFolder\Common" -Force
 		}
 	}
 	Catch {
@@ -146,6 +170,9 @@ if ($LASTEXITCODE -eq 0) {
 		# Load the Module in a new PowerShell session
 		$scriptBlock = {
 			Write-Host "Importing dotnet core version of assembly"
+			# Register the isolated-dependency resolver first (same bootstrap the manifest's ScriptsToProcess uses),
+			# otherwise importing the raw DLL fails to resolve PnP.Framework/PnP.Core now that they live in Common.
+			. "$using:destinationFolder/RegisterPnPAssemblyResolver.ps1"
 			Import-Module -Name "$using:destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
 			$cmdlets = Get-Command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
 			$cmdlets -Join ","
@@ -153,6 +180,7 @@ if ($LASTEXITCODE -eq 0) {
 		$cmdletsString = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
 
 		$manifest = "@{
+	ScriptsToProcess = 'RegisterPnPAssemblyResolver.ps1'
 	NestedModules =  'Core/PnP.PowerShell.dll'
 	ModuleVersion = '$version'
 	Description = 'Microsoft 365 Patterns and Practices PowerShell Cmdlets'

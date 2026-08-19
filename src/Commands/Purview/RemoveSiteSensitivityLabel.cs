@@ -1,4 +1,5 @@
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Attributes;
 using System;
 using System.Management.Automation;
 using System.Net.Http;
@@ -8,6 +9,9 @@ namespace PnP.PowerShell.Commands.Purview
 {
     [Cmdlet(VerbsCommon.Remove, "PnPSiteSensitivityLabel")]
     [OutputType(typeof(void))]
+    [RequiredApiDelegatedPermissions("graph/Group.ManageProtection.All")]
+    [RequiredApiDelegatedPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedPermissions("graph/Directory.ReadWrite.All")]
     public class RemoveSiteSensitivityLabel : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()

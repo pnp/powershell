@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Text;
@@ -90,7 +91,8 @@ namespace PnP.PowerShell.Commands.Lists
                 }
                 if (RetrievalExpressions.Length > 0)
                     ClientContext.Load(listItem, RetrievalExpressions);
-                ClientContext.ExecuteQueryRetry();
+                // Fields are loaded individually here rather than projected through a view, so the threshold does not apply
+                ExecuteQueryRetryWithLookupThresholdHint(list, null);
                 WriteObject(listItem);
             }
             else if (UniqueId != Guid.Empty)
@@ -116,7 +118,7 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     ClientContext.Load(listItem, l => l.Include(a => a.ContentType, a => a.ContentType.Id, a => a.ContentType.Name, a => a.ContentType.Description, a => a.ContentType.StringId));
                 }
-                ClientContext.ExecuteQueryRetry();
+                ExecuteQueryRetryWithLookupThresholdHint(list, GetProjectedFields(query.ViewXml));
                 WriteObject(listItem);
             }
             else
@@ -179,7 +181,7 @@ namespace PnP.PowerShell.Commands.Lists
                     {
                         ClientContext.Load(listItems, l => l.Include(a => a.ContentType, a => a.ContentType.Id, a => a.ContentType.Name, a => a.ContentType.Description, a => a.ContentType.StringId));
                     }
-                    ClientContext.ExecuteQueryRetry();
+                    ExecuteQueryRetryWithLookupThresholdHint(list, GetProjectedFields(query.ViewXml));
 
                     WriteObject(listItems, true);
 
@@ -193,6 +195,88 @@ namespace PnP.PowerShell.Commands.Lists
                         query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
                     }
                 } while (query.ListItemCollectionPosition != null);
+            }
+        }
+
+        /// <summary>
+        /// The number of lookup columns SharePoint Online allows a single query to project. A Lookup, Person or Group,
+        /// Managed Metadata, Created By or Modified By column each count as one.
+        /// </summary>
+        private const int LookupColumnThreshold = 12;
+
+        private static readonly string[] LookupColumnTypes = { "Lookup", "LookupMulti", "User", "UserMulti", "TaxonomyFieldType", "TaxonomyFieldTypeMulti" };
+
+        /// <summary>
+        /// SharePoint refuses a query that projects more than <see cref="LookupColumnThreshold"/> lookup columns, which is easy
+        /// to run into through -Fields or the ViewFields of -Query, and reports it only as a throttled query. Point at what can
+        /// be done about it, but leave the original error in place. See https://github.com/pnp/powershell/issues/4311
+        ///
+        /// The same exception covers the list view threshold, for which this advice would be wrong, so rather than reading the
+        /// server message, which is localized, establish from the columns that were asked for whether the limit was exceeded.
+        /// </summary>
+        private void ExecuteQueryRetryWithLookupThresholdHint(List list, IEnumerable<string> projectedFields)
+        {
+            try
+            {
+                ClientContext.ExecuteQueryRetry();
+            }
+            catch (ServerException e) when (e.ServerErrorTypeName == "Microsoft.SharePoint.SPQueryThrottledException"
+                                            && CountLookupColumns(list, projectedFields) > LookupColumnThreshold)
+            {
+                LogWarning($"The query asks for more than the {LookupColumnThreshold} lookup columns SharePoint allows a single query to project, counting every Lookup, Person or Group, Managed Metadata, Created By and Modified By column. Ask for fewer of those columns through -Fields, or through the ViewFields of -Query, or retrieve the items one at a time with -Id, which is not subject to this limit.");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Counts how many of the provided columns are of a type that counts towards the lookup column threshold. Runs only
+        /// when a query was refused, and reads the field schema of the list, which is not itself subject to the threshold.
+        /// </summary>
+        private int CountLookupColumns(List list, IEnumerable<string> projectedFields)
+        {
+            var names = new HashSet<string>(projectedFields ?? Enumerable.Empty<string>(), StringComparer.OrdinalIgnoreCase);
+            if (names.Count <= LookupColumnThreshold) return 0;
+
+            // A FieldRef can name its field through ID rather than Name, in braced or unbraced form, so compare on the
+            // parsed value rather than on the text
+            var ids = new HashSet<Guid>(names.Select(n => Guid.TryParse(n, out Guid id) ? id : Guid.Empty).Where(id => id != Guid.Empty));
+
+            try
+            {
+                var fields = ClientContext.LoadQuery(list.Fields.Include(f => f.Id, f => f.InternalName, f => f.Title, f => f.TypeAsString));
+                ClientContext.ExecuteQueryRetry();
+
+                return fields.Count(f => (names.Contains(f.InternalName) || names.Contains(f.Title) || ids.Contains(f.Id))
+                                         && LookupColumnTypes.Contains(f.TypeAsString));
+            }
+            catch (Exception)
+            {
+                // Never let establishing whether the advice applies get in the way of reporting the original error.
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Returns the columns a CAML view projects, named by internal name or, where a FieldRef uses ID instead of Name, by
+        /// field id, so that a refused query can be checked against the lookup column threshold. An empty result means the
+        /// query projects whatever SharePoint decides to return, which the threshold does not apply to.
+        /// </summary>
+        private static IEnumerable<string> GetProjectedFields(string viewXml)
+        {
+            if (string.IsNullOrWhiteSpace(viewXml)) return Enumerable.Empty<string>();
+
+            try
+            {
+                return XElement.Parse(viewXml)
+                    .Descendants("ViewFields")
+                    .Descendants("FieldRef")
+                    .Select(f => f.Attribute("Name")?.Value ?? f.Attribute("ID")?.Value)
+                    .Where(n => !string.IsNullOrEmpty(n))
+                    .ToArray();
+            }
+            catch (System.Xml.XmlException)
+            {
+                return Enumerable.Empty<string>();
             }
         }
 

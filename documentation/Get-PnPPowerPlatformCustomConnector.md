@@ -13,7 +13,7 @@ title: Get-PnPPowerPlatformCustomConnector
 
 **Required Permissions**
 
-* Azure: management.azure.com
+* Both Azure Service Management API user_impersonation and Power Apps Service API user (delegated). Application permissions are not supported.
 
 Returns the custom Power Platform Connectors for a given environment
 

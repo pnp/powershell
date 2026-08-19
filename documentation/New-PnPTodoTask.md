@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPTodoTask.html
 
 **Required Permissions**
 
-  * Microsoft Graph API : One of Tasks.ReadWrite, Tasks.ReadWrite.All
+  * Microsoft Graph API: Tasks.ReadWrite (delegated). Application permissions are not supported.
 
 Creates a new Todo task in a Todo list.
 

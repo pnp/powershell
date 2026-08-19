@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPlannerBucket.ht
 
 **Required Permissions**
 
-  * Microsoft Graph API: One of Tasks.ReadWrite, Tasks.ReadWrite.All, Group.ReadWrite.All
+  * Microsoft Graph API: One of Tasks.ReadWrite or Group.ReadWrite.All (delegated), or Tasks.ReadWrite.All (application). Additionally Group.Read.All when -Group is supplied as a mail nickname or display name rather than as a group id, as resolving those reads the group from Microsoft Graph.
 
 Updates an existing Planner bucket.
 

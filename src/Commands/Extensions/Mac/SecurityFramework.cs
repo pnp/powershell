@@ -49,6 +49,26 @@ namespace PnP.PowerShell.Extensions.Mac
             kSecReturnData = GetGlobal(Handle, "kSecReturnData");
         }
 
+        private static IntPtr _kSecMatchLimitAll;
+
+        /// <summary>Resolved on first use, not in the static constructor: an unresolvable symbol faults the type initializer for the
+        /// life of the process, which would take every other keychain operation down with it rather than only this one.</summary>
+        public static IntPtr GetMatchLimitAll()
+        {
+            if (_kSecMatchLimitAll == IntPtr.Zero)
+            {
+                IntPtr symbol = dlsym(Handle, "kSecMatchLimitAll");
+                if (symbol == IntPtr.Zero)
+                {
+                    throw new InteropException("The kSecMatchLimitAll symbol could not be resolved from the Security framework.", -1);
+                }
+
+                _kSecMatchLimitAll = Marshal.PtrToStructure<IntPtr>(symbol);
+            }
+
+            return _kSecMatchLimitAll;
+        }
+
         [DllImport(SecurityFrameworkLib, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SessionGetInfo(int session, out int sessionId, out SessionAttributeBits attributes);
 
