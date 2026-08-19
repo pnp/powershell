@@ -11,11 +11,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+
+### Fixed
+
+## [3.4.1]
+
+### Changed
 - Changed `Resolve-PnPFolder` to create a path in `-SiteRelativePath` which does not exist yet, instead of failing with `File Not Found.`, and to return the folder with its properties and the `Title` of the folders it creates populated as it did before 3.4.0. A folder name ending on a period is now rejected, and a path already carrying the server relative url of the web is accepted. [#5448](https://github.com/pnp/powershell/issues/5448)
 - Changed `Remove-PnPFile`, `Rename-PnPFile` and `Reset-PnPFileVersion` to act on the file the url points at when its name carries a sequence such as `%20` literally, which for the first two meant deleting or renaming a differently named file while reporting success. [#5449](https://github.com/pnp/powershell/pull/5449)
 - Changed `Remove-PnPEntraIDServicePrincipalAppRoleAssignment` to simulate rather than perform the removal when `-Force` and `-WhatIf` are combined, as `-Force` short circuited the `ShouldProcess` call it was guarded by. [#5449](https://github.com/pnp/powershell/pull/5449)
 
-### Fixed
+### Contributors
+
+- Gautam Sheth [gautamdsheth]
 
 ## [3.4.0]
 
