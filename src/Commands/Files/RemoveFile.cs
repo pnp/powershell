@@ -1,5 +1,4 @@
 ﻿using PnP.Core.Model.SharePoint;
-using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Model.SharePoint;
 using System.Management.Automation;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -28,16 +27,19 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
+            string webUrl = null;
+            var url = ServerRelativeUrl;
+
             if (ParameterSpecified(nameof(SiteRelativeUrl)))
             {
-                var pnpWeb = Connection.PnPContext.Web;
-                pnpWeb.EnsureProperties(w => w.ServerRelativeUrl);
+                Connection.PnPContext.Web.EnsureProperties(w => w.ServerRelativeUrl);
 
-                ServerRelativeUrl = UrlUtility.Combine(pnpWeb.ServerRelativeUrl, SiteRelativeUrl);
+                webUrl = Connection.PnPContext.Web.ServerRelativeUrl;
+                url = SiteRelativeUrl;
             }
 
-            IFile file = Connection.PnPContext.Web.GetFileByServerRelativeUrl(ServerRelativeUrl);
-            file.EnsureProperties(f => f.Name);
+            // Use the Url as provided when a file exists there, only fall back to its decoded form when it does not.
+            IFile file = Utilities.FileUrlResolver.ResolveFile(url, webUrl, ClientContext, CurrentWeb, Connection.PnPContext, f => f.Name);
 
             if (Force || ShouldContinue(string.Format(Resources.Delete0, file.Name), Resources.Confirm))
             {

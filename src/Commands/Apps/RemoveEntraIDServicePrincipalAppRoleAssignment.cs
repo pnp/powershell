@@ -10,7 +10,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPEntraIDServicePrincipalAppRoleAssignment", DefaultParameterSetName = ParameterSet_USER, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
+    [Cmdlet(VerbsCommon.Remove, "PnPEntraIDServicePrincipalAppRoleAssignment", DefaultParameterSetName = ParameterSet_USER, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.None)]
     [RequiredApiDelegatedOrApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All")]
     [OutputType(typeof(void))]
     [Alias("Remove-PnPAzureADServicePrincipalAppRoleAssignment")]
@@ -43,16 +43,54 @@ namespace PnP.PowerShell.Commands.Apps
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
+        // -Confirm binds per invocation and does not reach $ConfirmPreference from a compiled cmdlet, so both are read
+        private bool ConfirmSuppressed
+        {
+            get
+            {
+                if (MyInvocation.BoundParameters.TryGetValue("Confirm", out var confirm) && confirm is SwitchParameter confirmSwitch)
+                {
+                    return !confirmSwitch.ToBool();
+                }
+
+                return EffectiveConfirmPreference() == ConfirmImpact.None;
+            }
+        }
+
+        private ConfirmImpact EffectiveConfirmPreference()
+        {
+            var value = GetVariableValue("ConfirmPreference");
+
+            if (value is PSObject psObject)
+            {
+                value = psObject.BaseObject;
+            }
+
+            if (value is ConfirmImpact preference)
+            {
+                return preference;
+            }
+
+            return Enum.TryParse<ConfirmImpact>(value?.ToString(), true, out var parsed) ? parsed : ConfirmImpact.High;
+        }
+
         protected override void ExecuteCmdlet()
         {
             if (ParameterSetName == ParameterSet_BYINSTANCE)
             {
                 var target = Identity.Id ?? "app role assignment";
                 var resourceName = Identity.ResourceDisplayName ?? Identity.ResourceId?.ToString() ?? "service principal";
-                if (Force || ShouldProcess($"app role assignment {target} on {resourceName}", "Remove"))
+                if (!ShouldProcess($"app role assignment {target} on {resourceName}", "Remove"))
                 {
-                    ServicePrincipalUtility.RemoveServicePrincipalAppRoleAssignment(GraphRequestHelper, Identity);
+                    return;
                 }
+
+                if (!Force && !ConfirmSuppressed && !ShouldContinue($"Remove app role assignment {target} on {resourceName}?", Properties.Resources.Confirm))
+                {
+                    return;
+                }
+
+                ServicePrincipalUtility.RemoveServicePrincipalAppRoleAssignment(GraphRequestHelper, Identity);
                 return;
             }
 
@@ -86,7 +124,12 @@ namespace PnP.PowerShell.Commands.Apps
                 ? $"app role '{appRole.Value ?? appRole.DisplayName}' assignment for principal {principalId} on service principal {resource.DisplayName}"
                 : $"all {toRemove.Count} app role assignment(s) for principal {principalId} on service principal {resource.DisplayName}";
 
-            if (!Force && !ShouldProcess(description, "Remove"))
+            if (!ShouldProcess(description, "Remove"))
+            {
+                return;
+            }
+
+            if (!Force && !ConfirmSuppressed && !ShouldContinue($"Remove {description}?", Properties.Resources.Confirm))
             {
                 return;
             }
