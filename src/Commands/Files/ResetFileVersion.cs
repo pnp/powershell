@@ -17,7 +17,10 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            CurrentWeb.ResetFileToPreviousVersion(ServerRelativeUrl,CheckinType,CheckInComment);
+            // Use the Url as provided when a file exists there, only fall back to its decoded form when it does not.
+            var serverRelativeUrl = Utilities.FileUrlResolver.Resolve(ServerRelativeUrl, null, ClientContext, CurrentWeb);
+
+            CurrentWeb.ResetFileToPreviousVersion(serverRelativeUrl, CheckinType, CheckInComment);
         }
     }
 }

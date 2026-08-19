@@ -13,6 +13,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 ### Fixed
+- Fixed `Remove-PnPEntraIDServicePrincipalAppRoleAssignment` removing the app role assignment instead of simulating it when `-Force` and `-WhatIf` were combined, as `-Force` short circuited the `ShouldProcess` call it was guarded by. [#5448](https://github.com/pnp/powershell/issues/5448)
+- Fixed `Remove-PnPFile`, `Rename-PnPFile` and `Reset-PnPFileVersion` acting on a differently named file than the one asked for when the url holds a sequence such as `%20` which the name of the file carries literally, which for the first two meant deleting or renaming the wrong file while reporting success. [#5448](https://github.com/pnp/powershell/issues/5448)
+- Fixed `Resolve-PnPFolder` failing with `File Not Found.` instead of creating the folder when `-SiteRelativePath` points at a path which does not exist yet, and returning a folder with only its `Exists` property populated when the path did exist. [#5448](https://github.com/pnp/powershell/issues/5448)
 
 ## [3.4.0]
 
