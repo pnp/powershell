@@ -9,6 +9,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## [3.4.0]
+
+### Added
 - Added `-List` to `Get-PnPStoredCredential` to enumerate the names of the stored PnP credentials without requiring a credential name. [#5445](https://github.com/pnp/powershell/pull/5445)
 - Added `Test-PnPSiteTemplate` to validate the schema, internal structure and packaged resources of a PnP site template without applying it. [#5444](https://github.com/pnp/powershell/pull/5444)
 - Added `-EnableSensitivityLabelForOneNote` and `-EnableSensitivityLabelForVideoFiles` parameters to `Set-PnPTenant`. [#5442](https://github.com/pnp/powershell/pull/5442)
