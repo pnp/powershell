@@ -128,11 +128,22 @@ namespace PnP.PowerShell.Commands.Files
             }
         }
 
-        /// <summary>Whether the expression asks for ListItemAllFields itself, which a folder outside of a list cannot answer for.</summary>
+        /// <summary>Whether the expression reaches through ListItemAllFields, which a folder outside of a list cannot answer for. The whole member chain is walked, so that a nested retrieval such as ListItemAllFields.Id is recognized as well.</summary>
         private static bool IsListItemAllFields(Expression<Func<Folder, object>> expression)
         {
-            var body = expression.Body is UnaryExpression unary ? unary.Operand : expression.Body;
-            return body is MemberExpression member && member.Member.Name == nameof(Folder.ListItemAllFields);
+            var node = expression.Body is UnaryExpression unary ? unary.Operand : expression.Body;
+
+            while (node is MemberExpression member)
+            {
+                if (member.Member.Name == nameof(Folder.ListItemAllFields))
+                {
+                    return true;
+                }
+
+                node = member.Expression;
+            }
+
+            return false;
         }
 
         /// <summary>Loads a freshly created folder, falling back for one which lives outside of a list and therefore carries no list item. The folder itself is created by the batch that fails on the list item.</summary>

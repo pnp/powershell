@@ -43,8 +43,8 @@ namespace PnP.PowerShell.Commands.Apps
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
-        // -Confirm:$false states that the caller does not want to be asked, which ShouldContinue does not honour by itself
-        private bool ConfirmSuppressed => MyInvocation.BoundParameters.TryGetValue("Confirm", out var confirm) && confirm is SwitchParameter confirmSwitch && !confirmSwitch.ToBool();
+        // Passing -Confirm either way leaves the asking to ShouldProcess, so the prompt below would be a second one for the same removal
+        private bool ConfirmHandledByShouldProcess => MyInvocation.BoundParameters.ContainsKey("Confirm");
 
         protected override void ExecuteCmdlet()
         {
@@ -57,7 +57,7 @@ namespace PnP.PowerShell.Commands.Apps
                     return;
                 }
 
-                if (!Force && !ConfirmSuppressed && !ShouldContinue($"Remove app role assignment {target} on {resourceName}?", Properties.Resources.Confirm))
+                if (!Force && !ConfirmHandledByShouldProcess && !ShouldContinue($"Remove app role assignment {target} on {resourceName}?", Properties.Resources.Confirm))
                 {
                     return;
                 }
@@ -101,7 +101,7 @@ namespace PnP.PowerShell.Commands.Apps
                 return;
             }
 
-            if (!Force && !ConfirmSuppressed && !ShouldContinue($"Remove {description}?", Properties.Resources.Confirm))
+            if (!Force && !ConfirmHandledByShouldProcess && !ShouldContinue($"Remove {description}?", Properties.Resources.Confirm))
             {
                 return;
             }
