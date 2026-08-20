@@ -104,7 +104,7 @@ PnP PowerShell exists out of 852 cmdlets which can help you in setting up, confi
 - [Add-PnPTeamsUser](Add-PnPTeamsUser.md)
 - [Add-PnPTenantCdnOrigin](Add-PnPTenantCdnOrigin.md)
 - [Add-PnPTenantRestrictedSearchAllowedList](Add-PnPTenantRestrictedSearchAllowedList.md)
-- [Add-PnPTenantSearchCrawledProperty](Add-PnPTenantSearchCrawledProperty.md) <sup>1</sup>
+- [Add-PnPTenantSearchCrawledProperty](Add-PnPTenantSearchCrawledProperty.md)
 - [Add-PnPTenantSequence](Add-PnPTenantSequence.md)
 - [Add-PnPTenantSequenceSite](Add-PnPTenantSequenceSite.md)
 - [Add-PnPTenantSequenceSubSite](Add-PnPTenantSequenceSubSite.md)
@@ -222,7 +222,7 @@ PnP PowerShell exists out of 852 cmdlets which can help you in setting up, confi
 - [Get-PnPBuiltInSiteTemplateSettings](Get-PnPBuiltInSiteTemplateSettings.md)
 - [Get-PnPChangeLog](Get-PnPChangeLog.md)
 - [Get-PnPClientSidePage](Get-PnPClientSidePage.md) <sup>2</sup>
-- [Get-PnPCommandPermission](Get-PnPCommandPermission.md) <sup>1</sup>
+- [Get-PnPCommandPermission](Get-PnPCommandPermission.md)
 - [Get-PnPCompatibleHubContentTypes](Get-PnPCompatibleHubContentTypes.md)
 - [Get-PnPConnection](Get-PnPConnection.md)
 - [Get-PnPContainer](Get-PnPContainer.md)
@@ -931,11 +931,11 @@ PnP PowerShell exists out of 852 cmdlets which can help you in setting up, confi
 - [Sync-PnPAppToTeams](Sync-PnPAppToTeams.md)
 - [Sync-PnPSharePointUserProfilesFromAzureActiveDirectory](Sync-PnPSharePointUserProfilesFromAzureActiveDirectory.md)
 ## Test
-- [Test-PnPConnectionPermission](Test-PnPConnectionPermission.md) <sup>1</sup>
+- [Test-PnPConnectionPermission](Test-PnPConnectionPermission.md)
 - [Test-PnPListItemIsRecord](Test-PnPListItemIsRecord.md)
 - [Test-PnPMicrosoft365GroupAliasIsUsed](Test-PnPMicrosoft365GroupAliasIsUsed.md)
 - [Test-PnPSite](Test-PnPSite.md)
-- [Test-PnPSiteTemplate](Test-PnPSiteTemplate.md) <sup>1</sup>
+- [Test-PnPSiteTemplate](Test-PnPSiteTemplate.md)
 - [Test-PnPTenantTemplate](Test-PnPTenantTemplate.md)
 ## Undo
 - [Undo-PnPFileCheckedOut](Undo-PnPFileCheckedOut.md)

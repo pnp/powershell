@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -SiteRelativePath
-Site Relative Folder Path
+Site relative path of the folder to return or create. A path which already carries the server relative url of the web, such as `/sites/contoso/Shared Documents/demofolder`, is accepted as well. Folder names cannot end on a period.
 
 ```yaml
 Type: String
