@@ -2,7 +2,7 @@
 
 ![PnP PowerShell](https://repository-images.githubusercontent.com/296298081/933a6d00-072b-11eb-839d-56df16c29588)
 
-**PnP PowerShell** is a .NET 8 / .NET Framework 4.6.2 based PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Azure Active Directory, and more.
+**PnP PowerShell** is a .NET 10 based PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Azure Active Directory, and more.
 
 Last version | Last nightly version
 -------------|---------------------
@@ -33,13 +33,13 @@ Last version | Last nightly version
 Starting an isolated container with PnP.PowerShell module installed:
 
 ```powershell
-docker run --rm -it m365pnp/powershell:2.4.0-nanoserver-1809
+docker run --rm -it m365pnp/powershell:3.4.1-nanoserver-1809
 ```
 
 Starting a PnP.PowerShell container with the current directory mounted:
 
 ```powerShell
-docker run --rm -it -v ${PWD}:c:/app -w c:/app m365pnp/powershell:2.4.0-nanoserver-1809
+docker run --rm -it -v ${PWD}:c:/app -w c:/app m365pnp/powershell:3.4.1-nanoserver-1809
 ```
 
 ### Linux-container

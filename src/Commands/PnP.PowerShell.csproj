@@ -66,7 +66,7 @@
 		<PackageReference Include="PnP.Core.Admin" Version="1.17.37-nightly" Condition="'$(IsRelease)' == '1'" />
 
 		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.85.2" />
-		<PackageReference Include="Microsoft.Bcl.Cryptography" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Bcl.Cryptography" Version="10.0.11" />
 
 		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
 		
@@ -95,7 +95,7 @@
 			<HintPath>$(PnPCoreSdkPath)PnP.Core.Admin\bin\Debug\net10.0\PnP.Core.Admin.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
-		</Reference>		
+		</Reference>
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(PnPFrameworkPath)' != '' and '$(IsRelease)' != '1'">
