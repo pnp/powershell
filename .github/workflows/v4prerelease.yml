@@ -3,10 +3,6 @@ name: V4 GitHub Pre-release
 on:
   workflow_dispatch:
     inputs:
-      prereleaseLabel:
-        description: PowerShell prerelease label to append to the current version
-        required: true
-        default: v4
       releaseNotes:
         description: GitHub release notes
         required: false
@@ -34,27 +30,33 @@ jobs:
     - uses: actions/checkout@v6
       with:
         ref: dev
+        token: ${{ secrets.PAT }}
 
     - name: Determine version
       id: version
       shell: pwsh
       run: |
-        $moduleVersion = (Get-Content ./versionv4.txt -Raw).Trim()
-        if ([string]::IsNullOrWhiteSpace($moduleVersion)) {
-          throw "versionv4.txt did not contain a version."
+        $moduleVersion = "4.0.0"
+        $previewNumber = (Get-Content ./versionv4.txt -Raw).Trim()
+        if ($previewNumber -notmatch '^[1-9][0-9]*$') {
+          throw "versionv4.txt must contain the next positive integer Preview number to release. Current value: '$previewNumber'."
         }
 
-        $prereleaseLabel = "${{ inputs.prereleaseLabel }}".Trim()
-        if ($prereleaseLabel -notmatch '^[0-9A-Za-z][0-9A-Za-z.-]*$') {
-          throw "The prerelease label '$prereleaseLabel' is not a valid SemVer prerelease label."
-        }
+        $nextPreviewNumber = [int]$previewNumber + 1
+        $prereleaseLabel = "preview$previewNumber"
 
         $releaseVersion = "$moduleVersion-$prereleaseLabel"
+        $releaseTitle = "Release $moduleVersion Preview $previewNumber"
         Write-Host "Module version: $moduleVersion"
+        Write-Host "Preview number: $previewNumber"
         Write-Host "GitHub prerelease version: $releaseVersion"
+        Write-Host "GitHub release title: $releaseTitle"
         "MODULE_VERSION=$moduleVersion" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
+        "PREVIEW_NUMBER=$previewNumber" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
+        "NEXT_PREVIEW_NUMBER=$nextPreviewNumber" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
         "PRERELEASE_LABEL=$prereleaseLabel" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
         "RELEASE_VERSION=$releaseVersion" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
+        "RELEASE_TITLE=$releaseTitle" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
 
     - name: Install Sign CLI tool
       shell: pwsh
@@ -289,7 +291,7 @@ jobs:
       run: |
         $releaseVersion = "${{ steps.version.outputs.RELEASE_VERSION }}"
         $tagName = $releaseVersion
-        $title = "PnP.PowerShell $releaseVersion"
+        $title = "${{ steps.version.outputs.RELEASE_TITLE }}"
         $notesPath = Join-Path $env:RUNNER_TEMP "release-notes.md"
 
         @(
@@ -310,3 +312,15 @@ jobs:
           --title $title `
           --notes-file $notesPath `
           --prerelease
+
+    - name: Increment v4 preview number
+      shell: pwsh
+      run: |
+        Set-Content -Path ./versionv4.txt -Value "${{ steps.version.outputs.NEXT_PREVIEW_NUMBER }}" -NoNewline
+
+    - name: Commit next v4 preview number
+      uses: EndBug/add-and-commit@v10
+      with:
+        message: 'Increment v4 prerelease preview number'
+        add: 'versionv4.txt'
+        push: true
