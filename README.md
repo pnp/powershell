@@ -18,7 +18,7 @@ For more information about installing or upgrading to this module, please refer 
 
 We released a new major version of PnP PowerShell, version 4 and upwards. This version of PnP PowerShell requires as of today PowerShell 7.6.0 or newer, and is based upon .NET 10.0.
 
-We have created a [guide](https://github.com/pnp/powershell/blob/dev/MIGRATE-2.0-to-3.0.md) for upgrading from previous versions to PnP PowerShell 4.x. If you are still using PowerShell 5.1 or the ISE, and want to use the latest major or nightly release, you will need to specify the required version like below: 
+We have created a [guide](https://github.com/pnp/powershell/blob/dev/MIGRATE-3.0-to-4.0.md) for upgrading from previous versions to PnP PowerShell 4.x. If you are still using PowerShell 5.1 or the ISE, and want to use the latest major or nightly release, you will need to specify the required version like below: 
 
 `Install-Module PnP.PowerShell -RequiredVersion 1.12.0 -Force`
 
