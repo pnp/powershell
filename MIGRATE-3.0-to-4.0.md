@@ -28,7 +28,7 @@ Install-Module -Name "PnP.PowerShell" -AllowPrerelease
 
 ## Changes needed in Azure DevOps/GitHub Actions/Pipelines
 
-If you are using PnP PowerShell in Azure Devops, GitHub Actions or other pipeline infrastructure, you will have to update your PowerShell version from v5 or v7.4.x to v7.6.0 or later.
+If you are using PnP PowerShell in Azure Devops, GitHub Actions or other pipeline infrastructure, you will have to update your PowerShell version from v5 or v7.2.x to v7.6.0 or later.
 
 Recommend reading these 2 links:
 
@@ -46,3 +46,5 @@ Recommend reading these 2 links:
 
 | **Cmdlet** | **Comment** |
 | ----------- | ---------------------- |
+| Get-PnPAccessToken | The output type is now `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`, earlier it was `System.IdentityModel.Tokens.Jwt` |
+| Get-PnPCustomAction| The output type is now `PnP.Core.Model.SharePoint.UserCustomAction`, earlier it was `Microsoft.SharePoint.Client.UserCustomAction` |

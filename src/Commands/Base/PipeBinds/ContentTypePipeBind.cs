@@ -63,14 +63,14 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string GetId(PnP.Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
             => GetId()
-            ?? (searchInSiteHierarchy ? context.Web.AvailableContentTypes : context.Web.ContentTypes).AsQueryable().Where(ct => ct.Name == _idOrName).FirstOrDefault()?.StringId;
+            ?? ((IQueryable<PnPCore.IContentType>)(searchInSiteHierarchy ? context.Web.AvailableContentTypes : context.Web.ContentTypes)).Where(ct => ct.Name == _idOrName).FirstOrDefault()?.StringId;
         public string GetId(List list)
             => GetId()
             ?? list.GetContentTypeByName(_idOrName)?.StringId;
 
         public string GetId(PnPCore.IList list)
             => GetId()
-            ?? list.ContentTypes.AsQueryable().Where(ct => ct.Name == _idOrName).FirstOrDefault()?.StringId;
+            ?? ((IQueryable<PnPCore.IContentType>)list.ContentTypes).Where(ct => ct.Name == _idOrName).FirstOrDefault()?.StringId;
 
         internal string GetIdOrThrow(string paramName, Web web, bool searchInSiteHierarchy = true)
             => GetId(web, searchInSiteHierarchy)
@@ -141,11 +141,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
                 if (_idOrName.ToLower().StartsWith("0x0"))
                 {
-                    return collection.AsQueryable().Where(ct => ct.StringId == _idOrName).FirstOrDefault();
+                    return ((IQueryable<PnPCore.IContentType>)collection).Where(ct => ct.StringId == _idOrName).FirstOrDefault();
                 }
                 else
                 {
-                    return collection.AsQueryable().Where(ct => ct.Name == _idOrName).FirstOrDefault();
+                    return ((IQueryable<PnPCore.IContentType>)collection).Where(ct => ct.Name == _idOrName).FirstOrDefault();
                 }
             }
             return null;

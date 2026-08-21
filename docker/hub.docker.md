@@ -24,7 +24,7 @@ Last version | Last nightly version
 
 ## About this image
 
-**PnP PowerShell** is a .NET 10 based PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Azure Active Directory, and more.
+**PnP PowerShell** is a .NET 10 based PowerShell Module providing nearly 900 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Entra, and more.
 
 ## Usage examples
 

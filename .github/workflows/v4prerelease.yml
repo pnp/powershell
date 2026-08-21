@@ -1,0 +1,326 @@
+name: V4 GitHub Pre-release
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseNotes:
+        description: GitHub release notes
+        required: false
+        default: Signed GitHub-only prerelease build.
+
+permissions: read-all
+
+jobs:
+  build:
+    if: github.repository_owner == 'pnp'
+    runs-on: windows-latest
+    environment:
+      name: gh_releases
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: |
+          10.x
+
+    - uses: actions/checkout@v6
+      with:
+        ref: dev
+        token: ${{ secrets.PAT }}
+
+    - name: Determine version
+      id: version
+      shell: pwsh
+      run: |
+        $moduleVersion = "4.0.0"
+        $previewNumber = (Get-Content ./versionv4.txt -Raw).Trim()
+        if ($previewNumber -notmatch '^[1-9][0-9]*$') {
+          throw "versionv4.txt must contain the next positive integer Preview number to release. Current value: '$previewNumber'."
+        }
+
+        $nextPreviewNumber = [int]$previewNumber + 1
+        $prereleaseLabel = "preview$previewNumber"
+
+        $releaseVersion = "$moduleVersion-$prereleaseLabel"
+        $releaseTitle = "Release $moduleVersion Preview $previewNumber"
+        Write-Host "Module version: $moduleVersion"
+        Write-Host "Preview number: $previewNumber"
+        Write-Host "GitHub prerelease version: $releaseVersion"
+        Write-Host "GitHub release title: $releaseTitle"
+        "MODULE_VERSION=$moduleVersion" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
+        "PREVIEW_NUMBER=$previewNumber" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
+        "NEXT_PREVIEW_NUMBER=$nextPreviewNumber" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
+        "PRERELEASE_LABEL=$prereleaseLabel" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
+        "RELEASE_VERSION=$releaseVersion" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
+        "RELEASE_TITLE=$releaseTitle" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+    - name: Install Sign CLI tool
+      shell: pwsh
+      run: |
+        $signToolPath = Join-Path $env:RUNNER_TEMP "sign"
+        dotnet tool install sign --tool-path $signToolPath --version 0.9.1-beta.25181.2
+        "SIGN_CLI_PATH=$(Join-Path $signToolPath 'sign.exe')" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
+
+    - name: Azure CLI Login
+      uses: azure/login@v3 # v3.0.0
+      with:
+        client-id: ${{ secrets.SIGNING_CLIENT_ID }}
+        tenant-id: ${{ secrets.SIGNING_TENANTID }}
+        allow-no-subscriptions: true
+
+    - name: Build module
+      shell: pwsh
+      run: |
+        dotnet build ./src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=${{ steps.version.outputs.MODULE_VERSION }} -p:VersionSuffix=${{ steps.version.outputs.PRERELEASE_LABEL }}
+
+    - name: Package module
+      shell: pwsh
+      run: |
+        $moduleVersion = "${{ steps.version.outputs.MODULE_VERSION }}"
+        $prereleaseLabel = "${{ steps.version.outputs.PRERELEASE_LABEL }}"
+        $moduleDir = "./module/PnP.PowerShell"
+        $corePath = "$moduleDir/Core"
+        $commonPath = "$moduleDir/Common"
+
+        New-Item -Path $corePath -ItemType Directory -Force | Out-Null
+        New-Item -Path $commonPath -ItemType Directory -Force | Out-Null
+
+        $commonFiles = [System.Collections.Generic.Hashset[string]]::new()
+        $moduleAssemblies = @('PnP.PowerShell.dll', 'PnP.PowerShell.pdb')
+
+        Copy-Item -Path "./resources/*.ps1xml" -Destination $moduleDir
+        Copy-Item -Path "./resources/RegisterPnPAssemblyResolver.ps1" -Destination $moduleDir
+
+        Get-ChildItem -Path "./src/ALC/bin/Release/net10.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | ForEach-Object {
+          [void]$commonFiles.Add($_.Name)
+          Copy-Item -LiteralPath $_.FullName -Destination $commonPath
+        }
+
+        Get-ChildItem -Path "./src/Commands/bin/Release/net10.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | ForEach-Object {
+          if ($moduleAssemblies -contains $_.Name -or $_.Name -like 'Microsoft.SharePoint.Client*' -or $_.Name -like 'Microsoft.Online.SharePoint.Client*') {
+            Copy-Item -LiteralPath $_.FullName -Destination $corePath
+          }
+          elseif (-not $commonFiles.Contains($_.Name)) {
+            [void]$commonFiles.Add($_.Name)
+            Copy-Item -LiteralPath $_.FullName -Destination $commonPath
+          }
+        }
+
+        $sourceRuntimeBase = "./src/Commands/bin/Release/net10.0/runtimes"
+        if (Test-Path $sourceRuntimeBase) {
+          $runtimeDirs = @("win-x64/native", "win-arm64/native", "win-x86/native", "linux-x64/native")
+          foreach ($runtimeDir in $runtimeDirs) {
+            $sourceRuntimePath = Join-Path $sourceRuntimeBase $runtimeDir
+            if (Test-Path $sourceRuntimePath) {
+              $destinationRuntimePath = Join-Path $commonPath "runtimes/$runtimeDir"
+              New-Item -Path $destinationRuntimePath -ItemType Directory -Force | Out-Null
+              Get-ChildItem -Path $sourceRuntimePath -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb', '.so' -and -not $commonFiles.Contains($_.Name) } | ForEach-Object {
+                Copy-Item -LiteralPath $_.FullName -Destination $destinationRuntimePath
+              }
+            }
+          }
+        }
+
+        & "./build/Generate-PredictorCommands.ps1" -Version $prereleaseLabel
+        if (Test-Path "./resources/predictor") {
+          Copy-Item -Path "./resources/predictor" -Destination $moduleDir -Recurse -Force
+        }
+
+        Set-PSRepository PSGallery -InstallationPolicy Trusted
+        Install-Module -Name Microsoft.PowerShell.PlatyPS -RequiredVersion 1.0.3
+        $mdFiles = Measure-PlatyPSMarkdown -Path "./documentation/*.md"
+        $mdFiles | Import-MarkdownCommandHelp -Path {$_.FilePath} | Export-MamlCommandHelp -OutputFolder ./module -Force
+        ./build/Assert-OnlineHelpLinks.ps1 -OutputFolder ./module -DocumentationPath ./documentation
+
+        $scriptBlock = {
+          param([string] $modulePath)
+
+          . (Join-Path $modulePath "RegisterPnPAssemblyResolver.ps1")
+          $moduleAssemblyPath = Join-Path $modulePath "Core/PnP.PowerShell.dll"
+          Import-Module -Name $moduleAssemblyPath -DisableNameChecking
+
+          $cmdlets = Get-Command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
+          $cmdlets -Join ","
+        }
+
+        $cmdletJob = Start-Job -ScriptBlock $scriptBlock -ArgumentList (Resolve-Path -LiteralPath $moduleDir).Path
+        try {
+          $cmdletsString = Receive-Job -Job $cmdletJob -Wait -ErrorAction Stop
+          if ($cmdletJob.State -ne "Completed") {
+            throw "Failed to retrieve cmdlet names. Job state: $($cmdletJob.State)"
+          }
+        }
+        finally {
+          Remove-Job -Job $cmdletJob -Force -ErrorAction SilentlyContinue
+        }
+
+        $manifest = "@{
+          ScriptsToProcess = 'RegisterPnPAssemblyResolver.ps1'
+          NestedModules =  'Core/PnP.PowerShell.dll'
+          ModuleVersion = '$moduleVersion'
+          Description = 'Microsoft 365 Patterns and Practices PowerShell Cmdlets'
+          GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
+          Author = 'Microsoft 365 Patterns and Practices'
+          CompanyName = 'Microsoft 365 Patterns and Practices'
+          CompatiblePSEditions = @('Core')
+          PowerShellVersion = '7.6.0'
+          ProcessorArchitecture = 'None'
+          FunctionsToExport = '*'
+          CmdletsToExport = @($cmdletsString)
+          VariablesToExport = '*'
+          AliasesToExport = '*'
+          FormatsToProcess = 'PnP.PowerShell.Format.ps1xml'
+          PrivateData = @{
+            PSData = @{
+              Tags = 'SharePoint','PnP','Teams','Planner'
+              Prerelease = '$prereleaseLabel'
+              ProjectUri = 'https://aka.ms/sppnp'
+              IconUri = 'https://raw.githubusercontent.com/pnp/media/40e7cd8952a9347ea44e5572bb0e49622a102a12/parker/ms/300w/parker-ms-300.png'
+            }
+          }
+        }"
+        $manifest | Out-File "$moduleDir/PnP.PowerShell.psd1" -Force
+
+    - name: Sign module files
+      env:
+        SIGNING_TENANTID: ${{ secrets.SIGNING_TENANTID }}
+        SIGNING_CLIENT_ID: ${{ secrets.SIGNING_CLIENT_ID }}
+        SIGNING_CERTNAME: ${{ secrets.SIGNING_CERTNAME }}
+        SIGNING_VAULTURL: ${{ secrets.SIGNING_VAULTURL }}
+      shell: pwsh
+      run: |
+        function Invoke-ModuleFileSigning {
+          param(
+            [Parameter(Mandatory = $true)]
+            [System.IO.FileInfo] $File
+          )
+
+          Write-Host "Signing $($File.FullName)"
+          & $env:SIGN_CLI_PATH code azure-key-vault $File.FullName `
+            --publisher-name "Microsoft 365 Patterns and Practices" `
+            --description "PnP PowerShell Module" `
+            --description-url "https://pnp.github.io/powershell/" `
+            --azure-key-vault-tenant-id $env:SIGNING_TENANTID `
+            --azure-key-vault-client-id $env:SIGNING_CLIENT_ID `
+            --azure-key-vault-certificate $env:SIGNING_CERTNAME `
+            --azure-key-vault-url $env:SIGNING_VAULTURL `
+            --timestamp-url "http://timestamp.digicert.com" `
+            --verbosity Debug
+
+          if ($LASTEXITCODE -ne 0) {
+            throw "Signing failed for $($File.FullName)"
+          }
+        }
+
+        $filesToSign = @(
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Core/PnP.PowerShell.dll"
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Core.dll"
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Core.Admin.dll"
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Core.Auth.dll"
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Framework.dll"
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.PowerShell.ALC.dll"
+        )
+        $filesToSign += Get-ChildItem -LiteralPath ./module/PnP.PowerShell -Recurse -File | Where-Object { $_.Extension -in '.ps1', '.psm1', '.ps1xml', '.psd1' }
+
+        foreach ($fileToSign in $filesToSign) {
+          Invoke-ModuleFileSigning -File $fileToSign
+        }
+
+    - name: Verify signatures
+      shell: pwsh
+      run: |
+        $signedFiles = @(
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Core/PnP.PowerShell.dll"
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Core.dll"
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Core.Admin.dll"
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Core.Auth.dll"
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Framework.dll"
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.PowerShell.ALC.dll"
+        )
+        $signedFiles += Get-ChildItem -LiteralPath ./module/PnP.PowerShell -Recurse -File | Where-Object { $_.Extension -in '.ps1', '.psm1', '.ps1xml', '.psd1' }
+        $invalidSignatures = $signedFiles | ForEach-Object {
+          $signature = Get-AuthenticodeSignature -LiteralPath $_.FullName
+          if ($signature.Status -ne 'Valid') {
+            [pscustomobject]@{
+              Path = $_.FullName
+              Status = $signature.Status
+              Message = $signature.StatusMessage
+            }
+          }
+        }
+
+        if ($invalidSignatures) {
+          $invalidSignatures | Format-Table -AutoSize | Out-String | Write-Error
+          throw "One or more module files are not signed with a valid Authenticode signature."
+        }
+
+    - name: Archive module
+      id: archive
+      shell: pwsh
+      run: |
+        $releaseVersion = "${{ steps.version.outputs.RELEASE_VERSION }}"
+        $artifactDirectory = "./artifacts"
+        $zipPath = "$artifactDirectory/PnP.PowerShell-$releaseVersion.zip"
+
+        New-Item -Path $artifactDirectory -ItemType Directory -Force | Out-Null
+        Compress-Archive -Path "./module/PnP.PowerShell/*" -DestinationPath $zipPath -CompressionLevel Optimal -Force
+
+        $hash = (Get-FileHash $zipPath -Algorithm SHA256).Hash
+        Set-Content -Path "$zipPath.sha256" -Value $hash -NoNewline
+        "ZIP_PATH=$zipPath" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
+        "SHA256_PATH=$zipPath.sha256" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
+        "SHA256=$hash" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
+        Write-Host "SHA256: $hash"
+
+    - name: Upload module artifact
+      uses: actions/upload-artifact@v7
+      with:
+        name: PnP.PowerShell-${{ steps.version.outputs.RELEASE_VERSION }}
+        path: |
+          ${{ steps.archive.outputs.ZIP_PATH }}
+          ${{ steps.archive.outputs.SHA256_PATH }}
+
+    - name: Create GitHub prerelease
+      env:
+        GH_TOKEN: ${{ github.token }}
+      shell: pwsh
+      run: |
+        $releaseVersion = "${{ steps.version.outputs.RELEASE_VERSION }}"
+        $tagName = $releaseVersion
+        $title = "${{ steps.version.outputs.RELEASE_TITLE }}"
+        $notesPath = Join-Path $env:RUNNER_TEMP "release-notes.md"
+
+        @(
+          "${{ inputs.releaseNotes }}"
+          ""
+          "SHA256: ${{ steps.archive.outputs.SHA256 }}"
+        ) | Set-Content -Path $notesPath
+
+        if (gh release view $tagName --repo $env:GITHUB_REPOSITORY 2>$null) {
+          throw "GitHub release '$tagName' already exists. Delete it or choose a different prerelease label."
+        }
+
+        gh release create $tagName `
+          "${{ steps.archive.outputs.ZIP_PATH }}" `
+          "${{ steps.archive.outputs.SHA256_PATH }}" `
+          --repo $env:GITHUB_REPOSITORY `
+          --target dev `
+          --title $title `
+          --notes-file $notesPath `
+          --prerelease
+
+    - name: Increment v4 preview number
+      shell: pwsh
+      run: |
+        Set-Content -Path ./versionv4.txt -Value "${{ steps.version.outputs.NEXT_PREVIEW_NUMBER }}" -NoNewline
+
+    - name: Commit next v4 preview number
+      uses: EndBug/add-and-commit@v10
+      with:
+        message: 'Increment v4 prerelease preview number'
+        add: 'versionv4.txt'
+        push: true
