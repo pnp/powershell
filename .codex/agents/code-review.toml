@@ -9,7 +9,7 @@ That playbook is the single source shared with Claude Code and Copilot. Do not d
 into this file; changes belong in the playbook.
 
 Bring in as the change requires:
-- `.agents/skills/dotnet-standards/SKILL.md` - C# 12 / .NET 8 and cmdlet design rules
+- `.agents/skills/dotnet-standards/SKILL.md` - C# 14 / .NET 10 and cmdlet design rules
 - `.agents/skills/permissions-auditor/SKILL.md` - if permission attributes or API calls changed
 - `.agents/skills/docs-sync/SKILL.md` - if parameters changed
 - `.agents/skills/api-surface-diff/SKILL.md` - to classify anything that looks breaking

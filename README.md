@@ -1,6 +1,6 @@
 ﻿# PnP PowerShell
 
-**PnP PowerShell** is a .NET 8 based PowerShell Module providing close to 900 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Entra ID, and more.
+**PnP PowerShell** is a .NET 10 based PowerShell Module providing close to 900 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Entra ID, and more.
 
 Starting with version 3.1.379-nightly, all releases, including the nightly releases, will be fully digitally signed and will therefore work on machines restricted with the AllSigned PowerShell execution policy set. Major thanks to the [.NET Foundation](https://dotnetfoundation.org) for providing us with the signing certificate to be able to do so.
 
@@ -14,11 +14,11 @@ This module is a successor of the [PnP-PowerShell](https://github.com/pnp/pnp-po
 
 For more information about installing or upgrading to this module, please refer to [the documentation](https://pnp.github.io/powershell/articles/index.html).
 
-## IMPORTANT - New PnP PowerShell 3.x
+## IMPORTANT - New PnP PowerShell 4.x
 
-We released a new major version of PnP PowerShell, version 3 and upwards. This version of PnP PowerShell requires as of today PowerShell 7.4.0 or newer, and is based upon .NET 8.0. 
+We released a new major version of PnP PowerShell, version 4 and upwards. This version of PnP PowerShell requires as of today PowerShell 7.6.0 or newer, and is based upon .NET 10.0. 
 
-We have created a [guide](https://github.com/pnp/powershell/blob/dev/MIGRATE-2.0-to-3.0.md) for upgrading from previous versions to PnP PowerShell 3.x. If you are still using PowerShell 5.1 or the ISE, and want to use the latest major or nightly release, you will need to specify the required version like below: 
+We have created a [guide](https://github.com/pnp/powershell/blob/dev/MIGRATE-3.0-to-4.0.md) for upgrading from previous versions to PnP PowerShell 4.x. If you are still using PowerShell 5.1 or the ISE, and want to use the latest major or nightly release, you will need to specify the required version like below: 
 
 `Install-Module PnP.PowerShell -RequiredVersion 1.12.0 -Force`
 

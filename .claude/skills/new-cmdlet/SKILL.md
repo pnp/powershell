@@ -13,8 +13,8 @@ changes belong in the playbook.
 
 Supporting references:
 
-- [`.agents/skills/dotnet-standards/SKILL.md`](../../../.agents/skills/dotnet-standards/SKILL.md) — C# 12 /
-  .NET 8 and PowerShell cmdlet design rules
+- [`.agents/skills/dotnet-standards/SKILL.md`](../../../.agents/skills/dotnet-standards/SKILL.md) — C# 14 /
+  .NET 10 and PowerShell cmdlet design rules
 - [`.agents/skills/cmdlet-scaffolder/SKILL.md`](../../../.agents/skills/cmdlet-scaffolder/SKILL.md) — the
   step-by-step procedure for creating a new cmdlet
 - [`.agents/skills/permissions-auditor/SKILL.md`](../../../.agents/skills/permissions-auditor/SKILL.md) —

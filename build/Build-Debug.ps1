@@ -47,7 +47,7 @@ else {
 # 	$buildVersion = $versionObject.Patch + 1
 # }
 
-$configuration = "net8.0"
+$configuration = "net10.0"
 
 $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
@@ -136,7 +136,7 @@ if ($LASTEXITCODE -eq 0) {
 		Copy-Item -Path "$PSScriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
 		# ScriptsToProcess bootstrap that registers the isolated-dependency resolver before the binary module loads.
 		Copy-Item -Path "$PSScriptRoot/../resources/RegisterPnPAssemblyResolver.ps1" -Destination "$destinationFolder"
-		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Debug/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Debug/net10.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
 		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/$configuration" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object {
 			if ($moduleAssemblies -contains $_.Name -or $_.Name -like 'Microsoft.SharePoint.Client*' -or $_.Name -like 'Microsoft.Online.SharePoint.Client*') {
 				Copy-Item -LiteralPath $_.FullName -Destination $corePath
@@ -188,7 +188,7 @@ if ($LASTEXITCODE -eq 0) {
 	Author = 'Microsoft 365 Patterns and Practices'
 	CompanyName = 'Microsoft 365 Patterns and Practices'
 	CompatiblePSEditions = @('Core')
-	PowerShellVersion = '7.4.0'
+	PowerShellVersion = '7.6.0'
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  
 	CmdletsToExport = @($cmdletsString)
