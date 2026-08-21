@@ -9,12 +9,12 @@ starting; this file is context, the playbooks are how the work is done.
 
 ## What this is
 
-**PnP PowerShell** — a .NET 8 PowerShell module of 800+ cmdlets for Microsoft 365: SharePoint
+**PnP PowerShell** — a .NET 10 PowerShell module of 800+ cmdlets for Microsoft 365: SharePoint
 Online, Teams, Planner, Security & Compliance, Entra ID and more. Open-source community project,
-cross-platform (Windows, Linux, macOS), requires PowerShell 7.4+. Successor to the Windows-only
+cross-platform (Windows, Linux, macOS), requires PowerShell 7.6+. Successor to the Windows-only
 PnP-PowerShell module.
 
-Stack: C# 12, .NET 8, built on PnP Framework, PnP Core SDK, CSOM (`Microsoft.SharePoint.Client`) and
+Stack: C# 12, .NET 10, built on PnP Framework, PnP Core SDK, CSOM (`Microsoft.SharePoint.Client`) and
 the Microsoft Graph SDK.
 
 ## Human in the loop
