@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.ApplicationInsights" Version="3.1.2" />
-    <!-- Application Insights 3.x pulls MSAL 4.83.1 transitively (via the Azure Monitor OpenTelemetry exporter).
-         Pin it to the version PnP.PowerShell.csproj uses so the ALC and Commands outputs do not disagree:
-         the build scripts copy the ALC output into Common first, so a lower version here would be the one shipped. -->
-    <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.85.2" />
-    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="10.0.5" />
+    <!-- Keep this in step with the Microsoft.ApplicationInsights that PowerShell itself ships
+         (pwsh 7.6 carries 2.23.0 in its installation folder and loads it at startup for its own
+         telemetry). In-IDE (F5) debugging disables our dependency isolation, so this assembly then
+         resolves in the default load context, where PowerShell's copy is already loaded - a higher
+         reference version than PowerShell's cannot bind there and Connect-PnPOnline fails with
+         "The located assembly's manifest definition does not match the assembly reference".
+         Microsoft.ApplicationInsights 3.x is not a drop-in: it is a shim over OpenTelemetry and
+         drags the Azure Monitor exporter graph (plus its own older MSAL) into the module. -->
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.23.0" />
   </ItemGroup>
 
 </Project>
