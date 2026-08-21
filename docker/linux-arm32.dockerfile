@@ -8,8 +8,8 @@ RUN set -eux; \
     && update-ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# ---- Install PowerShell 7.6.0 (ARM32) ----
-ARG PWSH_VERSION=7.6.0
+# ---- Install PowerShell 7.4.2 (ARM32) ----
+ARG PWSH_VERSION=7.4.2
 RUN set -eux; \
     curl -sSL -o /tmp/pwsh.tar.gz \
       "https://github.com/PowerShell/PowerShell/releases/download/v${PWSH_VERSION}/powershell-${PWSH_VERSION}-linux-arm32.tar.gz"; \
@@ -19,7 +19,7 @@ RUN set -eux; \
     rm -f /tmp/pwsh.tar.gz
 
 # ---- PnP.PowerShell version to install at first run ----
-ARG PNP_VERSION=3.4.1
+ARG PNP_VERSION=3.1.306-nightly
 ENV PNP_VERSION=${PNP_VERSION} TZ=Etc/UTC
 
 # ---- Write entrypoint script via heredoc ----

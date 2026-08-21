@@ -1,11 +1,11 @@
 ---
 name: dotnet-standards
-description: C# 14 / .NET 10 and PowerShell cmdlet design rules for this repository - naming, output and error channels, parameter validation, ShouldProcess, async, culture, cross-platform and ALC constraints. Use when writing or reviewing any C# in this repo, cmdlet or otherwise.
+description: C# 12 / .NET 8 and PowerShell cmdlet design rules for this repository - naming, output and error channels, parameter validation, ShouldProcess, async, culture, cross-platform and ALC constraints. Use when writing or reviewing any C# in this repo, cmdlet or otherwise.
 ---
 
 # Playbook: dotnet-standards
 
-C# 14 / .NET 10 and PowerShell cmdlet design rules for this repository. Referenced by
+C# 12 / .NET 8 and PowerShell cmdlet design rules for this repository. Referenced by
 [`code-review`](../code-review/SKILL.md), [`new-cmdlet`](../new-cmdlet/SKILL.md) and
 [`cmdlet-scaffolder`](../cmdlet-scaffolder/SKILL.md).
 
@@ -81,7 +81,7 @@ These come from Microsoft's cmdlet development guidelines. Violations are user-f
 
 ---
 
-## C# 14 / .NET 10
+## C# 12 / .NET 8
 
 `EnforceCodeStyleInBuild` and `EnableNETAnalyzers` are on. Warnings are findings.
 
@@ -115,7 +115,7 @@ These come from Microsoft's cmdlet development guidelines. Violations are user-f
   introduce `async void`.
 - Do not add `ConfigureAwait` churn to existing call sites.
 
-**Cross-platform** — .NET 10 on Windows, Linux and macOS
+**Cross-platform** — .NET 8 on Windows, Linux and macOS
 - `Path.Combine`, `Path.DirectorySeparatorChar`. No backslash string surgery, no drive letters.
 - Case-sensitive file systems: filename casing must match exactly.
 - Do not mix `Environment.NewLine` (what `StringBuilder.AppendLine` writes) with hardcoded `\r\n` in

@@ -17,7 +17,7 @@ here.
 
 Bring in as the change requires:
 
-- [`dotnet-standards.md`](../../.agents/skills/dotnet-standards/SKILL.md) — C# 14 / .NET 10 and cmdlet
+- [`dotnet-standards.md`](../../.agents/skills/dotnet-standards/SKILL.md) — C# 12 / .NET 8 and cmdlet
   design rules
 - [`permissions-auditor.md`](../../.agents/skills/permissions-auditor/SKILL.md) — if permission
   attributes or API calls changed

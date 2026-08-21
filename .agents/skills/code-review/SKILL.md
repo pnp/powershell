@@ -111,7 +111,7 @@ would have told the user which object failed.
 
 ### Cross-platform
 
-.NET 10 and PowerShell 7.6+ on Windows, Linux and macOS.
+.NET 8 and PowerShell 7.4+ on Windows, Linux and macOS.
 
 - No Windows-only path assumptions, no backslash string surgery
 - `Environment.NewLine` (what `StringBuilder.AppendLine` writes) mixed with hardcoded `\r\n` makes

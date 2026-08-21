@@ -76,9 +76,7 @@ namespace PnP.PowerShell.Commands.Base
         /// resolver is active before cmdlet discovery forces PnP.Framework/PnP.Core to load. Also wired as a
         /// <see cref="ModuleInitializerAttribute"/> for defense in depth. Safe to call multiple times.
         /// </summary>
-    #pragma warning disable CA2255 // ModuleInitializer is an intentional fallback for dependency resolver registration in module hosts.
         [ModuleInitializer]
-    #pragma warning restore CA2255
         public static void EnsureDependencyResolverRegistered()
         {
             if (Interlocked.Exchange(ref s_resolverRegistered, 1) == 0)

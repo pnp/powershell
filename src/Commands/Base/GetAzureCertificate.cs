@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (System.IO.File.Exists(Path))
             {
-                var certificate = X509CertificateLoader.LoadPkcs12FromFile(Path, CredentialManager.SecureStringToString(Password), X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet);
+                var certificate = new X509Certificate2(Path, Password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet);
                 WriteAzureCertificateOutput(this, certificate, Password);
             }
             else

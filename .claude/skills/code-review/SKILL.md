@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Reviews changes to PnP PowerShell, a .NET 10 module of 800+ cmdlets for Microsoft 365. Knows the cmdlet base classes, how errors reach the user, unpaged Graph collections, the documentation and changelog conventions, and the failure modes this repository actually ships. Use when reviewing a diff, a PR, or uncommitted changes.
+description: Reviews changes to PnP PowerShell, a .NET 8 module of 800+ cmdlets for Microsoft 365. Knows the cmdlet base classes, how errors reach the user, unpaged Graph collections, the documentation and changelog conventions, and the failure modes this repository actually ships. Use when reviewing a diff, a PR, or uncommitted changes.
 ---
 
 # Reviewing PnP PowerShell
@@ -16,8 +16,8 @@ or PR** for a finding — see [Human in the loop](../../../AGENTS.md#human-in-th
 
 Supporting references, as the review needs them:
 
-- [`.agents/skills/dotnet-standards/SKILL.md`](../../../.agents/skills/dotnet-standards/SKILL.md) — C# 14 /
-  .NET 10 and PowerShell cmdlet design rules
+- [`.agents/skills/dotnet-standards/SKILL.md`](../../../.agents/skills/dotnet-standards/SKILL.md) — C# 12 /
+  .NET 8 and PowerShell cmdlet design rules
 - [`.agents/skills/permissions-auditor/SKILL.md`](../../../.agents/skills/permissions-auditor/SKILL.md) —
   if the change touches permission attributes or adds an API call
 - [`.agents/skills/docs-sync/SKILL.md`](../../../.agents/skills/docs-sync/SKILL.md) — if the change touches

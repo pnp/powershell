@@ -642,7 +642,7 @@ namespace PnP.PowerShell.Commands.Base
                         X509KeyStorageFlags.UserKeySet |
                         X509KeyStorageFlags.PersistKeySet;
                 }
-                var certificate = X509CertificateLoader.LoadPkcs12(certificateBytes, CredentialManager.SecureStringToString(CertificatePassword), X509KeyStorageFlags);
+                var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags);
 
                 if (Connection?.ClientId == ClientId &&
                     Connection?.Tenant == Tenant &&

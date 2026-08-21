@@ -494,7 +494,7 @@ namespace PnP.PowerShell.Commands.EntraID
 
                 try
                 {
-                    cert = X509CertificateLoader.LoadPkcs12FromFile(CertificatePath, CredentialManager.SecureStringToString(CertificatePassword), X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.PersistKeySet);
+                    cert = new X509Certificate2(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.PersistKeySet);
                 }
                 catch (CryptographicException e) when (e.Message.Contains("The specified password is not correct"))
                 {

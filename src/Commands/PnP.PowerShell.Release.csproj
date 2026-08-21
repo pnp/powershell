@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	
 	<PropertyGroup>
-		<TargetFramework>net10.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<LangVersion>12</LangVersion>
 	 </PropertyGroup>
 	 
@@ -23,7 +23,7 @@
 		<RepositoryUrl>https://github.com/pnp/powershell</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/pnp/powershell</PackageProjectUrl>
 		<PackageTags>Microsoft 365; PowerShell; SharePoint; Teams; Graph; Azure AD</PackageTags>
-		<Description>PnP PowerShell is a .NET 10 based PowerShell Module providing close to 900 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security &amp; Compliance, Azure Active Directory, and more.</Description>
+		<Description>PnP PowerShell is a .NET 8 based PowerShell Module providing over 750 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security &amp; Compliance, Azure Active Directory, and more.</Description>
 		<PackageIcon>nugeticon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
@@ -62,7 +62,7 @@
 
 
 	<ItemGroup>
-	  <PackageReference Include="System.Management.Automation" Version="7.6.0" />
+	  <PackageReference Include="System.Management.Automation" Version="7.4.0" />
  	  <PackageReference Include="TextCopy" Version="6.2.1" />		
 	</ItemGroup>
 

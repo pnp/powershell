@@ -4,7 +4,7 @@ $ProjectPath = $PSScriptRoot | Split-Path -Parent
 $BinPath = "$ProjectPath\bin\Debug"
 
 $dlls = @("PnP.PowerShell.ALC.dll", "PnP.PowerShell.dll")
-$netversion = "net10.0"
+$netversion = "net8.0"
 
 $BinPath = "$BinPath\$netversion"
 
