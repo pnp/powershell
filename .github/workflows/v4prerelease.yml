@@ -289,7 +289,7 @@ jobs:
       run: |
         $releaseVersion = "${{ steps.version.outputs.RELEASE_VERSION }}"
         $tagName = $releaseVersion
-        $title = "PnP.PowerShell $releaseVersion"
+        $title = "Release $releaseVersion-prerelease"
         $notesPath = Join-Path $env:RUNNER_TEMP "release-notes.md"
 
         @(
