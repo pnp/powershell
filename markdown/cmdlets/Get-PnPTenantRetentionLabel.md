@@ -1,12 +1,13 @@
 ---
+applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantRetentionLabel.html
+title: Get-PnPTenantRetentionLabel
 Module Name: PnP.PowerShell
 schema: 2.0.0
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantRetentionLabel.html
-external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPTenantRetentionLabel
 ---
-  
+   
 # Get-PnPTenantRetentionLabel
 
 ## SYNOPSIS
@@ -71,3 +72,4 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Microsoft Graph documentation](https://learn.microsoft.com/graph/api/security-labelsroot-list-retentionlabel?view=graph-rest-1.0)
+
