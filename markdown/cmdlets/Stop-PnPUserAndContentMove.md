@@ -1,13 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Stop-PnPUserAndContentMove
+schema: 2.0.0
 applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Stop-PnPUserAndContentMove.html
-title: Stop-PnPUserAndContentMove
-Module Name: PnP.PowerShell
-schema: 2.0.0
 ---
- 
+
 # Stop-PnPUserAndContentMove
 
 ## SYNOPSIS
@@ -74,4 +73,3 @@ Returns `The given move job has been stopped. Please run start cmdlet to restart
 [Start-PnPUserAndContentMove](Start-PnPUserAndContentMove.md)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

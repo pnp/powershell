@@ -1,13 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: New-PnPEntraIDGroup
+schema: 2.0.0
 applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/New-PnPEntraIDGroup.html
-title: New-PnPEntraIDGroup
-Module Name: PnP.PowerShell
-schema: 2.0.0
 ---
-  
+ 
 # New-PnPEntraIDGroup
 
 ## SYNOPSIS
@@ -169,4 +168,3 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Microsoft Graph documentation](https://learn.microsoft.com/graph/api/group-post-groups)
-

@@ -1,13 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Remove-PnPAdaptiveScopeProperty
+schema: 2.0.0
 applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAdaptiveScopeProperty.html
-title: Remove-PnPAdaptiveScopeProperty
-Module Name: PnP.PowerShell
-schema: 2.0.0
 ---
-  
+ 
 # Remove-PnPAdaptiveScopeProperty
 
 ## SYNOPSIS
@@ -90,4 +89,3 @@ Accept wildcard characters: False
 [Microsoft 365 Information Governance](https://learn.microsoft.com/en-us/microsoft-365/compliance/manage-information-governance?view=o365-worldwide)
 
 [Adaptive policy scopes](https://learn.microsoft.com/en-us/microsoft-365/compliance/retention?view=o365-worldwide#adaptive-or-static-policy-scopes-for-retention)
-

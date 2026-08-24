@@ -1,13 +1,12 @@
 ---
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPowerAppByPassConsent.html
-title: Set-PnPPowerAppByPassConsent
 Module Name: PnP.PowerShell
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPowerAppByPassConsent.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPPowerAppByPassConsent
 ---
-   
+  
 # Set-PnPPowerAppByPassConsent
 
 ## SYNOPSIS
@@ -125,4 +124,3 @@ Accept wildcard characters: False
 [Set-AdminPowerAppApisToBypassConsent](https://learn.microsoft.com/powershell/module/microsoft.powerapps.administration.powershell/set-adminpowerappapistobypassconsent)
 [Clear-AdminPowerAppApisToBypassConsent](https://learn.microsoft.com/powershell/module/microsoft.powerapps.administration.powershell/clear-adminpowerappapistobypassconsent)
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

@@ -1,13 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Remove-PnPUserProfile
+schema: 2.0.0
 applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPUserProfile.html
-title: Remove-PnPUserProfile
-Module Name: PnP.PowerShell
-schema: 2.0.0
 ---
-  
+ 
 # Remove-PnPUserProfile
 
 ## SYNOPSIS
@@ -58,5 +57,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 
