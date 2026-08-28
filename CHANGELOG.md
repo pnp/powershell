@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `Get-PnPEnterpriseWiki` and `Copy-PnPEnterpriseWiki` to capture an Enterprise Wiki into a sealed, digest-approved migration package and create it with fresh target preflight/readback.
+
 ### Changed
 
 ### Fixed
