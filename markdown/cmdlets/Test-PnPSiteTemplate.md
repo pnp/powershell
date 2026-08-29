@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Test-PnPSiteTemplate
 schema: 2.0.0
-applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
 external help file: PnP.PowerShell.dll-Help.xml
+title: Test-PnPSiteTemplate
+applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Test-PnPSiteTemplate.html
 ---
-
+ 
 # Test-PnPSiteTemplate
 
 ## SYNOPSIS
@@ -212,3 +213,4 @@ Accept wildcard characters: False
 [Invoke-PnPSiteTemplate](https://pnp.github.io/powershell/cmdlets/Invoke-PnPSiteTemplate.html)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

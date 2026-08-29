@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Set-PnPTeamsTab
 schema: 2.0.0
-applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
 external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPTeamsTab
+applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTeamsTab.html
 ---
- 
+  
 # Set-PnPTeamsTab
 
 ## SYNOPSIS
@@ -111,4 +112,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 
