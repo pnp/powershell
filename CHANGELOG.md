@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- Added `Get-PnPEnterpriseWiki` and `Copy-PnPEnterpriseWiki` to capture an Enterprise Wiki into a sealed, digest-approved migration package and create it with fresh target preflight/readback.
+- Added `Export-PnPEnterpriseWikiPackage`, `New-PnPEnterpriseWikiMigrationPlan`, and `Import-PnPEnterpriseWikiMigrationPackage` to preserve a complete source field snapshot, create a digest-approved target plan and field-by-field report, and import only recognized fields with fresh target and lifecycle verification.
 
 ### Changed
 

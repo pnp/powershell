@@ -6,16 +6,16 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Pages
 {
-    [Cmdlet(VerbsCommon.Copy, "PnPEnterpriseWiki", DefaultParameterSetName = ParameterSetApproved, SupportsShouldProcess = true)]
-    [OutputType(typeof(EnterpriseWikiCopyReceipt))]
+    [Cmdlet(VerbsData.Import, "PnPEnterpriseWikiMigrationPackage", DefaultParameterSetName = ParameterSetApproved, SupportsShouldProcess = true)]
+    [OutputType(typeof(EnterpriseWikiImportReceipt))]
     [RequiredApiApplicationPermissions("sharepoint/Sites.FullControl.All")]
     [RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl")]
-    public class CopyEnterpriseWiki : PnPWebCmdlet
+    public class ImportEnterpriseWikiMigrationPackage : PnPWebCmdlet
     {
         private const string ParameterSetApproved = "Approved";
         private const string ParameterSetAutoApprove = "AutoApprove";
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         [Alias("Path")]
         [ValidateNotNullOrEmpty]
         public string PackagePath { get; set; }
@@ -36,24 +36,24 @@ namespace PnP.PowerShell.Commands.Pages
         protected override void ExecuteCmdlet()
         {
             var resolvedPackagePath = ResolveLocalPath(PackagePath);
-            var package = EnterpriseWikiPackageSerializer.Load(resolvedPackagePath);
+            var package = EnterpriseWikiPackageSerializer.LoadMigration(resolvedPackagePath);
             var approvedDigest = ParameterSetName == ParameterSetAutoApprove
                 ? package.PlanDigest
                 : ApprovedPlanDigest;
             if (!ShouldProcess(
                     package.Plan.TargetPageServerRelativeUrl,
-                    $"Create Enterprise Wiki page from approved plan {approvedDigest}"))
+                    $"Import Enterprise Wiki page from approved plan {approvedDigest}"))
             {
                 return;
             }
 
             var service = new EnterpriseWikiMigrationService();
-            var receipt = service.Copy(Connection.Context, package, approvedDigest);
+            var receipt = service.Import(Connection.Context, package, approvedDigest);
             var receiptPath = string.IsNullOrWhiteSpace(ReceiptPath)
                 ? Path.GetDirectoryName(ResolvePackageFile(resolvedPackagePath))
                 : ResolveLocalPath(ReceiptPath);
             var savedReceiptPath = EnterpriseWikiPackageSerializer.SaveReceipt(receiptPath, receipt, Force);
-            WriteVerbose($"Enterprise Wiki copy receipt written to '{savedReceiptPath}'.");
+            WriteVerbose($"Enterprise Wiki import receipt written to '{savedReceiptPath}'.");
             foreach (var warning in receipt.Warnings)
             {
                 WriteWarning(warning);
