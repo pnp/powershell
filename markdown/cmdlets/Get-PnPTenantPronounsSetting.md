@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
+title: Get-PnPTenantPronounsSetting
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantPronounsSetting.html
-external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPTenantPronounsSetting
+tags: Available in the current Nightly Release only.
 ---
-  
+   
 # Get-PnPTenantPronounsSetting
 
 ## SYNOPSIS
@@ -55,3 +56,4 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Microsoft Graph documentation](https://learn.microsoft.com/graph/api/peopleadminsettings-list-pronouns)
+

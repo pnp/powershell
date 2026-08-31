@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
+title: Get-PnPSearchVertical
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchVertical.html
-external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPSearchVertical
+tags: Available in the current Nightly Release only.
 ---
-
+ 
 # Get-PnPSearchVertical
 
 ## SYNOPSIS
@@ -171,3 +172,4 @@ The `Payload` object contains:
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

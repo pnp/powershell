@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Set-PnPMicrosoft365Group
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPMicrosoft365Group
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMicrosoft365Group.html
+tags: Available in the current Nightly Release only.
 ---
- 
+  
 # Set-PnPMicrosoft365Group
 
 ## SYNOPSIS
@@ -318,3 +319,4 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Microsoft Graph documentation](https://learn.microsoft.com/graph/api/group-update)
+

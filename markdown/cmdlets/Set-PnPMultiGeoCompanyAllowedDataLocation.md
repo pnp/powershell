@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Set-PnPMultiGeoCompanyAllowedDataLocation
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPMultiGeoCompanyAllowedDataLocation
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMultiGeoCompanyAllowedDataLocation.html
+tags: Available in the current Nightly Release only.
 ---
- 
+  
 # Set-PnPMultiGeoCompanyAllowedDataLocation
 
 ## SYNOPSIS
@@ -115,3 +116,4 @@ Returns a message indicating that setting up the new location has started.
 [Remove-PnPMultiGeoCompanyAllowedDataLocation](Remove-PnPMultiGeoCompanyAllowedDataLocation.md)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

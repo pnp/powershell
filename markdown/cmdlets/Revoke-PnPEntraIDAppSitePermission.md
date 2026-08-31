@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
+title: Revoke-PnPEntraIDAppSitePermission
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Revoke-PnPEntraIDAppSitePermission.html
-external help file: PnP.PowerShell.dll-Help.xml
-title: Revoke-PnPEntraIDAppSitePermission
+tags: Available in the current Nightly Release only.
 ---
-  
+   
 # Revoke-PnPEntraIDAppSitePermission
 
 ## SYNOPSIS
@@ -83,5 +84,6 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 
 

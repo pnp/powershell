@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Update-PnPTeamsApp
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
+title: Update-PnPTeamsApp
 online version: https://pnp.github.io/powershell/cmdlets/Update-PnPTeamsApp.html
+tags: Available in the current Nightly Release only.
 ---
- 
+  
 # Update-PnPTeamsApp
 
 ## SYNOPSIS
@@ -69,4 +70,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 

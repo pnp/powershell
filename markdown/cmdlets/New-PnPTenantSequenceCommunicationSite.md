@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: New-PnPTenantSequenceCommunicationSite
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
+title: New-PnPTenantSequenceCommunicationSite
 online version: https://pnp.github.io/powershell/cmdlets/New-PnPTenantSequenceCommunicationSite.html
+tags: Available in the current Nightly Release only.
 ---
- 
+  
 # New-PnPTenantSequenceCommunicationSite
 
 ## SYNOPSIS
@@ -168,4 +169,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 

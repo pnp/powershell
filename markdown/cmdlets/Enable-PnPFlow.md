@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
+title: Enable-PnPFlow
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Enable-PnPFlow.html
-external help file: PnP.PowerShell.dll-Help.xml
-title: Enable-PnPFlow
+tags: Available in the current Nightly Release only.
 ---
-  
+   
 # Enable-PnPFlow
 
 ## SYNOPSIS
@@ -112,5 +113,6 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 
 

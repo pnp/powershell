@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
+title: Deny-PnPTenantServicePrincipalPermissionRequest
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Deny-PnPTenantServicePrincipalPermissionRequest.html
-external help file: PnP.PowerShell.dll-Help.xml
-title: Deny-PnPTenantServicePrincipalPermissionRequest
+tags: Available in the current Nightly Release only.
 ---
-  
+   
 # Deny-PnPTenantServicePrincipalPermissionRequest
 
 ## SYNOPSIS
@@ -77,5 +78,6 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 
 

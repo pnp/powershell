@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Set-PnPInPlaceRecordsManagement
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPInPlaceRecordsManagement
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPInPlaceRecordsManagement.html
+tags: Available in the current Nightly Release only.
 ---
- 
+  
 # Set-PnPInPlaceRecordsManagement
 
 ## SYNOPSIS
@@ -70,3 +71,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

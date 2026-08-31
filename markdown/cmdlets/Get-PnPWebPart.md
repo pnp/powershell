@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Get-PnPWebPart
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPWebPart
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPWebPart.html
+tags: Available in the current Nightly Release only.
 ---
- 
+  
 # Get-PnPWebPart
 
 ## SYNOPSIS
@@ -86,3 +87,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
