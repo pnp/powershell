@@ -1,13 +1,12 @@
 ---
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
-title: Get-PnPHideDefaultThemes
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPHideDefaultThemes.html
-tags: Available in the current Nightly Release only.
+external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPHideDefaultThemes
 ---
-   
+  
 # Get-PnPHideDefaultThemes
 
 ## SYNOPSIS
@@ -57,6 +56,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 
 

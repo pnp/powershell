@@ -1,13 +1,12 @@
 ---
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
+title: Move-PnPRecycleBinItem
 schema: 2.0.0
 applicable: SharePoint Online
-title: Move-PnPRecycleBinItem
+external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Move-PnPRecycleBinItem.html
-tags: Available in the current Nightly Release only.
 ---
-  
+ 
 # Move-PnPRecycleBinItem
 
 ## SYNOPSIS
@@ -92,5 +91,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 

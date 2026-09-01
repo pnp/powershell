@@ -1,13 +1,12 @@
 ---
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
-title: Get-PnPList
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPList.html
-tags: Available in the current Nightly Release only.
+external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPList
 ---
-   
+  
 # Get-PnPList
 
 ## SYNOPSIS
@@ -121,4 +120,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

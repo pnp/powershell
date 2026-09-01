@@ -1,13 +1,12 @@
 ---
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPMessageCenterAnnouncement
 schema: 2.0.0
 applicable: SharePoint Online
-title: Get-PnPMessageCenterAnnouncement
+external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPMessageCenterAnnouncement.html
-tags: Available in the current Nightly Release only.
 ---
-  
+ 
 # Get-PnPMessageCenterAnnouncement
 
 ## SYNOPSIS
@@ -62,4 +61,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

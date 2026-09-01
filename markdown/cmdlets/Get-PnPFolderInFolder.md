@@ -1,13 +1,12 @@
 ---
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
-title: Get-PnPFolderInFolder
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPFolderInFolder.html
-tags: Available in the current Nightly Release only.
+external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPFolderInFolder
 ---
-   
+  
 # Get-PnPFolderInFolder
 
 ## SYNOPSIS
@@ -225,4 +224,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

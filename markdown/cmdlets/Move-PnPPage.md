@@ -1,13 +1,12 @@
 ---
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
+title: Move-PnPPage
 schema: 2.0.0
 applicable: SharePoint Online
-title: Move-PnPPage
+external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Move-PnPPage.html
-tags: Available in the current Nightly Release only.
 ---
-  
+ 
 # Move-PnPPage
 
 ## SYNOPSIS
@@ -99,4 +98,3 @@ Accept wildcard characters: False
 
 [SharePoint Online Management Shell equivallent](https://learn.microsoft.com/powershell/module/sharepoint-online/copy-spopersonalsitepage)
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

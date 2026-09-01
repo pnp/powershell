@@ -1,13 +1,12 @@
 ---
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPSiteCollectionAppCatalog
 schema: 2.0.0
 applicable: SharePoint Online
-title: Get-PnPSiteCollectionAppCatalog
+external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteCollectionAppCatalog.html
-tags: Available in the current Nightly Release only.
 ---
-  
+ 
 # Get-PnPSiteCollectionAppCatalog
 
 ## SYNOPSIS
@@ -117,4 +116,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

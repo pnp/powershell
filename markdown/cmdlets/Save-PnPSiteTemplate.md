@@ -1,13 +1,12 @@
 ---
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
+title: Save-PnPSiteTemplate
 schema: 2.0.0
 applicable: SharePoint Online
-title: Save-PnPSiteTemplate
+external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Save-PnPSiteTemplate.html
-tags: Available in the current Nightly Release only.
 ---
-  
+ 
 # Save-PnPSiteTemplate
 
 ## SYNOPSIS
@@ -134,5 +133,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 

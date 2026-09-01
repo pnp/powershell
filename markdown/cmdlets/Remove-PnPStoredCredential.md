@@ -1,13 +1,12 @@
 ---
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
+title: Remove-PnPStoredCredential
 schema: 2.0.0
 applicable: SharePoint Online
-title: Remove-PnPStoredCredential
+external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPStoredCredential.html
-tags: Available in the current Nightly Release only.
 ---
-  
+ 
 # Remove-PnPStoredCredential
 
 ## SYNOPSIS
@@ -64,5 +63,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 
