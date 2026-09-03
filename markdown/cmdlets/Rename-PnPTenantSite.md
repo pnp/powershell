@@ -1,12 +1,13 @@
 ---
+external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-title: Rename-PnPTenantSite
 schema: 2.0.0
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Rename-PnPTenantSite.html
+tags: Available in the current Nightly Release only.
+title: Rename-PnPTenantSite
 ---
- 
+  
 # Rename-PnPTenantSite
 
 ## SYNOPSIS
@@ -153,3 +154,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

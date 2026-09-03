@@ -1,12 +1,13 @@
 ---
+external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-title: Set-PnPMultiGeoExperience
 schema: 2.0.0
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMultiGeoExperience.html
+tags: Available in the current Nightly Release only.
+title: Set-PnPMultiGeoExperience
 ---
- 
+  
 # Set-PnPMultiGeoExperience
 
 ## SYNOPSIS
@@ -111,3 +112,4 @@ Returns the SharePoint Online Management Shell completion message: `This upgrade
 [Get-PnPMultiGeoExperience](Get-PnPMultiGeoExperience.md)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
