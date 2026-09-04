@@ -1,13 +1,12 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPMicrosoft365GroupSettings.html
-tags: Available in the current Nightly Release only.
+external help file: PnP.PowerShell.dll-Help.xml
 title: Get-PnPMicrosoft365GroupSettings
 ---
-   
+  
 # Get-PnPMicrosoft365GroupSettings
 
 ## SYNOPSIS
@@ -96,6 +95,5 @@ Accept wildcard characters: False
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Microsoft Graph documentation get settings](https://learn.microsoft.com/graph/api/groupsetting-get)
 [Microsoft Graph documentation list settings](https://learn.microsoft.com/en-gb/graph/api/group-list-setting)
-
 
 

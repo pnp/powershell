@@ -1,13 +1,12 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
+title: Add-PnPHomeSite
 schema: 2.0.0
 applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Add-PnPHomeSite.html
-tags: Available in the current Nightly Release only.
-title: Add-PnPHomeSite
 ---
-  
+ 
 # Add-PnPHomeSite
 
 ## SYNOPSIS
@@ -72,4 +71,3 @@ Accept wildcard characters: False
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Set up a home site for your organization](https://learn.microsoft.com/sharepoint/home-site)
 [Customize and edit the Viva Connections home experience](https://learn.microsoft.com/en-us/viva/connections/edit-viva-home)
-

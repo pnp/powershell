@@ -1,13 +1,12 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
+title: Get-PnPMicrosoft365Roadmap
 schema: 2.0.0
 applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPMicrosoft365Roadmap.html
-tags: Available in the current Nightly Release only.
-title: Get-PnPMicrosoft365Roadmap
 ---
-  
+ 
 # Get-PnPMicrosoft365Roadmap
 
 ## SYNOPSIS
@@ -85,4 +84,3 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Microsoft 365 Roadmap](https://www.microsoft.com/microsoft-365/roadmap)
-
