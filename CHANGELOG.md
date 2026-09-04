@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `Export-PnPEnterpriseWikiPackage`, `New-PnPEnterpriseWikiMigrationPlan`, and `Import-PnPEnterpriseWikiMigrationPackage` to preserve a complete source field snapshot, create a digest-approved target plan and field-by-field report, and import only recognized fields with fresh target and lifecycle verification. [#5457](https://github.com/pnp/powershell/pull/5457)
+
 ### Changed
 
 ### Fixed
