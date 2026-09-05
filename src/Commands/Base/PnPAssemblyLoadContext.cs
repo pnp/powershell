@@ -9,8 +9,8 @@ namespace PnP.PowerShell.Commands.Base
     /// <summary>
     /// A dedicated <see cref="AssemblyLoadContext"/> that owns the complete private dependency
     /// graph shipped with PnP PowerShell (PnP.Framework, PnP.Core, PnP.Core.Auth, PnP.Core.Admin,
-    /// the CSOM libraries, Microsoft.Extensions.*, Microsoft.Identity.*, Microsoft.ApplicationInsights,
-    /// PnP.PowerShell.ALC, Newtonsoft.Json, AngleSharp, and so on).
+    /// the CSOM libraries, Microsoft.Extensions.*, Microsoft.Identity.*, Newtonsoft.Json,
+    /// AngleSharp, and so on).
     ///
     /// The purpose of this context is <b>full isolation</b>. By overriding <see cref="Load"/> to probe
     /// our own dependency folder first, every assembly loaded here - and, crucially, every transitive

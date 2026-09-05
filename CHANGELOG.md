@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Telemetry in PnP PowerShell has been removed due to the costs of collecting the data didn't outweigh the benefits to the PnP PowerShell team to have insights into its usage. The involved cmdlets `Get-PnPPowerShellTelemetryEnabled`, `Enable-PnPPowerShellTelemetry` and `Disable-PnPPowerShellTelemetry` have been marked as deprecated and no longer function, but will stay in v3 for backwards compatibility with existing scripts. These cmdlets will be removed in the next v4 release. All versions of PnP PowerShell will no longer be able to submit telemetry. You might see background requests for this failing. This will not interfear with the normal execution of your PowerShell script. [#5460](https://github.com/pnp/powershell/pull/5460)
 
 ### Fixed
 - Using UPNs with an apostrophe in it not working with `Remove-PnPUserProfile`, `Export-PnPUserProfile`, `Export-PnPUserInfo`, and `Remove-PnPUserInfo`. The apostrophe is now escaped in the API request. [#5459](https://github.com/pnp/powershell/pull/5459)
