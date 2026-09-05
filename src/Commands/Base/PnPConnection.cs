@@ -1173,7 +1173,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (appOnly)
                 {
-                    throw new InvalidOperationException("Secure persistence for the app-only token cache is unavailable on this machine. Persisted app-only login was not enabled.");
+                    throw new InvalidOperationException("Secure persistence for the app-only token cache is unavailable on this machine, so the persisted app-only login cache cannot be initialized or reused.");
                 }
 
                 PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Cache persistence failed. Retrying with an unprotected Linux fallback for delegated logins.");
