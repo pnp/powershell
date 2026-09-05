@@ -5,7 +5,6 @@ using PnP.Core.Services;
 using PnP.Framework;
 using PnP.Framework.Diagnostics;
 using PnP.Framework.Utilities.Context;
-using PnP.PowerShell.ALC;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
@@ -101,11 +100,6 @@ namespace PnP.PowerShell.Commands.Base
         /// ClientSecret used to set up the connection
         /// </summary>
         public string ClientSecret { get; protected set; }
-
-        /// <summary>
-        /// Azure Application Insights instance to provide telemetry
-        /// </summary>
-        public ApplicationInsights ApplicationInsights { get; set; }
 
         /// <summary>
         /// Url of the SharePoint Online site to connect to
@@ -802,8 +796,6 @@ namespace PnP.PowerShell.Commands.Base
                               string pnpVersionTag,
                               InitializationType initializationType)
         {
-            InitializeTelemetry(context, initializationType);
-
             var connectionMethod = ConnectionMethod.Credentials;
             if (initializationType == InitializationType.AzureADWorkloadIdentity)
             {
@@ -960,59 +952,9 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal void InitializeTelemetry(ClientContext context, InitializationType initializationType)
-        {
-            var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            var telemetryFile = Path.Combine(userProfile, ".pnppowershelltelemetry");
-
-            var enableTelemetry = true;
-            if (Environment.GetEnvironmentVariable("PNP_DISABLETELEMETRY") != null)
-            {
-                enableTelemetry = false;
-            }
-            // We have old systems to disable telemetry. 
-            // If telemetry should be enabled is based on:
-            // a. The environmentvariable not having been set OR having been set and having the value false
-            //    AND
-            // b. The telemetry file not existing OR existing and having the word allow in it
-            if (enableTelemetry == true)
-            {
-                enableTelemetry = ((Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY") == null || Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY").Equals("false", StringComparison.InvariantCultureIgnoreCase)) &&
-                                   (!System.IO.File.Exists(telemetryFile) || System.IO.File.ReadAllText(telemetryFile).Equals("allow", StringComparison.InvariantCultureIgnoreCase)));
-            }
-            // Load Application Insights if telemetry should be enabled
-            if (enableTelemetry)
-            {
-                var serverLibraryVersion = "";
-                var serverVersion = "";
-                if (context != null)
-                {
-                    try
-                    {
-                        if (context.ServerLibraryVersion != null)
-                        {
-                            serverLibraryVersion = context.ServerLibraryVersion.ToString();
-                        }
-                        if (context.ServerVersion != null)
-                        {
-                            serverVersion = context.ServerVersion.ToString();
-                        }
-                    }
-                    catch { }
-                }
-
-                ApplicationInsights = new ApplicationInsights();
-                var coreAssembly = Assembly.GetExecutingAssembly();
-                var operatingSystem = Utilities.OperatingSystem.GetOSString();
-
-                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString(), operatingSystem, PSUtility.PSVersion);
-                ApplicationInsights.TrackEvent("Connect-PnPOnline");
-            }
-        }
-
         private static string PnPPSVersionTag => (PnPPSVersionTagLazy.Value);
 
-        private static readonly Lazy<string> PnPPSVersionTagLazy = new Lazy<string>(
+        private static readonly Lazy<string> PnPPSVersionTagLazy = new(
             () =>
             {
                 var coreAssembly = Assembly.GetExecutingAssembly();
