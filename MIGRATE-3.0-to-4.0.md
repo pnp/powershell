@@ -16,8 +16,14 @@ Or
 
 Once PowerShell 7.6.0 or later is downloaded and installed in your environment, you can install the PnP PowerShell module like you normally do.
 
+This is using the PowerShellGet & PackageManagement Modules, which whilst are deprecated, they are still supported.
 ```powershell
 Install-Module -Name "PnP.PowerShell"
+```
+
+Or you can download using the replacement Microsoft.PowerShell.PSResourceGet module.
+```powershell
+Install-PSResource -Name "PnP.PowerShell"
 ```
 
 If you want to install or update to the latest nightly built prerelease of PnP PowerShell, run:
@@ -25,6 +31,14 @@ If you want to install or update to the latest nightly built prerelease of PnP P
 ```powershell
 Install-Module -Name "PnP.PowerShell" -AllowPrerelease
 ```
+
+Or using the replacement Microsoft.PowerShell.PSResourceGet module.
+```powershell
+Install-PSResource -Name PnP.PowerShell -Prerelease
+```
+
+> Note: For more about the PSResourceGet module please read the [PSResourceGet is Generally Available](https://devblogs.microsoft.com/powershell/psresourceget-is-generally-available/) blog post
+> PSResourceGet is included in PowerShell 7.6.0 and is maintained in the [PowerShell PSResourceGet repository](https://github.com/PowerShell/PSResourceGet/)
 
 ## Changes needed in Azure DevOps/GitHub Actions/Pipelines
 
