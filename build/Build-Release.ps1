@@ -58,7 +58,6 @@ Try {
 	Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
 	# ScriptsToProcess bootstrap that registers the isolated-dependency resolver before the binary module loads.
 	Copy-Item -Path "$PSscriptRoot/../resources/RegisterPnPAssemblyResolver.ps1" -Destination "$destinationFolder"
-	Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/net10.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
 	Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net10.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object {
 		if ($moduleAssemblies -contains $_.Name -or $_.Name -like 'Microsoft.SharePoint.Client*' -or $_.Name -like 'Microsoft.Online.SharePoint.Client*') {
 			Copy-Item -LiteralPath $_.FullName -Destination $corePath
@@ -234,7 +233,6 @@ $assembliesToBeSigned = @(
 	Get-Item -LiteralPath "$commonPath/PnP.Core.Admin.dll"
 	Get-Item -LiteralPath "$commonPath/PnP.Core.Auth.dll"
 	Get-Item -LiteralPath "$commonPath/PnP.Framework.dll"
-	Get-Item -LiteralPath "$commonPath/PnP.PowerShell.ALC.dll"
 )
 
 foreach ($assemblyToBeSigned in $assembliesToBeSigned) {

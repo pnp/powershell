@@ -113,14 +113,13 @@ if ($runPublish -eq $true) {
         # context. CSOM has no Microsoft.Extensions.* dependency, so sharing it in the default context does not
         # weaken the isolation that fixes the Azure Functions dependency conflict (#5350).
         # Every other assembly is a private dependency and goes to Common, the module's isolated ALC probe path.
-        $moduleAssemblies = @('PnP.PowerShell.dll', 'PnP.PowerShell.pdb')
-        Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
-        # ScriptsToProcess bootstrap that registers the isolated-dependency resolver before the binary module loads.
+		$moduleAssemblies = @('PnP.PowerShell.dll', 'PnP.PowerShell.pdb')
+		Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
+		# ScriptsToProcess bootstrap that registers the isolated-dependency resolver before the binary module loads.
 		Copy-Item -Path "$PSscriptRoot/../resources/RegisterPnPAssemblyResolver.ps1" -Destination "$destinationFolder"
-		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/net10.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
 		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net10.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object {
-            if ($moduleAssemblies -contains $_.Name -or $_.Name -like 'Microsoft.SharePoint.Client*' -or $_.Name -like 'Microsoft.Online.SharePoint.Client*') {
-                Copy-Item -LiteralPath $_.FullName -Destination $corePath
+			if ($moduleAssemblies -contains $_.Name -or $_.Name -like 'Microsoft.SharePoint.Client*' -or $_.Name -like 'Microsoft.Online.SharePoint.Client*') {
+				Copy-Item -LiteralPath $_.FullName -Destination $corePath
             }
             elseif (-not $commonFiles.Contains($_.Name)) {
                 [void]$commonFiles.Add($_.Name)
@@ -294,8 +293,7 @@ if ($runPublish -eq $true) {
 		Get-Item -LiteralPath "$commonPath/PnP.Core.Admin.dll"
 		Get-Item -LiteralPath "$commonPath/PnP.Core.Auth.dll"
 		Get-Item -LiteralPath "$commonPath/PnP.Framework.dll"
-		Get-Item -LiteralPath "$commonPath/PnP.PowerShell.ALC.dll"
-    )
+	)
 
 	foreach ($assemblyToBeSigned in $assembliesToBeSigned) {
 		Invoke-ModuleFileSigning -File $assemblyToBeSigned

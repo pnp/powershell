@@ -3,7 +3,7 @@ $env:PNPPOWERSHELL_UPDATECHECK = "Off"
 $ProjectPath = $PSScriptRoot | Split-Path -Parent
 $BinPath = "$ProjectPath\bin\Debug"
 
-$dlls = @("PnP.PowerShell.ALC.dll", "PnP.PowerShell.dll")
+$dlls = @("PnP.PowerShell.dll")
 $netversion = "net10.0"
 
 $BinPath = "$BinPath\$netversion"
