@@ -9,8 +9,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+- Added `Get-PnPPersistedLogin` which lists the tenant url, client id and authentication type of every login registered to use the local token cache, so the cache can be inspected without reading it. [#5463](https://github.com/pnp/powershell/pull/5463)
+- Added `-PersistLogin` to the certificate based app only parameter sets of `Connect-PnPOnline`, so a connection made with `-CertificatePath`, `-CertificateBase64Encoded`, `-Thumbprint` or the environment variables can reuse its access token from the local cache. The certificate, tenant and client id are still required on each connection, as neither the certificate nor its password is stored. [#5463](https://github.com/pnp/powershell/pull/5463)
 
 ### Changed
+- Changed `Connect-PnPOnline` to write verbose message on which stored credential it resolved for the url, as it previously picked one up from the credential manager without saying so. [#5463](https://github.com/pnp/powershell/pull/5463)
+- Changed `Disconnect-PnPOnline -ClearPersistedLogin` to write a warning when no persisted login exists for the current connection, instead of silently doing nothing. [#5463](https://github.com/pnp/powershell/pull/5463)
 - Telemetry in PnP PowerShell has been removed due to the costs of collecting the data didn't outweigh the benefits to the PnP PowerShell team to have insights into its usage. The involved cmdlets `Get-PnPPowerShellTelemetryEnabled`, `Enable-PnPPowerShellTelemetry` and `Disable-PnPPowerShellTelemetry` have been marked as deprecated and no longer function, but will stay in v3 for backwards compatibility with existing scripts. These cmdlets will be removed in the next v4 release. All versions of PnP PowerShell will no longer be able to submit telemetry. You might see background requests for this failing. This will not interfear with the normal execution of your PowerShell script. [#5460](https://github.com/pnp/powershell/pull/5460)
 
 ### Fixed
