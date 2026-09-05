@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Changed `Connect-PnPOnline` to allow authentication-only connections without `-Url` for non-SharePoint cmdlets. Omitting `-Url` no longer creates a SharePoint `ClientContext` or `PnPContext`.
 
 ### Fixed
 

@@ -81,7 +81,11 @@ namespace PnP.PowerShell.Commands.Base
 
             if (ParameterSpecified(nameof(Scopes)))
             {
-                var authManager = Connection.Context.GetContextSettings().AuthenticationManager;
+                var authManager = Connection.Context?.GetContextSettings().AuthenticationManager ?? Connection.AuthenticationManager;
+                if (authManager == null)
+                {
+                    throw new PSInvalidOperationException("The current connection cannot acquire tokens for explicit scopes.");
+                }
                 accessTokenValue = authManager.GetAccessTokenAsync(Scopes).GetAwaiter().GetResult();
             }
 

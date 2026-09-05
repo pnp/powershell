@@ -42,6 +42,7 @@ Recommend reading these 2 links:
 |  `Get-PnPPowerShellTelemetryEnabled` | All PnP Telemetry has been removed |
 | `Enable-PnPPowerShellTelemetry` | All PnP Telemetry has been removed |
 | `Disable-PnPPowerShellTelemetry` | All PnP Telemetry has been removed |
+| `Connect-PnPOnline` | `-Url` is no longer mandatory for most authentication methods. Omitting it creates an authentication-only connection without a SharePoint `ClientContext` or `PnPContext`. SharePoint cmdlets, `Get-PnPContext`, `-CreateDrive`, `-ValidateConnection`, `-TransformationOnPrem`, `-CurrentCredentials` and SharePoint ACS app-only connections still require a SharePoint URL. Scripts that assume every connection has `Connection.Url`, `Connection.Context` or `Connection.PnPContext` must check for `$null` or pass `-Url`. |
 
 ## Other notable changes
 
