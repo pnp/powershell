@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Enable-PnPPowerShellTel
 # Enable-PnPPowerShellTelemetry
 
 > [!WARNING]
-> This cmdlet is deprecated and will be removed in the next release.
+> This cmdlet is deprecated and will be removed in the v4 release.
 
 ## SYNOPSIS
 Enables sending of telemetry data.
