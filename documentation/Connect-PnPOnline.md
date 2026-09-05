@@ -39,7 +39,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientS
 
 ### App-Only with Azure Active Directory
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
+Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> [-CertificatePath <String>] [-CertificateBase64Encoded <String>]
  [-CertificatePassword <SecureString>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [-ValidateConnection] [-MicrosoftGraphEndPoint <string>]
@@ -48,7 +48,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
 
 ### App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
+Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> -Thumbprint <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [-ValidateConnection] [-MicrosoftGraphEndPoint <string>]
  [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
@@ -94,7 +94,7 @@ Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityA
 
 ### Environment Variable
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-EnvironmentVariable] [-CurrentCredentials]
+Connect-PnPOnline [-ReturnConnection] [-Url] <String> -EnvironmentVariable [-PersistLogin]
  [-CreateDrive] [-DriveName <String>] [-RedirectUri <String>]
  [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [-TransformationOnPrem] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
@@ -536,13 +536,19 @@ Accept wildcard characters: False
 ```
 
 ### -PersistLogin
-Persist the current access token and related information in a locally stored cache. This cache will be retained between PowerShell sessions and will also be available after a reboot. You only need to provide this switch one time on Connect-PnPOnline cmdlet, it will after that retain the information and reuse it for new connections to the same tenant. Notice that while using a cached token, if you change the permissions of an application registration, the token associated with that registration will not be updated automatically in the cache. You will have to clear the cache entry first and reauthenticate: use `Disconnect-PnPOnline -ClearPersistedLogin`
+Persist the current access token and related information in a locally stored cache. This cache will be retained between PowerShell sessions and will also be available after a reboot. You only need to provide this switch one time on Connect-PnPOnline; it will then retain the information and reuse it for new connections to the same tenant and client ID.
+
+Certificate-based app-only connections can also use this cache. The certificate, tenant and client ID are still required on each connection because the cache does not store the certificate or its password. When a cached app-only access token expires, the supplied certificate is used to acquire a new token.
+
+Use `Get-PnPPersistedLogin` to enumerate the registered cache entries. Notice that while using a cached token, if you change the permissions of an application registration, the token associated with that registration will not be updated automatically in the cache. You will have to clear the cache entry first and reauthenticate: use `Disconnect-PnPOnline -ClearPersistedLogin`.
+
+This switch is meant for a workstation you come back to. Do not use it in Azure Automation, Azure Functions, containers or any other environment where the file system does not survive the run or where the work is spread over instances which do not share a user profile: nothing is gained there and each instance authenticates as it normally would. Use a certificate, a managed identity or a workload identity in those environments instead.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Credentials, DeviceLogin, Interactive, OSLogin
+Parameter Sets: Credentials, Environment Variable, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, PnP Management Shell / DeviceLogin, Interactive login for Multi Factor Authentication, OS login
 
-Required: True
+Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False

@@ -9,8 +9,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+- Added `Get-PnPPersistedLogin` which lists the tenant url, client id and authentication type of every login registered to use the local token cache, so the cache can be inspected without reading it. [#5463](https://github.com/pnp/powershell/pull/5463)
+- Added `-PersistLogin` to the certificate based app only parameter sets of `Connect-PnPOnline`, so a connection made with `-CertificatePath`, `-CertificateBase64Encoded`, `-Thumbprint` or the environment variables can reuse its access token from the local cache. The certificate, tenant and client id are still required on each connection, as neither the certificate nor its password is stored. [#5463](https://github.com/pnp/powershell/pull/5463)
 
 ### Changed
+- Changed `Connect-PnPOnline` to write verbose message on which stored credential it resolved for the url, as it previously picked one up from the credential manager without saying so. [#5463](https://github.com/pnp/powershell/pull/5463)
 
 ### Fixed
 - Using UPNs with an apostrophe in it not working with `Remove-PnPUserProfile`, `Export-PnPUserProfile`, `Export-PnPUserInfo`, and `Remove-PnPUserInfo`. The apostrophe is now escaped in the API request. [#5459](https://github.com/pnp/powershell/pull/5459)

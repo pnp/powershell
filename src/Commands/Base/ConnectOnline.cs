@@ -283,9 +283,13 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         public SwitchParameter PersistLogin;
 
         private static readonly string[] sourceArray = ["stop", "ignore", "silentlycontinue"];
+        private string storedCredentialName;
         X509Certificate2 certificate;
 
         protected override void ProcessRecord()
@@ -623,15 +627,15 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword, X509KeyStorageFlags);
-                if (Connection?.ClientId == ClientId &&
+                if (!PersistLogin && !PnPConnection.CacheEnabled(Url, ClientId, true) &&
+                    Connection?.ClientId == ClientId &&
                     Connection?.Tenant == Tenant &&
                     Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
-
                 {
                     ReuseAuthenticationManager();
                 }
 
-                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
+                return PnPConnection.CreateWithCert(this, new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, PersistLogin, true, ErrorActionSetting);
             }
             else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
             {
@@ -644,14 +648,15 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags);
 
-                if (Connection?.ClientId == ClientId &&
+                if (!PersistLogin && !PnPConnection.CacheEnabled(Url, ClientId, true) &&
+                    Connection?.ClientId == ClientId &&
                     Connection?.Tenant == Tenant &&
                     Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
                 {
                     ReuseAuthenticationManager();
                 }
                 // The key container behind this certificate was created by loading the bytes above, so it is ours to remove again on disconnect
-                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
+                return PnPConnection.CreateWithCert(this, new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, PersistLogin, true, ErrorActionSetting);
             }
             else if (ParameterSpecified(nameof(Thumbprint)))
             {
@@ -667,13 +672,14 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     throw new PSArgumentException("The certificate specified does not have a private key.", nameof(Thumbprint));
                 }
-                if (Connection?.ClientId == ClientId &&
-                                    Connection?.Tenant == Tenant &&
-                                    Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
+                if (!PersistLogin && !PnPConnection.CacheEnabled(Url, ClientId, true) &&
+                    Connection?.ClientId == ClientId &&
+                    Connection?.Tenant == Tenant &&
+                    Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
                 {
                     ReuseAuthenticationManager();
                 }
-                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
+                return PnPConnection.CreateWithCert(this, new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, PersistLogin, false, ErrorActionSetting);
             }
             else
             {
@@ -703,7 +709,11 @@ namespace PnP.PowerShell.Commands.Base
             if (!CurrentCredentials && credentials == null)
             {
                 credentials = GetCredentials();
-                if (credentials == null)
+                if (credentials != null)
+                {
+                    WriteVerbose($"Using stored credential '{storedCredentialName}' for {Url}.");                    
+                }
+                else
                 {
                     credentials = Host.UI.PromptForCredential(Resources.EnterYourCredentials, "", "", "");
 
@@ -853,7 +863,8 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, azureCertificatePath, secPassword, X509KeyStorageFlags);
-                if (Connection?.ClientId == azureClientId &&
+                if (!PersistLogin && !PnPConnection.CacheEnabled(Url, azureClientId, true) &&
+                    Connection?.ClientId == azureClientId &&
                     Connection?.Tenant == Tenant &&
                     Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
                 {
@@ -862,7 +873,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 LogDebug($"ClientID: {azureClientId}");
 
-                return PnPConnection.CreateWithCert(new Uri(Url), azureClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
+                return PnPConnection.CreateWithCert(this, new Uri(Url), azureClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, PersistLogin, true, ErrorActionSetting);
             }
 
             else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
@@ -970,7 +981,7 @@ namespace PnP.PowerShell.Commands.Base
             var connectionUri = new Uri(Url);
 
             // Try to get the credentials by full url
-            PSCredential credentials = Utilities.CredentialManager.GetCredential(Url);
+            PSCredential credentials = GetStoredCredential(Url);
             if (credentials == null)
             {
                 // Try to get the credentials by splitting up the path
@@ -982,7 +993,7 @@ namespace PnP.PowerShell.Commands.Base
                     if (!string.IsNullOrEmpty(path))
                     {
                         var pathUrl = $"{pathString}{path}";
-                        credentials = Utilities.CredentialManager.GetCredential(pathUrl);
+                        credentials = GetStoredCredential(pathUrl);
                         if (credentials != null)
                         {
                             break;
@@ -993,23 +1004,33 @@ namespace PnP.PowerShell.Commands.Base
                 if (credentials == null)
                 {
                     // Try to find the credentials by schema and hostname
-                    credentials = Utilities.CredentialManager.GetCredential(connectionUri.Scheme + "://" + connectionUri.Host);
+                    credentials = GetStoredCredential(connectionUri.Scheme + "://" + connectionUri.Host);
 
                     if (credentials == null)
                     {
                         // Maybe added with an extra slash?
-                        credentials = Utilities.CredentialManager.GetCredential(connectionUri.Scheme + "://" + connectionUri.Host + "/");
+                        credentials = GetStoredCredential(connectionUri.Scheme + "://" + connectionUri.Host + "/");
 
                         if (credentials == null)
                         {
                             // try to find the credentials by hostname
-                            credentials = Utilities.CredentialManager.GetCredential(connectionUri.Host);
+                            credentials = GetStoredCredential(connectionUri.Host);
                         }
                     }
                 }
 
             }
 
+            return credentials;
+        }
+
+        private PSCredential GetStoredCredential(string name)
+        {
+            var credentials = Utilities.CredentialManager.GetCredential(name);
+            if (credentials != null)
+            {
+                storedCredentialName = name;
+            }
             return credentials;
         }
 

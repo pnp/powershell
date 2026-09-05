@@ -158,6 +158,8 @@ namespace PnP.PowerShell.Commands.Base
 
         internal PnP.Framework.AuthenticationManager AuthenticationManager { get; set; }
 
+        internal MsalCacheHelper PersistedLoginCacheHelper { get; set; }
+
         private string _graphEndPoint;
         /// <summary>
         private static readonly string[] errorActionSourceArray = ["stop", "ignore", "silentlycontinue"];
@@ -357,8 +359,25 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection CreateWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile = false)
+        internal static PnPConnection CreateWithCert(Cmdlet cmdlet, Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool persistLogin, bool certificateFromFile = false, string ErrorActionSetting = null)
         {
+            if (persistLogin)
+            {
+                EnableCaching(url.ToString(), clientId, true);
+            }
+            var cacheEnabled = CacheEnabled(url.ToString(), clientId, true);
+            if (cacheEnabled && !errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
+            {
+                WriteCacheEnabledMessage(cmdlet);
+            }
+
+            MsalCacheHelper cacheHelper = null;
+            Action<ITokenCache> tokenCacheCallback = null;
+            if (cacheEnabled)
+            {
+                tokenCacheCallback = tokenCache => cacheHelper = MSALCacheHelper(tokenCache, url.ToString(), clientId, appOnly: true).GetAwaiter().GetResult();
+            }
+
             Framework.AuthenticationManager authManager = null;
             if (CachedAuthenticationManager != null)
             {
@@ -367,8 +386,9 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                authManager = Framework.AuthenticationManager.CreateWithCertificate(clientId, certificate, tenant, azureEnvironment: azureEnvironment);
+                authManager = Framework.AuthenticationManager.CreateWithCertificate(clientId, certificate, tenant, azureEnvironment: azureEnvironment, tokenCacheCallback: tokenCacheCallback);
             }
+
             using (authManager)
             {
                 var clientContext = authManager.GetContext(url.ToString());
@@ -391,7 +411,9 @@ namespace PnP.PowerShell.Commands.Base
                     Certificate = certificate,
                     Tenant = tenant,
                     DeleteCertificateFromCacheOnDisconnect = certificateFromFile,
-                    AzureEnvironment = azureEnvironment
+                    AzureEnvironment = azureEnvironment,
+                    AuthenticationManager = authManager,
+                    PersistedLoginCacheHelper = cacheHelper
                 };
                 return spoConnection;
             }
@@ -1152,104 +1174,142 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private static async Task MSALCacheHelper(ITokenCache tokenCache, string url, string clientid)
+        private static async Task<MsalCacheHelper> MSALCacheHelper(ITokenCache tokenCache, string url, string clientid, bool appOnly = false)
         {
             const string CacheSchemaName = "pnp.powershell.tokencache";
             string cacheDir = Path.Combine(MsalCacheHelper.UserRootDirectory, @".m365pnppowershell");
 
-            if (CacheEnabled(url, clientid))
+            if (!CacheEnabled(url, clientid, appOnly))
             {
-                try
-                {
-                    StorageCreationPropertiesBuilder builder =
-                         new StorageCreationPropertiesBuilder("pnp.msal.cache", cacheDir)
-                         .WithMacKeyChain(
-                            serviceName: $"{CacheSchemaName}.service",
-                            accountName: $"{CacheSchemaName}.account")
-                        .WithLinuxKeyring(
-                            schemaName: CacheSchemaName,
-                            collection: MsalCacheHelper.LinuxKeyRingDefaultCollection,
-                            secretLabel: "MSAL token cache for PnP PowerShell.",
-                            attribute1: new KeyValuePair<string, string>("Version", "1"),
-                            attribute2: new KeyValuePair<string, string>("Product", "PnPPowerShell"));
+                return null;
+            }
 
-                    var storage = builder.Build();
-                    var cacheHelper = await MsalCacheHelper.CreateAsync(storage).ConfigureAwait(false);
-                    cacheHelper.VerifyPersistence();
+            var cacheKey = appOnly ? GetAppOnlyCacheKey(url, clientid) : null;
+            var cacheFileName = appOnly ? $"pnp.msal.app.{cacheKey}.cache" : "pnp.msal.cache";
+            var accountName = appOnly ? $"{CacheSchemaName}.app.{cacheKey}" : $"{CacheSchemaName}.account";
+            var version = appOnly ? $"app-{cacheKey}" : "1";
 
-                    cacheHelper.RegisterCache(tokenCache);
-                }
-                catch (MsalCachePersistenceException)
-                {
-                    PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Cache persistence failed. Trying again.");
-                    var storage =
-                     new StorageCreationPropertiesBuilder("pnp.msal.cache", cacheDir)
+            try
+            {
+                StorageCreationPropertiesBuilder builder =
+                     new StorageCreationPropertiesBuilder(cacheFileName, cacheDir)
                      .WithMacKeyChain(
                         serviceName: $"{CacheSchemaName}.service",
-                        accountName: $"{CacheSchemaName}.account")
-                     .WithLinuxUnprotectedFile()
-                    .Build();
-                    var cacheHelper = await MsalCacheHelper.CreateAsync(storage).ConfigureAwait(false);
+                        accountName: accountName)
+                    .WithLinuxKeyring(
+                        schemaName: CacheSchemaName,
+                        collection: MsalCacheHelper.LinuxKeyRingDefaultCollection,
+                        secretLabel: "MSAL token cache for PnP PowerShell.",
+                        attribute1: new KeyValuePair<string, string>("Version", version),
+                        attribute2: new KeyValuePair<string, string>("Product", "PnPPowerShell"));
 
-                    cacheHelper.RegisterCache(tokenCache);
+                var storage = builder.Build();
+                var cacheHelper = await MsalCacheHelper.CreateAsync(storage).ConfigureAwait(false);
+                cacheHelper.VerifyPersistence();
+
+                cacheHelper.RegisterCache(tokenCache);
+                return cacheHelper;
+            }
+            catch (MsalCachePersistenceException)
+            {
+                if (appOnly)
+                {
+                    throw new InvalidOperationException("Secure persistence for the app-only token cache is unavailable on this machine. Persisted app-only login was not enabled.");
                 }
+
+                PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Cache persistence failed. Retrying with an unprotected Linux fallback for delegated logins.");
+                var storage =
+                 new StorageCreationPropertiesBuilder(cacheFileName, cacheDir)
+                 .WithMacKeyChain(
+                    serviceName: $"{CacheSchemaName}.service",
+                    accountName: accountName)
+                 .WithLinuxUnprotectedFile()
+                .Build();
+                var cacheHelper = await MsalCacheHelper.CreateAsync(storage).ConfigureAwait(false);
+
+                cacheHelper.RegisterCache(tokenCache);
+                return cacheHelper;
             }
         }
 
-        internal static bool CacheEnabled(string url, string clientid)
+        private static string GetAppOnlyCacheKey(string url, string clientid)
         {
-            var settings = Settings.Current;
+            var canonicalUrl = GetCheckUrls(url)[0];
+            var value = $"{canonicalUrl}|{clientid}".ToLowerInvariant();
+            return Convert.ToHexString(SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(value))).ToLowerInvariant();
+        }
 
-            var cacheEntries = settings.Cache;
+        internal static bool CacheEnabled(string url, string clientid, bool appOnly = false)
+        {
             var urls = GetCheckUrls(url);
-            var entry = settings.Cache?.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
-            if (entry != null && entry.Enabled)
-            {
-                return true;
-            }
-            return false;
+            var entry = Settings.Current.Cache?.FirstOrDefault(c => urls.Contains(c.Url, StringComparer.OrdinalIgnoreCase) && string.Equals(c.ClientId, clientid, StringComparison.OrdinalIgnoreCase) && IsAppOnlyCacheEntry(c) == appOnly);
+            return entry?.Enabled == true;
         }
 
         internal static string GetCacheClientId(string url)
         {
-            var settings = Settings.Current;
-
-            var cacheEntries = settings.Cache;
             var urls = GetCheckUrls(url);
-            var entry = settings.Cache?.FirstOrDefault(c => urls.Contains(c.Url));
-            if (entry != null && entry.Enabled)
-            {
-                return entry.ClientId;
-            }
-            return null;
+            var entry = Settings.Current.Cache?.FirstOrDefault(c => urls.Contains(c.Url, StringComparer.OrdinalIgnoreCase) && c.Enabled && !IsAppOnlyCacheEntry(c));
+            return entry?.ClientId;
+        }
+
+        internal static List<TokenCacheConfiguration> GetPersistedLoginEntries()
+        {
+            return Settings.Current.Cache
+                .Where(entry => entry.Enabled)
+                .OrderBy(entry => entry.Url, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(entry => entry.ClientId, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(entry => entry.AuthenticationType, StringComparer.OrdinalIgnoreCase)
+                .Select(entry => new TokenCacheConfiguration
+                {
+                    Url = entry.Url,
+                    ClientId = entry.ClientId,
+                    AuthenticationType = IsAppOnlyCacheEntry(entry) ? "AppOnly" : "Delegated",
+                    Enabled = entry.Enabled
+                })
+                .ToList();
+        }
+
+        private static bool IsAppOnlyCacheEntry(TokenCacheConfiguration entry)
+        {
+            return string.Equals(entry.AuthenticationType, "AppOnly", StringComparison.OrdinalIgnoreCase);
         }
 
         private static List<string> GetCheckUrls(string url)
         {
-            var urls = new List<string>();
             var uri = new Uri(url);
-            var baseAuthority = uri.Authority;
-            baseAuthority = baseAuthority.Replace("-admin.sharepoint.com", ".sharepoint.com").Replace("-my.sharepoint.com", ".sharepoint.com");
-            var baseUri = new Uri($"https://{baseAuthority}");
-            var host = baseUri.Host.Split('.')[0];
-            urls = [$"https://{host}.sharepoint.com", $"https://{host}-my.sharepoint.com", $"https://{host}-admin.sharepoint.com"];
+            var hostParts = uri.Host.Split('.');
+            var tenantName = hostParts[0];
+            if (tenantName.EndsWith("-admin", StringComparison.OrdinalIgnoreCase))
+            {
+                tenantName = tenantName[..^6];
+            }
+            else if (tenantName.EndsWith("-my", StringComparison.OrdinalIgnoreCase))
+            {
+                tenantName = tenantName[..^3];
+            }
 
-            return urls;
+            var domainSuffix = string.Join('.', hostParts.Skip(1));
+            return
+            [
+                $"https://{tenantName}.{domainSuffix}",
+                $"https://{tenantName}-my.{domainSuffix}",
+                $"https://{tenantName}-admin.{domainSuffix}"
+            ];
         }
 
-        private static void EnableCaching(string url, string clientid)
+        private static void EnableCaching(string url, string clientid, bool appOnly = false)
         {
             var urls = GetCheckUrls(url);
-            var entry = Settings.Current.Cache?.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
+            var authenticationType = appOnly ? "AppOnly" : "Delegated";
+            var entry = Settings.Current.Cache?.FirstOrDefault(c => urls.Contains(c.Url, StringComparer.OrdinalIgnoreCase) && string.Equals(c.ClientId, clientid, StringComparison.OrdinalIgnoreCase) && IsAppOnlyCacheEntry(c) == appOnly);
             if (entry != null)
             {
                 entry.Enabled = true;
             }
             else
             {
-                var baseAuthority = new Uri(url).Authority.Replace("-admin.sharepoint.com", ".sharepoint.com").Replace("-my.sharepoint.com", ".sharepoint.com");
-                var baseUrl = $"https://{baseAuthority}";
-                Settings.Current.Cache.Add(new TokenCacheConfiguration() { ClientId = clientid, Url = baseUrl, Enabled = true });
+                Settings.Current.Cache.Add(new TokenCacheConfiguration() { ClientId = clientid, Url = urls[0], AuthenticationType = authenticationType, Enabled = true });
             }
             Settings.Current.Save();
         }
@@ -1261,13 +1321,41 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static void ClearCache(PnPConnection connection)
         {
+            var appOnly = connection.ConnectionMethod == ConnectionMethod.AzureADAppOnly;
             var urls = GetCheckUrls(connection.Url);
-            var entry = Settings.Current.Cache?.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == connection.ClientId);
+            var entry = Settings.Current.Cache?.FirstOrDefault(c => urls.Contains(c.Url, StringComparer.OrdinalIgnoreCase) && string.Equals(c.ClientId, connection.ClientId, StringComparison.OrdinalIgnoreCase) && IsAppOnlyCacheEntry(c) == appOnly);
+
+            if (appOnly)
+            {
+                var removedPersistedEntry = false;
+                if (connection.PersistedLoginCacheHelper != null)
+                {
+#pragma warning disable CS0618 // App-only tokens have no accounts to remove individually, and this cache is isolated to one URL/client ID.
+                    connection.PersistedLoginCacheHelper.Clear();
+#pragma warning restore CS0618
+                    removedPersistedEntry = true;
+                }
+
+                if (entry != null)
+                {
+                    Settings.Current.Cache.Remove(entry);
+                    Settings.Current.Save();
+                    removedPersistedEntry = true;
+                }
+
+                if (!removedPersistedEntry)
+                {
+                    PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "No app-only persisted login entry was removed because no cache registration or settings entry was found.");
+                }
+                return;
+            }
+
             if (entry != null)
             {
                 Settings.Current.Cache.Remove(entry);
                 Settings.Current.Save();
             }
+
             if (connection.AuthenticationManager != null)
             {
                 // Clearing the MSAL token cache can hang when the connection uses the WAM broker: the underlying
