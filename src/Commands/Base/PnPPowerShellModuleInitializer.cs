@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
 using System.Reflection;
@@ -76,6 +77,7 @@ namespace PnP.PowerShell.Commands.Base
         /// resolver is active before cmdlet discovery forces PnP.Framework/PnP.Core to load. Also wired as a
         /// <see cref="ModuleInitializerAttribute"/> for defense in depth. Safe to call multiple times.
         /// </summary>
+        [SuppressMessage("Usage", "CA2255:The ModuleInitializer attribute should not be used in libraries", Justification = "PowerShell loads this binary module into a host process; the resolver must be registered before cmdlet discovery loads private dependencies.")]
         [ModuleInitializer]
         public static void EnsureDependencyResolverRegistered()
         {
