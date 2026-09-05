@@ -7,7 +7,9 @@ This feature is particularly useful for scenarios where you need to run scripts 
 ## Where is the token stored
 The token is stored in a file in the `%LOCALAPPDATA%\.m365pnppowershell` folder on Windows or `$HOME/.m365pnppowershell` on Linux and macOS. The file is encrypted using the Data Protection API (DPAPI) on Windows, Keychain on macOS or Secret Service on Linux.
 
-This means that the token is securely stored and cannot be easily accessed by unauthorized users nor can it be copied to another machine as the encryption is tied to the machine on which it has been generated. However, it is important to note that if you share your machine with others, they may be able to access the token if they have access to your user profile.
+If Secret Service is unavailable on Linux, delegated authentication falls back to an unprotected file. Certificate-based app-only authentication does not use this fallback and instead fails to enable persistence. Ensure access to the cache directory is restricted when the delegated fallback is used.
+
+Except for that Linux fallback, the token cannot easily be accessed by unauthorized users or copied to another machine because the encryption is tied to the machine on which it was generated. If you share your machine with others, they may still be able to access the token when they have access to your user profile.
 
 ## How does it work
 When you use the `-PersistLogin` parameter with the `Connect-PnPOnline` cmdlet, PnP PowerShell authenticates as normal and stores the resulting token data in the local cache. The next time you run `Connect-PnPOnline`, PnP PowerShell checks whether a valid token exists for the tenant and client ID. If one is found, it is reused. Delegated authentication can therefore avoid prompting while its refresh token remains valid.

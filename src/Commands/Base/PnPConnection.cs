@@ -355,11 +355,7 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static PnPConnection CreateWithCert(Cmdlet cmdlet, Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool persistLogin, bool certificateFromFile = false, string ErrorActionSetting = null)
         {
-            if (persistLogin)
-            {
-                EnableCaching(url.ToString(), clientId, true);
-            }
-            var cacheEnabled = CacheEnabled(url.ToString(), clientId, true);
+            var cacheEnabled = persistLogin || CacheEnabled(url.ToString(), clientId, true);
             if (cacheEnabled && !errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
             {
                 WriteCacheEnabledMessage(cmdlet);
@@ -369,7 +365,7 @@ namespace PnP.PowerShell.Commands.Base
             Action<ITokenCache> tokenCacheCallback = null;
             if (cacheEnabled)
             {
-                tokenCacheCallback = tokenCache => cacheHelper = MSALCacheHelper(tokenCache, url.ToString(), clientId, appOnly: true).GetAwaiter().GetResult();
+                tokenCacheCallback = tokenCache => cacheHelper = MSALCacheHelper(tokenCache, url.ToString(), clientId, appOnly: true, cacheRequested: persistLogin).GetAwaiter().GetResult();
             }
 
             Framework.AuthenticationManager authManager = null;
@@ -386,6 +382,27 @@ namespace PnP.PowerShell.Commands.Base
             using (authManager)
             {
                 var clientContext = authManager.GetContext(url.ToString());
+                if (persistLogin)
+                {
+                    try
+                    {
+                        EnableCaching(url.ToString(), clientId, true);
+                    }
+                    catch
+                    {
+                        try
+                        {
+#pragma warning disable CS0618 // App-only tokens have no accounts to remove individually, and this cache is isolated to one URL/client ID.
+                            cacheHelper?.Clear();
+#pragma warning restore CS0618
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Debug("PnPConnection", $"Unable to remove the app-only token after saving its cache registration failed: {ex.Message}");
+                        }
+                        throw;
+                    }
+                }
                 var context = PnPClientContext.ConvertFrom(clientContext);
                 context.ExecutingWebRequest += (sender, e) =>
                 {
@@ -1116,12 +1133,12 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private static async Task<MsalCacheHelper> MSALCacheHelper(ITokenCache tokenCache, string url, string clientid, bool appOnly = false)
+        private static async Task<MsalCacheHelper> MSALCacheHelper(ITokenCache tokenCache, string url, string clientid, bool appOnly = false, bool cacheRequested = false)
         {
             const string CacheSchemaName = "pnp.powershell.tokencache";
             string cacheDir = Path.Combine(MsalCacheHelper.UserRootDirectory, @".m365pnppowershell");
 
-            if (!CacheEnabled(url, clientid, appOnly))
+            if (!cacheRequested && !CacheEnabled(url, clientid, appOnly))
             {
                 return null;
             }
@@ -1245,15 +1262,38 @@ namespace PnP.PowerShell.Commands.Base
             var urls = GetCheckUrls(url);
             var authenticationType = appOnly ? "AppOnly" : "Delegated";
             var entry = Settings.Current.Cache?.FirstOrDefault(c => urls.Contains(c.Url, StringComparer.OrdinalIgnoreCase) && string.Equals(c.ClientId, clientid, StringComparison.OrdinalIgnoreCase) && IsAppOnlyCacheEntry(c) == appOnly);
-            if (entry != null)
+            if (entry?.Enabled == true)
             {
-                entry.Enabled = true;
+                return;
+            }
+
+            var addedEntry = entry == null;
+            if (addedEntry)
+            {
+                entry = new TokenCacheConfiguration() { ClientId = clientid, Url = urls[0], AuthenticationType = authenticationType, Enabled = true };
+                Settings.Current.Cache.Add(entry);
             }
             else
             {
-                Settings.Current.Cache.Add(new TokenCacheConfiguration() { ClientId = clientid, Url = urls[0], AuthenticationType = authenticationType, Enabled = true });
+                entry.Enabled = true;
             }
-            Settings.Current.Save();
+
+            try
+            {
+                Settings.Current.Save();
+            }
+            catch
+            {
+                if (addedEntry)
+                {
+                    Settings.Current.Cache.Remove(entry);
+                }
+                else
+                {
+                    entry.Enabled = false;
+                }
+                throw;
+            }
         }
 
         private static void WriteCacheEnabledMessage(Cmdlet cmdlet)

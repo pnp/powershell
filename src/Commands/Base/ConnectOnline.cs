@@ -904,7 +904,7 @@ namespace PnP.PowerShell.Commands.Base
                                                                    PersistLogin,
                                                                    AzureEnvironment,
                                                                    azureClientId,
-                                                                   RedirectUri, TransformationOnPrem, initializationType);
+                                                                   RedirectUri, TransformationOnPrem, initializationType, ErrorActionSetting);
             }
 
             return null;

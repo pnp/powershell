@@ -15,7 +15,7 @@ Lists persisted login cache registrations
 ## SYNTAX
 
 ```powershell
-Get-PnPPersistedLogin
+Get-PnPPersistedLogin [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -31,6 +31,22 @@ Get-PnPPersistedLogin
 ```
 
 Lists all persisted login cache registrations for the current operating-system user.
+
+## PARAMETERS
+
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 

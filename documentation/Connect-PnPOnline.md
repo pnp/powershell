@@ -17,7 +17,7 @@ Connect to a SharePoint site
 ### Interactive for Multi Factor Authentication (Default)
 ```powershell
 Connect-PnPOnline -Interactive [-ReturnConnection] -Url <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>]
- [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
+ [-ClientId <String>] [-Tenant <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
 ### Credentials
@@ -56,7 +56,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDr
 
 ### DeviceLogin
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] -DeviceLogin -Tenant <String>
+Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] -DeviceLogin [-Tenant <String>]
  [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] 
  [-ValidateConnection] [-MicrosoftGraphEndPoint <string>]
  [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
@@ -95,7 +95,7 @@ Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityA
 ### Environment Variable
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> -EnvironmentVariable [-PersistLogin]
- [-CreateDrive] [-DriveName <String>] [-RedirectUri <String>]
+ [-CreateDrive] [-DriveName <String>] [-RedirectUri <String>] [-Tenant <String>]
  [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [-TransformationOnPrem] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
@@ -109,7 +109,7 @@ Connect-PnPOnline [-ReturnConnection] [-ValidateConnection] [-Url] <String>
 ### OS login
 ```powershell
 Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] 
- [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
+ [-ClientId <String>] [-Tenant <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
 ### Federated Identity
@@ -606,10 +606,22 @@ The Azure Active Directory tenant name, e.g. mycompany.onmicrosoft.com or mycomp
 
 ```yaml
 Type: String
-Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, Environment Variable, Federated Identity
+Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
+Parameter Sets: PnP Management Shell / DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable, OS login, Federated Identity
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -806,7 +818,7 @@ Connects using the necessary environment variables. For more information the req
 Type: SwitchParameter
 Parameter Sets: Environment Variable
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
