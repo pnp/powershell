@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Marked `Get-PnPPowerShellTelemetryEnabled`, `Enable-PnPPowerShellTelemetry` and `Disable-PnPPowerShellTelemetry` as deprecated. These cmdlets will be removed in the next release.
 
 ### Fixed
 - Using UPNs with an apostrophe in it not working with `Remove-PnPUserProfile`, `Export-PnPUserProfile`, `Export-PnPUserInfo`, and `Remove-PnPUserInfo`. The apostrophe is now escaped in the API request. [#5459](https://github.com/pnp/powershell/pull/5459)

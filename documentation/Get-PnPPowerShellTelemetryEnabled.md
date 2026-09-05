@@ -9,6 +9,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerShellTeleme
  
 # Get-PnPPowerShellTelemetryEnabled
 
+> [!WARNING]
+> This cmdlet is deprecated and will be removed in the next release.
+
 ## SYNOPSIS
 Returns true if the PnP PowerShell Telemetry has been enabled.
 

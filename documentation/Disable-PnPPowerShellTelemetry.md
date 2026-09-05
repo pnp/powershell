@@ -9,6 +9,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Disable-PnPPowerShellTe
  
 # Disable-PnPPowerShellTelemetry
 
+> [!WARNING]
+> This cmdlet is deprecated and will be removed in the next release.
+
 ## SYNOPSIS
 Disables sending of telemetry data.
 
