@@ -365,7 +365,20 @@ namespace PnP.PowerShell.Commands.Base
             Action<ITokenCache> tokenCacheCallback = null;
             if (cacheEnabled)
             {
-                tokenCacheCallback = tokenCache => cacheHelper = MSALCacheHelper(tokenCache, url.ToString(), clientId, appOnly: true, cacheRequested: persistLogin).GetAwaiter().GetResult();
+                tokenCacheCallback = tokenCache =>
+                {
+                    try
+                    {
+                        cacheHelper = MSALCacheHelper(tokenCache, url.ToString(), clientId, appOnly: true, cacheRequested: persistLogin).GetAwaiter().GetResult();
+                    }
+                    catch (InvalidOperationException ex) when (!persistLogin && ex.InnerException is MsalCachePersistenceException)
+                    {
+                        // The user did not ask for persistence on this call; an earlier -PersistLogin registered it. Failing here would block every
+                        // certificate connection for this tenant and client ID, including the one needed to run Disconnect-PnPOnline -ClearPersistedLogin,
+                        // so connect without the cache and tell the user why.
+                        cmdlet.WriteWarning($"{ex.Message} Connecting without the persisted login cache, so this token will not be reused across sessions. Run 'Disconnect-PnPOnline -ClearPersistedLogin' to remove the persisted login registration for this tenant and client ID, or connect again with -PersistLogin once secure storage is available.");
+                    }
+                };
             }
 
             Framework.AuthenticationManager authManager = null;
@@ -1169,11 +1182,11 @@ namespace PnP.PowerShell.Commands.Base
                 cacheHelper.RegisterCache(tokenCache);
                 return cacheHelper;
             }
-            catch (MsalCachePersistenceException)
+            catch (MsalCachePersistenceException ex)
             {
                 if (appOnly)
                 {
-                    throw new InvalidOperationException("Secure persistence for the app-only token cache is unavailable on this machine, so the persisted app-only login cache cannot be initialized or reused.");
+                    throw new InvalidOperationException("Secure persistence for the app-only token cache is unavailable on this machine, so the persisted app-only login cache cannot be initialized or reused.", ex);
                 }
 
                 PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Cache persistence failed. Retrying with an unprotected Linux fallback for delegated logins.");
@@ -1301,7 +1314,7 @@ namespace PnP.PowerShell.Commands.Base
             cmdlet.WriteVerbose("Connecting using token cache. See https://pnp.github.io/powershell/articles/persistedlogin.html for more information.");
         }
 
-        internal static void ClearCache(PnPConnection connection)
+        internal static void ClearCache(PnPConnection connection, Cmdlet cmdlet = null)
         {
             var appOnly = connection.ConnectionMethod == ConnectionMethod.AzureADAppOnly;
             var urls = GetCheckUrls(connection.Url);
@@ -1327,7 +1340,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 if (!removedPersistedEntry)
                 {
-                    PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "No app-only persisted login entry was removed because no cache registration or settings entry was found.");
+                    cmdlet?.WriteWarning($"No persisted login was found for {connection.Url} with client ID {connection.ClientId}, so nothing was cleared. Use Get-PnPPersistedLogin to list the registered persisted logins.");
                 }
                 return;
             }

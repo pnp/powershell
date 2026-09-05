@@ -7,7 +7,7 @@ This feature is particularly useful for scenarios where you need to run scripts 
 ## Where is the token stored
 The token is stored in a file in the `%LOCALAPPDATA%\.m365pnppowershell` folder on Windows or `$HOME/.m365pnppowershell` on Linux and macOS. The file is encrypted using the Data Protection API (DPAPI) on Windows, Keychain on macOS or Secret Service on Linux.
 
-If Secret Service is unavailable on Linux, delegated authentication falls back to an unprotected file. Certificate-based app-only authentication does not use this fallback and instead fails to enable persistence. Ensure access to the cache directory is restricted when the delegated fallback is used.
+If Secret Service is unavailable on Linux, delegated authentication falls back to an unprotected file. Certificate-based app-only authentication does not use this fallback: `Connect-PnPOnline -PersistLogin` fails, and a later connection that reuses an existing registration writes a warning and connects without the cache, so the token is not stored. Ensure access to the cache directory is restricted when the delegated fallback is used.
 
 Except for that Linux fallback, the token cannot easily be accessed by unauthorized users or copied to another machine because the encryption is tied to the machine on which it was generated. If you share your machine with others, they may still be able to access the token when they have access to your user profile.
 
