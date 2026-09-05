@@ -39,6 +39,9 @@ Recommend reading these 2 links:
 
 | **Cmdlet** | **Comment** |
 | ----------- | ---------------------- |
+|  `Get-PnPPowerShellTelemetryEnabled` | All PnP Telemetry has been removed |
+| `Enable-PnPPowerShellTelemetry` | All PnP Telemetry has been removed |
+| `Disable-PnPPowerShellTelemetry` | All PnP Telemetry has been removed |
 
 ## Other notable changes
 
