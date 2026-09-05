@@ -289,7 +289,7 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter PersistLogin;
 
         private static readonly string[] sourceArray = ["stop", "ignore", "silentlycontinue"];
-        private string storedCredentialName;
+        private string _storedCredentialName;
         X509Certificate2 certificate;
 
         protected override void ProcessRecord()
@@ -711,7 +711,7 @@ namespace PnP.PowerShell.Commands.Base
                 credentials = GetCredentials();
                 if (credentials != null)
                 {
-                    WriteVerbose($"Using stored credential '{storedCredentialName}' for {Url}.");                    
+                    WriteVerbose($"Using stored credential '{_storedCredentialName}' for {Url}.");
                 }
                 else
                 {
@@ -1029,7 +1029,7 @@ namespace PnP.PowerShell.Commands.Base
             var credentials = Utilities.CredentialManager.GetCredential(name);
             if (credentials != null)
             {
-                storedCredentialName = name;
+                _storedCredentialName = name;
             }
             return credentials;
         }

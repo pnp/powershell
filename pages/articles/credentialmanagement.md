@@ -67,7 +67,7 @@ Now you can simply do this:
 Connect-PnPOnline -Url "https://yourtenant.sharepoint.com"
 ```
 
-PnP PowerShell will check the vault if a secret is present with the label matching the URL and it will use those credentials. When this happens, `Connect-PnPOnline -Verbose` writes a one-line verbose message naming the stored credential it selected. Notice that a URL like `https://yourtenant.sharepoint.com/sites/demo` will also match the secret. You can create multiple secrets too. PnP PowerShell will then try to match the most complete label first, e.g. a secret ending on /sites/demo1 will proceed the one without that ending.
+PnP PowerShell will check the vault if a secret is present with the label matching the URL and it will use those credentials. When this happens, `Connect-PnPOnline -Verbose` writes a one-line verbose message naming the stored credential it selected. Notice that a URL like `https://yourtenant.sharepoint.com/sites/demo` will also match the secret. You can create multiple secrets too. PnP PowerShell will then try to match the most complete label first, e.g. a secret ending on /sites/demo1 will precede the one without that ending.
 
 ## Removing a secret 
 
