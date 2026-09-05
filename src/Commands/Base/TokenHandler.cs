@@ -298,6 +298,10 @@ namespace PnP.PowerShell.Commands.Base
                 PnP.Framework.Diagnostics.Log.Debug("TokenHandler", $"Acquiring token for resource {requestedAudience} using Federated Identity");
                 accessToken = GetFederatedIdentityTokenAsync(connection.ClientId, connection.Tenant, requestedAudience, connection.AzureEnvironment).GetAwaiter().GetResult();
             }
+            else if (connection.ConnectionMethod == ConnectionMethod.AccessToken)
+            {
+                accessToken = connection.AccessToken;
+            }
             else
             {
                 if (connection.Context != null)
@@ -314,6 +318,10 @@ namespace PnP.PowerShell.Commands.Base
 
                         accessToken = authManager.GetAccessToken(requestedAudience);
                     }
+                }
+                else if (connection.AuthenticationManager != null)
+                {
+                    accessToken = connection.AuthenticationManager.GetAccessToken(requestedAudience);
                 }
             }
             if (string.IsNullOrEmpty(accessToken))
