@@ -73,21 +73,21 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FEDERATEDIDENTITY, ValueFromPipeline = true)]
         public SwitchParameter ValidateConnection;
 
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ACSAPPONLY, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_OSLOGIN, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_FEDERATEDIDENTITY, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_OSLOGIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_FEDERATEDIDENTITY, ValueFromPipeline = true)]
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -332,10 +332,20 @@ namespace PnP.PowerShell.Commands.Base
 
             if (ValidateConnection)
             {
+                if (string.IsNullOrEmpty(Url))
+                {
+                    throw new PSArgumentException("The -ValidateConnection parameter requires -Url because only SharePoint connections can be validated during connect.", nameof(ValidateConnection));
+                }
+
                 if (PingHost(new Uri(Url).Host) == false)
                 {
                     throw new PSArgumentException("Host not reachable");
                 }
+            }
+
+            if (CreateDrive && string.IsNullOrEmpty(Url))
+            {
+                throw new PSArgumentException("The -CreateDrive parameter requires -Url because a SharePoint context is required to create a drive.", nameof(CreateDrive));
             }
 
             if (ParameterSpecified(nameof(Connection)))
@@ -417,7 +427,7 @@ namespace PnP.PowerShell.Commands.Base
                 Environment.SetEnvironmentVariable("PNPPSSITE", "GRAPH");
             }
 
-            if (ValidateConnection)
+            if (ValidateConnection && newConnection.Context != null)
             {
                 // Try requesting the site Id to validate that the site to which is being connected exists
                 newConnection.Context.Load(newConnection.Context.Site, p => p.Id);
@@ -522,10 +532,13 @@ namespace PnP.PowerShell.Commands.Base
             var messageWriter = new CmdletMessageWriter(this);
             PnPConnection connection = null;
             Exception connectionException = null;
-            var uri = new Uri(Url);
-            if ($"https://{uri.Host}".Equals(Url.ToLower()))
+            if (!string.IsNullOrEmpty(Url))
             {
-                Url += "/";
+                var uri = new Uri(Url);
+                if ($"https://{uri.Host}".Equals(Url.ToLower()))
+                {
+                    Url += "/";
+                }
             }
             Task.Factory.StartNew(() =>
             {
@@ -540,7 +553,7 @@ namespace PnP.PowerShell.Commands.Base
                             oldUri = new Uri(Connection.Url);
                         }
                     }
-                    if (oldUri != null && oldUri.Host == new Uri(Url).Host && Connection?.ConnectionMethod == ConnectionMethod.DeviceLogin)
+                    if (oldUri != null && !string.IsNullOrEmpty(Url) && oldUri.Host == new Uri(Url).Host && Connection?.ConnectionMethod == ConnectionMethod.DeviceLogin)
                     {
                         ReuseAuthenticationManager();
                     }
@@ -570,7 +583,7 @@ namespace PnP.PowerShell.Commands.Base
                             messageWriter.LogDebug("Using Managed AppId from secure store");
                         }
                     }
-                    if (string.IsNullOrWhiteSpace(Tenant))
+                    if (string.IsNullOrWhiteSpace(Tenant) && !string.IsNullOrEmpty(Url))
                     {
                         Tenant = TenantExtensions.GetTenantIdByUrl(Url, AzureEnvironment);
                     }
@@ -631,7 +644,7 @@ namespace PnP.PowerShell.Commands.Base
                     ReuseAuthenticationManager();
                 }
 
-                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
+                return PnPConnection.CreateWithCert(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
             }
             else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
             {
@@ -651,7 +664,7 @@ namespace PnP.PowerShell.Commands.Base
                     ReuseAuthenticationManager();
                 }
                 // The key container behind this certificate was created by loading the bytes above, so it is ours to remove again on disconnect
-                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
+                return PnPConnection.CreateWithCert(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
             }
             else if (ParameterSpecified(nameof(Thumbprint)))
             {
@@ -673,7 +686,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     ReuseAuthenticationManager();
                 }
-                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
+                return PnPConnection.CreateWithCert(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
             }
             else
             {
@@ -689,7 +702,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             LogDebug("Connecting using a provided Access Token");
 
-            return PnPConnection.CreateWithAccessToken(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, AccessToken, TenantAdminUrl);
+            return PnPConnection.CreateWithAccessToken(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, AccessToken, TenantAdminUrl, AzureEnvironment);
         }
 
         /// <summary>
@@ -699,6 +712,11 @@ namespace PnP.PowerShell.Commands.Base
         private PnPConnection ConnectCredentials(PSCredential credentials, InitializationType initializationType = InitializationType.Credentials)
         {
             LogDebug("Connecting using username and password");
+
+            if (string.IsNullOrEmpty(Url) && (CurrentCredentials || TransformationOnPrem))
+            {
+                throw new PSArgumentException("The -CurrentCredentials and -TransformationOnPrem parameters require -Url because they create a SharePoint context.", nameof(Url));
+            }
 
             if (!CurrentCredentials && credentials == null)
             {
@@ -746,14 +764,14 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
             LogDebug($"Using ClientID {ClientId}");
-            return PnPConnection.CreateWithCredentials(this, new Uri(Url),
+            return PnPConnection.CreateWithCredentials(this, !string.IsNullOrEmpty(Url) ? new Uri(Url) : null,
                                                                credentials,
                                                                CurrentCredentials,
                                                                TenantAdminUrl,
                                                                PersistLogin,
                                                                AzureEnvironment,
                                                                ClientId,
-                                                               RedirectUri, TransformationOnPrem, initializationType);
+                                                               RedirectUri, TransformationOnPrem, initializationType, ErrorActionSetting);
         }
 
 
@@ -790,7 +808,7 @@ namespace PnP.PowerShell.Commands.Base
                     LogDebug("Using Managed AppId from secure store");
                 }
             }
-            if (Connection?.ClientId == ClientId && Connection?.ConnectionMethod == ConnectionMethod.Credentials)
+            if (Connection?.ClientId == ClientId && Connection?.ConnectionMethod == ConnectionMethod.Credentials && !string.IsNullOrEmpty(Url) && !string.IsNullOrEmpty(Connection.Url))
             {
                 if (IsSameOrAdminHost(new Uri(Url), new Uri(Connection.Url)))
                 {
@@ -798,7 +816,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
             LogDebug($"Using ClientID {ClientId}");
-            return PnPConnection.CreateWithInteractiveLogin(this, new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, false, PersistLogin, Host, ErrorActionSetting);
+            return PnPConnection.CreateWithInteractiveLogin(this, !string.IsNullOrEmpty(Url) ? new Uri(Url.ToLower()) : null, ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, false, PersistLogin, Host, ErrorActionSetting);
         }
 
         private PnPConnection ConnectEnvironmentVariable(InitializationType initializationType = InitializationType.EnvironmentVariable)
@@ -862,7 +880,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 LogDebug($"ClientID: {azureClientId}");
 
-                return PnPConnection.CreateWithCert(new Uri(Url), azureClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
+                return PnPConnection.CreateWithCert(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, azureClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
             }
 
             else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
@@ -886,14 +904,14 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 LogDebug($"ClientID: {azureClientId}");
 
-                return PnPConnection.CreateWithCredentials(this, new Uri(Url),
+                return PnPConnection.CreateWithCredentials(this, !string.IsNullOrEmpty(Url) ? new Uri(Url) : null,
                                                                    credentials,
                                                                    CurrentCredentials,
                                                                    TenantAdminUrl,
                                                                    PersistLogin,
                                                                    AzureEnvironment,
                                                                    azureClientId,
-                                                                   RedirectUri, TransformationOnPrem, initializationType);
+                                                                   RedirectUri, TransformationOnPrem, initializationType, ErrorActionSetting);
             }
 
             return null;
@@ -926,7 +944,7 @@ namespace PnP.PowerShell.Commands.Base
                     LogDebug("Using Managed AppId from secure store");
                 }
             }
-            if (Connection?.ClientId == ClientId && Connection?.ConnectionMethod == ConnectionMethod.Credentials)
+            if (Connection?.ClientId == ClientId && Connection?.ConnectionMethod == ConnectionMethod.Credentials && !string.IsNullOrEmpty(Url) && !string.IsNullOrEmpty(Connection.Url))
             {
                 if (IsSameOrAdminHost(new Uri(Url), new Uri(Connection.Url)))
                 {
@@ -935,11 +953,12 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             LogDebug($"Using ClientID {ClientId}");
-            if (PnPConnection.CacheEnabled(Url, ClientId))
+            var cacheUrl = !string.IsNullOrEmpty(Url) ? Url : PnPConnection.GetDefaultTokenCacheUrl(AzureEnvironment);
+            if (PnPConnection.CacheEnabled(cacheUrl, ClientId))
             {
                 WriteObject("Cache used. Clear the cache entry with Disconnect-PnPOnline");
             }
-            return PnPConnection.CreateWithInteractiveLogin(this, new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, true, PersistLogin, Host, ErrorActionSetting);
+            return PnPConnection.CreateWithInteractiveLogin(this, !string.IsNullOrEmpty(Url) ? new Uri(Url.ToLower()) : null, ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, true, PersistLogin, Host, ErrorActionSetting);
         }
 
         private PnPConnection ConnectFederatedIdentity()
@@ -967,6 +986,11 @@ namespace PnP.PowerShell.Commands.Base
         }
         private PSCredential GetCredentials()
         {
+            if (string.IsNullOrEmpty(Url))
+            {
+                return null;
+            }
+
             var connectionUri = new Uri(Url);
 
             // Try to get the credentials by full url
@@ -1015,6 +1039,11 @@ namespace PnP.PowerShell.Commands.Base
 
         private string GetAppId()
         {
+            if (string.IsNullOrEmpty(Url))
+            {
+                return PnPConnection.GetCacheClientId(PnPConnection.GetDefaultTokenCacheUrl(AzureEnvironment));
+            }
+
             var connectionUri = new Uri(Url);
             // Try to get the credentials by full url
             string appId = PnPConnection.GetCacheClientId(connectionUri.ToString()) ?? Utilities.CredentialManager.GetAppId(connectionUri.ToString());
