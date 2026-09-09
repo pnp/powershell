@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Base
 
             if (ClearPersistedLogin)
             {
-                PnPConnection.ClearCache(PnPConnection.Current);
+                PnPConnection.ClearCache(PnPConnection.Current, this);
             }
 
             PnPConnection.Current = null;
