@@ -43,11 +43,6 @@ namespace PnP.PowerShell.Commands.Branding
         [Parameter(ParameterSetName = ParameterSet_Default)]
         [Parameter(ParameterSetName = ParameterSet_PreviousNode)]
         [Parameter(Mandatory = false)]
-        public SwitchParameter External;
-
-        [Parameter(ParameterSetName = ParameterSet_Default)]
-        [Parameter(ParameterSetName = ParameterSet_PreviousNode)]
-        [Parameter(Mandatory = false)]
         public List<Guid> AudienceIds;
 
         [Parameter(ParameterSetName = ParameterSet_Default)]
@@ -66,24 +61,6 @@ namespace PnP.PowerShell.Commands.Branding
                 ClientContext.ExecuteQueryRetry();
                 Url = CurrentWeb.Url;
             }
-
-            var navigationNodeCreationInformation = new NavigationNodeCreationInformation
-            {
-                Title = Title,
-                Url = Url,
-                IsExternal = External.IsPresent,
-            };
-
-            if (ParameterSpecified(nameof(PreviousNode)))
-            {
-                navigationNodeCreationInformation.PreviousNode = PreviousNode.GetNavigationNode(CurrentWeb);
-            }
-            else
-            {
-                navigationNodeCreationInformation.AsLastNode = !First.IsPresent;
-            }
-
-            NavigationNodeCollection nodeCollection = null;
 
             string menuNodeKey = string.Empty;
             switch (Location)
@@ -104,74 +81,84 @@ namespace PnP.PowerShell.Commands.Branding
                     throw new ArgumentOutOfRangeException("Location");
             }
 
+            // Get the current menu state
+            CurrentWeb.EnsureProperties(w => w.Url);
+            var menuState = Utilities.REST.RestHelper.Get<Model.SharePoint.NavigationNodeCollection>(
+                Connection.HttpClient,
+                $"{CurrentWeb.Url}/_api/navigation/MenuState?menuNodeKey='{menuNodeKey}'",
+                ClientContext.GetAccessToken(),
+                false);
+
+            if (menuState == null)
+            {
+                throw new Exception("Unable to retrieve current menu state.");
+            }
+
+            // Build the new node
+            var newNode = new Model.SharePoint.NavigationNode
+            {
+                NodeType = 0,
+                Title = Title,
+                SimpleUrl = Url,
+                FriendlyUrlSegment = "",
+                IsTitleForExistingLanguage = true,
+                AudienceIds = AudienceIds ?? new List<Guid>(),
+                CustomProperties = new List<object>(),
+                Translations = new List<object>(),  
+                OpenInNewWindow = OpenInNewTab.IsPresent ? true : null,
+                Nodes = new List<Model.SharePoint.NavigationNode>()
+            };
+
+            // Find where to insert the node
+            List<Model.SharePoint.NavigationNode> targetNodes = menuState.Nodes;
             if (ParameterSpecified(nameof(Parent)))
             {
-                var parentNode = Parent.GetNavigationNode(CurrentWeb);
-                nodeCollection = parentNode.Children;
-                CurrentWeb.Context.Load(nodeCollection);
-                CurrentWeb.Context.ExecuteQueryRetry();
-            }
-            else if (Location == NavigationType.SearchNav)
-            {
-                nodeCollection = CurrentWeb.LoadSearchNavigation();
-            }
-            else if (Location == NavigationType.Footer)
-            {
-                nodeCollection = CurrentWeb.LoadFooterNavigation();
-            }
-            else if (Location == NavigationType.QuickLaunch)
-            {
-                nodeCollection = CurrentWeb.Navigation.QuickLaunch;
-                ClientContext.Load(nodeCollection);
-            }
-            else
-            {
-                nodeCollection = CurrentWeb.Navigation.TopNavigationBar;
-                ClientContext.Load(nodeCollection);
-            }
-
-
-            if (nodeCollection == null)
-            {
-                throw new Exception("Unable to define Navigation Node collection to add the node to");
-            }
-
-            var addedNode = nodeCollection.Add(navigationNodeCreationInformation);
-
-            if (ParameterSpecified(nameof(AudienceIds)))
-            {
-                addedNode.AudienceIds = AudienceIds;
-                addedNode.Update();
-            }
-
-            ClientContext.Load(addedNode);
-            ClientContext.ExecuteQueryRetry();
-
-            // Retrieve the menu definition and save it back again. This step is needed to enforce some properties of the menu to be shown, such as the audience targeting.
-            CurrentWeb.EnsureProperties(w => w.Url);
-            var menuState = Utilities.REST.RestHelper.Get<Model.SharePoint.NavigationNodeCollection>(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/MenuState?menuNodeKey='{menuNodeKey}'", ClientContext.GetAccessToken(), false);
-
-            var currentItem = menuState?.Nodes?.Select(node => SearchNodeById(node, addedNode.Id))
-                .FirstOrDefault(result => result != null);
-            if (currentItem != null)
-            {
-                currentItem.OpenInNewWindow = OpenInNewTab.ToBool();
-                currentItem.SimpleUrl = Url;
-                if (ParameterSpecified(nameof(AudienceIds)))
+                var parentNode = menuState.Nodes.Select(node => SearchNodeById(node, Parent.GetNavigationNode(CurrentWeb)?.Id ?? 0))
+                    .FirstOrDefault(result => result != null);
+                if (parentNode == null)
                 {
-                    currentItem.AudienceIds = AudienceIds;
+                    throw new Exception("Parent node not found in menu state.");
                 }
-
-                var payload = JsonSerializer.Serialize(menuState);
-                Utilities.REST.RestHelper.Post(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/SaveMenuState", ClientContext, @"{ ""menuState"": " + payload + "}", "application/json", "application/json;odata=nometadata");
+                if (parentNode.Nodes == null)
+                    parentNode.Nodes = new List<Model.SharePoint.NavigationNode>();
+                targetNodes = parentNode.Nodes;
             }
-            else
+
+            int insertIndex = -1;
+            if (ParameterSpecified(nameof(PreviousNode)))
             {
-                LogWarning("Something went wrong while trying to set AudienceIDs or Open in new tab property");
+                var prevNode = targetNodes.Select(node => SearchNodeById(node, PreviousNode.GetNavigationNode(CurrentWeb)?.Id ?? 0))
+                    .FirstOrDefault(result => result != null);
+                if (prevNode != null)
+                {
+                    insertIndex = targetNodes.IndexOf(prevNode) + 1;
+                }
+            }
+            else if (First.IsPresent)
+            {
+                insertIndex = 0;
             }
 
+            if (insertIndex >= 0 && insertIndex <= targetNodes.Count)
+                targetNodes.Insert(insertIndex, newNode);
+            else
+                targetNodes.Add(newNode);
 
-            WriteObject(addedNode);
+            // Prepare the payload
+            var payload = JsonSerializer.Serialize(new { menuState });
+
+            // Save the new menu state
+            Utilities.REST.RestHelper.Post(
+                Connection.HttpClient,
+                $"{CurrentWeb.Url}/_api/navigation/SaveMenuState",
+                ClientContext,
+                 payload,
+                "application/json",
+                "application/json;odata=nometadata"
+            );
+
+            // Output the new node (for consistency with previous behavior)
+            WriteObject(newNode);
         }
 
         private static Model.SharePoint.NavigationNode SearchNodeById(Model.SharePoint.NavigationNode root, int id)
@@ -183,6 +170,7 @@ namespace PnP.PowerShell.Commands.Branding
 
             return root.Nodes.Select(child => SearchNodeById(child, id)).FirstOrDefault(result => result != null);
         }
+            // LogWarning("Something went wrong while trying to set AudienceIDs or Open in new tab property");
 
     }
 }
