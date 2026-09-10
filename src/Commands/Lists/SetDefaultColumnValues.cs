@@ -74,6 +74,14 @@ namespace PnP.PowerShell.Commands.Lists
                     }
                     IDefaultColumnValue defaultColumnValue = field.GetDefaultColumnValueFromField(ClientContext, Folder, Value);
                     list.SetDefaultColumnValues(new List<IDefaultColumnValue>() { defaultColumnValue });
+
+                    // SharePoint applies the stored defaults through this event receiver. PnP Framework registers it, but
+                    // since September 2026 SharePoint Online rejects event receiver registration through CSOM, in which
+                    // case the values are stored but never applied to newly added items (#5467)
+                    if (list.GetEventReceiverByName("LocationBasedMetadataDefaultsReceiver ItemAdded") == null)
+                    {
+                        LogWarning("The default column values have been stored, but the 'LocationBasedMetadataDefaultsReceiver ItemAdded' event receiver could not be registered on the list, so SharePoint will not apply them to newly added items.");
+                    }
                 }
                 else
                 {
