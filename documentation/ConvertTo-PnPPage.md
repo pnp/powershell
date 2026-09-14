@@ -22,7 +22,7 @@ ConvertTo-PnPPage [-Identity] <ClassicPagePipeBind> [-Library <String>] [-Folder
  [-AddTableListImageAsImageWebPart] [-UseCommunityScriptEditor] [-SummaryLinksToHtml]
  [-TargetWebUrl <String>] [-LogType <PageTransformatorLogType>] [-LogFolder <String>] [-LogSkipFlush]
  [-LogVerbose] [-DontPublish] [-KeepPageCreationModificationInformation] [-SetAuthorInPageHeader]
- [-PostAsNews] [-DisablePageComments] [-PublishingPage] [-BlogPage] [-DelveBlogPage]
+ [-PostAsNews] [-DisablePageComments] [-PublishingPage] [-InPlacePublishingPage] [-BlogPage] [-DelveBlogPage]
  [-DelveKeepSubTitle] [-PageLayoutMapping <String>] [-PublishingTargetPageName <String>]
  [-TargetPageName <String>] [-TargetPageFolder <String>] [-TargetPageFolderOverridesDefaultFolder]
  [-RemoveEmptySectionsAndColumns] [-TargetConnection <PnPConnection>] [-SkipUserMapping]
@@ -129,6 +129,13 @@ ConvertTo-PnPPage -Identity "somepage.aspx" -PublishingPage -Overwrite -TargetCo
 ```
 
 Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. This allows to read a page in on-premises environment and create in another online locations including using specific user mappings between the two environments.
+
+### EXAMPLE 15
+```powershell
+ConvertTo-PnPPage -Identity "Enterprise-Wiki.aspx" -PublishingPage -InPlacePublishingPage -PublishingTargetPageName "Enterprise-Wiki-modern.aspx"
+```
+
+Converts an Enterprise Wiki publishing page to a modern page in the same Web. This explicit opt-in cannot be combined with `-TargetWebUrl` or `-TargetConnection`. The source publishing page is retained.
 
 ## PARAMETERS
 
@@ -262,6 +269,18 @@ Parameter Sets: (All)
 Required: True
 Position: 0
 Accept pipeline input: True
+```
+
+### -InPlacePublishingPage
+Explicitly allows an Enterprise Wiki publishing page to be converted to a modern page in the currently connected Web. Requires `-PublishingPage` and cannot be combined with `-TargetWebUrl` or `-TargetConnection`. The target Web must meet the PnP Framework same-Web publishing transformation requirements.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
 ```
 
 ### -KeepPageCreationModificationInformation
