@@ -244,15 +244,15 @@ namespace PnP.PowerShell.Commands.Pages
             bool crossSiteTransformation = TargetConnection != null || !string.IsNullOrEmpty(TargetWebUrl);
 
             // Create target client context (when needed)
-            ClientContext targetContext = null;
-            if (TargetConnection == null)
+            ClientContext targetContext = this.InPlacePublishingPage ? this.ClientContext : null;
+            if (!this.InPlacePublishingPage && TargetConnection == null)
             {
                 if (!string.IsNullOrEmpty(TargetWebUrl))
                 {
                     targetContext = this.ClientContext.Clone(TargetWebUrl);
                 }
             }
-            else
+            else if (!this.InPlacePublishingPage)
             {
                 targetContext = TargetConnection.Context;
             }
