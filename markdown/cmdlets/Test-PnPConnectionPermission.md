@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Test-PnPConnectionPermission.html
-external help file: PnP.PowerShell.dll-Help.xml
 title: Test-PnPConnectionPermission
+applicable: SharePoint Online
+Module Name: PnP.PowerShell
+online version: https://pnp.github.io/powershell/cmdlets/Test-PnPConnectionPermission.html
+schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
 ---
-
+ 
 # Test-PnPConnectionPermission
 
 ## SYNOPSIS
@@ -120,3 +121,4 @@ Accept wildcard characters: False
 [How to determine which permissions you need](https://pnp.github.io/powershell/articles/determinepermissions.html)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
