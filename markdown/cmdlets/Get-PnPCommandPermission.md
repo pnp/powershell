@@ -1,13 +1,12 @@
 ---
-title: Get-PnPCommandPermission
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPCommandPermission.html
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPCommandPermission.html
 external help file: PnP.PowerShell.dll-Help.xml
-tags: Available in the current Nightly Release only.
+title: Get-PnPCommandPermission
 ---
-   
+  
 # Get-PnPCommandPermission
 
 ## SYNOPSIS
@@ -149,4 +148,3 @@ Accept wildcard characters: False
 [How to determine which permissions you need](https://pnp.github.io/powershell/articles/determinepermissions.html)
 
 [Working with permission attributes](https://pnp.github.io/powershell/articles/permissionattributes.html)
-

@@ -1,13 +1,12 @@
 ---
-title: Disable-PnPPowerShellTelemetry
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Disable-PnPPowerShellTelemetry.html
+title: Disable-PnPPowerShellTelemetry
 schema: 2.0.0
+applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Disable-PnPPowerShellTelemetry.html
 ---
-  
+ 
 # Disable-PnPPowerShellTelemetry
 
 > [!WARNING]
@@ -65,4 +64,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

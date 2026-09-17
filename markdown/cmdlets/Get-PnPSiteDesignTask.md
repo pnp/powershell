@@ -1,13 +1,12 @@
 ---
-title: Get-PnPSiteDesignTask
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteDesignTask.html
+title: Get-PnPSiteDesignTask
 schema: 2.0.0
+applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteDesignTask.html
 ---
-  
+ 
 # Get-PnPSiteDesignTask
 
 ## SYNOPSIS
@@ -96,5 +95,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 

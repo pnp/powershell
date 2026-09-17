@@ -1,13 +1,12 @@
 ---
-title: Get-PnPSearchCrawlLog
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchCrawlLog.html
+title: Get-PnPSearchCrawlLog
 schema: 2.0.0
+applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchCrawlLog.html
 ---
-  
+ 
 # Get-PnPSearchCrawlLog
 
 ## SYNOPSIS
@@ -221,5 +220,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 

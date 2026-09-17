@@ -1,13 +1,12 @@
 ---
-title: New-PnPSiteTemplate
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPSiteTemplate.html
+title: New-PnPSiteTemplate
 schema: 2.0.0
+applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/New-PnPSiteTemplate.html
 ---
-  
+ 
 # New-PnPSiteTemplate
 
 ## SYNOPSIS
@@ -35,5 +34,4 @@ Creates a new instance of a site template object.
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 

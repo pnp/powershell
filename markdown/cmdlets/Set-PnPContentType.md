@@ -1,13 +1,12 @@
 ---
-title: Set-PnPContentType
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContentType.html
+title: Set-PnPContentType
 schema: 2.0.0
+applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContentType.html
 ---
-  
+ 
 # Set-PnPContentType
 
 ## SYNOPSIS
@@ -373,4 +372,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

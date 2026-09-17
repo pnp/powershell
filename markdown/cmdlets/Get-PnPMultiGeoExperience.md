@@ -1,13 +1,12 @@
 ---
-title: Get-PnPMultiGeoExperience
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPMultiGeoExperience.html
+title: Get-PnPMultiGeoExperience
 schema: 2.0.0
+applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPMultiGeoExperience.html
 ---
-  
+ 
 # Get-PnPMultiGeoExperience
 
 ## SYNOPSIS
@@ -58,4 +57,3 @@ Returns an object with `GeoLocation` and `MultiGeoExperienceMode` properties.
 [Set-PnPMultiGeoExperience](Set-PnPMultiGeoExperience.md)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
