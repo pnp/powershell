@@ -20,18 +20,18 @@ Invoke-PnPSiteTemplate -Path <String> [-TemplateId <String>] [-ResourceFolder <S
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
- [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
+ [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Experimental]
  [-Url <String>]
  [-Connection <PnPConnection>] 
 ```
 
 ### Instance
 ```powershell
-Invoke-PnPSiteTemplate -InputInstance <SiteTemplate> [-TemplateId <String>] [-ResourceFolder <String>]
+Invoke-PnPSiteTemplate -InputInstance <SiteTemplateInstancePipeBind> [-TemplateId <String>] [-ResourceFolder <String>]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
- [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
+ [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Experimental]
  [-Url <String>]
  [-Connection <PnPConnection>] 
 ```
@@ -42,7 +42,7 @@ Invoke-PnPSiteTemplate -Stream <Stream> [-TemplateId <String>] [-ResourceFolder 
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
- [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
+ [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Experimental]
  [-Url <String>]
  [-Connection <PnPConnection>] 
 ```
@@ -135,6 +135,13 @@ Invoke-PnPSiteTemplate -Stream $stream
 
 Downloads the ProjectSite.pnp template from the TemplateGallery document library and applies it to the currently connected to site.
 
+### EXAMPLE 12
+```powershell
+Invoke-PnPSiteTemplate -Path .\template.pnp -Experimental
+```
+
+Applies the template with the experimental PnP.Core.Provisioning engine instead of PnP Framework. Watch the warnings it reports: the engine reports a problem and carries on rather than stopping, so a run can finish having skipped part of the template.
+
 ## PARAMETERS
 
 ### -ClearNavigation
@@ -172,6 +179,20 @@ Allows you to run all handlers, excluding the ones specified.
 Type: Handlers
 Parameter Sets: (All)
 Accepted values: All, ApplicationLifecycleManagement, AuditSettings, ComposedLook, ContentTypes, CustomActions, ExtensibilityProviders, Features, Fields, Files, ImageRenditions, Lists, Navigation, None, PageContents, Pages, PropertyBagEntries, Publishing, RegionalSettings, SearchSettings, SiteFooter, SiteHeader, SitePolicy, SiteSecurity, SiteSettings, SupportedUILanguages, SyntexModels, Tenant, TermGroups, Theme, WebApiPermissions, WebSettings, Workflows
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -228,8 +249,10 @@ Allows you to provide an in-memory instance of the SiteTemplate type of the PnP 
 
 Note that using a .pnp package containing additional files will not work through this method. You should either extract the files to the folder you specify through -Path yourself first or use -Stream to stream the package to be invoked directly.
 
+Accepts a template produced by either engine, so a template extracted with -Experimental can be applied with -Experimental.
+
 ```yaml
-Type: SiteTemplate
+Type: SiteTemplateInstancePipeBind
 Parameter Sets: Instance
 
 Required: False

@@ -21,14 +21,14 @@ Generates a provisioning tenant template from a site. If the site is a hubsite a
 
 ### Extract a template to a file
 ```powershell
-Get-PnPTenantTemplate [-SiteUrl <String>] [-Out <String>] [-Force]
+Get-PnPTenantTemplate [-SiteUrl <String>] [-Out <String>] [-Force] [-Experimental]
  [-Configuration <ExtractConfigurationPipeBind>] [-Connection <PnPConnection>]  
  
 ```
 
 ### Extract a template as an object
 ```powershell
-Get-PnPTenantTemplate [-SiteUrl <String>] [-AsInstance] [-Configuration <ExtractConfigurationPipeBind>]
+Get-PnPTenantTemplate [-SiteUrl <String>] [-AsInstance] [-Experimental] [-Configuration <ExtractConfigurationPipeBind>]
  [-Connection <PnPConnection>] 
 ```
 
@@ -116,6 +116,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework. That engine ships no tenant template extraction handlers yet, so this currently fails with a terminating error rather than writing an empty template. Applying a tenant template with `Invoke-PnPTenantTemplate -Experimental` is supported.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

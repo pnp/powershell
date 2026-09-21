@@ -18,7 +18,7 @@ Adds a file to a PnP Provisioning Template package
 ```powershell
 Add-PnPFileToSiteTemplate [-Path] <String> [-Source] <String> [-Folder] <String>
  [[-Container] <String>] [[-FileLevel] <FileLevel>] [-FileOverwrite]
- [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>] 
+ [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>] [-Experimental]
  [-Connection <PnPConnection>] 
 ```
 
@@ -26,7 +26,7 @@ Add-PnPFileToSiteTemplate [-Path] <String> [-Source] <String> [-Folder] <String>
 ```powershell
 Add-PnPFileToSiteTemplate [-Path] <String> [-SourceUrl] <String> [[-Container] <String>]
  [[-FileLevel] <FileLevel>] [-FileOverwrite] [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>]
- [-Connection <PnPConnection>] 
+ [-Experimental] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -95,6 +95,20 @@ Parameter Sets: (All)
 
 Required: False
 Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

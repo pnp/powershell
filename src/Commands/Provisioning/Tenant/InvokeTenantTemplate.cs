@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPTenantTemplate")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
-    public class InvokeTenantTemplate : PnPSharePointOnlineAdminCmdlet
+    public partial class InvokeTenantTemplate : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";
         private const string ParameterSet_OBJECT = "By Object";
@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
         public string Path;
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_OBJECT)]
-        public ProvisioningHierarchy Template;
+        public TenantTemplateInstancePipeBind Template;
 
         [Parameter(Mandatory = false)]
         public string SequenceId;
@@ -74,8 +74,16 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
         [ValidateNotNull]
         public ApplyConfigurationPipeBind Configuration;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public SwitchParameter Experimental;
+
         protected override void ExecuteCmdlet()
         {
+            if (Experimental)
+            {
+                ExecuteCmdletExperimental();
+                return;
+            }
 
             var sitesProvisioned = new List<ProvisionedSite>();
             var configuration = new ApplyConfiguration();
@@ -94,11 +102,11 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
 
             if (ParameterSpecified(nameof(Handlers)))
             {
-                if (!Handlers.Has(Handlers.All))
+                if (!Handlers.HasFlag(Handlers.All))
                 {
                     foreach (var enumValue in (Handlers[])Enum.GetValues(typeof(Handlers)))
                     {
-                        if (Handlers.Has(enumValue))
+                        if (Handlers.HasFlag(enumValue))
                         {
                             if (enumValue == Handlers.TermGroups)
                             {
@@ -120,7 +128,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             {
                 foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
-                    if (!ExcludeHandlers.Has(handler) && handler != Handlers.All)
+                    if (!ExcludeHandlers.HasFlag(handler) && handler != Handlers.All)
                     {
                         if (handler == Handlers.TermGroups)
                         {
@@ -237,7 +245,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                     }
                 case ParameterSet_OBJECT:
                     {
-                        hierarchyToApply = Template;
+                        hierarchyToApply = Template?.GetFrameworkHierarchy();
                         if (ResourceFolder != null)
                         {
                             var fileSystemConnector = new FileSystemConnector(ResourceFolder, "");

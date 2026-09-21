@@ -21,7 +21,7 @@ using PnP.Framework.Provisioning.Providers.Markdown;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteTemplate")]
-    public class GetSiteTemplate : PnPWebCmdlet
+    public partial class GetSiteTemplate : PnPWebCmdlet
     {
         //private readonly ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
         private readonly ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
@@ -115,8 +115,17 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [ValidateNotNull]
         public ExtractConfigurationPipeBind Configuration;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Experimental;
+
         protected override void ExecuteCmdlet()
         {
+            if (Experimental)
+            {
+                ExecuteCmdletExperimental();
+                return;
+            }
+
             ExtractConfiguration extractConfiguration = null;
             if (ParameterSpecified(nameof(Configuration)))
             {
@@ -171,7 +180,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
-                    if (!ExcludeHandlers.Has(handler) && handler != Handlers.All)
+                    if (!ExcludeHandlers.HasFlag(handler) && handler != Handlers.All)
                     {
                         Handlers = Handlers | handler;
                     }

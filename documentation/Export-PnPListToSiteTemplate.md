@@ -16,7 +16,7 @@ Exports one or more lists to provisioning template
 
 ```powershell
 Export-PnPListToSiteTemplate -List <System.Collections.Generic.List`1[System.String]> [[-Out] <String>]
- [[-Schema] <XMLPnPSchemaVersion>] [-Force] [-OutputInstance] 
+ [[-Schema] <XMLPnPSchemaVersion>] [-Force] [-OutputInstance] [-Experimental] 
  [-Connection <PnPConnection>]   
 ```
 
@@ -62,6 +62,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
