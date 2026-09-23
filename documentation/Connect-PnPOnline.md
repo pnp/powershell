@@ -540,6 +540,12 @@ Persist the current access token and related information in a locally stored cac
 
 Certificate-based app-only connections can also use this cache. The certificate, tenant and client ID are still required on each connection because the cache does not store the certificate or its password. When a cached app-only access token expires, the supplied certificate is used to acquire a new token.
 
+App-only cache read and write failures are reported as errors, including failures during later token acquisition. An explicit `-PersistLogin` also fails if secure storage is unavailable. When reusing an existing registration without this switch, unavailable secure storage causes a warning and a connection without persistence; previously stored tokens and the registration are left intact.
+
+If the persisted-login settings file is unreadable or invalid, a certificate connection without `-PersistLogin` writes a warning and proceeds without persistence. An explicit `-PersistLogin` fails before acquiring or storing a token, so invalid settings are not replaced with an empty configuration. Repair the settings file or restore read access before retrying persistence.
+
+You can enable persistence on an existing environment-variable credentials connection by connecting again with `-EnvironmentVariable -PersistLogin`. A new authentication manager is created so the cache is attached before authentication.
+
 Use `Get-PnPPersistedLogin` to enumerate the registered cache entries. Notice that while using a cached token, if you change the permissions of an application registration, the token associated with that registration will not be updated automatically in the cache. You will have to clear the cache entry first and reauthenticate: use `Disconnect-PnPOnline -ClearPersistedLogin`.
 
 This switch is meant for a workstation you come back to. Do not use it in Azure Automation, Azure Functions, containers or any other environment where the file system does not survive the run or where the work is spread over instances which do not share a user profile: nothing is gained there and each instance authenticates as it normally would. Use a certificate, a managed identity or a workload identity in those environments instead.

@@ -43,7 +43,9 @@ This disconnects and removes the persisted login that was registered with `Conne
 ## PARAMETERS
 
 ### -ClearPersistedLogin
-Removes the persisted login registered with `Connect-PnPOnline -PersistLogin` for the tenant and client ID of the current connection, and deletes the tokens stored for it in the local token cache. For a delegated connection this removes the account from the shared token cache. For a certificate-based app-only connection this deletes the cache file dedicated to that tenant and client ID. A warning is written when no persisted login exists for the current connection; use `Get-PnPPersistedLogin` to see which ones are registered.
+Removes the persisted login registered with `Connect-PnPOnline -PersistLogin` for the tenant and client ID of the current connection, and clears its local token cache. For a delegated connection this attempts to remove the account from the shared token cache. For a certificate-based app-only connection this deletes the cache dedicated to that tenant and client ID from secure storage. A warning is written when no persisted login is registered for the current connection, for both delegated and app-only authentication; use `Get-PnPPersistedLogin` to see which ones are registered.
+
+If app-only token deletion fails, for example because the cache file is locked or secure storage is unavailable, the cmdlet reports an error and retains the connection and registration so cleanup can be retried. This also applies when the connection was established without persistence after a secure-storage warning. Restore access to secure storage and run `Disconnect-PnPOnline -ClearPersistedLogin` again.
 
 ```yaml
 Type: SwitchParameter

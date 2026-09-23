@@ -627,7 +627,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword, X509KeyStorageFlags);
-                if (!PersistLogin && !PnPConnection.CacheEnabled(Url, ClientId, true) &&
+                if (!PersistLogin &&
                     Connection?.ClientId == ClientId &&
                     Connection?.Tenant == Tenant &&
                     Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
@@ -648,7 +648,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags);
 
-                if (!PersistLogin && !PnPConnection.CacheEnabled(Url, ClientId, true) &&
+                if (!PersistLogin &&
                     Connection?.ClientId == ClientId &&
                     Connection?.Tenant == Tenant &&
                     Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
@@ -672,7 +672,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     throw new PSArgumentException("The certificate specified does not have a private key.", nameof(Thumbprint));
                 }
-                if (!PersistLogin && !PnPConnection.CacheEnabled(Url, ClientId, true) &&
+                if (!PersistLogin &&
                     Connection?.ClientId == ClientId &&
                     Connection?.Tenant == Tenant &&
                     Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
@@ -763,7 +763,7 @@ namespace PnP.PowerShell.Commands.Base
                                                                PersistLogin,
                                                                AzureEnvironment,
                                                                ClientId,
-                                                               RedirectUri, TransformationOnPrem, initializationType);
+                                                               RedirectUri, TransformationOnPrem, initializationType, ErrorActionSetting);
         }
 
 
@@ -863,7 +863,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, azureCertificatePath, secPassword, X509KeyStorageFlags);
-                if (!PersistLogin && !PnPConnection.CacheEnabled(Url, azureClientId, true) &&
+                if (!PersistLogin &&
                     Connection?.ClientId == azureClientId &&
                     Connection?.Tenant == Tenant &&
                     Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
@@ -1111,6 +1111,12 @@ namespace PnP.PowerShell.Commands.Base
 
         private void ReuseAuthenticationManager()
         {
+            if (PersistLogin || Connection.PersistedAppOnlyTokenCache != null)
+            {
+                PnPConnection.CachedAuthenticationManager = null;
+                return;
+            }
+
             var contextSettings = Connection.Context?.GetContextSettings();
             PnPConnection.CachedAuthenticationManager = contextSettings?.AuthenticationManager;
         }

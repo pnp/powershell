@@ -7,7 +7,7 @@ This feature is particularly useful for scenarios where you need to run scripts 
 ## Where is the token stored
 The token is stored in a file in the `%LOCALAPPDATA%\.m365pnppowershell` folder on Windows or `$HOME/.m365pnppowershell` on Linux and macOS. The file is encrypted using the Data Protection API (DPAPI) on Windows, Keychain on macOS or Secret Service on Linux.
 
-If Secret Service is unavailable on Linux, delegated authentication falls back to an unprotected file. Certificate-based app-only authentication does not use this fallback: `Connect-PnPOnline -PersistLogin` fails, and a later connection that reuses an existing registration writes a warning and connects without the cache, so the token is not stored. Ensure access to the cache directory is restricted when the delegated fallback is used.
+If Secret Service is unavailable on Linux, delegated authentication falls back to an unprotected file. Certificate-based app-only authentication does not use this fallback: `Connect-PnPOnline -PersistLogin` fails, and a later connection that reuses an existing registration writes a warning and connects without the cache, so the new token is not stored. Existing registrations and previously stored tokens are left intact. Ensure access to the cache directory is restricted when the delegated fallback is used.
 
 Except for that Linux fallback, the token cannot easily be accessed by unauthorized users or copied to another machine because the encryption is tied to the machine on which it was generated. If you share your machine with others, they may still be able to access the token when they have access to your user profile.
 
@@ -15,6 +15,10 @@ Except for that Linux fallback, the token cannot easily be accessed by unauthori
 When you use the `-PersistLogin` parameter with the `Connect-PnPOnline` cmdlet, PnP PowerShell authenticates as normal and stores the resulting token data in the local cache. The next time you run `Connect-PnPOnline`, PnP PowerShell checks whether a valid token exists for the tenant and client ID. If one is found, it is reused. Delegated authentication can therefore avoid prompting while its refresh token remains valid.
 
 For certificate-based app-only authentication, the certificate, tenant and client ID must still be supplied on each connection because the cache does not store the certificate or its password. A cached access token is reused while valid; afterwards the supplied certificate is used to acquire a new token.
+
+App-only cache reads and writes report storage failures rather than silently continuing. This applies both when connecting and when acquiring tokens later. Each app-only cache is isolated by SharePoint tenant hostname and client ID, with the corresponding root, admin and OneDrive hostnames sharing a cache. Connecting to an unregistered hostname, such as another multi-geo location, does not inherit persistence from the previous connection.
+
+An unreadable or invalid `settings.json` does not prevent certificate authentication when `-PersistLogin` is omitted: the connection writes a warning and proceeds without persistence. Explicit `-PersistLogin` instead fails before authentication. Neither path overwrites the invalid settings or deletes previously cached tokens; repair the file or restore its read permissions before retrying persistence.
 
 You do not need to specify the `-PersistLogin` parameter again for subsequent connections unless you want to change the behavior.
 
@@ -28,6 +32,8 @@ Get-PnPPersistedLogin
 
 ## Clearing the persisted login
 If you want to clear the persisted login and remove the stored token, you can connect to the tenant for which you would like to remove the stored token first and then use the `Disconnect-PnPOnline` cmdlet with the `-ClearPersistedLogin` option. Documentation for it can be [found here](../cmdlets/Disconnect-PnPOnline.md#-clearpersistedlogin). This will delete the token from the local file and require you to authenticate again the next time you run `Connect-PnPOnline`.
+
+For an app-only connection, the registration is removed only after secure-storage deletion succeeds. If deletion fails, the command reports an error and retains the connection and registration. Restore access to secure storage, then retry `Disconnect-PnPOnline -ClearPersistedLogin`. A previous warning that the connection is running without persistence does not mean that old tokens were deleted.
 
 ## FAQ
 

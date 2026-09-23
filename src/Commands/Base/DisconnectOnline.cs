@@ -32,6 +32,18 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
 
+            if (ClearPersistedLogin)
+            {
+                try
+                {
+                    PnPConnection.ClearCache(PnPConnection.Current, this);
+                }
+                catch (Exception ex) when (ex is not PipelineStoppedException && ex is not ActionPreferenceStopException)
+                {
+                    ThrowTerminatingError(new ErrorRecord(new InvalidOperationException(Properties.Resources.PersistedLoginClearFailed, ex), "PersistedLoginClearFailed", ErrorCategory.WriteError, PnPConnection.Current));
+                }
+            }
+
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
             Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
 
@@ -42,11 +54,6 @@ namespace PnP.PowerShell.Commands.Base
                     PnPConnection.CleanupCryptoMachineKey(PnPConnection.Current.Certificate);
                 }
                 PnPConnection.Current.Certificate = null;
-            }
-
-            if (ClearPersistedLogin)
-            {
-                PnPConnection.ClearCache(PnPConnection.Current, this);
             }
 
             PnPConnection.Current = null;
