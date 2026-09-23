@@ -19,7 +19,7 @@ jobs:
       contents: write      
     steps:
       - name: Wait for actions to finish
-        uses: softprops/turnstyle@v1
+        uses: softprops/turnstyle@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout master branch
@@ -50,7 +50,7 @@ jobs:
         run: |
           ./dev/pages/Build-Site.ps1
       - name: Add & Commit & Push
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v10
         with:
           cwd: ./gh-pages          
           push: true          
