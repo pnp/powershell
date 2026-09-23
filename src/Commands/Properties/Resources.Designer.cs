@@ -61,6 +61,87 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string describing an app-only token cache that could not be cleared.
+        /// </summary>
+        internal static string PersistedLoginCacheNotCleared {
+            get {
+                return ResourceManager.GetString("PersistedLoginCacheNotCleared", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string describing a failed persisted login cleanup and how to retry.
+        /// </summary>
+        internal static string PersistedLoginClearFailed {
+            get {
+                return ResourceManager.GetString("PersistedLoginClearFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized warning for a connection without a persisted login registration.
+        /// </summary>
+        internal static string PersistedLoginNotFound {
+            get {
+                return ResourceManager.GetString("PersistedLoginNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized warning for token data left after a registration could not be saved.
+        /// </summary>
+        internal static string PersistedLoginRollbackFailed {
+            get {
+                return ResourceManager.GetString("PersistedLoginRollbackFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized error for unavailable secure app-only token storage.
+        /// </summary>
+        internal static string PersistedLoginSecureStorageUnavailable {
+            get {
+                return ResourceManager.GetString("PersistedLoginSecureStorageUnavailable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized warning for connecting without unavailable secure token storage.
+        /// </summary>
+        internal static string PersistedLoginSecureStorageWarning {
+            get {
+                return ResourceManager.GetString("PersistedLoginSecureStorageWarning", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized error for invalid persisted login settings.
+        /// </summary>
+        internal static string PersistedLoginSettingsInvalid {
+            get {
+                return ResourceManager.GetString("PersistedLoginSettingsInvalid", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized error for an explicit persistence request with unreadable settings.
+        /// </summary>
+        internal static string PersistedLoginSettingsUnavailable {
+            get {
+                return ResourceManager.GetString("PersistedLoginSettingsUnavailable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized warning for continuing without unreadable persisted login settings.
+        /// </summary>
+        internal static string PersistedLoginSettingsWarning {
+            get {
+                return ResourceManager.GetString("PersistedLoginSettingsWarning", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to No URL specified nor does the provided access token contain an audience.
         /// </summary>
         internal static string AccessTokenConnectFailed {
