@@ -33,14 +33,23 @@ Disconnect-PnPOnline
 
 This will clear out all active tokens from the current connection
 
+### EXAMPLE 2
+```powershell
+Disconnect-PnPOnline -ClearPersistedLogin
+```
+
+This disconnects and removes the persisted login that was registered with `Connect-PnPOnline -PersistLogin` for the tenant and client ID of the current connection, so the next connection has to authenticate again.
+
 ## PARAMETERS
 
 ### -ClearPersistedLogin
-Clears the entry in the token cache for this connection.
+Removes the persisted login registered with `Connect-PnPOnline -PersistLogin` for the tenant and client ID of the current connection, and clears its local token cache. For a delegated connection this attempts to remove the account from the shared token cache. For a certificate-based app-only connection this deletes the cache dedicated to that tenant and client ID from secure storage. A warning is written when no persisted login is registered for the current connection, for both delegated and app-only authentication; use `Get-PnPPersistedLogin` to see which ones are registered.
+
+If app-only token deletion fails, for example because the cache file is locked or secure storage is unavailable, the cmdlet reports an error and retains the connection and registration so cleanup can be retried. This also applies when the connection was established without persistence after a secure-storage warning. Restore access to secure storage and run `Disconnect-PnPOnline -ClearPersistedLogin` again.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All))
+Parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -51,5 +60,7 @@ Accept wildcard characters: False
 ```
 
 ## RELATED LINKS
+
+[Persisted Login](https://pnp.github.io/powershell/articles/persistedlogin.html)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
