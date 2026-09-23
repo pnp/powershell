@@ -9,7 +9,7 @@ using CoreListsConfiguration = PnP.Core.Provisioning.Model.Configuration.Lists.L
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    public partial class AddDataRowsToSiteTemplate
+    public partial class AddListFoldersToSiteTemplate
     {
         private void ExecuteCmdletExperimental()
         {
@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             var template = CoreProvisioningHelper.LoadSiteTemplateFromFile(Path, LogError);
             if (template == null)
             {
-                throw new ApplicationException("Invalid template file!");
+                throw new ApplicationException("Invalid template file.");
             }
 
             var siteList = List.GetListOrThrow(nameof(List), PnPContext, l => l.Title);
@@ -35,57 +35,48 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             var listInstance = template.Lists.FirstOrDefault(l => tokenParser.ParseString(l.Title) == siteList.Title);
             if (listInstance == null)
             {
-                throw new ApplicationException("List does not exist in the template file!");
+                throw new ApplicationException("List does not exist in the template file.");
             }
 
-            var rows = ExtractDataRowsExperimental(siteList.Title);
-            if (rows == null)
+            var folders = ExtractFoldersExperimental(siteList.Title);
+            if (folders == null)
             {
                 return;
             }
 
-            if (!string.IsNullOrEmpty(KeyColumn))
-            {
-                listInstance.DataRows.KeyColumn = KeyColumn;
-            }
-            listInstance.DataRows.AddRange(rows);
+            listInstance.Folders.AddRange(folders);
 
             CoreProvisioningHelper.SaveSiteTemplateToFile(template, Path);
         }
 
         /// <summary>
-        /// Extracts the items of one list as data rows with the PnP.Core.Provisioning engine.
+        /// Extracts the folders of one list with the PnP.Core.Provisioning engine.
         /// </summary>
-        /// <param name="listTitle">The title of the list to read the items of</param>
-        /// <returns>The extracted rows, or null when the engine extracted no instance for the list</returns>
-        private DataRowCollection ExtractDataRowsExperimental(string listTitle)
+        /// <param name="listTitle">The title of the list to read the folders of</param>
+        /// <returns>The extracted folders, or null when the engine extracted no instance for the list</returns>
+        private FolderCollection ExtractFoldersExperimental(string listTitle)
         {
-            var listConfiguration = new CoreListsConfiguration.ExtractListsListsConfiguration
-            {
-                Title = listTitle,
-                IncludeItems = true,
-                KeyColumn = KeyColumn,
-                IncludeSecurity = IncludeSecurity,
-                TokenizeUrls = TokenizeUrls
-            };
-            if (!string.IsNullOrEmpty(Query))
-            {
-                listConfiguration.Query.CamlQuery = Query;
-            }
-            if (Fields != null)
-            {
-                listConfiguration.Query.ViewFields.AddRange(Fields);
-            }
-
             var configuration = new ExtractConfiguration
             {
                 Handlers = { ConfigurationHandler.Lists },
-                // Only this list's rows are wanted, so there is nothing to compare with the site's base template.
+                // Only this list's folders are wanted, so there is nothing to compare with the site's base template.
                 CompareWithBaseTemplate = false,
-                Lists = { Lists = { listConfiguration } }
+                Lists =
+                {
+                    Lists =
+                    {
+                        new CoreListsConfiguration.ExtractListsListsConfiguration
+                        {
+                            Title = listTitle,
+                            IncludeFolders = true,
+                            MaxFolderDepth = Recursive ? 0 : 1,
+                            IncludeSecurity = IncludeSecurity
+                        }
+                    }
+                }
             };
 
-            var reporter = new CoreProvisioningReporter($"Extracting data rows of {listTitle}", WriteProgress, LogWarning);
+            var reporter = new CoreProvisioningReporter($"Extracting folders of {listTitle}", WriteProgress, LogWarning);
             configuration.ProgressDelegate = reporter.ProgressDelegate;
             configuration.MessagesDelegate = reporter.MessagesDelegate;
 
@@ -94,11 +85,11 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             var extractedList = extracted?.Lists.FirstOrDefault(l => l.Title == listTitle);
             if (extractedList == null)
             {
-                LogError($"The list '{listTitle}' could not be extracted, so no data rows were added.");
+                LogError($"The list '{listTitle}' could not be extracted, so no folders were added.");
                 return null;
             }
 
-            return extractedList.DataRows;
+            return extractedList.Folders;
         }
     }
 }

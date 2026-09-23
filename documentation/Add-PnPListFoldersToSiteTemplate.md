@@ -16,7 +16,7 @@ Adds folders to a list in a PnP Provisioning Template
 
 ```powershell
 Add-PnPListFoldersToSiteTemplate [-Path] <String> [-List] <ListPipeBind> [-Recursive]
- [-IncludeSecurity] [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>] 
+ [-IncludeSecurity] [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>] [-Experimental]
  [-Connection <PnPConnection>] 
 ```
 
@@ -47,6 +47,13 @@ Add-PnPListFoldersToSiteTemplate -Path template.pnp -List 'PnPTestList' -Recursi
 
 Adds all folders from a list with unique permissions to an in-memory PnP Site Template
 
+### EXAMPLE 4
+```powershell
+Add-PnPListFoldersToSiteTemplate -Path template.xml -List 'PnPTestList' -Recursive -IncludeSecurity -Experimental
+```
+
+Adds all folders from a list, with their property bags and unique permissions, to the template using the experimental PnP.Core.Provisioning engine
+
 ## PARAMETERS
 
 ### -Connection
@@ -54,6 +61,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework, which also adds the property bag of each folder.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

@@ -61,12 +61,14 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
             var tenantTemplate = reporter.Run(() => PnPContext.GetProvisioningManager().GetTenantTemplateAsync(configuration));
 
-            if (tenantTemplate == null || (tenantTemplate.Templates.Count == 0 && tenantTemplate.Sequences.Count == 0))
+            // The engine reports a site it cannot extract as a warning and carries on, so an extract in which
+            // every site failed comes back empty rather than throwing. Saving that would look like success.
+            if (tenantTemplate == null || (tenantTemplate.Templates.Count == 0 && tenantTemplate.Sequences.Count == 0 && tenantTemplate.Teams.Teams.Count == 0))
             {
                 ThrowTerminatingError(new ErrorRecord(
-                    new PSNotSupportedException("The experimental PnP.Core.Provisioning engine cannot extract a tenant template yet: it ships no hierarchy extraction handlers, so the extract returns an empty template. Run Get-PnPTenantTemplate without -Experimental to extract with PnP Framework. Applying a tenant template with Invoke-PnPTenantTemplate -Experimental is supported."),
-                    "TenantTemplateExtractionNotSupportedByExperimentalEngine",
-                    ErrorCategory.NotImplemented,
+                    new PSInvalidOperationException($"Nothing could be extracted from {SiteUrl}. The warnings above give the reason."),
+                    "TenantTemplateExtractionReturnedNothing",
+                    ErrorCategory.InvalidResult,
                     SiteUrl));
             }
 

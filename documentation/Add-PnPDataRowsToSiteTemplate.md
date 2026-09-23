@@ -56,7 +56,7 @@ Accept wildcard characters: False
 ```
 
 ### -Experimental
-Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework, which builds the data rows with its own list extract. `-IncludeSecurity` and `-TokenizeUrls` have no equivalent there and are ignored with a warning.
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework, which builds the data rows with its own list extract.
 
 ```yaml
 Type: SwitchParameter
@@ -154,7 +154,7 @@ Accept wildcard characters: False
 ```
 
 ### -TokenizeUrls
-If set, this switch will try to tokenize the values with web and site related tokens
+If set, this switch will try to tokenize the values with web and site related tokens. With `-Experimental`, an absolute url is written as `{hosturl}{site}` rather than `{site}`, so that it stays absolute on the site the template is applied to.
 
 ```yaml
 Type: SwitchParameter

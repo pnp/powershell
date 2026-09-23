@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
-- Added `-Experimental` to `Get-PnPSiteTemplate`, `Invoke-PnPSiteTemplate`, `Get-PnPTenantTemplate`, `Invoke-PnPTenantTemplate`, `Read-PnPSiteTemplate`, `Save-PnPSiteTemplate`, `Read-PnPTenantTemplate`, `Save-PnPTenantTemplate`, `Convert-PnPSiteTemplate`, `Export-PnPListToSiteTemplate`, `Add-PnPDataRowsToSiteTemplate`, `Add-PnPFileToSiteTemplate`, `Remove-PnPFileFromSiteTemplate` and `Set-PnPSiteTemplateMetadata` to run them on the experimental PnP.Core.Provisioning engine instead of PnP Framework. 
+- Added `-Experimental` to `Get-PnPSiteTemplate`, `Invoke-PnPSiteTemplate`, `Get-PnPTenantTemplate`, `Invoke-PnPTenantTemplate`, `Read-PnPSiteTemplate`, `Save-PnPSiteTemplate`, `Read-PnPTenantTemplate`, `Save-PnPTenantTemplate`, `Convert-PnPSiteTemplate`, `Export-PnPListToSiteTemplate`, `Add-PnPDataRowsToSiteTemplate`, `Add-PnPListFoldersToSiteTemplate`, `Add-PnPFileToSiteTemplate`, `Remove-PnPFileFromSiteTemplate` and `Set-PnPSiteTemplateMetadata` to run them on the experimental PnP.Core.Provisioning engine instead of PnP Framework.
 
 ### Changed
 - Changed `-InputInstance` on `Invoke-PnPSiteTemplate` and `-Template` on `Invoke-PnPTenantTemplate` to accept a template produced by either provisioning engine, so a template extracted with `-Experimental` can be applied with `-Experimental`. Templates produced by PnP Framework keep binding to these parameters as before.
