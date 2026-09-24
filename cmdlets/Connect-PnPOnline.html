@@ -92,7 +92,7 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="interactive-for-multi-factor-authentication-default">Interactive for Multi Factor Authentication (Default)</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Interactive [-ReturnConnection] -Url &lt;String&gt; [-PersistLogin] [-CreateDrive] [-DriveName &lt;String&gt;]
- [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;] [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-ClientId &lt;String&gt;] [-Tenant &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;] [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="credentials">Credentials</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-Credentials &lt;CredentialPipeBind&gt;] [-CurrentCredentials] [-PersistLogin]
@@ -108,20 +108,20 @@
  [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="app-only-with-azure-active-directory">App-Only with Azure Active Directory</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] -ClientId &lt;String&gt;
+<pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-PersistLogin] [-CreateDrive] [-DriveName &lt;String&gt;] -ClientId &lt;String&gt;
  -Tenant &lt;String&gt; [-CertificatePath &lt;String&gt;] [-CertificateBase64Encoded &lt;String&gt;]
  [-CertificatePassword &lt;SecureString&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
  [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;]
  [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="app-only-with-azure-active-directory-using-a-certificate-from-the-windows-certificate-management-store-by-thumbprint">App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] -ClientId &lt;String&gt;
+<pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-PersistLogin] [-CreateDrive] [-DriveName &lt;String&gt;] -ClientId &lt;String&gt;
  -Tenant &lt;String&gt; -Thumbprint &lt;String&gt; [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
  [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;]
  [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="devicelogin">DeviceLogin</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-PersistLogin] [-CreateDrive] [-DriveName &lt;String&gt;] -DeviceLogin -Tenant &lt;String&gt;
+<pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-PersistLogin] [-CreateDrive] [-DriveName &lt;String&gt;] -DeviceLogin [-Tenant &lt;String&gt;]
  [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] 
  [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;]
  [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
@@ -145,8 +145,8 @@
 <pre><code class="lang-powershell">Connect-PnPOnline [-Url &lt;String&gt;] -ManagedIdentity -UserAssignedManagedIdentityAzureResourceId &lt;String&gt; [-ReturnConnection]
 </code></pre>
 <h3 id="environment-variable">Environment Variable</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-EnvironmentVariable] [-CurrentCredentials]
- [-CreateDrive] [-DriveName &lt;String&gt;] [-RedirectUri &lt;String&gt;]
+<pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; -EnvironmentVariable [-PersistLogin]
+ [-CreateDrive] [-DriveName &lt;String&gt;] [-RedirectUri &lt;String&gt;] [-Tenant &lt;String&gt;]
  [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
  [-TransformationOnPrem] [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;] [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
@@ -156,7 +156,7 @@
 </code></pre>
 <h3 id="os-login">OS login</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url] &lt;String&gt; [-PersistLogin] [-CreateDrive] [-DriveName &lt;String&gt;] 
- [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;] [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-ClientId &lt;String&gt;] [-Tenant &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;] [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="federated-identity">Federated Identity</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline [-Url &lt;String&gt;] [-Tenant &lt;String&gt;] -FederatedIdentity [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;] [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
@@ -461,11 +461,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-persistlogin">-PersistLogin</h3>
-<p>Persist the current access token and related information in a locally stored cache. This cache will be retained between PowerShell sessions and will also be available after a reboot. You only need to provide this switch one time on Connect-PnPOnline cmdlet, it will after that retain the information and reuse it for new connections to the same tenant. Notice that while using a cached token, if you change the permissions of an application registration, the token associated with that registration will not be updated automatically in the cache. You will have to clear the cache entry first and reauthenticate: use <code>Disconnect-PnPOnline -ClearPersistedLogin</code></p>
+<p>Persist the current access token and related information in a locally stored cache. This cache will be retained between PowerShell sessions and will also be available after a reboot. You only need to provide this switch one time on Connect-PnPOnline; it will then retain the information and reuse it for new connections to the same tenant and client ID.</p>
+<p>Certificate-based app-only connections can also use this cache. The certificate, tenant and client ID are still required on each connection because the cache does not store the certificate or its password. When a cached app-only access token expires, the supplied certificate is used to acquire a new token.</p>
+<p>App-only cache read and write failures are reported as errors, including failures during later token acquisition. An explicit <code>-PersistLogin</code> also fails if secure storage is unavailable. When reusing an existing registration without this switch, unavailable secure storage causes a warning and a connection without persistence; previously stored tokens and the registration are left intact.</p>
+<p>If the persisted-login settings file is unreadable or invalid, a certificate connection without <code>-PersistLogin</code> writes a warning and proceeds without persistence. An explicit <code>-PersistLogin</code> fails before acquiring or storing a token, so invalid settings are not replaced with an empty configuration. Repair the settings file or restore read access before retrying persistence.</p>
+<p>You can enable persistence on an existing environment-variable credentials connection by connecting again with <code>-EnvironmentVariable -PersistLogin</code>. A new authentication manager is created so the cache is attached before authentication.</p>
+<p>Use <code>Get-PnPPersistedLogin</code> to enumerate the registered cache entries. Notice that while using a cached token, if you change the permissions of an application registration, the token associated with that registration will not be updated automatically in the cache. You will have to clear the cache entry first and reauthenticate: use <code>Disconnect-PnPOnline -ClearPersistedLogin</code>.</p>
+<p>This switch is meant for a workstation you come back to. Do not use it in Azure Automation, Azure Functions, containers or any other environment where the file system does not survive the run or where the work is spread over instances which do not share a user profile: nothing is gained there and each instance authenticates as it normally would. Use a certificate, a managed identity or a workload identity in those environments instead.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Credentials, DeviceLogin, Interactive, OSLogin
+Parameter Sets: Credentials, Environment Variable, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, PnP Management Shell / DeviceLogin, Interactive login for Multi Factor Authentication, OS login
 
-Required: True
+Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False
@@ -511,10 +517,20 @@ Accept wildcard characters: False
 <h3 id="-tenant">-Tenant</h3>
 <p>The Azure Active Directory tenant name, e.g. mycompany.onmicrosoft.com or mycompany.com if you have added custom domains to your tenant</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, Environment Variable, Federated Identity
+Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: PnP Management Shell / DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable, OS login, Federated Identity
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -672,7 +688,7 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Environment Variable
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

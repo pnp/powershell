@@ -3527,6 +3527,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPersistedLogin.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPersistedLogin.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPPlannerBucket.md",
       "output": {
         ".html": {

@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Disconnect-PnPOnline | PnP PowerShell </title>
+      <title>Get-PnPPersistedLogin | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Disconnect-PnPOnline | PnP PowerShell ">
+      <meta name="title" content="Get-PnPPersistedLogin | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,32 +85,26 @@
         </div>
 
         <article data-uid="">
-<h1 id="disconnect-pnponline">Disconnect-PnPOnline</h1>
+<h1 id="get-pnppersistedlogin">Get-PnPPersistedLogin</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Disconnects the current connection and clears its token cache.</p>
+<p>Lists persisted login cache registrations</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Disconnect-PnPOnline [-ClearPersistedLogin]
+<pre><code class="lang-powershell">Get-PnPPersistedLogin [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Disconnects the current connection and optionally clears its token cache. It will require you to build up a new connection again using <a href="Connect-PnPOnline.html">Connect-PnPOnline</a> in order to use any of the PnP PowerShell cmdlets. You might have to reauthenticate. If instead you simply want to connect to another site collection within the same tenant using the same credentials you used previously, do not use this cmdlet but instead use <code>Connect-PnPOnline -Url https://tenant.sharepoint.com/sites/othersite</code> instead without disconnecting. It will try to reuse the existing authentication method and cached credentials.</p>
-<p>Note that this cmdlet does not support passing in a specific connection to disconnect. If you wish to dispose a specific connection you have set up in a variable using <code>$variable = Connect-PnPOnline -ReturnConnection</code>, just dispose that variable using <code>$variable = $null</code> and it will be cleared from memory.</p>
+<p>Returns the SharePoint tenant URL, client ID and authentication type for every login registered to use the local token cache by <code>Connect-PnPOnline -PersistLogin</code>. The encrypted tokens themselves are not returned.</p>
+<p>The <code>AuthenticationType</code> property identifies delegated and certificate-based app-only logins. The <code>Enabled</code> property is <code>True</code> for every returned registration; disabled registrations are not returned. An empty result means no persisted logins are registered for the current operating-system user.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Disconnect-PnPOnline
+<pre><code class="lang-powershell">Get-PnPPersistedLogin
 </code></pre>
-<p>This will clear out all active tokens from the current connection</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Disconnect-PnPOnline -ClearPersistedLogin
-</code></pre>
-<p>This disconnects and removes the persisted login that was registered with <code>Connect-PnPOnline -PersistLogin</code> for the tenant and client ID of the current connection, so the next connection has to authenticate again.</p>
+<p>Lists all persisted login cache registrations for the current operating-system user.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-clearpersistedlogin">-ClearPersistedLogin</h3>
-<p>Removes the persisted login registered with <code>Connect-PnPOnline -PersistLogin</code> for the tenant and client ID of the current connection, and clears its local token cache. For a delegated connection this attempts to remove the account from the shared token cache. For a certificate-based app-only connection this deletes the cache dedicated to that tenant and client ID from secure storage. A warning is written when no persisted login is registered for the current connection, for both delegated and app-only authentication; use <code>Get-PnPPersistedLogin</code> to see which ones are registered.</p>
-<p>If app-only token deletion fails, for example because the cache file is locked or secure storage is unavailable, the cmdlet reports an error and retains the connection and registration so cleanup can be retried. This also applies when the connection was established without persistence after a secure-storage warning. Restore access to secure storage and run <code>Disconnect-PnPOnline -ClearPersistedLogin</code> again.</p>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

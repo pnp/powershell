@@ -133,9 +133,11 @@
 <p><img src="../images/registerapplication/entraid_new_app_authentication_add_platform_desktop.png" alt="image"></p>
 </li>
 <li><p>Leave the three boxes shown in the panel on the right unchecked and in the <em>Custom redirect URIs</em> field, enter:</p>
-<p>http://localhost</p>
-<p>Note that this should really be <code>http</code> and NOT <code>https</code></p>
-<p>Click on <em>Configure</em> at the bottom</p>
+<p>a. <code>http://localhost</code><br>
+Note this is <code>http</code> and NOT <code>https</code>.</p>
+<p>a. If you would like to use the <a href="https://learn.microsoft.com/entra/msal/dotnet/acquiring-tokens/desktop-mobile/wam#redirect-uri">Web Account Manager (WAM)</a> via the <code>-OsLogin</code> parameter, also add:<br>
+<code>ms-appx-web://microsoft.aad.brokerplugin/{client_id}</code> replacing <code>{client_id}</code> with the client id of the app registration you just created.</p>
+<p>a. Click on <em>Configure</em> at the bottom</p>
 <p><img src="../images/registerapplication/entraid_new_app_authentication_add_platform_desktop_redirecturis.png" alt="image"></p>
 </li>
 <li><p>Under <em>Manage</em> go to <em>API permissions</em></p>
