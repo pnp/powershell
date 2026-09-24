@@ -25,17 +25,17 @@ Invoke-PnPTenantTemplate [-Path] <String> [-SequenceId <String>] [-ResourceFolde
  [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Parameters <Hashtable>]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
- [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration <ApplyConfigurationPipeBind>]
+ [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration <ApplyConfigurationPipeBind>] [-Experimental]
  [-Connection <PnPConnection>]   
 ```
 
 ### By Object
 ```powershell
-Invoke-PnPTenantTemplate [-Template] <ProvisioningHierarchy> [-SequenceId <String>] [-ResourceFolder <String>]
+Invoke-PnPTenantTemplate [-Template] <TenantTemplateInstancePipeBind> [-SequenceId <String>] [-ResourceFolder <String>]
  [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Parameters <Hashtable>]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
- [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration <ApplyConfigurationPipeBind>]
+ [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration <ApplyConfigurationPipeBind>] [-Experimental]
  [-Connection <PnPConnection>]   
 ```
 
@@ -83,6 +83,13 @@ Invoke-PnPTenantTemplate -Path myfile.pnp -Configuration apply.json
 ```
 
 Applies only the lists and fields of the template, populating the {parameter:ListTitle} token with 'Projects'. The same JSON can be passed to `-Configuration` directly instead of through a file.
+
+### EXAMPLE 5
+```powershell
+Invoke-PnPTenantTemplate -Path myfile.pnp -Experimental
+```
+
+Applies the tenant template with the experimental PnP.Core.Provisioning engine instead of PnP Framework.
 
 ## PARAMETERS
 
@@ -139,6 +146,20 @@ Allows you to run all handlers, excluding the ones specified.
 Type: Handlers
 Parameter Sets: (All)
 Accepted values: None, AuditSettings, ComposedLook, CustomActions, ExtensibilityProviders, Features, Fields, Files, Lists, Pages, Publishing, RegionalSettings, SearchSettings, SitePolicy, SupportedUILanguages, TermGroups, Workflows, SiteSecurity, ContentTypes, PropertyBagEntries, PageContents, WebSettings, Navigation, ImageRenditions, ApplicationLifecycleManagement, Tenant, WebApiPermissions, SiteHeader, SiteFooter, Theme, SiteSettings, All
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -288,9 +309,10 @@ Accept wildcard characters: False
 ```
 
 ### -Template
+The tenant template to apply. Accepts a tenant template produced by either engine, so a template read with -Experimental can be applied with -Experimental.
 
 ```yaml
-Type: ProvisioningHierarchy
+Type: TenantTemplateInstancePipeBind
 Parameter Sets: By Object
 
 Required: True

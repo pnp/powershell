@@ -16,7 +16,7 @@ Saves a PnP site template to the file system
 
 ```powershell
 Save-PnPSiteTemplate -Template <SiteTemplatePipeBind> [-Out] <String>
- [-Schema <XMLPnPSchemaVersion>] [-Force] [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+ [-Schema <XMLPnPSchemaVersion>] [-Force] [-Experimental] [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
  
 ```
 
@@ -57,6 +57,20 @@ Read-PnPSiteTemplate -Path template.xml | Save-PnPSiteTemplate -Out .\template.p
 Saves a PnP site template to the file system as a PnP file.
 
 ## PARAMETERS
+
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.

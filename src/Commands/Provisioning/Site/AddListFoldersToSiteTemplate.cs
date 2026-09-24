@@ -13,7 +13,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPListFoldersToSiteTemplate")]
-    public class AddListFoldersToSiteTemplate : PnPWebCmdlet
+    public partial class AddListFoldersToSiteTemplate : PnPWebCmdlet
     {
 
         [Parameter(Mandatory = true, Position = 0)]
@@ -32,9 +32,17 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [Parameter(Mandatory = false, Position = 6)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Experimental;
 
         protected override void ExecuteCmdlet()
         {
+            if (Experimental)
+            {
+                ExecuteCmdletExperimental();
+                return;
+            }
+
             if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);

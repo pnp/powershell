@@ -17,19 +17,19 @@ Loads/Reads a PnP tenant template from the file system and returns an in-memory 
 ### By Path (default)
 
 ```powershell
-Read-PnPTenantTemplate -Path <String>
+Read-PnPTenantTemplate -Path <String> [-Experimental]
 ```
 
 ### By Stream
 
 ```powershell
-Read-PnPTenantTemplate -Stream <Stream>
+Read-PnPTenantTemplate -Stream <Stream> [-Experimental]
 ```
 
 ### By XML
 
 ```powershell
-Read-PnPTenantTemplate -Xml <String>
+Read-PnPTenantTemplate -Xml <String> [-Experimental]
 ```
 
 ## DESCRIPTION
@@ -54,6 +54,20 @@ Read-PnPTenantTemplate -Stream $template
 Downloads a PnP Tenant template from the provided location into memory and parses its contents into a TenantTemplate instance which can then be modified and passed on to the Apply-PnPTenantTemplate cmdlet without needing to write anything to disk
 
 ## PARAMETERS
+
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Path
 Filename to read from, optionally including full path.

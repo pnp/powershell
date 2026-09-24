@@ -14,7 +14,7 @@ using PnPFileLevel = PnP.Framework.Provisioning.Model.FileLevel;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPFileToSiteTemplate")]
-    public class AddFileToSiteTemplate : PnPWebCmdlet
+    public partial class AddFileToSiteTemplate : PnPWebCmdlet
     {
         const string parameterSet_LOCALFILE = "Local File";
         const string parameterSet_REMOTEFILE = "Remote File";
@@ -43,8 +43,17 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [Parameter(Mandatory = false, Position = 4)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Experimental;
+
         protected override void ProcessRecord()
         {
+            if (Experimental)
+            {
+                ProcessRecordExperimental();
+                return;
+            }
+
             if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);

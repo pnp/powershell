@@ -13,11 +13,12 @@ using System.Collections.Generic;
 using PnP.PowerShell.Commands.Utilities;
 using System.Net;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteTemplate")]
-    public class InvokeSiteTemplate : PnPSharePointCmdlet
+    public partial class InvokeSiteTemplate : PnPSharePointCmdlet
     {
         private ProgressRecord progressRecord = new ProgressRecord(0, "Activity", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
@@ -62,7 +63,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
         [Parameter(Mandatory = false, ParameterSetName = "Instance")]
-        public ProvisioningTemplate InputInstance;
+        public SiteTemplateInstancePipeBind InputInstance;
         
         [Parameter(Mandatory = false, ParameterSetName = "Stream")]
         public MemoryStream Stream { get; set; }
@@ -71,8 +72,17 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [Alias("Url")]
         public string Identity { get; set; }
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Experimental;
+
         protected override void ExecuteCmdlet()
         {
+            if (Experimental)
+            {
+                ExecuteCmdletExperimental();
+                return;
+            }
+
             ClientContext applyTemplateContext = null;
 
             // If the Identity or Url parameter has been specified, we will build a context to apply the template to that specific site collection
@@ -223,7 +233,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
             else
             {
-                if (InputInstance == null && Stream != null)
+                if ((InputInstance == null || InputInstance.IsEmpty) && Stream != null)
                 {
                     LogDebug("Determining if template from provided stream is a .pnp package file");
                     Stream.Position = 0;
@@ -267,7 +277,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 }
                 else
                 {
-                    provisioningTemplate = InputInstance;
+                    provisioningTemplate = InputInstance?.GetFrameworkTemplate();
 
                     if (ResourceFolder != null)
                     {
@@ -320,7 +330,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
-                    if (!ExcludeHandlers.Has(handler) && handler != Handlers.All)
+                    if (!ExcludeHandlers.HasFlag(handler) && handler != Handlers.All)
                     {
                         Handlers |= handler;
                     }

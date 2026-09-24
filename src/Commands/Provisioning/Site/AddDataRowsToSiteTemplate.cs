@@ -18,7 +18,7 @@ using PnP.PowerShell.Commands.Base.Completers;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPDataRowsToSiteTemplate")]
-    public class AddDataRowsToSiteTemplate : PnPWebCmdlet
+    public partial class AddDataRowsToSiteTemplate : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         [ValidateNotNullOrEmpty]
@@ -49,6 +49,9 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [ValidateNotNullOrEmpty]
         public string KeyColumn;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Experimental;
+
         private readonly static FieldType[] _unsupportedFieldTypes =
         {
             FieldType.Attachments,
@@ -57,6 +60,12 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         protected override void ExecuteCmdlet()
         {
+            if (Experimental)
+            {
+                ExecuteCmdletExperimental();
+                return;
+            }
+
             if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);

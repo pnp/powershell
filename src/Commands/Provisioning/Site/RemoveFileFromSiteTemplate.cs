@@ -12,7 +12,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Remove, "PnPFileFromSiteTemplate")]
-    public class RemoveFileFromSiteTemplate : BasePSCmdlet
+    public partial class RemoveFileFromSiteTemplate : BasePSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Path;
@@ -23,8 +23,17 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [Parameter(Mandatory = false, Position = 2)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Experimental;
+
         protected override void ProcessRecord()
         {
+            if (Experimental)
+            {
+                ProcessRecordExperimental();
+                return;
+            }
+
             if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);

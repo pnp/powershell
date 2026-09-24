@@ -106,6 +106,47 @@ The `<pnp:ListInstance>` for Events carries a `<pnp:DataRows>` element, one `<pn
 
 Useful when the title is localized or may change: put the list ID in `title` and a value which parses as a GUID is matched against the list ID instead. Note that this cannot be combined with `includeItems`, see above.
 
+### Extract a list with its folders and the permissions of its items (`-Experimental`)
+
+With `-Experimental`, an entry under `lists.lists` takes four more properties:
+
+```json
+{
+  "handlers": [ "Lists" ],
+  "lists": {
+    "lists": [
+      {
+        "title": "Projects",
+        "includeItems": true,
+        "includeFolders": true,
+        "maxFolderDepth": 2,
+        "includeSecurity": true,
+        "tokenizeUrls": true
+      }
+    ]
+  }
+}
+```
+
+`includeFolders` adds the folders of the list, each with its property bag, and `maxFolderDepth` limits how many levels are read: `1` takes only the folders at the root of the list, and `0`, the default, takes every level. `includeSecurity` adds the unique permissions of the list's folders and items. `tokenizeUrls` replaces the urls and ids of the site in the extracted item values with tokens, so that links in the data rows point at the site the template is applied to rather than back at the one it came from. Each of them costs extra requests, which is why they are off by default. Without `-Experimental` they are not recognized, so they are ignored with a warning.
+
+### Extract a hub site with the sites joined to it and their teams
+
+```json
+{
+  "tenant": {
+    "sequence": { "includeJoinedSites": true },
+    "teams": { }
+  }
+}
+```
+
+```powershell
+Get-PnPTenantTemplate -SiteUrl https://contoso.sharepoint.com/sites/hub -Out tenant.xml -Configuration .\tenant.json
+```
+
+`Get-PnPTenantTemplate` adds the site named by `-SiteUrl` to `tenant.sequence.siteUrls`. `includeJoinedSites` adds the sites joined to any hub site among them, and `includeSubsites` adds their subsites, each with a template of its own, down to `maxSubsiteDepth` levels: `0`, the default, takes every level. An empty `teams` section takes the team behind each group connected site of the sequence. Name the sites whose teams to take in `teamSiteUrls` instead, or take every team in the tenant with `includeAllTeams`. `includeMessages` adds the messages posted in each channel, and `includeGroupId` records the id of each team's group, so that applying the template configures the team of that same group rather than creating a new one. Everything outside `tenant` applies to the template of each site.
+
 ## Properties
 
 <!-- BEGIN GENERATED PROPERTIES -->
