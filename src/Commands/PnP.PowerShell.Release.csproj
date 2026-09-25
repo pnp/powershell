@@ -43,7 +43,7 @@
 	</ItemGroup>
 
 	<ItemGroup>		
-		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
+		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.27709.12000" />
 		<PackageReference Include="PnP.Framework" Version="1.18.0" />
 		<PackageReference Include="PnP.Core" Version="1.15.0" />
 		<PackageReference Include="PnP.Core.Auth" Version="1.15.0" />

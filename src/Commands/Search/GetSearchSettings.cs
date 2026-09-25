@@ -1,4 +1,4 @@
-﻿using System.Management.Automation;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Search
@@ -13,8 +13,18 @@ namespace PnP.PowerShell.Commands.Search
 
             string siteUrl = ClientContext.Web.GetSiteCollectionSearchCenterUrl();
             string webUrl = ClientContext.Web.GetWebSearchCenterUrl(urlOnly: true);
+            bool? copilotSearchOptOut = null;
+            try
+            {
+                copilotSearchOptOut = ClientContext.Site.EnsureProperty(s => s.CopilotSearchOptOut);
+            }
+            catch (ServerException ex)
+            {
+                LogWarning($"The CopilotSearchOptOut setting could not be retrieved: {ex.Message}");
+            }
 
             PSObject res = new PSObject();
+            res.Properties.Add(new PSNoteProperty("CopilotSearchOptOut", copilotSearchOptOut));
             res.Properties.Add(new PSNoteProperty("Classic Search Center URL", siteUrl));
             res.Properties.Add(new PSNoteProperty("Redirect search URL", webUrl));
             res.Properties.Add(new PSNoteProperty("Site Search Scope", ClientContext.Web.SearchScope));
