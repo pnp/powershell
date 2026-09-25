@@ -1,3 +1,4 @@
+using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
@@ -18,7 +19,7 @@ namespace PnP.PowerShell.Commands.Search
             {
                 copilotSearchOptOut = ClientContext.Site.EnsureProperty(s => s.CopilotSearchOptOut);
             }
-            catch (ServerException ex)
+            catch (Exception ex) when (ex is ServerException or PropertyOrFieldNotInitializedException)
             {
                 LogWarning($"The CopilotSearchOptOut setting could not be retrieved: {ex.Message}");
             }
