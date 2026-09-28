@@ -90,7 +90,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Sets search settings for a site.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPSearchSettings [-SearchBoxInNavBar &lt;SearchBoxInNavBarType&gt;] [-SearchPageUrl &lt;String&gt;]
+<pre><code class="lang-powershell">Set-PnPSearchSettings [-CopilotSearchOptOut &lt;Boolean&gt;] [-SearchBoxInNavBar &lt;SearchBoxInNavBarType&gt;] [-SearchPageUrl &lt;String&gt;]
  [-SearchBoxPlaceholderText &lt;String&gt;] [-SearchScope &lt;SearchScopeType&gt;] [-Scope &lt;SearchSettingsScope&gt;] [-Force]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
@@ -125,10 +125,25 @@
 <pre><code class="lang-powershell">Set-PnPSearchSettings -SearchScope Hub
 </code></pre>
 <p>Sets default behavior of the suite bar search box to show hub results instead of site results on an associated hub site.</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Set-PnPSearchSettings -CopilotSearchOptOut $true
+</code></pre>
+<p>Opts the current site collection out of Copilot Search. The setting is stored on the site collection regardless of the value of <code>-Scope</code>.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-copilotsearchoptout">-CopilotSearchOptOut</h3>
+<p>Specifies whether the current site collection is opted out of Copilot Search. The setting is stored on the site collection and requires <code>ManageWeb</code> permission.</p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False

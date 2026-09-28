@@ -88,17 +88,21 @@
 <h1 id="get-pnpsearchsettings">Get-PnPSearchSettings</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Retrieves search settings for a site</p>
+<p>Retrieves search settings for a site, including whether the site collection has opted out of Copilot Search.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPSearchSettings [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to retrieve search settings for a site.</p>
+<p>Allows to retrieve search settings for a site. The returned object includes the site collection-level <code>CopilotSearchOptOut</code> setting. If the setting is not available yet on the tenant, its value is <code>$null</code> and a warning is shown.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPSearchSettings
 </code></pre>
 <p>Retrieve search settings for the site</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">(Get-PnPSearchSettings).CopilotSearchOptOut
+</code></pre>
+<p>Returns whether the current site collection has opted out of Copilot Search.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>

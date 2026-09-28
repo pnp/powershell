@@ -262,6 +262,7 @@
  [-EnableMediaReactions &lt;Boolean&gt;]
  [-ResyncContentSecurityPolicyConfigurationEntries]
  [-ContentSecurityPolicyEnforcement &lt;Boolean&gt;]
+ [-CopilotSearchOptIn &lt;Boolean&gt;]
  [-DisableSpacesActivation &lt;Boolean&gt;]
  [-CoreOrganizationSharingLinkRecommendedExpirationInDays &lt;int&gt;] 
  [-CoreOrganizationSharingLinkMaxExpirationInDays &lt;int&gt;]
@@ -314,6 +315,10 @@ Set-PnPTenant -NoAccessRedirectUrl &quot;http://www.contoso.com&quot;
 (Get-PnPTenant).ResyncContentSecurityPolicyConfigurationEntries
 </code></pre>
 <p>This example requests a resync of Content Security Policy trusted script sources for SharePoint Framework solutions in the tenant app catalog and reads back whether the resync request is still pending.</p>
+<h3 id="example-10">EXAMPLE 10</h3>
+<pre><code class="lang-powershell">Set-PnPTenant -CopilotSearchOptIn $true
+</code></pre>
+<p>This example opts the tenant in to Copilot Search.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-allowdownloadingnonwebviewablefiles">-AllowDownloadingNonWebViewableFiles</h3>
 <pre><code class="lang-yaml">Type: Boolean
@@ -527,6 +532,17 @@ Accept wildcard characters: False
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-copilotsearchoptin">-CopilotSearchOptIn</h3>
+<p>Specifies whether the tenant is opted in to Copilot Search.</p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False
