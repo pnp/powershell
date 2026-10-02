@@ -102,6 +102,11 @@ namespace PnP.PowerShell.Commands.Base
         public string ClientSecret { get; protected set; }
 
         /// <summary>
+        /// Static access token used to set up the connection
+        /// </summary>
+        public string AccessToken { get; protected set; }
+
+        /// <summary>
         /// Url of the SharePoint Online site to connect to
         /// </summary>
         public string Url { get; protected set; }
@@ -158,7 +163,7 @@ namespace PnP.PowerShell.Commands.Base
         #endregion
 
         #region Creators
-        internal static PnPConnection CreateWithAccessToken(Uri url, string accessToken, string tenantAdminUrl)
+        internal static PnPConnection CreateWithAccessToken(Uri url, string accessToken, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
             {
@@ -179,7 +184,13 @@ namespace PnP.PowerShell.Commands.Base
                     }
                 }
 
-                var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.Token);
+                var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.Token)
+                {
+                    AccessToken = accessToken,
+                    ConnectionMethod = ConnectionMethod.AccessToken,
+                    AzureEnvironment = azureEnvironment,
+                    _graphEndPoint = GetGraphEndPoint(azureEnvironment)
+                };
                 return connection;
             }
         }
@@ -250,19 +261,19 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static PnPConnection CreateWithDeviceLogin(Cmdlet cmdlet, string clientId, string url, string tenantId, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool persistLogin, System.Management.Automation.Host.PSHost host, string ErrorActionSetting = null)
         {
+            var cacheUrl = !string.IsNullOrEmpty(url) ? url : GetDefaultTokenCacheUrl(azureEnvironment);
             if (persistLogin)
             {
-                EnableCaching(url, clientId);
+                EnableCaching(cacheUrl, clientId);
             }
-            if (CacheEnabled(url, clientId))
+            if (CacheEnabled(cacheUrl, clientId))
             {
                 if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
                     messageWriter.LogDebug("Connecting using token cache. See https://pnp.github.io/powershell/articles/persistedlogin.html for more information.");
                 }
             }
-            var connectionUri = new Uri(url);
-            var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
+
             Framework.AuthenticationManager authManager = null;
             if (CachedAuthenticationManager != null)
             {
@@ -272,55 +283,69 @@ namespace PnP.PowerShell.Commands.Base
             else
             {
                 authManager = Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, tenantId, (deviceCodeResult) =>
-                 {
-                     if (PSUtility.IsAzureCloudShell())
-                     {
-                         messageWriter.LogWarning($"\n\nTo sign in, use a web browser to open the page {deviceCodeResult.VerificationUrl} and enter the code {deviceCodeResult.UserCode} to authenticate.\n\n");
-                     }
-                     else
-                     {
-                         var copiedToClipboard = true;
-                         try
-                         {
-                             ClipboardService.SetText(deviceCodeResult.UserCode);
-                         }
-                         catch
-                         {
-                             copiedToClipboard = false;
-                         }
+                {
+                    if (PSUtility.IsAzureCloudShell())
+                    {
+                        messageWriter.LogWarning($"\n\nTo sign in, use a web browser to open the page {deviceCodeResult.VerificationUrl} and enter the code {deviceCodeResult.UserCode} to authenticate.\n\n");
+                    }
+                    else
+                    {
+                        var copiedToClipboard = true;
+                        try
+                        {
+                            ClipboardService.SetText(deviceCodeResult.UserCode);
+                        }
+                        catch
+                        {
+                            copiedToClipboard = false;
+                        }
 
-                         var browserOpened = true;
-                         try
-                         {
-                             BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
-                         }
-                         catch
-                         {
-                             browserOpened = false;
-                         }
+                        var browserOpened = true;
+                        try
+                        {
+                            BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
+                        }
+                        catch
+                        {
+                            browserOpened = false;
+                        }
 
-                         if (copiedToClipboard && browserOpened)
-                         {
-                             messageWriter.LogWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
-                         }
-                         else
-                         {
+                        if (copiedToClipboard && browserOpened)
+                        {
+                            messageWriter.LogWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
+                        }
+                        else
+                        {
                             messageWriter.LogWarning($"\n\nOpen a browser, navigate to {deviceCodeResult.VerificationUrl} and authenticate using code {deviceCodeResult.UserCode} to proceed.\n\n");
-                         }
-                     }
+                        }
+                    }
 
-                     return Task.FromResult(0);
-                 }, azureEnvironment, tokenCacheCallback: async (tokenCache) =>
-                 {
-                     await MSALCacheHelper(tokenCache, url, clientId);
-                 });
+                    return Task.FromResult(0);
+                }, azureEnvironment, tokenCacheCallback: async (tokenCache) =>
+                {
+                    await MSALCacheHelper(tokenCache, cacheUrl, clientId);
+                });
             }
+
+            if (string.IsNullOrEmpty(url))
+            {
+                authManager.GetAccessToken($"https://{GetGraphEndPoint(azureEnvironment)}/.default");
+                return new PnPConnection(null, ConnectionType.O365, null, null, null, PnPPSVersionTag, InitializationType.DeviceLogin)
+                {
+                    ConnectionMethod = ConnectionMethod.DeviceLogin,
+                    AuthenticationManager = authManager,
+                    ClientId = clientId,
+                    Tenant = tenantId,
+                    AzureEnvironment = azureEnvironment,
+                    _graphEndPoint = GetGraphEndPoint(azureEnvironment)
+                };
+            }
+
             using (authManager)
             {
                 try
                 {
                     var clientContext = authManager.GetContext(url.ToString(), cancellationTokenSource.Token);
-
                     var context = PnPClientContext.ConvertFrom(clientContext);
                     context.ExecutingWebRequest += (sender, e) =>
                     {
@@ -363,6 +388,21 @@ namespace PnP.PowerShell.Commands.Base
             {
                 authManager = Framework.AuthenticationManager.CreateWithCertificate(clientId, certificate, tenant, azureEnvironment: azureEnvironment);
             }
+            if (url == null)
+            {
+                authManager.GetAccessToken($"https://{GetGraphEndPoint(azureEnvironment)}/.default");
+                return new PnPConnection(null, ConnectionType.O365, null, clientId, null, null, tenantAdminUrl, PnPPSVersionTag, InitializationType.ClientIDCertificate)
+                {
+                    ConnectionMethod = ConnectionMethod.AzureADAppOnly,
+                    AuthenticationManager = authManager,
+                    Certificate = certificate,
+                    Tenant = tenant,
+                    DeleteCertificateFromCacheOnDisconnect = certificateFromFile,
+                    AzureEnvironment = azureEnvironment,
+                    _graphEndPoint = GetGraphEndPoint(azureEnvironment)
+                };
+            }
+
             using (authManager)
             {
                 var clientContext = authManager.GetContext(url.ToString());
@@ -457,6 +497,8 @@ namespace PnP.PowerShell.Commands.Base
                     UserAssignedManagedIdentityClientId = userAssignedManagedIdentityClientId,
                     UserAssignedManagedIdentityAzureResourceId = userAssignedManagedIdentityAzureResourceId,
                     ConnectionMethod = ConnectionMethod.ManagedIdentity,
+                    AzureEnvironment = azureEnvironment,
+                    _graphEndPoint = GetGraphEndPoint(azureEnvironment)
                 };
                 return connection;
             }
@@ -464,22 +506,23 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static PnPConnection CreateWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, bool persistLogin, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials, string ErrorActionSetting = null)
         {
+            var cacheUrl = url?.ToString() ?? GetDefaultTokenCacheUrl(azureEnvironment);
             if (persistLogin)
             {
-                EnableCaching(url.ToString(), clientId);
+                EnableCaching(cacheUrl, clientId);
             }
-            if (CacheEnabled(url.ToString(), clientId))
+            if (CacheEnabled(cacheUrl, clientId))
             {
                 if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
                     WriteCacheEnabledMessage(cmdlet);
                 }
             }
-            var context = new PnPClientContext(url.AbsoluteUri)
+            var context = url != null ? new PnPClientContext(url.AbsoluteUri)
             {
                 ApplicationName = Resources.ApplicationName,
                 DisableReturnValueCache = true,
-            };
+            } : null;
             PnPConnection spoConnection = null;
             if (!onPrem)
             {
@@ -496,9 +539,28 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(clientId, credentials.UserName, credentials.Password, redirectUrl, azureEnvironment, tokenCacheCallback: async (tokenCache) =>
                         {
-                            await MSALCacheHelper(tokenCache, url.ToString(), clientId);
+                            await MSALCacheHelper(tokenCache, cacheUrl, clientId);
                         });
                     }
+                    if (url == null)
+                    {
+                        Log.Debug("PnPConnection", "Acquiring token");
+                        var accessToken = authManager.GetAccessToken($"https://{GetGraphEndPoint(azureEnvironment)}/.default");
+                        Log.Debug("PnPConnection", "Token acquired");
+                        var parsedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
+                        tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid")?.Value;
+
+                        return new PnPConnection(null, ConnectionType.O365, credentials, null, tenantAdminUrl, PnPPSVersionTag, initializationType)
+                        {
+                            ConnectionMethod = ConnectionMethod.Credentials,
+                            AuthenticationManager = authManager,
+                            AzureEnvironment = azureEnvironment,
+                            Tenant = tenantId,
+                            ClientId = clientId,
+                            _graphEndPoint = GetGraphEndPoint(azureEnvironment)
+                        };
+                    }
+
                     using (authManager)
                     {
                         var clientContext = authManager.GetContext(url.ToString());
@@ -587,11 +649,12 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static PnPConnection CreateWithInteractiveLogin(Cmdlet cmdlet, Uri uri, string clientId, string tenantAdminUrl, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool forceAuthentication, string tenant, bool enableLoginWithWAM, bool persistLogin, System.Management.Automation.Host.PSHost host, string ErrorActionSetting)
         {
+            var cacheUrl = uri?.ToString() ?? GetDefaultTokenCacheUrl(azureEnvironment);
             if (persistLogin)
             {
-                EnableCaching(uri.ToString(), clientId);
+                EnableCaching(cacheUrl, clientId);
             }
-            if (CacheEnabled(uri.ToString(), clientId))
+            if (CacheEnabled(cacheUrl, clientId))
             {
                 if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
@@ -619,9 +682,22 @@ namespace PnP.PowerShell.Commands.Base
                 htmlMessageFailure,
                 azureEnvironment: azureEnvironment, tokenCacheCallback: async (tokenCache) =>
                 {
-                    await MSALCacheHelper(tokenCache, uri.ToString(), clientId);
+                    await MSALCacheHelper(tokenCache, cacheUrl, clientId);
                 }, useWAM: enableLoginWithWAM);
             }
+            if (uri == null)
+            {
+                authManager.GetAccessToken($"https://{GetGraphEndPoint(azureEnvironment)}/.default");
+                return new PnPConnection(null, ConnectionType.O365, null, clientId, null, null, tenantAdminUrl, PnPPSVersionTag, InitializationType.ClientIDCertificate)
+                {
+                    ConnectionMethod = ConnectionMethod.Credentials,
+                    AuthenticationManager = authManager,
+                    Tenant = tenant,
+                    AzureEnvironment = azureEnvironment,
+                    _graphEndPoint = GetGraphEndPoint(azureEnvironment)
+                };
+            }
+
             using (authManager)
             {
                 var clientContext = authManager.GetContext(uri.ToString(), cancellationTokenSource.Token);
@@ -776,6 +852,11 @@ namespace PnP.PowerShell.Commands.Base
             // Custom clouds carry their endpoint in configuration, which Connect-PnPOnline -MicrosoftGraphEndPoint writes.
             using var authManager = new Framework.AuthenticationManager();
             return authManager.GetGraphEndPointForCustomAzureEnvironmentConfiguration();
+        }
+
+        internal static string GetDefaultTokenCacheUrl(AzureEnvironment azureEnvironment)
+        {
+            return $"https://{GetGraphEndPoint(azureEnvironment)}";
         }
         #endregion
 
@@ -1140,6 +1221,11 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static bool CacheEnabled(string url, string clientid)
         {
+            if (string.IsNullOrEmpty(url))
+            {
+                return false;
+            }
+
             var settings = Settings.Current;
 
             var cacheEntries = settings.Cache;
@@ -1154,6 +1240,11 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static string GetCacheClientId(string url)
         {
+            if (string.IsNullOrEmpty(url))
+            {
+                return null;
+            }
+
             var settings = Settings.Current;
 
             var cacheEntries = settings.Cache;
@@ -1168,15 +1259,19 @@ namespace PnP.PowerShell.Commands.Base
 
         private static List<string> GetCheckUrls(string url)
         {
-            var urls = new List<string>();
             var uri = new Uri(url);
             var baseAuthority = uri.Authority;
-            baseAuthority = baseAuthority.Replace("-admin.sharepoint.com", ".sharepoint.com").Replace("-my.sharepoint.com", ".sharepoint.com");
-            var baseUri = new Uri($"https://{baseAuthority}");
-            var host = baseUri.Host.Split('.')[0];
-            urls = [$"https://{host}.sharepoint.com", $"https://{host}-my.sharepoint.com", $"https://{host}-admin.sharepoint.com"];
+            if (!baseAuthority.Contains(".sharepoint.", StringComparison.OrdinalIgnoreCase))
+            {
+                return [uri.GetLeftPart(UriPartial.Authority).TrimEnd('/')];
+            }
 
-            return urls;
+            baseAuthority = baseAuthority
+                .Replace("-admin.sharepoint.", ".sharepoint.", StringComparison.OrdinalIgnoreCase)
+                .Replace("-my.sharepoint.", ".sharepoint.", StringComparison.OrdinalIgnoreCase);
+            var host = baseAuthority.Split('.')[0];
+            var suffix = baseAuthority[host.Length..];
+            return [$"https://{host}{suffix}", $"https://{host}-my{suffix}", $"https://{host}-admin{suffix}"];
         }
 
         private static void EnableCaching(string url, string clientid)
@@ -1189,8 +1284,20 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                var baseAuthority = new Uri(url).Authority.Replace("-admin.sharepoint.com", ".sharepoint.com").Replace("-my.sharepoint.com", ".sharepoint.com");
-                var baseUrl = $"https://{baseAuthority}";
+                var uri = new Uri(url);
+                var baseAuthority = uri.Authority;
+                string baseUrl;
+                if (baseAuthority.Contains(".sharepoint.", StringComparison.OrdinalIgnoreCase))
+                {
+                    baseAuthority = baseAuthority
+                        .Replace("-admin.sharepoint.", ".sharepoint.", StringComparison.OrdinalIgnoreCase)
+                        .Replace("-my.sharepoint.", ".sharepoint.", StringComparison.OrdinalIgnoreCase);
+                    baseUrl = $"https://{baseAuthority}";
+                }
+                else
+                {
+                    baseUrl = uri.GetLeftPart(UriPartial.Authority).TrimEnd('/');
+                }
                 Settings.Current.Cache.Add(new TokenCacheConfiguration() { ClientId = clientid, Url = baseUrl, Enabled = true });
             }
             Settings.Current.Save();
@@ -1203,7 +1310,8 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static void ClearCache(PnPConnection connection)
         {
-            var urls = GetCheckUrls(connection.Url);
+            var cacheUrl = connection.Url ?? GetDefaultTokenCacheUrl(connection.AzureEnvironment);
+            var urls = GetCheckUrls(cacheUrl);
             var entry = Settings.Current.Cache?.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == connection.ClientId);
             if (entry != null)
             {

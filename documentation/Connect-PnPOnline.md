@@ -10,19 +10,19 @@ title: Connect-PnPOnline
 # Connect-PnPOnline
 
 ## SYNOPSIS
-Connect to a SharePoint site
+Connect and authenticate to PnP PowerShell
 
 ## SYNTAX
 
 ### Interactive for Multi Factor Authentication (Default)
 ```powershell
-Connect-PnPOnline -Interactive [-ReturnConnection] -Url <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>]
+Connect-PnPOnline -Interactive [-ReturnConnection] [-Url <String>] [-PersistLogin] [-CreateDrive] [-DriveName <String>]
  [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
 ### Credentials
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Credentials <CredentialPipeBind>] [-CurrentCredentials] [-PersistLogin]
+Connect-PnPOnline [-ReturnConnection] [-Url <String>] [-Credentials <CredentialPipeBind>] [-CurrentCredentials] [-PersistLogin]
  [-CreateDrive] [-DriveName <String>] [-ClientId <String>] [-RedirectUri <String>]
  [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [-TransformationOnPrem] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>]
@@ -39,7 +39,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientS
 
 ### App-Only with Azure Active Directory
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
+Connect-PnPOnline [-ReturnConnection] [-Url <String>] [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> [-CertificatePath <String>] [-CertificateBase64Encoded <String>]
  [-CertificatePassword <SecureString>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [-ValidateConnection] [-MicrosoftGraphEndPoint <string>]
@@ -48,7 +48,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
 
 ### App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
+Connect-PnPOnline [-ReturnConnection] [-Url <String>] [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> -Thumbprint <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [-ValidateConnection] [-MicrosoftGraphEndPoint <string>]
  [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
@@ -56,7 +56,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
 
 ### DeviceLogin
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] -DeviceLogin -Tenant <String>
+Connect-PnPOnline [-ReturnConnection] [-Url <String>] [-PersistLogin] [-CreateDrive] [-DriveName <String>] -DeviceLogin -Tenant <String>
  [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] 
  [-ValidateConnection] [-MicrosoftGraphEndPoint <string>]
  [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
@@ -69,7 +69,7 @@ Connect-PnPOnline -Url <String> -TransformationOnPrem [-CurrentCredential]
 
 ### Access Token
 ```
-Connect-PnPOnline -Url <String> -AccessToken <String> [-AzureEnvironment <AzureEnvironment>] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-ReturnConnection]
+Connect-PnPOnline [-Url <String>] -AccessToken <String> [-AzureEnvironment <AzureEnvironment>] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-ReturnConnection]
 ```
 
 ### System Assigned Managed Identity
@@ -94,7 +94,7 @@ Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityA
 
 ### Environment Variable
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-EnvironmentVariable] [-CurrentCredentials]
+Connect-PnPOnline [-ReturnConnection] [-Url <String>] [-EnvironmentVariable] [-CurrentCredentials]
  [-CreateDrive] [-DriveName <String>] [-RedirectUri <String>]
  [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [-TransformationOnPrem] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
@@ -102,13 +102,13 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-EnvironmentVariable] [-C
 
 ### Azure AD Workload Identity
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-ValidateConnection] [-Url] <String>
+Connect-PnPOnline [-ReturnConnection] [-ValidateConnection] [-Url <String>]
  [-AzureADWorkloadIdentity] [-Connection <PnPConnection>]
 ```
 
 ### OS login
 ```powershell
-Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] 
+Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url <String>] [-PersistLogin] [-CreateDrive] [-DriveName <String>]
  [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
@@ -118,12 +118,21 @@ Connect-PnPOnline [-Url <String>] [-Tenant <String>] -FederatedIdentity [-AzureE
 ```
 
 ## DESCRIPTION
-Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets.
+Connects and authenticates to PnP PowerShell. When `-Url` is provided, the connection includes a SharePoint ClientContext and PnPContext for SharePoint cmdlets. When `-Url` is omitted, the connection is authentication-only and can be used by Graph, Azure Resource Manager, Planner, Graph Connector Service and other non-SharePoint cmdlets that do not require a SharePoint context.
+
+A SharePoint URL is still required for SharePoint cmdlets, `-CreateDrive`, `-ValidateConnection`, `-TransformationOnPrem`, `-CurrentCredentials` and SharePoint ACS app-only connections.
 See https://pnp.github.io/powershell/articles/connecting.html for more information on the options to connect.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+```powershell
+Connect-PnPOnline -Interactive -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28
+```
+
+Authenticate without creating a SharePoint context. This connection can be used with cmdlets that only need Microsoft Graph or another non-SharePoint API.
+
+### EXAMPLE 2
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com"
 ```
@@ -131,21 +140,21 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com"
 Connect to SharePoint prompting for the username and password.
 When a generic credential is added to the Windows Credential Manager with https://contoso.sharepoint.com, PowerShell will not prompt for username and password and use those stored credentials instead. You will have to register your own App first, by means of `Register-PnPEntraIDApp` to use this method. You will also have to provide the `-ClientId` parameter starting September 9, 2024. Alternatively, create an environment variable, call it `ENTRAID_APP_ID` or `ENTRAID_CLIENT_ID` and set the value to the app id you created
 
-### EXAMPLE 2
+### EXAMPLE 3
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -Credentials (Get-Credential)
 ```
 
 Connect to SharePoint prompting for the username and password to use to authenticate.
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.de" -ClientId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret $clientSecret
 ```
 
 This will authenticate you to the site using Legacy ACS authentication
 
-### EXAMPLE 4
+### EXAMPLE 5
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -DeviceLogin -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28
 ```
@@ -153,7 +162,7 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com" -DeviceLogin -ClientId 6
 This will authenticate you using the specified Entra ID App registration. Alternatively, create an environment variable, call it `ENTRAID_APP_ID` or `ENTRAID_CLIENT_ID` and set the value to the app id you created.
 A browser window will automatically open and the code you need to enter will be automatically copied to your clipboard. 
 
-### EXAMPLE 5
+### EXAMPLE 6
 ```powershell
 $password = (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force)
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificatePath 'c:\mycertificate.pfx' -CertificatePassword $password  -Tenant 'contoso.onmicrosoft.com'
@@ -162,7 +171,7 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-
 Connects using an Azure Active Directory registered application using a locally available certificate containing a private key.
 See https://learn.microsoft.com/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.
 
-### EXAMPLE 6
+### EXAMPLE 7
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA
 ```
@@ -171,7 +180,7 @@ Connects to SharePoint using app-only tokens via an app's declared permission sc
 See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started.
 Ensure you have imported the private key certificate, typically the .pfx file, into the Windows Certificate Store for the certificate with the provided thumbprint.
 
-### EXAMPLE 7
+### EXAMPLE 8
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificateBase64Encoded $base64encodedstring -Tenant 'contoso.onmicrosoft.com'
 ```
@@ -180,7 +189,7 @@ Connects using an Azure Active Directory registered application using a certific
 See https://learn.microsoft.com/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.
 
 
-### EXAMPLE 8
+### EXAMPLE 9
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -Interactive -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28
 ```
@@ -188,7 +197,7 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com" -Interactive -ClientId 6
 Connects to the Azure AD, acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph. Notice that you will have to register your own App first, by means of `Register-PnPEntraIDApp` to use this method. You will also have to provide the `-ClientId` parameter starting September 9, 2024. Alternatively, create an environment variable, call it `ENTRAID_APP_ID` or `ENTRAID_CLIENT_ID` and set the value to the app id you created. If you use -Interactive and this environment variable is present you will not have to use -ClientId.
 
 
-### EXAMPLE 9
+### EXAMPLE 10
 ```powershell
 Connect-PnPOnline -Url "https://portal.contoso.com" -TransformationOnPrem -CurrentCredential
 ```
@@ -198,7 +207,7 @@ This option is only supported for being able to transform on-premises classic wi
 Although other PnP cmdlets might work as well, they're officially not supported for being used in an on-premises context.
 See http://aka.ms/sharepoint/modernization/pages for more details on page transformation.
 
-### EXAMPLE 10
+### EXAMPLE 11
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ManagedIdentity
 Get-PnPTeamsTeam
@@ -206,7 +215,7 @@ Get-PnPTeamsTeam
 
 Connects using a system assigned managed identity to Microsoft Graph. Using this way of connecting only works with environments that support managed identities: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on [this article](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) how it can be used.
 
-### EXAMPLE 11
+### EXAMPLE 12
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ManagedIdentity -UserAssignedManagedIdentityObjectId 363c1b31-6872-47fd-a616-574d3aec2a51
 Get-PnPList
@@ -214,7 +223,7 @@ Get-PnPList
 
 Connects using an user assigned managed identity with object/principal ID 363c1b31-6872-47fd-a616-574d3aec2a51 to SharePoint Online. Using this way of connecting only works with environments that support managed identities: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on [this article](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) how it can be used.
 
-### EXAMPLE 12
+### EXAMPLE 13
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -AccessToken $token
 ```
@@ -222,7 +231,7 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com" -AccessToken $token
 This method assumes you have acquired a valid OAuth2 access token from Azure AD with the correct audience and permissions set.
 Using this method PnP PowerShell will not acquire tokens dynamically and if the token expires (typically after 1 hour) cmdlets will fail to work using this method.
 
-### EXAMPLE 13
+### EXAMPLE 14
 ```powershell
 Connect-PnPOnline -Url contoso.sharepoint.com -EnvironmentVariable -Tenant 'contoso.onmicrosoft.com'
 ```
@@ -231,7 +240,7 @@ This example uses the `AZURE_CLIENT_CERTIFICATE_PATH` and `AZURE_CLIENT_CERTIFIC
 
 If these environment variables are not present, it will try to find `ENTRAID_APP_CERTIFICATE_PATH` or `ENTRAID_CLIENT_CERTIFICATE_PATH` and for certificate password use `ENTRAID_APP_CERTIFICATE_PASSWORD` or `ENTRAID_CLIENT_CERTIFICATE_PASSWORD` as fallback.
 
-### EXAMPLE 14
+### EXAMPLE 15
 ```powershell
 Connect-PnPOnline -Url contoso.sharepoint.com -EnvironmentVariable
 ```
@@ -250,21 +259,21 @@ If `ENTRAID_USERNAME`, `ENTRAID_PASSWORD` and `ENTRAID_APP_ID` , we will use the
 
 We support only Service principal with certificate and Username with password mode for authentication. Configuration will be attempted in that order. For example, if values for a certificate and username+password are both present, the client certificate method will be used.
 
-### EXAMPLE 15
+### EXAMPLE 16
 ```
 Connect-PnPOnline -Url contoso.sharepoint.com -AzureEnvironment Custom -MicrosoftGraphEndPoint "custom.graph.microsoft.com" -AzureADLoginEndPoint "https://custom.login.microsoftonline.com"
 ```
 
 Use this method to connect to a custom Azure Environment. You can also specify the `MicrosoftGraphEndPoint` and `AzureADLoginEndPoint` parameters if applicable. If specified, then these values will be used to make requests to Graph and to retrieve access token.
 
-### EXAMPLE 16
+### EXAMPLE 17
 ```powershell
 Connect-PnPOnline -Url contoso.sharepoint.com -AzureADWorkloadIdentity
 ```
 
 This example uses Azure AD Workload Identity to retrieve access tokens. For more information about this, please refer to this article, [Azure AD Workload Identity](https://azure.github.io/azure-workload-identity/docs/introduction.html). We are following the guidance mentioned in [this sample](https://github.com/Azure/azure-workload-identity/blob/main/examples/msal-net/akvdotnet/TokenCredential.cs) to retrieve the access tokens.
 
-### EXAMPLE 17
+### EXAMPLE 18
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -OSLogin
 ```
@@ -273,7 +282,7 @@ Connects to the Azure AD with WAM (aka native Windows authentication prompt), ac
 
 WAM is a more secure & faster way of authenticating in Windows OS. It supports Windows Hello, FIDO keys , conditional access policies and more.
 
-### EXAMPLE 18
+### EXAMPLE 19
 ```powershell
 $keyStorageflags = [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::MachineKeySet -bor [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::PersistKeySet
 
@@ -285,7 +294,7 @@ See [Security App-only EntraId guidance](https://learn.microsoft.com/sharepoint/
 
 See [X509 key storage flags](https://learn.microsoft.com/dotnet/api/system.security.cryptography.x509certificates.x509keystorageflags) for information on how to configure key storage when creating the certificate.
 
-### EXAMPLE 19
+### EXAMPLE 20
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -Credentials "https://contoso.sharepoint.com"
 ```
@@ -294,21 +303,21 @@ Connect to SharePoint using Credentials (username and password) from Credential 
 
 On Windows, this entry needs to be under "Generic Credentials".
 
-### EXAMPLE 20
+### EXAMPLE 21
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentity
 ```
 > This functionality is only available in the nightly release.
 Connect to SharePoint/Microsoft Graph using federated identity credentials in Github.
 
-### EXAMPLE 21
+### EXAMPLE 22
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -FederatedIdentity
 ```
 
 Connect to SharePoint/Microsoft Graph using federated identity credentials in Azure DevOps. This option is available from version 3.1.51-nightly onwards.
 
-### EXAMPLE 22
+### EXAMPLE 23
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentity
 ```
@@ -536,13 +545,13 @@ Accept wildcard characters: False
 ```
 
 ### -PersistLogin
-Persist the current access token and related information in a locally stored cache. This cache will be retained between PowerShell sessions and will also be available after a reboot. You only need to provide this switch one time on Connect-PnPOnline cmdlet, it will after that retain the information and reuse it for new connections to the same tenant. Notice that while using a cached token, if you change the permissions of an application registration, the token associated with that registration will not be updated automatically in the cache. You will have to clear the cache entry first and reauthenticate: use `Disconnect-PnPOnline -ClearPersistedLogin`
+Persist the current access token and related information in a locally stored cache. This cache will be retained between PowerShell sessions and will also be available after a reboot. You only need to provide this switch one time on Connect-PnPOnline cmdlet, it will after that retain the information and reuse it for new connections to the same tenant. When `-Url` is omitted, the persisted login is keyed to the Microsoft Graph endpoint for the selected Azure environment. Notice that while using a cached token, if you change the permissions of an application registration, the token associated with that registration will not be updated automatically in the cache. You will have to clear the cache entry first and reauthenticate: use `Disconnect-PnPOnline -ClearPersistedLogin`
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Credentials, DeviceLogin, Interactive, OSLogin
 
-Required: True
+Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False
@@ -642,14 +651,14 @@ Accept wildcard characters: False
 ```
 
 ### -Url
-The Url of the site collection or subsite to connect to, i.e. tenant.sharepoint.com, https://tenant.sharepoint.com, tenant.sharepoint.com/sites/hr, etc.
+The URL of the site collection or subsite to connect to, i.e. tenant.sharepoint.com, https://tenant.sharepoint.com, tenant.sharepoint.com/sites/hr, etc. If omitted, Connect-PnPOnline creates an authentication-only connection without a SharePoint ClientContext or PnPContext.
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity, Federated Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Managed Identity, Azure AD Workload Identity, OS login, Federated Identity
 Aliases:
 
-Required: True (Except when using -ManagedIdentity and -AzureADWorkloadIdentity)
+Required: False, except for SharePoint ACS (Legacy) App Only
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
@@ -657,11 +666,11 @@ Accept wildcard characters: False
 ```
 
 ### -ValidateConnection
-When provided, the cmdlet will check to ensure the SharePoint Online site specified through `-Url` exists and if not, will throw an exception. If you omit this flag or set it to $false, it will blindly set up a connection without validating that the site actually exists. Making use of this option does make one extra call on the connection attempt, so it is recommended to only use it in scenarios where you know the site you're trying to connect o may not exist and would like to have feedback on this during the connect.
+When provided, the cmdlet will check to ensure the SharePoint Online site specified through `-Url` exists and if not, will throw an exception. `-ValidateConnection` requires `-Url`. If you omit this flag or set it to $false, it will blindly set up a connection without validating that the site actually exists. Making use of this option does make one extra call on the connection attempt, so it is recommended to only use it in scenarios where you know the site you're trying to connect to may not exist and would like to have feedback on this during the connect.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity, Federated Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Managed Identity, Azure AD Workload Identity, OS login, Federated Identity
 Aliases:
 
 Required: False
@@ -812,7 +821,7 @@ Custom Microsoft Graph endpoint to be used if we are using Azure Custom environm
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Federated Identity, OS Login
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Managed Identity, Azure AD Workload Identity, Federated Identity, OS Login
 Aliases:
 
 Required: False
@@ -827,7 +836,7 @@ Custom Azure AD login endpoint to be used if we are using Azure Custom environme
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Federated Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Managed Identity, Azure AD Workload Identity, Federated Identity, OS Login
 Aliases:
 
 Required: False
