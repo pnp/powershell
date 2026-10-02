@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
+title: Enable-PnPCommSite
 online version: https://pnp.github.io/powershell/cmdlets/Enable-PnPCommSite.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Enable-PnPCommSite
+schema: 2.0.0
+Module Name: PnP.PowerShell
 ---
-  
+   
 # Enable-PnPCommSite
 
 ## SYNOPSIS
@@ -70,5 +71,6 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 
 

@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPTenant
-schema: 2.0.0
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
+title: Get-PnPTenant
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenant.html
+external help file: PnP.PowerShell.dll-Help.xml
+schema: 2.0.0
+Module Name: PnP.PowerShell
 ---
- 
+  
 # Get-PnPTenant
 
 ## SYNOPSIS
@@ -94,3 +95,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
