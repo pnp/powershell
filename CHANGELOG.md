@@ -20,6 +20,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 - Using UPNs with an apostrophe in it not working with `Remove-PnPUserProfile`, `Export-PnPUserProfile`, `Export-PnPUserInfo`, and `Remove-PnPUserInfo`. The apostrophe is now escaped in the API request. [#5459](https://github.com/pnp/powershell/pull/5459)
+- Fix PnP ALC initializer with loaded assemblies stackoverflow issue. [#5481](https://github.com/pnp/powershell/pull/5481)
+
+### Contributors
+
+- Fabien Tschanz [FabienTschanz]
 
 ## [3.4.1]
 
