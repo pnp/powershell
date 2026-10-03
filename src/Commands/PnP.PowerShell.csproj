@@ -65,6 +65,9 @@
 		<PackageReference Include="PnP.Core.Admin" Version="1.18.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Core.Admin" Version="1.18.*-*" Condition="'$(IsRelease)' == '1'" />
 
+		<PackageReference Include="PnP.Core.Provisioning" Version="1.18.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Core.Provisioning" Version="1.18.*-*" Condition="'$(IsRelease)' == '1'" />
+
 		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.85.2" />
 		<PackageReference Include="Microsoft.Bcl.Cryptography" Version="9.0.5" />
 
@@ -93,7 +96,12 @@
 			<HintPath>$(PnPCoreSdkPath)PnP.Core.Admin\bin\Debug\net8.0\PnP.Core.Admin.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
-		</Reference>		
+		</Reference>
+		<Reference Include="PnP.Core.Provisioning" Condition="'$(TargetFramework)' == 'net8.0'">
+			<HintPath>$(PnPCoreSdkPath)PnP.Core.Provisioning\bin\Debug\net8.0\PnP.Core.Provisioning.dll</HintPath>
+			<Private>true</Private>
+			<SpecificVersion>false</SpecificVersion>
+		</Reference>
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(PnPFrameworkPath)' != '' and '$(IsRelease)' != '1'">

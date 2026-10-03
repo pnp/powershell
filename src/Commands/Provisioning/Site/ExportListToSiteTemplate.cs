@@ -14,7 +14,7 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsData.Export, "PnPListToSiteTemplate")]
-    public class ExportListToSiteTemplate : PnPWebCmdlet
+    public partial class ExportListToSiteTemplate : PnPWebCmdlet
     {
         //private ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
@@ -34,8 +34,17 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [Parameter(Mandatory = false)]
         public SwitchParameter OutputInstance;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Experimental;
+
         protected override void ExecuteCmdlet()
         {
+            if (Experimental)
+            {
+                ExecuteCmdletExperimental();
+                return;
+            }
+
             if (!string.IsNullOrEmpty(Out))
             {
                 if (!Path.IsPathRooted(Out))

@@ -16,7 +16,7 @@ Removes a file from a PnP Provisioning Template
 
 ```powershell
 Remove-PnPFileFromSiteTemplate [-Path] <String> [-FilePath] <String>
- [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>] 
+ [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>] [-Experimental] 
 ```
 
 ## DESCRIPTION
@@ -33,6 +33,20 @@ Remove-PnPFileFromSiteTemplate -Path template.pnp -FilePath filePath
 Removes a file from an in-memory PnP Provisioning Template
 
 ## PARAMETERS
+
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -FilePath
 The relative File Path of the file to remove from the in-memory template

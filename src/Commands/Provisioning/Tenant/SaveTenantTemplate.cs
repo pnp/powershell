@@ -12,7 +12,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsData.Save, "PnPTenantTemplate")]
-    public class SaveTenantTemplate : BasePSCmdlet
+    public partial class SaveTenantTemplate : BasePSCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public ProvisioningHierarchyPipeBind Template;
@@ -26,8 +26,17 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Experimental;
+
         protected override void ProcessRecord()
         {
+            if (Experimental)
+            {
+                ProcessRecordExperimental();
+                return;
+            }
+
             var templateObject = Template.GetTemplate(SessionState.Path.CurrentFileSystemLocation.Path, (e) =>
              {
                  LogError(e);

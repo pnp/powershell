@@ -25,7 +25,7 @@ Get-PnPSiteTemplate [[-Out] <String>] [[-Schema] <XMLPnPSchemaVersion>] [-Includ
  [-NoBaseTemplate] [-Encoding <Encoding>] [-TemplateDisplayName <String>] [-TemplateImagePreviewUrl <String>]
  [-TemplateProperties <Hashtable>] [-OutputInstance] [-ExcludeContentTypesFromSyndication]
  [-ListsToExtract <System.Collections.Generic.List`1[System.String]>]
- [-Configuration <ExtractConfigurationPipeBind>] [-Connection <PnPConnection>] 
+ [-Configuration <ExtractConfigurationPipeBind>] [-Experimental] [-Connection <PnPConnection>] 
   
 ```
 
@@ -184,6 +184,13 @@ Get-PnPSiteTemplate -Out template.xml -Configuration extract.json
 
 Extracts a template holding only the "Events" list, with its list items included as `<pnp:DataRows />`. The same JSON can be passed to `-Configuration` directly instead of through a file.
 
+### EXAMPLE 19
+```powershell
+Get-PnPSiteTemplate -Out template.xml -Experimental
+```
+
+Extracts a provisioning template with the experimental PnP.Core.Provisioning engine instead of PnP Framework. The engine is a beta, so compare the result with an extract made without `-Experimental` before relying on it.
+
 ## PARAMETERS
 
 ### -Configuration
@@ -282,6 +289,20 @@ Allows you to run all handlers, excluding the ones specified.
 Type: Handlers
 Parameter Sets: (All)
 Accepted values: All, ApplicationLifecycleManagement, AuditSettings, ComposedLook, ContentTypes, CustomActions, ExtensibilityProviders, Features, Fields, Files, ImageRenditions, Lists, Navigation, None, PageContents, Pages, PropertyBagEntries, Publishing, RegionalSettings, SearchSettings, SiteFooter, SiteHeader, SitePolicy, SiteSecurity, SiteSettings, SupportedUILanguages, SyntexModels, Tenant, TermGroups, Theme, WebApiPermissions, WebSettings, Workflows
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named

@@ -78,6 +78,8 @@ if ($LocalPnPFramework) {
 if ($LocalPnPCore) {
 	$pnpCoreAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\$configuration\PnP.Core.dll"
 	$pnpCoreAssembly = [System.IO.Path]::GetFullPath($pnpCoreAssembly)
+	$pnpCoreProvisioningAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore\src\sdk\PnP.Core.Provisioning\bin\Debug\$configuration\PnP.Core.Provisioning.dll"
+	$pnpCoreProvisioningAssembly = [System.IO.Path]::GetFullPath($pnpCoreProvisioningAssembly)
 	if (Test-Path $pnpCoreAssembly -PathType Leaf) {
 		$pnpCoreAssemblyItem = Get-ChildItem -Path $pnpCoreAssembly
 		Write-Host "  Using local PnP.Core SDK build located at $($pnpCoreAssemblyItem.FullName) compiled at $($pnpCoreAssemblyItem.LastWritetime)" -ForegroundColor Yellow
@@ -157,6 +159,11 @@ if ($LASTEXITCODE -eq 0) {
 			# It is a private dependency, so it belongs in Common (the isolated ALC probe path), not Core.
 			Write-Host "  Copying local PnP.Core SDK assembly" -ForegroundColor Yellow
 			Copy-Item -Path $pnpCoreAssembly -Destination "$destinationFolder\Common" -Force
+
+			if (Test-Path $pnpCoreProvisioningAssembly -PathType Leaf) {
+				Write-Host "  Copying local PnP.Core.Provisioning assembly" -ForegroundColor Yellow
+				Copy-Item -Path $pnpCoreProvisioningAssembly -Destination "$destinationFolder\Common" -Force
+			}
 		}
 	}
 	Catch {

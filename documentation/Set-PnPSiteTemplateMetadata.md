@@ -17,7 +17,7 @@ Sets metadata of a provisioning template.
 ```powershell
 Set-PnPSiteTemplateMetadata [-Path] <String> [-TemplateDisplayName <String>]
  [-TemplateImagePreviewUrl <String>] [-TemplateProperties <Hashtable>]
- [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
+ [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Experimental] 
  [-Connection <PnPConnection>] 
 ```
 
@@ -76,6 +76,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommunications.Read, "PnPSiteTemplate", DefaultParameterSetName = ParameterSet_PATH)]
-    public class ReadSiteTemplate : BasePSCmdlet
+    public partial class ReadSiteTemplate : BasePSCmdlet
     {
         const string ParameterSet_STREAM = "By Stream";
         const string ParameterSet_PATH = "By Path";
@@ -25,8 +25,17 @@ namespace PnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public SwitchParameter Experimental;
+
         protected override void ProcessRecord()
         {
+            if (Experimental)
+            {
+                ProcessRecordExperimental();
+                return;
+            }
+
             switch (ParameterSetName)
             {
                 case ParameterSet_PATH:

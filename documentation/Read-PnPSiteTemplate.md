@@ -16,17 +16,17 @@ Loads/Reads a PnP file from the file system, string or stream
 
 ### By Path
 ```powershell
-Read-PnPSiteTemplate [-Path] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
+Read-PnPSiteTemplate [-Path] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Experimental] 
 ```
 
 ### By XML
 ```powershell
-Read-PnPSiteTemplate [-Xml] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
+Read-PnPSiteTemplate [-Xml] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Experimental] 
 ```
 
 ### From a Stream
 ```powershell
-Read-PnPSiteTemplate [-Stream] <Stream> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
+Read-PnPSiteTemplate [-Stream] <Stream> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Experimental] 
 ```
 
 ## DESCRIPTION
@@ -64,6 +64,20 @@ Read-PnPSiteTemplate -Stream $stream
 Downloads the contents of a PnP Provisioning template from a SharePoint Online location in memory and parses it as a PnP Provisioning Template
 
 ## PARAMETERS
+
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Path
 Filename to read from, optionally including full path.

@@ -10,6 +10,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     public sealed class ProvisioningTemplatePipeBind
     {
         private ProvisioningTemplate template;
+        private PnP.Core.Provisioning.Model.ProvisioningTemplate coreTemplate;
         private string templatePath;
 
         public ProvisioningTemplatePipeBind(ProvisioningTemplate template)
@@ -17,9 +18,41 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             this.template = template;
         }
 
+        public ProvisioningTemplatePipeBind(PnP.Core.Provisioning.Model.ProvisioningTemplate template)
+        {
+            this.coreTemplate = template;
+        }
+
         public ProvisioningTemplatePipeBind(string templatePath)
         {
             this.templatePath = templatePath;
+        }
+
+        /// <summary>
+        /// Returns the template as a PnP.Core.Provisioning template
+        /// </summary>
+        /// <param name="rootPath">The location to resolve a relative path against</param>
+        /// <param name="exceptionHandler">Called for every template in the source which cannot be read</param>
+        /// <returns>The template, or null when nothing was passed in</returns>
+        internal PnP.Core.Provisioning.Model.ProvisioningTemplate GetCoreTemplate(string rootPath, Action<Exception> exceptionHandler)
+        {
+            if (this.coreTemplate != null)
+            {
+                return this.coreTemplate;
+            }
+            if (this.template != null)
+            {
+                return CoreProvisioningHelper.ToCoreTemplate(this.template);
+            }
+            if (!string.IsNullOrEmpty(templatePath))
+            {
+                if (!System.IO.Path.IsPathRooted(templatePath))
+                {
+                    templatePath = System.IO.Path.Combine(rootPath, templatePath);
+                }
+                return CoreProvisioningHelper.LoadSiteTemplateFromFile(templatePath, exceptionHandler);
+            }
+            return null;
         }
 
         public ProvisioningTemplate GetTemplate(string rootPath, Action<Exception> exceptionHandler)

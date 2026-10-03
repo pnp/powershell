@@ -10,6 +10,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     public sealed class ProvisioningHierarchyPipeBind
     {
         private ProvisioningHierarchy template;
+        private PnP.Core.Provisioning.Model.ProvisioningHierarchy coreTemplate;
         private string templatePath;
 
         public ProvisioningHierarchyPipeBind(ProvisioningHierarchy template)
@@ -17,9 +18,41 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             this.template = template;
         }
 
+        public ProvisioningHierarchyPipeBind(PnP.Core.Provisioning.Model.ProvisioningHierarchy template)
+        {
+            this.coreTemplate = template;
+        }
+
         public ProvisioningHierarchyPipeBind(string templatePath)
         {
             this.templatePath = templatePath;
+        }
+
+        /// <summary>
+        /// Returns the tenant template as a PnP.Core.Provisioning hierarchy
+        /// </summary>
+        /// <param name="rootPath">The location to resolve a relative path against</param>
+        /// <param name="exceptionHandler">Called for every template in the source which cannot be read</param>
+        /// <returns>The hierarchy, or null when nothing was passed in</returns>
+        internal PnP.Core.Provisioning.Model.ProvisioningHierarchy GetCoreHierarchy(string rootPath, Action<Exception> exceptionHandler)
+        {
+            if (this.coreTemplate != null)
+            {
+                return this.coreTemplate;
+            }
+            if (this.template != null)
+            {
+                return CoreProvisioningHelper.ToCoreHierarchy(this.template);
+            }
+            if (!string.IsNullOrEmpty(templatePath))
+            {
+                if (!System.IO.Path.IsPathRooted(templatePath))
+                {
+                    templatePath = System.IO.Path.Combine(rootPath, templatePath);
+                }
+                return CoreProvisioningHelper.LoadTenantTemplateFromFile(templatePath, exceptionHandler);
+            }
+            return null;
         }
 
         public ProvisioningHierarchy GetTemplate(string rootPath, Action<Exception> exceptionHandler)

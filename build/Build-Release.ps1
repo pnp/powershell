@@ -232,6 +232,7 @@ $assembliesToBeSigned = @(
 	Get-Item -LiteralPath "$commonPath/PnP.Core.dll"
 	Get-Item -LiteralPath "$commonPath/PnP.Core.Admin.dll"
 	Get-Item -LiteralPath "$commonPath/PnP.Core.Auth.dll"
+	Get-Item -LiteralPath "$commonPath/PnP.Core.Provisioning.dll"
 	Get-Item -LiteralPath "$commonPath/PnP.Framework.dll"
 )
 

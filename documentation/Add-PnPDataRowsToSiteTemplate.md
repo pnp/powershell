@@ -17,7 +17,7 @@ Adds datarows to a list inside a PnP Provisioning Template
 ```powershell
 Add-PnPDataRowsToSiteTemplate [-Path] <String> -List <ListPipeBind> [-Query <String>]
  [-Fields <String[]>] [-IncludeSecurity] [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>]
- [-TokenizeUrls] [-Connection <PnPConnection>] 
+ [-TokenizeUrls] [-Experimental] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -46,6 +46,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework, which builds the data rows with its own list extract.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
@@ -140,7 +154,7 @@ Accept wildcard characters: False
 ```
 
 ### -TokenizeUrls
-If set, this switch will try to tokenize the values with web and site related tokens
+If set, this switch will try to tokenize the values with web and site related tokens. With `-Experimental`, an absolute url is written as `{hosturl}{site}` rather than `{site}`, so that it stays absolute on the site the template is applied to.
 
 ```yaml
 Type: SwitchParameter
