@@ -9,7 +9,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
-- Added `-Experimental` to `Get-PnPSiteTemplate`, `Invoke-PnPSiteTemplate`, `Get-PnPTenantTemplate`, `Invoke-PnPTenantTemplate`, `Read-PnPSiteTemplate`, `Save-PnPSiteTemplate`, `Read-PnPTenantTemplate`, `Save-PnPTenantTemplate`, `Convert-PnPSiteTemplate`, `Export-PnPListToSiteTemplate`, `Add-PnPDataRowsToSiteTemplate`, `Add-PnPListFoldersToSiteTemplate`, `Add-PnPFileToSiteTemplate`, `Remove-PnPFileFromSiteTemplate` and `Set-PnPSiteTemplateMetadata` to run them on the experimental PnP.Core.Provisioning engine instead of PnP Framework.
+
+- Added `-Experimental` to `Get-PnPSiteTemplate`, `Invoke-PnPSiteTemplate`, `Get-PnPTenantTemplate`, `Invoke-PnPTenantTemplate`, `Read-PnPSiteTemplate`, `Save-PnPSiteTemplate`, `Read-PnPTenantTemplate`, `Save-PnPTenantTemplate`, `Convert-PnPSiteTemplate`, `Export-PnPListToSiteTemplate`, `Add-PnPDataRowsToSiteTemplate`, `Add-PnPListFoldersToSiteTemplate`, `Add-PnPFileToSiteTemplate`, `Remove-PnPFileFromSiteTemplate` and `Set-PnPSiteTemplateMetadata` to run them on the experimental PnP.Core.Provisioning engine instead of PnP Framework. [#5474](https://github.com/pnp/powershell/pull/5474)
+- Added `Get-PnPPersistedLogin` which lists the tenant url, client id and authentication type of every login registered to use the local token cache, so the cache can be inspected without reading it. [#5463](https://github.com/pnp/powershell/pull/5463)
+- Added `-PersistLogin` to the certificate based app only parameter sets of `Connect-PnPOnline`, so a connection made with `-CertificatePath`, `-CertificateBase64Encoded`, `-Thumbprint` or the environment variables can reuse its access token from the local cache. The certificate, tenant and client id are still required on each connection, as neither the certificate nor its password is stored. [#5463](https://github.com/pnp/powershell/pull/5463)
+- Added `-CopilotSearchOptOut` to `Set-PnPSearchSettings` and exposed the value through `Get-PnPSearchSettings`; added `-CopilotSearchOptIn` to `Set-PnPTenant` and exposed the value through `Get-PnPTenant`. [#5478](https://github.com/pnp/powershell/pull/5478)
+
 
 ### Changed
 - Changed `-InputInstance` on `Invoke-PnPSiteTemplate` and `-Template` on `Invoke-PnPTenantTemplate` to accept a template produced by either provisioning engine, so a template extracted with `-Experimental` can be applied with `-Experimental`. Templates produced by PnP Framework keep binding to these parameters as before.
@@ -21,6 +26,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 - Using UPNs with an apostrophe in it not working with `Remove-PnPUserProfile`, `Export-PnPUserProfile`, `Export-PnPUserInfo`, and `Remove-PnPUserInfo`. The apostrophe is now escaped in the API request. [#5459](https://github.com/pnp/powershell/pull/5459)
+- Fix PnP ALC initializer with loaded assemblies stackoverflow issue. [#5481](https://github.com/pnp/powershell/pull/5481)
+
+### Contributors
+
+- Fabien Tschanz [FabienTschanz]
 
 ## [3.4.1]
 

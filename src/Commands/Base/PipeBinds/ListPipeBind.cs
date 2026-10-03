@@ -80,6 +80,8 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         internal PnPCore.IList GetList(PnPBatch batch, bool throwError = true, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] selectors)
         {
+            var escapedName = _name.Replace("'", "''");
+
             PnPCore.IList returnList = null;
             if (_corelist != null)
             {
@@ -110,7 +112,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 {
                     return batchedList;
                 }
-                returnList = batch.Context.Web.Lists.GetByTitle(_name, selectors);
+                returnList = batch.Context.Web.Lists.GetByTitle(escapedName, selectors);
                 if (returnList == null)
                 {
                     var url = _name;
@@ -148,6 +150,8 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         internal PnPCore.IList GetList(PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] selectors)
         {
+            var escapedName = _name.Replace("'", "''");
+
             PnPCore.IList returnList = null;
             if (_corelist != null)
             {
@@ -163,7 +167,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(_name))
             {
-                returnList = context.Web.Lists.GetByTitle(_name, selectors);
+                returnList = context.Web.Lists.GetByTitle(escapedName, selectors);
                 if (returnList == null)
                 {
                     var url = _name;
