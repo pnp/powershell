@@ -363,6 +363,9 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? ContentSecurityPolicyConfigSynced { get; private set; }
 
+        [CsomToModelConverter(Skip = true)]
+        public bool? CopilotSearchOptIn { get; private set; }
+
         public bool? CoreDefaultLinkToExistingAccess { get; private set; }
 
         public string CustomizedExternalSharingServiceUrl { get; private set; }
@@ -648,6 +651,16 @@ namespace PnP.PowerShell.Commands.Model
             {
                 failedProperties++;
                 cmdlet.LogDebug($"Property ContentTypeSyncSiteTemplatesList not loaded due to error '{e.Message}'");
+            }
+
+            try
+            {
+                CopilotSearchOptIn = tenant.EnsureProperty(t => t.CopilotSearchOptIn);
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property CopilotSearchOptIn not loaded due to error '{e.Message}'");
             }
 
             ResyncContentSecurityPolicyConfigurationEntries = ContentSecurityPolicyConfigSynced.HasValue

@@ -111,8 +111,9 @@ namespace PnP.PowerShell.Commands.Base
 
         /// <summary>
         /// Default-context resolver. When the default context cannot satisfy an assembly this assembly references,
-        /// we check whether we ship it. If so, we hand it to the private context; otherwise we return <c>null</c>
-        /// and let the runtime continue its normal resolution (shared framework, PowerShell, host).
+        /// we check whether we ship it. If so, we hand it to the private context or we return a copy that is already
+        /// loaded when the private context defers it to the default context. Otherwise we return <c>null</c> and let
+        /// the runtime continue its normal resolution (shared framework, PowerShell, host).
         /// </summary>
         private static Assembly ResolveDependency(AssemblyLoadContext defaultContext, AssemblyName assemblyName)
         {
@@ -126,6 +127,15 @@ namespace PnP.PowerShell.Commands.Base
             {
                 // Not ours - let the default resolution logic (shared framework / PowerShell / host) handle it.
                 return null;
+            }
+
+            // Routing a deferred boundary assembly to the private context sends the request back to the default
+            // context, which raises this event again until the stack overflows. Serve an already loaded copy instead.
+            // The default context caches the failed bind per display name and keeps raising this event even after a
+            // matching copy was loaded.
+            if (s_dependencyContext.DefersToDefaultContext(assemblyName.Name))
+            {
+                return s_dependencyContext.ResolveDeferredAssembly(assemblyName);
             }
 
             // Route the assembly into the private context. Because that context overrides Load() to probe the
