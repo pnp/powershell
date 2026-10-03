@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -45,12 +44,14 @@ namespace PnP.PowerShell.Commands.Base
         private static readonly string s_dependencyPath;
 
         /// <summary>
-        /// Simple names of the assemblies this assembly references directly. These are the only requests from the
-        /// default context that are ours to answer: everything they depend on is resolved inside the private
-        /// context by <see cref="PnPAssemblyLoadContext"/>. The resolver is process-wide, so without this filter it
-        /// would hand our private copies to any other module that fails to resolve an assembly we happen to ship.
+        /// Versions of the assemblies this assembly references directly, keyed by simple name. These references are the
+        /// only requests from the default context that are ours to answer: everything they depend on is resolved inside
+        /// the private context by <see cref="PnPAssemblyLoadContext"/>. The resolver is process-wide and its event does
+        /// not say which assembly made the request, so a request is only answered when both its name and its version
+        /// match one of our references. Other modules shipping the same assemblies (MSAL above all) build against their
+        /// own versions, so their requests fall through to their own resolution instead of receiving our private copies.
         /// </summary>
-        private static readonly HashSet<string> s_referencedAssemblyNames;
+        private static readonly Dictionary<string, Version> s_referencedAssemblyVersions;
 
         /// <summary>
         /// Guards against registering the resolver more than once (module initializer + OnImport + re-import).
@@ -69,9 +70,11 @@ namespace PnP.PowerShell.Commands.Base
             Assembly executingAssembly = Assembly.GetExecutingAssembly();
             string executingDirectory = Path.GetDirectoryName(executingAssembly.Location);
             s_dependencyPath = Path.GetFullPath(Path.Combine(executingDirectory, "..", "Common"));
-            s_referencedAssemblyNames = new HashSet<string>(
-                executingAssembly.GetReferencedAssemblies().Select(reference => reference.Name),
-                StringComparer.OrdinalIgnoreCase);
+            s_referencedAssemblyVersions = new Dictionary<string, Version>(StringComparer.OrdinalIgnoreCase);
+            foreach (AssemblyName reference in executingAssembly.GetReferencedAssemblies())
+            {
+                s_referencedAssemblyVersions.TryAdd(reference.Name, reference.Version);
+            }
 
             // In-IDE (Visual Studio F5) debugging imports the raw build output, where every dependency sits in
             // the same folder as this assembly. PowerShell's own directory probing already resolves that whole
@@ -117,7 +120,7 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         private static Assembly ResolveDependency(AssemblyLoadContext defaultContext, AssemblyName assemblyName)
         {
-            if (string.IsNullOrEmpty(assemblyName?.Name) || !s_referencedAssemblyNames.Contains(assemblyName.Name))
+            if (!IsReferencedByThisAssembly(assemblyName))
             {
                 return null;
             }
@@ -142,6 +145,17 @@ namespace PnP.PowerShell.Commands.Base
             // same folder, this assembly and its entire transitive dependency graph resolve to our shipped
             // copies, isolated from whatever the host already loaded into the default context.
             return s_dependencyContext.LoadFromAssemblyName(assemblyName);
+        }
+
+        /// <summary>
+        /// True when the requested assembly is one this assembly references, at the version it references. A request
+        /// for the same name at another version comes from another module and is left to that module's resolution.
+        /// </summary>
+        private static bool IsReferencedByThisAssembly(AssemblyName assemblyName)
+        {
+            return !string.IsNullOrEmpty(assemblyName?.Name)
+                && s_referencedAssemblyVersions.TryGetValue(assemblyName.Name, out Version referencedVersion)
+                && assemblyName.Version == referencedVersion;
         }
     }
 }
