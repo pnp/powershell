@@ -48,8 +48,9 @@ namespace PnP.PowerShell.Commands.Base
         /// only requests from the default context that are ours to answer: everything they depend on is resolved inside
         /// the private context by <see cref="PnPAssemblyLoadContext"/>. The resolver is process-wide and its event does
         /// not say which assembly made the request, so a request is only answered when both its name and its version
-        /// match one of our references. Other modules shipping the same assemblies (MSAL above all) build against their
-        /// own versions, so their requests fall through to their own resolution instead of receiving our private copies.
+        /// match one of our references. This narrows the interception rather than isolating it: another module asking
+        /// for one of these assemblies (MSAL above all) at another version falls through to its own resolution, but one
+        /// asking for the very same version cannot be told apart from us and still receives our private copy.
         /// </summary>
         private static readonly Dictionary<string, Version> s_referencedAssemblyVersions;
 
@@ -149,7 +150,7 @@ namespace PnP.PowerShell.Commands.Base
 
         /// <summary>
         /// True when the requested assembly is one this assembly references, at the version it references. A request
-        /// for the same name at another version comes from another module and is left to that module's resolution.
+        /// for the same name at another version is not ours and is left to the requester's own resolution.
         /// </summary>
         private static bool IsReferencedByThisAssembly(AssemblyName assemblyName)
         {
