@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management.Automation;
@@ -16,9 +17,9 @@ namespace PnP.PowerShell.Commands.Base
     /// default <see cref="AssemblyLoadContext"/> so its cmdlet types remain discoverable. Every other
     /// assembly we ship lives in the sibling "Common" folder and is loaded into a dedicated, fully
     /// isolated <see cref="PnPAssemblyLoadContext"/>. A single <see cref="AssemblyLoadContext.Resolving"/>
-    /// handler on the default context routes any assembly we ship into that private context; from there the
-    /// private context resolves the entire transitive graph internally, so our Microsoft.Extensions.* (and
-    /// friends) can never bind against a version the host process already loaded.
+    /// handler on the default context routes the private dependencies this assembly references into that
+    /// private context; from there the private context resolves the entire transitive graph internally, so our
+    /// Microsoft.Extensions.* (and friends) can never bind against a version the host process already loaded.
     ///
     /// The handler MUST be registered before PowerShell reflects over this assembly to discover cmdlets,
     /// because the cmdlet base types statically reference PnP.Framework/PnP.Core and reflection therefore
@@ -43,6 +44,17 @@ namespace PnP.PowerShell.Commands.Base
         private static readonly string s_dependencyPath;
 
         /// <summary>
+        /// Versions of the assemblies this assembly references directly, keyed by simple name. These references are the
+        /// only requests from the default context that are ours to answer: everything they depend on is resolved inside
+        /// the private context by <see cref="PnPAssemblyLoadContext"/>. The resolver is process-wide and its event does
+        /// not say which assembly made the request, so a request is only answered when both its name and its version
+        /// match one of our references. This narrows the interception rather than isolating it: another module asking
+        /// for one of these assemblies (MSAL above all) at another version falls through to its own resolution, but one
+        /// asking for the very same version cannot be told apart from us and still receives our private copy.
+        /// </summary>
+        private static readonly Dictionary<string, Version> s_referencedAssemblyVersions;
+
+        /// <summary>
         /// Guards against registering the resolver more than once (module initializer + OnImport + re-import).
         /// </summary>
         private static int s_resolverRegistered;
@@ -56,8 +68,14 @@ namespace PnP.PowerShell.Commands.Base
         {
             // This assembly (PnP.PowerShell.dll) ships in "<module>/Core"; the private dependency graph ships
             // in the sibling "<module>/Common" folder.
-            string executingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Assembly executingAssembly = Assembly.GetExecutingAssembly();
+            string executingDirectory = Path.GetDirectoryName(executingAssembly.Location);
             s_dependencyPath = Path.GetFullPath(Path.Combine(executingDirectory, "..", "Common"));
+            s_referencedAssemblyVersions = new Dictionary<string, Version>(StringComparer.OrdinalIgnoreCase);
+            foreach (AssemblyName reference in executingAssembly.GetReferencedAssemblies())
+            {
+                s_referencedAssemblyVersions.TryAdd(reference.Name, reference.Version);
+            }
 
             // In-IDE (Visual Studio F5) debugging imports the raw build output, where every dependency sits in
             // the same folder as this assembly. PowerShell's own directory probing already resolves that whole
@@ -96,14 +114,14 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
-        /// Default-context resolver. When the default context cannot satisfy an assembly, we check whether we
-        /// ship it. If so, we hand it to the private context or we return a copy that is already loaded when the private
-        /// context defers it to the default context. Otherwise we return <c>null</c> and let the runtime continue its
-        /// normal resolution (shared framework, PowerShell, host).
+        /// Default-context resolver. When the default context cannot satisfy an assembly this assembly references,
+        /// we check whether we ship it. If so, we hand it to the private context or we return a copy that is already
+        /// loaded when the private context defers it to the default context. Otherwise we return <c>null</c> and let
+        /// the runtime continue its normal resolution (shared framework, PowerShell, host).
         /// </summary>
         private static Assembly ResolveDependency(AssemblyLoadContext defaultContext, AssemblyName assemblyName)
         {
-            if (string.IsNullOrEmpty(assemblyName?.Name))
+            if (!IsReferencedByThisAssembly(assemblyName))
             {
                 return null;
             }
@@ -128,6 +146,17 @@ namespace PnP.PowerShell.Commands.Base
             // same folder, this assembly and its entire transitive dependency graph resolve to our shipped
             // copies, isolated from whatever the host already loaded into the default context.
             return s_dependencyContext.LoadFromAssemblyName(assemblyName);
+        }
+
+        /// <summary>
+        /// True when the requested assembly is one this assembly references, at the version it references. A request
+        /// for the same name at another version is not ours and is left to the requester's own resolution.
+        /// </summary>
+        private static bool IsReferencedByThisAssembly(AssemblyName assemblyName)
+        {
+            return !string.IsNullOrEmpty(assemblyName?.Name)
+                && s_referencedAssemblyVersions.TryGetValue(assemblyName.Name, out Version referencedVersion)
+                && assemblyName.Version == referencedVersion;
         }
     }
 }
