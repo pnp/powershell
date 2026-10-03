@@ -1,13 +1,12 @@
 ---
-applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-title: Restore-PnPTenantSite
-online version: https://pnp.github.io/powershell/cmdlets/Restore-PnPTenantSite.html
-external help file: PnP.PowerShell.dll-Help.xml
-schema: 2.0.0
 Module Name: PnP.PowerShell
+title: Restore-PnPTenantSite
+schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Restore-PnPTenantSite.html
 ---
-  
+ 
 # Restore-PnPTenantSite
 
 ## SYNOPSIS
@@ -125,4 +124,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

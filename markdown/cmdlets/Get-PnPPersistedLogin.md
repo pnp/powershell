@@ -1,10 +1,10 @@
 ---
 applicable: SharePoint Online
-tags: Available in the current Nightly Release only.
-title: Get-PnPPersistedLogin
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPersistedLogin.html
-external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
 schema: 2.0.0
+title: Get-PnPPersistedLogin
+external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
 ---
  
