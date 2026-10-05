@@ -1,13 +1,12 @@
 ---
-tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+title: Get-PnPUnifiedAuditLog
+schema: 2.0.0
+applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUnifiedAuditLog.html
-Module Name: PnP.PowerShell
-applicable: SharePoint Online
-schema: 2.0.0
-title: Get-PnPUnifiedAuditLog
 ---
-  
+ 
 # Get-PnPUnifiedAuditLog
 
 ## SYNOPSIS
@@ -34,6 +33,8 @@ Get-PnPUnifiedAuditLog [-ContentType <AuditContentType>] [-StartTime <DateTime>]
 ## DESCRIPTION
 
 Allows to retrieve unified audit logs from the Office 365 Management API.
+
+The cmdlet calls the Office 365 Management API of the cloud you connected to with `Connect-PnPOnline -AzureEnvironment`: `manage-gcc.office.com` for `USGovernment`, `manage.office365.us` for `USGovernmentHigh`, `manage.protection.apps.mil` for `USGovernmentDoD`, and `manage.office.com` for any other value.
 
 ### Prerequisites
 
@@ -111,5 +112,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 

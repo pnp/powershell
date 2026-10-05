@@ -274,10 +274,40 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/logging.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/logging.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/mcpserver.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/mcpserver.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/microsoftsearch.md",
       "output": {
         ".html": {
           "relative_path": "articles/microsoftsearch.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/nationalclouds.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/nationalclouds.html"
         }
       },
       "version": ""
@@ -348,6 +378,16 @@
       "output": {
         ".html": {
           "relative_path": "articles/telemetry.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/throttling.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/throttling.html"
         }
       },
       "version": ""
@@ -5297,6 +5337,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Move-PnPItemProxy.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Move-PnPItemProxy.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Move-PnPListItemToRecycleBin.md",
       "output": {
         ".html": {
@@ -9540,136 +9590,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "images/azureautomation/addmodulefromgallery.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/addmodulefromgallery.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/addmodulefromgallerycustombuild.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/addmodulefromgallerycustombuild.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/addmodulefromgallerycustombuildimport.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/addmodulefromgallerycustombuildimport.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/addmodulefromgallerycustombuildnupkg.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/addmodulefromgallerycustombuildnupkg.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/automationaccountmodulesmenu.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/automationaccountmodulesmenu.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/automationaddmodule.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/automationaddmodule.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/automationaddmodulepnpposh.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/automationaddmodulepnpposh.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/automationaddmodulepnpposhconfirm.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/automationaddmodulepnpposhconfirm.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/automationaddmodulepnpposhcustombuildstatus.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/automationaddmodulepnpposhcustombuildstatus.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/automationaddmodulepnpposhcustomdone.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/automationaddmodulepnpposhcustomdone.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/automationaddmodulepnpposhdone.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/automationaddmodulepnpposhdone.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/automationaddmodulepnpposhimport.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/automationaddmodulepnpposhimport.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/automationaddmodulepnpposhstatus.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/automationaddmodulepnpposhstatus.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "images/azureautomation/automationcreateinstance.png",
       "output": {
         "resource": {
@@ -9694,16 +9614,6 @@
       "output": {
         "resource": {
           "relative_path": "images/azureautomation/azureportaladdrunbookoption.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/azureportalcreaterunbook.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/azureportalcreaterunbook.png"
         }
       },
       "version": ""
@@ -9754,26 +9664,6 @@
       "output": {
         "resource": {
           "relative_path": "images/azureautomation/createresource.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/explorerzipcustombuild.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/explorerzipcustombuild.png"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/azureautomation/pwshdownloadcustombuild.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/azureautomation/pwshdownloadcustombuild.png"
         }
       },
       "version": ""
@@ -10614,16 +10504,6 @@
       "output": {
         "resource": {
           "relative_path": "images/determinepermissions/README.md"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/determinepermissions/entraid_permissions_accessdenied_verbose.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/determinepermissions/entraid_permissions_accessdenied_verbose.png"
         }
       },
       "version": ""

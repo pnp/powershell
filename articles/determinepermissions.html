@@ -236,9 +236,12 @@ Get-PnPCommandPermission | Where-Object ApplicationAvailable -eq $false
 <h3 id="when-using-an-app-only-context-1">When using an app only context</h3>
 <p>For an app only scenario, you will have to follow a different approach, as there is no way for it to interactively request for more permissions. If you try to execute a cmdlet for which the Entra ID application registration does not have permissions, it will return you an access denied notice.</p>
 <p>The quickest way to find out what to add is to run <a href="../cmdlets/Get-PnPCommandPermission.html">Get-PnPCommandPermission</a> against the cmdlet that failed, as described <a href="#asking-pnp-powershell-which-permissions-a-cmdlet-needs">earlier in this article</a>. It requires no connection, so you can run it before ever hitting the access denied.</p>
-<p>Alternatively you can add <code>-Verbose</code> to your cmdlet. For many, but unfortunately not all, cmdlets, this will reveal which permissions it receives through the application registration and which permissions it actually needs to be able to execute properly. See the following example:</p>
-<p><img src="../images/determinepermissions/entraid_permissions_accessdenied_verbose.png" alt="image"></p>
-<p>In this scenario, you now know you need to add <code>Application.Read.All</code> on the applications scope of Microsoft Graph in your application registration in order to give it sufficient rights to execute this cmdlet.</p>
+<p>Alternatively you can start the <a href="logging.html">trace log</a> before running the cmdlet. For many, but unfortunately not all, cmdlets, PnP PowerShell compares the permissions in the access token with the permissions the cmdlet needs, and writes the ones that are missing to the trace log as an error. <code>-Verbose</code> does not show them. See the following example:</p>
+<pre><code class="lang-powershell">Start-PnPTraceLog -WriteToLogStream
+Get-PnPEntraIDApp
+Get-PnPTraceLog | Where-Object Level -eq Error
+</code></pre>
+<p>If the application registration lacks the permission, this returns an entry with the message <code>Current access token lacks the following required application permission scope on the resource Microsoft Graph: Application.Read.All</code>. In this scenario, you now know you need to add <code>Application.Read.All</code> on the applications scope of Microsoft Graph in your application registration in order to give it sufficient rights to execute this cmdlet.</p>
 <h2 id="help-i-cant-figure-out-which-permissions-i-need">Help, I can't figure out which permissions I need</h2>
 <p>First run <a href="../cmdlets/Get-PnPCommandPermission.html">Get-PnPCommandPermission</a> against the cmdlet, as described <a href="#asking-pnp-powershell-which-permissions-a-cmdlet-needs">earlier in this article</a>. It has an answer for nearly every cmdlet in the module.</p>
 <p>If it returns a <code>PermissionSource</code> of <code>Unknown</code>, or an <code>Inferred</code> answer that turns out not to be sufficient, use the table below for guidance on a minimum permissions approach.</p>

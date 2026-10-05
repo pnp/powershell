@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Move-PnPItemProxy | PnP PowerShell </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Move-PnPItemProxy | PnP PowerShell ">
+      <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+      
+      <link rel="icon" href="../images/favicon-pnp.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pnp/powershell/blob/dev/documentation/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="PnP PowerShell">
+            PnP PowerShell
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="move-pnpitemproxy">Move-PnPItemProxy</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Moves files and folders between the local file system and a SharePoint drive. It is used through the <code>Move-Item</code> alias.</p>
+<h2 id="syntax">SYNTAX</h2>
+<h3 id="path-default">Path (Default)</h3>
+<pre><code class="lang-powershell">Move-PnPItemProxy [-Path] &lt;String[]&gt; [[-Destination] &lt;String&gt;] [-Container] [-Force] [-Filter &lt;String&gt;]
+ [-Include &lt;String[]&gt;] [-Exclude &lt;String[]&gt;] [-PassThru] [-Credential &lt;PSCredential&gt;] [-WhatIf] [-Confirm]
+</code></pre>
+<h3 id="literalpath">LiteralPath</h3>
+<pre><code class="lang-powershell">Move-PnPItemProxy [-LiteralPath] &lt;String[]&gt; [[-Destination] &lt;String&gt;] [-Container] [-Force] [-Filter &lt;String&gt;]
+ [-Include &lt;String[]&gt;] [-Exclude &lt;String[]&gt;] [-PassThru] [-Credential &lt;PSCredential&gt;] [-WhatIf] [-Confirm]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p><strong>This cmdlet stands in for the <code>Move-Item</code> cmdlet that is natively available with PowerShell.</strong></p>
+<p>When a SharePoint drive is created, for instance with <code>Connect-PnPOnline -CreateDrive</code>, PnP PowerShell points the <code>Move-Item</code> alias to <code>Move-PnPItemProxy</code> for the session. Removing the last SharePoint drive removes the alias again, and a drive created with <code>New-PSDrive -PSProvider SharePoint -NoProxyCmdLets</code> leaves it alone. Paths on the drive are server relative: on a drive named SPO, the library at <a href="https://contoso.sharepoint.com/sites/project/Shared%20Documents">https://contoso.sharepoint.com/sites/project/Shared%20Documents</a> is <code>SPO:\sites\project\Shared Documents</code>.</p>
+<p>When items are moved from the file system to a SharePoint drive or from a SharePoint drive to the file system, folders are moved with all of their content, and the source is removed once everything has been copied. A file or folder removed from SharePoint this way is deleted permanently, not sent to the recycle bin, and without <code>-Force</code> that includes a file that was not downloaded because a file with the same name already existed locally. Any other move, including one between two locations in SharePoint, is passed on to <code>Move-Item</code>.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>A move between the file system and a SharePoint drive removes the whole source, also the parts it did not copy:</p>
+<ul>
+<li>from a SharePoint folder holding more than 5,000 items, only the first 100 are copied</li>
+<li>hidden files in a local folder are not copied</li>
+<li>a local source given as a UNC path, or on a drive other than a drive letter such as <code>Temp:</code>, is not copied at all</li>
+<li>without <code>-Force</code>, a file that already exists locally is not downloaded</li>
+<li><code>-LiteralPath</code> expands wildcard characters, so <code>-LiteralPath &quot;file[1].txt&quot;</code> moves <code>file1.txt</code></li>
+</ul>
+<p>To keep the source until you have checked the result, copy with <code>Copy-PnPItemProxy</code> and remove the source afterwards.</p>
+</div>
+<p>For more information on <code>Move-Item</code>, please refer to the official PowerShell documentation <a href="https://learn.microsoft.com/powershell/module/microsoft.powershell.management/move-item">here</a>.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Move-Item -Path &quot;C:\Reports\*.xlsx&quot; -Destination &quot;SPO:\sites\project\Shared Documents\Reports&quot;
+</code></pre>
+<p>Uploads all Excel files in the local <code>C:\Reports</code> folder to the Reports folder of the Shared Documents library of the site at /sites/project, then deletes them from <code>C:\Reports</code>.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Move-PnPItemProxy -Path &quot;SPO:\sites\project\Shared Documents\Archive&quot; -Destination &quot;C:\Archive&quot; -Force
+</code></pre>
+<p>Downloads the Archive folder to <code>C:\Archive</code>, overwriting local files with the same name, then permanently deletes the Archive folder from SharePoint. See the warning above for the content that is not downloaded.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-confirm">-Confirm</h3>
+<p>Prompts you for confirmation before running the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-container">-Container</h3>
+<p>Treats the last segment of <code>-Destination</code> as a folder, even when it contains a period. Without it, a destination whose last segment contains a period is taken to be a file name. Only used when moving between the file system and a SharePoint drive.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-credential">-Credential</h3>
+<p>Passed on to <code>Move-Item</code>. Not used when moving between the file system and a SharePoint drive.</p>
+<pre><code class="lang-yaml">Type: PSCredential
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-destination">-Destination</h3>
+<p>The path to move the items to. When it is a file name, only a single file can be moved to it.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-exclude">-Exclude</h3>
+<p>Passed on to <code>Move-Item</code>. Not used when moving between the file system and a SharePoint drive.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-filter">-Filter</h3>
+<p>Passed on to <code>Move-Item</code>. Not used when moving between the file system and a SharePoint drive.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-force">-Force</h3>
+<p>Overwrites files that already exist at the destination. Without it, a move to a SharePoint drive stops at the first file that already exists there. A move from a SharePoint drive to the file system, however, does not download a file that already exists locally, and still deletes it from SharePoint.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-include">-Include</h3>
+<p>Passed on to <code>Move-Item</code>. Not used when moving between the file system and a SharePoint drive.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-literalpath">-LiteralPath</h3>
+<p>The path of the items to move.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: LiteralPath
+Aliases: PSPath
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-passthru">-PassThru</h3>
+<p>Returns objects for the files and folders created at the destination. By default, this cmdlet does not generate any output.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-path">-Path</h3>
+<p>The path of the items to move. Wildcard characters are permitted.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Path
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByValue, ByPropertyName)
+Accept wildcard characters: True
+</code></pre>
+<h3 id="-whatif">-WhatIf</h3>
+<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

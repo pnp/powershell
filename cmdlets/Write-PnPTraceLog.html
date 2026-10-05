@@ -90,11 +90,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Allows logging your own messages during the execution of PnP PowerShell cmdlets</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="log-from-file">Log from file</h3>
-<pre><code class="lang-powershell">Write-PnPTraceLog -Path &lt;string&gt; [-Verbose]
-</code></pre>
-<h3 id="log-from-log-stream">Log from log stream</h3>
-<pre><code class="lang-powershell">Write-PnPTraceLog [-Verbose]
+<pre><code class="lang-powershell">Write-PnPTraceLog [-Message] &lt;String&gt; [-CorrelationId &lt;Guid&gt;] [-Source &lt;String&gt;] [-EllapsedMilliseconds &lt;Long&gt;] [-Level &lt;LogLevel&gt;] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet allows logging of your own messages in line with the PnPTraceLog cmdlets that allow logging what happens behind the scenes of the execution of PnP PowerShell cmdlets. This allows you to inject your own custom logging along with the built in logging to get a complete and chronoligal log of the execution of the cmdlets in your scripts.</p>
@@ -141,7 +137,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-level">-Level</h3>
-<p>The level to log your message under. Options are: Verbose, Information, Warning, Error and Debug. It will log it both to the default PowerShell its logging equivallent such as Write-Warning, Write-Error, Write-Verbose, and to the PnPTraceLog logging. If not provided, it will default to Information.</p>
+<p>The level to log your message under. Options are: Debug, Information, Warning and Error. It will log it both to the default PowerShell its logging equivalent such as Write-Warning, Write-Error, Write-Verbose, and to the PnPTraceLog logging. If not provided, it will default to Information.</p>
 <pre><code class="lang-yaml">Type: Framework.Diagnostics.LogLevel
 Parameter Sets: (All)
 
@@ -157,9 +153,9 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-source">-Source</h3>

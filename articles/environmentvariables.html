@@ -99,7 +99,23 @@
 <tbody>
 <tr>
 <td>MicrosoftGraphEndPoint</td>
-<td>Overrides the default Microsoft Graph endpoint (<a href="https://graph.microsoft.com">https://graph.microsoft.com</a>) to use</td>
+<td>The Microsoft Graph endpoint to use with <code>Connect-PnPOnline -AzureEnvironment Custom</code>, as a host name such as <code>custom.graph.microsoft.com</code>. It is ignored for the other values of <code>-AzureEnvironment</code>. See <a href="nationalclouds.html#custom-endpoints">National and sovereign clouds</a></td>
+</tr>
+<tr>
+<td>AzureADLoginEndPoint</td>
+<td>The Microsoft Entra ID sign in endpoint to use with <code>Connect-PnPOnline -AzureEnvironment Custom</code>, as a URL such as <code>https://custom.login.microsoftonline.com</code>. It is ignored for the other values of <code>-AzureEnvironment</code></td>
+</tr>
+<tr>
+<td>PNPPOWERSHELL_FEDERATEDIDENTITY_AUDIENCE</td>
+<td>The audience <code>Connect-PnPOnline -FederatedIdentity</code> requests its GitHub Actions token for, instead of the one that follows from <code>-AzureEnvironment</code>. See <a href="nationalclouds.html#sign-in-methods">National and sovereign clouds</a></td>
+</tr>
+<tr>
+<td>SharePointPnPHttpTimeout</td>
+<td>The timeout in seconds for requests to SharePoint Online and Microsoft Graph, retries included, or <code>-1</code> for no timeout. Defaults to 100 seconds. Set it before connecting. It does not apply to cmdlets built on the PnP Core SDK. See <a href="throttling.html#the-request-timeout">Throttling and retries</a></td>
+</tr>
+<tr>
+<td>SharePointPnPUserAgent</td>
+<td>The <code>User-Agent</code> sent with the SharePoint REST API and Microsoft Graph requests PnP PowerShell makes through PnP Framework. Set it before the first connection in the PowerShell session. See <a href="throttling.html#identifying-your-traffic">Throttling and retries</a> for the format</td>
 </tr>
 <tr>
 <td>ENTRAID_APP_ID</td>

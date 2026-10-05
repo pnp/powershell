@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>National and sovereign clouds | PnP PowerShell </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="National and sovereign clouds | PnP PowerShell ">
+      <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+      
+      <link rel="icon" href="../images/favicon-pnp.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pnp/powershell/blob/dev/pages/articles/nationalclouds.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="PnP PowerShell">
+            PnP PowerShell
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="national-and-sovereign-clouds">National and sovereign clouds</h1>
+
+<p>By default, PnP PowerShell signs in to and calls the worldwide Microsoft cloud. To work with a tenant in another cloud, connect to a site in that tenant and pass the cloud to <a href="../cmdlets/Connect-PnPOnline.html#-azureenvironment">Connect-PnPOnline</a> with <code>-AzureEnvironment</code>:</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.us&quot; -ClientId &quot;&lt;client id&gt;&quot; -Interactive -AzureEnvironment USGovernmentHigh
+</code></pre>
+<p>The application registration you connect with has to be registered in that same cloud. See <a href="registerapplication.html#special-instructions-for-gcc-or-national-cloud-environments">Register your application</a> for how to create one with <code>Register-PnPEntraIDApp -AzureEnvironment</code>.</p>
+<h2 id="the-values-of--azureenvironment">The values of -AzureEnvironment</h2>
+<p>The value decides which Microsoft Entra ID endpoint PnP PowerShell signs in with and which Microsoft Graph endpoint it calls. The SharePoint endpoint follows from the URL you connect to.</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Cloud</th>
+<th>Sign in</th>
+<th>Microsoft Graph</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Production</code></td>
+<td>Worldwide, the default</td>
+<td>login.microsoftonline.com</td>
+<td>graph.microsoft.com</td>
+</tr>
+<tr>
+<td><code>USGovernment</code></td>
+<td>US Government Community Cloud (GCC)</td>
+<td>login.microsoftonline.com</td>
+<td>graph.microsoft.com</td>
+</tr>
+<tr>
+<td><code>USGovernmentHigh</code></td>
+<td>US Government GCC High</td>
+<td>login.microsoftonline.us</td>
+<td>graph.microsoft.us</td>
+</tr>
+<tr>
+<td><code>USGovernmentDoD</code></td>
+<td>US Government DoD</td>
+<td>login.microsoftonline.us</td>
+<td>dod-graph.microsoft.us</td>
+</tr>
+<tr>
+<td><code>China</code></td>
+<td>Microsoft 365 operated by 21Vianet</td>
+<td>login.chinacloudapi.cn</td>
+<td>microsoftgraph.chinacloudapi.cn</td>
+</tr>
+<tr>
+<td><code>BleuCloud</code></td>
+<td>Bleu, France</td>
+<td>login.sovcloud-identity.fr</td>
+<td>graph.svc.sovcloud.fr</td>
+</tr>
+<tr>
+<td><code>DelosCloud</code></td>
+<td>Delos, Germany</td>
+<td>login.sovcloud-identity.de</td>
+<td>graph.svc.sovcloud.de</td>
+</tr>
+<tr>
+<td><code>GovSGCloud</code></td>
+<td>GovSG</td>
+<td>login.sovcloud-identity.sg</td>
+<td>graph.svc.sovcloud.sg</td>
+</tr>
+<tr>
+<td><code>Germany</code></td>
+<td>Microsoft Cloud Deutschland, closed on 29 October 2021</td>
+<td>login.microsoftonline.com</td>
+<td>graph.microsoft.com</td>
+</tr>
+<tr>
+<td><code>PPE</code></td>
+<td>Microsoft's internal preproduction environment</td>
+<td>login.windows-ppe.net, except for <code>-Interactive</code> and <code>-OSLogin</code></td>
+<td>graph.microsoft.com</td>
+</tr>
+<tr>
+<td><code>Custom</code></td>
+<td>Endpoints you provide</td>
+<td>see <a href="#custom-endpoints">Custom endpoints</a></td>
+<td>see <a href="#custom-endpoints">Custom endpoints</a></td>
+</tr>
+</tbody>
+</table>
+<p>A tenant in GCC uses the worldwide endpoints for signing in and for Microsoft Graph, but <code>USGovernment</code> also points the cmdlets that call Power Platform, Azure Resource Manager and Office 365 Management APIs to their US Government endpoints. <code>Get-PnPUnifiedAuditLog</code> calls the Office 365 Management API for GCC, GCC High and DoD at its endpoint in that cloud, and at the worldwide endpoint for the other values. With <code>BleuCloud</code>, <code>DelosCloud</code> and <code>GovSGCloud</code>, the cmdlets that call Power Platform APIs are not supported.</p>
+<p><code>Germany</code> is still accepted, but uses the worldwide endpoints, as the cloud it stood for has closed.</p>
+<h2 id="custom-endpoints">Custom endpoints</h2>
+<p>For a cloud not in the list, use <code>-AzureEnvironment Custom</code> and provide the endpoints yourself. Provide the Microsoft Graph endpoint as a host name and the sign in endpoint as a URL:</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId &quot;&lt;client id&gt;&quot; -DeviceLogin -AzureEnvironment Custom -MicrosoftGraphEndPoint &quot;custom.graph.microsoft.com&quot; -AzureADLoginEndPoint &quot;https://custom.login.microsoftonline.com&quot;
+</code></pre>
+<p>Instead of the parameters, you can set the <code>MicrosoftGraphEndPoint</code> and <code>AzureADLoginEndPoint</code> environment variables. Like the parameters, they are only used with <code>-AzureEnvironment Custom</code>, and an endpoint you do not provide falls back to the worldwide one. The custom sign in endpoint is used when signing in with a certificate, with credentials, with <code>-DeviceLogin</code> or with <code>-FederatedIdentity</code>; <code>-Interactive</code> and <code>-OSLogin</code> sign in through the worldwide endpoint, and <code>-AzureADWorkloadIdentity</code> through the endpoint in <code>AZURE_AUTHORITY_HOST</code>.</p>
+<h2 id="sign-in-methods">Sign in methods</h2>
+<p><code>-AzureEnvironment</code> applies to every way of signing in with <code>Connect-PnPOnline</code>, with these differences:</p>
+<ul>
+<li><strong><code>-AccessToken</code></strong> sends the token as it is given to every API, so the token has to be issued in the cloud given with <code>-AzureEnvironment</code>.</li>
+<li><strong><code>-AzureADWorkloadIdentity</code></strong> signs in through the endpoint in the <code>AZURE_AUTHORITY_HOST</code> environment variable, which the workload identity webhook sets for the cloud of the cluster. <code>-AzureEnvironment</code> decides the endpoints of Microsoft Graph and the other APIs.</li>
+<li><strong><code>-FederatedIdentity</code></strong> on GitHub Actions requests its token for the audience <code>api://AzureADTokenExchangeUSGov</code> with <code>USGovernmentHigh</code> and <code>USGovernmentDoD</code>, <code>api://AzureADTokenExchangeChina</code> with <code>China</code>, and <code>api://AzureADTokenExchange</code> otherwise. The federated credential on your application registration has to use the same audience. To use another one, set it in the <code>PNPPOWERSHELL_FEDERATEDIDENTITY_AUDIENCE</code> environment variable.</li>
+</ul>
+<h2 id="cmdlets-that-only-work-in-the-worldwide-cloud">Cmdlets that only work in the worldwide cloud</h2>
+<p>The following cmdlets call APIs through their worldwide endpoints, whatever the value of <code>-AzureEnvironment</code>:</p>
+<ul>
+<li><code>Get-PnPPlannerConfiguration</code>, <code>Set-PnPPlannerConfiguration</code>, <code>Get-PnPPlannerUserPolicy</code> and <code>Set-PnPPlannerUserPolicy</code></li>
+<li><code>Get-PnPSearchVertical</code>, <code>New-PnPSearchVertical</code>, <code>Set-PnPSearchVertical</code>, <code>Remove-PnPSearchVertical</code>, <code>Set-PnPSearchVerticalOrder</code>, <code>Get-PnPSearchResultType</code>, <code>New-PnPSearchResultType</code>, <code>Set-PnPSearchResultType</code>, <code>Remove-PnPSearchResultType</code> and <code>Get-PnPSearchSiteConnection</code></li>
+</ul>
+<h2 id="other-cmdlets-that-take--azureenvironment">Other cmdlets that take -AzureEnvironment</h2>
+<p><a href="../cmdlets/Register-PnPEntraIDApp.html">Register-PnPEntraIDApp</a>, <a href="../cmdlets/Register-PnPEntraIDAppForInteractiveLogin.html">Register-PnPEntraIDAppForInteractiveLogin</a> and <a href="../cmdlets/Get-PnPTenantId.html">Get-PnPTenantId</a> take the same values, to work with a tenant in another cloud without connecting first.</p>
+<p>For the endpoints of each cloud, see <a href="https://learn.microsoft.com/graph/deployments">Microsoft Graph national cloud deployments</a> and <a href="https://learn.microsoft.com/entra/identity-platform/authentication-national-cloud">National clouds</a>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/nationalclouds.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

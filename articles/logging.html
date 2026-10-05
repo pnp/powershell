@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Logging and tracing | PnP PowerShell </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Logging and tracing | PnP PowerShell ">
+      <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+      
+      <link rel="icon" href="../images/favicon-pnp.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pnp/powershell/blob/dev/pages/articles/logging.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="PnP PowerShell">
+            PnP PowerShell
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="logging-and-tracing">Logging and tracing</h1>
+
+<p>PnP PowerShell can keep a trace log of what it does: the start and end of every cmdlet, the Microsoft Graph and REST requests it sends, the <a href="throttling.html">retries after throttling</a>, and the warnings and errors it runs into. The trace log also holds messages that <code>-Verbose</code> does not show, such as a permission scope missing from the access token. It is the first thing to turn on when a cmdlet does not behave as expected.</p>
+<h2 id="starting-the-trace-log">Starting the trace log</h2>
+<p><a href="../cmdlets/Start-PnPTraceLog.html">Start-PnPTraceLog</a> writes the log to one or more targets:</p>
+<pre><code class="lang-powershell"># Keep the entries in memory, to read them as objects with Get-PnPTraceLog
+Start-PnPTraceLog -WriteToLogStream -Level Debug
+
+# Append the entries to a file
+Start-PnPTraceLog -Path ./pnp.log -Level Debug
+
+# Write the entries to the console
+Start-PnPTraceLog -WriteToConsole
+</code></pre>
+<p>The targets can be combined. Starting a target that is already running replaces it, which for <code>-WriteToLogStream</code> discards the entries kept so far.</p>
+<p><code>-Level</code> sets which entries are written, for all targets at once:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Writes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Debug</code></td>
+<td>everything, including each cmdlet as it was called and each Microsoft Graph and REST request sent</td>
+</tr>
+<tr>
+<td><code>Information</code></td>
+<td>retries and other progress messages, plus warnings and errors (the default)</td>
+</tr>
+<tr>
+<td><code>Warning</code></td>
+<td>warnings and errors</td>
+</tr>
+<tr>
+<td><code>Error</code></td>
+<td>errors only</td>
+</tr>
+</tbody>
+</table>
+<p>The trace log is kept for the whole PowerShell process. It is not affected by <code>Connect-PnPOnline</code> or <code>Disconnect-PnPOnline</code>, and entries from <code>ForEach-Object -Parallel</code> script blocks end up in the same log.</p>
+<h2 id="reading-the-trace-log">Reading the trace log</h2>
+<p><a href="../cmdlets/Get-PnPTraceLog.html">Get-PnPTraceLog</a> returns the entries kept in memory as objects with, among others, a <code>TimeStamp</code>, <code>Source</code>, <code>Level</code> and <code>Message</code>:</p>
+<pre><code class="lang-powershell">Get-PnPTraceLog | Where-Object Level -eq Error
+</code></pre>
+<p>A log file is plain text with the fields of each entry separated by tabs, and can be read with <code>Get-Content</code> while it is still being written. <a href="../cmdlets/Clear-PnPTraceLog.html">Clear-PnPTraceLog</a> empties the entries kept in memory.</p>
+<h2 id="adding-your-own-entries">Adding your own entries</h2>
+<p><a href="../cmdlets/Write-PnPTraceLog.html">Write-PnPTraceLog</a> adds entries from your script, so they appear in order with those of PnP PowerShell:</p>
+<pre><code class="lang-powershell">Write-PnPTraceLog -Message &quot;Processing site $siteUrl&quot; -Source &quot;SiteInventory&quot; -Level Information
+</code></pre>
+<p>Besides the trace log, an entry is also written to the matching PowerShell stream: a <code>Warning</code> entry shows as a warning, and an <code>Error</code> entry is written as an error, which stops a script running with <code>$ErrorActionPreference = 'Stop'</code>.</p>
+<h2 id="stopping-the-trace-log">Stopping the trace log</h2>
+<p><a href="../cmdlets/Stop-PnPTraceLog.html">Stop-PnPTraceLog</a> stops every target unless told otherwise. To stop writing to a file and the console, but keep the entries in memory available to <code>Get-PnPTraceLog</code>:</p>
+<pre><code class="lang-powershell">Stop-PnPTraceLog -StopLogStreamLogging:$false
+</code></pre>
+<h2 id="the-trace-log-and--verbose">The trace log and -Verbose</h2>
+<p>Entries written at the <code>Debug</code> level by the cmdlets themselves also appear when a cmdlet runs with <code>-Verbose</code>, whether the trace log is started or not. The other entries, which include the requests sent, the retries and the permission checks, appear only in the trace log.</p>
+<h2 id="secrets-in-the-trace-log">Secrets in the trace log</h2>
+<p>At the <code>Debug</code> level, each cmdlet is logged as it was typed. A client secret or password typed into the command appears in the log as is, while one passed in a variable appears as the variable name. The access tokens PnP PowerShell acquires are not logged. Treat a debug log as sensitive, and pass secrets in variables.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/logging.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

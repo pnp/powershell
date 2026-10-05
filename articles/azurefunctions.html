@@ -101,7 +101,7 @@
 <p><img src="../images/azurefunctions/createresource.png" alt="Creating an Azure resource"></p>
 <p><img src="../images/azurefunctions/createfunctionappresource.png" alt="Creating a function app resource"></p>
 </li>
-<li><p>Choose runtime stack <code>PowerShell Core</code> and version <code>7.4</code> (7.0 is not longer an option as of December 3rd, 2022)</p>
+<li><p>Choose runtime stack <code>PowerShell Core</code> and version <code>7.6</code>. PnP PowerShell 3.x requires PowerShell 7.4 or later, and PowerShell 7.4 reaches end of support on 10 November 2026. The Linux Consumption plan does not offer 7.6; use the Flex Consumption plan instead.</p>
 <p><img src="../images/azurefunctions/createfunctionappbasics2.png" alt="Create function app basics"></p>
 </li>
 <li><p>Select <code>Windows</code> as the operating system or else you will not be able to perform the following steps from your browser.</p>
@@ -140,33 +140,33 @@
 <p><img src="../images/azurefunctions/functionappappfilesdropdown.png" alt="Navigate to requirements.psd1"></p>
 </li>
 <li><p>Add a new entry or replace the whole contents of the file with one of the following and remember to save the <code>requirements.psd1</code> file:</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The Flex Consumption plan does not install the modules listed in <code>requirements.psd1</code>. On that plan, include PnP PowerShell in your app content instead, as described in <a href="https://learn.microsoft.com/azure/azure-functions/functions-reference-powershell#including-modules-in-app-content">Including modules in app content</a>.</p>
+</div>
 </li>
 </ol>
 <h4 id="specific-stable-version">Specific stable version</h4>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>PnP PowerShell version 2 or later is required for this to work</p>
+<p>Use PnP PowerShell 3.4.0 or later. Earlier versions can fail in <code>Connect-PnPOnline</code> with <code>Method not found: 'Microsoft.Extensions.DependencyInjection.IServiceCollection Microsoft.Extensions.DependencyInjection.OptionsServiceCollectionExtensions.AddOptions(...)'</code> on current Azure Functions hosts, see <a href="https://github.com/pnp/powershell/issues/5350">#5350</a>.</p>
 </div>
 <pre><code class="lang-powershell">@{
-    'PnP.PowerShell' = '2.12.0'
+    'PnP.PowerShell' = '3.4.1'
 }
 </code></pre>
 <p>The version that will be installed will be the specified specific build, which is generally recommended. You build and test your Azure Function against this specific PnP PowerShell version. Future releases may work differently and cause issues, therefore it is generally recommended to specify a specific version here.</p>
 <h4 id="latest-stable-version">Latest stable version</h4>
-<div class="IMPORTANT">
-<h5>Important</h5>
-<p>PnP PowerShell version 2 or later is required for this to work</p>
-</div>
 <p>If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version (not recommended):</p>
 <pre><code class="lang-powershell">@{
-    'PnP.PowerShell' = '2.*'
+    'PnP.PowerShell' = '3.*'
  }
 </code></pre>
-<p>This will then automatically download any minor version of the major 1 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.</p>
+<p>This will then automatically download any minor version of the major 3 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.</p>
 <h4 id="specific-prerelease-version">Specific prerelease version</h4>
 <p>If you wish to use a specific prerelease/nightly build version, go to the <a href="https://www.powershellgallery.com/packages/PnP.PowerShell">overview of available versions</a> and literally copy/paste the version in the definition, i.e.:</p>
 <pre><code class="lang-powershell">@{
-    'PnP.PowerShell' = '2.99.50-nightly'
+    'PnP.PowerShell' = '3.4.46-nightly'
  }
 </code></pre>
 <p><img src="../images/azurefunctions/addpnpposhtoappfilerequirements.png" alt="Adding PnP PowerShell to the requirements.psd1 file in an Azure Function"></p>

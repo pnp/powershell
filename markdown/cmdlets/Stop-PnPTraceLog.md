@@ -1,13 +1,12 @@
 ---
-tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
+title: Stop-PnPTraceLog
+schema: 2.0.0
+applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Stop-PnPTraceLog.html
-Module Name: PnP.PowerShell
-applicable: SharePoint Online
-schema: 2.0.0
-title: Stop-PnPTraceLog
 ---
-  
+ 
 # Stop-PnPTraceLog
 
 ## SYNOPSIS
@@ -20,7 +19,7 @@ Stop-PnPTraceLog [-StopFileLogging <SwitchParameter>] [-StopConsoleLogging <Swit
 ```
 
 ## DESCRIPTION
-Stops PnP PowerShell tracelogging to specific targets. By default, all logging is stopped. You can use the parameters to stop specific logging targets only.
+Stops PnP PowerShell tracelogging to specific targets. By default, all logging is stopped, also when you only provide one of the parameters, as each of them defaults to `$true`. To keep logging to a target, set its parameter to `$false`, i.e. `-StopLogStreamLogging:$false`.
 
 You can turn on the trace log with [Start-PnPTraceLog](Start-PnPTraceLog.md).
 You can look at the logged data using [Get-PnPTraceLog](Get-PnPTraceLog.md).
@@ -34,19 +33,17 @@ Stop-PnPTraceLog
 
 This turns off all trace logging
 
-## EXAMPLES
-
 ### EXAMPLE 2
 ```powershell
-Stop-PnPTraceLog -StopFileLogging -StopConsoleLogging
+Stop-PnPTraceLog -StopLogStreamLogging:$false
 ```
 
-This turns off trace logging to file and console, but keeps the other logging options active.
+This turns off trace logging to file and console, but keeps logging to the in memory log stream active.
 
 ## PARAMETERS
 
 ### -StopConsoleLogging
-Allows you to specifically stop logging to the console while keeping the other logging options active.
+Stops logging to the console. Set it to `$false` to keep logging to the console.
 
 ```yaml
 Type: SwitchParameter
@@ -60,7 +57,7 @@ Accept wildcard characters: False
 ```
 
 ### -StopFileLogging
-Allows you to specifically stop logging to a file while keeping the other logging options active.
+Stops logging to a file. Set it to `$false` to keep logging to a file.
 
 ```yaml
 Type: SwitchParameter
@@ -74,7 +71,7 @@ Accept wildcard characters: False
 ```
 
 ### -StopLogStreamLogging
-Allows you to specifically stop logging to the in memory log stream while keeping the other logging options active.
+Stops logging to the in memory log stream. Set it to `$false` to keep logging to the in memory log stream.
 
 ```yaml
 Type: SwitchParameter
@@ -90,4 +87,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

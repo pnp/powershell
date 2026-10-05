@@ -102,6 +102,7 @@
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to retrieve unified audit logs from the Office 365 Management API.</p>
+<p>The cmdlet calls the Office 365 Management API of the cloud you connected to with <code>Connect-PnPOnline -AzureEnvironment</code>: <code>manage-gcc.office.com</code> for <code>USGovernment</code>, <code>manage.office365.us</code> for <code>USGovernmentHigh</code>, <code>manage.protection.apps.mil</code> for <code>USGovernmentDoD</code>, and <code>manage.office.com</code> for any other value.</p>
 <h3 id="prerequisites">Prerequisites</h3>
 <p>Your Entra app registration must have one or more of the following delegated or application permissions from the Office 365 Management API. To add this permission using Azure CLI:</p>
 <pre><code class="lang-bash"># ActivityFeed.Read - Read activity data for your organization

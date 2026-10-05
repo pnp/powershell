@@ -1,13 +1,12 @@
 ---
-title: Connect-PnPOnline
-tags: Available in the current Nightly Release only.
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html
 Module Name: PnP.PowerShell
+schema: 2.0.0
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html
 external help file: PnP.PowerShell.dll-Help.xml
+title: Connect-PnPOnline
 ---
- 
+
 # Connect-PnPOnline
 
 ## SYNOPSIS
@@ -75,22 +74,22 @@ Connect-PnPOnline -Url <String> -AccessToken <String> [-AzureEnvironment <AzureE
 
 ### System Assigned Managed Identity
 ```powershell
-Connect-PnPOnline [-Url <String>] -ManagedIdentity [-ReturnConnection]
+Connect-PnPOnline [-Url <String>] -ManagedIdentity [-AzureEnvironment <AzureEnvironment>] [-ReturnConnection]
 ```
 
 ### User Assigned Managed Identity by Client Id
 ```powershell
-Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityClientId <String> [-ReturnConnection]
+Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityClientId <String> [-AzureEnvironment <AzureEnvironment>] [-ReturnConnection]
 ```
 
 ### User Assigned Managed Identity by Principal Id
 ```powershell
-Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityObjectId <String> [-ReturnConnection]
+Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityObjectId <String> [-AzureEnvironment <AzureEnvironment>] [-ReturnConnection]
 ```
 
 ### User Assigned Managed Identity by Azure Resource Id
 ```powershell
-Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityAzureResourceId <String> [-ReturnConnection]
+Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityAzureResourceId <String> [-AzureEnvironment <AzureEnvironment>] [-ReturnConnection]
 ```
 
 ### Environment Variable
@@ -104,7 +103,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> -EnvironmentVariable [-Per
 ### Azure AD Workload Identity
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-ValidateConnection] [-Url] <String>
- [-AzureADWorkloadIdentity] [-Connection <PnPConnection>]
+ [-AzureADWorkloadIdentity] [-AzureEnvironment <AzureEnvironment>] [-MicrosoftGraphEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
 ### OS login
@@ -350,7 +349,7 @@ The Azure environment to use for authentication, the defaults to 'Production' wh
 
 ```yaml
 Type: AzureEnvironment
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Managed Identity, Federated Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, OS login, System Assigned Managed Identity, User Assigned Managed Identity by Client Id, User Assigned Managed Identity by Principal Id, User Assigned Managed Identity by Azure Resource Id, Federated Identity, Azure AD Workload Identity
 Aliases:
 Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD, BleuCloud, DelosCloud, GovSGCloud, Custom
 
@@ -837,7 +836,7 @@ Custom Microsoft Graph endpoint to be used if we are using Azure Custom environm
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Federated Identity, OS Login
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, OS login, System Assigned Managed Identity, User Assigned Managed Identity by Client Id, User Assigned Managed Identity by Principal Id, User Assigned Managed Identity by Azure Resource Id, Federated Identity, Azure AD Workload Identity
 Aliases:
 
 Required: False
@@ -852,7 +851,7 @@ Custom Azure AD login endpoint to be used if we are using Azure Custom environme
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Federated Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, OS login, System Assigned Managed Identity, User Assigned Managed Identity by Client Id, User Assigned Managed Identity by Principal Id, User Assigned Managed Identity by Azure Resource Id, Federated Identity
 Aliases:
 
 Required: False
@@ -943,4 +942,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

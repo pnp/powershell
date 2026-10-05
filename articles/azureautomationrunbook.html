@@ -107,48 +107,23 @@
 <h2 id="configure-the-azure-automation-account">Configure the Azure Automation Account</h2>
 <p>Now your Azure Automation Account has been created, proceed with the next paragraphs to configure it for using PnP PowerShell.</p>
 <h3 id="add-the-pnp-powershell-module-to-the-azure-automation-account">Add the PnP PowerShell module to the Azure Automation Account</h3>
+<p>PnP PowerShell 3.x requires PowerShell 7.4 or later, so it runs on the PowerShell 7.4 and 7.6 runtime versions of Azure Automation. These are only available through a <a href="https://learn.microsoft.com/azure/automation/runtime-environment-overview">Runtime environment</a>. The PowerShell 7.1 and 7.2 runtime versions, which only run PnP PowerShell 2.12.0 or older, are no longer supported by Azure Automation since 30 September 2026. PowerShell 7.4 itself reaches end of support on 10 November 2026, so use 7.6 for new runbooks.</p>
 <p>To add PnP PowerShell to the Azure Automation Account, follow these steps:</p>
 <ol>
-<li><p>Navigate to <code>Modules</code> which is located the left side menu of the function app under the <code>Shared Resources</code> header.</p>
-<p><img src="../images/azureautomation/automationaccountmodulesmenu.png" alt="Navigate to modules"></p>
+<li><p>In your Azure Automation Account, select <strong>Runtime Environments</strong> under <strong>Process Automation</strong>. If it is not there, first select <strong>Try Runtime environment experience</strong> on the <strong>Overview</strong> page.</p>
 </li>
-<li><p>Click on <strong>Add a module</strong> at the top of the screen</p>
-<p><img src="../images/azureautomation/automationaddmodule.png" alt="Add a module"></p>
-<p>Choose from the following options:</p>
+<li><p>Select <strong>Create</strong>, enter a name for the Runtime environment, select <strong>PowerShell</strong> as the <strong>Language</strong> and <strong>7.6</strong> as the <strong>Runtime version</strong>, and select <strong>Next</strong>.</p>
+</li>
+<li><p>On the <strong>Packages</strong> tab, add PnP PowerShell using one of the following options, then select <strong>Next</strong> and <strong>Create</strong>. Importing the module can take several minutes.</p>
 </li>
 </ol>
-<h4 id="specific-stable-version">Specific stable version</h4>
-<div class="IMPORTANT">
-<h5>Important</h5>
-<p>Currently the only stable PnP PowerShell version that works with Azure Automation 7.2 Runbooks is <strong>2.12.0</strong>. Later versions are currently not supported.
-If you would like to use a <a href="#latest-prerelease-version">latest nightly build</a> instead, use the below instructions</p>
-</div>
-<p>Select <strong>Browse from gallery</strong>, Runtime version <strong>7.2 (recommended)</strong> and click on the <strong>Click here to browse from gallery</strong> link</p>
-<p><img src="../images/azureautomation/addmodulefromgallery.png" alt="Add a module"></p>
-<p>Search for PnP PowerShell and select the first result.</p>
-<p><img src="../images/azureautomation/automationaddmodulepnpposh.png" alt="Add the PnP PowerShell module"></p>
-<p>Click on <strong>Select</strong> to confirm.</p>
-<p><img src="../images/azureautomation/automationaddmodulepnpposhconfirm.png" alt="Confirm adding the PnP PowerShell module"></p>
-<p>Click on <strong>Import</strong> to start the download and importing process.</p>
-<p><img src="../images/azureautomation/automationaddmodulepnpposhimport.png" alt="Start importing the PnP PowerShell module"></p>
-<p>It will take up to 10 minutes for the import to complete. You can check the import status by changing the <strong>Module type</strong> filter to <strong>Custom</strong>.</p>
-<p><img src="../images/azureautomation/automationaddmodulepnpposhstatus.png" alt="Check the import status"></p>
-<p>Once it's done, it will show the status <strong>Available</strong></p>
-<p><img src="../images/azureautomation/automationaddmodulepnpposhdone.png" alt="Import done"></p>
+<h4 id="stable-version">Stable version</h4>
+<p>Select <strong>Add from gallery</strong>, search for <strong>PnP.PowerShell</strong> and select it.</p>
 <h4 id="latest-prerelease-version">Latest prerelease version</h4>
 <p>If you wish to use the latest prerelease/nightly build version, open up a PowerShell 7 console and execute:</p>
 <pre><code class="lang-powershell">Save-Module PnP.PowerShell -AllowPrerelease -Path c:\temp
 </code></pre>
-<p><img src="../images/azureautomation/pwshdownloadcustombuild.png" alt="Download the PnP PowerShell package"></p>
-<p>Using Windows File Explorer, go to the folder where you downloaded the PnP PowerShell package. You should see a folder called <code>PnP.PowerShell</code> in there. Right click on it and choose the option <strong>Compress to ZIP file</strong>.</p>
-<p><img src="../images/azureautomation/explorerzipcustombuild.png" alt="Compress the PnP PowerShell package"></p>
-<p>Select <strong>Browse for file</strong>, Runtime version <strong>7.2 (recommended)</strong> and click on the folder icon next to <strong>Powershell module file</strong> and select the zipped up PnP.PowerShell.zip file generated in the previous step.</p>
-<p><img src="../images/azureautomation/addmodulefromgallerycustombuild.png" alt="Upload module file"></p>
-<p>Click on <strong>Import</strong> to start the download and importing process.</p>
-<p>It will take up to 10 minutes for the import to complete. You can check the import status by changing the <strong>Module type</strong> filter to <strong>Custom</strong>.</p>
-<p><img src="../images/azureautomation/automationaddmodulepnpposhcustombuildstatus.png" alt="Check the import status"></p>
-<p>Once it's done, it will show the status <strong>Available</strong></p>
-<p><img src="../images/azureautomation/automationaddmodulepnpposhcustomdone.png" alt="Import done"></p>
+<p>This creates a folder <code>c:\temp\PnP.PowerShell</code> holding a folder named after the version number. Rename that version folder to <code>PnP.PowerShell</code>, as Azure Automation only imports a module from a folder that has the name of the module, and compress it into a ZIP file. Select <strong>Add a file</strong> and select the ZIP file.</p>
 <h2 id="decide-how-you-want-to-authenticate-in-your-azure-automation-runbooks">Decide how you want to authenticate in your Azure Automation Runbooks</h2>
 <h3 id="by-using-a-managed-identity">By using a Managed Identity</h3>
 <p>The recommended option is to use a <a href="https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview">managed identity in Azure</a> to allow your Azure Automation Runbook to connect to Microsoft Graph or SharePoint Online using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Runbook to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Since version 1.11.95-nightly, Managed Identities are both supported against SharePoint Online as well as Microsoft Graph cmdlets. Before this version, only Microsoft Graph was being supported.</p>
@@ -185,8 +160,7 @@ Add-PnPAzureADServicePrincipalAppRole -Principal &quot;mymanagedidentity&quot; -
 <li><p>Click on <strong>Create a runbook</strong> at the top of the screen</p>
 <p><img src="../images/azureautomation/azureportaladdrunbookoption.png" alt="Create a Runbook"></p>
 </li>
-<li><p>Give the Runbook a name, select the Runbook type <strong>PowerShell</strong> and for the Runtime version choose <strong>7.2 (recommended)</strong> and click on <strong>Create</strong> at the bottom left.</p>
-<p><img src="../images/azureautomation/azureportalcreaterunbook.png" alt="Provide Runbook creation paramters"></p>
+<li><p>Give the Runbook a name, select the Runbook type <strong>PowerShell</strong>, select the Runtime environment you created in which PnP PowerShell has been added and click on <strong>Create</strong> at the bottom left.</p>
 </li>
 <li><p>On the Edit PowerShell Runbook page, enter your PnP PowerShell code in the large white area, i.e.:</p>
 <pre><code class="lang-powershell">Connect-PnPOnline tenant.sharepoint.com -ManagedIdentity

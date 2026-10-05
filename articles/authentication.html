@@ -172,11 +172,11 @@ Set-Secret -Name &quot;yourlabel&quot; -Secret (Get-Credential)
 <pre><code class="lang-powershell">Connect-PnPOnline [yourtenant].sharepoint.com -ClientId &lt;client id of your Entra ID Application Registration&gt; -Credentials (Get-Secret -Name &quot;yourlabel&quot;)
 </code></pre>
 <h2 id="authentication-to-gcc-or-national-cloud-environments">Authentication to GCC or National Cloud environments</h2>
-<p>In order to connect to a GCC or a national cloud environment, ensure you have followed the <a href="#special-instructions-for-gcc-or-national-cloud-environments">specific steps for setting up the application registration for national clouds</a>.</p>
+<p>In order to connect to a GCC or a national cloud environment, ensure you have followed the <a href="registerapplication.html#special-instructions-for-gcc-or-national-cloud-environments">specific steps for setting up the application registration for national clouds</a>.</p>
 <p>Connecting can be done using:</p>
-<pre><code class="lang-powershell">Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China|BleuCloud|DelosCloud|GovSGCloud]
+<pre><code class="lang-powershell">Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|China|BleuCloud|DelosCloud|GovSGCloud]
 </code></pre>
-<p>The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.</p>
+<p>The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment. For what each value changes, the sign in methods it applies to, and how to provide the endpoints of another cloud with <code>Custom</code>, see <a href="nationalclouds.html">National and sovereign clouds</a>.</p>
 <h2 id="silent-authentication-with-credentials-for-running-in-pipelines">Silent Authentication with Credentials for running in Pipelines</h2>
 <p>For running <code>Connect-PnPOnline</code> with user credentials in Azure DevOps pipeline, you need to make sure that authentication in your Entra ID application is configured to allow public client.</p>
 <p>Public client can be configured from the Azure portal from the Authentication Blade in the application or by setting the <code>allowPublicClient</code> property in the application's manifest to true.

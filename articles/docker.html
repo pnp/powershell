@@ -169,11 +169,11 @@ newgrp docker
 <h2 id="using-pnppowershell">Using PnP.PowerShell</h2>
 <p>If you want to run PnP.PowerShell commands interactively:</p>
 <ul>
-<li><p>Latest stable version (i.e. 3.1.0)</p>
+<li><p>Latest stable version</p>
 <pre><code class="lang-bash">docker run --rm -it m365pnp/powershell:latest
 </code></pre>
 </li>
-<li><p>Latest nightly version (i.e. 3.1.127-nightly)</p>
+<li><p>Latest nightly version</p>
 <pre><code class="lang-bash">docker run --rm -it m365pnp/powershell:nightly
 </code></pre>
 </li>
@@ -193,7 +193,7 @@ newgrp docker
 <h2 id="featured-tags">Featured tags</h2>
 <h3 id="latest">Latest</h3>
 <ul>
-<li><p>latest: The latest stable image (i.e. 3.1.0)</p>
+<li><p>latest: The latest stable image</p>
 <ul>
 <li><code>docker pull m365pnp/powershell:stable</code> or <code>docker pull m365pnp/powershell:latest</code> or even more simple just <code>docker pull m365pnp/powershell</code></li>
 </ul>
@@ -201,7 +201,7 @@ newgrp docker
 </ul>
 <h3 id="nightly">Nightly</h3>
 <ul>
-<li><p>nightly: The latest nightly image (i.e. 3.1.127-nightly)</p>
+<li><p>nightly: The latest nightly image</p>
 <ul>
 <li><code>docker pull m365pnp/powershell:nightly</code></li>
 </ul>
@@ -212,10 +212,10 @@ newgrp docker
 <p><code>&lt;version&gt;[-nightly/-stable]-&lt;architecture&gt;</code></p>
 <p>Currently supported architectures:</p>
 <ul>
-<li><a href="/pnp/powershell/blob/dev/docker/windows-amd64.dockerfile">windows-amd64</a>: Windows NanoServer LTSC 2025 64 bits</li>
-<li><a href="/pnp/powershell/blob/dev/docker/linux-arm32.dockerfile">linux-arm32</a>: .NET 9 SDK 32 bit (i.e. Raspberry Pi 2 v1.1 or older running 32 bits Linux)</li>
-<li><a href="/pnp/powershell/blob/dev/docker/linux-arm64.dockerfile">linux-arm64</a>: Linux Debian Bullseye Slim 64 bits for ARM devices (i.e. Raspberry Pi 2 v1.2 or later running 64 bits Linux)</li>
-<li><a href="/pnp/powershell/blob/dev/docker/linux-amd64.dockerfile">linux-amd64</a>: Alpine 64 bits</li>
+<li><a href="https://github.com/pnp/powershell/blob/dev/docker/windows-amd64.dockerfile">windows-amd64</a>: Windows NanoServer LTSC 2025 64 bits</li>
+<li><a href="https://github.com/pnp/powershell/blob/dev/docker/linux-arm32.dockerfile">linux-arm32v7</a>: Linux Debian Bookworm Slim 32 bits for ARM devices (i.e. Raspberry Pi 2 v1.1 or older running 32 bits Linux). This image installs PnP PowerShell from the PowerShell Gallery each time a container starts</li>
+<li><a href="https://github.com/pnp/powershell/blob/dev/docker/linux-arm64.dockerfile">linux-arm64</a>: Linux Debian Bookworm Slim 64 bits for ARM devices (i.e. Raspberry Pi 2 v1.2 or later running 64 bits Linux)</li>
+<li><a href="https://github.com/pnp/powershell/blob/dev/docker/linux-amd64.dockerfile">linux-amd64</a>: Alpine 64 bits</li>
 </ul>
 <p>Tag name examples:</p>
 <ul>
