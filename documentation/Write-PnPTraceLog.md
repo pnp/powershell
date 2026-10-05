@@ -85,7 +85,7 @@ Accept wildcard characters: False
 ```
 
 ### -Level
-The level to log your message under. Options are: Debug, Information, Warning and Error. It will log it both to the default PowerShell its logging equivallent such as Write-Warning, Write-Error, Write-Verbose, and to the PnPTraceLog logging. If not provided, it will default to Information.
+The level to log your message under. Options are: Debug, Information, Warning and Error. It will log it both to the default PowerShell its logging equivalent such as Write-Warning, Write-Error, Write-Verbose, and to the PnPTraceLog logging. If not provided, it will default to Information.
 
 ```yaml
 Type: Framework.Diagnostics.LogLevel
