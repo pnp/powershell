@@ -93,7 +93,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             var extension = new FileInfo(Path).Extension.ToLowerInvariant();
             if (extension == ".pnp")
             {
-                XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(Path, fileSystemConnector));
+                XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(PnPPackageConnector.OpenFramework(Path, fileSystemConnector));
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 
                 provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);

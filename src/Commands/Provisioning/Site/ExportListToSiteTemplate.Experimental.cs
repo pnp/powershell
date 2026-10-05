@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 Handlers = { ConfigurationHandler.Lists },
                 FileConnector = extension == ".pnp"
-                    ? new OpenXMLConnector(packageName, fileSystemConnector)
+                    ? PnPPackageConnector.OpenCore(packageName, fileSystemConnector)
                     : fileSystemConnector
             };
 
@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 }
             }
 
-            var reporter = new CoreProvisioningReporter($"Extracting lists from {PnPContext.Uri}", WriteProgress, LogWarning);
+            var reporter = new CoreProvisioningReporter($"Extracting lists from {PnPContext.Uri}", WriteProgress, LogWarning, StoppingToken);
             configuration.ProgressDelegate = reporter.ProgressDelegate;
             configuration.MessagesDelegate = reporter.MessagesDelegate;
 

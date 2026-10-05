@@ -97,7 +97,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             XMLTemplateProvider provider;
             if (isOpenOfficeFile)
             {
-                var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
+                var openXmlConnector = PnPPackageConnector.OpenFramework(templateFileName, fileConnector);
                 provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
                 if (!String.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
                 {

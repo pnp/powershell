@@ -26,6 +26,8 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         internal bool IsEmpty => frameworkTemplate == null && coreTemplate == null;
 
+        internal bool IsFrameworkTemplate => frameworkTemplate != null;
+
         internal FrameworkTemplate GetFrameworkTemplate()
         {
             if (frameworkTemplate != null)

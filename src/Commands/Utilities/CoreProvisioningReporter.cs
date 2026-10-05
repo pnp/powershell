@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Management.Automation;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Utilities
@@ -16,6 +17,9 @@ namespace PnP.PowerShell.Commands.Utilities
     /// and WriteWarning only from the pipeline thread. Callbacks are therefore queued, and
     /// <see cref="Run{T}(Func{Task{T}})"/> replays them on the pipeline thread while the engine runs.
     /// Call the engine through that method rather than blocking on the task yourself.
+    ///
+    /// The engine takes no cancellation token. When the cmdlet is stopped, the progress callbacks throw instead,
+    /// which ends the run at the next item or handler, and <see cref="Run{T}(Func{Task{T}})"/> waits for that.
     /// </summary>
     internal sealed class CoreProvisioningReporter
     {
@@ -24,6 +28,7 @@ namespace PnP.PowerShell.Commands.Utilities
         private readonly Action<ProgressRecord> writeProgress;
         private readonly Action<string> logWarning;
         private readonly string activity;
+        private readonly CancellationTokenSource cancellation;
 
         /// <summary>
         /// Creates a reporter for one run of the engine.
@@ -31,11 +36,13 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="activity">The activity shown on the main progress record</param>
         /// <param name="writeProgress">Writes a progress record, normally the cmdlet's WriteProgress</param>
         /// <param name="logWarning">Reports a warning, normally the cmdlet's LogWarning</param>
-        internal CoreProvisioningReporter(string activity, Action<ProgressRecord> writeProgress, Action<string> logWarning)
+        /// <param name="stoppingToken">Cancelled when the cmdlet is stopped, normally the cmdlet's StoppingToken</param>
+        internal CoreProvisioningReporter(string activity, Action<ProgressRecord> writeProgress, Action<string> logWarning, CancellationToken stoppingToken)
         {
             this.activity = string.IsNullOrWhiteSpace(activity) ? "Processing" : activity;
             this.writeProgress = writeProgress;
             this.logWarning = logWarning;
+            cancellation = CancellationTokenSource.CreateLinkedTokenSource(stoppingToken);
         }
 
         /// <summary>
@@ -43,6 +50,8 @@ namespace PnP.PowerShell.Commands.Utilities
         /// </summary>
         internal ProvisioningProgressDelegate ProgressDelegate => (message, step, total) =>
         {
+            cancellation.Token.ThrowIfCancellationRequested();
+
             if (string.IsNullOrWhiteSpace(message) || total == 0)
             {
                 return;
@@ -81,6 +90,8 @@ namespace PnP.PowerShell.Commands.Utilities
                     break;
 
                 case ProvisioningMessageType.Progress:
+                    // Handlers report this before each item they process, so throwing here ends the run before the next item.
+                    cancellation.Token.ThrowIfCancellationRequested();
                     var progressRecord = BuildSubProgressRecord(message);
                     pendingWrites.Add(() => writeProgress(progressRecord));
                     break;
@@ -105,21 +116,43 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 while (!task.IsCompleted)
                 {
-                    if (pendingWrites.TryTake(out var write, 100))
+                    if (pendingWrites.TryTake(out var write, 100) && !cancellation.IsCancellationRequested)
                     {
                         write();
                     }
                 }
-                while (pendingWrites.TryTake(out var remaining, 0))
+                while (!cancellation.IsCancellationRequested && pendingWrites.TryTake(out var remaining, 0))
                 {
                     remaining();
                 }
 
+                if (cancellation.IsCancellationRequested)
+                {
+                    throw new PipelineStoppedException();
+                }
                 return task.GetAwaiter().GetResult();
             }
             finally
             {
-                Complete();
+                // Once the pipeline is stopped the writes above throw. Stop the engine at its next item and wait for it,
+                // so it does not keep changing the site after the cmdlet has returned.
+                if (!task.IsCompleted)
+                {
+                    cancellation.Cancel();
+                    try
+                    {
+                        task.Wait();
+                    }
+                    catch (AggregateException)
+                    {
+                        // The engine stopped, most likely with the OperationCanceledException thrown by the callbacks
+                    }
+                }
+                if (!cancellation.IsCancellationRequested)
+                {
+                    Complete();
+                }
+                cancellation.Dispose();
             }
         }
 

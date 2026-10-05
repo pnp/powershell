@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Management.Automation;
 using System.Text;
 using FrameworkHandlers = PnP.Framework.Provisioning.Model.Handlers;
 using FrameworkSchemaVersion = PnP.Framework.Provisioning.Providers.Xml.XMLPnPSchemaVersion;
@@ -36,18 +37,43 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
-        /// Maps the flags of a -Handlers parameter onto the handler list of a PnP.Core.Provisioning configuration.
+        /// Combines the -Handlers and -ExcludeHandlers parameters into the handler list of a PnP.Core.Provisioning configuration
         /// </summary>
-        /// <param name="handlers">The handlers a cmdlet was given</param>
-        /// <returns>The matching configuration handlers. An empty list means every handler.</returns>
-        internal static List<ConfigurationHandler> ToConfigurationHandlers(FrameworkHandlers handlers)
+        /// <param name="handlers">The handlers passed to -Handlers, or null when it was not passed</param>
+        /// <param name="excludeHandlers">The handlers passed to -ExcludeHandlers, or null when it was not passed</param>
+        /// <param name="logWarning">Called when excluding Pages or PageContents excludes the other one as well</param>
+        /// <returns>The configuration handlers to process, which is never empty</returns>
+        internal static List<ConfigurationHandler> ToConfigurationHandlers(FrameworkHandlers? handlers, FrameworkHandlers? excludeHandlers, Action<string> logWarning)
         {
-            var configurationHandlers = new List<ConfigurationHandler>();
-            if (handlers.HasFlag(FrameworkHandlers.All))
+            var allConfigurationHandlers = (ConfigurationHandler[])Enum.GetValues(typeof(ConfigurationHandler));
+            var configurationHandlers = new HashSet<ConfigurationHandler>();
+            if (handlers.HasValue)
             {
-                return configurationHandlers;
+                configurationHandlers.UnionWith(MapHandlers(handlers.Value));
             }
 
+            if (excludeHandlers.HasValue)
+            {
+                configurationHandlers.UnionWith(allConfigurationHandlers.Except(MapHandlers(excludeHandlers.Value)));
+
+                var pageHandlers = FrameworkHandlers.Pages | FrameworkHandlers.PageContents;
+                var excludedPageHandlers = excludeHandlers.Value & pageHandlers;
+                if (excludedPageHandlers != FrameworkHandlers.None && excludedPageHandlers != pageHandlers && !configurationHandlers.Contains(ConfigurationHandler.Pages))
+                {
+                    logWarning?.Invoke($"The experimental PnP.Core.Provisioning engine handles Pages and PageContents with a single Pages handler, so excluding {excludedPageHandlers} excludes both.");
+                }
+            }
+
+            if (configurationHandlers.Count == 0)
+            {
+                throw new PSArgumentException("-Handlers and -ExcludeHandlers leave no handlers to run. The experimental PnP.Core.Provisioning engine runs every handler when it is given none, so at least one handler has to remain.");
+            }
+
+            return allConfigurationHandlers.Where(configurationHandlers.Contains).ToList();
+        }
+
+        private static IEnumerable<ConfigurationHandler> MapHandlers(FrameworkHandlers handlers)
+        {
             foreach (var handler in (FrameworkHandlers[])Enum.GetValues(typeof(FrameworkHandlers)))
             {
                 if (handler == FrameworkHandlers.All || handler == FrameworkHandlers.None || !handlers.HasFlag(handler))
@@ -57,37 +83,17 @@ namespace PnP.PowerShell.Commands.Utilities
 
                 if (handler == FrameworkHandlers.TermGroups)
                 {
-                    configurationHandlers.Add(ConfigurationHandler.Taxonomy);
+                    yield return ConfigurationHandler.Taxonomy;
                 }
                 else if (handler == FrameworkHandlers.PageContents)
                 {
-                    configurationHandlers.Add(ConfigurationHandler.Pages);
+                    yield return ConfigurationHandler.Pages;
                 }
                 else if (Enum.TryParse(handler.ToString(), out ConfigurationHandler configurationHandler))
                 {
-                    configurationHandlers.Add(configurationHandler);
+                    yield return configurationHandler;
                 }
             }
-
-            return configurationHandlers.Distinct().ToList();
-        }
-
-        /// <summary>
-        /// Inverts the flags of an -ExcludeHandlers parameter into the handlers to process.
-        /// </summary>
-        /// <param name="excludeHandlers">The handlers a cmdlet was told to exclude</param>
-        /// <returns>The handlers to process</returns>
-        internal static FrameworkHandlers InvertExcludedHandlers(FrameworkHandlers excludeHandlers)
-        {
-            var handlers = FrameworkHandlers.None;
-            foreach (var handler in (FrameworkHandlers[])Enum.GetValues(typeof(FrameworkHandlers)))
-            {
-                if (handler != FrameworkHandlers.All && handler != FrameworkHandlers.None && !excludeHandlers.HasFlag(handler))
-                {
-                    handlers |= handler;
-                }
-            }
-            return handlers;
         }
 
         /// <summary>
@@ -167,7 +173,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
 
             var packageConnector = template.Connector as OpenXMLConnector
-                ?? new OpenXMLConnector(templatePath, new FileSystemConnector(fileInfo.DirectoryName, string.Empty));
+                ?? PnPPackageConnector.OpenCore(templatePath, new FileSystemConnector(fileInfo.DirectoryName, string.Empty));
             var templateFileName = Path.GetFileNameWithoutExtension(templatePath) + ".xml";
             new XMLOpenXMLTemplateProvider(packageConnector).SaveAs(template, templateFileName, formatter);
         }
@@ -211,10 +217,15 @@ namespace PnP.PowerShell.Commands.Utilities
             }
 
             memoryStream.Position = 0;
-            var provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(memoryStream));
+            var provider = new XMLOpenXMLTemplateProvider(PnPPackageConnector.OpenCore(memoryStream));
             try
             {
-                return provider.GetTemplates();
+                var templates = provider.GetTemplates();
+                foreach (var template in templates)
+                {
+                    template.Connector = provider.Connector;
+                }
+                return templates;
             }
             catch (ApplicationException ex)
             {
@@ -297,7 +308,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
 
             memoryStream.Position = 0;
-            var provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(memoryStream));
+            var provider = new XMLOpenXMLTemplateProvider(PnPPackageConnector.OpenCore(memoryStream));
             try
             {
                 var hierarchy = provider.GetHierarchy();
@@ -365,7 +376,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 return new XMLFileSystemTemplateProvider(fileConnector.Parameters[FileConnectorBase.CONNECTIONSTRING] + string.Empty, string.Empty);
             }
 
-            var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
+            var openXmlConnector = PnPPackageConnector.OpenCore(templateFileName, fileConnector);
             templateFileName = !string.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName)
                 ? openXmlConnector.Info.Properties.TemplateFileName
                 : templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";

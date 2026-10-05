@@ -54,6 +54,8 @@
       href: extract-configuration.md
     - name: The apply configuration (using PnP Provisioning Engine)
       href: apply-configuration.md
+    - name: The experimental PnP.Core.Provisioning engine
+      href: experimental-provisioning.md
     - name: Upgrading from the Legacy version
       href: upgrading.md
     - name: Dealing with the ACS deprecation

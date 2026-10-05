@@ -90,7 +90,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             {
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
                 XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
-                      Out, fileSystemConnector, templateFileName: templateFileName);
+                      PnPPackageConnector.OpenFramework(Out, fileSystemConnector, templateFileName));
                 WriteObject("Processing template");
                 provider.SaveAs(templateObject, templateFileName, formatter);
                 ProcessFiles(templateObject, Out, fileSystemConnector, (message) =>

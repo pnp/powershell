@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
 
             var configuration = BuildApplyConfigurationExperimental();
-            var reporter = new CoreProvisioningReporter($"Applying template to {targetUri}", WriteProgress, LogWarning);
+            var reporter = new CoreProvisioningReporter($"Applying template to {targetUri}", WriteProgress, LogWarning, StoppingToken);
             configuration.ProgressDelegate = reporter.ProgressDelegate;
             configuration.MessagesDelegate = reporter.MessagesDelegate;
 
@@ -93,7 +93,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
 
             var inputTemplate = InputInstance?.GetCoreTemplate();
-            if (inputTemplate != null)
+            if (inputTemplate != null && (ResourceFolder != null || InputInstance.IsFrameworkTemplate))
             {
                 inputTemplate.Connector = ResolveResourceConnectorExperimental();
             }
@@ -124,7 +124,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             XMLTemplateProvider provider;
             if (isPackage)
             {
-                var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
+                var openXmlConnector = PnPPackageConnector.OpenCore(templateFileName, fileConnector);
                 templateFileName = !string.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName)
                     ? openXmlConnector.Info.Properties.TemplateFileName
                     : templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
@@ -224,14 +224,12 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         {
             var configuration = new ApplyConfiguration();
 
-            var handlers = this.Handlers;
-            if (ParameterSpecified(nameof(ExcludeHandlers)))
-            {
-                handlers |= CoreProvisioningHelper.InvertExcludedHandlers(this.ExcludeHandlers);
-            }
             if (ParameterSpecified(nameof(Handlers)) || ParameterSpecified(nameof(ExcludeHandlers)))
             {
-                configuration.Handlers = CoreProvisioningHelper.ToConfigurationHandlers(handlers);
+                configuration.Handlers = CoreProvisioningHelper.ToConfigurationHandlers(
+                    ParameterSpecified(nameof(Handlers)) ? this.Handlers : null,
+                    ParameterSpecified(nameof(ExcludeHandlers)) ? this.ExcludeHandlers : null,
+                    LogWarning);
             }
 
             if (ExtensibilityHandlers != null)

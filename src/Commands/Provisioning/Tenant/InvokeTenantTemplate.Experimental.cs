@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 }
             };
 
-            var reporter = new CoreProvisioningReporter("Applying template to tenant", WriteProgress, LogWarning);
+            var reporter = new CoreProvisioningReporter("Applying template to tenant", WriteProgress, LogWarning, StoppingToken);
             configuration.ProgressDelegate = reporter.ProgressDelegate;
             configuration.MessagesDelegate = reporter.MessagesDelegate;
 
@@ -98,7 +98,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             }
 
             var hierarchy = Template?.GetCoreHierarchy();
-            if (hierarchy != null)
+            if (hierarchy != null && (ResourceFolder != null || Template.IsFrameworkHierarchy))
             {
                 hierarchy.Connector = ResolveResourceConnectorExperimental();
             }
@@ -134,14 +134,12 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 ? Configuration.GetCoreConfiguration(SessionState.Path.CurrentFileSystemLocation.Path, LogWarning)
                 : new ApplyConfiguration();
 
-            var handlers = this.Handlers;
-            if (ParameterSpecified(nameof(ExcludeHandlers)))
-            {
-                handlers |= CoreProvisioningHelper.InvertExcludedHandlers(this.ExcludeHandlers);
-            }
             if (ParameterSpecified(nameof(Handlers)) || ParameterSpecified(nameof(ExcludeHandlers)))
             {
-                configuration.Handlers = CoreProvisioningHelper.ToConfigurationHandlers(handlers);
+                configuration.Handlers = CoreProvisioningHelper.ToConfigurationHandlers(
+                    ParameterSpecified(nameof(Handlers)) ? this.Handlers : null,
+                    ParameterSpecified(nameof(ExcludeHandlers)) ? this.ExcludeHandlers : null,
+                    LogWarning);
             }
 
             if (ExtensibilityHandlers != null)

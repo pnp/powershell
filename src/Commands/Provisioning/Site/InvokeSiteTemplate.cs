@@ -175,7 +175,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 XMLTemplateProvider provider;
                 if (isOpenOfficeFile)
                 {
-                    var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
+                    var openXmlConnector = PnPPackageConnector.OpenFramework(templateFileName, fileConnector);
                     provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
                     if (!string.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
                     {
@@ -242,7 +242,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     if (isOpenOfficeFile)
                     {
                         LogDebug("Package is a .pnp package file, loading template from provided stream");
-                        var openXmlConnector = new OpenXMLConnector(Stream);
+                        var openXmlConnector = PnPPackageConnector.OpenFramework(Stream);
                         var provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
 
                         var templates = ProvisioningHelper.LoadSiteTemplatesFromStream(Stream, TemplateProviderExtensions, LogError);

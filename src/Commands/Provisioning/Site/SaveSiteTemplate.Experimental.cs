@@ -49,7 +49,7 @@ namespace PnP.PowerShell.Commands.Provisioning
             }
 
             var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
-            new XMLOpenXMLTemplateProvider(Out, fileSystemConnector).SaveAs(templateObject, templateFileName, formatter);
+            new XMLOpenXMLTemplateProvider(PnPPackageConnector.OpenCore(Out, fileSystemConnector)).SaveAs(templateObject, templateFileName, formatter);
             ProcessFilesExperimental(templateObject, Out, fileSystemConnector);
         }
 

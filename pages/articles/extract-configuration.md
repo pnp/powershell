@@ -17,7 +17,7 @@ Get-PnPSiteTemplate -Out template.xml -Configuration '{ "handlers": [ "Lists" ] 
 
 A configuration which cannot be read is an error, not something that is passed over: a path which does not exist, JSON which cannot be parsed, a null anywhere in it, or a `handlers` array in which no name is recognized will all stop the cmdlet. A property or a handler name which is not recognized is reported as a warning and then ignored, so a configuration written for a newer version still applies the parts this version understands.
 
-For applying a template, see [The apply configuration](apply-configuration.md).
+For applying a template, see [The apply configuration](apply-configuration.md). For what changes with `-Experimental`, including the permissions it needs, see [The experimental PnP.Core.Provisioning engine](experimental-provisioning.md).
 
 ## Things which are easy to get wrong
 

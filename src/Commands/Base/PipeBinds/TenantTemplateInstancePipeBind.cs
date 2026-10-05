@@ -26,6 +26,8 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         internal bool IsEmpty => frameworkHierarchy == null && coreHierarchy == null;
 
+        internal bool IsFrameworkHierarchy => frameworkHierarchy != null;
+
         internal FrameworkHierarchy GetFrameworkHierarchy()
         {
             if (frameworkHierarchy != null)

@@ -55,7 +55,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         private ProvisioningHierarchy ExtractTemplateExperimental(ExtractConfiguration configuration)
         {
-            var reporter = new CoreProvisioningReporter("Extracting tenant template", WriteProgress, LogWarning);
+            var reporter = new CoreProvisioningReporter("Extracting tenant template", WriteProgress, LogWarning, StoppingToken);
             configuration.ProgressDelegate = reporter.ProgressDelegate;
             configuration.MessagesDelegate = reporter.MessagesDelegate;
 

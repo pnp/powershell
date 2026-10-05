@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             XMLTemplateProvider provider;
             if (isPackage)
             {
-                var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
+                var openXmlConnector = PnPPackageConnector.OpenCore(templateFileName, fileConnector);
                 templateFileName = !string.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName)
                     ? openXmlConnector.Info.Properties.TemplateFileName
                     : System.IO.Path.GetFileNameWithoutExtension(templateFileName) + ".xml";

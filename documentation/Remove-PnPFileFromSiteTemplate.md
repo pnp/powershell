@@ -35,7 +35,7 @@ Removes a file from an in-memory PnP Provisioning Template
 ## PARAMETERS
 
 ### -Experimental
-Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework.
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework. It needs more permissions than PnP Framework, and a .pnp package can only be opened by the engine that created it. See [The experimental PnP.Core.Provisioning engine](https://pnp.github.io/powershell/articles/experimental-provisioning.html).
 
 ```yaml
 Type: SwitchParameter

@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
             ApplyParametersToConfiguration(configuration, path, packageName, extension);
 
-            var reporter = new CoreProvisioningReporter($"Extracting template from {PnPContext.Uri}", WriteProgress, LogWarning);
+            var reporter = new CoreProvisioningReporter($"Extracting template from {PnPContext.Uri}", WriteProgress, LogWarning, StoppingToken);
             configuration.ProgressDelegate = reporter.ProgressDelegate;
             configuration.MessagesDelegate = reporter.MessagesDelegate;
 
@@ -111,17 +111,15 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         {
             var fileSystemConnector = new FileSystemConnector(path, string.Empty);
             configuration.FileConnector = extension == ".pnp"
-                ? new OpenXMLConnector(packageName, fileSystemConnector)
+                ? PnPPackageConnector.OpenCore(packageName, fileSystemConnector)
                 : fileSystemConnector;
 
-            var handlers = this.Handlers;
-            if (ParameterSpecified(nameof(ExcludeHandlers)))
-            {
-                handlers |= CoreProvisioningHelper.InvertExcludedHandlers(this.ExcludeHandlers);
-            }
             if (ParameterSpecified(nameof(Handlers)) || ParameterSpecified(nameof(ExcludeHandlers)))
             {
-                configuration.Handlers = CoreProvisioningHelper.ToConfigurationHandlers(handlers);
+                configuration.Handlers = CoreProvisioningHelper.ToConfigurationHandlers(
+                    ParameterSpecified(nameof(Handlers)) ? this.Handlers : null,
+                    ParameterSpecified(nameof(ExcludeHandlers)) ? this.ExcludeHandlers : null,
+                    LogWarning);
             }
 
             if (ParameterSpecified(nameof(PersistBrandingFiles)))

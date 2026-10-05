@@ -18,7 +18,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "PnPTenantTemplate")]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPTenantTemplate", DefaultParameterSetName = ParameterSet_OBJECT)]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public partial class InvokeTenantTemplate : PnPSharePointOnlineAdminCmdlet
     {

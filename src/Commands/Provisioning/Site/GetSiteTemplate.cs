@@ -205,7 +205,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             var fileSystemConnector = new FileSystemConnector(path, "");
             if (extension == ".pnp")
             {
-                creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector);
+                creationInformation.FileConnector = PnPPackageConnector.OpenFramework(packageName, fileSystemConnector);
             }
             else if (extension == ".md")
             {

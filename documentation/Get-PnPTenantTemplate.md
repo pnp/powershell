@@ -126,7 +126,7 @@ Accept wildcard characters: False
 ```
 
 ### -Experimental
-Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework. The site collections and teams are chosen by the `tenant` section of `-Configuration`, as they are without the switch.
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework. The site collections and teams are chosen by the `tenant` section of `-Configuration`, as they are without the switch. It needs more permissions than PnP Framework, and a .pnp package can only be opened by the engine that created it. See [The experimental PnP.Core.Provisioning engine](https://pnp.github.io/powershell/articles/experimental-provisioning.html).
 
 A site that cannot be extracted is reported as a warning and left out, rather than stopping the cmdlet. If nothing at all could be extracted, the cmdlet ends with a terminating error instead of writing an empty template. The engine does not create subsites when it applies a tenant template yet, so `includeSubsites` is not useful for a template you mean to apply with `Invoke-PnPTenantTemplate -Experimental`.
 
