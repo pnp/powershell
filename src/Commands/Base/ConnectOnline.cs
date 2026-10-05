@@ -191,6 +191,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FEDERATEDIDENTITY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY)]
         public Framework.AzureEnvironment AzureEnvironment = Framework.AzureEnvironment.Production;
 
         // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
@@ -255,6 +256,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FEDERATEDIDENTITY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY)]
         public string MicrosoftGraphEndPoint;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -695,7 +697,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             LogDebug("Connecting using a provided Access Token");
 
-            return PnPConnection.CreateWithAccessToken(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, AccessToken, TenantAdminUrl);
+            return PnPConnection.CreateWithAccessToken(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, AccessToken, TenantAdminUrl, AzureEnvironment);
         }
 
         /// <summary>
@@ -914,7 +916,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             LogDebug("Connecting using Entra ID Workload Identity");
 
-            return PnPConnection.CreateWithAzureADWorkloadIdentity(Url, TenantAdminUrl);
+            return PnPConnection.CreateWithAzureADWorkloadIdentity(Url, TenantAdminUrl, AzureEnvironment);
         }
 
         private PnPConnection ConnectWithOSLogin()

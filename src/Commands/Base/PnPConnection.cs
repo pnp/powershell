@@ -161,7 +161,7 @@ namespace PnP.PowerShell.Commands.Base
         #endregion
 
         #region Creators
-        internal static PnPConnection CreateWithAccessToken(Uri url, string accessToken, string tenantAdminUrl)
+        internal static PnPConnection CreateWithAccessToken(Uri url, string accessToken, string tenantAdminUrl, AzureEnvironment azureEnvironment)
         {
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
             {
@@ -183,6 +183,9 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.Token);
+                connection.AzureEnvironment = azureEnvironment;
+                // The token only AuthenticationManager backing this context carries no cloud, so its Graph endpoint would otherwise resolve to the commercial one.
+                connection._graphEndPoint = GetGraphEndPoint(azureEnvironment);
                 return connection;
             }
         }
@@ -513,6 +516,9 @@ namespace PnP.PowerShell.Commands.Base
                     UserAssignedManagedIdentityClientId = userAssignedManagedIdentityClientId,
                     UserAssignedManagedIdentityAzureResourceId = userAssignedManagedIdentityAzureResourceId,
                     ConnectionMethod = ConnectionMethod.ManagedIdentity,
+                    AzureEnvironment = azureEnvironment,
+                    // Without a url there is no context to derive the Graph endpoint from, so it would otherwise resolve to the commercial one.
+                    _graphEndPoint = GetGraphEndPoint(azureEnvironment),
                 };
                 return connection;
             }
@@ -709,10 +715,12 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="cmdlet">PowerShell instance hosting this execution</param>
         /// <param name="url">Url to the SharePoint Online site to connect to</param>
         /// <param name="tenantAdminUrl">Url to the SharePoint Online Admin Center site to connect to</param>
+        /// <param name="azureEnvironment">The cloud to connect to, which selects the Microsoft Graph endpoint</param>
         /// <returns>Instantiated PnPConnection</returns>
-        internal static PnPConnection CreateWithAzureADWorkloadIdentity(string url, string tenantAdminUrl)
+        internal static PnPConnection CreateWithAzureADWorkloadIdentity(string url, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            string defaultResource = "https://graph.microsoft.com/.default";
+            var graphEndPoint = GetGraphEndPoint(azureEnvironment);
+            string defaultResource = $"https://{graphEndPoint}/.default";
             if (url != null)
             {
                 var resourceUri = new Uri(url);
@@ -755,6 +763,9 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.AzureADWorkloadIdentity);
+                connection.AzureEnvironment = azureEnvironment;
+                // The token only AuthenticationManager backing this context carries no cloud, so its Graph endpoint would otherwise resolve to the commercial one.
+                connection._graphEndPoint = graphEndPoint;
                 return connection;
             }
         }

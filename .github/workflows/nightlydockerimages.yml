@@ -125,9 +125,9 @@ jobs:
           platforms: linux/arm/v7
           push: true
           tags: ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-arm32v7
-          # Optional: pass your own build args
-          # build-args: |
-          #   PNP_VERSION=${{ needs.compute-version.outputs.VERSION }}
+          # The image installs this version each time a container starts; without it, it falls back to the dockerfile's default
+          build-args: |
+            PNP_VERSION=${{ needs.compute-version.outputs.VERSION_NIGHTLY }}
 
   publish-docker-manifest:
     if: github.repository_owner == 'pnp'
