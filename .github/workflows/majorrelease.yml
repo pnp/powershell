@@ -13,7 +13,9 @@ jobs:
     permissions:
       id-token: write
       contents: write
-      
+
+    outputs:
+      version: ${{ steps.variables.outputs.BUILDVERSION }}
     steps:
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
@@ -24,6 +26,20 @@ jobs:
       with:
         ref: dev
         token: ${{ secrets.PAT }}
+    # The provenance names the commit the workflow run is for, so stop before publishing anything when that is not the commit checked out
+    - name: Check the commit to build
+      shell: pwsh
+      run: |
+        $head = git rev-parse HEAD
+        if ($head -ne $env:GITHUB_SHA) {
+          throw "dev is at $head, but this workflow run is for $env:GITHUB_SHA. Start the workflow from dev again."
+        }
+    - name: Install SBOM tool
+      shell: pwsh
+      run: |
+        $sbomToolPath = Join-Path $env:RUNNER_TEMP "sbom-tool"
+        dotnet tool install Microsoft.Sbom.DotNetTool --tool-path $sbomToolPath --version 4.1.13
+        "SBOM_TOOL_PATH=$sbomToolPath" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
     - name: Install Sign CLI tool
       shell: pwsh
       run: |
@@ -48,13 +64,73 @@ jobs:
       run: |
         ./build/Build-Release.ps1
     - name: Set variables
+      id: variables
       shell: pwsh
       run: |
           $version = Get-Content version.txt -raw
           "BUILDVERSION=$version" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
+          "BUILDVERSION=$version" | Out-File $env:GITHUB_OUTPUT -Encoding utf8 -Append
     - name: Add & Commit
       uses: EndBug/add-and-commit@v10
       with:
         message: 'Major release to PowerShell Gallery'
         tag: '${{env.BUILDVERSION}} --force'
         push: true
+    # The SBOM is generated here, as its packages are read from the restore this build used
+    - name: Package module and generate SBOM
+      shell: pwsh
+      run: |
+        $moduleFolder = Join-Path ([environment]::GetFolderPath("MyDocuments")) "PowerShell/Modules/PnP.PowerShell"
+        $releaseFolder = Join-Path $env:RUNNER_TEMP "release"
+        New-Item -Path $releaseFolder -ItemType Directory -Force | Out-Null
+        Compress-Archive -Path "$moduleFolder/*" -DestinationPath (Join-Path $releaseFolder "PnP.PowerShell-$env:BUILDVERSION.zip") -CompressionLevel Optimal
+        & (Join-Path $env:SBOM_TOOL_PATH "sbom-tool.exe") generate -b $moduleFolder -bc ./src/Commands -pn PnP.PowerShell -pv $env:BUILDVERSION -ps "Microsoft 365 Patterns and Practices" -nsb https://github.com/pnp/powershell -m $env:SBOM_TOOL_PATH
+        if ($LASTEXITCODE -ne 0) {
+          throw "Generating the SBOM failed"
+        }
+        Copy-Item -LiteralPath (Join-Path $env:SBOM_TOOL_PATH "_manifest/spdx_2.2/manifest.spdx.json") -Destination (Join-Path $releaseFolder "PnP.PowerShell-$env:BUILDVERSION.spdx.json")
+    - name: Upload release files
+      uses: actions/upload-artifact@v7
+      with:
+        name: release
+        path: ${{ runner.temp }}/release
+
+  # Attests and drafts the release apart from the signing environment, so that it can be rerun on its own when it fails
+  attest:
+    if: github.repository_owner == 'pnp'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      attestations: write
+
+    steps:
+    - name: Download release files
+      uses: actions/download-artifact@v7
+      with:
+        name: release
+        path: release
+    - name: Attest build provenance
+      id: provenance
+      uses: actions/attest@v4
+      with:
+        subject-path: release/PnP.PowerShell-${{ needs.build.outputs.version }}.zip
+    - name: Attest SBOM
+      uses: actions/attest@v4
+      with:
+        subject-path: release/PnP.PowerShell-${{ needs.build.outputs.version }}.zip
+        sbom-path: release/PnP.PowerShell-${{ needs.build.outputs.version }}.spdx.json
+    - name: Create draft GitHub release
+      env:
+        GH_TOKEN: ${{ github.token }}
+        VERSION: ${{ needs.build.outputs.version }}
+      run: |
+        # Scorecard reads provenance from the release assets, not from the attestation store
+        cp "${{ steps.provenance.outputs.bundle-path }}" "release/PnP.PowerShell-$VERSION.intoto.jsonl"
+        gh release create "v$VERSION" release/* \
+          --repo "$GITHUB_REPOSITORY" \
+          --target "$GITHUB_SHA" \
+          --title "Release $VERSION" \
+          --notes "The zip holds the module as published to the PowerShell Gallery. Verify where it was built with \`gh attestation verify PnP.PowerShell-$VERSION.zip --repo pnp/powershell\`." \
+          --draft

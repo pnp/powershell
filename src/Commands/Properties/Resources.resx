@@ -411,4 +411,31 @@
     <data name="ContainerNotFound" xml:space="preserve">
     <value>The provided container could not be found</value>
   </data>
+  <data name="PersistedLoginCacheNotCleared" xml:space="preserve">
+    <value>The persisted app-only token cache still contains data after clearing it.</value>
+  </data>
+  <data name="PersistedLoginClearFailed" xml:space="preserve">
+    <value>Unable to clear the persisted login. The connection has been retained. For an app-only connection, its registration has also been retained. Restore access to secure storage and retry Disconnect-PnPOnline -ClearPersistedLogin.</value>
+  </data>
+  <data name="PersistedLoginNotFound" xml:space="preserve">
+    <value>No persisted login was found for {0} with client ID {1}, so no persisted login registration was removed. Use Get-PnPPersistedLogin to list the registered persisted logins.</value>
+  </data>
+  <data name="PersistedLoginRollbackFailed" xml:space="preserve">
+    <value>Saving the persisted login registration failed, and its app-only token cache could not be removed: {0}. Token data may remain in secure storage.</value>
+  </data>
+  <data name="PersistedLoginSecureStorageUnavailable" xml:space="preserve">
+    <value>Secure persistence for the app-only token cache is unavailable on this machine, so the persisted app-only login cache cannot be initialized or reused.</value>
+  </data>
+  <data name="PersistedLoginSecureStorageWarning" xml:space="preserve">
+    <value>Secure persistence for the app-only token cache is unavailable. Connecting without the persisted login cache, so this token will not be reused across sessions. The existing registration and any previously stored tokens have not been removed. Restore access to secure storage before retrying with -PersistLogin or running Disconnect-PnPOnline -ClearPersistedLogin.</value>
+  </data>
+  <data name="PersistedLoginSettingsInvalid" xml:space="preserve">
+    <value>The persisted login settings must contain a settings object without null cache registrations.</value>
+  </data>
+  <data name="PersistedLoginSettingsUnavailable" xml:space="preserve">
+    <value>Unable to read the persisted login settings. Repair the settings file or restore read access before connecting with -PersistLogin. No token has been acquired or written by this connection attempt.</value>
+  </data>
+  <data name="PersistedLoginSettingsWarning" xml:space="preserve">
+    <value>Unable to read the persisted login settings: {0} Connecting without the persisted login cache. Existing settings and cached tokens have not been changed. Repair the settings file or restore read access before using persisted login.</value>
+  </data>
 </root>

@@ -586,6 +586,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? ContentSecurityPolicyEnforcement { set; get; }
 
         [Parameter(Mandatory = false)]
+        public bool? CopilotSearchOptIn { set; get; }
+
+        [Parameter(Mandatory = false)]
         public bool? DisableSpacesActivation { set; get; }
 
         [Parameter(Mandatory = false)]
@@ -1826,6 +1829,11 @@ namespace PnP.PowerShell.Commands.Admin
             if (ContentSecurityPolicyEnforcement.HasValue)
             {
                 Tenant.ContentSecurityPolicyEnforcement = ContentSecurityPolicyEnforcement.Value;
+                modified = true;
+            }
+            if (CopilotSearchOptIn.HasValue)
+            {
+                Tenant.CopilotSearchOptIn = CopilotSearchOptIn.Value;
                 modified = true;
             }
             if (DisableSpacesActivation.HasValue)

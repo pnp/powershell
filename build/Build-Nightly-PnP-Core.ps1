@@ -32,7 +32,8 @@ Set-Content -Path $incrementFilePath -Value $versionIncrement
 $projects = @(
 	@{ Name = "PnP.Core"; ProjectPath = "./pnpcore/src/sdk/PnP.Core/PnP.Core.csproj"; OutputRoot = "pnpcore/src/sdk/PnP.Core/bin/Release"; DllName = "PnP.Core.dll" },
 	@{ Name = "PnP.Core.Auth"; ProjectPath = "./pnpcore/src/sdk/PnP.Core.Auth/PnP.Core.Auth.csproj"; OutputRoot = "pnpcore/src/sdk/PnP.Core.Auth/bin/Release"; DllName = "PnP.Core.Auth.dll" },
-	@{ Name = "PnP.Core.Admin"; ProjectPath = "./pnpcore/src/sdk/PnP.Core.Admin/PnP.Core.Admin.csproj"; OutputRoot = "pnpcore/src/sdk/PnP.Core.Admin/bin/Release"; DllName = "PnP.Core.Admin.dll" }
+	@{ Name = "PnP.Core.Admin"; ProjectPath = "./pnpcore/src/sdk/PnP.Core.Admin/PnP.Core.Admin.csproj"; OutputRoot = "pnpcore/src/sdk/PnP.Core.Admin/bin/Release"; DllName = "PnP.Core.Admin.dll" },
+	@{ Name = "PnP.Core.Provisioning"; ProjectPath = "./pnpcore/src/sdk/PnP.Core.Provisioning/PnP.Core.Provisioning.csproj"; OutputRoot = "pnpcore/src/sdk/PnP.Core.Provisioning/bin/Release"; DllName = "PnP.Core.Provisioning.dll" }
 )
 
 Write-Host "1. Building PnP.Core packages version $version"

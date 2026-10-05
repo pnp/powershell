@@ -14,15 +14,8 @@ Allows logging your own messages during the execution of PnP PowerShell cmdlets
 
 ## SYNTAX
 
-### Log from file
-
 ```powershell
-Write-PnPTraceLog -Path <string> [-Verbose]
-```
-### Log from log stream
-
-```powershell
-Write-PnPTraceLog [-Verbose]
+Write-PnPTraceLog [-Message] <String> [-CorrelationId <Guid>] [-Source <String>] [-EllapsedMilliseconds <Long>] [-Level <LogLevel>] [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -92,7 +85,7 @@ Accept wildcard characters: False
 ```
 
 ### -Level
-The level to log your message under. Options are: Verbose, Information, Warning, Error and Debug. It will log it both to the default PowerShell its logging equivallent such as Write-Warning, Write-Error, Write-Verbose, and to the PnPTraceLog logging. If not provided, it will default to Information.
+The level to log your message under. Options are: Debug, Information, Warning and Error. It will log it both to the default PowerShell its logging equivalent such as Write-Warning, Write-Error, Write-Verbose, and to the PnPTraceLog logging. If not provided, it will default to Information.
 
 ```yaml
 Type: Framework.Diagnostics.LogLevel
@@ -113,9 +106,9 @@ Type: String
 Parameter Sets: (All)
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 

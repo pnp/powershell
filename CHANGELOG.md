@@ -9,11 +9,30 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+- Added `Get-PnPPersistedLogin` which lists the tenant url, client id and authentication type of every login registered to use the local token cache, so the cache can be inspected without reading it. [#5463](https://github.com/pnp/powershell/pull/5463)
+- Added `-PersistLogin` to the certificate based app only parameter sets of `Connect-PnPOnline`, so a connection made with `-CertificatePath`, `-CertificateBase64Encoded`, `-Thumbprint` or the environment variables can reuse its access token from the local cache. The certificate, tenant and client id are still required on each connection, as neither the certificate nor its password is stored. [#5463](https://github.com/pnp/powershell/pull/5463)
+- Added `-CopilotSearchOptOut` to `Set-PnPSearchSettings` and exposed the value through `Get-PnPSearchSettings`; added `-CopilotSearchOptIn` to `Set-PnPTenant` and exposed the value through `Get-PnPTenant`. [#5478](https://github.com/pnp/powershell/pull/5478)
+- Added a zip of the module, its SPDX software bill of materials and its build provenance to each stable release on GitHub, so the zip can be verified with `gh attestation verify`. [#5483](https://github.com/pnp/powershell/pull/5483)
+- Added `-AzureEnvironment` and `-MicrosoftGraphEndPoint` to `Connect-PnPOnline -AzureADWorkloadIdentity`, so a connection through a workload identity calls Microsoft Graph and the other APIs of a national cloud instead of the worldwide ones. [#5483](https://github.com/pnp/powershell/pull/5483)
 
 ### Changed
 - Changed `Connect-PnPOnline` to allow authentication-only connections without `-Url` for non-SharePoint cmdlets. Omitting `-Url` no longer creates a SharePoint `ClientContext` or `PnPContext`.
+- Changed `Connect-PnPOnline` to write verbose message on which stored credential it resolved for the url, as it previously picked one up from the credential manager without saying so. [#5463](https://github.com/pnp/powershell/pull/5463)
+- Changed `Disconnect-PnPOnline -ClearPersistedLogin` to write a warning when no persisted login exists for the current connection, instead of silently doing nothing. [#5463](https://github.com/pnp/powershell/pull/5463)
+- Telemetry in PnP PowerShell has been removed due to the costs of collecting the data didn't outweigh the benefits to the PnP PowerShell team to have insights into its usage. The involved cmdlets `Get-PnPPowerShellTelemetryEnabled`, `Enable-PnPPowerShellTelemetry` and `Disable-PnPPowerShellTelemetry` have been removed. [#5460](https://github.com/pnp/powershell/pull/5460)
+- Changed `Disable-PnPFeature` to mark `-Force` as obsolete, as it never had an effect. Using it now writes a warning. [#5483](https://github.com/pnp/powershell/pull/5483)
+- Changed `Get-PnPUnifiedAuditLog` to call the Office 365 Management API of the cloud given with `Connect-PnPOnline -AzureEnvironment` for `USGovernment`, `USGovernmentHigh` and `USGovernmentDoD`, instead of always calling `manage.office.com`. [#5483](https://github.com/pnp/powershell/pull/5483)
+- Changed `Connect-PnPOnline -ManagedIdentity` and `Connect-PnPOnline -AccessToken` to keep the cloud given with `-AzureEnvironment`, so the cmdlets that look it up, such as `Get-PnPEntraIDUser`, `Get-PnPUnifiedAuditLog` and those calling Power Platform or Azure Resource Manager APIs, call that cloud instead of the worldwide one. Microsoft Graph requests on such a connection now go to that cloud as well, also without `-Url`. [#5483](https://github.com/pnp/powershell/pull/5483)
 
 ### Fixed
+- Using UPNs with an apostrophe in it not working with `Remove-PnPUserProfile`, `Export-PnPUserProfile`, `Export-PnPUserInfo`, and `Remove-PnPUserInfo`. The apostrophe is now escaped in the API request. [#5459](https://github.com/pnp/powershell/pull/5459)
+- Fix PnP ALC initializer with loaded assemblies stackoverflow issue. [#5481](https://github.com/pnp/powershell/pull/5481)
+- Fixed the stable Docker images stopping at 3.1.0: `m365pnp/powershell:latest` and `m365pnp/powershell:stable` are published again, for the latest stable release on the PowerShell Gallery, now also for 32 bit ARM (`linux/arm/v7`). [#5483](https://github.com/pnp/powershell/pull/5483)
+- Fixed `Get-Help Move-PnPItemProxy` returning only the syntax of the cmdlet, as it had no documentation page. [#5483](https://github.com/pnp/powershell/pull/5483)
+
+### Contributors
+
+- Fabien Tschanz [FabienTschanz]
 
 ## [3.4.1]
 
@@ -25,6 +44,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 
 - Gautam Sheth [gautamdsheth]
+- [till-llit]
 
 ## [3.4.0]
 

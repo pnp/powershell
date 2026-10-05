@@ -113,13 +113,13 @@ if ($runPublish -eq $true) {
         # context. CSOM has no Microsoft.Extensions.* dependency, so sharing it in the default context does not
         # weaken the isolation that fixes the Azure Functions dependency conflict (#5350).
         # Every other assembly is a private dependency and goes to Common, the module's isolated ALC probe path.
-		$moduleAssemblies = @('PnP.PowerShell.dll', 'PnP.PowerShell.pdb')
-		Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
-		# ScriptsToProcess bootstrap that registers the isolated-dependency resolver before the binary module loads.
-		Copy-Item -Path "$PSscriptRoot/../resources/RegisterPnPAssemblyResolver.ps1" -Destination "$destinationFolder"
-		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net10.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object {
-			if ($moduleAssemblies -contains $_.Name -or $_.Name -like 'Microsoft.SharePoint.Client*' -or $_.Name -like 'Microsoft.Online.SharePoint.Client*') {
-				Copy-Item -LiteralPath $_.FullName -Destination $corePath
+        $moduleAssemblies = @('PnP.PowerShell.dll', 'PnP.PowerShell.pdb')
+        Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
+        # ScriptsToProcess bootstrap that registers the isolated-dependency resolver before the binary module loads.
+        Copy-Item -Path "$PSscriptRoot/../resources/RegisterPnPAssemblyResolver.ps1" -Destination "$destinationFolder"
+        Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net10.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object {
+            if ($moduleAssemblies -contains $_.Name -or $_.Name -like 'Microsoft.SharePoint.Client*' -or $_.Name -like 'Microsoft.Online.SharePoint.Client*') {
+                Copy-Item -LiteralPath $_.FullName -Destination $corePath
             }
             elseif (-not $commonFiles.Contains($_.Name)) {
                 [void]$commonFiles.Add($_.Name)

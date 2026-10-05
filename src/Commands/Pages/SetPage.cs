@@ -96,9 +96,8 @@ namespace PnP.PowerShell.Commands.Pages
             string name = PageUtilities.EnsureCorrectPageName(Name ?? Identity?.Name);
             if (name == null)
                 throw new Exception("Insufficient arguments to update a client side page");
-
-            // Don't allow changing a topic page into a regular page as that could lead to data loss
-            if (ParameterSpecified(nameof(LayoutType)) && clientSidePage.LayoutType != PageLayoutType.Topic)
+            
+            if (ParameterSpecified(nameof(LayoutType)))
             {
                 clientSidePage.LayoutType = LayoutType;
             }

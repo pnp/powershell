@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.Features
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Guid Identity;
 
+        [Obsolete("The Force parameter is obsolete and will be removed in future versions. Please update your scripts accordingly.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter Force;
 

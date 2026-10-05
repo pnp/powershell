@@ -50,6 +50,12 @@
       href: microsoftsearch.md  
     - name: Batching in PnP PowerShell
       href: batching.md
+    - name: Throttling and retries
+      href: throttling.md
+    - name: Logging and tracing
+      href: logging.md
+    - name: National and sovereign clouds
+      href: nationalclouds.md
     - name: The extract configuration (using PnP Provisioning Engine)
       href: extract-configuration.md
     - name: The apply configuration (using PnP Provisioning Engine)
@@ -78,3 +84,5 @@
   items:
     - name: Visual Studio Code extension
       href: vscodeextension.md
+    - name: MCP server for AI assistants
+      href: mcpserver.md

@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             {
                 hostUrl = hostUrl.Substring(0, hostUrl.Length - 1);
             }
-            var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}");
+            var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}".Replace("'", "''"));
 
             if (!ParameterSpecified(nameof(UserId)))
             {

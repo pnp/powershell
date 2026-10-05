@@ -100,13 +100,13 @@ After that you can start running commands like `Connect-PnPOnline`.
 
 If you want to run PnP.PowerShell commands interactively:
 
-- Latest stable version (i.e. 3.1.0)
+- Latest stable version
 
     ```bash
     docker run --rm -it m365pnp/powershell:latest
     ```
 
-- Latest nightly version (i.e. 3.1.127-nightly)
+- Latest nightly version
 
     ```bash
     docker run --rm -it m365pnp/powershell:nightly
@@ -140,13 +140,13 @@ Please see [Docker documentation](https://docs.docker.com/engine/reference/run/)
 
 ### Latest
 
-* latest: The latest stable image (i.e. 3.1.0)
+* latest: The latest stable image
 
   * `docker pull m365pnp/powershell:stable` or `docker pull m365pnp/powershell:latest` or even more simple just `docker pull m365pnp/powershell`
 
 ### Nightly
 
-* nightly: The latest nightly image (i.e. 3.1.127-nightly)
+* nightly: The latest nightly image
 
   * `docker pull m365pnp/powershell:nightly`
 
@@ -158,10 +158,10 @@ Tags names mean the following:
 
 Currently supported architectures:
 
-* [windows-amd64](/pnp/powershell/blob/dev/docker/windows-amd64.dockerfile): Windows NanoServer LTSC 2025 64 bits
-* [linux-arm32](/pnp/powershell/blob/dev/docker/linux-arm32.dockerfile): .NET 9 SDK 32 bit (i.e. Raspberry Pi 2 v1.1 or older running 32 bits Linux)
-* [linux-arm64](/pnp/powershell/blob/dev/docker/linux-arm64.dockerfile): Linux Debian Bullseye Slim 64 bits for ARM devices (i.e. Raspberry Pi 2 v1.2 or later running 64 bits Linux)
-* [linux-amd64](/pnp/powershell/blob/dev/docker/linux-amd64.dockerfile): Alpine 64 bits
+* [windows-amd64](https://github.com/pnp/powershell/blob/dev/docker/windows-amd64.dockerfile): Windows NanoServer LTSC 2025 64 bits
+* [linux-arm32v7](https://github.com/pnp/powershell/blob/dev/docker/linux-arm32.dockerfile): Linux Debian Bookworm Slim 32 bits for ARM devices (i.e. Raspberry Pi 2 v1.1 or older running 32 bits Linux). This image installs PnP PowerShell from the PowerShell Gallery each time a container starts
+* [linux-arm64](https://github.com/pnp/powershell/blob/dev/docker/linux-arm64.dockerfile): Linux Debian Bookworm Slim 64 bits for ARM devices (i.e. Raspberry Pi 2 v1.2 or later running 64 bits Linux)
+* [linux-amd64](https://github.com/pnp/powershell/blob/dev/docker/linux-amd64.dockerfile): Alpine 64 bits
 
 Tag name examples:
 
