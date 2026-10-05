@@ -34,6 +34,8 @@ Get-PnPUnifiedAuditLog [-ContentType <AuditContentType>] [-StartTime <DateTime>]
 
 Allows to retrieve unified audit logs from the Office 365 Management API.
 
+The cmdlet calls the Office 365 Management API of the cloud you connected to with `Connect-PnPOnline -AzureEnvironment`: `manage-gcc.office.com` for `USGovernment`, `manage.office365.us` for `USGovernmentHigh`, `manage.protection.apps.mil` for `USGovernmentDoD`, and `manage.office.com` for any other value.
+
 ### Prerequisites
 
 Your Entra app registration must have one or more of the following delegated or application permissions from the Office 365 Management API. To add this permission using Azure CLI:
