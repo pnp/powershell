@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Revoke-PnPUserSession
-schema: 2.0.0
-applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Revoke-PnPUserSession.html
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+schema: 2.0.0
+title: Revoke-PnPUserSession
 ---
- 
+  
 # Revoke-PnPUserSession
 
 ## SYNOPSIS
@@ -72,4 +73,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 

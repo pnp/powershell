@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Convert-PnPSiteTemplate.html
-external help file: PnP.PowerShell.dll-Help.xml
 title: Convert-PnPSiteTemplate
+tags: Available in the current Nightly Release only.
+schema: 2.0.0
+online version: https://pnp.github.io/powershell/cmdlets/Convert-PnPSiteTemplate.html
+Module Name: PnP.PowerShell
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
 ---
-  
+   
 # Convert-PnPSiteTemplate
 
 ## SYNOPSIS
@@ -123,3 +124,4 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Encoding documentation](https://learn.microsoft.com/dotnet/api/system.text.encoding?view=net-8.0)
+
