@@ -921,6 +921,12 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static string SecureStringToString(SecureString value)
         {
+            // A certificate without a password is passed in as null, which X509CertificateLoader accepts but Marshal does not
+            if (value == null)
+            {
+                return null;
+            }
+
             IntPtr valuePtr = IntPtr.Zero;
             try
             {

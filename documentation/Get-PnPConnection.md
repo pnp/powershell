@@ -19,7 +19,7 @@ Get-PnPConnection [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Returns a PnP PowerShell Connection for use with the -Connection parameter on other cmdlets.
+Returns a PnP PowerShell Connection for use with the -Connection parameter on other cmdlets. This includes authentication-only connections made with Connect-PnPOnline without `-Url`, which hold no SharePoint context.
 
 ## EXAMPLES
 
