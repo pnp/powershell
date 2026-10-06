@@ -1,12 +1,13 @@
 ---
+tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Revoke-PnPHubSiteRights.html
 Module Name: PnP.PowerShell
-title: Revoke-PnPHubSiteRights
 schema: 2.0.0
+title: Revoke-PnPHubSiteRights
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Revoke-PnPHubSiteRights.html
 ---
- 
+  
 # Revoke-PnPHubSiteRights
 
 ## SYNOPSIS
@@ -85,4 +86,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 

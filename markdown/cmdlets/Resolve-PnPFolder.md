@@ -1,12 +1,13 @@
 ---
+tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Resolve-PnPFolder.html
 Module Name: PnP.PowerShell
-title: Resolve-PnPFolder
 schema: 2.0.0
+title: Resolve-PnPFolder
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Resolve-PnPFolder.html
 ---
- 
+  
 # Resolve-PnPFolder
 
 ## SYNOPSIS
@@ -81,3 +82,4 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Get-PnPFolder](https://github.com/OfficeDev/PnP-PowerShell/blob/master/Documentation/GetPnPFolder.md)
+

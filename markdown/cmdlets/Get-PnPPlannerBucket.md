@@ -1,12 +1,13 @@
 ---
+tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPlannerBucket.html
 Module Name: PnP.PowerShell
-title: Get-PnPPlannerBucket
 schema: 2.0.0
+title: Get-PnPPlannerBucket
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPlannerBucket.html
 ---
- 
+  
 # Get-PnPPlannerBucket
 
 ## SYNOPSIS
@@ -112,4 +113,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 

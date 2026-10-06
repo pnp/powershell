@@ -1,12 +1,13 @@
 ---
+tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsPrimaryChannel.html
 Module Name: PnP.PowerShell
-title: Get-PnPTeamsPrimaryChannel
 schema: 2.0.0
+title: Get-PnPTeamsPrimaryChannel
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsPrimaryChannel.html
 ---
- 
+  
 # Get-PnPTeamsPrimaryChannel
 
 ## SYNOPSIS
@@ -63,3 +64,4 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Microsoft Graph documentation](https://learn.microsoft.com/graph/api/team-get-primarychannel)
+

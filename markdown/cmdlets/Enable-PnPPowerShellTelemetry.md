@@ -1,12 +1,13 @@
 ---
+tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/Enable-PnPPowerShellTelemetry.html
 Module Name: PnP.PowerShell
-title: Enable-PnPPowerShellTelemetry
 schema: 2.0.0
+title: Enable-PnPPowerShellTelemetry
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Enable-PnPPowerShellTelemetry.html
 ---
- 
+  
 # Enable-PnPPowerShellTelemetry
 
 > [!WARNING]
@@ -64,3 +65,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
