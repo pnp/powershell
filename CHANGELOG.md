@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-CopilotSearchOptOut` to `Set-PnPSearchSettings` and exposed the value through `Get-PnPSearchSettings`; added `-CopilotSearchOptIn` to `Set-PnPTenant` and exposed the value through `Get-PnPTenant`. [#5478](https://github.com/pnp/powershell/pull/5478)
 - Added a zip of the module, its SPDX software bill of materials and its build provenance to each stable release on GitHub, so the zip can be verified with `gh attestation verify`. [#5483](https://github.com/pnp/powershell/pull/5483)
 - Added `-AzureEnvironment` and `-MicrosoftGraphEndPoint` to `Connect-PnPOnline -AzureADWorkloadIdentity`, so a connection through a workload identity calls Microsoft Graph and the other APIs of a national cloud instead of the worldwide ones. [#5483](https://github.com/pnp/powershell/pull/5483)
-- Added `-DefaultMainLinkScope` to `Set-PnPTenantSite` and `Set-PnPSite`, and exposed the value through `Get-PnPTenantSite`.
+- Added `-DefaultMainLinkScope` to `Set-PnPTenantSite` and `Set-PnPSite`, and exposed the value through `Get-PnPTenantSite`. [#5486](https://github.com/pnp/powershell/pull/5486)
 
 ### Changed
 - Changed `Connect-PnPOnline` to write verbose message on which stored credential it resolved for the url, as it previously picked one up from the credential manager without saying so. [#5463](https://github.com/pnp/powershell/pull/5463)
