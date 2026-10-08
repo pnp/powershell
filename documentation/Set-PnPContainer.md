@@ -13,7 +13,8 @@ title: Set-PnPContainer
 
 **Required Permissions**
 
-* SharePoint Embedded Administrator or Global Administrator role is required
+* For all parameters except those below: SharePoint Embedded Administrator or Global Administrator role is required
+* For `-Name`, `-Description`, `-OcrEnabled`, `-ItemVersioningEnabled` and `-ItemMajorVersionLimit`: Microsoft Graph API : FileStorageContainer.Selected, plus permission on the Container Type for the application you connect with, or FileStorageContainer.Manage.All on behalf of a SharePoint Embedded Administrator
 
 Sets or updates one or more properties of a Container in SharePoint Embedded.
 
@@ -89,13 +90,20 @@ Set-PnPContainer [-Identity] <ContainerPipeBind> -AddInformationSegment <Guid[]>
 Set-PnPContainer [-Identity] <ContainerPipeBind> -RemoveInformationSegment <Guid[]> [-InformationBarriersMode <String>] [-WhatIf] [-Confirm] [-Connection <PnPConnection>]
 ```
 
+### Container properties
+```powershell
+Set-PnPContainer [-Identity] <ContainerPipeBind> [-Name <String>] [-Description <String>] [-OcrEnabled <Boolean>] [-ItemVersioningEnabled <Boolean>] [-ItemMajorVersionLimit <Int32>] [-InformationBarriersMode <String>] [-WhatIf] [-Confirm] [-Connection <PnPConnection>]
+```
+
 ## DESCRIPTION
 
-Changes only the properties for the parameters that are passed in, on the active Container identified by `-Identity`. Each parameter set changes one group of properties; `-InformationBarriersMode` can be combined with any of them. The Container is always read from the server first, so a Container object passed in is not modified and its values are not written back.
+Changes only the properties for the parameters that are passed in, on the active Container identified by `-Identity`. Each parameter set changes one group of properties; `-InformationBarriersMode` can be combined with any of them, except the Container properties parameter set. For the settings changed through the SharePoint Online admin API, the Container is always read from the server first, so a Container object passed in is not modified and its values are not written back.
 
 Some parameters reset related properties:
 - `-ConditionalAccessPolicy` other than `AllowLimitedAccess` turns off `ReadOnlyForUnmanagedDevices`; other than `AuthenticationContext` it clears the authentication context name; and `AllowFullAccess` allows editing.
 - `-BlockDownloadPolicy` resets `ExcludeBlockDownloadPolicyContainerOwners` and `ReadOnlyForBlockDownloadPolicy` to the values passed in, or to `$false`.
+
+The name, description, optical character recognition and versioning settings are changed through Microsoft Graph, which needs different permissions but no access to the SharePoint Online Admin Center, so the application owning the Container can change them. For these, specify the Container by its id or its api url. Changing them also activates an inactive Container. Passing `-InformationBarriersMode` with them results in an error. All other settings are changed through the SharePoint Online admin API.
 
 The cmdlet fails for an archived Container. Transferring the principal owner is only supported for Containers that are owned by a user. Always wait for a principal owner transfer to finish before running the cmdlet again, as running it concurrently or too early can lead to incomplete or invalid ownership changes.
 
@@ -149,6 +157,13 @@ Set-PnPContainer -Identity "b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk
 ```
 
 Adds the specified information barrier segment to the Container.
+
+### EXAMPLE 8
+```powershell
+Set-PnPContainer -Identity "b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1" -Name "Contoso Legal" -OcrEnabled $true
+```
+
+Renames the Container and enables optical character recognition on its documents.
 
 ## PARAMETERS
 
@@ -293,6 +308,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Description
+
+The new description of the Container. An empty string removes the description. Changed through Microsoft Graph.
+
+```yaml
+Type: String
+Parameter Sets: Container properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -EnableRestrictedAccessControl
 
 Restricts access to the Container to the members of the groups given with `-RestrictedAccessControlGroups`. The restricted access control groups can only be changed while it is enabled.
@@ -340,7 +370,7 @@ Accept wildcard characters: False
 
 ### -Identity
 
-The url or the id of the Container.
+The url, the api url or the id of the Container. With `-Name`, `-Description`, `-OcrEnabled`, `-ItemVersioningEnabled` or `-ItemMajorVersionLimit`, only the id or the api url.
 
 ```yaml
 Type: ContainerPipeBind
@@ -360,6 +390,36 @@ The information barriers mode of the Container.
 ```yaml
 Type: String
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ItemMajorVersionLimit
+
+The maximum number of major versions kept of each file in the Container. Changed through Microsoft Graph.
+
+```yaml
+Type: Int32
+Parameter Sets: Container properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ItemVersioningEnabled
+
+Whether versioning is enabled for the files in the Container. Changed through Microsoft Graph.
+
+```yaml
+Type: Boolean
+Parameter Sets: Container properties
 
 Required: False
 Position: Named
@@ -389,6 +449,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Name
+
+The new display name of the Container. Changed through Microsoft Graph.
+
+```yaml
+Type: String
+Parameter Sets: Container properties
+Aliases: DisplayName
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -NewPrincipalOwner
 
 The user to transfer the principal ownership of the Container to.
@@ -398,6 +474,21 @@ Type: String
 Parameter Sets: Principal owner transfer
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OcrEnabled
+
+Whether optical character recognition is performed on new and updated documents in the Container, so their text can be searched. Turning it off leaves existing recognised text in place. Changed through Microsoft Graph.
+
+```yaml
+Type: Boolean
+Parameter Sets: Container properties
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
