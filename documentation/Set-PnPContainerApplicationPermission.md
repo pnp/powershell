@@ -40,10 +40,10 @@ Lets the application read and write the content of the Containers without a user
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPContainerApplicationPermission -ContainerTypeId 4f0af585-8dcc-0000-223d-661eb2c604e4 -ApplicationId 7b8c9d0e-1f2a-4b3c-8d4e-5f6a7b8c9d0e -AppOnlyPermissions None
+Set-PnPContainerApplicationPermission -ContainerTypeId 4f0af585-8dcc-0000-223d-661eb2c604e4 -ApplicationId 7b8c9d0e-1f2a-4b3c-8d4e-5f6a7b8c9d0e -AppOnlyPermissions None -DelegatedPermissions None
 ```
 
-Removes the permissions of the application on the Containers.
+Removes all permissions of the application on the Containers. Passing only `-AppOnlyPermissions None` would remove only the permissions it has when it calls without a user, and keep those it has on behalf of a user.
 
 ## PARAMETERS
 

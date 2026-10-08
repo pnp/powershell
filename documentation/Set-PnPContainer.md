@@ -92,7 +92,7 @@ Set-PnPContainer [-Identity] <ContainerPipeBind> -RemoveInformationSegment <Guid
 
 ### Container properties
 ```powershell
-Set-PnPContainer [-Identity] <ContainerPipeBind> [-Name <String>] [-Description <String>] [-OcrEnabled <Boolean>] [-ItemVersioningEnabled <Boolean>] [-ItemMajorVersionLimit <Int32>] [-InformationBarriersMode <String>] [-WhatIf] [-Confirm] [-Connection <PnPConnection>]
+Set-PnPContainer [-Identity] <ContainerPipeBind> [-Name <String>] [-Description <String>] [-OcrEnabled <Boolean>] [-ItemVersioningEnabled <Boolean>] [-ItemMajorVersionLimit <Int32>] [-WhatIf] [-Confirm] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -103,7 +103,7 @@ Some parameters reset related properties:
 - `-ConditionalAccessPolicy` other than `AllowLimitedAccess` turns off `ReadOnlyForUnmanagedDevices`; other than `AuthenticationContext` it clears the authentication context name; and `AllowFullAccess` allows editing.
 - `-BlockDownloadPolicy` resets `ExcludeBlockDownloadPolicyContainerOwners` and `ReadOnlyForBlockDownloadPolicy` to the values passed in, or to `$false`.
 
-The name, description, optical character recognition and versioning settings are changed through Microsoft Graph, which needs different permissions but no access to the SharePoint Online Admin Center, so the application owning the Container can change them. For these, specify the Container by its id or its api url. Changing them also activates an inactive Container. Passing `-InformationBarriersMode` with them results in an error. All other settings are changed through the SharePoint Online admin API.
+The name, description, optical character recognition and versioning settings are changed through Microsoft Graph, which needs different permissions but no access to the SharePoint Online Admin Center, so the application owning the Container can change them. For these, specify the Container by its id or its api url. Changing them also activates an inactive Container. They cannot be combined with `-InformationBarriersMode`. All other settings are changed through the SharePoint Online admin API.
 
 The cmdlet fails for an archived Container. Transferring the principal owner is only supported for Containers that are owned by a user. Always wait for a principal owner transfer to finish before running the cmdlet again, as running it concurrently or too early can lead to incomplete or invalid ownership changes.
 
@@ -389,7 +389,7 @@ The information barriers mode of the Container.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Information barriers mode, Sensitivity label, Remove sensitivity label, Restrict content org wide search, Block download policy, Restricted access control, Add restricted access control groups, Remove restricted access control groups, Clear restricted access control, Conditional access, Sharing domain restriction, Principal owner transfer, Add information barrier segments, Remove information barrier segments
 
 Required: False
 Position: Named

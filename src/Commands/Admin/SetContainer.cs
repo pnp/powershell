@@ -142,7 +142,21 @@ namespace PnP.PowerShell.Commands.Admin
         [ValidateNotNullOrEmpty]
         public Guid[] RemoveInformationSegment { get; set; }
 
-        [Parameter(Mandatory = false)]
+        // In every parameter set except Container properties, which is changed through Microsoft Graph instead of the SharePoint Online admin API
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_InformationBarriersMode)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SensitivityLabel)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_RemoveLabel)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_RestrictContentOrgWideSearch)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BlockDownloadPolicy)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_RestrictedAccessControl)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_RestrictedAccessControlGroupsToAdd)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_RestrictedAccessControlGroupsToRemove)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ClearRestrictedAccessControl)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ConditionalAccess)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SharingDomainRestriction)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PrincipalOwnerTransfer)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AddInformationBarrierSegments)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_RemoveInformationBarrierSegments)]
         [ValidateNotNullOrWhiteSpace]
         public string InformationBarriersMode { get; set; }
 
@@ -258,11 +272,6 @@ namespace PnP.PowerShell.Commands.Admin
         // The name, description, OCR and versioning settings can only be changed through Microsoft Graph, which only changes the properties sent
         private void SetContainerProperties()
         {
-            if (ParameterSpecified(nameof(InformationBarriersMode)))
-            {
-                ThrowArgumentError($"-{nameof(InformationBarriersMode)} cannot be combined with -{nameof(Name)}, -{nameof(Description)}, -{nameof(OcrEnabled)}, -{nameof(ItemVersioningEnabled)} or -{nameof(ItemMajorVersionLimit)}.", nameof(InformationBarriersMode));
-            }
-
             // Microsoft Graph addresses containers by id only, and looking one up by its site url would need the SharePoint Online Admin Center
             var containerId = Identity.Id;
             if (containerId == null)
