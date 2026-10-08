@@ -6,95 +6,95 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.New, "PnPContainerType", DefaultParameterSetName = ParameterSet_Trial)]
+    [Cmdlet(VerbsCommon.New, "PnPContainerType", SupportsShouldProcess = true)]
+    [OutputType(typeof(Model.SharePoint.SPContainerTypeObj))]
     public class NewContainerType : PnPSharePointOnlineAdminCmdlet
     {
-        private const string ParameterSet_Trial = "Trial";
-        private const string ParameterSet_Standard = "Standard";
-
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_Trial)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_Standard)]
+        [Parameter(Mandatory = true)]
         public string ContainerTypeName;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_Trial)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_Standard)]
+        [Parameter(Mandatory = true)]
         public Guid OwningApplicationId;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_Trial)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_Standard)]
+        [Parameter(Mandatory = false)]
         public SwitchParameter TrialContainerType;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_Standard)]
+        [Parameter(Mandatory = false)]
+        public SwitchParameter IsPassThroughBilling;
+
+        [Parameter(Mandatory = false)]
+        public string ApplicationRedirectUrl;
+
+        [Parameter(Mandatory = false)]
+        public bool IsGovernableByAdmin;
+
+        [Parameter(Mandatory = false)]
+        public bool IsArchiveEnabled;
+
+        [Obsolete("Billing is no longer set up when creating a container type. Set up billing for a standard container type separately, for example with Add-SPOContainerTypeBilling in the SharePoint Online Management Shell.")]
+        [Parameter(Mandatory = false)]
         public Guid? AzureSubscriptionId;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_Standard)]
+        [Obsolete("Billing is no longer set up when creating a container type. Set up billing for a standard container type separately, for example with Add-SPOContainerTypeBilling in the SharePoint Online Management Shell.")]
+        [Parameter(Mandatory = false)]
         public string ResourceGroup;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_Standard)]
+        [Obsolete("Billing is no longer set up when creating a container type. Set up billing for a standard container type separately, for example with Add-SPOContainerTypeBilling in the SharePoint Online Management Shell.")]
+        [Parameter(Mandatory = false)]
         public string Region;
 
         protected override void ExecuteCmdlet()
         {
-            // Ensure when creating a standard container type that the required parameters are provided
-            if(ParameterSpecified(nameof(TrialContainerType)) && !TrialContainerType.ToBool() && (!AzureSubscriptionId.HasValue || string.IsNullOrWhiteSpace(ResourceGroup) || string.IsNullOrWhiteSpace(Region)))
+            if (TrialContainerType && IsPassThroughBilling)
             {
-                throw new PSArgumentException($"{nameof(AzureSubscriptionId)}, {nameof(ResourceGroup)} and {nameof(Region)} are required when creating a standard container type");
+                ThrowTerminatingError(new ErrorRecord(new PSArgumentException($"-{nameof(TrialContainerType)} and -{nameof(IsPassThroughBilling)} cannot be combined, as a trial container type has no billing."), "TrialWithPassThroughBilling", ErrorCategory.InvalidArgument, null));
             }
 
-            SPContainerTypeProperties sPContainerTypeProperties;
-            if (!ParameterSpecified(nameof(TrialContainerType)) || !TrialContainerType.ToBool())
+            var billingClassification = TrialContainerType ? SPContainerTypeBillingClassification.Trial
+                : IsPassThroughBilling ? SPContainerTypeBillingClassification.DirectToCustomer
+                : SPContainerTypeBillingClassification.Standard;
+
+            if (!ShouldProcess(ContainerTypeName, $"Create {billingClassification} container type"))
             {
-                LogWarning($"Creation of standard container types is not yet supported. This will be enabled in the future. For now, only trial container types can be created by adding the -{nameof(TrialContainerType)} parameter.");
                 return;
-
-                // NOTICE:
-                // Currently disabled by request of the product group as it doesn't work reliably yet
-                // Once the official endpoint to create standard container types is available, this code can be enabled again and will point to the proper API to use
-
-                // LogDebug("Creating a standard container type");
-
-                // sPContainerTypeProperties = new SPContainerTypeProperties
-                // {
-                //     DisplayName = ContainerTypeName,
-                //     OwningAppId = OwningApplicationId,
-                //     AzureSubscriptionId = AzureSubscriptionId.Value,
-                //     ResourceGroup = ResourceGroup,
-                //     Region = Region,
-                //     SPContainerTypeBillingClassification = SPContainerTypeBillingClassification.Standard
-                // };
             }
-            else
-            {
-                LogDebug("Creating a trial container type");
 
-                sPContainerTypeProperties = new SPContainerTypeProperties
-                {
-                    DisplayName = ContainerTypeName,
-                    OwningAppId = OwningApplicationId,
-                    SPContainerTypeBillingClassification = SPContainerTypeBillingClassification.Trial
-                };
+            var containerTypeProperties = new SPContainerTypeProperties
+            {
+                DisplayName = ContainerTypeName,
+                OwningAppId = OwningApplicationId,
+                SPContainerTypeBillingClassification = billingClassification,
+                ApplicationRedirectUrl = ApplicationRedirectUrl
+            };
+
+            if (ParameterSpecified(nameof(IsGovernableByAdmin)))
+            {
+                containerTypeProperties.IsGovernableByAdminNullable = IsGovernableByAdmin ? NullableBoolean.TRUE : NullableBoolean.FALSE;
+            }
+
+            if (ParameterSpecified(nameof(IsArchiveEnabled)))
+            {
+                containerTypeProperties.IsArchiveEnabled = IsArchiveEnabled ? NullableBoolean.TRUE : NullableBoolean.FALSE;
             }
 
             //
             // NOTICE: The SharePoint API being used in this code is of temporary nature.
-            //         It will be replaced by Microsoft Graph in due time. 
+            //         It will be replaced by Microsoft Graph in due time.
             //         This SharePoint API should not be called directly or implemented into your own tools or software.
             //         When the Microsoft Graph alternative becomes available, this PnP cmdlet will be rewritten to use it instead.
             //         So when using this PnP PowerShell cmdlet, the goal is to seemlessly transition to the new API.
             //         When you would use it in your own code directly, it will stop working at some point in time without prior announcement.
             //
 
-            var sPOContainerTypeId = Tenant.NewSPOContainerType(sPContainerTypeProperties);
+            LogDebug($"Creating a {billingClassification} container type");
+            var sPOContainerTypeId = Tenant.NewSPOContainerType(containerTypeProperties);
             AdminContext.ExecuteQueryRetry();
 
-            if (sPOContainerTypeId != null && sPOContainerTypeId.Value != null)
+            if (sPOContainerTypeId?.Value == null)
             {
-                WriteObject(new Model.SharePoint.SPContainerTypeObj(sPOContainerTypeId.Value));
+                ThrowTerminatingError(new ErrorRecord(new InvalidOperationException($"Container type '{ContainerTypeName}' was not created, as the server returned no container type."), "ContainerTypeNotCreated", ErrorCategory.InvalidResult, ContainerTypeName));
             }
-            else
-            {
-                LogDebug("Failed to create container type");
-            }
+            WriteObject(new Model.SharePoint.SPContainerTypeObj(sPOContainerTypeId.Value));
         }
     }
 }
