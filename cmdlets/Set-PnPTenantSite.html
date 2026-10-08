@@ -116,7 +116,7 @@
  [-ReadOnlyForBlockDownloadPolicy]
  [-ListsShowHeaderAndNavigation &lt;Boolean&gt;]
  [-DefaultLinkToExistingAccessReset &lt;SwitchParameter&gt;] [-DefaultShareLinkRole &lt;Role&gt;]
- [-DefaultShareLinkScope &lt;SharingScope&gt;] [-LoopDefaultSharingLinkRole &lt;Role&gt;]
+ [-DefaultShareLinkScope &lt;SharingScope&gt;] [-DefaultMainLinkScope &lt;MainLinkAudience&gt;] [-LoopDefaultSharingLinkRole &lt;Role&gt;]
  [-LoopDefaultSharingLinkScope &lt;SharingScope&gt;] [-RestrictContentOrgWideSearch &lt;Boolean&gt;] [-ReadOnlyForUnmanagedDevices &lt;Boolean&gt;]
  [-RequestFilesLinkExpirationInDays &lt;Int32&gt;] [-RequestFilesLinkEnabled &lt;Boolean&gt;] [-OverrideSharingCapability &lt;Boolean&gt;]
  [-RestrictedAccessControl &lt;Boolean&gt;] [-ClearRestrictedAccessControl &lt;SwitchParameter&gt;] [-RestrictedAccessControlGroups &lt;Guid[]&gt;]
@@ -890,6 +890,18 @@ Accept wildcard characters: False
 <p>To reset the default link to existing access configuration for a site.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-defaultmainlinkscope">-DefaultMainLinkScope</h3>
+<p>To set the default audience of the main sharing link of items at the root of the document libraries of the site. Available values are <code>OnlyPeopleAdded</code>, <code>Organization</code> and <code>Anyone</code>. When not set, the effective value is <code>OnlyPeopleAdded</code>. <code>Anyone</code> is only available when anonymous links are allowed at the tenant level; if the site has Anyone links disabled, the next most restrictive value applies.</p>
+<pre><code class="lang-yaml">Type: MainLinkAudience
+Parameter Sets: Set Properties
+Accepted values: OnlyPeopleAdded, Organization, Anyone
+
 Required: False
 Position: Named
 Default value: None

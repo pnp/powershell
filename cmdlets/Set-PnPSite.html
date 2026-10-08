@@ -109,6 +109,7 @@
  [-DefaultSharingLinkType &lt;SharingLinkType&gt;]
  [-DefaultLinkToExistingAccess &lt;Boolean&gt;]
  [-DefaultLinkToExistingAccessReset]
+ [-DefaultMainLinkScope &lt;MainLinkAudience&gt;]
  [-DisableAppViews &lt;AppViewsPolicy&gt;]
  [-DisableCompanyWideSharingLinks &lt;CompanyWideSharingLinksPolicy&gt;]
  [-DisableSharingForNonOwners]
@@ -385,6 +386,18 @@ Parameter Sets: Set Properties
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-defaultmainlinkscope">-DefaultMainLinkScope</h3>
+<p>Specifies the default audience of the main sharing link of items at the root of the document libraries of the site. Available values are <code>OnlyPeopleAdded</code>, <code>Organization</code> and <code>Anyone</code>. When not set, the effective value is <code>OnlyPeopleAdded</code>. <code>Anyone</code> is only available when anonymous links are allowed at the tenant level; if the site has Anyone links disabled, the next most restrictive value applies.</p>
+<pre><code class="lang-yaml">Type: MainLinkAudience
+Parameter Sets: Set Properties
+Accepted values: OnlyPeopleAdded, Organization, Anyone
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
