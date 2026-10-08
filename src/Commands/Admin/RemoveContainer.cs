@@ -19,6 +19,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public SwitchParameter Force { get; set; }
 
+        private bool _yesToAll;
+        private bool _noToAll;
+
         protected override void ExecuteCmdlet()
         {
             var containerProperties = Identity.GetContainer(Tenant);
@@ -33,7 +36,7 @@ namespace PnP.PowerShell.Commands.Admin
                 return;
             }
 
-            if (SkipRecycleBin && !Force && !ShouldContinue($"Permanently delete container '{containerId}' and everything in it? It cannot be restored.", Properties.Resources.Confirm))
+            if (SkipRecycleBin && !Force && !ShouldContinue($"Permanently delete container '{containerId}' and everything in it? It cannot be restored.", Properties.Resources.Confirm, ref _yesToAll, ref _noToAll))
             {
                 return;
             }

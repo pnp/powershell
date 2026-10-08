@@ -10,9 +10,10 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     public sealed class ContainerPipeBind
     {
         /// <summary>
-        /// Matches the path of a container api url, such as https://contoso.sharepoint.com/_api/v2.1/storageContainers/{containerId}
+        /// Matches a url carrying the id of a container: a SharePoint api url such as https://contoso-admin.sharepoint.com/_api/v2.1/storageContainers/{containerId},
+        /// or a Microsoft Graph url such as https://graph.microsoft.com/v1.0/storage/fileStorage/containers/{containerId}. The id ends at the next path segment, query or fragment.
         /// </summary>
-        private static readonly Regex ContainerApiUrlPath = new(@"/_api/v2\.1/storageContainers/", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        private static readonly Regex ContainerIdUrl = new(@"/(?:_api/v2\.1/storageContainers|storage/fileStorage/(?:containers|deletedContainers))/(?<id>[^/?#]*)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
         /// <summary>
         /// Id of the container
@@ -45,17 +46,18 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         /// <param name="idOrUrl">Site url, api url or id of a container</param>
         public ContainerPipeBind(string idOrUrl)
         {
-            if (string.IsNullOrEmpty(idOrUrl))
+            if (string.IsNullOrWhiteSpace(idOrUrl))
                 throw new ArgumentException("Url or ID null or empty.", nameof(idOrUrl));
 
+            idOrUrl = idOrUrl.Trim();
             if (Uri.TryCreate(idOrUrl, UriKind.Absolute, out _))
             {
-                var apiUrlParts = ContainerApiUrlPath.Split(idOrUrl);
-                if (apiUrlParts.Length == 2)
+                var idUrl = ContainerIdUrl.Match(idOrUrl);
+                if (idUrl.Success)
                 {
-                    _id = apiUrlParts[1].TrimEnd('/');
+                    _id = Uri.UnescapeDataString(idUrl.Groups["id"].Value);
                     if (string.IsNullOrWhiteSpace(_id))
-                        throw new ArgumentException($"The container api url '{idOrUrl}' does not contain a container id.", nameof(idOrUrl));
+                        throw new ArgumentException($"The container url '{idOrUrl}' does not contain a container id.", nameof(idOrUrl));
                 }
                 else
                 {
@@ -77,6 +79,26 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         public ContainerPipeBind(SPConsumingTenantContainerByIdentity container)
         {
             _id = container.ContainerId;
+        }
+
+        public ContainerPipeBind(Model.Graph.FileStorage.FileStorageContainer container)
+        {
+            _id = container.Id;
+        }
+
+        public ContainerPipeBind(SPContainerUser user)
+        {
+            _id = user.ContainerId;
+        }
+
+        /// <summary>
+        /// Gets the id of the container in this pipebind, looking it up by its site url when the pipebind was created from one
+        /// </summary>
+        /// <param name="tenant">Tenant instance to use to look up the container by its site url</param>
+        /// <returns>Id of the container, or null when no container exists at the site url</returns>
+        public string GetContainerId(Tenant tenant)
+        {
+            return _id ?? GetContainer(tenant)?.ContainerId;
         }
 
         /// <summary>

@@ -1,8 +1,10 @@
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.Graph.FileStorage;
 using System;
 using System.Linq;
 using System.Management.Automation;
@@ -10,6 +12,15 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPContainer", DefaultParameterSetName = ParameterSet_InformationBarriersMode, SupportsShouldProcess = true)]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/FileStorageContainer.Selected")]
+    [RequiredApiDelegatedPermissions("graph/FileStorageContainer.Manage.All")]
+
+    // The name, description, OCR and versioning settings are changed through Microsoft Graph, everything else through the SharePoint Online admin API, so the
+    // SharePoint permission is an alternative to the Microsoft Graph permissions above rather than something needed next to them.
+    [ApiPermissionsDependOnResource(
+        ApiIsAlternativeToSharePoint = true,
+        Remarks = "-Name, -Description, -OcrEnabled, -ItemVersioningEnabled and -ItemMajorVersionLimit are changed through Microsoft Graph, which needs FileStorageContainer.Selected and permission on the container type for the application connected with, or the delegated FileStorageContainer.Manage.All. All other parameters change the container through the SharePoint Online admin API, which needs the SharePoint permission and the SharePoint Embedded Administrator or Global Administrator role instead.",
+        DocumentationUrl = "https://pnp.github.io/powershell/cmdlets/Set-PnPContainer.html")]
     public class SetContainer : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_InformationBarriersMode = "Information barriers mode";
@@ -26,10 +37,30 @@ namespace PnP.PowerShell.Commands.Admin
         private const string ParameterSet_PrincipalOwnerTransfer = "Principal owner transfer";
         private const string ParameterSet_AddInformationBarrierSegments = "Add information barrier segments";
         private const string ParameterSet_RemoveInformationBarrierSegments = "Remove information barrier segments";
+        private const string ParameterSet_ContainerProperties = "Container properties";
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         [ValidateNotNull]
         public ContainerPipeBind Identity { get; set; }
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ContainerProperties)]
+        [Alias("DisplayName")]
+        [ValidateNotNullOrWhiteSpace]
+        public string Name { get; set; }
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ContainerProperties)]
+        [ValidateNotNull]
+        public string Description { get; set; }
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ContainerProperties)]
+        public bool OcrEnabled { get; set; }
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ContainerProperties)]
+        public bool ItemVersioningEnabled { get; set; }
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ContainerProperties)]
+        [ValidateRange(1, int.MaxValue)]
+        public int ItemMajorVersionLimit { get; set; }
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SensitivityLabel)]
         [ValidateNotNullOrWhiteSpace]
@@ -111,12 +142,35 @@ namespace PnP.PowerShell.Commands.Admin
         [ValidateNotNullOrEmpty]
         public Guid[] RemoveInformationSegment { get; set; }
 
-        [Parameter(Mandatory = false)]
+        // In every parameter set except Container properties, which is changed through Microsoft Graph instead of the SharePoint Online admin API
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_InformationBarriersMode)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SensitivityLabel)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_RemoveLabel)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_RestrictContentOrgWideSearch)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BlockDownloadPolicy)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_RestrictedAccessControl)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_RestrictedAccessControlGroupsToAdd)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_RestrictedAccessControlGroupsToRemove)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ClearRestrictedAccessControl)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ConditionalAccess)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SharingDomainRestriction)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PrincipalOwnerTransfer)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AddInformationBarrierSegments)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_RemoveInformationBarrierSegments)]
         [ValidateNotNullOrWhiteSpace]
         public string InformationBarriersMode { get; set; }
 
+        // The container properties are changed through Microsoft Graph only, so they also work for an app without access to the SharePoint Online Admin Center
+        protected override bool RequiresAdminContext => ParameterSetName != ParameterSet_ContainerProperties;
+
         protected override void ExecuteCmdlet()
         {
+            if (ParameterSetName == ParameterSet_ContainerProperties)
+            {
+                SetContainerProperties();
+                return;
+            }
+
             if ((ParameterSetName == ParameterSet_InformationBarriersMode && !ParameterSpecified(nameof(InformationBarriersMode)))
                 || (ParameterSetName == ParameterSet_RemoveLabel && !RemoveLabel)
                 || (ParameterSetName == ParameterSet_ClearRestrictedAccessControl && !ClearRestrictedAccessControl))
@@ -213,6 +267,40 @@ namespace PnP.PowerShell.Commands.Admin
 
             Tenant.SetSPOContainerProperties(container);
             AdminContext.ExecuteQueryRetry();
+        }
+
+        // The name, description, OCR and versioning settings can only be changed through Microsoft Graph, which only changes the properties sent
+        private void SetContainerProperties()
+        {
+            // Microsoft Graph addresses containers by id only, and looking one up by its site url would need the SharePoint Online Admin Center
+            var containerId = Identity.Id;
+            if (containerId == null)
+            {
+                WriteError(new ErrorRecord(new PSArgumentException($"Specify the container by its id or its api url to change -{nameof(Name)}, -{nameof(Description)}, -{nameof(OcrEnabled)}, -{nameof(ItemVersioningEnabled)} or -{nameof(ItemMajorVersionLimit)}, as these are changed through Microsoft Graph, which cannot look a container up by its site url.", nameof(Identity)), "ContainerSiteUrlNotSupported", ErrorCategory.InvalidArgument, Identity.Url));
+                return;
+            }
+
+            var update = new FileStorageContainer
+            {
+                DisplayName = Name,
+                Description = Description
+            };
+            if (ParameterSpecified(nameof(OcrEnabled)) || ParameterSpecified(nameof(ItemVersioningEnabled)) || ParameterSpecified(nameof(ItemMajorVersionLimit)))
+            {
+                update.Settings = new FileStorageContainerSettings
+                {
+                    IsOcrEnabled = ParameterSpecified(nameof(OcrEnabled)) ? OcrEnabled : null,
+                    IsItemVersioningEnabled = ParameterSpecified(nameof(ItemVersioningEnabled)) ? ItemVersioningEnabled : null,
+                    ItemMajorVersionLimit = ParameterSpecified(nameof(ItemMajorVersionLimit)) ? ItemMajorVersionLimit : null
+                };
+            }
+
+            if (!ShouldProcess(containerId, "Set container properties"))
+            {
+                return;
+            }
+
+            GraphRequestHelper.Patch($"v1.0/storage/fileStorage/containers/{containerId}", update);
         }
 
         private void ApplyBlockDownloadPolicy(SPContainerProperties container)
