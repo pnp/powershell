@@ -20,7 +20,7 @@ Create a Container Type for a SharePoint Embedded Application. Refer to [Hands o
 ## SYNTAX
 
 ```powershell
-New-PnPContainerType -ContainerTypeName <String> -OwningApplicationId <Guid> [-TrialContainerType] [-IsPassThroughBilling] [-ApplicationRedirectUrl <String>] [-IsGovernableByAdmin <Boolean>] [-IsArchiveEnabled <Boolean>] [-WhatIf] [-Confirm] [-Connection <PnPConnection>]
+New-PnPContainerType -ContainerTypeName <String> -OwningApplicationId <Guid> [-TrialContainerType] [-IsPassThroughBilling] [-ApplicationRedirectUrl <String>] [-IsGovernableByAdmin <Boolean>] [-IsArchiveEnabled <Boolean>] [-AzureSubscriptionId <Guid>] [-ResourceGroup <String>] [-Region <String>] [-WhatIf] [-Confirm] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION

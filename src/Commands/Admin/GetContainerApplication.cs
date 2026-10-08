@@ -29,12 +29,19 @@ namespace PnP.PowerShell.Commands.Admin
                 return;
             }
 
+            if (OwningApplicationId == Guid.Empty || (ParameterSpecified(nameof(ApplicationId)) && ApplicationId == Guid.Empty))
+            {
+                var parameterName = OwningApplicationId == Guid.Empty ? nameof(OwningApplicationId) : nameof(ApplicationId);
+                ThrowTerminatingError(new ErrorRecord(new PSArgumentException($"-{parameterName} cannot be an empty GUID.", parameterName), "EmptyApplicationId", ErrorCategory.InvalidArgument, null));
+            }
+
             var application = Tenant.GetSPOSyntexConsumingApplications(OwningApplicationId, ApplicationId);
             AdminContext.ExecuteQueryRetry();
-            if (application.Value != null)
+            if (application.Value == null)
             {
-                WriteObject(application.Value);
+                ThrowTerminatingError(new ErrorRecord(new PSArgumentException($"SharePoint Embedded application '{(ParameterSpecified(nameof(ApplicationId)) ? ApplicationId : OwningApplicationId)}' could not be found.", nameof(OwningApplicationId)), "ApplicationNotFound", ErrorCategory.ObjectNotFound, OwningApplicationId));
             }
+            WriteObject(application.Value);
         }
     }
 }
