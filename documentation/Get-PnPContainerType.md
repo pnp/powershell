@@ -15,15 +15,17 @@ title: Get-PnPContainerType
 
 * SharePoint Embedded Administrator or Global Administrator is required
 
- Returns the list of Container Types created for a SharePoint Embedded Application in the tenant.
+ Returns the Container Types created for SharePoint Embedded applications in the tenant.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPContainerType [-Connection <PnPConnection>] 
+Get-PnPContainerType [[-Identity] <Guid>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
+
+Returns every Container Type created in the tenant, or a single Container Type when `-Identity` is given.
 
 ## EXAMPLES
 
@@ -32,7 +34,14 @@ Get-PnPContainerType [-Connection <PnPConnection>]
 Get-PnPContainerType
 ```
 
-Returns the list of Container Types created for a SharePoint Embedded application in the tenant.
+Returns the list of Container Types created for SharePoint Embedded applications in the tenant.
+
+### EXAMPLE 2
+```powershell
+Get-PnPContainerType -Identity 4f0af585-8dcc-0000-223d-661eb2c604e4
+```
+
+Returns the Container Type with the specified id.
 
 ## PARAMETERS
 
@@ -46,6 +55,22 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Identity
+
+The id of the Container Type to return.
+
+```yaml
+Type: Guid
+Parameter Sets: (All)
+Aliases: ContainerTypeId
+
+Required: False
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
