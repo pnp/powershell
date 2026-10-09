@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPContainerApplicationPermission` to set the permissions of an application on the containers of a SharePoint Embedded container type registered in the tenant, through Microsoft Graph. [#5488](https://github.com/pnp/powershell/pull/5488)
 - Added `New-PnPContainer` and `Enable-PnPContainer` to create and activate a SharePoint Embedded container through Microsoft Graph. [#5488](https://github.com/pnp/powershell/pull/5488)
 - Added `-Name`, `-Description`, `-OcrEnabled`, `-ItemVersioningEnabled` and `-ItemMajorVersionLimit` to `Set-PnPContainer`, which change those settings of a container through Microsoft Graph. [#5488](https://github.com/pnp/powershell/pull/5488)
+- Added `-ExpirationDateTime` to `Add-PnPFolderUserSharingLink` and `Add-PnPFileUserSharingLink`, so a sharing link for specific people stops working after the given date. [#5484](https://github.com/pnp/powershell/issues/5484)
 
 ### Changed
 - Changed `Connect-PnPOnline` to write verbose message on which stored credential it resolved for the url, as it previously picked one up from the credential manager without saying so. [#5463](https://github.com/pnp/powershell/pull/5463)
