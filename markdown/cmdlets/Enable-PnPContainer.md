@@ -1,39 +1,48 @@
 ---
 Module Name: PnP.PowerShell
+tags: Available in the current Nightly Release only.
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPContainerType.html
+online version: https://pnp.github.io/powershell/cmdlets/Enable-PnPContainer.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Remove-PnPContainerType
+title: Enable-PnPContainer
 ---
-  
-# Remove-PnPContainerType
+ 
+# Enable-PnPContainer
 
 ## SYNOPSIS
 
 **Required Permissions**
 
-* SharePoint Embedded Administrator or Global Administrator role is required
+  * Microsoft Graph API : FileStorageContainer.Selected, plus permission on the Container Type for the application you connect with
 
-The Remove-PnPContainerType cmdlet removes a trial Container Type from the SharePoint tenant. The Container Type to remove is specified by the Identity parameter.
+Activates a Container in SharePoint Embedded.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPContainerType [-Identity] <Guid> [-WhatIf] [-Confirm] [-Connection <PnPConnection>]
+Enable-PnPContainer [-Identity] <ContainerPipeBind> [-WhatIf] [-Confirm] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
+A Container is created inactive and is deleted automatically if it is not activated within 24 hours after its creation. This cmdlet activates it through Microsoft Graph.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
-
 ```powershell
-Remove-PnPContainerType -Identity 00be1092-0c75-028a-18db-89e57908e7d6 
+Enable-PnPContainer -Identity "b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1"
 ```
 
-Removes the specified trial Container Type by using its id.
+Activates the specified Container.
+
+### EXAMPLE 2
+```powershell
+New-PnPContainer -Name "Contoso Legal" -ContainerTypeId 4f0af585-8dcc-0000-223d-661eb2c604e4 | Enable-PnPContainer
+```
+
+Creates a Container and activates it.
 
 ## PARAMETERS
 
@@ -70,10 +79,10 @@ Accept wildcard characters: False
 
 ### -Identity
 
-Specify the Container Type id.
+The id or the api url of the Container. Microsoft Graph cannot look a Container up by its site url.
 
 ```yaml
-Type: Guid
+Type: ContainerPipeBind
 Parameter Sets: (All)
 
 Required: True
@@ -102,3 +111,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+[Activate fileStorageContainer](https://learn.microsoft.com/graph/api/filestoragecontainer-activate)
+

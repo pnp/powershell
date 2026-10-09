@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Set-PnPContainer | PnP PowerShell </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Set-PnPContainer | PnP PowerShell ">
+      <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+      
+      <link rel="icon" href="../images/favicon-pnp.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pnp/powershell/blob/dev/documentation/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="PnP PowerShell">
+            PnP PowerShell
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="set-pnpcontainer">Set-PnPContainer</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>For all parameters except those below: SharePoint Embedded Administrator or Global Administrator role is required</li>
+<li>For <code>-Name</code>, <code>-Description</code>, <code>-OcrEnabled</code>, <code>-ItemVersioningEnabled</code> and <code>-ItemMajorVersionLimit</code>: Microsoft Graph API : FileStorageContainer.Selected, plus permission on the Container Type for the application you connect with, or FileStorageContainer.Manage.All on behalf of a SharePoint Embedded Administrator</li>
+</ul>
+<p>Sets or updates one or more properties of a Container in SharePoint Embedded.</p>
+<h2 id="syntax">SYNTAX</h2>
+<h3 id="information-barriers-mode-default">Information barriers mode (Default)</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="sensitivity-label">Sensitivity label</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; -SensitivityLabel &lt;String&gt; [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="remove-sensitivity-label">Remove sensitivity label</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; -RemoveLabel [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="restrict-content-org-wide-search">Restrict content org wide search</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; -RestrictContentOrgWideSearch &lt;Boolean&gt; [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="block-download-policy">Block download policy</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; [-BlockDownloadPolicy &lt;Boolean&gt;] [-ExcludeBlockDownloadPolicyContainerOwners &lt;Boolean&gt;] [-ReadOnlyForBlockDownloadPolicy &lt;Boolean&gt;] [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="restricted-access-control">Restricted access control</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; [-EnableRestrictedAccessControl &lt;Boolean&gt;] [-RestrictedAccessControlGroups &lt;Guid[]&gt;] [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="add-restricted-access-control-groups">Add restricted access control groups</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; -RestrictedAccessControlGroupsToAdd &lt;Guid[]&gt; [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="remove-restricted-access-control-groups">Remove restricted access control groups</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; -RestrictedAccessControlGroupsToRemove &lt;Guid[]&gt; [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="clear-restricted-access-control">Clear restricted access control</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; -ClearRestrictedAccessControl [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="conditional-access">Conditional access</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; [-ConditionalAccessPolicy &lt;SPOConditionalAccessPolicyType&gt;] [-LimitedAccessFileType &lt;SPOLimitedAccessFileType&gt;] [-AllowEditing &lt;Boolean&gt;] [-ReadOnlyForUnmanagedDevices &lt;Boolean&gt;] [-AuthenticationContextName &lt;String&gt;] [-Force] [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="sharing-domain-restriction">Sharing domain restriction</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; -SharingDomainRestrictionMode &lt;SharingDomainRestrictionModes&gt; [-SharingAllowedDomainList &lt;String&gt;] [-SharingBlockedDomainList &lt;String&gt;] [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="principal-owner-transfer">Principal owner transfer</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; -CurrentPrincipalOwner &lt;String&gt; -NewPrincipalOwner &lt;String&gt; [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="add-information-barrier-segments">Add information barrier segments</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; -AddInformationSegment &lt;Guid[]&gt; [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="remove-information-barrier-segments">Remove information barrier segments</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; -RemoveInformationSegment &lt;Guid[]&gt; [-InformationBarriersMode &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="container-properties">Container properties</h3>
+<pre><code class="lang-powershell">Set-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; [-Name &lt;String&gt;] [-Description &lt;String&gt;] [-OcrEnabled &lt;Boolean&gt;] [-ItemVersioningEnabled &lt;Boolean&gt;] [-ItemMajorVersionLimit &lt;Int32&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Changes only the properties for the parameters that are passed in, on the active Container identified by <code>-Identity</code>. Each parameter set changes one group of properties; <code>-InformationBarriersMode</code> can be combined with any of them, except the Container properties parameter set. For the settings changed through the SharePoint Online admin API, the Container is always read from the server first, so a Container object passed in is not modified and its values are not written back.</p>
+<p>Some parameters reset related properties:</p>
+<ul>
+<li><code>-ConditionalAccessPolicy</code> other than <code>AllowLimitedAccess</code> turns off <code>ReadOnlyForUnmanagedDevices</code>; other than <code>AuthenticationContext</code> it clears the authentication context name; and <code>AllowFullAccess</code> allows editing.</li>
+<li><code>-BlockDownloadPolicy</code> resets <code>ExcludeBlockDownloadPolicyContainerOwners</code> and <code>ReadOnlyForBlockDownloadPolicy</code> to the values passed in, or to <code>$false</code>.</li>
+</ul>
+<p>The name, description, optical character recognition and versioning settings are changed through Microsoft Graph, which needs different permissions but no access to the SharePoint Online Admin Center, so the application owning the Container can change them. For these, specify the Container by its id or its api url. Changing them also activates an inactive Container. They cannot be combined with <code>-InformationBarriersMode</code>. All other settings are changed through the SharePoint Online admin API.</p>
+<p>The cmdlet fails for an archived Container. Transferring the principal owner is only supported for Containers that are owned by a user. Always wait for a principal owner transfer to finish before running the cmdlet again, as running it concurrently or too early can lead to incomplete or invalid ownership changes.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Set-PnPContainer -Identity &quot;https://contoso.sharepoint.com/contentstorage/CSP_33a63968-abae-49a3-a255-f83d0ab2260a&quot; -BlockDownloadPolicy $true
+</code></pre>
+<p>Turns on the block download policy for the Container.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPContainer -Identity &quot;https://contoso.sharepoint.com/contentstorage/CSP_33a63968-abae-49a3-a255-f83d0ab2260a&quot; -ConditionalAccessPolicy AllowLimitedAccess -LimitedAccessFileType OfficeOnlineFilesOnly
+</code></pre>
+<p>Gives limited, web-only access to the content of the Container, in which only Office files can be previewed in the browser.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Set-PnPContainer -Identity &quot;b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot; -SensitivityLabel ab310e93-9f19-43f2-bc19-bf3386dc0956
+</code></pre>
+<p>Sets a sensitivity label on the Container.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Set-PnPContainer -Identity &quot;b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot; -RemoveLabel
+</code></pre>
+<p>Removes the sensitivity label from the Container.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Set-PnPContainer -Identity &quot;b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot; -SharingDomainRestrictionMode AllowList -SharingAllowedDomainList &quot;contoso.com fabrikam.com&quot;
+</code></pre>
+<p>Only allows sharing with external users from the contoso.com and fabrikam.com domains.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Set-PnPContainer -Identity &quot;b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot; -EnableRestrictedAccessControl $true -RestrictedAccessControlGroups 5e3f9c1a-7d2b-4c8e-9f1a-2b3c4d5e6f70
+</code></pre>
+<p>Restricts access to the Container to the members of the specified group.</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Set-PnPContainer -Identity &quot;b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot; -AddInformationSegment a17efb47-e3c9-4d85-a188-1cd59c83de32
+</code></pre>
+<p>Adds the specified information barrier segment to the Container.</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Set-PnPContainer -Identity &quot;b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot; -Name &quot;Contoso Legal&quot; -OcrEnabled $true
+</code></pre>
+<p>Renames the Container and enables optical character recognition on its documents.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-addinformationsegment">-AddInformationSegment</h3>
+<p>Adds information barrier segments to the Container. Only available for tenants with Microsoft 365 Information Barriers enabled.</p>
+<pre><code class="lang-yaml">Type: Guid[]
+Parameter Sets: Add information barrier segments
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowediting">-AllowEditing</h3>
+<p>Whether users can edit Office files in the browser and copy and paste their contents out of the browser window, when the conditional access policy is <code>AllowLimitedAccess</code>. Requires <code>-ConditionalAccessPolicy AllowLimitedAccess</code>; when that is not passed, you are asked to set the policy to <code>AllowLimitedAccess</code>.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Conditional access
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-authenticationcontextname">-AuthenticationContextName</h3>
+<p>The name of the Conditional Access authentication context. Can only be used with <code>-ConditionalAccessPolicy AuthenticationContext</code>. When omitted, the current name is kept.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Conditional access
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-blockdownloadpolicy">-BlockDownloadPolicy</h3>
+<p>Blocks downloading files from the Container, without needing Microsoft Entra Conditional Access policies. Users get browser-only access: they can't download, print or sync files, nor open them in apps, including the Office desktop apps.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Block download policy
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-clearrestrictedaccesscontrol">-ClearRestrictedAccessControl</h3>
+<p>Clears the list of groups given access to the Container through the restricted access control policy.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Clear restricted access control
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-conditionalaccesspolicy">-ConditionalAccessPolicy</h3>
+<p>The Conditional Access policy of the Container:</p>
+<ul>
+<li>AllowFullAccess: full access from desktop apps, mobile apps and the web.</li>
+<li>AllowLimitedAccess: limited, web-only access.</li>
+<li>BlockAccess: blocks access.</li>
+<li>AuthenticationContext: requires the authentication context given with <code>-AuthenticationContextName</code>.</li>
+</ul>
+<pre><code class="lang-yaml">Type: SPOConditionalAccessPolicyType
+Parameter Sets: Conditional access
+Accepted values: AllowFullAccess, AllowLimitedAccess, BlockAccess, AuthenticationContext
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-confirm">-Confirm</h3>
+<p>Prompts you for confirmation before running the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-currentprincipalowner">-CurrentPrincipalOwner</h3>
+<p>The current principal owner of the Container.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Principal owner transfer
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-description">-Description</h3>
+<p>The new description of the Container. An empty string removes the description. Changed through Microsoft Graph.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Container properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-enablerestrictedaccesscontrol">-EnableRestrictedAccessControl</h3>
+<p>Restricts access to the Container to the members of the groups given with <code>-RestrictedAccessControlGroups</code>. The restricted access control groups can only be changed while it is enabled.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Restricted access control
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-excludeblockdownloadpolicycontainerowners">-ExcludeBlockDownloadPolicyContainerOwners</h3>
+<p>Excludes the owners of the Container from the block download policy. Can only be used with <code>-BlockDownloadPolicy $true</code>.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Block download policy
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-force">-Force</h3>
+<p>Sets the conditional access policy to <code>AllowLimitedAccess</code> without asking for confirmation, when <code>-LimitedAccessFileType</code>, <code>-AllowEditing</code> or <code>-ReadOnlyForUnmanagedDevices</code> is used without <code>-ConditionalAccessPolicy</code> on a Container with another policy.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Conditional access
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>The url, the api url or the id of the Container. With <code>-Name</code>, <code>-Description</code>, <code>-OcrEnabled</code>, <code>-ItemVersioningEnabled</code> or <code>-ItemMajorVersionLimit</code>, only the id or the api url.</p>
+<pre><code class="lang-yaml">Type: ContainerPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-informationbarriersmode">-InformationBarriersMode</h3>
+<p>The information barriers mode of the Container.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Information barriers mode, Sensitivity label, Remove sensitivity label, Restrict content org wide search, Block download policy, Restricted access control, Add restricted access control groups, Remove restricted access control groups, Clear restricted access control, Conditional access, Sharing domain restriction, Principal owner transfer, Add information barrier segments, Remove information barrier segments
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-itemmajorversionlimit">-ItemMajorVersionLimit</h3>
+<p>The maximum number of major versions kept of each file in the Container. Changed through Microsoft Graph.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: Container properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-itemversioningenabled">-ItemVersioningEnabled</h3>
+<p>Whether versioning is enabled for the files in the Container. Changed through Microsoft Graph.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Container properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-limitedaccessfiletype">-LimitedAccessFileType</h3>
+<p>The files users can access when the conditional access policy is <code>AllowLimitedAccess</code>:</p>
+<ul>
+<li>OfficeOnlineFilesOnly: users can only preview Office files in the browser. More secure, but may hinder productivity.</li>
+<li>WebPreviewableFiles: users can preview Office files and other file types, such as PDF files and images, in the browser.</li>
+<li>OtherFiles: users can download files that can't be previewed, such as .zip and .exe files. Less secure.</li>
+</ul>
+<p>Requires <code>-ConditionalAccessPolicy AllowLimitedAccess</code>; when that is not passed, you are asked to set the policy to <code>AllowLimitedAccess</code>.</p>
+<pre><code class="lang-yaml">Type: SPOLimitedAccessFileType
+Parameter Sets: Conditional access
+Accepted values: OfficeOnlineFilesOnly, WebPreviewableFiles, OtherFiles
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-name">-Name</h3>
+<p>The new display name of the Container. Changed through Microsoft Graph.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Container properties
+Aliases: DisplayName
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-newprincipalowner">-NewPrincipalOwner</h3>
+<p>The user to transfer the principal ownership of the Container to.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Principal owner transfer
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-ocrenabled">-OcrEnabled</h3>
+<p>Whether optical character recognition is performed on new and updated documents in the Container, so their text can be searched. Turning it off leaves existing recognised text in place. Changed through Microsoft Graph.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Container properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-readonlyforblockdownloadpolicy">-ReadOnlyForBlockDownloadPolicy</h3>
+<p>Makes the Container read-only under the block download policy. Can only be used with <code>-BlockDownloadPolicy $true</code>.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Block download policy
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-readonlyforunmanageddevices">-ReadOnlyForUnmanagedDevices</h3>
+<p>Gives unmanaged devices read-only access to the Container. Requires <code>-ConditionalAccessPolicy AllowLimitedAccess</code>; when that is not passed, you are asked to set the policy to <code>AllowLimitedAccess</code>.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Conditional access
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-removeinformationsegment">-RemoveInformationSegment</h3>
+<p>Removes information barrier segments from the Container. Only available for tenants with Microsoft 365 Information Barriers enabled.</p>
+<pre><code class="lang-yaml">Type: Guid[]
+Parameter Sets: Remove information barrier segments
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-removelabel">-RemoveLabel</h3>
+<p>Removes the sensitivity label from the Container.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Remove sensitivity label
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-restrictcontentorgwidesearch">-RestrictContentOrgWideSearch</h3>
+<p>Whether the content of the Container is excluded from organization wide search.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Restrict content org wide search
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-restrictedaccesscontrolgroups">-RestrictedAccessControlGroups</h3>
+<p>The ids of the groups whose members can access the Container under the restricted access control policy. Cannot be used with <code>-EnableRestrictedAccessControl $false</code>.</p>
+<pre><code class="lang-yaml">Type: Guid[]
+Parameter Sets: Restricted access control
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-restrictedaccesscontrolgroupstoadd">-RestrictedAccessControlGroupsToAdd</h3>
+<p>The ids of groups to add to the restricted access control policy, granting their members access.</p>
+<pre><code class="lang-yaml">Type: Guid[]
+Parameter Sets: Add restricted access control groups
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-restrictedaccesscontrolgroupstoremove">-RestrictedAccessControlGroupsToRemove</h3>
+<p>The ids of groups to remove from the restricted access control policy, revoking their members' access.</p>
+<pre><code class="lang-yaml">Type: Guid[]
+Parameter Sets: Remove restricted access control groups
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sensitivitylabel">-SensitivityLabel</h3>
+<p>The id of the sensitivity label to assign to the Container.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Sensitivity label
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sharingalloweddomainlist">-SharingAllowedDomainList</h3>
+<p>The email domains external users must belong to for content to be shared with them, separated by spaces, such as &quot;contoso.com fabrikam.com&quot;. Requires <code>-SharingDomainRestrictionMode AllowList</code>. When the tenant also uses an allow list, the domains must be on it.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Sharing domain restriction
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sharingblockeddomainlist">-SharingBlockedDomainList</h3>
+<p>The email domains of external users content cannot be shared with, separated by spaces, such as &quot;contoso.com fabrikam.com&quot;. Requires <code>-SharingDomainRestrictionMode BlockList</code>.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Sharing domain restriction
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sharingdomainrestrictionmode">-SharingDomainRestrictionMode</h3>
+<p>Restricts sharing with external users by their email domain:</p>
+<ul>
+<li>None: does not restrict sharing by domain, and removes the domain lists.</li>
+<li>AllowList: only allows sharing with external users from the domains in <code>-SharingAllowedDomainList</code>.</li>
+<li>BlockList: allows sharing with external users from every domain except those in <code>-SharingBlockedDomainList</code>.</li>
+</ul>
+<p>A Container cannot use a block list when the tenant uses an allow list.</p>
+<pre><code class="lang-yaml">Type: SharingDomainRestrictionModes
+Parameter Sets: Sharing domain restriction
+Accepted values: None, AllowList, BlockList
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-whatif">-WhatIf</h3>
+<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://learn.microsoft.com/sharepoint/dev/embedded/admin/manage-containers-powershell">Manage containers with PowerShell</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Get-PnPContainer | PnP PowerShell </title>
+      <title>Get-PnPContainerUser | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Get-PnPContainer | PnP PowerShell ">
+      <meta name="title" content="Get-PnPContainerUser | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,59 +85,29 @@
         </div>
 
         <article data-uid="">
-<h1 id="get-pnpcontainer">Get-PnPContainer</h1>
+<h1 id="get-pnpcontaineruser">Get-PnPContainerUser</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+<li>SharePoint Embedded Administrator or Global Administrator role is required</li>
 </ul>
-<p>Returns one or more Containers in SharePoint Embedded. The Containers returned can be piped to <code>Set-PnPContainer</code> and <code>Remove-PnPContainer</code>.</p>
+<p>Returns the users of a Container in SharePoint Embedded and their roles.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPContainer [[-Identity] &lt;ContainerPipeBind&gt;] [-OwningApplicationId &lt;Guid&gt;] [-Paged] [-PagingToken &lt;String&gt;] [-SortByStorage &lt;SortOrder&gt;] [-ArchiveStatus &lt;SPContainerArchiveStatusFilterProperties&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPContainerUser [-Identity] &lt;ContainerPipeBind&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Returns the Containers of every SharePoint Embedded application in the tenant, the Containers of one application when <code>-OwningApplicationId</code> is given, or a single Container when <code>-Identity</code> is given. As an application owns exactly one container type, <code>-OwningApplicationId</code> also returns the Containers of one container type.</p>
+<p>Returns one entry for every user with the Owner, Manager, Writer or Reader role on the Container.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPContainer
+<pre><code class="lang-powershell">Get-PnPContainerUser -Identity &quot;b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot;
 </code></pre>
-<p>Returns the active Containers of every SharePoint Embedded application in the tenant.</p>
+<p>Returns the users of the specified Container.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPContainer -OwningApplicationId a187e399-0c36-4b98-8f04-1edc167a0996
+<pre><code class="lang-powershell">Get-PnPContainer -OwningApplicationId a187e399-0c36-4b98-8f04-1edc167a0996 | Get-PnPContainerUser | Where-Object Role -eq Owner
 </code></pre>
-<p>Returns the active Containers created under the specified SharePoint Embedded application.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPContainer -Identity &quot;b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot;
-</code></pre>
-<p>Returns the properties of the specified Container by using the Container id.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPContainer -Identity &quot;https://contoso.sharepoint.com/contentstorage/CSP_4bd71a68-8312-4275-99b1-a2b70e3ba0e8&quot;
-</code></pre>
-<p>Returns the properties of the specified Container by using the Container url.</p>
-<h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Get-PnPContainer -SortByStorage Descending -ArchiveStatus Archived
-</code></pre>
-<p>Returns the archived Containers in the tenant, largest first.</p>
+<p>Returns the owners of every Container of the specified SharePoint Embedded application.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-archivestatus">-ArchiveStatus</h3>
-<p>The ArchiveStatus parameter is used to display containers in various stages of archiving. The following states are supported:</p>
-<ul>
-<li>Archived: Displays containers in all archived states.</li>
-<li>RecentlyArchived: Displays containers in the &quot;Recently archived&quot; state.</li>
-<li>FullyArchived: Displays containers in the &quot;Fully archived&quot; state.</li>
-<li>Reactivating: Displays containers in the &quot;Reactivating&quot; state.</li>
-<li>NotArchived: Displays active containers</li>
-</ul>
-<pre><code class="lang-yaml">Type: SPContainerArchiveStatusFilterProperties
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: NotArchived
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -150,61 +120,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Specify container site url, container api url or container id.</p>
+<p>The id, the site url or the api url of the Container.</p>
 <pre><code class="lang-yaml">Type: ContainerPipeBind
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-owningapplicationid">-OwningApplicationId</h3>
-<p>This parameter specifies the ID of the SharePoint repository services application. When omitted, the Containers of every application in the tenant are returned.</p>
-<p>To retrieve Containers for the Microsoft Loop app, use OwningApplicationId: a187e399-0c36-4b98-8f04-1edc167a0996.
-To retrieve Containers for the Microsoft Designer app, use OwningApplicationId: 5e2795e3-ce8c-4cfb-b302-35fe5cd01597</p>
-<pre><code class="lang-yaml">Type: Guid
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-paged">-Paged</h3>
-<p>Returns a single batch of Containers followed by a paging token, which can be passed to <code>-PagingToken</code> to retrieve the next batch. Without it, all Containers are returned.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-pagingtoken">-PagingToken</h3>
-<p>Use this parameter to provide the paging token returned when using <code>-Paged</code>. Together with <code>-Paged</code>, it returns the next batch of Containers, or the message End of containers view when there are no more. Without <code>-Paged</code>, it returns every Container after the token.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-sortbystorage">-SortByStorage</h3>
-<p>Sorts the Containers by the storage they use, in ascending or descending order. When omitted, the Containers of every application in the tenant are sorted by creation date, newest first.</p>
-<pre><code class="lang-yaml">Type: SortOrder
-Parameter Sets: (All)
-Accepted values: Ascending, Descending
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>New-PnPContainerType | PnP PowerShell </title>
+      <title>Set-PnPContainerTypeConfiguration | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="New-PnPContainerType | PnP PowerShell ">
+      <meta name="title" content="Set-PnPContainerTypeConfiguration | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,38 +85,44 @@
         </div>
 
         <article data-uid="">
-<h1 id="new-pnpcontainertype">New-PnPContainerType</h1>
+<h1 id="set-pnpcontainertypeconfiguration">Set-PnPContainerTypeConfiguration</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>SharePoint Embedded Administrator or Global Administrator role is required</li>
 </ul>
-<p>Create a Container Type for a SharePoint Embedded Application. Refer to <a href="https://learn.microsoft.com/en-us/sharepoint/dev/embedded/mslearn/m01-05-hol">Hands on Lab - Setup and Configure SharePoint Embedded</a> for more details.</p>
+<p>Sets or updates the configuration of a Container Type in SharePoint Embedded.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">New-PnPContainerType -ContainerTypeName &lt;String&gt; -OwningApplicationId &lt;Guid&gt; [-TrialContainerType] [-IsPassThroughBilling] [-ApplicationRedirectUrl &lt;String&gt;] [-IsGovernableByAdmin &lt;Boolean&gt;] [-IsArchiveEnabled &lt;Boolean&gt;] [-AzureSubscriptionId &lt;Guid&gt;] [-ResourceGroup &lt;String&gt;] [-Region &lt;String&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Set-PnPContainerTypeConfiguration [-Identity] &lt;Guid&gt; [-DiscoverabilityDisabled &lt;Boolean&gt;] [-SharingRestricted &lt;Boolean&gt;] [-ApplicationRedirectUrl &lt;String&gt;] [-OverrideTenantWhoCanShareAnonymousAllowList &lt;Boolean&gt;] [-WhoCanShareAnonymousAllowList &lt;Guid[]&gt;] [-OverrideTenantWhoCanShareAuthenticatedGuestAllowList &lt;Boolean&gt;] [-WhoCanShareAuthenticatedGuestAllowList &lt;Guid[]&gt;] [-CopilotEmbeddedChatHosts &lt;String[]&gt;] [-AnonymousLinkExpirationInDays &lt;Int32&gt;] [-IsArchiveEnabled &lt;Boolean&gt;] [-UseLegacyItemWebUrl &lt;Boolean&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Creates a trial, standard or pass-through billing SharePoint Container Type. Use the <code>-TrialContainerType</code> switch parameter to create a trial Container Type, and the <code>-IsPassThroughBilling</code> switch parameter to have the consuming tenant pay. Without either, a standard Container Type is created, billed to your tenant.</p>
-<p>The billing of a standard Container Type is not set up by this cmdlet. Set it up separately, for example with <code>Add-SPOContainerTypeBilling</code> in the SharePoint Online Management Shell.</p>
-<p>An application can own only one Container Type, and the billing model of a Container Type cannot be changed after it has been created.</p>
+<p>Changes only the settings for the parameters that are passed in, on a Container Type created under a SharePoint Embedded application, and returns the resulting configuration. At least one setting has to be passed.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">New-PnPContainerType -ContainerTypeName &quot;test1&quot; -OwningApplicationId 50785fde-3082-47ac-a36d-06282ac5c7da
+<pre><code class="lang-powershell">Set-PnPContainerTypeConfiguration -Identity 4f0af585-8dcc-0000-223d-661eb2c604e4 -DiscoverabilityDisabled $false
 </code></pre>
-<p>Creates a standard SharePoint Container Type.</p>
+<p>Shows the content of Containers of this Container Type across Microsoft 365, such as on office.com, onedrive.com and in recommended files.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">New-PnPContainerType -TrialContainerType -ContainerTypeName &quot;test1&quot; -OwningApplicationId df4085cc-9a38-4255-badc-5c5225610475
+<pre><code class="lang-powershell">Set-PnPContainerTypeConfiguration -Identity 4f0af585-8dcc-0000-223d-661eb2c604e4 -SharingRestricted $false
 </code></pre>
-<p>Creates a trial SharePoint Container Type.</p>
+<p>Lets any member or guest of a Container with edit permission share its files.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">New-PnPContainerType -ContainerTypeName &quot;test1&quot; -OwningApplicationId 50785fde-3082-47ac-a36d-06282ac5c7da -IsPassThroughBilling -ApplicationRedirectUrl &quot;https://contoso.com/app&quot;
+<pre><code class="lang-powershell">Set-PnPContainerTypeConfiguration -Identity 4f0af585-8dcc-0000-223d-661eb2c604e4 -OverrideTenantWhoCanShareAnonymousAllowList $true -WhoCanShareAnonymousAllowList 3f0b8a1e-6c2d-4e5f-9a7b-1c2d3e4f5a6b
 </code></pre>
-<p>Creates a SharePoint Container Type billed to the consuming tenant, whose files redirect to the specified url.</p>
+<p>Only lets members of the specified security group share with anonymous users, regardless of the tenant level setting.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Set-PnPContainerTypeConfiguration -Identity 4f0af585-8dcc-0000-223d-661eb2c604e4 -OverrideTenantWhoCanShareAnonymousAllowList $true -WhoCanShareAnonymousAllowList $null -OverrideTenantWhoCanShareAuthenticatedGuestAllowList $true -WhoCanShareAuthenticatedGuestAllowList $null
+</code></pre>
+<p>Overrides both tenant level allow lists with an empty one, so sharing with external users is no longer limited to members of specific security groups.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Set-PnPContainerTypeConfiguration -Identity 4f0af585-8dcc-0000-223d-661eb2c604e4 -IsArchiveEnabled $true
+</code></pre>
+<p>Enables archiving and reactivating the Containers of this Container Type.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-applicationredirecturl">-ApplicationRedirectUrl</h3>
-<p>The url of the application that files in Containers of this Container Type redirect to.</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-anonymouslinkexpirationindays">-AnonymousLinkExpirationInDays</h3>
+<p>The number of days after which anonymous links created from then on expire, from 1 to 730. Use -1 to follow the tenant level setting.</p>
+<pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 
 Required: False
@@ -125,9 +131,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-azuresubscriptionid">-AzureSubscriptionId</h3>
-<p>This parameter is obsolete and is ignored. Set up the billing of a standard Container Type separately, for example with <code>Add-SPOContainerTypeBilling</code> in the SharePoint Online Management Shell.</p>
-<pre><code class="lang-yaml">Type: Guid
+<h3 id="-applicationredirecturl">-ApplicationRedirectUrl</h3>
+<p>The url of the application that files in Containers of this Container Type redirect to.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
@@ -159,30 +165,42 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-containertypename">-ContainerTypeName</h3>
-<p>The name of the Container Type.</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-copilotembeddedchathosts">-CopilotEmbeddedChatHosts</h3>
+<p>The hosts allowed to embed Copilot chat over the content of Containers of this Container Type.</p>
+<pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-discoverabilitydisabled">-DiscoverabilityDisabled</h3>
+<p>When <code>$true</code>, the content of Containers of this Container Type is hidden across Microsoft 365, such as on office.com, onedrive.com, in recommended files and in other intelligent file discovery features.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>The id of the Container Type.</p>
+<pre><code class="lang-yaml">Type: Guid
+Parameter Sets: (All)
+Aliases: ContainerTypeId
+
+Required: True
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-isarchiveenabled">-IsArchiveEnabled</h3>
-<p>Whether Containers of this Container Type can be archived. Archiving moves their content to the cold tier, where it cannot be accessed until the Container is reactivated. When omitted, archiving is disabled. A change can take up to 24 hours to reach the consuming tenant.</p>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-isgovernablebyadmin">-IsGovernableByAdmin</h3>
-<p>Whether the administrators of a consuming tenant can manage Containers of this Container Type in the SharePoint admin center and PowerShell. When set to <code>$false</code>, they can only view them. When omitted, they can manage them.</p>
+<p>Enables archiving the Containers of this Container Type. Archiving moves their content to the cold tier, where it cannot be accessed until the Container is reactivated. Reactivation is immediate within the first seven days and can take up to 24 hours after that. A change can take up to 24 hours to reach the consuming tenant.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -192,9 +210,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-ispassthroughbilling">-IsPassThroughBilling</h3>
-<p>Creates a Container Type billed to the consuming tenant rather than to your tenant. Cannot be combined with <code>-TrialContainerType</code>.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
+<h3 id="-overridetenantwhocanshareanonymousallowlist">-OverrideTenantWhoCanShareAnonymousAllowList</h3>
+<p>Whether <code>-WhoCanShareAnonymousAllowList</code> replaces the tenant level list of security groups allowed to share with anonymous users. <code>-WhoCanShareAnonymousAllowList</code> can only be used with <code>-OverrideTenantWhoCanShareAnonymousAllowList $true</code>.</p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False
@@ -203,20 +221,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-owningapplicationid">-OwningApplicationId</h3>
-<p>The unique identifier of the owning application which is the value of the Microsoft Entra ID app ID set up as part of configuring SharePoint Embed.</p>
-<pre><code class="lang-yaml">Type: Guid
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-region">-Region</h3>
-<p>This parameter is obsolete and is ignored. Set up the billing of a standard Container Type separately, for example with <code>Add-SPOContainerTypeBilling</code> in the SharePoint Online Management Shell.</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-overridetenantwhocanshareauthenticatedguestallowlist">-OverrideTenantWhoCanShareAuthenticatedGuestAllowList</h3>
+<p>Whether <code>-WhoCanShareAuthenticatedGuestAllowList</code> replaces the tenant level list of security groups allowed to share with authenticated guests. <code>-WhoCanShareAuthenticatedGuestAllowList</code> can only be used with <code>-OverrideTenantWhoCanShareAuthenticatedGuestAllowList $true</code>.</p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False
@@ -225,9 +232,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-resourcegroup">-ResourceGroup</h3>
-<p>This parameter is obsolete and is ignored. Set up the billing of a standard Container Type separately, for example with <code>Add-SPOContainerTypeBilling</code> in the SharePoint Online Management Shell.</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-sharingrestricted">-SharingRestricted</h3>
+<p>When <code>$true</code>, only owners and managers of a Container can share its files. When <code>$false</code>, any member or guest with edit permission can.</p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False
@@ -236,9 +243,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-trialcontainertype">-TrialContainerType</h3>
-<p>Creates a trial Container Type, which needs no billing. Cannot be combined with <code>-IsPassThroughBilling</code>.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
+<h3 id="-uselegacyitemweburl">-UseLegacyItemWebUrl</h3>
+<p>Temporarily keeps using the legacy format of the item WebUrl, instead of the SharePoint Embedded one.</p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False
@@ -259,9 +266,31 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-whocanshareanonymousallowlist">-WhoCanShareAnonymousAllowList</h3>
+<p>The object ids of up to 12 security groups whose members can share with anonymous users as well as with authenticated guests. Microsoft 365 Groups are not supported. Pass <code>$null</code> to no longer restrict sharing to specific security groups. Requires <code>-OverrideTenantWhoCanShareAnonymousAllowList $true</code>.</p>
+<pre><code class="lang-yaml">Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-whocanshareauthenticatedguestallowlist">-WhoCanShareAuthenticatedGuestAllowList</h3>
+<p>The object ids of up to 12 security groups whose members can share with authenticated guests. Microsoft 365 Groups are not supported. Pass <code>$null</code> to no longer restrict sharing to specific security groups. Requires <code>-OverrideTenantWhoCanShareAuthenticatedGuestAllowList $true</code>.</p>
+<pre><code class="lang-yaml">Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
-<a href="https://learn.microsoft.com/sharepoint/dev/embedded/concepts/app-concepts/containertypes">SharePoint Online Embedded Container Types</a></p>
+<a href="https://learn.microsoft.com/sharepoint/dev/embedded/concepts/app-concepts/containertypes">SharePoint Embedded Container Types</a></p>
 
 </article>
 

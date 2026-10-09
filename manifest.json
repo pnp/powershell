@@ -547,6 +547,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPContainerUser.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPContainerUser.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPContentType.md",
       "output": {
         ".html": {
@@ -1857,6 +1867,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Enable-PnPContainer.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Enable-PnPContainer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Enable-PnPFeature.md",
       "output": {
         ".html": {
@@ -2437,6 +2457,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPContainerApplication.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPContainerApplication.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPContainerType.md",
       "output": {
         ".html": {
@@ -2451,6 +2481,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPContainerTypeConfiguration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPContainerUser.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPContainerUser.html"
         }
       },
       "version": ""
@@ -5447,6 +5487,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPContainer.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPContainer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/New-PnPContainerType.md",
       "output": {
         ".html": {
@@ -6187,6 +6237,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPContainerUser.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPContainerUser.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPContentType.md",
       "output": {
         ".html": {
@@ -6221,6 +6281,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPCustomAction.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPDeletedContainer.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPDeletedContainer.html"
         }
       },
       "version": ""
@@ -7801,6 +7871,66 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPClientSidePage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPContainer.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPContainer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPContainerApplication.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPContainerApplication.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPContainerApplicationPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPContainerApplicationPermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPContainerType.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPContainerType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPContainerTypeConfiguration.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPContainerTypeConfiguration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPContainerUser.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPContainerUser.html"
         }
       },
       "version": ""

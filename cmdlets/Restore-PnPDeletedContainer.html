@@ -94,7 +94,7 @@
 </ul>
 <p>The Restore-PnPDeletedContainer recovers a deleted Container from the Recycle Bin.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Restore-PnPDeletedContainer -Identity &lt;string&gt; [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Restore-PnPDeletedContainer [-Identity] &lt;String&gt; [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -102,25 +102,40 @@
 <pre><code class="lang-powershell">Restore-PnPDeletedContainer -Identity &quot;b!jKRbiovfMEWUWKabObEnjC5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot;
 </code></pre>
 <p>Restores the Container with ContainerId &quot;b!jKRbiovfMEWUWKabObEnjC5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot; from the Recycle Bin.</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-identity">-Identity</h3>
-<p>The ContainerId of the deleted container to be restored.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Restore-PnPDeletedContainer -Identity &quot;https://contoso-admin.sharepoint.com/_api/v2.1/storageContainers/b!jKRbiovfMEWUWKabObEnjC5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot; -Force
 </code></pre>
+<p>Restores the Container with the specified api url from the Recycle Bin without asking for confirmation.</p>
+<h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Restore-PnPConnection.</p>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
 Required: False
 Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-force">-Force</h3>
+<p>Restores the Container without asking for confirmation.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>The id or the api url of the deleted Container to be restored. A deleted Container cannot be restored by its site url.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

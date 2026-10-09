@@ -87,7 +87,7 @@
         <article data-uid="pnp.powershell.cmdlets">
 <h1 id="pnp-powershell-cmdlets">PnP PowerShell cmdlets</h1>
 
-<p>PnP PowerShell exists out of 854 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below.</p>
+<p>PnP PowerShell exists out of 867 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below.</p>
 <p><sup>1</sup>: Only available in the latest nightly build. All the others can also be used using the latest stable release.<br>
 <sup>2</sup>: Cmdlet is an alias of another cmdlet, used to provide backwards compatibility.</p>
 <h2 id="add">Add</h2>
@@ -103,6 +103,7 @@
 <li><a href="Add-PnPAzureADServicePrincipalAppRoleAssignment.html">Add-PnPAzureADServicePrincipalAppRoleAssignment</a> <sup>2</sup></li>
 <li><a href="Add-PnPBrandCenterFont.html">Add-PnPBrandCenterFont</a></li>
 <li><a href="Add-PnPBrandCenterFontPackage.html">Add-PnPBrandCenterFontPackage</a></li>
+<li><a href="Add-PnPContainerUser.html">Add-PnPContainerUser</a> <sup>1</sup></li>
 <li><a href="Add-PnPContentType.html">Add-PnPContentType</a></li>
 <li><a href="Add-PnPContentTypesFromContentTypeHub.html">Add-PnPContentTypesFromContentTypeHub</a></li>
 <li><a href="Add-PnPContentTypeToDocumentSet.html">Add-PnPContentTypeToDocumentSet</a></li>
@@ -264,6 +265,7 @@
 <h2 id="enable">Enable</h2>
 <ul>
 <li><a href="Enable-PnPCommSite.html">Enable-PnPCommSite</a></li>
+<li><a href="Enable-PnPContainer.html">Enable-PnPContainer</a> <sup>1</sup></li>
 <li><a href="Enable-PnPFeature.html">Enable-PnPFeature</a></li>
 <li><a href="Enable-PnPFlow.html">Enable-PnPFlow</a></li>
 <li><a href="Enable-PnPPageScheduling.html">Enable-PnPPageScheduling</a></li>
@@ -334,8 +336,10 @@
 <li><a href="Get-PnPCompatibleHubContentTypes.html">Get-PnPCompatibleHubContentTypes</a></li>
 <li><a href="Get-PnPConnection.html">Get-PnPConnection</a></li>
 <li><a href="Get-PnPContainer.html">Get-PnPContainer</a></li>
+<li><a href="Get-PnPContainerApplication.html">Get-PnPContainerApplication</a> <sup>1</sup></li>
 <li><a href="Get-PnPContainerType.html">Get-PnPContainerType</a></li>
 <li><a href="Get-PnPContainerTypeConfiguration.html">Get-PnPContainerTypeConfiguration</a></li>
+<li><a href="Get-PnPContainerUser.html">Get-PnPContainerUser</a> <sup>1</sup></li>
 <li><a href="Get-PnPContentType.html">Get-PnPContentType</a></li>
 <li><a href="Get-PnPContentTypePublishingHubUrl.html">Get-PnPContentTypePublishingHubUrl</a></li>
 <li><a href="Get-PnPContentTypePublishingStatus.html">Get-PnPContentTypePublishingStatus</a></li>
@@ -659,6 +663,7 @@
 <li><a href="New-PnPAzureADUserTemporaryAccessPass.html">New-PnPAzureADUserTemporaryAccessPass</a> <sup>2</sup></li>
 <li><a href="New-PnPAzureCertificate.html">New-PnPAzureCertificate</a></li>
 <li><a href="New-PnPBatch.html">New-PnPBatch</a></li>
+<li><a href="New-PnPContainer.html">New-PnPContainer</a> <sup>1</sup></li>
 <li><a href="New-PnPContainerType.html">New-PnPContainerType</a></li>
 <li><a href="New-PnPEntraIDGroup.html">New-PnPEntraIDGroup</a></li>
 <li><a href="New-PnPEntraIDUserTemporaryAccessPass.html">New-PnPEntraIDUserTemporaryAccessPass</a></li>
@@ -748,10 +753,12 @@
 <li><a href="Remove-PnPClientSidePage.html">Remove-PnPClientSidePage</a> <sup>2</sup></li>
 <li><a href="Remove-PnPContainer.html">Remove-PnPContainer</a></li>
 <li><a href="Remove-PnPContainerType.html">Remove-PnPContainerType</a></li>
+<li><a href="Remove-PnPContainerUser.html">Remove-PnPContainerUser</a> <sup>1</sup></li>
 <li><a href="Remove-PnPContentType.html">Remove-PnPContentType</a></li>
 <li><a href="Remove-PnPContentTypeFromDocumentSet.html">Remove-PnPContentTypeFromDocumentSet</a></li>
 <li><a href="Remove-PnPContentTypeFromList.html">Remove-PnPContentTypeFromList</a></li>
 <li><a href="Remove-PnPCustomAction.html">Remove-PnPCustomAction</a></li>
+<li><a href="Remove-PnPDeletedContainer.html">Remove-PnPDeletedContainer</a> <sup>1</sup></li>
 <li><a href="Remove-PnPDeletedMicrosoft365Group.html">Remove-PnPDeletedMicrosoft365Group</a></li>
 <li><a href="Remove-PnPEntraIDApp.html">Remove-PnPEntraIDApp</a></li>
 <li><a href="Remove-PnPEntraIDGroup.html">Remove-PnPEntraIDGroup</a></li>
@@ -943,6 +950,12 @@
 <li><a href="Set-PnPBuiltInDesignPackageVisibility.html">Set-PnPBuiltInDesignPackageVisibility</a></li>
 <li><a href="Set-PnPBuiltInSiteTemplateSettings.html">Set-PnPBuiltInSiteTemplateSettings</a></li>
 <li><a href="Set-PnPClientSidePage.html">Set-PnPClientSidePage</a> <sup>2</sup></li>
+<li><a href="Set-PnPContainer.html">Set-PnPContainer</a> <sup>1</sup></li>
+<li><a href="Set-PnPContainerApplication.html">Set-PnPContainerApplication</a> <sup>1</sup></li>
+<li><a href="Set-PnPContainerApplicationPermission.html">Set-PnPContainerApplicationPermission</a> <sup>1</sup></li>
+<li><a href="Set-PnPContainerType.html">Set-PnPContainerType</a> <sup>1</sup></li>
+<li><a href="Set-PnPContainerTypeConfiguration.html">Set-PnPContainerTypeConfiguration</a> <sup>1</sup></li>
+<li><a href="Set-PnPContainerUser.html">Set-PnPContainerUser</a> <sup>1</sup></li>
 <li><a href="Set-PnPContentType.html">Set-PnPContentType</a></li>
 <li><a href="Set-PnPContext.html">Set-PnPContext</a></li>
 <li><a href="Set-PnPCopilotAdminLimitedMode.html">Set-PnPCopilotAdminLimitedMode</a></li>

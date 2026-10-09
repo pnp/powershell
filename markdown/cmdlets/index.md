@@ -6,7 +6,7 @@ description: Full cmdlet reference for PnP PowerShell.
 
 # PnP PowerShell cmdlets
 
-PnP PowerShell exists out of 854 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
+PnP PowerShell exists out of 867 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
  
 <sup>1</sup>: Only available in the latest nightly build. All the others can also be used using the latest stable release.  
 <sup>2</sup>: Cmdlet is an alias of another cmdlet, used to provide backwards compatibility.
@@ -23,6 +23,7 @@ PnP PowerShell exists out of 854 cmdlets which can help you in setting up, confi
 - [Add-PnPAzureADServicePrincipalAppRoleAssignment](Add-PnPAzureADServicePrincipalAppRoleAssignment.md) <sup>2</sup>
 - [Add-PnPBrandCenterFont](Add-PnPBrandCenterFont.md)
 - [Add-PnPBrandCenterFontPackage](Add-PnPBrandCenterFontPackage.md)
+- [Add-PnPContainerUser](Add-PnPContainerUser.md) <sup>1</sup>
 - [Add-PnPContentType](Add-PnPContentType.md)
 - [Add-PnPContentTypesFromContentTypeHub](Add-PnPContentTypesFromContentTypeHub.md)
 - [Add-PnPContentTypeToDocumentSet](Add-PnPContentTypeToDocumentSet.md)
@@ -164,6 +165,7 @@ PnP PowerShell exists out of 854 cmdlets which can help you in setting up, confi
 - [Disconnect-PnPOnline](Disconnect-PnPOnline.md)
 ## Enable
 - [Enable-PnPCommSite](Enable-PnPCommSite.md)
+- [Enable-PnPContainer](Enable-PnPContainer.md) <sup>1</sup>
 - [Enable-PnPFeature](Enable-PnPFeature.md)
 - [Enable-PnPFlow](Enable-PnPFlow.md)
 - [Enable-PnPPageScheduling](Enable-PnPPageScheduling.md)
@@ -226,8 +228,10 @@ PnP PowerShell exists out of 854 cmdlets which can help you in setting up, confi
 - [Get-PnPCompatibleHubContentTypes](Get-PnPCompatibleHubContentTypes.md)
 - [Get-PnPConnection](Get-PnPConnection.md)
 - [Get-PnPContainer](Get-PnPContainer.md)
+- [Get-PnPContainerApplication](Get-PnPContainerApplication.md) <sup>1</sup>
 - [Get-PnPContainerType](Get-PnPContainerType.md)
 - [Get-PnPContainerTypeConfiguration](Get-PnPContainerTypeConfiguration.md)
+- [Get-PnPContainerUser](Get-PnPContainerUser.md) <sup>1</sup>
 - [Get-PnPContentType](Get-PnPContentType.md)
 - [Get-PnPContentTypePublishingHubUrl](Get-PnPContentTypePublishingHubUrl.md)
 - [Get-PnPContentTypePublishingStatus](Get-PnPContentTypePublishingStatus.md)
@@ -535,6 +539,7 @@ PnP PowerShell exists out of 854 cmdlets which can help you in setting up, confi
 - [New-PnPAzureADUserTemporaryAccessPass](New-PnPAzureADUserTemporaryAccessPass.md) <sup>2</sup>
 - [New-PnPAzureCertificate](New-PnPAzureCertificate.md)
 - [New-PnPBatch](New-PnPBatch.md)
+- [New-PnPContainer](New-PnPContainer.md) <sup>1</sup>
 - [New-PnPContainerType](New-PnPContainerType.md)
 - [New-PnPEntraIDGroup](New-PnPEntraIDGroup.md)
 - [New-PnPEntraIDUserTemporaryAccessPass](New-PnPEntraIDUserTemporaryAccessPass.md)
@@ -614,10 +619,12 @@ PnP PowerShell exists out of 854 cmdlets which can help you in setting up, confi
 - [Remove-PnPClientSidePage](Remove-PnPClientSidePage.md) <sup>2</sup>
 - [Remove-PnPContainer](Remove-PnPContainer.md)
 - [Remove-PnPContainerType](Remove-PnPContainerType.md)
+- [Remove-PnPContainerUser](Remove-PnPContainerUser.md) <sup>1</sup>
 - [Remove-PnPContentType](Remove-PnPContentType.md)
 - [Remove-PnPContentTypeFromDocumentSet](Remove-PnPContentTypeFromDocumentSet.md)
 - [Remove-PnPContentTypeFromList](Remove-PnPContentTypeFromList.md)
 - [Remove-PnPCustomAction](Remove-PnPCustomAction.md)
+- [Remove-PnPDeletedContainer](Remove-PnPDeletedContainer.md) <sup>1</sup>
 - [Remove-PnPDeletedMicrosoft365Group](Remove-PnPDeletedMicrosoft365Group.md)
 - [Remove-PnPEntraIDApp](Remove-PnPEntraIDApp.md)
 - [Remove-PnPEntraIDGroup](Remove-PnPEntraIDGroup.md)
@@ -787,6 +794,12 @@ PnP PowerShell exists out of 854 cmdlets which can help you in setting up, confi
 - [Set-PnPBuiltInDesignPackageVisibility](Set-PnPBuiltInDesignPackageVisibility.md)
 - [Set-PnPBuiltInSiteTemplateSettings](Set-PnPBuiltInSiteTemplateSettings.md)
 - [Set-PnPClientSidePage](Set-PnPClientSidePage.md) <sup>2</sup>
+- [Set-PnPContainer](Set-PnPContainer.md) <sup>1</sup>
+- [Set-PnPContainerApplication](Set-PnPContainerApplication.md) <sup>1</sup>
+- [Set-PnPContainerApplicationPermission](Set-PnPContainerApplicationPermission.md) <sup>1</sup>
+- [Set-PnPContainerType](Set-PnPContainerType.md) <sup>1</sup>
+- [Set-PnPContainerTypeConfiguration](Set-PnPContainerTypeConfiguration.md) <sup>1</sup>
+- [Set-PnPContainerUser](Set-PnPContainerUser.md) <sup>1</sup>
 - [Set-PnPContentType](Set-PnPContentType.md)
 - [Set-PnPContext](Set-PnPContext.md)
 - [Set-PnPCopilotAdminLimitedMode](Set-PnPCopilotAdminLimitedMode.md)

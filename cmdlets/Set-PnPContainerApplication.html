@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Get-PnPContainer | PnP PowerShell </title>
+      <title>Set-PnPContainerApplication | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Get-PnPContainer | PnP PowerShell ">
+      <meta name="title" content="Set-PnPContainerApplication | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
       
       <link rel="icon" href="../images/favicon-pnp.svg">
@@ -85,56 +85,42 @@
         </div>
 
         <article data-uid="">
-<h1 id="get-pnpcontainer">Get-PnPContainer</h1>
+<h1 id="set-pnpcontainerapplication">Set-PnPContainerApplication</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+<li>SharePoint Embedded Administrator or Global Administrator role is required</li>
 </ul>
-<p>Returns one or more Containers in SharePoint Embedded. The Containers returned can be piped to <code>Set-PnPContainer</code> and <code>Remove-PnPContainer</code>.</p>
+<p>Sets the configuration of a SharePoint Embedded application in the tenant.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPContainer [[-Identity] &lt;ContainerPipeBind&gt;] [-OwningApplicationId &lt;Guid&gt;] [-Paged] [-PagingToken &lt;String&gt;] [-SortByStorage &lt;SortOrder&gt;] [-ArchiveStatus &lt;SPContainerArchiveStatusFilterProperties&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Set-PnPContainerApplication [-OwningApplicationId] &lt;Guid&gt; [-OverrideTenantSharingCapability &lt;Boolean&gt;] [-SharingCapability &lt;SharingCapabilities&gt;] [-CopilotEmbeddedChatHosts &lt;String[]&gt;] [-ItemMajorVersionLimit &lt;Int32&gt;] [-WhatIf] [-Confirm] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Returns the Containers of every SharePoint Embedded application in the tenant, the Containers of one application when <code>-OwningApplicationId</code> is given, or a single Container when <code>-Identity</code> is given. As an application owns exactly one container type, <code>-OwningApplicationId</code> also returns the Containers of one container type.</p>
+<p>Changes only the settings for the parameters that are passed in, on the SharePoint Embedded application given with <code>-OwningApplicationId</code>. At least one setting has to be passed.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPContainer
+<pre><code class="lang-powershell">Set-PnPContainerApplication -OwningApplicationId 2ce03211-353e-45d7-b487-8ac6981332cf -OverrideTenantSharingCapability $false
 </code></pre>
-<p>Returns the active Containers of every SharePoint Embedded application in the tenant.</p>
+<p>Makes the sharing of the application follow the sharing capability of the tenant.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPContainer -OwningApplicationId a187e399-0c36-4b98-8f04-1edc167a0996
+<pre><code class="lang-powershell">Set-PnPContainerApplication -OwningApplicationId 2ce03211-353e-45d7-b487-8ac6981332cf -OverrideTenantSharingCapability $true -SharingCapability Disabled
 </code></pre>
-<p>Returns the active Containers created under the specified SharePoint Embedded application.</p>
+<p>Limits sharing files in the application to internal users, regardless of the sharing capability of the tenant.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPContainer -Identity &quot;b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot;
+<pre><code class="lang-powershell">Set-PnPContainerApplication -OwningApplicationId 2ce03211-353e-45d7-b487-8ac6981332cf -ItemMajorVersionLimit 1000
 </code></pre>
-<p>Returns the properties of the specified Container by using the Container id.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPContainer -Identity &quot;https://contoso.sharepoint.com/contentstorage/CSP_4bd71a68-8312-4275-99b1-a2b70e3ba0e8&quot;
-</code></pre>
-<p>Returns the properties of the specified Container by using the Container url.</p>
-<h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Get-PnPContainer -SortByStorage Descending -ArchiveStatus Archived
-</code></pre>
-<p>Returns the archived Containers in the tenant, largest first.</p>
+<p>Keeps at most 1000 major versions of each file in the Containers of the application.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-archivestatus">-ArchiveStatus</h3>
-<p>The ArchiveStatus parameter is used to display containers in various stages of archiving. The following states are supported:</p>
-<ul>
-<li>Archived: Displays containers in all archived states.</li>
-<li>RecentlyArchived: Displays containers in the &quot;Recently archived&quot; state.</li>
-<li>FullyArchived: Displays containers in the &quot;Fully archived&quot; state.</li>
-<li>Reactivating: Displays containers in the &quot;Reactivating&quot; state.</li>
-<li>NotArchived: Displays active containers</li>
-</ul>
-<pre><code class="lang-yaml">Type: SPContainerArchiveStatusFilterProperties
+<h3 id="-confirm">-Confirm</h3>
+<p>Prompts you for confirmation before running the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases: cf
 
 Required: False
 Position: Named
-Default value: NotArchived
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
@@ -149,57 +135,76 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>Specify container site url, container api url or container id.</p>
-<pre><code class="lang-yaml">Type: ContainerPipeBind
+<h3 id="-copilotembeddedchathosts">-CopilotEmbeddedChatHosts</h3>
+<p>The hosts allowed to embed Copilot chat over the content of the application.</p>
+<pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-itemmajorversionlimit">-ItemMajorVersionLimit</h3>
+<p>The maximum number of major versions kept of each file in the Containers of the application, from 1 to 50000.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-overridetenantsharingcapability">-OverrideTenantSharingCapability</h3>
+<p>When <code>$true</code>, the application uses the sharing capability given with <code>-SharingCapability</code> instead of the one of the tenant, and <code>-SharingCapability</code> is required. When <code>$false</code>, the application follows the sharing capability of the tenant.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-owningapplicationid">-OwningApplicationId</h3>
-<p>This parameter specifies the ID of the SharePoint repository services application. When omitted, the Containers of every application in the tenant are returned.</p>
-<p>To retrieve Containers for the Microsoft Loop app, use OwningApplicationId: a187e399-0c36-4b98-8f04-1edc167a0996.
-To retrieve Containers for the Microsoft Designer app, use OwningApplicationId: 5e2795e3-ce8c-4cfb-b302-35fe5cd01597</p>
+<p>The id of the SharePoint Embedded application.</p>
+<p>To configure the Microsoft Loop app, use OwningApplicationId: a187e399-0c36-4b98-8f04-1edc167a0996.
+To configure the Microsoft Designer app, use OwningApplicationId: 5e2795e3-ce8c-4cfb-b302-35fe5cd01597</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
 
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sharingcapability">-SharingCapability</h3>
+<p>The sharing available in the application. Can only be used with <code>-OverrideTenantSharingCapability $true</code>.</p>
+<ul>
+<li>Disabled: external sharing is disabled.</li>
+<li>ExternalUserSharingOnly: sharing by email is enabled, guest link sharing is disabled.</li>
+<li>ExternalUserAndGuestSharing: sharing by email and guest link sharing are both enabled.</li>
+<li>ExistingExternalUserSharingOnly: only sharing with guests already in the directory of your organization.</li>
+</ul>
+<p>Inviting people from outside your organization requires Microsoft Entra B2B integration, which can be enabled with <code>Set-PnPTenant -EnableAzureADB2BIntegration $true</code>.</p>
+<pre><code class="lang-yaml">Type: SharingCapabilities
+Parameter Sets: (All)
+Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
+
 Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-paged">-Paged</h3>
-<p>Returns a single batch of Containers followed by a paging token, which can be passed to <code>-PagingToken</code> to retrieve the next batch. Without it, all Containers are returned.</p>
+<h3 id="-whatif">-WhatIf</h3>
+<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-pagingtoken">-PagingToken</h3>
-<p>Use this parameter to provide the paging token returned when using <code>-Paged</code>. Together with <code>-Paged</code>, it returns the next batch of Containers, or the message End of containers view when there are no more. Without <code>-Paged</code>, it returns every Container after the token.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-sortbystorage">-SortByStorage</h3>
-<p>Sorts the Containers by the storage they use, in ascending or descending order. When omitted, the Containers of every application in the tenant are sorted by creation date, newest first.</p>
-<pre><code class="lang-yaml">Type: SortOrder
-Parameter Sets: (All)
-Accepted values: Ascending, Descending
+Aliases: wi
 
 Required: False
 Position: Named
@@ -208,7 +213,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://learn.microsoft.com/sharepoint/dev/embedded/admin/manage-containers-powershell">Manage containers with PowerShell</a></p>
 
 </article>
 
