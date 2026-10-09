@@ -12,7 +12,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteTemplateMetadata")]
-    public class SetSiteTemplateMetadata : PnPWebCmdlet
+    public partial class SetSiteTemplateMetadata : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]
         public string Path;
@@ -29,8 +29,17 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [Parameter(Mandatory = false)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Experimental;
+
         protected override void ExecuteCmdlet()
         {
+            if (Experimental)
+            {
+                ExecuteCmdletExperimental();
+                return;
+            }
+
             CurrentWeb.EnsureProperty(w => w.Url);
             bool templateFromFileSystem = !Path.ToLower().StartsWith("http");
             FileConnectorBase fileConnector;
@@ -61,7 +70,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
             if (isOpenOfficeFile)
             {
-                var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
+                var openXmlConnector = PnPPackageConnector.OpenFramework(templateFileName, fileConnector);
                 provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
                 if (!String.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
                 {
