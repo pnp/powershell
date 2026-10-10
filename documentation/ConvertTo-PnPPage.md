@@ -10,7 +10,7 @@ title: ConvertTo-PnPPage
 # ConvertTo-PnPPage
 
 ## SYNOPSIS
-Converts a classic page (wiki or web part page) into a modern page
+Converts a classic page (wiki, web part, or publishing page) into a modern page
 
 ## SYNTAX 
 
@@ -29,6 +29,12 @@ ConvertTo-PnPPage [-Identity] <ClassicPagePipeBind> [-Library <String>] [-Folder
  [-UserMappingFile <String>] [-TermMappingFile <String>] [-SkipTermStoreMapping]
  [-LDAPConnectionString <String>] [-SkipHiddenWebParts] [-Connection <PnPConnection>]
 ```
+
+## DESCRIPTION
+
+Wiki, web part, and publishing pages can be converted within the currently connected Web or to a target in another site collection. Use `-PublishingPage` for a publishing page and `-TargetWebUrl` or `-TargetConnection` to select a target.
+
+Publishing page conversion within the current Web requires an existing Site Pages library with Add Items and Edit Items permissions. The source publishing page is retained, and an existing target page is never overwritten, even when `-Overwrite` is supplied.
 
 ## EXAMPLES
 
@@ -129,6 +135,13 @@ ConvertTo-PnPPage -Identity "somepage.aspx" -PublishingPage -Overwrite -TargetCo
 ```
 
 Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. This allows to read a page in on-premises environment and create in another online locations including using specific user mappings between the two environments.
+
+### EXAMPLE 15
+```powershell
+ConvertTo-PnPPage -Identity "Enterprise-Wiki.aspx" -PublishingPage -PublishingTargetPageName "Enterprise-Wiki-modern.aspx"
+```
+
+Converts an Enterprise Wiki publishing page to a modern page in the currently connected Web. The source publishing page is retained.
 
 ## PARAMETERS
 
@@ -385,7 +398,7 @@ Accept pipeline input: False
 ```
 
 ### -PublishingPage
-I'm transforming a publishing page
+Transforms a classic publishing page using its page layout and publishing fields.
 
 ```yaml
 Type: SwitchParameter
@@ -589,7 +602,7 @@ Accept pipeline input: False
 ```
 
 ### -TargetWebUrl
-Url of the target web that will receive the modern page. Defaults to null which means in-place transformation
+Url of the target Web that will receive the modern page. If neither `-TargetWebUrl` nor `-TargetConnection` is specified, wiki, web part, and publishing pages are converted within the currently connected Web.
 
 ```yaml
 Type: String

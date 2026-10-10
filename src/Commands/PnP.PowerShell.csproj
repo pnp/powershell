@@ -97,8 +97,13 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(PnPFrameworkPath)' != '' and '$(IsRelease)' != '1'">
+		<PackageReference Include="AngleSharp.Css" Version="1.0.0" />
+		<PackageReference Include="Microsoft.Identity.Client.Broker" Version="4.85.2" />
+		<PackageReference Include="Portable.Xaml" Version="0.26.0" />
+		<PackageReference Include="System.IO.Packaging" Version="8.0.1" />
+		<PackageReference Include="System.Text.Json" Version="8.0.5" />
 		<Reference Include="PnP.Framework" Condition="'$(TargetFramework)' == 'net8.0'">
-			<HintPath>$(PnPFrameworkPath)PnP.Framework\bin\Debug\net8.0\PnP.Framework.dll</HintPath>
+			<HintPath>$(PnPFrameworkPath)PnP.Framework\bin\$(Configuration)\net8.0\PnP.Framework.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>

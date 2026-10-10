@@ -202,12 +202,6 @@ namespace PnP.PowerShell.Commands.Pages
                 throw new Exception($"Page '{Identity?.Name}' does not exist");
             }
 
-            // Publishing specific validation
-            if (this.PublishingPage && string.IsNullOrEmpty(this.TargetWebUrl) && TargetConnection == null)
-            {
-                throw new Exception($"Publishing page transformation is only supported when transformating into another site collection. Use the -TargetWebUrl to specify a modern target site.");
-            }
-
             // Blog specific validation
             if ((this.BlogPage || this.DelveBlogPage) && string.IsNullOrEmpty(this.TargetWebUrl) && TargetConnection == null)
             {
