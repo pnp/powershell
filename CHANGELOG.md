@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
-- Added the explicit `-InPlacePublishingPage` opt-in to `ConvertTo-PnPPage` for publishing page transformation in the currently connected Web. The source page is retained and existing target pages are not overwritten.
+- Added the explicit `-InPlacePublishingPage` opt-in to `ConvertTo-PnPPage` for publishing page transformation in the currently connected Web. The source page is retained and existing target pages are not overwritten. [#5490](https://github.com/pnp/powershell/pull/5490)
 - Added `Get-PnPPersistedLogin` which lists the tenant url, client id and authentication type of every login registered to use the local token cache, so the cache can be inspected without reading it. [#5463](https://github.com/pnp/powershell/pull/5463)
 - Added `-PersistLogin` to the certificate based app only parameter sets of `Connect-PnPOnline`, so a connection made with `-CertificatePath`, `-CertificateBase64Encoded`, `-Thumbprint` or the environment variables can reuse its access token from the local cache. The certificate, tenant and client id are still required on each connection, as neither the certificate nor its password is stored. [#5463](https://github.com/pnp/powershell/pull/5463)
 - Added `-CopilotSearchOptOut` to `Set-PnPSearchSettings` and exposed the value through `Get-PnPSearchSettings`; added `-CopilotSearchOptIn` to `Set-PnPTenant` and exposed the value through `Get-PnPTenant`. [#5478](https://github.com/pnp/powershell/pull/5478)
