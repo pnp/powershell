@@ -630,8 +630,10 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string BlockUserInfoVisibility { set; get; }
         [Parameter(Mandatory = false)]
+        [ValidateRange(0, 730)]
         public int? CoreAnyoneSharingLinkMaxExpirationInDays { set; get; }
         [Parameter(Mandatory = false)]
+        [ValidateRange(0, 730)]
         public int? CoreAnyoneSharingLinkRecommendedExpirationInDays { set; get; }
         [Parameter(Mandatory = false)]
         public string DefaultContentCenterSite { set; get; }
@@ -662,8 +664,10 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? MassDeleteNotificationDisabledForSPO { set; get; }
         [Parameter(Mandatory = false)]
+        [ValidateRange(0, 730)]
         public int? OneDriveAnyoneSharingLinkMaxExpirationInDays { set; get; }
         [Parameter(Mandatory = false)]
+        [ValidateRange(0, 730)]
         public int? OneDriveAnyoneSharingLinkRecommendedExpirationInDays { set; get; }
         [Parameter(Mandatory = false)]
         public bool? PermissiveBrowserFileHandlingOverride { set; get; }
@@ -683,6 +687,7 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? SyncPrivacyProfileProperties { set; get; }
         [Parameter(Mandatory = false)]
+        [ValidateRange(93, 3650)]
         public int? UnlicensedOneDriveAccountsActiveStoragePeriod { set; get; }
         [Parameter(Mandatory = false)]
         public Guid[] WhoCanShareAnonymousAllowList { set; get; }
@@ -2150,6 +2155,10 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.BlockUserInfoVisibility = BlockUserInfoVisibility;
                 modified = true;
             }
+            if (CoreAnyoneSharingLinkMaxExpirationInDays.HasValue || CoreAnyoneSharingLinkRecommendedExpirationInDays.HasValue)
+            {
+                EnsureRecommendedWithinMaxExpiration(nameof(CoreAnyoneSharingLinkRecommendedExpirationInDays), CoreAnyoneSharingLinkRecommendedExpirationInDays ?? Tenant.CoreAnyoneSharingLinkRecommendedExpirationInDays, nameof(CoreAnyoneSharingLinkMaxExpirationInDays), CoreAnyoneSharingLinkMaxExpirationInDays ?? Tenant.CoreAnyoneSharingLinkMaxExpirationInDays);
+            }
             if (CoreAnyoneSharingLinkMaxExpirationInDays.HasValue)
             {
                 Tenant.CoreAnyoneSharingLinkMaxExpirationInDays = CoreAnyoneSharingLinkMaxExpirationInDays.Value;
@@ -2225,6 +2234,10 @@ namespace PnP.PowerShell.Commands.Admin
             }
             if (LimitedAccessFileType.HasValue)
             {
+                if (ConditionalAccessPolicy.HasValue && ConditionalAccessPolicy.Value != SPOConditionalAccessPolicyType.AllowLimitedAccess)
+                {
+                    throw new PSArgumentException($"{nameof(LimitedAccessFileType)} can only be used with {nameof(ConditionalAccessPolicy)} {SPOConditionalAccessPolicyType.AllowLimitedAccess}.", nameof(LimitedAccessFileType));
+                }
                 if (Tenant.ConditionalAccessPolicy == SPOConditionalAccessPolicyType.AllowLimitedAccess)
                 {
                     Tenant.LimitedAccessFileType = LimitedAccessFileType.Value;
@@ -2246,6 +2259,10 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 Tenant.MassDeleteNotificationDisabledForSPO = MassDeleteNotificationDisabledForSPO.Value;
                 modified = true;
+            }
+            if (OneDriveAnyoneSharingLinkMaxExpirationInDays.HasValue || OneDriveAnyoneSharingLinkRecommendedExpirationInDays.HasValue)
+            {
+                EnsureRecommendedWithinMaxExpiration(nameof(OneDriveAnyoneSharingLinkRecommendedExpirationInDays), OneDriveAnyoneSharingLinkRecommendedExpirationInDays ?? Tenant.OneDriveAnyoneSharingLinkRecommendedExpirationInDays, nameof(OneDriveAnyoneSharingLinkMaxExpirationInDays), OneDriveAnyoneSharingLinkMaxExpirationInDays ?? Tenant.OneDriveAnyoneSharingLinkMaxExpirationInDays);
             }
             if (OneDriveAnyoneSharingLinkMaxExpirationInDays.HasValue)
             {
@@ -2288,6 +2305,10 @@ namespace PnP.PowerShell.Commands.Admin
             }
             if (SyncPrivacyProfileProperties.HasValue || ReSyncTenantPrivacyProfile)
             {
+                if (ReSyncTenantPrivacyProfile && SyncPrivacyProfileProperties == false)
+                {
+                    throw new PSArgumentException($"{nameof(ReSyncTenantPrivacyProfile)} can't be combined with {nameof(SyncPrivacyProfileProperties)} $false.", nameof(ReSyncTenantPrivacyProfile));
+                }
                 Tenant.SyncPrivacyProfileProperties = SyncPrivacyProfileProperties ?? true;
                 modified = true;
             }
@@ -2443,6 +2464,14 @@ namespace PnP.PowerShell.Commands.Admin
         private static bool IsValidOrganizationSharingLinkExpirationInDays(int value)
         {
             return value == 0 || value >= 7 && value <= 730;
+        }
+
+        private static void EnsureRecommendedWithinMaxExpiration(string recommendedName, int recommended, string maxName, int max)
+        {
+            if (max != 0 && recommended != 0 && recommended > max)
+            {
+                throw new PSArgumentException($"{recommendedName} ({recommended}) must be less than or equal to {maxName} ({max}).", recommendedName);
+            }
         }
     }
 }

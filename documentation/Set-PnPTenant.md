@@ -3854,7 +3854,7 @@ Accept wildcard characters: False
 ```
 
 ### -LimitedAccessFileType
-Specifies which files users with limited, web-only access can preview or download. It applies when `ConditionalAccessPolicy` is `AllowLimitedAccess`; if it isn't, you are asked whether to set it, unless `-Force` is used.
+Specifies which files users with limited, web-only access can preview or download. It applies when `ConditionalAccessPolicy` is `AllowLimitedAccess`; if it isn't, you are asked whether to set it, unless `-Force` is used. It can't be combined with any other `-ConditionalAccessPolicy` value.
 
 The valid values are:
 
@@ -3972,7 +3972,7 @@ Accept wildcard characters: False
 ```
 
 ### -ReSyncTenantPrivacyProfile
-Makes SharePoint Online sync the tenant display name and privacy profile URL from Microsoft Entra on the next request. The sync can take up to 24 hours. Replaces `SyncPrivacyProfileProperties`.
+Makes SharePoint Online sync the tenant display name and privacy profile URL from Microsoft Entra on the next request. The sync can take up to 24 hours. Replaces `SyncPrivacyProfileProperties`, and can't be combined with `-SyncPrivacyProfileProperties $false`.
 
 ```yaml
 Type: SwitchParameter
