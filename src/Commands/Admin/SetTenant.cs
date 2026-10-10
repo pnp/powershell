@@ -562,6 +562,7 @@ namespace PnP.PowerShell.Commands.Admin
         public string RestrictedAccessControlforSitesErrorHelpLink { set; get; }
 
         [Parameter(Mandatory = false)]
+        [Alias("DisableWorkflow2010")]
         public bool? Workflow2010Disabled { set; get; }
 
         [Parameter(Mandatory = false)]
@@ -614,10 +615,86 @@ namespace PnP.PowerShell.Commands.Admin
         public string[] FileTypesForVersionExpiration { set; get; }
         [Parameter(Mandatory = false)]
         public bool? DelayContentSecurityPolicyEnforcement { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? AllowLegacyAuthProtocolsEnabledSetting { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? AllowLegacyBrowserAuthProtocolsEnabledSetting { set; get; }
+        [Parameter(Mandatory = false)]
+        public Guid[] AppAccessInformationBarriersAllowList { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? AppOnlyBypassPeoplePickerPolicies { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? BlockAppAccessWithAuthenticationContext { set; get; }
+        [Parameter(Mandatory = false)]
+        public BlockDownloadLinksFileTypes? BlockDownloadLinksFileType { set; get; }
+        [Parameter(Mandatory = false)]
+        public string BlockUserInfoVisibility { set; get; }
+        [Parameter(Mandatory = false)]
+        public int? CoreAnyoneSharingLinkMaxExpirationInDays { set; get; }
+        [Parameter(Mandatory = false)]
+        public int? CoreAnyoneSharingLinkRecommendedExpirationInDays { set; get; }
+        [Parameter(Mandatory = false)]
+        public string DefaultContentCenterSite { set; get; }
+        [Parameter(Mandatory = false)]
+        public string DefaultLanguageForSiteCreation { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? DelegateRestrictedAccessControlManagement { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? DelegateRestrictedContentDiscoverabilityManagement { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? DisableSharePointStoreAccess { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? DisableSpfxTopBottomPlaceholdersInElevatedContent { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? DisableTeamsMeetingRecordingDeletedNotification { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? EnableAgentWorkerSharingDisclaimer { set; get; }
+        [Parameter(Mandatory = false)]
+        public string FilePreviewAllowedDomainList { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? IsFilePreviewDomainRestrictionEnabled { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? IsSharePointAddInsBlocked { set; get; }
+        [Parameter(Mandatory = false)]
+        public SPOLimitedAccessFileType? LimitedAccessFileType { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? MassDeleteNotificationDisabledForODB { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? MassDeleteNotificationDisabledForSPO { set; get; }
+        [Parameter(Mandatory = false)]
+        public int? OneDriveAnyoneSharingLinkMaxExpirationInDays { set; get; }
+        [Parameter(Mandatory = false)]
+        public int? OneDriveAnyoneSharingLinkRecommendedExpirationInDays { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? PermissiveBrowserFileHandlingOverride { set; get; }
+        [Parameter(Mandatory = false)]
+        [ValidateNotNullOrEmpty]
+        public string[] RemoveVersionExpirationFileTypeOverride { set; get; }
+        [Parameter(Mandatory = false)]
+        public string RestrictedAccessControlForOneDriveErrorHelpLink { set; get; }
+        [Parameter(Mandatory = false)]
+        public SwitchParameter ReSyncTenantPrivacyProfile { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? SiteOwnersCanAccessMissingContent { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? StopAlerts { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? StopNew2010Workflows { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? SyncPrivacyProfileProperties { set; get; }
+        [Parameter(Mandatory = false)]
+        public int? UnlicensedOneDriveAccountsActiveStoragePeriod { set; get; }
+        [Parameter(Mandatory = false)]
+        public Guid[] WhoCanShareAnonymousAllowList { set; get; }
+        [Parameter(Mandatory = false)]
+        public Guid[] WhoCanShareAuthenticatedGuestAllowList { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? Workflows2013Enabled { set; get; }
 
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
+            var contentCenterSite = DefaultContentCenterSite != null ? SPSyntexManagementUtilities.GetContentCenterSiteInfoFromURL(AdminContext, DefaultContentCenterSite) : null;
             AdminContext.ExecuteQueryRetry();
 
             bool modified = false;
@@ -2038,6 +2115,202 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.EnableNotificationsSubscriptions = EnableNotificationsSubscriptions.Value;
                 modified = true;
             }
+            if (AllowLegacyAuthProtocolsEnabledSetting.HasValue)
+            {
+                Tenant.AllowLegacyAuthProtocolsEnabledSetting = AllowLegacyAuthProtocolsEnabledSetting.Value;
+                modified = true;
+            }
+            if (AllowLegacyBrowserAuthProtocolsEnabledSetting.HasValue)
+            {
+                Tenant.AllowLegacyBrowserAuthProtocolsEnabledSetting = AllowLegacyBrowserAuthProtocolsEnabledSetting.Value;
+                modified = true;
+            }
+            if (AppAccessInformationBarriersAllowList != null)
+            {
+                Tenant.AppAccessInformationBarriersAllowList = AppAccessInformationBarriersAllowList;
+                modified = true;
+            }
+            if (AppOnlyBypassPeoplePickerPolicies.HasValue)
+            {
+                Tenant.AppOnlyBypassPeoplePickerPolicies = AppOnlyBypassPeoplePickerPolicies.Value;
+                modified = true;
+            }
+            if (BlockAppAccessWithAuthenticationContext.HasValue)
+            {
+                Tenant.BlockAppAccessWithAuthenticationContext = BlockAppAccessWithAuthenticationContext.Value;
+                modified = true;
+            }
+            if (BlockDownloadLinksFileType.HasValue)
+            {
+                Tenant.BlockDownloadLinksFileType = BlockDownloadLinksFileType.Value;
+                modified = true;
+            }
+            if (BlockUserInfoVisibility != null)
+            {
+                Tenant.BlockUserInfoVisibility = BlockUserInfoVisibility;
+                modified = true;
+            }
+            if (CoreAnyoneSharingLinkMaxExpirationInDays.HasValue)
+            {
+                Tenant.CoreAnyoneSharingLinkMaxExpirationInDays = CoreAnyoneSharingLinkMaxExpirationInDays.Value;
+                modified = true;
+            }
+            if (CoreAnyoneSharingLinkRecommendedExpirationInDays.HasValue)
+            {
+                Tenant.CoreAnyoneSharingLinkRecommendedExpirationInDays = CoreAnyoneSharingLinkRecommendedExpirationInDays.Value;
+                modified = true;
+            }
+            if (contentCenterSite != null)
+            {
+                if (Tenant.DefaultContentCenterSite != null)
+                {
+                    throw new PSInvalidOperationException("A default content center site already exists for this tenant.");
+                }
+                if (!string.IsNullOrWhiteSpace(contentCenterSite.Value.Error))
+                {
+                    throw new PSArgumentException(contentCenterSite.Value.Error, nameof(DefaultContentCenterSite));
+                }
+                Tenant.DefaultContentCenterSite = contentCenterSite.Value;
+                modified = true;
+            }
+            if (DefaultLanguageForSiteCreation != null)
+            {
+                Tenant.DefaultLanguageForSiteCreation = DefaultLanguageForSiteCreation;
+                modified = true;
+            }
+            if (DelegateRestrictedAccessControlManagement.HasValue)
+            {
+                Tenant.DelegateRestrictedAccessControlConfiguration = DelegateRestrictedAccessControlManagement.Value;
+                modified = true;
+            }
+            if (DelegateRestrictedContentDiscoverabilityManagement.HasValue)
+            {
+                Tenant.DelegateRestrictedContentDiscoveryConfiguration = DelegateRestrictedContentDiscoverabilityManagement.Value;
+                modified = true;
+            }
+            if (DisableSharePointStoreAccess.HasValue)
+            {
+                Tenant.DisableSharePointStoreAccess = DisableSharePointStoreAccess.Value;
+                modified = true;
+            }
+            if (DisableSpfxTopBottomPlaceholdersInElevatedContent.HasValue)
+            {
+                Tenant.DisableSpfxTopBottomPlaceholdersInElevatedContent = DisableSpfxTopBottomPlaceholdersInElevatedContent.Value;
+                modified = true;
+            }
+            if (DisableTeamsMeetingRecordingDeletedNotification.HasValue && (!DisableTeamsMeetingRecordingDeletedNotification.Value || Force || ShouldContinue("Users will no longer be told when an expired Teams meeting recording is deleted from your tenant. Do you want to continue?", Properties.Resources.Confirm)))
+            {
+                Tenant.DisableTeamsMeetingRecordingDeletedNotification = DisableTeamsMeetingRecordingDeletedNotification.Value;
+                modified = true;
+            }
+            if (EnableAgentWorkerSharingDisclaimer.HasValue)
+            {
+                Tenant.EnableAgentWorkerSharingDisclaimer = EnableAgentWorkerSharingDisclaimer.Value;
+                modified = true;
+            }
+            if (FilePreviewAllowedDomainList != null)
+            {
+                Tenant.FilePreviewAllowedDomainList = FilePreviewAllowedDomainList;
+                modified = true;
+            }
+            if (IsFilePreviewDomainRestrictionEnabled.HasValue)
+            {
+                Tenant.IsFilePreviewDomainRestrictionEnabled = IsFilePreviewDomainRestrictionEnabled.Value;
+                modified = true;
+            }
+            if (IsSharePointAddInsBlocked.HasValue)
+            {
+                Tenant.SharePointAddInsBlocked = IsSharePointAddInsBlocked.Value;
+                modified = true;
+            }
+            if (LimitedAccessFileType.HasValue)
+            {
+                if (Tenant.ConditionalAccessPolicy == SPOConditionalAccessPolicyType.AllowLimitedAccess)
+                {
+                    Tenant.LimitedAccessFileType = LimitedAccessFileType.Value;
+                    modified = true;
+                }
+                else if (Force || ShouldContinue("To set this parameter, you need to set the Set-PnPTenant -ConditionalAccessPolicy to AllowLimitedAccess. Would you like to set it now?", Properties.Resources.Confirm))
+                {
+                    Tenant.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
+                    Tenant.LimitedAccessFileType = LimitedAccessFileType.Value;
+                    modified = true;
+                }
+            }
+            if (MassDeleteNotificationDisabledForODB.HasValue)
+            {
+                Tenant.MassDeleteNotificationDisabledForODB = MassDeleteNotificationDisabledForODB.Value;
+                modified = true;
+            }
+            if (MassDeleteNotificationDisabledForSPO.HasValue)
+            {
+                Tenant.MassDeleteNotificationDisabledForSPO = MassDeleteNotificationDisabledForSPO.Value;
+                modified = true;
+            }
+            if (OneDriveAnyoneSharingLinkMaxExpirationInDays.HasValue)
+            {
+                Tenant.OneDriveAnyoneSharingLinkMaxExpirationInDays = OneDriveAnyoneSharingLinkMaxExpirationInDays.Value;
+                modified = true;
+            }
+            if (OneDriveAnyoneSharingLinkRecommendedExpirationInDays.HasValue)
+            {
+                Tenant.OneDriveAnyoneSharingLinkRecommendedExpirationInDays = OneDriveAnyoneSharingLinkRecommendedExpirationInDays.Value;
+                modified = true;
+            }
+            if (PermissiveBrowserFileHandlingOverride.HasValue)
+            {
+                if (PermissiveBrowserFileHandlingOverride.Value)
+                {
+                    throw new PSArgumentException("Permissive browser file handling is deprecated and can't be enabled.", nameof(PermissiveBrowserFileHandlingOverride));
+                }
+                Tenant.PermissiveBrowserFileHandlingOverride = PermissiveBrowserFileHandlingOverride.Value;
+                modified = true;
+            }
+            if (RestrictedAccessControlForOneDriveErrorHelpLink != null)
+            {
+                Tenant.RestrictedAccessControlForOneDriveErrorHelpLink = RestrictedAccessControlForOneDriveErrorHelpLink;
+                modified = true;
+            }
+            if (SiteOwnersCanAccessMissingContent.HasValue)
+            {
+                Tenant.SiteOwnersCanAccessMissingContent = SiteOwnersCanAccessMissingContent.Value;
+                modified = true;
+            }
+            if (StopAlerts.HasValue)
+            {
+                Tenant.StopAlerts = StopAlerts.Value;
+                modified = true;
+            }
+            if (StopNew2010Workflows.HasValue)
+            {
+                Tenant.StopNew2010Workflows = StopNew2010Workflows.Value;
+                modified = true;
+            }
+            if (SyncPrivacyProfileProperties.HasValue || ReSyncTenantPrivacyProfile)
+            {
+                Tenant.SyncPrivacyProfileProperties = SyncPrivacyProfileProperties ?? true;
+                modified = true;
+            }
+            if (UnlicensedOneDriveAccountsActiveStoragePeriod.HasValue && (Force || ShouldContinue("Changing the active storage period changes when unlicensed OneDrive accounts become read-only and are archived. Accounts kept active for longer are billed for Standard storage. Do you want to continue?", Properties.Resources.Confirm)))
+            {
+                Tenant.UnlicensedOdbActiveStorageRetentionPeriod = UnlicensedOneDriveAccountsActiveStoragePeriod.Value;
+                modified = true;
+            }
+            if (WhoCanShareAnonymousAllowList != null)
+            {
+                Tenant.WhoCanShareAllowListInTenantByGroupId = WhoCanShareAnonymousAllowList.Select(id => id.ToString()).ToList();
+                modified = true;
+            }
+            if (WhoCanShareAuthenticatedGuestAllowList != null)
+            {
+                Tenant.GuestSharingGroupAllowListInTenantByGroupId = WhoCanShareAuthenticatedGuestAllowList.Select(id => id.ToString()).ToList();
+                modified = true;
+            }
+            if (Workflows2013Enabled.HasValue)
+            {
+                Tenant.SetWorkflows2013Enabled(Workflows2013Enabled.Value);
+                modified = true;
+            }
             if (modified)
             {
                 AdminContext.ExecuteQueryRetry();
@@ -2143,6 +2416,15 @@ namespace PnP.PowerShell.Commands.Admin
                 }
 
                 fileTypeVersionPolicyModified = true;
+            }
+            if (RemoveVersionExpirationFileTypeOverride != null)
+            {
+                if (modified || fileTypeVersionPolicyModified)
+                {
+                    throw new PSArgumentException($"The parameter {nameof(RemoveVersionExpirationFileTypeOverride)} can't be combined with {nameof(FileTypesForVersionExpiration)}, {nameof(EnableAutoExpirationVersionTrim)}, {nameof(MajorVersionLimit)} or {nameof(ExpireVersionsAfterDays)}.", nameof(RemoveVersionExpirationFileTypeOverride));
+                }
+                Tenant.RemoveFileTypeVersionPolicy(RemoveVersionExpirationFileTypeOverride);
+                AdminContext.ExecuteQueryRetry();
             }
             if (modified)
             {
