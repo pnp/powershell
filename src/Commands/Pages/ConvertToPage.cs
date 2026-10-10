@@ -105,9 +105,6 @@ namespace PnP.PowerShell.Commands.Pages
         public SwitchParameter PublishingPage = false;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter InPlacePublishingPage = false;
-
-        [Parameter(Mandatory = false)]
         public SwitchParameter BlogPage = false;
 
         [Parameter(Mandatory = false)]
@@ -157,8 +154,6 @@ namespace PnP.PowerShell.Commands.Pages
 
         protected override void ExecuteCmdlet()
         {
-            ValidatePublishingPageParameters();
-
             //Fix loading of modernization framework
             FixLocalAssemblyResolving();
 
@@ -207,12 +202,6 @@ namespace PnP.PowerShell.Commands.Pages
                 throw new Exception($"Page '{Identity?.Name}' does not exist");
             }
 
-            // Publishing specific validation
-            if (this.PublishingPage && !this.InPlacePublishingPage && string.IsNullOrEmpty(this.TargetWebUrl) && TargetConnection == null)
-            {
-                throw new Exception($"Publishing page transformation is only supported when transformating into another site collection. Use the -TargetWebUrl to specify a modern target site.");
-            }
-
             // Blog specific validation
             if ((this.BlogPage || this.DelveBlogPage) && string.IsNullOrEmpty(this.TargetWebUrl) && TargetConnection == null)
             {
@@ -244,15 +233,15 @@ namespace PnP.PowerShell.Commands.Pages
             bool crossSiteTransformation = TargetConnection != null || !string.IsNullOrEmpty(TargetWebUrl);
 
             // Create target client context (when needed)
-            ClientContext targetContext = this.InPlacePublishingPage ? this.ClientContext : null;
-            if (!this.InPlacePublishingPage && TargetConnection == null)
+            ClientContext targetContext = null;
+            if (TargetConnection == null)
             {
                 if (!string.IsNullOrEmpty(TargetWebUrl))
                 {
                     targetContext = this.ClientContext.Clone(TargetWebUrl);
                 }
             }
-            else if (!this.InPlacePublishingPage)
+            else
             {
                 targetContext = TargetConnection.Context;
             }
@@ -378,7 +367,6 @@ namespace PnP.PowerShell.Commands.Pages
                     SkipTermStoreMapping = SkipTermStoreMapping,
                     RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns,
                     SkipHiddenWebParts = this.SkipHiddenWebParts,
-                    InPlacePublishingPage = this.InPlacePublishingPage,
                 };
 
                 // Set mapping properties
@@ -467,78 +455,6 @@ namespace PnP.PowerShell.Commands.Pages
             {
                 WriteObject(serverRelativeClientPageUrl);
             }
-        }
-
-        private void ValidatePublishingPageParameters()
-        {
-            if (this.InPlacePublishingPage && !this.PublishingPage)
-            {
-                ThrowPublishingPageValidationError("-InPlacePublishingPage requires -PublishingPage.");
-                return;
-            }
-
-            if (this.InPlacePublishingPage && (this.BlogPage || this.DelveBlogPage))
-            {
-                ThrowPublishingPageValidationError("-InPlacePublishingPage cannot be combined with -BlogPage or -DelveBlogPage.");
-                return;
-            }
-
-            if (!this.InPlacePublishingPage)
-            {
-                return;
-            }
-
-            var sourceWebUrl = this.ClientContext?.Url;
-
-            if (this.TargetConnection != null)
-            {
-                var targetWebUrl = this.TargetConnection.Context?.Url ?? this.TargetConnection.Url;
-                if (!AreSameWeb(sourceWebUrl, targetWebUrl))
-                {
-                    ThrowPublishingPageValidationError($"-InPlacePublishingPage only supports the current Web. The target Web '{targetWebUrl}' differs from the connected source Web '{sourceWebUrl}'.");
-                    return;
-                }
-
-                ThrowPublishingPageValidationError("-InPlacePublishingPage cannot be combined with -TargetConnection because it always targets the current Web.");
-                return;
-            }
-
-            if (!string.IsNullOrWhiteSpace(this.TargetWebUrl))
-            {
-                if (!AreSameWeb(sourceWebUrl, this.TargetWebUrl))
-                {
-                    ThrowPublishingPageValidationError($"-InPlacePublishingPage only supports the current Web. The target Web '{this.TargetWebUrl}' differs from the connected source Web '{sourceWebUrl}'.");
-                    return;
-                }
-
-                ThrowPublishingPageValidationError("-InPlacePublishingPage cannot be combined with -TargetWebUrl because it always targets the current Web.");
-            }
-        }
-
-        private void ThrowPublishingPageValidationError(string message)
-        {
-            ThrowTerminatingError(new ErrorRecord(
-                new PSArgumentException(message),
-                "ConvertToPnPPageInvalidPublishingPageOptions",
-                ErrorCategory.InvalidArgument,
-                this.Identity));
-        }
-
-        private static bool AreSameWeb(string sourceWebUrl, string targetWebUrl)
-        {
-            if (!Uri.TryCreate(sourceWebUrl, UriKind.Absolute, out var sourceUri) ||
-                !Uri.TryCreate(targetWebUrl, UriKind.Absolute, out var targetUri))
-            {
-                return false;
-            }
-
-            var sourceAuthority = sourceUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
-            var targetAuthority = targetUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.Unescaped);
-            var sourcePath = sourceUri.AbsolutePath.TrimEnd('/');
-            var targetPath = targetUri.AbsolutePath.TrimEnd('/');
-
-            return string.Equals(sourceAuthority, targetAuthority, StringComparison.OrdinalIgnoreCase) &&
-                string.Equals(sourcePath, targetPath, StringComparison.OrdinalIgnoreCase);
         }
 
         private Stream GenerateStreamFromString(string s)

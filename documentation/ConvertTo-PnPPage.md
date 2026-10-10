@@ -10,7 +10,7 @@ title: ConvertTo-PnPPage
 # ConvertTo-PnPPage
 
 ## SYNOPSIS
-Converts a classic page (wiki or web part page) into a modern page
+Converts a classic page (wiki, web part, or publishing page) into a modern page
 
 ## SYNTAX 
 
@@ -22,13 +22,19 @@ ConvertTo-PnPPage [-Identity] <ClassicPagePipeBind> [-Library <String>] [-Folder
  [-AddTableListImageAsImageWebPart] [-UseCommunityScriptEditor] [-SummaryLinksToHtml]
  [-TargetWebUrl <String>] [-LogType <PageTransformatorLogType>] [-LogFolder <String>] [-LogSkipFlush]
  [-LogVerbose] [-DontPublish] [-KeepPageCreationModificationInformation] [-SetAuthorInPageHeader]
- [-PostAsNews] [-DisablePageComments] [-PublishingPage] [-InPlacePublishingPage] [-BlogPage] [-DelveBlogPage]
+ [-PostAsNews] [-DisablePageComments] [-PublishingPage] [-BlogPage] [-DelveBlogPage]
  [-DelveKeepSubTitle] [-PageLayoutMapping <String>] [-PublishingTargetPageName <String>]
  [-TargetPageName <String>] [-TargetPageFolder <String>] [-TargetPageFolderOverridesDefaultFolder]
  [-RemoveEmptySectionsAndColumns] [-TargetConnection <PnPConnection>] [-SkipUserMapping]
  [-UserMappingFile <String>] [-TermMappingFile <String>] [-SkipTermStoreMapping]
  [-LDAPConnectionString <String>] [-SkipHiddenWebParts] [-Connection <PnPConnection>]
 ```
+
+## DESCRIPTION
+
+Wiki, web part, and publishing pages can be converted within the currently connected Web or to a target in another site collection. Use `-PublishingPage` for a publishing page and `-TargetWebUrl` or `-TargetConnection` to select a target.
+
+Publishing page conversion within the current Web requires an existing Site Pages library with Add Items and Edit Items permissions. The source publishing page is retained, and an existing target page is never overwritten, even when `-Overwrite` is supplied.
 
 ## EXAMPLES
 
@@ -132,10 +138,10 @@ Converts a publishing page named 'somepage' to a client side page in the site sp
 
 ### EXAMPLE 15
 ```powershell
-ConvertTo-PnPPage -Identity "Enterprise-Wiki.aspx" -PublishingPage -InPlacePublishingPage -PublishingTargetPageName "Enterprise-Wiki-modern.aspx"
+ConvertTo-PnPPage -Identity "Enterprise-Wiki.aspx" -PublishingPage -PublishingTargetPageName "Enterprise-Wiki-modern.aspx"
 ```
 
-Converts an Enterprise Wiki publishing page to a modern page in the same Web. This explicit opt-in cannot be combined with `-TargetWebUrl` or `-TargetConnection`. The source publishing page is retained.
+Converts an Enterprise Wiki publishing page to a modern page in the currently connected Web. The source publishing page is retained.
 
 ## PARAMETERS
 
@@ -271,18 +277,6 @@ Position: 0
 Accept pipeline input: True
 ```
 
-### -InPlacePublishingPage
-Explicitly allows a publishing page to be converted to a modern page in the currently connected Web. Requires `-PublishingPage` and cannot be combined with `-TargetWebUrl` or `-TargetConnection`. The current Web must have an existing Site Pages library with Add Items and Edit Items permissions. The source publishing page is retained, and an existing target page is never overwritten, even when `-Overwrite` is supplied.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -KeepPageCreationModificationInformation
 Keep the author, editor, created and modified information from the source page (when source page lives in SPO)
 
@@ -404,7 +398,7 @@ Accept pipeline input: False
 ```
 
 ### -PublishingPage
-I'm transforming a publishing page
+Transforms a classic publishing page using its page layout and publishing fields.
 
 ```yaml
 Type: SwitchParameter
@@ -608,7 +602,7 @@ Accept pipeline input: False
 ```
 
 ### -TargetWebUrl
-Url of the target web that will receive the modern page. Defaults to null which means in-place transformation
+Url of the target Web that will receive the modern page. If neither `-TargetWebUrl` nor `-TargetConnection` is specified, wiki, web part, and publishing pages are converted within the currently connected Web.
 
 ```yaml
 Type: String
