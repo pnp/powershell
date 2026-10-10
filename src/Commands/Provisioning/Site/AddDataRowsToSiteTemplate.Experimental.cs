@@ -85,7 +85,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 Lists = { Lists = { listConfiguration } }
             };
 
-            var reporter = new CoreProvisioningReporter($"Extracting data rows of {listTitle}", WriteProgress, LogWarning, StoppingToken);
+            var reporter = new CoreProvisioningReporter($"Extracting data rows of {listTitle}", WriteProgress, LogWarning, WriteError, PnPContext.Uri, StoppingToken);
             configuration.ProgressDelegate = reporter.ProgressDelegate;
             configuration.MessagesDelegate = reporter.MessagesDelegate;
 

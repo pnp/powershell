@@ -1,4 +1,4 @@
-using PnP.Framework.Provisioning.Model.Configuration;
+﻿using PnP.Framework.Provisioning.Model.Configuration;
 using System;
 using System.Management.Automation;
 using CoreApplyConfiguration = PnP.Core.Provisioning.Model.Configuration.ApplyConfiguration;

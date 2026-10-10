@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
             ApplyParametersToConfiguration(configuration, path, packageName, extension);
 
-            var reporter = new CoreProvisioningReporter($"Extracting template from {PnPContext.Uri}", WriteProgress, LogWarning, StoppingToken);
+            var reporter = new CoreProvisioningReporter($"Extracting template from {PnPContext.Uri}", WriteProgress, LogWarning, WriteError, PnPContext.Uri, StoppingToken);
             configuration.ProgressDelegate = reporter.ProgressDelegate;
             configuration.MessagesDelegate = reporter.MessagesDelegate;
 

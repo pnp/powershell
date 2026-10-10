@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
 
             var configuration = BuildApplyConfigurationExperimental();
-            var reporter = new CoreProvisioningReporter($"Applying template to {targetUri}", WriteProgress, LogWarning, StoppingToken);
+            var reporter = new CoreProvisioningReporter($"Applying template to {targetUri}", WriteProgress, LogWarning, WriteError, targetUri, StoppingToken);
             configuration.ProgressDelegate = reporter.ProgressDelegate;
             configuration.MessagesDelegate = reporter.MessagesDelegate;
 

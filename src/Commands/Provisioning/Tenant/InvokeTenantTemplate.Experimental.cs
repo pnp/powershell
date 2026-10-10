@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 }
             };
 
-            var reporter = new CoreProvisioningReporter("Applying template to tenant", WriteProgress, LogWarning, StoppingToken);
+            var reporter = new CoreProvisioningReporter("Applying template to tenant", WriteProgress, LogWarning, WriteError, PnPContext.Uri, StoppingToken);
             configuration.ProgressDelegate = reporter.ProgressDelegate;
             configuration.MessagesDelegate = reporter.MessagesDelegate;
 

@@ -20,13 +20,19 @@ namespace PnP.PowerShell.Commands.Utilities
     ///
     /// The engine takes no cancellation token. When the cmdlet is stopped, the progress callbacks throw instead,
     /// which ends the run at the next item or handler, and <see cref="Run{T}(Func{Task{T}})"/> waits for that.
+    ///
+    /// The engine carries on after an item fails and only reports it as an error message. Those are shown as warnings
+    /// while the engine runs, and written as errors once it has finished, so scripts can tell that part of the run failed.
     /// </summary>
     internal sealed class CoreProvisioningReporter
     {
         private readonly BlockingCollection<Action> pendingWrites = new();
         private readonly HashSet<string> warningsShown = new(StringComparer.Ordinal);
+        private readonly List<string> errors = new();
         private readonly Action<ProgressRecord> writeProgress;
         private readonly Action<string> logWarning;
+        private readonly Action<ErrorRecord> writeError;
+        private readonly object errorTarget;
         private readonly string activity;
         private readonly CancellationTokenSource cancellation;
 
@@ -36,12 +42,17 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="activity">The activity shown on the main progress record</param>
         /// <param name="writeProgress">Writes a progress record, normally the cmdlet's WriteProgress</param>
         /// <param name="logWarning">Reports a warning, normally the cmdlet's LogWarning</param>
+        /// <param name="writeError">Writes an error record, normally the cmdlet's WriteError</param>
+        /// <param name="errorTarget">The target of the error records, normally the url of the site the engine runs against</param>
         /// <param name="stoppingToken">Cancelled when the cmdlet is stopped, normally the cmdlet's StoppingToken</param>
-        internal CoreProvisioningReporter(string activity, Action<ProgressRecord> writeProgress, Action<string> logWarning, CancellationToken stoppingToken)
+        internal CoreProvisioningReporter(string activity, Action<ProgressRecord> writeProgress, Action<string> logWarning,
+            Action<ErrorRecord> writeError, object errorTarget, CancellationToken stoppingToken)
         {
             this.activity = string.IsNullOrWhiteSpace(activity) ? "Processing" : activity;
             this.writeProgress = writeProgress;
             this.logWarning = logWarning;
+            this.writeError = writeError;
+            this.errorTarget = errorTarget;
             cancellation = CancellationTokenSource.CreateLinkedTokenSource(stoppingToken);
         }
 
@@ -79,12 +90,16 @@ namespace PnP.PowerShell.Commands.Utilities
             switch (type)
             {
                 case ProvisioningMessageType.Warning:
+                    pendingWrites.Add(() => ShowWarning(message));
+                    break;
+
                 case ProvisioningMessageType.Error:
                     pendingWrites.Add(() =>
                     {
-                        if (warningsShown.Add(message))
+                        ShowWarning(message);
+                        if (!errors.Contains(message))
                         {
-                            logWarning(message);
+                            errors.Add(message);
                         }
                     });
                     break;
@@ -112,6 +127,7 @@ namespace PnP.PowerShell.Commands.Utilities
         internal T Run<T>(Func<Task<T>> operation)
         {
             var task = Task.Run(operation);
+            var completed = false;
             try
             {
                 while (!task.IsCompleted)
@@ -130,7 +146,12 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     throw new PipelineStoppedException();
                 }
-                return task.GetAwaiter().GetResult();
+                var result = task.GetAwaiter().GetResult();
+
+                Complete();
+                completed = true;
+                WriteErrors();
+                return result;
             }
             finally
             {
@@ -148,7 +169,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         // The engine stopped, most likely with the OperationCanceledException thrown by the callbacks
                     }
                 }
-                if (!cancellation.IsCancellationRequested)
+                if (!completed && !cancellation.IsCancellationRequested)
                 {
                     Complete();
                 }
@@ -168,6 +189,22 @@ namespace PnP.PowerShell.Commands.Utilities
                 await operation().ConfigureAwait(false);
                 return true;
             });
+        }
+
+        private void ShowWarning(string message)
+        {
+            if (warningsShown.Add(message))
+            {
+                logWarning(message);
+            }
+        }
+
+        private void WriteErrors()
+        {
+            foreach (var message in errors)
+            {
+                writeError(new ErrorRecord(new InvalidOperationException(message), "PnPCoreProvisioningError", ErrorCategory.InvalidResult, errorTarget));
+            }
         }
 
         private void Complete()

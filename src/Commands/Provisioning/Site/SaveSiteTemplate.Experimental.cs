@@ -29,9 +29,13 @@ namespace PnP.PowerShell.Commands.Provisioning
             {
                 Out = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Out);
             }
-            if (System.IO.File.Exists(Out) && !Force && !ShouldContinue(string.Format(Properties.Resources.File0ExistsOverwrite, Out), Properties.Resources.Confirm))
+            if (System.IO.File.Exists(Out))
             {
-                return;
+                if (!Force && !ShouldContinue(string.Format(Properties.Resources.File0ExistsOverwrite, Out), Properties.Resources.Confirm))
+                {
+                    return;
+                }
+                System.IO.File.Delete(Out);
             }
 
             var outPath = new FileInfo(Out).DirectoryName;

@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 }
             }
 
-            var reporter = new CoreProvisioningReporter($"Extracting lists from {PnPContext.Uri}", WriteProgress, LogWarning, StoppingToken);
+            var reporter = new CoreProvisioningReporter($"Extracting lists from {PnPContext.Uri}", WriteProgress, LogWarning, WriteError, PnPContext.Uri, StoppingToken);
             configuration.ProgressDelegate = reporter.ProgressDelegate;
             configuration.MessagesDelegate = reporter.MessagesDelegate;
 

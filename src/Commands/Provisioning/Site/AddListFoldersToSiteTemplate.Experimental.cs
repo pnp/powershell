@@ -76,7 +76,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 }
             };
 
-            var reporter = new CoreProvisioningReporter($"Extracting folders of {listTitle}", WriteProgress, LogWarning, StoppingToken);
+            var reporter = new CoreProvisioningReporter($"Extracting folders of {listTitle}", WriteProgress, LogWarning, WriteError, PnPContext.Uri, StoppingToken);
             configuration.ProgressDelegate = reporter.ProgressDelegate;
             configuration.MessagesDelegate = reporter.MessagesDelegate;
 
