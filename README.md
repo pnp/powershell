@@ -14,6 +14,8 @@ This module is a successor of the [PnP-PowerShell](https://github.com/pnp/pnp-po
 
 For more information about installing or upgrading to this module, please refer to [the documentation](https://pnp.github.io/powershell/articles/index.html).
 
+To use PnP PowerShell from an AI assistant such as GitHub Copilot or Claude, see the [PnP PowerShell MCP server](https://pnp.github.io/powershell/articles/mcpserver.html).
+
 ## IMPORTANT - New PnP PowerShell 3.x
 
 We released a new major version of PnP PowerShell, version 3 and upwards. This version of PnP PowerShell requires as of today PowerShell 7.4.0 or newer, and is based upon .NET 8.0. 

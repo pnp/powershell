@@ -17,7 +17,7 @@ Connect to a SharePoint site
 ### Interactive for Multi Factor Authentication (Default)
 ```powershell
 Connect-PnPOnline -Interactive [-ReturnConnection] -Url <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>]
- [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
+ [-ClientId <String>] [-Tenant <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
 ### Credentials
@@ -39,7 +39,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientS
 
 ### App-Only with Azure Active Directory
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
+Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> [-CertificatePath <String>] [-CertificateBase64Encoded <String>]
  [-CertificatePassword <SecureString>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [-ValidateConnection] [-MicrosoftGraphEndPoint <string>]
@@ -48,7 +48,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
 
 ### App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
+Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> -Thumbprint <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [-ValidateConnection] [-MicrosoftGraphEndPoint <string>]
  [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
@@ -56,7 +56,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
 
 ### DeviceLogin
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] -DeviceLogin -Tenant <String>
+Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] -DeviceLogin [-Tenant <String>]
  [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] 
  [-ValidateConnection] [-MicrosoftGraphEndPoint <string>]
  [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
@@ -74,28 +74,28 @@ Connect-PnPOnline -Url <String> -AccessToken <String> [-AzureEnvironment <AzureE
 
 ### System Assigned Managed Identity
 ```powershell
-Connect-PnPOnline [-Url <String>] -ManagedIdentity [-ReturnConnection]
+Connect-PnPOnline [-Url <String>] -ManagedIdentity [-AzureEnvironment <AzureEnvironment>] [-ReturnConnection]
 ```
 
 ### User Assigned Managed Identity by Client Id
 ```powershell
-Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityClientId <String> [-ReturnConnection]
+Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityClientId <String> [-AzureEnvironment <AzureEnvironment>] [-ReturnConnection]
 ```
 
 ### User Assigned Managed Identity by Principal Id
 ```powershell
-Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityObjectId <String> [-ReturnConnection]
+Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityObjectId <String> [-AzureEnvironment <AzureEnvironment>] [-ReturnConnection]
 ```
 
 ### User Assigned Managed Identity by Azure Resource Id
 ```powershell
-Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityAzureResourceId <String> [-ReturnConnection]
+Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityAzureResourceId <String> [-AzureEnvironment <AzureEnvironment>] [-ReturnConnection]
 ```
 
 ### Environment Variable
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-EnvironmentVariable] [-CurrentCredentials]
- [-CreateDrive] [-DriveName <String>] [-RedirectUri <String>]
+Connect-PnPOnline [-ReturnConnection] [-Url] <String> -EnvironmentVariable [-PersistLogin]
+ [-CreateDrive] [-DriveName <String>] [-RedirectUri <String>] [-Tenant <String>]
  [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [-TransformationOnPrem] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
@@ -103,13 +103,13 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-EnvironmentVariable] [-C
 ### Azure AD Workload Identity
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-ValidateConnection] [-Url] <String>
- [-AzureADWorkloadIdentity] [-Connection <PnPConnection>]
+ [-AzureADWorkloadIdentity] [-AzureEnvironment <AzureEnvironment>] [-MicrosoftGraphEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
 ### OS login
 ```powershell
 Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] 
- [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
+ [-ClientId <String>] [-Tenant <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
 ### Federated Identity
@@ -349,7 +349,7 @@ The Azure environment to use for authentication, the defaults to 'Production' wh
 
 ```yaml
 Type: AzureEnvironment
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Managed Identity, Federated Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, OS login, System Assigned Managed Identity, User Assigned Managed Identity by Client Id, User Assigned Managed Identity by Principal Id, User Assigned Managed Identity by Azure Resource Id, Federated Identity, Azure AD Workload Identity
 Aliases:
 Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD, BleuCloud, DelosCloud, GovSGCloud, Custom
 
@@ -536,13 +536,25 @@ Accept wildcard characters: False
 ```
 
 ### -PersistLogin
-Persist the current access token and related information in a locally stored cache. This cache will be retained between PowerShell sessions and will also be available after a reboot. You only need to provide this switch one time on Connect-PnPOnline cmdlet, it will after that retain the information and reuse it for new connections to the same tenant. Notice that while using a cached token, if you change the permissions of an application registration, the token associated with that registration will not be updated automatically in the cache. You will have to clear the cache entry first and reauthenticate: use `Disconnect-PnPOnline -ClearPersistedLogin`
+Persist the current access token and related information in a locally stored cache. This cache will be retained between PowerShell sessions and will also be available after a reboot. You only need to provide this switch one time on Connect-PnPOnline; it will then retain the information and reuse it for new connections to the same tenant and client ID.
+
+Certificate-based app-only connections can also use this cache. The certificate, tenant and client ID are still required on each connection because the cache does not store the certificate or its password. When a cached app-only access token expires, the supplied certificate is used to acquire a new token.
+
+App-only cache read and write failures are reported as errors, including failures during later token acquisition. An explicit `-PersistLogin` also fails if secure storage is unavailable. When reusing an existing registration without this switch, unavailable secure storage causes a warning and a connection without persistence; previously stored tokens and the registration are left intact.
+
+If the persisted-login settings file is unreadable or invalid, a certificate connection without `-PersistLogin` writes a warning and proceeds without persistence. An explicit `-PersistLogin` fails before acquiring or storing a token, so invalid settings are not replaced with an empty configuration. Repair the settings file or restore read access before retrying persistence.
+
+You can enable persistence on an existing environment-variable credentials connection by connecting again with `-EnvironmentVariable -PersistLogin`. A new authentication manager is created so the cache is attached before authentication.
+
+Use `Get-PnPPersistedLogin` to enumerate the registered cache entries. Notice that while using a cached token, if you change the permissions of an application registration, the token associated with that registration will not be updated automatically in the cache. You will have to clear the cache entry first and reauthenticate: use `Disconnect-PnPOnline -ClearPersistedLogin`.
+
+This switch is meant for a workstation you come back to. Do not use it in Azure Automation, Azure Functions, containers or any other environment where the file system does not survive the run or where the work is spread over instances which do not share a user profile: nothing is gained there and each instance authenticates as it normally would. Use a certificate, a managed identity or a workload identity in those environments instead.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Credentials, DeviceLogin, Interactive, OSLogin
+Parameter Sets: Credentials, Environment Variable, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, PnP Management Shell / DeviceLogin, Interactive login for Multi Factor Authentication, OS login
 
-Required: True
+Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False
@@ -600,10 +612,22 @@ The Azure Active Directory tenant name, e.g. mycompany.onmicrosoft.com or mycomp
 
 ```yaml
 Type: String
-Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, Environment Variable, Federated Identity
+Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
+Parameter Sets: PnP Management Shell / DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable, OS login, Federated Identity
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -800,7 +824,7 @@ Connects using the necessary environment variables. For more information the req
 Type: SwitchParameter
 Parameter Sets: Environment Variable
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -812,7 +836,7 @@ Custom Microsoft Graph endpoint to be used if we are using Azure Custom environm
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Federated Identity, OS Login
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, OS login, System Assigned Managed Identity, User Assigned Managed Identity by Client Id, User Assigned Managed Identity by Principal Id, User Assigned Managed Identity by Azure Resource Id, Federated Identity, Azure AD Workload Identity
 Aliases:
 
 Required: False
@@ -827,7 +851,7 @@ Custom Azure AD login endpoint to be used if we are using Azure Custom environme
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Federated Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, OS login, System Assigned Managed Identity, User Assigned Managed Identity by Client Id, User Assigned Managed Identity by Principal Id, User Assigned Managed Identity by Azure Resource Id, Federated Identity
 Aliases:
 
 Required: False

@@ -17,7 +17,7 @@ As the UI in [the Azure Portal](https://portal.azure.com) changes every now and 
 
    ![Creating a function app resource](./../images/azurefunctions/createfunctionappresource.png)
 
-1. Choose runtime stack `PowerShell Core` and version `7.4` (7.0 is not longer an option as of December 3rd, 2022)
+1. Choose runtime stack `PowerShell Core` and version `7.6`. PnP PowerShell 3.x requires PowerShell 7.4 or later, and PowerShell 7.4 reaches end of support on 10 November 2026. The Linux Consumption plan does not offer 7.6; use the Flex Consumption plan instead.
 
    ![Create function app basics](./../images/azurefunctions/createfunctionappbasics2.png)
 
@@ -68,14 +68,17 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 
 1. Add a new entry or replace the whole contents of the file with one of the following and remember to save the `requirements.psd1` file:
 
+   > [!Note]
+   > The Flex Consumption plan does not install the modules listed in `requirements.psd1`. On that plan, include PnP PowerShell in your app content instead, as described in [Including modules in app content](https://learn.microsoft.com/azure/azure-functions/functions-reference-powershell#including-modules-in-app-content).
+
 #### Specific stable version
 
    > [!Important]
-   > PnP PowerShell version 2 or later is required for this to work
+   > Use PnP PowerShell 3.4.0 or later. Earlier versions can fail in `Connect-PnPOnline` with `Method not found: 'Microsoft.Extensions.DependencyInjection.IServiceCollection Microsoft.Extensions.DependencyInjection.OptionsServiceCollectionExtensions.AddOptions(...)'` on current Azure Functions hosts, see [#5350](https://github.com/pnp/powershell/issues/5350).
 
    ```powershell
    @{
-       'PnP.PowerShell' = '2.12.0'
+       'PnP.PowerShell' = '3.4.1'
    }
    ```
 
@@ -83,18 +86,15 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 
 #### Latest stable version
 
-   > [!Important]
-   > PnP PowerShell version 2 or later is required for this to work
-
    If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version (not recommended):
 
    ```powershell
    @{
-       'PnP.PowerShell' = '2.*'
+       'PnP.PowerShell' = '3.*'
     }
    ```
 
-   This will then automatically download any minor version of the major 1 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.
+   This will then automatically download any minor version of the major 3 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.
 
 #### Specific prerelease version
 
@@ -102,7 +102,7 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 
    ```powershell
    @{
-       'PnP.PowerShell' = '2.99.50-nightly'
+       'PnP.PowerShell' = '3.4.46-nightly'
     }
    ```   
 

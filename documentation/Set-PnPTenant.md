@@ -188,6 +188,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EnableMediaReactions <Boolean>]
  [-ResyncContentSecurityPolicyConfigurationEntries]
  [-ContentSecurityPolicyEnforcement <Boolean>]
+ [-CopilotSearchOptIn <Boolean>]
  [-DisableSpacesActivation <Boolean>]
  [-CoreOrganizationSharingLinkRecommendedExpirationInDays <int>] 
  [-CoreOrganizationSharingLinkMaxExpirationInDays <int>]
@@ -270,6 +271,13 @@ Set-PnPTenant -ResyncContentSecurityPolicyConfigurationEntries
 ```
 
 This example requests a resync of Content Security Policy trusted script sources for SharePoint Framework solutions in the tenant app catalog and reads back whether the resync request is still pending.
+
+### EXAMPLE 10
+```powershell
+Set-PnPTenant -CopilotSearchOptIn $true
+```
+
+This example opts the tenant in to Copilot Search.
 
 ## PARAMETERS
 
@@ -543,6 +551,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CopilotSearchOptIn
+Specifies whether the tenant is opted in to Copilot Search.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False

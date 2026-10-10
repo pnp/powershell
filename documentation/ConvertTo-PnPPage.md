@@ -272,7 +272,7 @@ Accept pipeline input: True
 ```
 
 ### -InPlacePublishingPage
-Explicitly allows an Enterprise Wiki publishing page to be converted to a modern page in the currently connected Web. Requires `-PublishingPage` and cannot be combined with `-TargetWebUrl` or `-TargetConnection`. The target Web must meet the PnP Framework same-Web publishing transformation requirements.
+Explicitly allows a publishing page to be converted to a modern page in the currently connected Web. Requires `-PublishingPage` and cannot be combined with `-TargetWebUrl` or `-TargetConnection`. The current Web must have an existing Site Pages library with Add Items and Edit Items permissions. The source publishing page is retained, and an existing target page is never overwritten, even when `-Overwrite` is supplied.
 
 ```yaml
 Type: SwitchParameter

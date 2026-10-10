@@ -1,8 +1,8 @@
-# --platform linux/amd64
-FROM debian:bullseye-slim
+# --platform linux/arm64
+FROM debian:bookworm-slim
 
 # Install dependencies
-RUN apt-get update && apt-get install -y curl libicu67 libssl1.1 libunwind8
+RUN apt-get update && apt-get install -y curl libicu72 libssl3 libunwind8
 
 # Download and install PowerShell
 RUN curl -L -o powershell.tar.gz https://github.com/PowerShell/PowerShell/releases/download/v7.5.4/powershell-7.5.4-linux-arm64.tar.gz \
@@ -18,5 +18,4 @@ ARG PNP_VERSION
 RUN Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force -Scope AllUsers -AllowPrerelease -SkipPublisherCheck
 
 ENTRYPOINT ["pwsh"]
-
 

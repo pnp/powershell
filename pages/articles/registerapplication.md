@@ -68,14 +68,16 @@ Another option is to manually create the application registration in Entra ID. W
 
    ![image](../images/registerapplication/entraid_new_app_authentication_add_platform_desktop.png)
 
-1. Leave the three boxes shown in the panel on the right unchecked and in the _Custom redirect URIs_ field, enter:
-
-   http://localhost
-
-   Note that this should really be `http` and NOT `https`
-
-   Click on _Configure_ at the bottom
-
+1. Leave the three boxes shown in the panel on the right unchecked and in the _Custom redirect URIs_ field, enter:  
+   
+   a. `http://localhost`  
+       Note this is `http` and NOT `https`.  
+       
+   a. If you would like to use the [Web Account Manager (WAM)](https://learn.microsoft.com/entra/msal/dotnet/acquiring-tokens/desktop-mobile/wam#redirect-uri) via the `-OsLogin` parameter, also add:  
+       `ms-appx-web://microsoft.aad.brokerplugin/{client_id}` replacing `{client_id}` with the client id of the app registration you just created.  
+   
+   a. Click on _Configure_ at the bottom  
+   
    ![image](../images/registerapplication/entraid_new_app_authentication_add_platform_desktop_redirecturis.png)
 
 1. Under _Manage_ go to _API permissions_
@@ -147,18 +149,18 @@ Connect-PnPOnline [yourtenant].sharepoint.com -ClientId [clientid] -Tenant [your
 
 ## Special instructions for GCC or National Cloud environments
 
-In order to set up your application registration on a GCC or a national cloud environment, you will have to take a few extra steps. In the two methods described above for [interactive login](#automatically-create-an-app-registration-for-interactive-login) and [App Only access](#setting-up-access-to-your-own-entra-id-app-for-app-only-access), you will have to add `-AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China|BleuCloud|DelosCloud|GovSGCloud]` to the cmdlet picking the one that applies to your environment to register your application in Entra ID.
+In order to set up your application registration on a GCC or a national cloud environment, you will have to take a few extra steps. In the two methods described above for [interactive login](#automatically-create-an-app-registration-for-interactive-login) and [App Only access](#setting-up-access-to-your-own-entra-id-app-for-app-only-access), you will have to add `-AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|China|BleuCloud|DelosCloud|GovSGCloud]` to the cmdlet picking the one that applies to your environment to register your application in Entra ID. See [National and sovereign clouds](nationalclouds.md) for what each value changes.
 
 For an application registration meant for interactive login, use:
 
 ```PowerShell
-Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP.PowerShell" -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China|BleuCloud|DelosCloud|GovSGCloud]
+Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP.PowerShell" -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|China|BleuCloud|DelosCloud|GovSGCloud]
 ```
 
 And for an App Only application registration, use:
 
 ```PowerShell
-$result = Register-PnPEntraIDApp -ApplicationName "PnP.PowerShell" -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China|BleuCloud|DelosCloud|GovSGCloud]
+$result = Register-PnPEntraIDApp -ApplicationName "PnP.PowerShell" -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|China|BleuCloud|DelosCloud|GovSGCloud]
 $result
 ```
 
