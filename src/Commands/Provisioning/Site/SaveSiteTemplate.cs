@@ -13,7 +13,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsData.Save, "PnPSiteTemplate")]
-    public class SaveSiteTemplate : BasePSCmdlet
+    public partial class SaveSiteTemplate : BasePSCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [Alias("InputInstance")]
@@ -31,8 +31,17 @@ namespace PnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = false)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Experimental;
+
         protected override void ProcessRecord()
         {
+            if (Experimental)
+            {
+                ProcessRecordExperimental();
+                return;
+            }
+
             var templateObject = Template.GetTemplate(SessionState.Path.CurrentFileSystemLocation.Path, (e) =>
             {
                 LogError(e);
@@ -84,7 +93,7 @@ namespace PnP.PowerShell.Commands.Provisioning
             if (extension == ".pnp")
             {
                 XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
-                      Out, fileSystemConnector);
+                      PnPPackageConnector.OpenFramework(Out, fileSystemConnector));
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 
                 provider.SaveAs(templateObject, templateFileName, formatter, TemplateProviderExtensions);
