@@ -271,6 +271,43 @@
  [-RestrictExternalSharingForAgents &lt;Boolean&gt;]
  [-DelayContentSecurityPolicyEnforcement &lt;Boolean&gt;]
  [-EnableNotificationsSubscriptions &lt;Boolean&gt;]
+ [-AllowLegacyAuthProtocolsEnabledSetting &lt;Boolean&gt;]
+ [-AllowLegacyBrowserAuthProtocolsEnabledSetting &lt;Boolean&gt;]
+ [-AppAccessInformationBarriersAllowList &lt;Guid[]&gt;]
+ [-AppOnlyBypassPeoplePickerPolicies &lt;Boolean&gt;]
+ [-BlockAppAccessWithAuthenticationContext &lt;Boolean&gt;]
+ [-BlockDownloadLinksFileType &lt;BlockDownloadLinksFileTypes&gt;]
+ [-BlockUserInfoVisibility &lt;String&gt;]
+ [-CoreAnyoneSharingLinkMaxExpirationInDays &lt;Int32&gt;]
+ [-CoreAnyoneSharingLinkRecommendedExpirationInDays &lt;Int32&gt;]
+ [-DefaultContentCenterSite &lt;String&gt;]
+ [-DefaultLanguageForSiteCreation &lt;String&gt;]
+ [-DelegateRestrictedAccessControlManagement &lt;Boolean&gt;]
+ [-DelegateRestrictedContentDiscoverabilityManagement &lt;Boolean&gt;]
+ [-DisableSharePointStoreAccess &lt;Boolean&gt;]
+ [-DisableSpfxTopBottomPlaceholdersInElevatedContent &lt;Boolean&gt;]
+ [-DisableTeamsMeetingRecordingDeletedNotification &lt;Boolean&gt;]
+ [-EnableAgentWorkerSharingDisclaimer &lt;Boolean&gt;]
+ [-FilePreviewAllowedDomainList &lt;String&gt;]
+ [-IsFilePreviewDomainRestrictionEnabled &lt;Boolean&gt;]
+ [-IsSharePointAddInsBlocked &lt;Boolean&gt;]
+ [-LimitedAccessFileType &lt;SPOLimitedAccessFileType&gt;]
+ [-MassDeleteNotificationDisabledForODB &lt;Boolean&gt;]
+ [-MassDeleteNotificationDisabledForSPO &lt;Boolean&gt;]
+ [-OneDriveAnyoneSharingLinkMaxExpirationInDays &lt;Int32&gt;]
+ [-OneDriveAnyoneSharingLinkRecommendedExpirationInDays &lt;Int32&gt;]
+ [-PermissiveBrowserFileHandlingOverride &lt;Boolean&gt;]
+ [-RemoveVersionExpirationFileTypeOverride &lt;String[]&gt;]
+ [-RestrictedAccessControlForOneDriveErrorHelpLink &lt;String&gt;]
+ [-ReSyncTenantPrivacyProfile]
+ [-SiteOwnersCanAccessMissingContent &lt;Boolean&gt;]
+ [-StopAlerts &lt;Boolean&gt;]
+ [-StopNew2010Workflows &lt;Boolean&gt;]
+ [-SyncPrivacyProfileProperties &lt;Boolean&gt;]
+ [-UnlicensedOneDriveAccountsActiveStoragePeriod &lt;Int32&gt;]
+ [-WhoCanShareAnonymousAllowList &lt;Guid[]&gt;]
+ [-WhoCanShareAuthenticatedGuestAllowList &lt;Guid[]&gt;]
+ [-Workflows2013Enabled &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -2613,7 +2650,7 @@ Accept wildcard characters: False
 <p>Sets a value to specify whether Workflow 2010 is disabled.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
-
+Aliases: DisableWorkflow2010
 Required: False
 Position: Named
 Default value: None
@@ -2817,6 +2854,424 @@ Accept wildcard characters: False
 <li>False (default) - Agents can share content externally according to existing sharing policies.</li>
 <li>True - External sharing for agents is restricted.</li>
 </ul>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowlegacyauthprotocolsenabledsetting">-AllowLegacyAuthProtocolsEnabledSetting</h3>
+<p>Sets the AllowLegacyAuthProtocolsEnabledSetting value of the tenant, which accompanies <code>LegacyAuthProtocolsEnabled</code>. Microsoft does not document what it does.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowlegacybrowserauthprotocolsenabledsetting">-AllowLegacyBrowserAuthProtocolsEnabledSetting</h3>
+<p>Sets the AllowLegacyBrowserAuthProtocolsEnabledSetting value of the tenant, which accompanies <code>LegacyBrowserAuthProtocolsEnabled</code>. Microsoft does not document what it does.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-appaccessinformationbarriersallowlist">-AppAccessInformationBarriersAllowList</h3>
+<p>Specifies the IDs of the third-party applications that are allowed to access sites and OneDrive accounts protected by information barriers. Microsoft lists this feature as rolling out soon.</p>
+<pre><code class="lang-yaml">Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-apponlybypasspeoplepickerpolicies">-AppOnlyBypassPeoplePickerPolicies</h3>
+<p>Specifies whether app-only calls bypass the people picker policies.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-blockappaccesswithauthenticationcontext">-BlockAppAccessWithAuthenticationContext</h3>
+<p>Specifies whether to block app access through authentication context.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-blockdownloadlinksfiletype">-BlockDownloadLinksFileType</h3>
+<p>Specifies which files the block download setting of sharing links applies to.</p>
+<p>The valid values are:</p>
+<ul>
+<li>WebPreviewableFiles - all supported files.</li>
+<li>ServerRenderedFilesOnly - Office files only.</li>
+</ul>
+<pre><code class="lang-yaml">Type: BlockDownloadLinksFileTypes
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-blockuserinfovisibility">-BlockUserInfoVisibility</h3>
+<p>Sets the block user info visibility policy of the tenant, for example <code>ExternalPeopleInOD</code>. Microsoft does not document the accepted values.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-coreanyonesharinglinkmaxexpirationindays">-CoreAnyoneSharingLinkMaxExpirationInDays</h3>
+<p>Specifies the maximum number of days before Anyone links expire on SharePoint sites, not including OneDrive. The value can be from 1 to 730 days. Set it to 0 to remove the expiration requirement.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-coreanyonesharinglinkrecommendedexpirationindays">-CoreAnyoneSharingLinkRecommendedExpirationInDays</h3>
+<p>Specifies the recommended number of days before Anyone links expire on SharePoint sites, not including OneDrive. Users are offered it as the expiration when they create a link. The value can be from 1 to 730 days and can't be more than <code>CoreAnyoneSharingLinkMaxExpirationInDays</code>.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-defaultcontentcentersite">-DefaultContentCenterSite</h3>
+<p>Sets the default content center of the tenant from the URL of a content center site. The default content center can be set only once: this fails when the tenant already has one, and it can't be changed afterwards. Requires a Microsoft Syntex license or pay-as-you-go billing.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-defaultlanguageforsitecreation">-DefaultLanguageForSiteCreation</h3>
+<p>Specifies the language, such as <code>en-US</code>, in which new OneDrive sites are created. The language must be installed for the organization. Pass an empty string to clear it. Existing sites are not changed.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-delegaterestrictedaccesscontrolmanagement">-DelegateRestrictedAccessControlManagement</h3>
+<p>Allows site admins and owners to manage the restricted access control policy of their sites. Requires a SharePoint Advanced Management license.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-delegaterestrictedcontentdiscoverabilitymanagement">-DelegateRestrictedContentDiscoverabilityManagement</h3>
+<p>Allows site admins and owners to manage the restricted content discoverability policy of their sites. Requires Microsoft 365 Copilot and SharePoint Advanced Management licenses.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-disablesharepointstoreaccess">-DisableSharePointStoreAccess</h3>
+<p>When set to <code>$true</code>, the SharePoint Store is hidden from all users in the tenant.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-disablespfxtopbottomplaceholdersinelevatedcontent">-DisableSpfxTopBottomPlaceholdersInElevatedContent</h3>
+<p>When set to <code>$true</code>, SharePoint Framework top and bottom placeholders render outside elevated content instead of inside it.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-disableteamsmeetingrecordingdeletednotification">-DisableTeamsMeetingRecordingDeletedNotification</h3>
+<p>When set to <code>$true</code>, users are no longer notified by email when an expired Teams meeting recording is deleted. Setting it to <code>$true</code> asks for confirmation unless <code>-Force</code> is used.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-enableagentworkersharingdisclaimer">-EnableAgentWorkerSharingDisclaimer</h3>
+<p>Shows users a disclaimer when they share a site or its content with an agent worker or AI teammate. Microsoft lists this as a preview feature that may not be available in your tenant.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-filepreviewalloweddomainlist">-FilePreviewAllowedDomainList</h3>
+<p>Specifies a comma-separated list of domains, such as <code>contoso.com,*.fabrikam.com</code>, that the file preview viewer may load content from, in addition to a built-in default set. The list is only enforced when <code>IsFilePreviewDomainRestrictionEnabled</code> is <code>$true</code>.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-isfilepreviewdomainrestrictionenabled">-IsFilePreviewDomainRestrictionEnabled</h3>
+<p>Enforces the domain allow list set with <code>FilePreviewAllowedDomainList</code>. When set to <code>$false</code>, the list is kept but ignored.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-issharepointaddinsblocked">-IsSharePointAddInsBlocked</h3>
+<p>When set to <code>$true</code>, SharePoint Add-ins are blocked and can't be installed or run.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-limitedaccessfiletype">-LimitedAccessFileType</h3>
+<p>Specifies which files users with limited, web-only access can preview or download. It applies when <code>ConditionalAccessPolicy</code> is <code>AllowLimitedAccess</code>; if it isn't, you are asked whether to set it, unless <code>-Force</code> is used. It can't be combined with any other <code>-ConditionalAccessPolicy</code> value.</p>
+<p>The valid values are:</p>
+<ul>
+<li>OfficeOnlineFilesOnly - users can preview Office files only.</li>
+<li>WebPreviewableFiles - users can preview Office files and other files that can be viewed in the browser.</li>
+<li>OtherFiles - users can also download files that can't be previewed, such as .zip and .exe files.</li>
+</ul>
+<pre><code class="lang-yaml">Type: SPOLimitedAccessFileType
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-massdeletenotificationdisabledforodb">-MassDeleteNotificationDisabledForODB</h3>
+<p>When set to <code>$true</code>, mass deletions in OneDrive don't trigger the mass delete notification email.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-massdeletenotificationdisabledforspo">-MassDeleteNotificationDisabledForSPO</h3>
+<p>When set to <code>$true</code>, mass deletions in SharePoint don't trigger the mass delete notification email.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-onedriveanyonesharinglinkmaxexpirationindays">-OneDriveAnyoneSharingLinkMaxExpirationInDays</h3>
+<p>Specifies the maximum number of days before Anyone links expire on OneDrive sites. The value can be from 1 to 730 days. Set it to 0 to remove the expiration requirement.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-onedriveanyonesharinglinkrecommendedexpirationindays">-OneDriveAnyoneSharingLinkRecommendedExpirationInDays</h3>
+<p>Specifies the recommended number of days before Anyone links expire on OneDrive sites. Users are offered it as the expiration when they create a link. The value can be from 1 to 730 days and can't be more than <code>OneDriveAnyoneSharingLinkMaxExpirationInDays</code>.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-permissivebrowserfilehandlingoverride">-PermissiveBrowserFileHandlingOverride</h3>
+<p>Was used to enable permissive browser file handling. The setting is deprecated and can't be enabled, so only <code>$false</code> is accepted.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-removeversionexpirationfiletypeoverride">-RemoveVersionExpirationFileTypeOverride</h3>
+<p>Removes the version history limit override from the given file types, such as <code>Audio</code> or <code>Video</code>, so that they follow the default version history limits of the tenant again. It can't be combined with <code>FileTypesForVersionExpiration</code>, <code>EnableAutoExpirationVersionTrim</code>, <code>MajorVersionLimit</code> or <code>ExpireVersionsAfterDays</code>.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-restrictedaccesscontrolforonedriveerrorhelplink">-RestrictedAccessControlForOneDriveErrorHelpLink</h3>
+<p>Sets the link to your organization's help page that users see when the restricted access control policy denies them access to a OneDrive.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-resynctenantprivacyprofile">-ReSyncTenantPrivacyProfile</h3>
+<p>Makes SharePoint Online sync the tenant display name and privacy profile URL from Microsoft Entra on the next request. The sync can take up to 24 hours. Replaces <code>SyncPrivacyProfileProperties</code>, and can't be combined with <code>-SyncPrivacyProfileProperties $false</code>.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-siteownerscanaccessmissingcontent">-SiteOwnersCanAccessMissingContent</h3>
+<p>Specifies whether site owners can see information about missing content on their site. Microsoft lists this as a preview feature that may not be available in your tenant.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-stopalerts">-StopAlerts</h3>
+<p>Turns off classic SharePoint alerts, which Microsoft is retiring. When set to <code>$true</code>, no classic alert emails are sent.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-stopnew2010workflows">-StopNew2010Workflows</h3>
+<p>Prevents new SharePoint 2010 workflows from being created.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-syncprivacyprofileproperties">-SyncPrivacyProfileProperties</h3>
+<p>Sets whether the synced privacy profile properties are refreshed on the next request. Microsoft has made this obsolete; use <code>ReSyncTenantPrivacyProfile</code> instead.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-unlicensedonedriveaccountsactivestorageperiod">-UnlicensedOneDriveAccountsActiveStoragePeriod</h3>
+<p>Specifies how many days an unlicensed OneDrive account stays active before it is archived, from 93 to 3650. The account becomes read-only 33 days before it is archived. Requires Standard storage billing for unlicensed OneDrive accounts, and accounts kept active longer are billed for that storage. Asks for confirmation unless <code>-Force</code> is used.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-whocanshareanonymousallowlist">-WhoCanShareAnonymousAllowList</h3>
+<p>Specifies the object IDs of the security groups whose members can share with Anyone links as well as with authenticated guests. The list you pass replaces the current one; pass <code>@()</code> to clear it. Microsoft 365 groups are not accepted.</p>
+<pre><code class="lang-yaml">Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-whocanshareauthenticatedguestallowlist">-WhoCanShareAuthenticatedGuestAllowList</h3>
+<p>Specifies the object IDs of the security groups whose members can share with authenticated guests only. The list you pass replaces the current one; pass <code>@()</code> to clear it. Microsoft 365 groups are not accepted.</p>
+<pre><code class="lang-yaml">Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-workflows2013enabled">-Workflows2013Enabled</h3>
+<p>Specifies whether SharePoint 2013 workflows are enabled.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
