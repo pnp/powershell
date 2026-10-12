@@ -95,12 +95,12 @@
 <p>Generates a provisioning tenant template from a site. If the site is a hubsite any connected site will be included.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="extract-a-template-to-a-file">Extract a template to a file</h3>
-<pre><code class="lang-powershell">Get-PnPTenantTemplate [-SiteUrl &lt;String&gt;] [-Out &lt;String&gt;] [-Force]
+<pre><code class="lang-powershell">Get-PnPTenantTemplate [-SiteUrl &lt;String&gt;] [-Out &lt;String&gt;] [-Force] [-Experimental]
  [-Configuration &lt;ExtractConfigurationPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]  
  
 </code></pre>
 <h3 id="extract-a-template-as-an-object">Extract a template as an object</h3>
-<pre><code class="lang-powershell">Get-PnPTenantTemplate [-SiteUrl &lt;String&gt;] [-AsInstance] [-Configuration &lt;ExtractConfigurationPipeBind&gt;]
+<pre><code class="lang-powershell">Get-PnPTenantTemplate [-SiteUrl &lt;String&gt;] [-AsInstance] [-Experimental] [-Configuration &lt;ExtractConfigurationPipeBind&gt;]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -161,6 +161,18 @@ Accept wildcard characters: False
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-experimental">-Experimental</h3>
+<p>Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework. The site collections and teams are chosen by the <code>tenant</code> section of <code>-Configuration</code>, as they are without the switch. It needs more permissions than PnP Framework, and a .pnp package can only be opened by the engine that created it. See <a href="https://pnp.github.io/powershell/articles/experimental-provisioning.html">The experimental PnP.Core.Provisioning engine</a>.</p>
+<p>A site that cannot be extracted is reported as a warning and left out, rather than stopping the cmdlet. If nothing at all could be extracted, the cmdlet ends with a terminating error instead of writing an empty template. The engine does not create subsites when it applies a tenant template yet, so <code>includeSubsites</code> is not useful for a template you mean to apply with <code>Invoke-PnPTenantTemplate -Experimental</code>.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

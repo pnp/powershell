@@ -99,15 +99,15 @@
  [-Handlers &lt;Handlers&gt;] [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;]
  [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [-Parameters &lt;Hashtable&gt;]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
- [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration &lt;ApplyConfigurationPipeBind&gt;]
+ [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration &lt;ApplyConfigurationPipeBind&gt;] [-Experimental]
  [-Connection &lt;PnPConnection&gt;]   
 </code></pre>
 <h3 id="by-object">By Object</h3>
-<pre><code class="lang-powershell">Invoke-PnPTenantTemplate [-Template] &lt;ProvisioningHierarchy&gt; [-SequenceId &lt;String&gt;] [-ResourceFolder &lt;String&gt;]
+<pre><code class="lang-powershell">Invoke-PnPTenantTemplate [-Template] &lt;TenantTemplateInstancePipeBind&gt; [-SequenceId &lt;String&gt;] [-ResourceFolder &lt;String&gt;]
  [-Handlers &lt;Handlers&gt;] [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;]
  [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [-Parameters &lt;Hashtable&gt;]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
- [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration &lt;ApplyConfigurationPipeBind&gt;]
+ [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration &lt;ApplyConfigurationPipeBind&gt;] [-Experimental]
  [-Connection &lt;PnPConnection&gt;]   
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -139,6 +139,10 @@
 Invoke-PnPTenantTemplate -Path myfile.pnp -Configuration apply.json
 </code></pre>
 <p>Applies only the lists and fields of the template, populating the {parameter:ListTitle} token with 'Projects'. The same JSON can be passed to <code>-Configuration</code> directly instead of through a file.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Invoke-PnPTenantTemplate -Path myfile.pnp -Experimental
+</code></pre>
+<p>Applies the tenant template with the experimental PnP.Core.Provisioning engine instead of PnP Framework.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-clearnavigation">-ClearNavigation</h3>
 <p>Override the RemoveExistingNodes attribute in the Navigation elements of the template. If you specify this value the navigation nodes will always be removed before adding the nodes in the template</p>
@@ -180,6 +184,17 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: Handlers
 Parameter Sets: (All)
 Accepted values: None, AuditSettings, ComposedLook, CustomActions, ExtensibilityProviders, Features, Fields, Files, Lists, Pages, Publishing, RegionalSettings, SearchSettings, SitePolicy, SupportedUILanguages, TermGroups, Workflows, SiteSecurity, ContentTypes, PropertyBagEntries, PageContents, WebSettings, Navigation, ImageRenditions, ApplicationLifecycleManagement, Tenant, WebApiPermissions, SiteHeader, SiteFooter, Theme, SiteSettings, All
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-experimental">-Experimental</h3>
+<p>Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework. It needs more permissions than PnP Framework, and a .pnp package can only be opened by the engine that created it. See <a href="https://pnp.github.io/powershell/articles/experimental-provisioning.html">The experimental PnP.Core.Provisioning engine</a>.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -298,7 +313,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-template">-Template</h3>
-<pre><code class="lang-yaml">Type: ProvisioningHierarchy
+<p>The tenant template to apply. Accepts a tenant template produced by either engine, so a template read with -Experimental can be applied with -Experimental.</p>
+<pre><code class="lang-yaml">Type: TenantTemplateInstancePipeBind
 Parameter Sets: By Object
 
 Required: True

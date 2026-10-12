@@ -93,13 +93,13 @@
 <h3 id="local-file">Local File</h3>
 <pre><code class="lang-powershell">Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-Source] &lt;String&gt; [-Folder] &lt;String&gt;
  [[-Container] &lt;String&gt;] [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite]
- [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] 
+ [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Experimental]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="remove-file">Remove File</h3>
 <pre><code class="lang-powershell">Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-SourceUrl] &lt;String&gt; [[-Container] &lt;String&gt;]
  [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;]
- [-Connection &lt;PnPConnection&gt;] 
+ [-Experimental] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows adding a file to a PnP Provisioning Template package (.pnp) so that the file will get uploaded to the SharePoint Online site to which the template is being invoked. This allows the file to be referenced in i.e. a document template, site logo or any other component that references a file.</p>
@@ -143,6 +143,17 @@ Parameter Sets: (All)
 
 Required: False
 Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-experimental">-Experimental</h3>
+<p>Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework. It needs more permissions than PnP Framework, and a .pnp package can only be opened by the engine that created it. See <a href="https://pnp.github.io/powershell/articles/experimental-provisioning.html">The experimental PnP.Core.Provisioning engine</a>.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

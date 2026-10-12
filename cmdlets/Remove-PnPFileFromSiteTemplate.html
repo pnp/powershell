@@ -91,7 +91,7 @@
 <p>Removes a file from a PnP Provisioning Template</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Remove-PnPFileFromSiteTemplate [-Path] &lt;String&gt; [-FilePath] &lt;String&gt;
- [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] 
+ [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Experimental] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to remove a file from a PnP Provisioning Template.</p>
@@ -101,6 +101,17 @@
 </code></pre>
 <p>Removes a file from an in-memory PnP Provisioning Template</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-experimental">-Experimental</h3>
+<p>Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework. It needs more permissions than PnP Framework, and a .pnp package can only be opened by the engine that created it. See <a href="https://pnp.github.io/powershell/articles/experimental-provisioning.html">The experimental PnP.Core.Provisioning engine</a>.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-filepath">-FilePath</h3>
 <p>The relative File Path of the file to remove from the in-memory template</p>
 <pre><code class="lang-yaml">Type: String

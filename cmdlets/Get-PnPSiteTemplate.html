@@ -100,7 +100,7 @@
  [-NoBaseTemplate] [-Encoding &lt;Encoding&gt;] [-TemplateDisplayName &lt;String&gt;] [-TemplateImagePreviewUrl &lt;String&gt;]
  [-TemplateProperties &lt;Hashtable&gt;] [-OutputInstance] [-ExcludeContentTypesFromSyndication]
  [-ListsToExtract &lt;System.Collections.Generic.List`1[System.String]&gt;]
- [-Configuration &lt;ExtractConfigurationPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] 
+ [-Configuration &lt;ExtractConfigurationPipeBind&gt;] [-Experimental] [-Connection &lt;PnPConnection&gt;] 
   
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -197,6 +197,10 @@ Get-PnPSiteTemplate -Out MyModels.pnp -Handlers SyntexModels
 Get-PnPSiteTemplate -Out template.xml -Configuration extract.json
 </code></pre>
 <p>Extracts a template holding only the &quot;Events&quot; list, with its list items included as <code>&lt;pnp:DataRows /&gt;</code>. The same JSON can be passed to <code>-Configuration</code> directly instead of through a file.</p>
+<h3 id="example-19">EXAMPLE 19</h3>
+<pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.xml -Experimental
+</code></pre>
+<p>Extracts a provisioning template with the experimental PnP.Core.Provisioning engine instead of PnP Framework. The engine is a beta, so compare the result with an extract made without <code>-Experimental</code> before relying on it.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-configuration">-Configuration</h3>
 <p>Specify a JSON configuration to configure the extraction process. Accepts either the path to a file containing the JSON, or the JSON itself.</p>
@@ -272,6 +276,17 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: Handlers
 Parameter Sets: (All)
 Accepted values: All, ApplicationLifecycleManagement, AuditSettings, ComposedLook, ContentTypes, CustomActions, ExtensibilityProviders, Features, Fields, Files, ImageRenditions, Lists, Navigation, None, PageContents, Pages, PropertyBagEntries, Publishing, RegionalSettings, SearchSettings, SiteFooter, SiteHeader, SitePolicy, SiteSecurity, SiteSettings, SupportedUILanguages, SyntexModels, Tenant, TermGroups, Theme, WebApiPermissions, WebSettings, Workflows
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-experimental">-Experimental</h3>
+<p>Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework. It needs more permissions than PnP Framework, and a .pnp package can only be opened by the engine that created it. See <a href="https://pnp.github.io/powershell/articles/experimental-provisioning.html">The experimental PnP.Core.Provisioning engine</a>.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named

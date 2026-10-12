@@ -92,7 +92,7 @@
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Add-PnPDataRowsToSiteTemplate [-Path] &lt;String&gt; -List &lt;ListPipeBind&gt; [-Query &lt;String&gt;]
  [-Fields &lt;String[]&gt;] [-IncludeSecurity] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;]
- [-TokenizeUrls] [-Connection &lt;PnPConnection&gt;] 
+ [-TokenizeUrls] [-Experimental] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to add datarows to list inside a PnP Provisioning Template. The command allows to specify the fields which should be retrieved using <code>-Fields</code> option and filter the datarows to be used by using <code>-Query</code> option.</p>
@@ -109,6 +109,17 @@
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-experimental">-Experimental</h3>
+<p>Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework, which builds the data rows with its own list extract. It needs more permissions than PnP Framework, and a .pnp package can only be opened by the engine that created it. See <a href="https://pnp.github.io/powershell/articles/experimental-provisioning.html">The experimental PnP.Core.Provisioning engine</a>.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
@@ -184,7 +195,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-tokenizeurls">-TokenizeUrls</h3>
-<p>If set, this switch will try to tokenize the values with web and site related tokens</p>
+<p>If set, this switch will try to tokenize the values with web and site related tokens. With <code>-Experimental</code>, an absolute url is written as <code>{hosturl}{site}</code> rather than <code>{site}</code>, so that it stays absolute on the site the template is applied to.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 

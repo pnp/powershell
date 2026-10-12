@@ -93,7 +93,7 @@
 Get-PnPSiteTemplate -Out template.xml -Configuration '{ &quot;handlers&quot;: [ &quot;Lists&quot; ] }'
 </code></pre>
 <p>A configuration which cannot be read is an error, not something that is passed over: a path which does not exist, JSON which cannot be parsed, a null anywhere in it, or a <code>handlers</code> array in which no name is recognized will all stop the cmdlet. A property or a handler name which is not recognized is reported as a warning and then ignored, so a configuration written for a newer version still applies the parts this version understands.</p>
-<p>For applying a template, see <a href="apply-configuration.html">The apply configuration</a>.</p>
+<p>For applying a template, see <a href="apply-configuration.html">The apply configuration</a>. For what changes with <code>-Experimental</code>, including the permissions it needs, see <a href="experimental-provisioning.html">The experimental PnP.Core.Provisioning engine</a>.</p>
 <h2 id="things-which-are-easy-to-get-wrong">Things which are easy to get wrong</h2>
 <p><strong>Leaving <code>handlers</code> out is not the same as an empty list.</strong> Omit the property and every handler runs. An empty array does the same. Only a non-empty array narrows the work, and because a misspelled name is dropped, a <code>handlers</code> array whose names are all wrong would otherwise quietly widen the extract to everything. That case is rejected.</p>
 <p><strong>Handler names are case sensitive.</strong> <code>&quot;Lists&quot;</code> is a handler, <code>&quot;lists&quot;</code> is not.</p>
@@ -156,6 +156,36 @@ Get-PnPSiteTemplate -Out template.xml -Configuration '{ &quot;handlers&quot;: [ 
 }
 </code></pre>
 <p>Useful when the title is localized or may change: put the list ID in <code>title</code> and a value which parses as a GUID is matched against the list ID instead. Note that this cannot be combined with <code>includeItems</code>, see above.</p>
+<h3 id="extract-a-list-with-its-folders-and-the-permissions-of-its-items--experimental">Extract a list with its folders and the permissions of its items (<code>-Experimental</code>)</h3>
+<p>With <code>-Experimental</code>, an entry under <code>lists.lists</code> takes four more properties:</p>
+<pre><code class="lang-json">{
+  &quot;handlers&quot;: [ &quot;Lists&quot; ],
+  &quot;lists&quot;: {
+    &quot;lists&quot;: [
+      {
+        &quot;title&quot;: &quot;Projects&quot;,
+        &quot;includeItems&quot;: true,
+        &quot;includeFolders&quot;: true,
+        &quot;maxFolderDepth&quot;: 2,
+        &quot;includeSecurity&quot;: true,
+        &quot;tokenizeUrls&quot;: true
+      }
+    ]
+  }
+}
+</code></pre>
+<p><code>includeFolders</code> adds the folders of the list, each with its property bag, and <code>maxFolderDepth</code> limits how many levels are read: <code>1</code> takes only the folders at the root of the list, and <code>0</code>, the default, takes every level. <code>includeSecurity</code> adds the unique permissions of the list's folders and items. <code>tokenizeUrls</code> replaces the urls and ids of the site in the extracted item values with tokens, so that links in the data rows point at the site the template is applied to rather than back at the one it came from. Each of them costs extra requests, which is why they are off by default. Without <code>-Experimental</code> they are not recognized, so they are ignored with a warning.</p>
+<h3 id="extract-a-hub-site-with-the-sites-joined-to-it-and-their-teams">Extract a hub site with the sites joined to it and their teams</h3>
+<pre><code class="lang-json">{
+  &quot;tenant&quot;: {
+    &quot;sequence&quot;: { &quot;includeJoinedSites&quot;: true },
+    &quot;teams&quot;: { }
+  }
+}
+</code></pre>
+<pre><code class="lang-powershell">Get-PnPTenantTemplate -SiteUrl https://contoso.sharepoint.com/sites/hub -Out tenant.xml -Configuration .\tenant.json
+</code></pre>
+<p><code>Get-PnPTenantTemplate</code> adds the site named by <code>-SiteUrl</code> to <code>tenant.sequence.siteUrls</code>. <code>includeJoinedSites</code> adds the sites joined to any hub site among them, and <code>includeSubsites</code> adds their subsites, each with a template of its own, down to <code>maxSubsiteDepth</code> levels: <code>0</code>, the default, takes every level. An empty <code>teams</code> section takes the team behind each group connected site of the sequence. Name the sites whose teams to take in <code>teamSiteUrls</code> instead, or take every team in the tenant with <code>includeAllTeams</code>. <code>includeMessages</code> adds the messages posted in each channel, and <code>includeGroupId</code> records the id of each team's group, so that applying the template configures the team of that same group rather than creating a new one. Everything outside <code>tenant</code> applies to the template of each site.</p>
 <h2 id="properties">Properties</h2>
 <!-- BEGIN GENERATED PROPERTIES -->
 <h3 id="section"><code>$</code></h3>

@@ -91,13 +91,13 @@
 <p>Loads/Reads a PnP tenant template from the file system and returns an in-memory instance of this template.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-path-default">By Path (default)</h3>
-<pre><code class="lang-powershell">Read-PnPTenantTemplate -Path &lt;String&gt;
+<pre><code class="lang-powershell">Read-PnPTenantTemplate -Path &lt;String&gt; [-Experimental]
 </code></pre>
 <h3 id="by-stream">By Stream</h3>
-<pre><code class="lang-powershell">Read-PnPTenantTemplate -Stream &lt;Stream&gt;
+<pre><code class="lang-powershell">Read-PnPTenantTemplate -Stream &lt;Stream&gt; [-Experimental]
 </code></pre>
 <h3 id="by-xml">By XML</h3>
-<pre><code class="lang-powershell">Read-PnPTenantTemplate -Xml &lt;String&gt;
+<pre><code class="lang-powershell">Read-PnPTenantTemplate -Xml &lt;String&gt; [-Experimental]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to load a PnP tenant template from the file system, from a stream or from a string to memory and return its instance object.</p>
@@ -112,6 +112,17 @@ Read-PnPTenantTemplate -Stream $template
 </code></pre>
 <p>Downloads a PnP Tenant template from the provided location into memory and parses its contents into a TenantTemplate instance which can then be modified and passed on to the Apply-PnPTenantTemplate cmdlet without needing to write anything to disk</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-experimental">-Experimental</h3>
+<p>Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework. It needs more permissions than PnP Framework, and a .pnp package can only be opened by the engine that created it. See <a href="https://pnp.github.io/powershell/articles/experimental-provisioning.html">The experimental PnP.Core.Provisioning engine</a>.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-path">-Path</h3>
 <p>Filename to read from, optionally including full path.</p>
 <pre><code class="lang-yaml">Type: String

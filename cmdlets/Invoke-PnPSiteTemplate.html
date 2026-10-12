@@ -95,16 +95,16 @@
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters &lt;Hashtable&gt;] [-Handlers &lt;Handlers&gt;]
  [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;]
- [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] 
+ [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [-Experimental]
  [-Url &lt;String&gt;]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="instance">Instance</h3>
-<pre><code class="lang-powershell">Invoke-PnPSiteTemplate -InputInstance &lt;SiteTemplate&gt; [-TemplateId &lt;String&gt;] [-ResourceFolder &lt;String&gt;]
+<pre><code class="lang-powershell">Invoke-PnPSiteTemplate -InputInstance &lt;SiteTemplateInstancePipeBind&gt; [-TemplateId &lt;String&gt;] [-ResourceFolder &lt;String&gt;]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters &lt;Hashtable&gt;] [-Handlers &lt;Handlers&gt;]
  [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;]
- [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] 
+ [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [-Experimental]
  [-Url &lt;String&gt;]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
@@ -113,7 +113,7 @@
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters &lt;Hashtable&gt;] [-Handlers &lt;Handlers&gt;]
  [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;]
- [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] 
+ [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [-Experimental]
  [-Url &lt;String&gt;]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
@@ -168,6 +168,10 @@ Invoke-PnPSiteTemplate -Path NewTemplate.xml -ExtensibilityHandlers $handler1,$h
 Invoke-PnPSiteTemplate -Stream $stream
 </code></pre>
 <p>Downloads the ProjectSite.pnp template from the TemplateGallery document library and applies it to the currently connected to site.</p>
+<h3 id="example-12">EXAMPLE 12</h3>
+<pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path .\template.pnp -Experimental
+</code></pre>
+<p>Applies the template with the experimental PnP.Core.Provisioning engine instead of PnP Framework. Watch the warnings it reports: the engine reports a problem and carries on rather than stopping, so a run can finish having skipped part of the template.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-clearnavigation">-ClearNavigation</h3>
 <p>Override the RemoveExistingNodes attribute in the Navigation elements of the template. If you specify this value the navigation nodes will always be removed before adding the nodes in the template</p>
@@ -196,6 +200,17 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: Handlers
 Parameter Sets: (All)
 Accepted values: All, ApplicationLifecycleManagement, AuditSettings, ComposedLook, ContentTypes, CustomActions, ExtensibilityProviders, Features, Fields, Files, ImageRenditions, Lists, Navigation, None, PageContents, Pages, PropertyBagEntries, Publishing, RegionalSettings, SearchSettings, SiteFooter, SiteHeader, SitePolicy, SiteSecurity, SiteSettings, SupportedUILanguages, SyntexModels, Tenant, TermGroups, Theme, WebApiPermissions, WebSettings, Workflows
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-experimental">-Experimental</h3>
+<p>Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework. It needs more permissions than PnP Framework, and a .pnp package can only be opened by the engine that created it. See <a href="https://pnp.github.io/powershell/articles/experimental-provisioning.html">The experimental PnP.Core.Provisioning engine</a>.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -240,7 +255,8 @@ Accept wildcard characters: False
 <h3 id="-inputinstance">-InputInstance</h3>
 <p>Allows you to provide an in-memory instance of the SiteTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.</p>
 <p>Note that using a .pnp package containing additional files will not work through this method. You should either extract the files to the folder you specify through -Path yourself first or use -Stream to stream the package to be invoked directly.</p>
-<pre><code class="lang-yaml">Type: SiteTemplate
+<p>Accepts a template produced by either engine, so a template extracted with -Experimental can be applied with -Experimental.</p>
+<pre><code class="lang-yaml">Type: SiteTemplateInstancePipeBind
 Parameter Sets: Instance
 
 Required: False

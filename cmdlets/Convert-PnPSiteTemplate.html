@@ -91,7 +91,7 @@
 <p>Converts a provisioning template to an other schema version</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Convert-PnPSiteTemplate [-Path] &lt;String&gt; [-Out &lt;String&gt;] [[-ToSchema] &lt;XMLPnPSchemaVersion&gt;]
- [-Encoding &lt;Encoding&gt;] [-Force] 
+ [-Encoding &lt;Encoding&gt;] [-Force] [-Experimental] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to convert a provisioning template to an other schema version.</p>
@@ -112,6 +112,17 @@
 <h3 id="-encoding">-Encoding</h3>
 <p>The encoding type of the XML file, Unicode is default</p>
 <pre><code class="lang-yaml">Type: Encoding
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-experimental">-Experimental</h3>
+<p>Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework. It needs more permissions than PnP Framework, and a .pnp package can only be opened by the engine that created it. See <a href="https://pnp.github.io/powershell/articles/experimental-provisioning.html">The experimental PnP.Core.Provisioning engine</a>.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

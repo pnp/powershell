@@ -224,6 +224,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/experimental-provisioning.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/experimental-provisioning.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/extract-configuration.md",
       "output": {
         ".html": {

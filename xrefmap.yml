@@ -16,6 +16,9 @@ references:
 - uid: pnp.powershell.articles.apply-configuration
   name: The apply configuration (using PnP Provisioning Engine)
   href: articles/apply-configuration.html
+- uid: pnp.powershell.articles.experimental-provisioning
+  name: The experimental PnP.Core.Provisioning engine
+  href: articles/experimental-provisioning.html
 - uid: pnp.powershell.articles.extract-configuration
   name: The extract configuration (using PnP Provisioning Engine)
   href: articles/extract-configuration.html

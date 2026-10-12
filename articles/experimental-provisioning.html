@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>The experimental PnP.Core.Provisioning engine | PnP PowerShell </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="The experimental PnP.Core.Provisioning engine | PnP PowerShell ">
+      <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+      <meta name="description" content="What changes when a provisioning cmdlet runs with -Experimental, the permissions it needs, and which .pnp packages it can open.">
+      <link rel="icon" href="../images/favicon-pnp.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/pnp/powershell/blob/dev/pages/articles/experimental-provisioning.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.svg" alt="PnP PowerShell">
+            PnP PowerShell
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="pnp.powershell.articles.experimental-provisioning">
+<h1 id="the-experimental-pnpcoreprovisioning-engine">The experimental PnP.Core.Provisioning engine</h1>
+
+<p>The provisioning cmdlets run on the provisioning engine of PnP Framework. Add <code>-Experimental</code> and they run on PnP.Core.Provisioning instead, the provisioning engine built on the PnP Core SDK. It is a preview, so compare what it extracts or applies with the result of PnP Framework before you rely on it.</p>
+<pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.xml -Experimental
+Invoke-PnPSiteTemplate -Path template.xml -Experimental
+</code></pre>
+<p><code>-Experimental</code> is available on <code>Get-PnPSiteTemplate</code>, <code>Invoke-PnPSiteTemplate</code>, <code>Get-PnPTenantTemplate</code>, <code>Invoke-PnPTenantTemplate</code>, <code>Read-PnPSiteTemplate</code>, <code>Save-PnPSiteTemplate</code>, <code>Read-PnPTenantTemplate</code>, <code>Save-PnPTenantTemplate</code>, <code>Convert-PnPSiteTemplate</code>, <code>Export-PnPListToSiteTemplate</code>, <code>Add-PnPDataRowsToSiteTemplate</code>, <code>Add-PnPListFoldersToSiteTemplate</code>, <code>Add-PnPFileToSiteTemplate</code>, <code>Remove-PnPFileFromSiteTemplate</code> and <code>Set-PnPSiteTemplateMetadata</code>.</p>
+<h2 id="permissions">Permissions</h2>
+<p>PnP Framework works through CSOM, for which <code>AllSites.FullControl</code> on SharePoint is enough. PnP.Core.Provisioning also calls Microsoft Graph and the SharePoint REST API, so the application you connect with needs more permissions to use every part of the engine. Grant these delegated permissions to it, see <a href="registerapplication.html">Register an Entra ID Application to use with PnP PowerShell</a> for how:</p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Delegated permission</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft Graph</td>
+<td><code>Group.ReadWrite.All</code></td>
+</tr>
+<tr>
+<td>Microsoft Graph</td>
+<td><code>openid</code></td>
+</tr>
+<tr>
+<td>Microsoft Graph</td>
+<td><code>profile</code></td>
+</tr>
+<tr>
+<td>Microsoft Graph</td>
+<td><code>Sites.Manage.All</code></td>
+</tr>
+<tr>
+<td>Microsoft Graph</td>
+<td><code>User.Read.All</code></td>
+</tr>
+<tr>
+<td>SharePoint</td>
+<td><code>AllSites.FullControl</code></td>
+</tr>
+<tr>
+<td>SharePoint</td>
+<td><code>AllSites.Manage</code></td>
+</tr>
+<tr>
+<td>SharePoint</td>
+<td><code>TermStore.ReadWrite.All</code></td>
+</tr>
+<tr>
+<td>SharePoint</td>
+<td><code>User.Read.All</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="pnp-packages">.pnp packages</h2>
+<p>For now, a .pnp package can only be opened by the engine that created it. A package saved without <code>-Experimental</code> cannot be opened with <code>-Experimental</code>. The cmdlets say which of the two to use when they are given a package of the other engine. An .xml template can be read by both engines.</p>
+<h2 id="differences-from-pnp-framework">Differences from PnP Framework</h2>
+<p><strong>Pages and PageContents are one handler.</strong> PnP.Core.Provisioning processes the pages of a site and their contents with a single <code>Pages</code> handler, so excluding either <code>Pages</code> or <code>PageContents</code> with <code>-ExcludeHandlers</code> excludes both, and a warning says so.</p>
+<p><strong>At least one handler has to remain.</strong> The engine runs every handler when it is given none, so <code>-Handlers</code> and <code>-ExcludeHandlers</code> values that leave no handler, such as <code>-ExcludeHandlers All</code>, are rejected rather than processing everything.</p>
+<p><strong>Template provider extensions are not run.</strong> <code>-TemplateProviderExtensions</code> has no effect, and a warning says so.</p>
+<p><strong><code>Get-PnPSiteTemplate</code> does not write markdown reports.</strong> Extract to an .xml or .pnp file instead.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/experimental-provisioning.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
