@@ -1,12 +1,13 @@
 ---
+tags: Available in the current Nightly Release only.
 Module Name: PnP.PowerShell
-title: Get-PnPTeamsChannelUser
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsChannelUser.html
+title: Get-PnPTeamsChannelUser
 ---
- 
+  
 # Get-PnPTeamsChannelUser
 
 ## SYNOPSIS
@@ -123,3 +124,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

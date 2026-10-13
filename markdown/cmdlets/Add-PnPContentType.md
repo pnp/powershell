@@ -1,12 +1,13 @@
 ---
+tags: Available in the current Nightly Release only.
 Module Name: PnP.PowerShell
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Add-PnPContentType.html
-external help file: PnP.PowerShell.dll-Help.xml
 title: Add-PnPContentType
 ---
-  
+   
 # Add-PnPContentType
 
 ## SYNOPSIS
@@ -162,5 +163,6 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 
 
