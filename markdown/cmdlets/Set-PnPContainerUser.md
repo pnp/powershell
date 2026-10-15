@@ -1,11 +1,11 @@
 ---
 applicable: SharePoint Online
 Module Name: PnP.PowerShell
-tags: Available in the current Nightly Release only.
-external help file: PnP.PowerShell.dll-Help.xml
-schema: 2.0.0
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContainerUser.html
 title: Set-PnPContainerUser
+schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContainerUser.html
+tags: Available in the current Nightly Release only.
 ---
  
 # Set-PnPContainerUser
