@@ -259,12 +259,16 @@ namespace PnP.PowerShell.Commands.Pages
                     if (!string.IsNullOrEmpty(this.PageLayoutMapping))
                     {
                         // Using custom page layout mapping file + default one (they're merged together)
-                        publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile, this.PageLayoutMapping);
+                        publishingPageTransformator = targetContext == null
+                            ? PublishingPageTransformator.CreateInPlace(this.ClientContext, this.WebPartMappingFile, this.PageLayoutMapping)
+                            : new PublishingPageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile, this.PageLayoutMapping);
                     }
                     else
                     {
                         // Using default page layout mapping file
-                        publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile, null);
+                        publishingPageTransformator = targetContext == null
+                            ? PublishingPageTransformator.CreateInPlace(this.ClientContext, this.WebPartMappingFile, null)
+                            : new PublishingPageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile, null);
                     }
                 }
                 else
@@ -285,12 +289,16 @@ namespace PnP.PowerShell.Commands.Pages
                         var pageLayoutMappingModel = pageLayoutManager.LoadPageLayoutMappingFile(this.PageLayoutMapping);
 
                         // Using custom page layout mapping file + default one (they're merged together)
-                        publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, webPartMappingModel, pageLayoutMappingModel);
+                        publishingPageTransformator = targetContext == null
+                            ? PublishingPageTransformator.CreateInPlace(this.ClientContext, webPartMappingModel, pageLayoutMappingModel)
+                            : new PublishingPageTransformator(this.ClientContext, targetContext, webPartMappingModel, pageLayoutMappingModel);
                     }
                     else
                     {
                         // Using default page layout mapping file
-                        publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, webPartMappingModel, null);
+                        publishingPageTransformator = targetContext == null
+                            ? PublishingPageTransformator.CreateInPlace(this.ClientContext, webPartMappingModel, null)
+                            : new PublishingPageTransformator(this.ClientContext, targetContext, webPartMappingModel, null);
                     }
                 }
                 else

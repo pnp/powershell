@@ -36,6 +36,8 @@ Wiki, web part, and publishing pages can be converted within the currently conne
 
 Publishing page conversion within the current Web requires an existing Site Pages library with Add Items and Edit Items permissions. The source publishing page is retained, and an existing target page is never overwritten, even when `-Overwrite` is supplied.
 
+The modern page is created in the Site Pages library, so it does not collide with the publishing page it is converted from. When neither `-PublishingTargetPageName` nor `-TargetPageName` is supplied, the modern page keeps the file name of the source page.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
@@ -410,7 +412,7 @@ Accept pipeline input: False
 ```
 
 ### -PublishingTargetPageName
-Name for the target page (only applies to publishing page transformation)
+Name for the target page (only applies to publishing page transformation). Optional. When omitted, `-TargetPageName` is used, and when that is omitted as well the modern page keeps the file name of the source publishing page.
 
 ```yaml
 Type: String
