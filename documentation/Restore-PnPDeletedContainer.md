@@ -20,7 +20,7 @@ The Restore-PnPDeletedContainer recovers a deleted Container from the Recycle Bi
 ## SYNTAX
 
 ```powershell
-Restore-PnPDeletedContainer -Identity <string> [-Connection <PnPConnection>] 
+Restore-PnPDeletedContainer [-Identity] <String> [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -35,26 +35,19 @@ Restore-PnPDeletedContainer -Identity "b!jKRbiovfMEWUWKabObEnjC5rF4MG3pRBomypnjO
 
 Restores the Container with ContainerId "b!jKRbiovfMEWUWKabObEnjC5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1" from the Recycle Bin.
 
-## PARAMETERS
+### EXAMPLE 2
 
-### -Identity
-
-The ContainerId of the deleted container to be restored.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+```powershell
+Restore-PnPDeletedContainer -Identity "https://contoso-admin.sharepoint.com/_api/v2.1/storageContainers/b!jKRbiovfMEWUWKabObEnjC5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1" -Force
 ```
+
+Restores the Container with the specified api url from the Recycle Bin without asking for confirmation.
+
+## PARAMETERS
 
 ### -Connection
 
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Restore-PnPConnection.
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
@@ -62,6 +55,36 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+
+Restores the Container without asking for confirmation.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Identity
+
+The id or the api url of the deleted Container to be restored. A deleted Container cannot be restored by its site url.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

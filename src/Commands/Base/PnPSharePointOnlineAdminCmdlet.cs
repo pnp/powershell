@@ -62,11 +62,25 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
+        /// Controls whether the cmdlet connects to the SharePoint Online Admin Center before it runs.
+        /// Override this for cmdlets with parameter sets that only call Microsoft Graph, so those work with a connection that has no access to the SharePoint Online Admin Center.
+        /// </summary>
+        protected virtual bool RequiresAdminContext => true;
+
+        /// <summary>
         /// Executed before executing the specific admin cmdlet logic
         /// </summary>
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
+
+            if (!RequiresAdminContext)
+            {
+                // Cached all the same, so the error handling that restores the cached context finds it
+                Connection.CacheContext();
+                return;
+            }
+
             
             Connection.CacheContext();
 

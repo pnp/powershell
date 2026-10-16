@@ -268,6 +268,15 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Container type &apos;{0}&apos; could not be found.
+        /// </summary>
+        internal static string ContainerTypeNotFound {
+            get {
+                return ResourceManager.GetString("ContainerTypeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy file or folder &apos;{0}&apos; to &apos;{1}&apos;?.
         /// </summary>
         internal static string CopyFile0To1 {

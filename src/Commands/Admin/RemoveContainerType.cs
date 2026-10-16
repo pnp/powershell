@@ -6,7 +6,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPContainerType")]    
+    [Cmdlet(VerbsCommon.Remove, "PnPContainerType", SupportsShouldProcess = true)]
     public class RemoveContainerType : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -14,6 +14,11 @@ namespace PnP.PowerShell.Commands.Admin
 
         protected override void ExecuteCmdlet()
         {
+            if (!ShouldProcess(Identity.ToString(), "Remove container type"))
+            {
+                return;
+            }
+
             SPDeletedContainerTypeProperties sPDeletedContainerTypeProperties = new SPDeletedContainerTypeProperties();
             sPDeletedContainerTypeProperties.ContainerTypeId = Identity;
             Tenant.RemoveSPOContainerType(sPDeletedContainerTypeProperties);

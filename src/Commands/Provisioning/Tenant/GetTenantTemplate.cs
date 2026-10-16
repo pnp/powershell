@@ -15,7 +15,7 @@ using PnP.PowerShell.Commands.Base;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantTemplate")]
-    public class GetTenantTemplate : PnPSharePointOnlineAdminCmdlet
+    public partial class GetTenantTemplate : PnPSharePointOnlineAdminCmdlet
     {
         const string PARAMETERSET_ASFILE = "Extract a template to a file";
         const string PARAMETERSET_ASOBJECT = "Extract a template as an object";
@@ -40,8 +40,17 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [ValidateNotNull]
         public ExtractConfigurationPipeBind Configuration;
 
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ASFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ASOBJECT)]
+        public SwitchParameter Experimental;
+
         protected override void ExecuteCmdlet()
         {
+            if (Experimental)
+            {
+                ExecuteCmdletExperimental();
+                return;
+            }
 
             ExtractConfiguration extractConfiguration;
 

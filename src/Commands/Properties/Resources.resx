@@ -411,6 +411,9 @@
     <data name="ContainerNotFound" xml:space="preserve">
     <value>The provided container could not be found</value>
   </data>
+  <data name="ContainerTypeNotFound" xml:space="preserve">
+    <value>Container type '{0}' could not be found</value>
+  </data>
   <data name="PersistedLoginCacheNotCleared" xml:space="preserve">
     <value>The persisted app-only token cache still contains data after clearing it.</value>
   </data>

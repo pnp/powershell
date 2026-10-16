@@ -1,6 +1,8 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
@@ -16,12 +18,23 @@ namespace PnP.PowerShell.Commands.Admin
 
         protected override void ExecuteCmdlet()
         {
+            // SharePoint Online rejects restoring by site url with "Restore Deleted Container by ContainerSiteURL is not supported yet."
+            var container = new ContainerPipeBind(Identity);
+            if (container.Id == null)
+            {
+                ThrowTerminatingError(new ErrorRecord(new PSArgumentException("A deleted container cannot be restored by its site url. Use its id, as returned by Get-PnPDeletedContainer, or its api url.", nameof(Identity)), "RestoreBySiteUrlNotSupported", ErrorCategory.InvalidArgument, Identity));
+            }
+
             if (Force || ShouldContinue($"Restore container {Identity}?", Properties.Resources.Confirm))
+            {
+                LogDebug($"Restoring container {Identity}");
+                var restored = Tenant.RestoreSPODeletedContainerByContainerId(container.Id);
+                AdminContext.ExecuteQueryRetry();
+                if (!restored.Value)
                 {
-                    LogDebug($"Restoring container {Identity}");
-                    Tenant.RestoreSPODeletedContainerByContainerId(Identity);
-                    AdminContext.ExecuteQueryRetry();
-                    LogDebug($"Restored container {Identity}");
+                    ThrowTerminatingError(new ErrorRecord(new InvalidOperationException($"Container '{Identity}' could not be restored, as the server did not report success."), "ContainerNotRestored", ErrorCategory.InvalidResult, Identity));
+                }
+                LogDebug($"Restored container {Identity}");
             }
         }
     }
