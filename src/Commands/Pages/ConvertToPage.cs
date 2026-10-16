@@ -202,12 +202,6 @@ namespace PnP.PowerShell.Commands.Pages
                 throw new Exception($"Page '{Identity?.Name}' does not exist");
             }
 
-            // Publishing specific validation
-            if (this.PublishingPage && string.IsNullOrEmpty(this.TargetWebUrl) && TargetConnection == null)
-            {
-                throw new Exception($"Publishing page transformation is only supported when transformating into another site collection. Use the -TargetWebUrl to specify a modern target site.");
-            }
-
             // Blog specific validation
             if ((this.BlogPage || this.DelveBlogPage) && string.IsNullOrEmpty(this.TargetWebUrl) && TargetConnection == null)
             {
@@ -265,12 +259,16 @@ namespace PnP.PowerShell.Commands.Pages
                     if (!string.IsNullOrEmpty(this.PageLayoutMapping))
                     {
                         // Using custom page layout mapping file + default one (they're merged together)
-                        publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile, this.PageLayoutMapping);
+                        publishingPageTransformator = targetContext == null
+                            ? PublishingPageTransformator.CreateInPlace(this.ClientContext, this.WebPartMappingFile, this.PageLayoutMapping)
+                            : new PublishingPageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile, this.PageLayoutMapping);
                     }
                     else
                     {
                         // Using default page layout mapping file
-                        publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile, null);
+                        publishingPageTransformator = targetContext == null
+                            ? PublishingPageTransformator.CreateInPlace(this.ClientContext, this.WebPartMappingFile, null)
+                            : new PublishingPageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile, null);
                     }
                 }
                 else
@@ -291,12 +289,16 @@ namespace PnP.PowerShell.Commands.Pages
                         var pageLayoutMappingModel = pageLayoutManager.LoadPageLayoutMappingFile(this.PageLayoutMapping);
 
                         // Using custom page layout mapping file + default one (they're merged together)
-                        publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, webPartMappingModel, pageLayoutMappingModel);
+                        publishingPageTransformator = targetContext == null
+                            ? PublishingPageTransformator.CreateInPlace(this.ClientContext, webPartMappingModel, pageLayoutMappingModel)
+                            : new PublishingPageTransformator(this.ClientContext, targetContext, webPartMappingModel, pageLayoutMappingModel);
                     }
                     else
                     {
                         // Using default page layout mapping file
-                        publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, webPartMappingModel, null);
+                        publishingPageTransformator = targetContext == null
+                            ? PublishingPageTransformator.CreateInPlace(this.ClientContext, webPartMappingModel, null)
+                            : new PublishingPageTransformator(this.ClientContext, targetContext, webPartMappingModel, null);
                     }
                 }
                 else
