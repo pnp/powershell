@@ -1,12 +1,13 @@
 ---
 Module Name: PnP.PowerShell
+online version: https://pnp.github.io/powershell/cmdlets/Merge-PnPTerm.html
+applicable: SharePoint Online
 title: Merge-PnPTerm
 schema: 2.0.0
-applicable: SharePoint Online
+tags: Available in the current Nightly Release only.
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Merge-PnPTerm.html
 ---
-
+ 
 # Merge-PnPTerm
 
 ## SYNOPSIS
@@ -79,3 +80,4 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
