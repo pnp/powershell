@@ -1,13 +1,12 @@
 ---
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPException.html
-applicable: SharePoint Online
-title: Get-PnPException
 schema: 2.0.0
-tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPException.html
 external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPException
 ---
-   
+  
 # Get-PnPException
 
 ## SYNOPSIS
@@ -57,6 +56,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 
 

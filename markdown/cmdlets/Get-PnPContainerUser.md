@@ -1,11 +1,11 @@
 ---
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPContainerUser.html
-applicable: SharePoint Online
-title: Get-PnPContainerUser
 schema: 2.0.0
+Module Name: PnP.PowerShell
 tags: Available in the current Nightly Release only.
+title: Get-PnPContainerUser
+applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPContainerUser.html
 ---
  
 # Get-PnPContainerUser

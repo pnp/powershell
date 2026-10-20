@@ -1,13 +1,12 @@
 ---
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Copy-PnPFolder.html
-applicable: SharePoint Online
-title: Copy-PnPFolder
 schema: 2.0.0
-tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Copy-PnPFolder.html
 external help file: PnP.PowerShell.dll-Help.xml
+title: Copy-PnPFolder
 ---
-   
+  
 # Copy-PnPFolder
 
 ## SYNOPSIS
@@ -261,4 +260,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
