@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommunications.Read, "PnPTenantTemplate", DefaultParameterSetName = ParameterSet_PATH)]
-    public class ReadTenantTemplate : BasePSCmdlet
+    public partial class ReadTenantTemplate : BasePSCmdlet
     {
         const string ParameterSet_STREAM = "By Stream";
         const string ParameterSet_PATH = "By Path";
@@ -21,8 +21,17 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
         [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_XML)]
         public string Xml;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public SwitchParameter Experimental;
+
         protected override void ProcessRecord()
         {
+            if (Experimental)
+            {
+                ProcessRecordExperimental();
+                return;
+            }
+
             switch (ParameterSetName)
             {
                 case ParameterSet_PATH:
