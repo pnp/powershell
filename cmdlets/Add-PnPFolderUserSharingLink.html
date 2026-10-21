@@ -90,7 +90,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Creates a sharing link to share a folder with a list of specified users.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPFolderUserSharingLink -Folder &lt;FolderPipeBind&gt; -ShareType &lt;PnP.Core.Model.Security.ShareType&gt; -Users &lt;String[]&gt; [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Add-PnPFolderUserSharingLink -Folder &lt;FolderPipeBind&gt; -Users &lt;String[]&gt; [-ShareType &lt;PnP.Core.Model.Security.ShareType&gt;] [-ExpirationDateTime &lt;DateTime&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Creates a new user sharing link for a folder.</p>
@@ -103,10 +103,25 @@
 <pre><code class="lang-powershell">Add-PnPFolderUserSharingLink -Folder &quot;/sites/demo/Shared Documents/Test&quot; -ShareType Edit -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot;
 </code></pre>
 <p>This will create an user sharing link for <code>Test</code> folder in the <code>Shared Documents</code> library which will be editable by specified users in the organization.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Add-PnPFolderUserSharingLink -Folder &quot;/sites/demo/Shared Documents/Test&quot; -Users &quot;john@contoso.onmicrosoft.com&quot; -ExpirationDateTime (Get-Date).AddDays(15)
+</code></pre>
+<p>This will create an user sharing link for <code>Test</code> folder in the <code>Shared Documents</code> library which will be viewable by the specified user. The link will stop working after 15 days.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-expirationdatetime">-ExpirationDateTime</h3>
+<p>The date and time after which the sharing link stops working. A value without a time zone, such as <code>(Get-Date).AddDays(15)</code> or <code>&quot;2026-12-31 18:00&quot;</code>, is treated as local time. When not specified, the link does not expire unless an expiration policy applies to the tenant or site.</p>
+<pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
 
 Required: False

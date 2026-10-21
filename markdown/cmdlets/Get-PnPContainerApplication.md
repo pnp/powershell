@@ -1,11 +1,11 @@
 ---
-schema: 2.0.0
-Module Name: PnP.PowerShell
-tags: Available in the current Nightly Release only.
 title: Get-PnPContainerApplication
+tags: Available in the current Nightly Release only.
+Module Name: PnP.PowerShell
 applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPContainerApplication.html
+schema: 2.0.0
+external help file: PnP.PowerShell.dll-Help.xml
 ---
  
 # Get-PnPContainerApplication
