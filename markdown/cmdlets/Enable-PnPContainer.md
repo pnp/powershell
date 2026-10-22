@@ -1,11 +1,11 @@
 ---
-title: Enable-PnPContainer
-tags: Available in the current Nightly Release only.
-Module Name: PnP.PowerShell
+external help file: PnP.PowerShell.dll-Help.xml
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Enable-PnPContainer.html
 schema: 2.0.0
-external help file: PnP.PowerShell.dll-Help.xml
+title: Enable-PnPContainer
+Module Name: PnP.PowerShell
+tags: Available in the current Nightly Release only.
 ---
  
 # Enable-PnPContainer
