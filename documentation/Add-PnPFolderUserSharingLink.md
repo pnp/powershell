@@ -15,7 +15,7 @@ Creates a sharing link to share a folder with a list of specified users.
 ## SYNTAX
 
 ```powershell
-Add-PnPFolderUserSharingLink -Folder <FolderPipeBind> -ShareType <PnP.Core.Model.Security.ShareType> -Users <String[]> [-Connection <PnPConnection>] 
+Add-PnPFolderUserSharingLink -Folder <FolderPipeBind> -Users <String[]> [-ShareType <PnP.Core.Model.Security.ShareType>] [-ExpirationDateTime <DateTime>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -38,6 +38,13 @@ Add-PnPFolderUserSharingLink -Folder "/sites/demo/Shared Documents/Test" -ShareT
 
 This will create an user sharing link for `Test` folder in the `Shared Documents` library which will be editable by specified users in the organization.
 
+### EXAMPLE 3
+```powershell
+Add-PnPFolderUserSharingLink -Folder "/sites/demo/Shared Documents/Test" -Users "john@contoso.onmicrosoft.com" -ExpirationDateTime (Get-Date).AddDays(15)
+```
+
+This will create an user sharing link for `Test` folder in the `Shared Documents` library which will be viewable by the specified user. The link will stop working after 15 days.
+
 ## PARAMETERS
 
 ### -Connection
@@ -45,6 +52,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExpirationDateTime
+The date and time after which the sharing link stops working. A value without a time zone, such as `(Get-Date).AddDays(15)` or `"2026-12-31 18:00"`, is treated as local time. When not specified, the link does not expire unless an expiration policy applies to the tenant or site.
+
+```yaml
+Type: DateTime
 Parameter Sets: (All)
 
 Required: False
