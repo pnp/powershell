@@ -1,10 +1,10 @@
 ﻿# PnP PowerShell
 
-**PnP PowerShell** is a .NET 8 based PowerShell Module providing close to 900 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Entra ID, and more.
+**PnP PowerShell** is a .NET 8 based PowerShell Module providing over 900 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Entra ID, and more.
 
 Starting with version 3.1.379-nightly, all releases, including the nightly releases, will be fully digitally signed and will therefore work on machines restricted with the AllSigned PowerShell execution policy set. Major thanks to the [.NET Foundation](https://dotnetfoundation.org) for providing us with the signing certificate to be able to do so.
 
-Last version | Last nightly version
+Latest version | Latest nightly version
 -------------|---------------------
 [![PnP.PowerShell](https://img.shields.io/powershellgallery/v/pnp.powershell)](https://www.powershellgallery.com/packages/PnP.PowerShell/) | [![PnP.PowerShell](https://img.shields.io/powershellgallery/v/pnp.powershell?include_prereleases)](https://www.powershellgallery.com/packages/PnP.PowerShell/)
 
@@ -12,17 +12,23 @@ Last version | Last nightly version
 
 This module is a successor of the [PnP-PowerShell](https://github.com/pnp/pnp-powershell) module. The original cmdlets only work on Windows and Windows PowerShell and supports SharePoint On-Premises (2013, 2016 and 2019) and SharePoint Online. This version of the cmdlets is cross-platform (i.e it works on Windows, MacOS and Linux) but it will only support SharePoint Online. Only the cross-platform PnP PowerShell SharePoint Online module is still being updated, earlier versions are not.
 
-For more information about installing or upgrading to this module, please refer to [the documentation](https://pnp.github.io/powershell/articles/index.html).
+For more information about installing or upgrading to this module, please refer to [the documentation](https://pnp.github.io/powershell/articles/installation.html).
 
 To use PnP PowerShell from an AI assistant such as GitHub Copilot or Claude, see the [PnP PowerShell MCP server](https://pnp.github.io/powershell/articles/mcpserver.html).
 
-## IMPORTANT - New PnP PowerShell 3.x
+## PnP PowerShell 3.x
 
 We released a new major version of PnP PowerShell, version 3 and upwards. This version of PnP PowerShell requires as of today PowerShell 7.4.0 or newer, and is based upon .NET 8.0. 
 
 We have created a [guide](https://github.com/pnp/powershell/blob/dev/MIGRATE-2.0-to-3.0.md) for upgrading from previous versions to PnP PowerShell 3.x. If you are still using PowerShell 5.1 or the ISE, and want to use the latest major or nightly release, you will need to specify the required version like below: 
 
 `Install-Module PnP.PowerShell -RequiredVersion 1.12.0 -Force`
+
+## PnP PowerShell 4.x Preview
+
+We are preparing a v4 release of PnP PowerShell. This version of PnP PowerShell requires as of today PowerShell 7.6.0 or newer, and is based upon .NET 10.0. It will contain breaking changes towards v3.
+
+If you already want to try out this new version out, follow [the steps in the installation manual](https://pnp.github.io/powershell/articles/installation.html#v4-preview-build) to get started with it.
 
 ## Supportability and SLA
 
