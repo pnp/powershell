@@ -1,11 +1,11 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContainer.html
-applicable: SharePoint Online
-title: Set-PnPContainer
-Module Name: PnP.PowerShell
-schema: 2.0.0
 tags: Available in the current Nightly Release only.
+external help file: PnP.PowerShell.dll-Help.xml
+applicable: SharePoint Online
+Module Name: PnP.PowerShell
+title: Set-PnPContainer
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContainer.html
+schema: 2.0.0
 ---
  
 # Set-PnPContainer

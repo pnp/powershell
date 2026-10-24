@@ -97,6 +97,20 @@
 <p>If you want to install the latest nightly build prerelease of PnP PowerShell, run:</p>
 <pre><code class="lang-powershell">Install-Module PnP.PowerShell -AllowPrerelease
 </code></pre>
+<h2 id="v4-preview-build">v4 Preview build</h2>
+<p>If you want to try the latest v4 Preview build of PnP PowerShell, ensure you're running PowerShell 7.6 or later, as it is built on top of .NET 10.</p>
+<ol>
+<li><p>Download the latest ZIP package from where it states Release 4.0.0 Preview:
+<a href="https://github.com/pnp/powershell/releases">https://github.com/pnp/powershell/releases</a></p>
+</li>
+<li><p>Extract the files from the downloaded ZIP package to a location of your choice, i.e. c:\temp\PnP.PowerShell</p>
+</li>
+<li><p>Open PowerShell and run, adjusting the location according to where you extracted the files from the ZIP file:</p>
+<pre><code class="lang-powershell">Import-Module C:\temp\PnP.PowerShell\PnP.PowerShell.psd1
+</code></pre>
+<p>Within the PowerShell session, you can now use the PnP PowerShell cmdlets as usual utilizing the v4 Preview build.</p>
+</li>
+</ol>
 <h2 id="use-in-docker">Use in Docker</h2>
 <p>To use PnP.PowerShell in a Docker container:</p>
 <pre><code class="lang-powershell">docker run -it m365pnp/powershell
