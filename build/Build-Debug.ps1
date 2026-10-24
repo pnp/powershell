@@ -47,7 +47,7 @@ else {
 # 	$buildVersion = $versionObject.Patch + 1
 # }
 
-$configuration = "net8.0"
+$configuration = "net10.0"
 
 $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
@@ -194,7 +194,7 @@ if ($LASTEXITCODE -eq 0) {
 	Author = 'Microsoft 365 Patterns and Practices'
 	CompanyName = 'Microsoft 365 Patterns and Practices'
 	CompatiblePSEditions = @('Core')
-	PowerShellVersion = '7.4.0'
+	PowerShellVersion = '7.6.0'
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  
 	CmdletsToExport = @($cmdletsString)

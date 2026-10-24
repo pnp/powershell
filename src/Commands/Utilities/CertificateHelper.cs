@@ -188,9 +188,9 @@ namespace PnP.PowerShell.Commands.Utilities
                 Log.Debug("CertificateHelper", $"Opening certificate in file '{certificatePath}' {(certificatePassword == null ? "without" : "using")} a certificate password");
                 try
                 {
-                    var certificate = new X509Certificate2(
+                    var certificate = X509CertificateLoader.LoadPkcs12(
                         certificateBytes,
-                        certificatePassword,
+                        CredentialManager.SecureStringToString(certificatePassword),
                         x509KeyStorageFlags
                         );
                     return certificate;
@@ -328,13 +328,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     certificate.FriendlyName = friendlyName;
                 }
                 string passString = password != null ? CredentialManager.SecureStringToString(password) : null;
-
-                if (PSUtility.PSVersion == "7.5")
-                {
-                    return X509CertificateLoader.LoadPkcs12(certificate.Export(X509ContentType.Pfx, password), passString, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.PersistKeySet);
-                }
-
-                return new X509Certificate2(certificate.Export(X509ContentType.Pfx, password), password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.PersistKeySet);
+                return X509CertificateLoader.LoadPkcs12(certificate.Export(X509ContentType.Pfx, password), passString, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.PersistKeySet);
             }
 #pragma warning restore CA1416 // Validate platform compatibility
         }

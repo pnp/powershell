@@ -95,12 +95,12 @@ jobs:
         Copy-Item -Path "./resources/*.ps1xml" -Destination $moduleDir
         Copy-Item -Path "./resources/RegisterPnPAssemblyResolver.ps1" -Destination $moduleDir
 
-        Get-ChildItem -Path "./src/ALC/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | ForEach-Object {
+        Get-ChildItem -Path "./src/ALC/bin/Release/net10.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | ForEach-Object {
           [void]$commonFiles.Add($_.Name)
           Copy-Item -LiteralPath $_.FullName -Destination $commonPath
         }
 
-        Get-ChildItem -Path "./src/Commands/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | ForEach-Object {
+        Get-ChildItem -Path "./src/Commands/bin/Release/net10.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | ForEach-Object {
           if ($moduleAssemblies -contains $_.Name -or $_.Name -like 'Microsoft.SharePoint.Client*' -or $_.Name -like 'Microsoft.Online.SharePoint.Client*') {
             Copy-Item -LiteralPath $_.FullName -Destination $corePath
           }
@@ -110,7 +110,7 @@ jobs:
           }
         }
 
-        $sourceRuntimeBase = "./src/Commands/bin/Release/net8.0/runtimes"
+        $sourceRuntimeBase = "./src/Commands/bin/Release/net10.0/runtimes"
         if (Test-Path $sourceRuntimeBase) {
           $runtimeDirs = @("win-x64/native", "win-arm64/native", "win-x86/native", "linux-x64/native")
           foreach ($runtimeDir in $runtimeDirs) {
@@ -167,7 +167,7 @@ jobs:
           Author = 'Microsoft 365 Patterns and Practices'
           CompanyName = 'Microsoft 365 Patterns and Practices'
           CompatiblePSEditions = @('Core')
-          PowerShellVersion = '7.4.0'
+          PowerShellVersion = '7.6.0'
           ProcessorArchitecture = 'None'
           FunctionsToExport = '*'
           CmdletsToExport = @($cmdletsString)

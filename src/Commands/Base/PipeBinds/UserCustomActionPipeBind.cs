@@ -62,11 +62,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 {
                     case Microsoft.SharePoint.Client.UserCustomActionScope.Web:
                         {
-                            return new List<IUserCustomAction> { context.Web.UserCustomActions.Where(ca => ca.Id == _userCustomAction.Id).FirstOrDefault() };
+                            return new List<IUserCustomAction> { ((IQueryable<IUserCustomAction>)context.Web.UserCustomActions).Where(ca => ca.Id == _userCustomAction.Id).FirstOrDefault() };
                         }
                         case Microsoft.SharePoint.Client.UserCustomActionScope.Site:
                         {
-                            return new List<IUserCustomAction> { context.Site.UserCustomActions.Where(ca => ca.Id == _userCustomAction.Id).FirstOrDefault() };
+                            return new List<IUserCustomAction> { ((IQueryable<IUserCustomAction>)context.Site.UserCustomActions).Where(ca => ca.Id == _userCustomAction.Id).FirstOrDefault() };
                         }
 
                 }

@@ -98,7 +98,7 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException(errorMessage, ex);
                 }
 
-                if (Connection.Context.Url != Connection.Url)
+                if (Connection?.Context != null && Connection.Url != null && Connection.Context.Url != Connection.Url)
                 {
                     Connection.RestoreCachedContext(Connection.Url);
                 }
@@ -106,7 +106,10 @@ namespace PnP.PowerShell.Commands.Base
                 // With ErrorAction:Ignore, the $Error variable should not be populated with the error, otherwise it should
                 if (!new[] { "ignore" }.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
-                    ex.Data["CorrelationId"] = Connection.Context.TraceCorrelationId;
+                    if (Connection?.Context != null)
+                    {
+                        ex.Data["CorrelationId"] = Connection.Context.TraceCorrelationId;
+                    }
                     ex.Data["TimeStampUtc"] = DateTime.UtcNow;
 
                     LogError(errorMessage);
