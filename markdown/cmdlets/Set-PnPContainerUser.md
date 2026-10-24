@@ -1,9 +1,9 @@
 ---
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContainerUser.html
-title: Set-PnPContainerUser
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContainerUser.html
+applicable: SharePoint Online
+title: Set-PnPContainerUser
+Module Name: PnP.PowerShell
 schema: 2.0.0
 tags: Available in the current Nightly Release only.
 ---
