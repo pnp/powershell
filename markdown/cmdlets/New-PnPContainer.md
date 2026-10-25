@@ -1,11 +1,11 @@
 ---
-tags: Available in the current Nightly Release only.
-external help file: PnP.PowerShell.dll-Help.xml
 applicable: SharePoint Online
-Module Name: PnP.PowerShell
 title: New-PnPContainer
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPContainer.html
 schema: 2.0.0
+tags: Available in the current Nightly Release only.
+online version: https://pnp.github.io/powershell/cmdlets/New-PnPContainer.html
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
 ---
  
 # New-PnPContainer
