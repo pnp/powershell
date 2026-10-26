@@ -54,7 +54,7 @@ Gets the document processing model named "Invoice model".
 ## PARAMETERS
 
 ### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+Ignored, as this cmdlet no longer performs any request. Kept for backwards compatibility with existing scripts.
 
 ```yaml
 Type: PnPConnection

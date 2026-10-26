@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Base.Completers;
+﻿using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
 using System;
@@ -7,12 +8,10 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Syntex
 {
     [Cmdlet(VerbsLifecycle.Request, "PnPSyntexClassifyAndExtract")]
-    [Obsolete(ObsoleteMessage)]
+    [Obsolete("It no longer does anything, as SharePoint Syntex is no longer supported, and will be removed in a future version.")]
     [Attributes.ApiPermissionsNotRequired(Remarks = "This cmdlet performs no request.")]
-    public class RequestSyntexClassifyAndExtract : PnPWebCmdlet
+    public class RequestSyntexClassifyAndExtract : BasePSCmdlet
     {
-        private const string ObsoleteMessage = "Request-PnPSyntexClassifyAndExtract is obsolete and no longer does anything, as SharePoint Syntex is no longer supported. It will be removed in a future version.";
-
         const string ParameterSet_LIST = "List";
         const string Parameterset_FILE = "File";
         const string Parameterset_FOLDER = "Folder";
@@ -36,9 +35,7 @@ namespace PnP.PowerShell.Commands.Syntex
         [Parameter(Mandatory = true, ParameterSetName = Parameterset_FOLDER)]
         public FolderPipeBind Folder;
 
-        protected override void ExecuteCmdlet()
-        {
-            LogWarning(ObsoleteMessage);
-        }
+        [Parameter(Mandatory = false, HelpMessage = "Ignored, as this cmdlet no longer performs any request. Kept for backwards compatibility with existing scripts.")]
+        public PnPConnection Connection = null;
     }
 }

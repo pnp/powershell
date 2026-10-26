@@ -1,22 +1,19 @@
-﻿using PnP.PowerShell.Commands.Base.PipeBinds;
+﻿using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Syntex
 {
     [Cmdlet(VerbsCommon.Get, "PnPSyntexModel")]
-    [Obsolete(ObsoleteMessage)]
+    [Obsolete("It no longer does anything, as SharePoint Syntex is no longer supported, and will be removed in a future version.")]
     [Attributes.ApiPermissionsNotRequired(Remarks = "This cmdlet performs no request.")]
-    public class GetSyntexModel : PnPWebCmdlet
+    public class GetSyntexModel : BasePSCmdlet
     {
-        private const string ObsoleteMessage = "Get-PnPSyntexModel is obsolete and no longer does anything, as SharePoint Syntex is no longer supported. It will be removed in a future version.";
-
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         public SyntexModelPipeBind Identity;
 
-        protected override void ExecuteCmdlet()
-        {
-            LogWarning(ObsoleteMessage);
-        }
+        [Parameter(Mandatory = false, HelpMessage = "Ignored, as this cmdlet no longer performs any request. Kept for backwards compatibility with existing scripts.")]
+        public PnPConnection Connection = null;
     }
 }
