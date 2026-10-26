@@ -9,6 +9,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Request-PnPSyntexClassi
  
 # Request-PnPSyntexClassifyAndExtract
 
+> [!WARNING]
+> This cmdlet is obsolete and no longer does anything, as SharePoint Syntex is no longer supported. It only writes a warning and will be removed in a future version.
+
 ## SYNOPSIS
 
 Requests for a file, folder or all files in a library to be classified and extracted via the published Microsoft Syntex models on the libraries hosting the files.

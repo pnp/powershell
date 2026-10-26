@@ -9,6 +9,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Publish-PnPSyntexModel.
  
 # Publish-PnPSyntexModel
 
+> [!WARNING]
+> This cmdlet is obsolete and no longer does anything, as SharePoint Syntex is no longer supported. It only writes a warning and will be removed in a future version.
+
 ## SYNOPSIS
 
 Publishes Microsoft Syntex models to a list.
@@ -24,14 +27,14 @@ This cmdlet only works when you've connected to a Syntex Content Center site.
 ### Single
 
 ```powershell
-Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -ListWebUrl <string> -List <ListPipeBind> [-PublicationViewOption <MachineLearningPublicationViewOption>]  [-Connection <PnPConnection>]
+Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -ListWebUrl <string> -List <ListPipeBind> [-PublicationViewOption <string>]  [-Connection <PnPConnection>]
  
 ```
 
 ### Batched
 
 ```powershell
-Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -TargetSiteUrl <string> -TargetWebServerRelativeUrl <string> -TargetLibraryServerRelativeUrl <string> -Batch <PnPBatch>  [-PublicationViewOption <MachineLearningPublicationViewOption>]  [-Connection <PnPConnection>]
+Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -TargetSiteUrl <string> -TargetWebServerRelativeUrl <string> -TargetLibraryServerRelativeUrl <string> -Batch <PnPBatch>  [-PublicationViewOption <string>]  [-Connection <PnPConnection>]
  
 ```
 
@@ -189,13 +192,12 @@ Accept wildcard characters: False
 The view options to apply when publishing the model to the list.
 
 ```yaml
-Type: MachineLearningPublicationViewOption
+Type: String
 Parameter Sets: (All)
-Accepted values: NewView, NewViewAsDefault, NoNewView
 
 Required: False
 Position: Named
-Default value: NewViewAsDefault
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

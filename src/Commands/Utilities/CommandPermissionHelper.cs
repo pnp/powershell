@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.Utilities
             "SiteDesign", "SiteScript", "SiteDesignTask", "SiteClassification", "SiteClosure", "SitePolicy",
             "AuditSetting", "PropertyBagValue", "IndexedPropertyBagKey", "IndexedProperty", "IndexedProperties",
             "InPlaceRecordsManagement", "RetentionLabel", "DocumentId", "SiteDocumentIdPrefix", "TeamifyPromptHidden",
-            "SiteCollectionTermStore", "SyntexModel", "SyntexClassifyAndExtract", "VivaConnectionsDashboardACE",
+            "SiteCollectionTermStore", "VivaConnectionsDashboardACE",
             "ReIndexWeb", "WebHook",
 
             // Tenant wide version trim and cleanup jobs run against the whole site

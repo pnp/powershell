@@ -52,6 +52,3 @@ The following cmdlets support batching. (This support began with the 1.7.63-nigh
 * [`Add-PnPListItem`](/powershell/cmdlets/Add-PnPListItem.html)
 * [`Set-PnPListItem`](/powershell/cmdlets/Set-PnPListItem.html)
 * [`Remove-PnPListItem`](/powershell/cmdlets/Remove-PnPListItem.html)
-* [`Publish-PnPSyntexModel`](/powershell/cmdlets/Publish-PnPSyntexModel.html)
-* [`Unpublish-PnPSyntexModel`](/powershell/cmdlets/Unpublish-PnPSyntexModel.html)
-* [`Request-PnPSyntexClassifyAndExtract`](/powershell/cmdlets/Request-PnPSyntexClassifyAndExtract.html)

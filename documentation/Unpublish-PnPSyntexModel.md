@@ -9,6 +9,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Unpublish-PnPSyntexMode
  
 # Unpublish-PnPSyntexModel
 
+> [!WARNING]
+> This cmdlet is obsolete and no longer does anything, as SharePoint Syntex is no longer supported. It only writes a warning and will be removed in a future version.
+
 ## SYNOPSIS
 
 Unpublishes a Microsoft Syntex model from a list.

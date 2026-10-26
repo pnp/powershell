@@ -9,6 +9,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSyntexModelPubli
  
 # Get-PnPSyntexModelPublication
 
+> [!WARNING]
+> This cmdlet is obsolete and no longer does anything, as SharePoint Syntex is no longer supported. It only writes a warning and will be removed in a future version.
+
 ## SYNOPSIS
 Returns the libraries to which a Microsoft Syntex model was published.
 

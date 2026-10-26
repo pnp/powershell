@@ -9,6 +9,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSyntexModel.html
  
 # Get-PnPSyntexModel
 
+> [!WARNING]
+> This cmdlet is obsolete and no longer does anything, as SharePoint Syntex is no longer supported. It only writes a warning and will be removed in a future version.
+
 ## SYNOPSIS
 Returns Microsoft Syntex models from a Syntex Content Center.
 
