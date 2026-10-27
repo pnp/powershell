@@ -120,6 +120,9 @@
   <data name="ApplicationName" xml:space="preserve">
     <value>SharePoint PnP PowerShell Library</value>
   </data>
+  <data name="EnterpriseWikiCapabilitiesRequirePublishingPage" xml:space="preserve">
+    <value>EnableEnterpriseWikiCapabilities requires PublishingPage. Use -PublishingPage -EnableEnterpriseWikiCapabilities to convert an Enterprise Wiki publishing page.</value>
+  </data>
   <data name="CommandNotExecutedDueToHealthscoreValueOf0" xml:space="preserve">
     <value>Command not executed due to healthscore value of {0}</value>
   </data>
