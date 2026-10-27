@@ -88,7 +88,7 @@
 <h1 id="convertto-pnppage">ConvertTo-PnPPage</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Converts a classic page (wiki or web part page) into a modern page</p>
+<p>Converts a classic page (wiki, web part, or publishing page) into a modern page</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">ConvertTo-PnPPage [-Identity] &lt;ClassicPagePipeBind&gt; [-Library &lt;String&gt;] [-Folder &lt;String&gt;]
  [-WebPartMappingFile &lt;String&gt;] [-Overwrite] [-TakeSourcePageName] [-ReplaceHomePageWithDefault]
@@ -104,6 +104,10 @@
  [-UserMappingFile &lt;String&gt;] [-TermMappingFile &lt;String&gt;] [-SkipTermStoreMapping]
  [-LDAPConnectionString &lt;String&gt;] [-SkipHiddenWebParts] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Wiki, web part, and publishing pages can be converted within the currently connected Web or to a target in another site collection. Use <code>-PublishingPage</code> for a publishing page and <code>-TargetWebUrl</code> or <code>-TargetConnection</code> to select a target.</p>
+<p>Publishing page conversion within the current Web requires an existing Site Pages library with Add Items and Edit Items permissions. The source publishing page is retained, and an existing target page is never overwritten, even when <code>-Overwrite</code> is supplied.</p>
+<p>The modern page is created in the Site Pages library, so it does not collide with the publishing page it is converted from. When neither <code>-PublishingTargetPageName</code> nor <code>-TargetPageName</code> is supplied, the modern page keeps the file name of the source page.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">ConvertTo-PnPPage -Identity &quot;somepage.aspx&quot; -Overwrite
@@ -161,6 +165,10 @@
 <pre><code class="lang-powershell">ConvertTo-PnPPage -Identity &quot;somepage.aspx&quot; -PublishingPage -Overwrite -TargetConnection $target -UserMappingFile c:\\temp\user_mapping_file.csv
 </code></pre>
 <p>Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. This allows to read a page in on-premises environment and create in another online locations including using specific user mappings between the two environments.</p>
+<h3 id="example-15">EXAMPLE 15</h3>
+<pre><code class="lang-powershell">ConvertTo-PnPPage -Identity &quot;Enterprise-Wiki.aspx&quot; -PublishingPage -PublishingTargetPageName &quot;Enterprise-Wiki-modern.aspx&quot;
+</code></pre>
+<p>Converts an Enterprise Wiki publishing page to a modern page in the currently connected Web. The source publishing page is retained.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-addpageacceptbanner">-AddPageAcceptBanner</h3>
 <p>Adds the page accept banner web part. The actual web part is specified in webpartmapping.xml file</p>
@@ -352,7 +360,7 @@ Position: Named
 Accept pipeline input: False
 </code></pre>
 <h3 id="-publishingpage">-PublishingPage</h3>
-<p>I'm transforming a publishing page</p>
+<p>Transforms a classic publishing page using its page layout and publishing fields.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -361,7 +369,7 @@ Position: Named
 Accept pipeline input: False
 </code></pre>
 <h3 id="-publishingtargetpagename">-PublishingTargetPageName</h3>
-<p>Name for the target page (only applies to publishing page transformation)</p>
+<p>Name for the target page (only applies to publishing page transformation). Optional. When omitted, <code>-TargetPageName</code> is used, and when that is omitted as well the modern page keeps the file name of the source publishing page.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -505,7 +513,7 @@ Position: Named
 Accept pipeline input: False
 </code></pre>
 <h3 id="-targetweburl">-TargetWebUrl</h3>
-<p>Url of the target web that will receive the modern page. Defaults to null which means in-place transformation</p>
+<p>Url of the target Web that will receive the modern page. If neither <code>-TargetWebUrl</code> nor <code>-TargetConnection</code> is specified, wiki, web part, and publishing pages are converted within the currently connected Web.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
