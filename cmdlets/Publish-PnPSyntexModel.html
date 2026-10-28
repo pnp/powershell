@@ -87,6 +87,10 @@
         <article data-uid="">
 <h1 id="publish-pnpsyntexmodel">Publish-PnPSyntexModel</h1>
 
+<div class="WARNING">
+<h5>Warning</h5>
+<p>This cmdlet is obsolete and no longer does anything, as SharePoint Syntex is no longer supported. It only writes a warning and will be removed in a future version.</p>
+</div>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Publishes Microsoft Syntex models to a list.</p>
 <p>This cmdlet only works when you've connected to a Syntex Content Center site.</p>
@@ -95,11 +99,11 @@
 </a>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="single">Single</h3>
-<pre><code class="lang-powershell">Publish-PnPSyntexModel -Model &lt;SyntexModelPipeBind&gt; -ListWebUrl &lt;string&gt; -List &lt;ListPipeBind&gt; [-PublicationViewOption &lt;MachineLearningPublicationViewOption&gt;]  [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Publish-PnPSyntexModel -Model &lt;SyntexModelPipeBind&gt; -ListWebUrl &lt;string&gt; -List &lt;ListPipeBind&gt; [-PublicationViewOption &lt;string&gt;]  [-Connection &lt;PnPConnection&gt;]
  
 </code></pre>
 <h3 id="batched">Batched</h3>
-<pre><code class="lang-powershell">Publish-PnPSyntexModel -Model &lt;SyntexModelPipeBind&gt; -TargetSiteUrl &lt;string&gt; -TargetWebServerRelativeUrl &lt;string&gt; -TargetLibraryServerRelativeUrl &lt;string&gt; -Batch &lt;PnPBatch&gt;  [-PublicationViewOption &lt;MachineLearningPublicationViewOption&gt;]  [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Publish-PnPSyntexModel -Model &lt;SyntexModelPipeBind&gt; -TargetSiteUrl &lt;string&gt; -TargetWebServerRelativeUrl &lt;string&gt; -TargetLibraryServerRelativeUrl &lt;string&gt; -Batch &lt;PnPBatch&gt;  [-PublicationViewOption &lt;string&gt;]  [-Connection &lt;PnPConnection&gt;]
  
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -115,7 +119,7 @@
 <p>Adds the publishing of the document processing model named &quot;Invoice model&quot; to the &quot;Shared Documents&quot; library into the PnPBatch $batch. Use <code>Invoke-PnPBatch -Batch $batch</code> to execute the batch, use <code>$batch = New-PnPBatch</code> to create a batch.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<p>Ignored, as this cmdlet no longer performs any request. Kept for backwards compatibility with existing scripts.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
@@ -209,13 +213,12 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-publicationviewoption">-PublicationViewOption</h3>
 <p>The view options to apply when publishing the model to the list.</p>
-<pre><code class="lang-yaml">Type: MachineLearningPublicationViewOption
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Accepted values: NewView, NewViewAsDefault, NoNewView
 
 Required: False
 Position: Named
-Default value: NewViewAsDefault
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

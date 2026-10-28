@@ -9,6 +9,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Unpublish-PnPSyntexMode
  
 # Unpublish-PnPSyntexModel
 
+> [!WARNING]
+> This cmdlet is obsolete and no longer does anything, as SharePoint Syntex is no longer supported. It only writes a warning and will be removed in a future version.
+
 ## SYNOPSIS
 
 Unpublishes a Microsoft Syntex model from a list.
@@ -61,7 +64,7 @@ Adds the unpublishing of the document processing model named "Invoice model" fro
 
 ### -Connection
 
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+Ignored, as this cmdlet no longer performs any request. Kept for backwards compatibility with existing scripts.
 
 ```yaml
 Type: PnPConnection

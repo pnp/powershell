@@ -87,6 +87,10 @@
         <article data-uid="">
 <h1 id="get-pnpsyntexmodel">Get-PnPSyntexModel</h1>
 
+<div class="WARNING">
+<h5>Warning</h5>
+<p>This cmdlet is obsolete and no longer does anything, as SharePoint Syntex is no longer supported. It only writes a warning and will be removed in a future version.</p>
+</div>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Returns Microsoft Syntex models from a Syntex Content Center.</p>
 <p>This cmdlet only works when you've connected to a Syntex Content Center site.</p>
@@ -111,7 +115,7 @@
 <p>Gets the document processing model named &quot;Invoice model&quot;.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<p>Ignored, as this cmdlet no longer performs any request. Kept for backwards compatibility with existing scripts.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
