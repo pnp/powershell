@@ -1,11 +1,11 @@
 ---
-Module Name: PnP.PowerShell
-title: Add-PnPContainerUser
-tags: Available in the current Nightly Release only.
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPContainerUser.html
+title: Add-PnPContainerUser
+Module Name: PnP.PowerShell
 external help file: PnP.PowerShell.dll-Help.xml
+schema: 2.0.0
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPContainerUser.html
+tags: Available in the current Nightly Release only.
 ---
  
 # Add-PnPContainerUser
