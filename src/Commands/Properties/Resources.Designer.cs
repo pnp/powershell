@@ -61,6 +61,15 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized error for Enterprise Wiki capabilities without publishing page conversion.
+        /// </summary>
+        internal static string EnterpriseWikiCapabilitiesRequirePublishingPage {
+            get {
+                return ResourceManager.GetString("EnterpriseWikiCapabilitiesRequirePublishingPage", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string describing an app-only token cache that could not be cleared.
         /// </summary>
         internal static string PersistedLoginCacheNotCleared {

@@ -105,6 +105,9 @@ namespace PnP.PowerShell.Commands.Pages
         public SwitchParameter PublishingPage = false;
 
         [Parameter(Mandatory = false)]
+        public SwitchParameter EnableEnterpriseWikiCapabilities = false;
+
+        [Parameter(Mandatory = false)]
         public SwitchParameter BlogPage = false;
 
         [Parameter(Mandatory = false)]
@@ -154,6 +157,15 @@ namespace PnP.PowerShell.Commands.Pages
 
         protected override void ExecuteCmdlet()
         {
+            if (EnableEnterpriseWikiCapabilities && !PublishingPage)
+            {
+                ThrowTerminatingError(new ErrorRecord(
+                    new ArgumentException(Properties.Resources.EnterpriseWikiCapabilitiesRequirePublishingPage),
+                    "EnterpriseWikiCapabilitiesRequirePublishingPage",
+                    ErrorCategory.InvalidArgument,
+                    EnableEnterpriseWikiCapabilities));
+            }
+
             //Fix loading of modernization framework
             FixLocalAssemblyResolving();
 
@@ -355,6 +367,7 @@ namespace PnP.PowerShell.Commands.Pages
                 // Setup Transformation information
                 PublishingPageTransformationInformation pti = new PublishingPageTransformationInformation(page)
                 {
+                    EnableEnterpriseWikiCapabilities = this.EnableEnterpriseWikiCapabilities,
                     Overwrite = this.Overwrite,
                     KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
                     PublishCreatedPage = !this.DontPublish,
