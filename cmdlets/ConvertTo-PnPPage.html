@@ -97,7 +97,7 @@
  [-AddTableListImageAsImageWebPart] [-UseCommunityScriptEditor] [-SummaryLinksToHtml]
  [-TargetWebUrl &lt;String&gt;] [-LogType &lt;PageTransformatorLogType&gt;] [-LogFolder &lt;String&gt;] [-LogSkipFlush]
  [-LogVerbose] [-DontPublish] [-KeepPageCreationModificationInformation] [-SetAuthorInPageHeader]
- [-PostAsNews] [-DisablePageComments] [-PublishingPage] [-BlogPage] [-DelveBlogPage]
+ [-PostAsNews] [-DisablePageComments] [-PublishingPage] [-EnableEnterpriseWikiCapabilities] [-BlogPage] [-DelveBlogPage]
  [-DelveKeepSubTitle] [-PageLayoutMapping &lt;String&gt;] [-PublishingTargetPageName &lt;String&gt;]
  [-TargetPageName &lt;String&gt;] [-TargetPageFolder &lt;String&gt;] [-TargetPageFolderOverridesDefaultFolder]
  [-RemoveEmptySectionsAndColumns] [-TargetConnection &lt;PnPConnection&gt;] [-SkipUserMapping]
@@ -106,8 +106,9 @@
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Wiki, web part, and publishing pages can be converted within the currently connected Web or to a target in another site collection. Use <code>-PublishingPage</code> for a publishing page and <code>-TargetWebUrl</code> or <code>-TargetConnection</code> to select a target.</p>
-<p>Publishing page conversion within the current Web requires an existing Site Pages library with Add Items and Edit Items permissions. The source publishing page is retained, and an existing target page is never overwritten, even when <code>-Overwrite</code> is supplied.</p>
+<p>Publishing page conversion within the current Web requires the Site Pages feature to be enabled and an existing Site Pages library with Add Items and Edit Items permissions. In-place conversion fails when the feature is disabled, even with <code>-EnableEnterpriseWikiCapabilities</code>; it does not activate the feature. The source publishing page is retained, and an existing target page is never overwritten, even when <code>-Overwrite</code> is supplied.</p>
 <p>The modern page is created in the Site Pages library, so it does not collide with the publishing page it is converted from. When neither <code>-PublishingTargetPageName</code> nor <code>-TargetPageName</code> is supplied, the modern page keeps the file name of the source page.</p>
+<p>Add <code>-EnableEnterpriseWikiCapabilities</code> for Enterprise Wiki metadata, ratings and sidebar migration. See the parameter below for prerequisites.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">ConvertTo-PnPPage -Identity &quot;somepage.aspx&quot; -Overwrite
@@ -166,9 +167,9 @@
 </code></pre>
 <p>Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. This allows to read a page in on-premises environment and create in another online locations including using specific user mappings between the two environments.</p>
 <h3 id="example-15">EXAMPLE 15</h3>
-<pre><code class="lang-powershell">ConvertTo-PnPPage -Identity &quot;Enterprise-Wiki.aspx&quot; -PublishingPage -PublishingTargetPageName &quot;Enterprise-Wiki-modern.aspx&quot;
+<pre><code class="lang-powershell">ConvertTo-PnPPage -Identity &quot;Enterprise-Wiki.aspx&quot; -PublishingPage -EnableEnterpriseWikiCapabilities -PublishingTargetPageName &quot;Enterprise-Wiki-modern.aspx&quot;
 </code></pre>
-<p>Converts an Enterprise Wiki publishing page to a modern page in the currently connected Web. The source publishing page is retained.</p>
+<p>Converts an Enterprise Wiki page in the current Web, retaining the source. Omit <code>-TargetWebUrl</code> and <code>-TargetConnection</code> for in-place conversion.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-addpageacceptbanner">-AddPageAcceptBanner</h3>
 <p>Adds the page accept banner web part. The actual web part is specified in webpartmapping.xml file</p>
@@ -246,6 +247,17 @@ Accept pipeline input: False
 <p>Don't publish the created modern page</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+</code></pre>
+<h3 id="-enableenterprisewikicapabilities">-EnableEnterpriseWikiCapabilities</h3>
+<p>Enables Enterprise Wiki preparation, metadata, ratings and sidebar migration. Requires <code>-PublishingPage</code>; defaults to false, preserving existing behavior.</p>
+<p>In-place conversion requires Site Pages already enabled; eligible cross-site conversion may enable it. Preparation can add list columns and content type field links. Required site columns, term sets and the sidebar renderer must already exist.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Default value: False
 
 Required: False
 Position: Named

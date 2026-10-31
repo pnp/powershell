@@ -22,7 +22,7 @@ ConvertTo-PnPPage [-Identity] <ClassicPagePipeBind> [-Library <String>] [-Folder
  [-AddTableListImageAsImageWebPart] [-UseCommunityScriptEditor] [-SummaryLinksToHtml]
  [-TargetWebUrl <String>] [-LogType <PageTransformatorLogType>] [-LogFolder <String>] [-LogSkipFlush]
  [-LogVerbose] [-DontPublish] [-KeepPageCreationModificationInformation] [-SetAuthorInPageHeader]
- [-PostAsNews] [-DisablePageComments] [-PublishingPage] [-BlogPage] [-DelveBlogPage]
+ [-PostAsNews] [-DisablePageComments] [-PublishingPage] [-EnableEnterpriseWikiCapabilities] [-BlogPage] [-DelveBlogPage]
  [-DelveKeepSubTitle] [-PageLayoutMapping <String>] [-PublishingTargetPageName <String>]
  [-TargetPageName <String>] [-TargetPageFolder <String>] [-TargetPageFolderOverridesDefaultFolder]
  [-RemoveEmptySectionsAndColumns] [-TargetConnection <PnPConnection>] [-SkipUserMapping]
@@ -34,9 +34,11 @@ ConvertTo-PnPPage [-Identity] <ClassicPagePipeBind> [-Library <String>] [-Folder
 
 Wiki, web part, and publishing pages can be converted within the currently connected Web or to a target in another site collection. Use `-PublishingPage` for a publishing page and `-TargetWebUrl` or `-TargetConnection` to select a target.
 
-Publishing page conversion within the current Web requires an existing Site Pages library with Add Items and Edit Items permissions. The source publishing page is retained, and an existing target page is never overwritten, even when `-Overwrite` is supplied.
+Publishing page conversion within the current Web requires the Site Pages feature to be enabled and an existing Site Pages library with Add Items and Edit Items permissions. In-place conversion fails when the feature is disabled, even with `-EnableEnterpriseWikiCapabilities`; it does not activate the feature. The source publishing page is retained, and an existing target page is never overwritten, even when `-Overwrite` is supplied.
 
 The modern page is created in the Site Pages library, so it does not collide with the publishing page it is converted from. When neither `-PublishingTargetPageName` nor `-TargetPageName` is supplied, the modern page keeps the file name of the source page.
+
+Add `-EnableEnterpriseWikiCapabilities` for Enterprise Wiki metadata, ratings and sidebar migration. See the parameter below for prerequisites.
 
 ## EXAMPLES
 
@@ -140,10 +142,10 @@ Converts a publishing page named 'somepage' to a client side page in the site sp
 
 ### EXAMPLE 15
 ```powershell
-ConvertTo-PnPPage -Identity "Enterprise-Wiki.aspx" -PublishingPage -PublishingTargetPageName "Enterprise-Wiki-modern.aspx"
+ConvertTo-PnPPage -Identity "Enterprise-Wiki.aspx" -PublishingPage -EnableEnterpriseWikiCapabilities -PublishingTargetPageName "Enterprise-Wiki-modern.aspx"
 ```
 
-Converts an Enterprise Wiki publishing page to a modern page in the currently connected Web. The source publishing page is retained.
+Converts an Enterprise Wiki page in the current Web, retaining the source. Omit `-TargetWebUrl` and `-TargetConnection` for in-place conversion.
 
 ## PARAMETERS
 
@@ -249,6 +251,21 @@ Don't publish the created modern page
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -EnableEnterpriseWikiCapabilities
+Enables Enterprise Wiki preparation, metadata, ratings and sidebar migration. Requires `-PublishingPage`; defaults to false, preserving existing behavior.
+
+In-place conversion requires Site Pages already enabled; eligible cross-site conversion may enable it. Preparation can add list columns and content type field links. Required site columns, term sets and the sidebar renderer must already exist.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Default value: False
 
 Required: False
 Position: Named
