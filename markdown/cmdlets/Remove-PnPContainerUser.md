@@ -1,11 +1,11 @@
 ---
+title: Remove-PnPContainerUser
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPContainerUser.html
+external help file: PnP.PowerShell.dll-Help.xml
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
 schema: 2.0.0
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPContainerUser.html
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
-title: Remove-PnPContainerUser
-tags: Available in the current Nightly Release only.
 ---
  
 # Remove-PnPContainerUser
