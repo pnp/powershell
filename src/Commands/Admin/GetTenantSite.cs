@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Management.Automation;
+using System.Text.RegularExpressions;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
@@ -51,6 +52,7 @@ namespace PnP.PowerShell.Commands
                 }
                 else
                 {
+                    ValidateSiteUrl(Identity.Url);
                     siteProperties = Tenant.GetSitePropertiesByUrl(Identity.Url, Detailed);
                     AdminContext.Load(siteProperties);
                     AdminContext.ExecuteQueryRetry();
@@ -113,5 +115,22 @@ namespace PnP.PowerShell.Commands
                 }
             }
         }
+
+        // A value that does not parse as a GUID is treated as a URL; without this check SharePoint returns "Unknown Error"
+        private void ValidateSiteUrl(string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value) && GuidLikeRegex.IsMatch(value))
+            {
+                var hexDigitCount = value.Count(Uri.IsHexDigit);
+                throw new PSArgumentException($"'{value}' is not a valid site ID. A site ID must be a GUID in the format 00000000-0000-0000-0000-000000000000 (32 hexadecimal digits in groups of 8-4-4-4-12), but the value provided contains {hexDigitCount} hexadecimal digits.", nameof(Identity));
+            }
+
+            if (!Uri.TryCreate(value, UriKind.Absolute, out var uri) || (uri.Scheme != Uri.UriSchemeHttps && uri.Scheme != Uri.UriSchemeHttp))
+            {
+                throw new PSArgumentException($"'{value}' is neither a valid site URL nor a valid site ID. Provide the full URL of the site, e.g. https://contoso.sharepoint.com/sites/demo, or its site ID as a GUID.", nameof(Identity));
+            }
+        }
+
+        private static readonly Regex GuidLikeRegex = new Regex(@"^[\{\(]?[0-9a-fA-F\-]+[\}\)]?$", RegexOptions.Compiled);
     }
 }
