@@ -1,11 +1,11 @@
 ---
-title: Set-PnPContainerApplication
-tags: Available in the current Nightly Release only.
-schema: 2.0.0
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContainerApplication.html
+title: Set-PnPContainerApplication
 external help file: PnP.PowerShell.dll-Help.xml
+applicable: SharePoint Online
+schema: 2.0.0
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContainerApplication.html
+tags: Available in the current Nightly Release only.
 ---
  
 # Set-PnPContainerApplication

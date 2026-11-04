@@ -1,11 +1,11 @@
 ---
-title: Remove-PnPDeletedContainer
-tags: Available in the current Nightly Release only.
-schema: 2.0.0
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPDeletedContainer.html
+title: Remove-PnPDeletedContainer
 external help file: PnP.PowerShell.dll-Help.xml
+applicable: SharePoint Online
+schema: 2.0.0
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPDeletedContainer.html
+tags: Available in the current Nightly Release only.
 ---
  
 # Remove-PnPDeletedContainer

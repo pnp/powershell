@@ -1,11 +1,11 @@
 ---
-title: Set-PnPContainerApplicationPermission
-tags: Available in the current Nightly Release only.
-schema: 2.0.0
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContainerApplicationPermission.html
+title: Set-PnPContainerApplicationPermission
 external help file: PnP.PowerShell.dll-Help.xml
+applicable: SharePoint Online
+schema: 2.0.0
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContainerApplicationPermission.html
+tags: Available in the current Nightly Release only.
 ---
  
 # Set-PnPContainerApplicationPermission
