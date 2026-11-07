@@ -646,6 +646,42 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no existing SharePoint Online tenant rename jobs..
+        /// </summary>
+        internal static string TenantRenameJobNotFound {
+            get {
+                return ResourceManager.GetString("TenantRenameJobNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} The rename may still have been scheduled, so do not run Start-PnPTenantRename again yet. Run Get-PnPTenantRenameStatus to check whether the job exists. For more guidance, visit https://aka.ms/SPOTenantRename..
+        /// </summary>
+        internal static string TenantRenameScheduleTimedOut {
+            get {
+                return ResourceManager.GetString("TenantRenameScheduleTimedOut", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The request to stop the tenant rename job completed at {0} (UTC). Run Get-PnPTenantRenameStatus to check the state of the job..
+        /// </summary>
+        internal static string TenantRenameStopRequested {
+            get {
+                return ResourceManager.GetString("TenantRenameStopRequested", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The tenant rename job was returned, but the progress of its site renames could not be retrieved, so InProgress, Renamed and AttentionRequired are empty. {0}.
+        /// </summary>
+        internal static string TenantRenameSiteProgressUnavailable {
+            get {
+                return ResourceManager.GetString("TenantRenameSiteProgressUnavailable", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to SharePoint PnP PowerShell Library ({0}).
         /// </summary>
         internal static string OfficeDevPnPPowerShellLibrary0 {

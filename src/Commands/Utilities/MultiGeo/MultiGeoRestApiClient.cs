@@ -16,19 +16,20 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using CommandResources = PnP.PowerShell.Commands.Properties.Resources;
+using SiteRenameState = PnP.PowerShell.Commands.Enums.SiteRenameState;
 
 namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 {
 	internal class MultiGeoRestApiClient
 	{
-		private const string TenantRenameApiVersion = "1.5.3";
-		private const string TenantRenameCancelApiVersion = "1.5.5";
-		private const string TenantRenameStatusV2ApiVersion = "1.5.18";
+		private const string TenantRenameMinimumApiVersion = "1.5.3";
+		private const string TenantRenameCancelMinimumApiVersion = "1.5.5";
+		private const string TenantRenameStatusV2MinimumApiVersion = "1.5.18";
 		private const string TenantRenameJobsPath = "TenantRenameJobs";
 		private const string TenantRenameJobsPathToGetWarningMessages = "TenantRenameJobs/GetWarningMessages";
-		private const string TenantRenameJobsPathToGetStatus = "TenantRenameJobs/Get";
 		private const string TenantRenameJobsPathToGetStatusV2 = "TenantRenameJobs/GetV2";
 		private const string TenantRenameJobsPathToCancelAJob = "TenantRenameJobs/Cancel";
+		private const string SiteRenameJobsCountPathByParentIdAndState = "SiteRenameJobs/GetJobsCountByParentIdAndState(parentId='{0}', state='{1}')";
 		private const string GeoMoveCompatibilityChecksMinimumApiVersion = "1.3.6";
 		private const string GeoMoveCompatibilityChecksPath = "GeoMoveCompatibilityChecks";
 		private const string GeoAdministratorsMinimumApiVersion = "1.2-beta";
@@ -79,9 +80,11 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const int GeoAdministratorGroupMemberType = 2;
 		private const int MaximumPagination = 10;
 		private const int ApiVersionCacheValidTimeInHours = 1;
-		private static readonly TimeSpan CreateTenantRenameJobTimeout = TimeSpan.FromSeconds(300);
+		private static readonly TimeSpan CreateTenantRenameJobMinimumTimeout = TimeSpan.FromSeconds(300);
 		private static readonly string[] ClientSupportedApiVersions =
 		[
+			"1.6.2",
+			"1.6.1",
 			"1.6.0",
 			"1.5.20",
 			"1.5.19",
@@ -139,31 +142,68 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 		private readonly ClientContext adminContext;
 		private readonly HttpClient httpClient;
+		private readonly TimeSpan configuredTimeout;
 
 		internal MultiGeoRestApiClient(ClientContext adminContext)
 		{
 			this.adminContext = adminContext ?? throw new ArgumentNullException(nameof(adminContext));
 			httpClient = PnPHttpClient.Instance.GetHttpClient(adminContext);
+
+			// HttpClient.Timeout caps every request, so a call that must wait longer than it, like scheduling a tenant rename,
+			// would still be cut off. Keep the timeout PnP Framework configured (SharePointPnPHttpTimeout, 100 seconds by default)
+			// and let Send apply it per request instead. GetHttpClient returns a new instance per call, so other cmdlets are not affected.
+			configuredTimeout = httpClient.Timeout;
+			httpClient.Timeout = Timeout.InfiniteTimeSpan;
 		}
 
 		internal TenantRenameJob CreateTenantRenameJob(TenantRenameJobEntityData job)
 		{
-			return Post<TenantRenameJob>(TenantRenameJobsPath, job, CreateTenantRenameJobTimeout);
-		}
-
-		internal TenantRenameJob GetTenantRenameJob()
-		{
-			return Get<TenantRenameJob>(TenantRenameJobsPathToGetStatus);
+			return Post<TenantRenameJob>(TenantRenameJobsPath, job, GetCurrentApiVersion(TenantRenameMinimumApiVersion), CreateTenantRenameJobMinimumTimeout);
 		}
 
 		internal TenantRenameJob GetTenantRenameJobV2()
 		{
-			return Get<TenantRenameJob>(TenantRenameJobsPathToGetStatusV2, TenantRenameStatusV2ApiVersion);
+			return Get<TenantRenameJob>(TenantRenameJobsPathToGetStatusV2, GetCurrentApiVersion(TenantRenameStatusV2MinimumApiVersion));
+		}
+
+		/// <summary>
+		/// Returns the number of site rename jobs of a tenant rename job that are in the given state, following NextLink and adding up every page.
+		/// </summary>
+		internal int GetSiteRenameJobsCountByParentIdAndState(Guid parentId, SiteRenameState state)
+		{
+			var apiVersion = GetCurrentApiVersion(TenantRenameStatusV2MinimumApiVersion);
+			var path = string.Format(CultureInfo.InvariantCulture, SiteRenameJobsCountPathByParentIdAndState, parentId, (int)state);
+			var requestUri = CreateApiUri(path, apiVersion);
+			var count = 0;
+			var pages = 0;
+
+			while (requestUri != null && pages < MaximumPagination)
+			{
+				var currentUri = requestUri;
+				var responseText = Send(() => CreateRequest(HttpMethod.Get, currentUri), minimumTimeout: null, allowRetries: true);
+				var page = DeserializeResponse<SiteRenameJobsCount>(responseText);
+				if (page == null)
+				{
+					// An empty body is not a count; returning what was added up so far would present missing progress as real
+					throw new InvalidOperationException("SharePoint Online returned an empty response for the site rename count.");
+				}
+
+				count = checked(count + page.SiteRenameJobsCountByParentIdAndState);
+				requestUri = string.IsNullOrWhiteSpace(page.NextLink) ? null : new Uri(currentUri, page.NextLink);
+				pages++;
+			}
+
+			if (requestUri != null)
+			{
+				throw new InvalidOperationException("SharePoint Online REST request returned too many pages.");
+			}
+
+			return count;
 		}
 
 		internal IEnumerable<string> GetTenantRenameWarningMessages()
 		{
-			return GetFeed<string>(TenantRenameJobsPathToGetWarningMessages, TenantRenameApiVersion);
+			return GetFeed<string>(TenantRenameJobsPathToGetWarningMessages, GetCurrentApiVersion(TenantRenameMinimumApiVersion));
 		}
 
 		internal IEnumerable<GeoMoveTenantCompatibilityCheck> GetGeoMoveCompatibilityChecks()
@@ -423,18 +463,24 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 		internal void CancelTenantRenameJob()
 		{
-			Post<string>(TenantRenameJobsPathToCancelAJob, payload: null, apiVersion: TenantRenameCancelApiVersion);
+			var apiVersion = GetCurrentApiVersion(TenantRenameCancelMinimumApiVersion);
+			Send(() =>
+			{
+				var request = CreateRequest(HttpMethod.Post, TenantRenameJobsPathToCancelAJob, apiVersion, string.Empty);
+				request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json;charset=UTF-8");
+				return request;
+			}, minimumTimeout: null, allowRetries: false);
 		}
 
-		private T Get<T>(string path, string apiVersion = TenantRenameApiVersion)
+		private T Get<T>(string path, string apiVersion)
 		{
-			var responseText = Send(() => CreateRequest(HttpMethod.Get, path, apiVersion), timeout: null, allowRetries: true);
+			var responseText = Send(() => CreateRequest(HttpMethod.Get, path, apiVersion), minimumTimeout: null, allowRetries: true);
 			return DeserializeResponse<T>(responseText);
 		}
 
 		private T GetWithoutApiVersion<T>(string path)
 		{
-			var responseText = Send(() => CreateRequest(HttpMethod.Get, CreateApiUri(path)), timeout: null, allowRetries: true);
+			var responseText = Send(() => CreateRequest(HttpMethod.Get, CreateApiUri(path)), minimumTimeout: null, allowRetries: true);
 			return DeserializeResponse<T>(responseText);
 		}
 
@@ -446,7 +492,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 			while (requestUri != null && pages < MaximumPagination)
 			{
-				var responseText = Send(() => CreateRequest(HttpMethod.Get, requestUri), timeout: null, allowRetries: true);
+				var responseText = Send(() => CreateRequest(HttpMethod.Get, requestUri), minimumTimeout: null, allowRetries: true);
 				var collection = DeserializeFeed<T>(responseText);
 				if (collection.Value != null)
 				{
@@ -475,22 +521,22 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			return results;
 		}
 
-		private T Post<T>(string path, object payload, TimeSpan? timeout = null, string apiVersion = TenantRenameApiVersion)
+		private T Post<T>(string path, object payload, string apiVersion, TimeSpan? minimumTimeout = null)
 		{
 			var jsonPayload = payload == null ? null : JsonSerializer.Serialize(payload, SerializerOptions);
-			var responseText = Send(() => CreateRequest(HttpMethod.Post, path, apiVersion, jsonPayload), timeout, allowRetries: false);
+			var responseText = Send(() => CreateRequest(HttpMethod.Post, path, apiVersion, jsonPayload), minimumTimeout, allowRetries: false);
 			return DeserializeResponse<T>(responseText);
 		}
 
 		private void PostWithoutResponse(string path, object payload, string apiVersion)
 		{
 			var jsonPayload = payload == null ? null : JsonSerializer.Serialize(payload, SerializerOptions);
-			Send(() => CreateRequest(HttpMethod.Post, path, apiVersion, jsonPayload), timeout: null, allowRetries: false);
+			Send(() => CreateRequest(HttpMethod.Post, path, apiVersion, jsonPayload), minimumTimeout: null, allowRetries: false);
 		}
 
 		private void PostWithEmptyBody(string path, string apiVersion)
 		{
-			Send(() => CreateRequest(HttpMethod.Post, path, apiVersion, string.Empty), timeout: null, allowRetries: false);
+			Send(() => CreateRequest(HttpMethod.Post, path, apiVersion, string.Empty), minimumTimeout: null, allowRetries: false);
 		}
 
 		private void PostWithMethodOverride(string path, object payload, string methodOverride, string apiVersion)
@@ -506,7 +552,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 				}
 
 				return request;
-			}, timeout: null, allowRetries: false);
+			}, minimumTimeout: null, allowRetries: false);
 		}
 
 		private void PostWithMethodOverrideEmptyBody(string path, string methodOverride, string apiVersion)
@@ -521,7 +567,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 				}
 
 				return request;
-			}, timeout: null, allowRetries: false);
+			}, minimumTimeout: null, allowRetries: false);
 		}
 
 		private HttpRequestMessage CreateRequest(HttpMethod method, string path, string apiVersion, string jsonPayload = null)
@@ -677,14 +723,15 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			return assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version ?? assembly.GetName().Version?.ToString();
 		}
 
-		private string Send(Func<HttpRequestMessage> requestFactory, TimeSpan? timeout, bool allowRetries)
+		private string Send(Func<HttpRequestMessage> requestFactory, TimeSpan? minimumTimeout, bool allowRetries)
 		{
 			var retryAttempt = 0;
 			while (true)
 			{
 				using var request = requestFactory();
-				using var cancellationTokenSource = timeout.HasValue ? new CancellationTokenSource(timeout.Value) : null;
-				using var response = httpClient.SendAsync(request, cancellationTokenSource?.Token ?? CancellationToken.None).GetAwaiter().GetResult();
+				var requestTimeout = GetRequestTimeout(minimumTimeout);
+				using var cancellationTokenSource = new CancellationTokenSource(requestTimeout);
+				using var response = SendWithTimeout(request, cancellationTokenSource, requestTimeout);
 				var responseText = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
 				if (allowRetries && IsTransient(response.StatusCode) && retryAttempt < 10)
@@ -700,6 +747,32 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 				}
 
 				return responseText;
+			}
+		}
+
+		/// <summary>
+		/// Returns the configured timeout, or the minimum timeout when the call needs longer. An infinite configured timeout is kept.
+		/// </summary>
+		private TimeSpan GetRequestTimeout(TimeSpan? minimumTimeout)
+		{
+			if (configuredTimeout == Timeout.InfiniteTimeSpan || !minimumTimeout.HasValue || minimumTimeout.Value <= configuredTimeout)
+			{
+				return configuredTimeout;
+			}
+
+			return minimumTimeout.Value;
+		}
+
+		private HttpResponseMessage SendWithTimeout(HttpRequestMessage request, CancellationTokenSource cancellationTokenSource, TimeSpan requestTimeout)
+		{
+			try
+			{
+				return httpClient.SendAsync(request, cancellationTokenSource.Token).GetAwaiter().GetResult();
+			}
+			catch (OperationCanceledException ex) when (cancellationTokenSource.IsCancellationRequested)
+			{
+				// A cancelled token surfaces as "A task was canceled."; say what actually happened
+				throw new TimeoutException(string.Format(CultureInfo.InvariantCulture, "SharePoint Online did not respond to {0} {1} within {2} seconds.", request.Method, request.RequestUri?.GetLeftPart(UriPartial.Path), requestTimeout.TotalSeconds), ex);
 			}
 		}
 
@@ -939,6 +1012,13 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private sealed class ApiVersions
 		{
 			public string[] SupportedVersions { get; set; }
+		}
+
+		private sealed class SiteRenameJobsCount
+		{
+			public int SiteRenameJobsCountByParentIdAndState { get; set; }
+
+			public string NextLink { get; set; }
 		}
 
 		private sealed class CachedApiVersion
