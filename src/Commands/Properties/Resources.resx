@@ -444,4 +444,16 @@
   <data name="PersistedLoginSettingsWarning" xml:space="preserve">
     <value>Unable to read the persisted login settings: {0} Connecting without the persisted login cache. Existing settings and cached tokens have not been changed. Repair the settings file or restore read access before using persisted login.</value>
   </data>
+  <data name="TenantRenameJobNotFound" xml:space="preserve">
+    <value>There are no existing SharePoint Online tenant rename jobs.</value>
+  </data>
+  <data name="TenantRenameScheduleTimedOut" xml:space="preserve">
+    <value>SharePoint Online did not respond to the tenant rename request within 5 minutes. The rename may still have been scheduled, so do not run Start-PnPTenantRename again yet. Run Get-PnPTenantRenameStatus to check whether the job exists. For more guidance, visit https://aka.ms/SPOTenantRename.</value>
+  </data>
+  <data name="TenantRenameStopRequested" xml:space="preserve">
+    <value>The request to stop the tenant rename job completed at {0} (UTC). Run Get-PnPTenantRenameStatus to check the state of the job.</value>
+  </data>
+  <data name="TenantRenameSiteProgressUnavailable" xml:space="preserve">
+    <value>The tenant rename job was returned, but the progress of its site renames could not be retrieved, so InProgress, Renamed and AttentionRequired are empty. {0}</value>
+  </data>
 </root>

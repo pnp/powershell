@@ -43,7 +43,17 @@ namespace PnP.PowerShell.Commands.Admin
 				ScheduledDateTimeInUtc = scheduledDateTimeInUtc
 			};
 
-			var tenantRenameJobResponse = multiGeoRestApiClient.CreateTenantRenameJob(tenantRenameJob);
+			TenantRenameJob tenantRenameJobResponse = null;
+			try
+			{
+				tenantRenameJobResponse = multiGeoRestApiClient.CreateTenantRenameJob(tenantRenameJob);
+			}
+			catch (TimeoutException ex)
+			{
+				// The service may have scheduled the rename before the response was lost, so retrying is not safe
+				ThrowTerminatingError(new ErrorRecord(new TimeoutException(Properties.Resources.TenantRenameScheduleTimedOut, ex), "TenantRenameScheduleTimedOut", ErrorCategory.OperationTimeout, targetDomainPrefix));
+			}
+
 			if (tenantRenameJobResponse?.ResponseMessages == null)
 			{
 				throw new PSInvalidOperationException("The tenant rename job could not be created. SharePoint Online did not return a response message.");
