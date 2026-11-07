@@ -8,10 +8,14 @@ using System.Runtime.Loader;
 namespace PnP.PowerShell.Commands.Base
 {
     /// <summary>
-    /// A dedicated <see cref="AssemblyLoadContext"/> that owns the complete private dependency
-    /// graph shipped with PnP PowerShell (PnP.Framework, PnP.Core, PnP.Core.Auth, PnP.Core.Admin,
-    /// the CSOM libraries, Microsoft.Extensions.*, Microsoft.Identity.*, Newtonsoft.Json,
-    /// AngleSharp, and so on).
+    /// A dedicated <see cref="AssemblyLoadContext"/> that owns the private dependency graph shipped with
+    /// PnP PowerShell in the module's "Common" folder (PnP.Framework, PnP.Core, PnP.Core.Auth, PnP.Core.Admin,
+    /// Microsoft.Extensions.*, Microsoft.Identity.*, Newtonsoft.Json, and so on).
+    ///
+    /// The CSOM libraries are the exception: they ship in the "Core" folder next to PnP.PowerShell.dll and live
+    /// in the default context, so that PowerShell's [TypeName] resolver can find their types in user scripts. When
+    /// an assembly in this context needs one of them, <see cref="ResolveFromModuleAssemblyFolder"/> hands it the
+    /// copy in the default context. See that method for why this cannot be left to the runtime.
     ///
     /// The purpose of this context is <b>full isolation</b>. By overriding <see cref="Load"/> to probe
     /// our own dependency folder first, every assembly loaded here - and, crucially, every transitive
@@ -45,6 +49,12 @@ namespace PnP.PowerShell.Commands.Base
         private readonly string _dependencyPath;
 
         /// <summary>
+        /// Absolute path to the folder that holds PnP.PowerShell.dll and the CSOM libraries (the module's "Core"
+        /// folder), whose assemblies are loaded into the default context.
+        /// </summary>
+        private readonly string _moduleAssemblyPath;
+
+        /// <summary>
         /// Candidate runtime identifiers used to locate native (unmanaged) libraries, most specific first.
         /// </summary>
         private readonly string[] _nativeRuntimeIdentifiers;
@@ -55,11 +65,13 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         private readonly ConcurrentDictionary<string, Version> _shippedVersions = new(StringComparer.OrdinalIgnoreCase);
 
-        public PnPAssemblyLoadContext(string dependencyPath)
+        public PnPAssemblyLoadContext(string dependencyPath, string moduleAssemblyPath)
             : base(name: "PnP.PowerShell", isCollectible: false)
         {
             _dependencyPath = dependencyPath ?? throw new ArgumentNullException(nameof(dependencyPath));
+            _moduleAssemblyPath = moduleAssemblyPath ?? throw new ArgumentNullException(nameof(moduleAssemblyPath));
             _nativeRuntimeIdentifiers = BuildNativeRuntimeIdentifiers();
+            Resolving += ResolveFromModuleAssemblyFolder;
         }
 
         /// <summary>
@@ -100,6 +112,33 @@ namespace PnP.PowerShell.Commands.Base
             // returned from a custom ALC's Load override the runtime does not enforce the requested version, so
             // PnP.Framework/PnP.Core always bind to the version we shipped even if the host asked for another.
             return File.Exists(candidate) ? LoadFromAssemblyPath(candidate) : null;
+        }
+
+        /// <summary>
+        /// Loads a CSOM library that an assembly in this context needs from the module's "Core" folder into the default
+        /// context, and returns <c>null</c> for any assembly that is not in that folder.
+        ///
+        /// <see cref="Load"/> leaves the CSOM libraries to the default context, but the runtime's fallback to the default
+        /// context only finds an assembly that is already loaded there. PowerShell loads the CSOM libraries from "Core" only
+        /// when PnP.PowerShell.dll asks for them, as it resolves the dependencies of an assembly from that assembly's
+        /// folder for requests from the default context only. Microsoft.SharePoint.Client.UserProfiles, .Search and
+        /// .Search.Applications are not needed to import the module, so PnP.Framework failed to load them whenever
+        /// PnP.PowerShell.dll had not used them first, for instance when applying a template with localizations
+        /// (issue #5495).
+        ///
+        /// This handler runs only after the default context has no copy, so a copy that is already loaded is never
+        /// loaded twice. <see cref="Assembly.LoadFrom(string)"/> loads into the default context the way PowerShell loads
+        /// the other assemblies in "Core", so the dependencies of the loaded assembly resolve from "Core" as well.
+        /// </summary>
+        private Assembly ResolveFromModuleAssemblyFolder(AssemblyLoadContext context, AssemblyName assemblyName)
+        {
+            if (string.IsNullOrEmpty(assemblyName?.Name))
+            {
+                return null;
+            }
+
+            string candidate = Path.Combine(_moduleAssemblyPath, assemblyName.Name + ".dll");
+            return File.Exists(candidate) ? Assembly.LoadFrom(candidate) : null;
         }
 
         /// <summary>

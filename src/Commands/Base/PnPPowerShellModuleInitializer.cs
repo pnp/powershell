@@ -14,10 +14,10 @@ namespace PnP.PowerShell.Commands.Base
     /// Bootstraps PnP PowerShell's dependency isolation.
     ///
     /// PnP.PowerShell.dll (this assembly, containing all cmdlets) is loaded by PowerShell into the
-    /// default <see cref="AssemblyLoadContext"/> so its cmdlet types remain discoverable. Every other
-    /// assembly we ship lives in the sibling "Common" folder and is loaded into a dedicated, fully
-    /// isolated <see cref="PnPAssemblyLoadContext"/>. A single <see cref="AssemblyLoadContext.Resolving"/>
-    /// handler on the default context routes the private dependencies this assembly references into that
+    /// default <see cref="AssemblyLoadContext"/> so its cmdlet types remain discoverable, together with the
+    /// CSOM libraries next to it in the "Core" folder. Every other assembly we ship lives in the sibling
+    /// "Common" folder and is loaded into a dedicated, fully isolated <see cref="PnPAssemblyLoadContext"/>.
+    /// A single <see cref="AssemblyLoadContext.Resolving"/> handler on the default context routes the private dependencies this assembly references into that
     /// private context; from there the private context resolves the entire transitive graph internally, so our
     /// Microsoft.Extensions.* (and friends) can never bind against a version the host process already loaded.
     ///
@@ -86,7 +86,7 @@ namespace PnP.PowerShell.Commands.Base
             // layout produced by the build scripts.
             s_isolationEnabled = Environment.GetEnvironmentVariable("PNP_PS_DEBUG_IN_VISUAL_STUDIO") != "True";
 
-            s_dependencyContext = s_isolationEnabled ? new PnPAssemblyLoadContext(s_dependencyPath) : null;
+            s_dependencyContext = s_isolationEnabled ? new PnPAssemblyLoadContext(s_dependencyPath, executingDirectory) : null;
         }
 
         /// <summary>
