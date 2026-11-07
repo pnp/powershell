@@ -107,8 +107,8 @@ if ($runPublish -eq $true) {
         $commonFiles = [System.Collections.Generic.Hashset[string]]::new()
         # The module assembly itself stays in Core (loaded into the default ALC so its cmdlets are discoverable).
         # The CSOM client libraries (Microsoft.SharePoint.Client.* / Microsoft.Online.SharePoint.Client.*) also
-        # stay in Core: PowerShell probes the imported binary module's own directory (Core), so placing them there
-        # loads them into the default ALC. That keeps their types resolvable by PowerShell's [TypeName] resolver in
+        # stay in Core and are loaded into the default ALC. PowerShell probes Core only for the requests of assemblies in
+        # the default ALC, so PnPAssemblyLoadContext loads the ones PnP.Framework needs from Core itself (#5495). That keeps their types resolvable by PowerShell's [TypeName] resolver in
         # user scripts (e.g. [Microsoft.SharePoint.Client.ScriptSafeDomainEntityData]), which only sees the default
         # context. CSOM has no Microsoft.Extensions.* dependency, so sharing it in the default context does not
         # weaken the isolation that fixes the Azure Functions dependency conflict (#5350).
