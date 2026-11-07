@@ -16,17 +16,17 @@ List subfolders in a folder
 
 ### Folder via url
 ```powershell
-Get-PnPFolderInFolder [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recurse] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFolderInFolder [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ### Folder via pipebind
 ```powershell
-Get-PnPFolderInFolder [-Identity <FolderPipeBind>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recurse] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFolderInFolder [-Identity <FolderPipeBind>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ### Folder via list pipebind
 ```powershell
-Get-PnPFolderInFolder [-List <ListPipeBind>] [-ItemType <String>] [-ItemName <String>] [-Includes <String[]>] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFolderInFolder [-List <ListPipeBind>] [-ItemName <String>] [-Includes <String[]>] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -114,7 +114,7 @@ When provided, all system folders will be excluded from the output. This paramet
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Folder via url, Folder via pipebind
 
 Required: False
 Position: Named
@@ -133,7 +133,7 @@ Parameter Sets: Folder via url
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -147,7 +147,7 @@ Parameter Sets: Folder via pipebind
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -189,19 +189,20 @@ Parameter Sets: Folder via list pipebind
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Recurse
-A switch parameter to include folders of all subfolders in the specified folder
+### -Recursive
+A switch parameter to include folders of all subfolders in the specified folder. Not available with -List, which always retrieves the folders of all subfolders.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Folder via url, Folder via pipebind
+Aliases: Recurse
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
