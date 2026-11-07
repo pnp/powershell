@@ -16,17 +16,17 @@ List files in a folder
 
 ### Folder via url
 ```powershell
-Get-PnPFileInFolder [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-Recurse] [-Includes <String[]>] [-ExcludeSystemFolders] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFileInFolder [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-Recursive] [-Includes <String[]>] [-ExcludeSystemFolders] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ### Folder via pipebind
 ```powershell
-Get-PnPFileInFolder [-Identity <FolderPipeBind>] [-ItemName <String>] [-Recurse] [-Includes <String[]>] [-ExcludeSystemFolders] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFileInFolder [-Identity <FolderPipeBind>] [-ItemName <String>] [-Recursive] [-Includes <String[]>] [-ExcludeSystemFolders] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ### Folder via list pipebind
 ```powershell
-Get-PnPFileInFolder [-List <ListPipeBind>] [-ItemType <String>] [-ItemName <String>] [-Includes <String[]>] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFileInFolder [-List <ListPipeBind>] [-ItemName <String>] [-Includes <String[]>] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -107,7 +107,7 @@ When provided, all files in system folders will be excluded from the output. Thi
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Folder via url, Folder via pipebind
 
 Required: False
 Position: Named
@@ -126,7 +126,7 @@ Parameter Sets: Folder via url
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -140,7 +140,7 @@ Parameter Sets: Folder via pipebind
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -182,19 +182,20 @@ Parameter Sets: Folder via list pipebind
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Recurse
-A switch parameter to include files of all subfolders in the specified folder
+### -Recursive
+A switch parameter to include files of all subfolders in the specified folder. Not available with -List, which always retrieves the files of all subfolders.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Folder via url, Folder via pipebind
+Aliases: Recurse
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
