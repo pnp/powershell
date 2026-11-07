@@ -31,7 +31,7 @@ The new domain name must already have been added successfully to Microsoft Entra
 
 The scheduled date and time must be at least 24 hours in the future and no more than 30 days in the future. Tenant rename can take several hours to days depending on the number of SharePoint sites and OneDrive accounts in the tenant.
 
-Scheduling can take a few minutes. If SharePoint Online does not respond within 5 minutes, the cmdlet stops with an error, but the rename may still have been scheduled. Run `Get-PnPTenantRenameStatus` to check before running this cmdlet again. Use `Stop-PnPTenantRename` to cancel a scheduled rename.
+Scheduling can take a few minutes. If SharePoint Online does not respond within 5 minutes, or within the timeout set in the `SharePointPnPHttpTimeout` environment variable when that is longer, the cmdlet stops with an error, but the rename may still have been scheduled. Run `Get-PnPTenantRenameStatus` to check before running this cmdlet again. Use `Stop-PnPTenantRename` to cancel a scheduled rename.
 
 ## EXAMPLES
 

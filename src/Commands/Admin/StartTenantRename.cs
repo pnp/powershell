@@ -4,6 +4,7 @@ using PnP.PowerShell.Commands.Utilities.MultiGeo;
 using PnP.PowerShell.Commands.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
@@ -51,7 +52,8 @@ namespace PnP.PowerShell.Commands.Admin
 			catch (TimeoutException ex)
 			{
 				// The service may have scheduled the rename before the response was lost, so retrying is not safe
-				ThrowTerminatingError(new ErrorRecord(new TimeoutException(Properties.Resources.TenantRenameScheduleTimedOut, ex), "TenantRenameScheduleTimedOut", ErrorCategory.OperationTimeout, targetDomainPrefix));
+				var message = string.Format(CultureInfo.CurrentCulture, Properties.Resources.TenantRenameScheduleTimedOut, ex.Message);
+				ThrowTerminatingError(new ErrorRecord(new TimeoutException(message, ex), "TenantRenameScheduleTimedOut", ErrorCategory.OperationTimeout, targetDomainPrefix));
 			}
 
 			if (tenantRenameJobResponse?.ResponseMessages == null)

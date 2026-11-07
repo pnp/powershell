@@ -6,8 +6,6 @@ using PnP.PowerShell.Commands.Utilities.MultiGeo;
 using System;
 using System.Globalization;
 using System.Management.Automation;
-using System.Net.Http;
-using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -56,8 +54,10 @@ namespace PnP.PowerShell.Commands.Admin
                     status.InProgress = inProgress;
                     status.AttentionRequired = checked(failed + suspended);
                 }
-                catch (Exception ex) when (ex is InvalidOperationException or HttpRequestException or TimeoutException or JsonException)
+                catch (Exception ex) when (ex is not PipelineStoppedException)
                 {
+                    // Any failure here, including the untyped Exception PnP Framework's RetryHandler throws once its retries are
+                    // exhausted, must not cost the caller the job already retrieved. It is reported below, after the job.
                     siteProgressException = ex;
                 }
             }

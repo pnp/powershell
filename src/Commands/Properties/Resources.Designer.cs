@@ -655,7 +655,7 @@ namespace PnP.PowerShell.Commands.Properties {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to SharePoint Online did not respond to the tenant rename request within 5 minutes. The rename may still have been scheduled, so do not run Start-PnPTenantRename again yet. Run Get-PnPTenantRenameStatus to check whether the job exists. For more guidance, visit https://aka.ms/SPOTenantRename..
+        ///   Looks up a localized string similar to {0} The rename may still have been scheduled, so do not run Start-PnPTenantRename again yet. Run Get-PnPTenantRenameStatus to check whether the job exists. For more guidance, visit https://aka.ms/SPOTenantRename..
         /// </summary>
         internal static string TenantRenameScheduleTimedOut {
             get {

@@ -448,7 +448,7 @@
     <value>There are no existing SharePoint Online tenant rename jobs.</value>
   </data>
   <data name="TenantRenameScheduleTimedOut" xml:space="preserve">
-    <value>SharePoint Online did not respond to the tenant rename request within 5 minutes. The rename may still have been scheduled, so do not run Start-PnPTenantRename again yet. Run Get-PnPTenantRenameStatus to check whether the job exists. For more guidance, visit https://aka.ms/SPOTenantRename.</value>
+    <value>{0} The rename may still have been scheduled, so do not run Start-PnPTenantRename again yet. Run Get-PnPTenantRenameStatus to check whether the job exists. For more guidance, visit https://aka.ms/SPOTenantRename.</value>
   </data>
   <data name="TenantRenameStopRequested" xml:space="preserve">
     <value>The request to stop the tenant rename job completed at {0} (UTC). Run Get-PnPTenantRenameStatus to check the state of the job.</value>
