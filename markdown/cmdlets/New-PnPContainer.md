@@ -1,9 +1,9 @@
 ---
-applicable: SharePoint Online
+title: New-PnPContainer
 tags: Available in the current Nightly Release only.
 schema: 2.0.0
 Module Name: PnP.PowerShell
-title: New-PnPContainer
+applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/New-PnPContainer.html
 ---
