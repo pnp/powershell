@@ -49,6 +49,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Using UPNs with an apostrophe in it not working with `Remove-PnPUserProfile`, `Export-PnPUserProfile`, `Export-PnPUserInfo`, and `Remove-PnPUserInfo`. The apostrophe is now escaped in the API request. [#5459](https://github.com/pnp/powershell/pull/5459)
 - Fix PnP ALC initializer with loaded assemblies stackoverflow issue. [#5481](https://github.com/pnp/powershell/pull/5481)
+- Fixed `Invoke-PnPSiteTemplate` failing with "Could not load file or assembly 'Microsoft.SharePoint.Client.UserProfiles'" when the template uses localizations. PnP Framework could not load the CSOM libraries for user profiles and search unless a cmdlet had loaded them earlier in the session. [#5495](https://github.com/pnp/powershell/issues/5495)
 - Fixed the stable Docker images stopping at 3.1.0: `m365pnp/powershell:latest` and `m365pnp/powershell:stable` are published again, for the latest stable release on the PowerShell Gallery, now also for 32 bit ARM (`linux/arm/v7`). [#5483](https://github.com/pnp/powershell/pull/5483)
 - Fixed `Get-Help Move-PnPItemProxy` returning only the syntax of the cmdlet, as it had no documentation page. [#5483](https://github.com/pnp/powershell/pull/5483)
 
