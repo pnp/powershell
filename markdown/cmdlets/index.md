@@ -6,7 +6,7 @@ description: Full cmdlet reference for PnP PowerShell.
 
 # PnP PowerShell cmdlets
 
-PnP PowerShell exists out of 867 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
+PnP PowerShell exists out of 869 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below. 
  
 <sup>1</sup>: Only available in the latest nightly build. All the others can also be used using the latest stable release.  
 <sup>2</sup>: Cmdlet is an alias of another cmdlet, used to provide backwards compatibility.
@@ -441,6 +441,7 @@ PnP PowerShell exists out of 867 cmdlets which can help you in setting up, confi
 - [Get-PnPTenantInternalSetting](Get-PnPTenantInternalSetting.md)
 - [Get-PnPTenantPronounsSetting](Get-PnPTenantPronounsSetting.md)
 - [Get-PnPTenantRecycleBinItem](Get-PnPTenantRecycleBinItem.md)
+- [Get-PnPTenantRenameStatus](Get-PnPTenantRenameStatus.md) <sup>1</sup>
 - [Get-PnPTenantRestrictedSearchAllowedList](Get-PnPTenantRestrictedSearchAllowedList.md)
 - [Get-PnPTenantRestrictedSearchMode](Get-PnPTenantRestrictedSearchMode.md)
 - [Get-PnPTenantRetentionLabel](Get-PnPTenantRetentionLabel.md)
@@ -937,6 +938,7 @@ PnP PowerShell exists out of 867 cmdlets which can help you in setting up, confi
 ## Stop
 - [Stop-PnPFlowRun](Stop-PnPFlowRun.md)
 - [Stop-PnPSiteContentMove](Stop-PnPSiteContentMove.md)
+- [Stop-PnPTenantRename](Stop-PnPTenantRename.md) <sup>1</sup>
 - [Stop-PnPTraceLog](Stop-PnPTraceLog.md)
 - [Stop-PnPUserAndContentMove](Stop-PnPUserAndContentMove.md)
 ## Submit

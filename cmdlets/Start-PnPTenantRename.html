@@ -88,6 +88,11 @@
 <h1 id="start-pnptenantrename">Start-PnPTenantRename</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+<li>SharePoint permissions: <code>Sites.FullControl.All</code> (application) or <code>AllSites.FullControl</code> (delegated)</li>
+</ul>
 <p>Schedules a rename of the SharePoint Online tenant domain name.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Start-PnPTenantRename -DomainName &lt;String&gt; -ScheduledDateTime &lt;DateTime&gt; [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm]
@@ -96,6 +101,7 @@
 <p>Schedules a tenant rename job to change the SharePoint Online domain name for the organization. For example, this can change <code>contoso.sharepoint.com</code> to <code>fabrikam.sharepoint.com</code>.</p>
 <p>The new domain name must already have been added successfully to Microsoft Entra ID. Specify only the domain prefix, without <code>.sharepoint.com</code> or <code>.onmicrosoft.com</code>.</p>
 <p>The scheduled date and time must be at least 24 hours in the future and no more than 30 days in the future. Tenant rename can take several hours to days depending on the number of SharePoint sites and OneDrive accounts in the tenant.</p>
+<p>Scheduling can take a few minutes. If SharePoint Online does not respond within 5 minutes, or within the timeout set in the <code>SharePointPnPHttpTimeout</code> environment variable when that is longer, the cmdlet stops with an error, but the rename may still have been scheduled. Run <code>Get-PnPTenantRenameStatus</code> to check before running this cmdlet again. Use <code>Stop-PnPTenantRename</code> to cancel a scheduled rename.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Start-PnPTenantRename -DomainName &quot;fabrikam&quot; -ScheduledDateTime &quot;2026-05-30T22:00:00&quot;
@@ -165,6 +171,8 @@ Accept wildcard characters: False
 <h3 id="systemstring">System.String</h3>
 <p>Returns tenant rename warning and scheduling messages from SharePoint Online.</p>
 <h2 id="related-links">RELATED LINKS</h2>
+<p><a href="Get-PnPTenantRenameStatus.html">Get-PnPTenantRenameStatus</a></p>
+<p><a href="Stop-PnPTenantRename.html">Stop-PnPTenantRename</a></p>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>

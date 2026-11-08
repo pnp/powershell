@@ -4597,6 +4597,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTenantRenameStatus.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTenantRenameStatus.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPTenantRestrictedSearchAllowedList.md",
       "output": {
         ".html": {
@@ -9291,6 +9301,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Stop-PnPSiteContentMove.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Stop-PnPTenantRename.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Stop-PnPTenantRename.html"
         }
       },
       "version": ""

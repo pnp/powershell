@@ -26,7 +26,7 @@ Get-PnPFolderItem [-Identity <FolderPipeBind>] [-ItemType <String>] [-ItemName <
 
 ### Folder via list pipebind
 ```powershell
-Get-PnPFolderItem [-List <ListPipeBind>] [-ItemType <String>] [-ItemName <String>] [-Includes <string[]>] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFolderItem [-List <ListPipeBind>] [-ItemType <String>] [-ItemName <String>] [-Includes <String[]>] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -114,7 +114,7 @@ Parameter Sets: Folder via url
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -123,12 +123,26 @@ A folder instance to the folder to retrieve
 
 ```yaml
 Type: FolderPipeBind
-Parameter Sets: Folder via pipebind
+Parameter Sets: Folder via folder pipebind
 
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Includes
+Optionally allows properties to be retrieved for the returned files and folders which are not included in the response by default. Start the property name with "File." or "Folder." followed by the property name of the file or folder, i.e. "File.VersionExpirationReport". Only available with -List.
+
+```yaml
+Type: String[]
+Parameter Sets: Folder via list pipebind
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -156,7 +170,7 @@ Accepted values: Folder, File, All
 
 Required: False
 Position: Named
-Default value: None
+Default value: All
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -171,20 +185,20 @@ Parameter Sets: Folder via list pipebind
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
 ### -Recursive
-A switch parameter to include contents of all subfolders in the specified folder
+A switch parameter to include contents of all subfolders in the specified folder. Not available with -List, which always retrieves the contents of all subfolders.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Folder via url, Folder via folder pipebind
 Aliases: Recurse
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

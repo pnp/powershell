@@ -91,13 +91,13 @@
 <p>List subfolders in a folder</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="folder-via-url">Folder via url</h3>
-<pre><code class="lang-powershell">Get-PnPFolderInFolder [-FolderSiteRelativeUrl &lt;String&gt;] [-ItemName &lt;String&gt;] [-ExcludeSystemFolders] [-Includes &lt;String[]&gt;] [-Recurse] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPFolderInFolder [-FolderSiteRelativeUrl &lt;String&gt;] [-ItemName &lt;String&gt;] [-ExcludeSystemFolders] [-Includes &lt;String[]&gt;] [-Recursive] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="folder-via-pipebind">Folder via pipebind</h3>
-<pre><code class="lang-powershell">Get-PnPFolderInFolder [-Identity &lt;FolderPipeBind&gt;] [-ItemName &lt;String&gt;] [-ExcludeSystemFolders] [-Includes &lt;String[]&gt;] [-Recurse] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPFolderInFolder [-Identity &lt;FolderPipeBind&gt;] [-ItemName &lt;String&gt;] [-ExcludeSystemFolders] [-Includes &lt;String[]&gt;] [-Recursive] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="folder-via-list-pipebind">Folder via list pipebind</h3>
-<pre><code class="lang-powershell">Get-PnPFolderInFolder [-List &lt;ListPipeBind&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Includes &lt;String[]&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPFolderInFolder [-List &lt;ListPipeBind&gt;] [-ItemName &lt;String&gt;] [-Includes &lt;String[]&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet allows listing of all the subfolders of a folder. It can optionally also list all folders in the underlying subfolders.</p>
@@ -150,7 +150,7 @@ Accept wildcard characters: False
 <h3 id="-excludesystemfolders">-ExcludeSystemFolders</h3>
 <p>When provided, all system folders will be excluded from the output. This parameter is not supported when not providing a folder through -Identity or -FolderSiteRelativeUrl.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Folder via url, Folder via pipebind
 
 Required: False
 Position: Named
@@ -166,7 +166,7 @@ Parameter Sets: Folder via url
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
@@ -177,7 +177,7 @@ Parameter Sets: Folder via pipebind
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-includes">-Includes</h3>
@@ -210,16 +210,17 @@ Parameter Sets: Folder via list pipebind
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-recurse">-Recurse</h3>
-<p>A switch parameter to include folders of all subfolders in the specified folder</p>
+<h3 id="-recursive">-Recursive</h3>
+<p>A switch parameter to include folders of all subfolders in the specified folder. Not available with -List, which always retrieves the folders of all subfolders.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Folder via url, Folder via pipebind
+Aliases: Recurse
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

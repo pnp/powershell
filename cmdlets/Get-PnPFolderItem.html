@@ -97,7 +97,7 @@
 <pre><code class="lang-powershell">Get-PnPFolderItem [-Identity &lt;FolderPipeBind&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Recursive] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="folder-via-list-pipebind">Folder via list pipebind</h3>
-<pre><code class="lang-powershell">Get-PnPFolderItem [-List &lt;ListPipeBind&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Includes &lt;string[]&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPFolderItem [-List &lt;ListPipeBind&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Includes &lt;String[]&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet allows listing of all the content in a folder. It can be used to list all files and folders in a folder and optionally all its subfolders.</p>
@@ -152,18 +152,29 @@ Parameter Sets: Folder via url
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>A folder instance to the folder to retrieve</p>
 <pre><code class="lang-yaml">Type: FolderPipeBind
-Parameter Sets: Folder via pipebind
+Parameter Sets: Folder via folder pipebind
 
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includes">-Includes</h3>
+<p>Optionally allows properties to be retrieved for the returned files and folders which are not included in the response by default. Start the property name with &quot;File.&quot; or &quot;Folder.&quot; followed by the property name of the file or folder, i.e. &quot;File.VersionExpirationReport&quot;. Only available with -List.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Folder via list pipebind
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-itemname">-ItemName</h3>
@@ -185,7 +196,7 @@ Accepted values: Folder, File, All
 
 Required: False
 Position: Named
-Default value: None
+Default value: All
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
@@ -197,17 +208,17 @@ Parameter Sets: Folder via list pipebind
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-recursive">-Recursive</h3>
-<p>A switch parameter to include contents of all subfolders in the specified folder</p>
+<p>A switch parameter to include contents of all subfolders in the specified folder. Not available with -List, which always retrieves the contents of all subfolders.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Folder via url, Folder via folder pipebind
 Aliases: Recurse
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
