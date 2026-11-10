@@ -66,7 +66,9 @@ namespace PnP.PowerShell.Commands.Lists
                 // Enumerate over the attachments and download them
                 foreach (var attachment in attachmentFilesCollection)
                 {
-                    string fileOut = System.IO.Path.Combine(Path, attachment.FileName);
+                    // Only the file name part of what the server returned is combined with the path, as Path.Combine silently discards the path it is
+                    // given when the second argument turns out to be rooted
+                    string fileOut = System.IO.Path.Combine(Path, System.IO.Path.GetFileName(attachment.FileName));
 
                     if (System.IO.File.Exists(fileOut) && !Force)
                     {

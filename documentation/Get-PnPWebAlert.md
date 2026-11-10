@@ -10,6 +10,11 @@ title: Get-PnPWebAlert
 # Get-PnPWebAlert
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: One of User.ReadBasic.All (delegated), User.Read.All (application) when using `-UserId`
+
 Returns alerts from the current web, optionally filtered by list and user.
 
 ## SYNTAX
@@ -127,7 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -UserId
-The user ID (GUID) to filter alerts by. Do not specify together with UserName.
+The user ID (GUID) to filter alerts by. The user principal name is resolved through Microsoft Graph, which requires User.ReadBasic.All (delegated) or User.Read.All (application). Do not specify together with UserName.
 
 ```yaml
 Type: Guid

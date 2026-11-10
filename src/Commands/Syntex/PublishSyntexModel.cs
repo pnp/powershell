@@ -1,16 +1,16 @@
-﻿using PnP.Core.Model.SharePoint;
-using PnP.Framework;
+﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
-using PnP.PowerShell.Commands.Model.Syntex;
+using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Syntex
 {
     [Cmdlet(VerbsData.Publish, "PnPSyntexModel")]
-    [OutputType(typeof(SyntexPublicationResult))]
-    public class PublishSyntexModel : PnPWebCmdlet
+    [Obsolete("It no longer does anything, as SharePoint Syntex is no longer supported, and will be removed in a future version.")]
+    [Attributes.ApiPermissionsNotRequired(Remarks = "This cmdlet performs no request.")]
+    public class PublishSyntexModel : BasePSCmdlet
     {
         const string ParameterSet_SINGLE = "Single";
         const string Parameterset_BATCHED = "Batched";
@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Syntex
         public ListPipeBind List;
 
         [Parameter(Mandatory = false)]
-        public MachineLearningPublicationViewOption PublicationViewOption = MachineLearningPublicationViewOption.NewViewAsDefault;
+        public string PublicationViewOption;
 
         [Parameter(Mandatory = true, ParameterSetName = Parameterset_BATCHED)]
         public string TargetSiteUrl;
@@ -41,76 +41,7 @@ namespace PnP.PowerShell.Commands.Syntex
         [ValidateNotNull]
         public PnPBatch Batch;
 
-        protected override void ExecuteCmdlet()
-        {
-            var ctx = Connection.PnPContext;
-
-            if (ctx.Web.IsSyntexContentCenter())
-            {
-                if (ParameterSpecified(nameof(Batch)))
-                {
-                    // Get the model we're publishing
-                    ISyntexModel modelToPublish = Model.GetSyntexModel(Batch, Connection);
-
-                    if (modelToPublish == null)
-                    {
-                        throw new PSArgumentException("Provide a valid model to publish");
-                    }
-
-                    modelToPublish.PublishModelBatch(Batch.Batch, new SyntexModelPublishOptions() 
-                    {
-                        TargetSiteUrl = TargetSiteUrl,
-                        TargetWebServerRelativeUrl = TargetWebServerRelativeUrl,
-                        TargetLibraryServerRelativeUrl = TargetLibraryServerRelativeUrl,
-                        ViewOption = PublicationViewOption
-                    });
-                }
-                else
-                {
-                    // Get the model we're publishing
-                    ISyntexModel modelToPublish = Model.GetSyntexModel(Connection);
-
-                    if (modelToPublish == null)
-                    {
-                        throw new PSArgumentException("Provide a valid model to publish");
-                    }
-
-                    // resolve the list 
-                    IList listToPublishModelTo = null;
-                    using (var listContext = Connection.CloneContext(ListWebUrl))
-                    {
-                        var pnpContext = PnPCoreSdk.Instance.GetPnPContext(listContext);
-                        listToPublishModelTo = List.GetList(pnpContext);
-                    }
-
-                    if (listToPublishModelTo == null)
-                    {
-                        throw new PSArgumentException("Provide a valid list to publish the Syntex model to");
-                    }
-
-                    var publishResult = modelToPublish.PublishModel(listToPublishModelTo, PublicationViewOption);
-                    if (publishResult != null)
-                    {
-                        WriteObject(new SyntexPublicationResult()
-                        {
-                            ErrorMessage = publishResult.ErrorMessage,
-                            StatusCode = publishResult.StatusCode,
-                            Publication = new Model.Syntex.SyntexModelPublication()
-                            {
-                                ModelUniqueId = publishResult.Publication.ModelUniqueId,
-                                TargetSiteUrl = publishResult.Publication.TargetSiteUrl,
-                                TargetWebServerRelativeUrl = publishResult.Publication.TargetWebServerRelativeUrl,
-                                TargetLibraryServerRelativeUrl = publishResult.Publication.TargetLibraryServerRelativeUrl,
-                                ViewOption = publishResult.Publication.ViewOption
-                            }
-                        });
-                    }
-                }
-            }
-            else
-            {
-                LogWarning("The connected site is not a Syntex Content Center site");
-            }
-        }
+        [Parameter(Mandatory = false, HelpMessage = "Ignored, as this cmdlet no longer performs any request. Kept for backwards compatibility with existing scripts.")]
+        public PnPConnection Connection = null;
     }
 }

@@ -6,5 +6,7 @@ namespace PnP.PowerShell.Commands.Enums
         None,
         EDU_Class,
         EDU_PLC,
+        EDU_Staff,
+        Standard
     }
 }

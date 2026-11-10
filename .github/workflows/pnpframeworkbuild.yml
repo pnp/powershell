@@ -21,6 +21,7 @@ permissions: read-all
 jobs:
   build_sign_package:
     name: Build, sign, and package PnP.Framework
+    if: github.repository_owner == 'pnp'
     runs-on: windows-latest
     environment:
       name: gh_releases
@@ -34,7 +35,7 @@ jobs:
 
       - name: Generate GitHub App token
         id: app-token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ secrets.AUTOMATION_APP_ID }}
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}

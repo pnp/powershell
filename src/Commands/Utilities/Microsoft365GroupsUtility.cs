@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Utilities
             public List<Exception> Errors;
         }
 
-        internal static GroupsResult GetGroups(ApiRequestHelper requestHelper, bool includeSiteUrl, bool includeOwners, string filter = null, bool includeSensitivityLabels = false)
+        internal static GroupsResult GetGroups(ApiRequestHelper requestHelper, bool includeSiteUrl, bool includeOwners, string filter = null, bool includeSensitivityLabels = false, bool includeExtensionAttributes = false)
         {
             var errors = new List<Exception>();
             var items = new List<Microsoft365Group>();
@@ -94,6 +94,22 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 }
             }
+            if (includeExtensionAttributes)
+            {
+                // Microsoft Graph only returns onPremisesExtensionAttributes when it is explicitly selected, which requires a second pass over the same set of groups.
+                var extensionAttributeResults = requestHelper.GetResultCollection<Microsoft365Group>($"{requestUrl}&$select=id,onPremisesExtensionAttributes", additionalHeaders: additionalHeaders);
+                if (extensionAttributeResults != null)
+                {
+                    var extensionAttributesByGroupId = extensionAttributeResults.Where(g => g.Id.HasValue).ToDictionary(g => g.Id.Value, g => g.OnPremisesExtensionAttributes);
+                    foreach (var item in items.Where(i => i.Id.HasValue))
+                    {
+                        if (extensionAttributesByGroupId.TryGetValue(item.Id.Value, out var extensionAttributes))
+                        {
+                            item.OnPremisesExtensionAttributes = extensionAttributes;
+                        }
+                    }
+                }
+            }
             // if(errors.Any())
             // {
             //     throw new AggregateException($"{errors.Count} error(s) occurred in a Graph batch request", errors);
@@ -101,7 +117,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return new GroupsResult { Groups = items, Errors = errors };
         }
 
-        internal static Microsoft365Group GetGroup(ApiRequestHelper requestHelper, Guid groupId, bool includeSiteUrl, bool includeOwners, bool detailed, bool includeSensitivityLabels)
+        internal static Microsoft365Group GetGroup(ApiRequestHelper requestHelper, Guid groupId, bool includeSiteUrl, bool includeOwners, bool detailed, bool includeSensitivityLabels, bool includeExtensionAttributes = false)
         {
             var results = requestHelper.Get<RestResultCollection<Microsoft365Group>>($"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and id eq '{groupId}'");
 
@@ -159,12 +175,17 @@ namespace PnP.PowerShell.Commands.Utilities
                     var sensitivityLabels = GetGroupSensitivityLabels(requestHelper, group.Id.Value);
                     group.AssignedLabels = sensitivityLabels.AssignedLabels;
                 }
+                if (includeExtensionAttributes)
+                {
+                    var extensionAttributes = GetGroupExtensionAttributes(requestHelper, group.Id.Value);
+                    group.OnPremisesExtensionAttributes = extensionAttributes?.OnPremisesExtensionAttributes;
+                }
                 return group;
             }
             return null;
         }
 
-        internal static Microsoft365Group GetGroup(ApiRequestHelper requestHelper, string displayName, bool includeSiteUrl, bool includeOwners, bool detailed, bool includeSensitivityLabels)
+        internal static Microsoft365Group GetGroup(ApiRequestHelper requestHelper, string displayName, bool includeSiteUrl, bool includeOwners, bool detailed, bool includeSensitivityLabels, bool includeExtensionAttributes = false)
         {
             displayName = WebUtility.UrlEncode(displayName.Replace("'", "''"));
             var results = requestHelper.Get<RestResultCollection<Microsoft365Group>>($"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and (displayName eq '{displayName}' or mailNickName eq '{displayName}')");
@@ -195,6 +216,11 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     var sensitivityLabels = GetGroupSensitivityLabels(requestHelper, group.Id.Value);
                     group.AssignedLabels = sensitivityLabels.AssignedLabels;
+                }
+                if (includeExtensionAttributes)
+                {
+                    var extensionAttributes = GetGroupExtensionAttributes(requestHelper, group.Id.Value);
+                    group.OnPremisesExtensionAttributes = extensionAttributes?.OnPremisesExtensionAttributes;
                 }
                 return group;
             }
@@ -426,6 +452,12 @@ namespace PnP.PowerShell.Commands.Utilities
         private static Microsoft365Group GetGroupSensitivityLabels(ApiRequestHelper requestHelper, Guid groupId)
         {
             var results = requestHelper.Get<Microsoft365Group>($"v1.0/groups/{groupId}?$select=assignedLabels");
+            return results;
+        }
+
+        private static Microsoft365Group GetGroupExtensionAttributes(ApiRequestHelper requestHelper, Guid groupId)
+        {
+            var results = requestHelper.Get<Microsoft365Group>($"v1.0/groups/{groupId}?$select=onPremisesExtensionAttributes");
             return results;
         }
 

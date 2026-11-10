@@ -12,9 +12,9 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Set, "PnPPlannerTask")]
-    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.ReadWrite")]
     [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite.All")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedPermissions("graph/Group.ReadWrite.All")]
     public class SetPlannerTask : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

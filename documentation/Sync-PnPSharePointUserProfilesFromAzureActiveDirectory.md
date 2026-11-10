@@ -13,7 +13,7 @@ title: Sync-PnPSharePointUserProfilesFromAzureActiveDirectory
 **Required Permissions**
 
 * SharePoint: Sites.FullControl.All, TermStore.ReadWrite.All, User.ReadWrite.All
-* Microsoft Graph: User.Read
+* Microsoft Graph: User.Read.All, only needed when `-Users` is not provided. Without `-Users` this cmdlet lists all users from Entra ID, which `User.Read` does not allow as that only grants access to the profile of the signed in user. When the users to synchronize are passed in through `-Users`, Microsoft Graph is not called at all.
 * ACS: No longer needed
   
 Synchronizes user profiles from Entra ID into the SharePoint Online User Profiles

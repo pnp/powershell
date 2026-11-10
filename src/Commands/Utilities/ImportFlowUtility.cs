@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text.Json.Nodes;
 using PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate;
 using System.Threading;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -68,7 +69,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 if (!uploadResponse.IsSuccessStatusCode)
                 {
                     var errorContent = uploadResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                    throw new Exception($"Upload failed: {uploadResponse.StatusCode} - {errorContent}");
+                    throw new PSInvalidOperationException($"Upload failed: {uploadResponse.StatusCode} - {errorContent}");
                 }
             }
         }
@@ -99,7 +100,6 @@ namespace PnP.PowerShell.Commands.Utilities
             int resolvedMaxRetries = maxRetries ?? DefaultImportOperationsMaxRetries;
             int resolvedDelayMs = delayMs ?? DefaultImportOperationsDelayMs;
             int retryCount = 0;
-            JsonElement importOperationsData = default;
 
             while (retryCount < resolvedMaxRetries)
             {
@@ -109,7 +109,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     accessToken,
                     accept: "application/json"
                 );
-                importOperationsData = JsonSerializer.Deserialize<JsonElement>(listImportOperations);
+                var importOperationsData = JsonSerializer.Deserialize<JsonElement>(listImportOperations);
 
                 if (importOperationsData.TryGetProperty("properties", out JsonElement propertiesElement))
                 {
@@ -127,18 +127,21 @@ namespace PnP.PowerShell.Commands.Utilities
 
                 retryCount++;
                 Log.Debug("ImportFlowUtility", $"Import operations not ready yet. Retry {retryCount}/{resolvedMaxRetries}...");
-                Thread.Sleep(resolvedDelayMs);
+                if (retryCount < resolvedMaxRetries)
+                {
+                    Thread.Sleep(resolvedDelayMs);
+                }
             }
 
-            Log.Debug("ImportFlowUtility", "Import operations retrieved (max retries reached)");
-            return importOperationsData;
+            Log.Debug("ImportFlowUtility", "Import operations did not become available within the allowed number of retries");
+            throw new PSInvalidOperationException($"Import failed: the import parameters were not available after {resolvedMaxRetries} attempts. Increase -RetryCount or -Delay and try again.");
         }
 
         public static JsonElement GetPropertiesElement(JsonElement importOperationsData)
         {
             if (!importOperationsData.TryGetProperty("properties", out JsonElement propertiesElement))
             {
-                throw new Exception("Import failed: 'properties' section missing.");
+                throw new PSInvalidOperationException("Import failed: 'properties' section missing.");
             }
             return propertiesElement;
         }
@@ -152,11 +155,11 @@ namespace PnP.PowerShell.Commands.Utilities
 
             if (!(hasStatus && hasPackageLink && hasDetails && hasResources))
             {
-                throw new Exception("Import failed: One or more required fields are missing in 'properties'. The API may still be processing the request.");
+                throw new PSInvalidOperationException("Import failed: One or more required fields are missing in 'properties'. The API may still be processing the request.");
             }
             if (!propertiesElement.TryGetProperty("resources", out JsonElement resourcesElement))
             {
-                throw new Exception("Import failed: 'resources' section missing in 'properties'.");
+                throw new PSInvalidOperationException("Import failed: 'resources' section missing in 'properties'.");
             }
         }
 
@@ -164,7 +167,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             if (!propertiesElement.TryGetProperty("resources", out JsonElement resourcesElement))
             {
-                throw new Exception("Import failed: 'resources' section missing in 'properties'.");
+                throw new PSInvalidOperationException("Import failed: 'resources' section missing in 'properties'.");
             }
             return JsonNode.Parse(resourcesElement.GetRawText()) as JsonObject;
         }
@@ -257,7 +260,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 else
                 {
                     Log.Warning("ImportFlowUtility", "Failed to retrieve the status from the response.");
-                    throw new Exception("Import status could not be determined.");
+                    throw new PSInvalidOperationException("Import status could not be determined.");
                 }
 
                 if (status == "Running")
@@ -274,7 +277,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             if (status == "Running")
             {
-                throw new Exception("Import failed to complete after 5 attempts.");
+                throw new PSInvalidOperationException("Import failed to complete after 5 attempts.");
             }
             return MapToImportFlowResult(importResultDataElement);
         }
@@ -295,13 +298,13 @@ namespace PnP.PowerShell.Commands.Utilities
                                 ? codeElement.GetString()
                                 : "Unknown error";
 
-                        throw new Exception($"Import failed: {errorMessage}");
+                        throw new PSInvalidOperationException($"Import failed: {errorMessage}");
                     }
                 }
-                throw new Exception("Import failed: No error details found in resources.");
+                throw new PSInvalidOperationException("Import failed: No error details found in resources.");
             }
 
-            throw new Exception("Import failed: Unknown error.");
+            throw new PSInvalidOperationException("Import failed: Unknown error.");
         }
 
 

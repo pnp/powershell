@@ -7,7 +7,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 {
     [Cmdlet(VerbsCommon.Get, "PnPPowerApp")]
-    [RequiredApiApplicationPermissions("https://management.azure.com/user_impersonation", "https://service.powerapps.com/user")]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation", "https://service.powerapps.com/user")]
+    [ApiNotAvailableUnderApplicationPermissions]
     [OutputType(typeof(Model.PowerPlatform.PowerApp.PowerApp))]
     public class GetPowerApp : PnPAzureManagementApiCmdlet
     {
@@ -40,7 +41,10 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             {
                 LogDebug($"Retrieving all PowerApps within environment '{environmentName}'");
 
-                var apps = PowerAppsRequestHelper.GetResultCollection<Model.PowerPlatform.PowerApp.PowerApp>($"{powerAppsUrl}/providers/Microsoft.PowerApps/apps?api-version=2016-11-01&$filter=environment eq '{environmentName}'");
+                var requestUrl = AsAdmin
+                    ? $"{powerAppsUrl}/providers/Microsoft.PowerApps/scopes/admin/environments/{environmentName}/apps?api-version=2016-11-01"
+                    : $"{powerAppsUrl}/providers/Microsoft.PowerApps/apps?api-version=2016-11-01&$filter=environment eq '{environmentName}'";
+                var apps = PowerAppsRequestHelper.GetResultCollection<Model.PowerPlatform.PowerApp.PowerApp>(requestUrl);
                 WriteObject(apps, true);
             }
         }

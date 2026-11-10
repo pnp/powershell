@@ -1,4 +1,5 @@
 ﻿using PnP.Framework.Graph;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using System;
 using System.Management.Automation;
@@ -8,7 +9,11 @@ namespace PnP.PowerShell.Commands.Graph
     [Cmdlet(VerbsCommon.New, "PnPGraphSubscription")]
     [OutputType(typeof(Framework.Graph.Model.Subscription))]
 
-    // Deliberately omitting the CmdletMicrosoftGraphApiPermission attribute as permissions vary largely by the subscription type being used. This means it will not work with an app-only token.
+    // Deliberately not declaring RequiredApi*Permissions attributes: Microsoft Graph requires read permissions on the resource being subscribed to, which differ per resource, so any fixed set declared here would be inaccurate.
+    [ApiPermissionsDependOnResource(
+        ParameterName = nameof(Resource),
+        Remarks = "Microsoft Graph requires read permissions on the resource being subscribed to, i.e. Mail.Read to subscribe to messages, Sites.Read.All to subscribe to a SharePoint list or Group.Read.All to subscribe to groups.",
+        DocumentationUrl = "https://learn.microsoft.com/graph/api/subscription-post-subscriptions?view=graph-rest-1.0#permissions")]
     public class NewGraphSubscription : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

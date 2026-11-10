@@ -9,7 +9,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Add-PnPPlannerRoster.ht
  
 # Add-PnPPlannerRoster
 
+**Required Permissions**
+
+  * Microsoft Graph API: Tasks.ReadWrite (delegated) or Tasks.ReadWrite.All (application)
+
 ## SYNOPSIS
+
 Creates a new Microsoft Planner Roster
 
 ## SYNTAX
@@ -20,6 +25,8 @@ Add-PnPPlannerRoster [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 Creates a new Microsoft Planner Roster
+
+The Microsoft Planner Roster APIs this cmdlet uses are only available through the beta endpoint of Microsoft Graph. Microsoft can change the permissions they require without notice, so verify the permissions above against Microsoft Learn if a call is unexpectedly denied.
 
 ## EXAMPLES
 

@@ -380,6 +380,16 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return GetResponseMessage(message);
         }
 
+        /// <summary>
+        /// Sends a PATCH request and returns the response without throwing on a failed status code. Use when the caller
+        /// needs to handle a specific failure itself, such as retrying an HTTP 412 caused by a stale ETag.
+        /// </summary>
+        public HttpResponseMessage PatchWithoutValidation(HttpContent content, string url, IDictionary<string, string> additionalHeaders = null)
+        {
+            var message = GetMessage(url, HttpMethod.Patch, content, additionalHeaders);
+            return GetResponseMessageWithoutValidation(message);
+        }
+
         #endregion
 
         #region POST
@@ -539,7 +549,12 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        public HttpResponseMessage GetResponseMessage(HttpRequestMessage message)
+        /// <summary>
+        /// Sends the request, retrying while the service reports throttling, and returns the response as it came back from the service.
+        /// Use this when the caller needs to act on a specific failure status code, such as an HTTP 412 caused by a stale ETag.
+        /// Use <see cref="GetResponseMessage"/> instead when any failure should surface as an exception.
+        /// </summary>
+        public HttpResponseMessage GetResponseMessageWithoutValidation(HttpRequestMessage message)
         {
             LogDebug($"Making {message.Method} call to {message.RequestUri}");
 
@@ -556,22 +571,24 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 response = Connection.HttpClient.SendAsync(CloneMessage(message)).GetAwaiter().GetResult();
             }
 
+            return response;
+        }
+
+        public HttpResponseMessage GetResponseMessage(HttpRequestMessage message)
+        {
+            var response = GetResponseMessageWithoutValidation(message);
+
             // Validate if the response was successful, if not throw an exception
             if (!response.IsSuccessStatusCode)
             {
                 LogDebug($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode}");
 
-                if (TryGetGraphException(response, out GraphException ex))
+                if (TryGetGraphException(response, out GraphException ex) && ex.Error != null)
                 {
-                    if (ex.Error != null)
-                    {
-                        throw new PSInvalidOperationException($"Call to Microsoft Graph URL {message.RequestUri} failed with status code {response.StatusCode}{(!string.IsNullOrEmpty(ex.Error.Message) ? $": {ex.Error.Message}" : "")}");
-                    }
+                    throw new PSInvalidOperationException($"Call to Microsoft Graph URL {message.RequestUri} failed with status code {response.StatusCode}{(!string.IsNullOrEmpty(ex.Error.Message) ? $": {ex.Error.Message}" : "")}");
                 }
-                else
-                {
-                    throw new PSInvalidOperationException($"Call to Microsoft Graph URL {message.RequestUri} failed with status code {response.StatusCode}");
-                }
+
+                throw new PSInvalidOperationException($"Call to Microsoft Graph URL {message.RequestUri} failed with status code {response.StatusCode}");
             }
             else
             {

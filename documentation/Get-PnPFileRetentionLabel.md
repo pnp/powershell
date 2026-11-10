@@ -38,7 +38,7 @@ Get-PnPFileRetentionLabel -Url "/sites/Marketing/Shared Documents/Report.pptx"
 ## PARAMETERS
 
 ### -Url
-Specifies the URL of the file for which to retrieve the retention label information.
+Specifies the URL of the file for which to retrieve the retention label information. Accepts a server relative or a site relative URL. A sequence such as `%20` in the URL is taken literally when a file of that name exists, and is decoded otherwise.
 
 ```yaml
 Type: String

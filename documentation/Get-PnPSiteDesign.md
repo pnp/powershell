@@ -15,17 +15,27 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteDesign.html
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Retrieve Site Designs that have been registered on the current tenant.
+Retrieve Site Designs that have been registered on the current tenant, or list the built-in Microsoft site designs.
 
 ## SYNTAX
+
+### Default (Default)
 
 ```powershell
 Get-PnPSiteDesign [[-Identity] <TenantSiteDesignPipeBind>] [-Connection <PnPConnection>] 
 ```
 
+### BuiltIn
+
+```powershell
+Get-PnPSiteDesign -BuiltIn [-Connection <PnPConnection>] 
+```
+
 ## DESCRIPTION
 
 Retrieve Site Designs that have been registered on the current tenant. When providing a name with -Identity, it returns all site designs with that name.
+
+Use the -BuiltIn switch to instead return the built-in Microsoft site designs (e.g. Event, Department, Human Resources) which are available from the SharePoint site template store.
 
 ## EXAMPLES
 
@@ -34,28 +44,56 @@ Retrieve Site Designs that have been registered on the current tenant. When prov
 Get-PnPSiteDesign
 ```
 
-Returns all registered site designs
+Returns all tenant-registered site designs.
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd
 ```
 
-Returns a specific registered site designs
+Returns a specific registered site design.
+
+### EXAMPLE 3
+```powershell
+Get-PnPSiteDesign -BuiltIn
+```
+
+Returns all built-in Microsoft site designs, including their Ids, titles, and matching template enum values.
+
+### EXAMPLE 4
+```powershell
+Get-PnPSiteDesign -BuiltIn | Where-Object { $_.Template -eq "Event" }
+```
+
+Returns the built-in Event site design.
 
 ## PARAMETERS
 
 ### -Identity
-If specified will retrieve the specified site design
+If specified, retrieves the site design with the given Id or name.
 
 ```yaml
 Type: TenantSiteDesignPipeBind
-Parameter Sets: (All)
+Parameter Sets: Default
 
 Required: False
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -BuiltIn
+When specified, returns the built-in Microsoft site designs from the SharePoint site template store (store 1) instead of tenant-registered designs.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: BuiltIn
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

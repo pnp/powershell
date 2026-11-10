@@ -10,6 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html
 # Send-PnPMail
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Mail.Send (delegated or application) for standard Microsoft Graph sends
+  * Microsoft Graph API: Mail.Send.Shared (delegated) when sending from a mailbox other than the signed-in user's mailbox. The signed-in user must also have Full Access and either Send As or Send on Behalf permissions for that mailbox in Exchange Online.
+
 Allows sending an e-mail
 
 ## SYNTAX
@@ -34,7 +40,7 @@ Send-PnPMail -To <String[]> -Subject <String> -Body <String> [-Cc <String[]>] [-
 
 ## DESCRIPTION
 
-Allows sending an e-mail through SharePoint Online or Microsoft Graph. Sending e-mail through Microsoft Graph requires the **Mail.Send** permission.
+Allows sending an e-mail through SharePoint Online or Microsoft Graph. Standard Microsoft Graph sends require the **Mail.Send** permission. Delegated callers sending from a mailbox other than the signed-in user's mailbox require **Mail.Send.Shared**. Because this cmdlet calls `/users/{From}/sendMail`, the signed-in user must also have Full Access and either Send As or Send on Behalf permissions for that mailbox in Exchange Online.
 
 In October 2025, [Microsoft will remove the API](https://support.microsoft.com/office/retirement-of-the-sharepoint-sendemail-api-b35bbab1-7d09-455f-8737-c2de63fe0821) which is being used to send e-mail through SharePoint. It is therefore highly recommended to use the Microsoft Graph option listed above instead.
 

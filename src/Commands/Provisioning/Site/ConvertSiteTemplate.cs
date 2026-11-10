@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Base;
 namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsData.Convert, "PnPSiteTemplate")]
-    public class ConvertSiteTemplate : BasePSCmdlet
+    public partial class ConvertSiteTemplate : BasePSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]
         public string Path;
@@ -25,8 +25,17 @@ namespace PnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Experimental;
+
         protected override void BeginProcessing()
         {
+            if (Experimental)
+            {
+                BeginProcessingExperimental();
+                return;
+            }
+
             if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);

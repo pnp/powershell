@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
@@ -46,7 +47,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var collection = requestHelper.Get<RestResultCollection<Model.Graph.Group>>( $"v1.0/groups?$filter=mailNickname eq '{_stringValue}'&$select=Id");
+                // A single quote closes the OData string literal, so it is doubled to keep a name such as O'Brien from breaking the filter, and the
+                // result is url encoded as it travels in the query string
+                var filterValue = UrlUtilities.UrlEncode(_stringValue.Replace("'", "''"));
+
+                var collection = requestHelper.Get<RestResultCollection<Model.Graph.Group>>( $"v1.0/groups?$filter=mailNickname eq '{filterValue}'&$select=Id");
                 if (collection != null && collection.Items.Any())
                 {
                     return collection.Items.First().Id;
@@ -54,7 +59,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 else
                 {
                     // find the team by displayName
-                    var byDisplayNamecollection = requestHelper.Get<RestResultCollection<Model.Graph.Group>>( $"v1.0/groups?$filter=displayName eq '{_stringValue}'&$select=Id");
+                    var byDisplayNamecollection = requestHelper.Get<RestResultCollection<Model.Graph.Group>>( $"v1.0/groups?$filter=displayName eq '{filterValue}'&$select=Id");
                     if (byDisplayNamecollection != null && byDisplayNamecollection.Items.Any())
                     {
                         if (byDisplayNamecollection.Items.Count() == 1)

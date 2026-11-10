@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Principals
             var site = Tenant.GetSiteByUrl(siteUrl);
             AdminContext.Load(site);
             AdminContext.ExecuteQueryRetry();
-            var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}");
+            var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}".Replace("'", "''"));
             var results = RestHelper.Get<RestResultCollection<ExportEntity>>(Connection.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/GetSPUserInformation(accountName=@a,siteId=@b)?@a='{normalizedUserName}'&@b='{site.Id}'", AdminContext, false);
             var record = new PSObject();
             foreach (var item in results.Items)

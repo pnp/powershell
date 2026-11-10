@@ -1,5 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.Auth;
 using PnP.PowerShell.Commands.Utilities.REST;
 
@@ -18,7 +19,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// The default audience to target PowerApps APIs
         /// </summary>
-        public string PowerAppDefaultAudience => "https://service.powerapps.com/.default";
+        public string PowerAppDefaultAudience => $"{PowerPlatformUtility.GetPowerAppsServiceEndpoint(Connection.AzureEnvironment)}/.default";
 
         /// <summary>
         /// Returns an Access Token for the Microsoft Office Management API, if available, otherwise NULL

@@ -10,7 +10,7 @@ title: Set-PnPManagedAppId
 # Set-PnPManagedAppId
 
 ## SYNOPSIS
-Sets/Adds an App Id for use with Connect-PnPOnline to the Windows Credential Manager or Mac OS Key Chain Entry. If you the PowerShell Module Microsoft.PowerShell.SecretsStore and Microsoft.PowerShell.SecretsManagement installed and you have defined a default vault without a password than that will be used to store the App Id.
+Sets or adds an App Id for use with Connect-PnPOnline in the Windows Credential Manager, macOS Keychain, Linux Secret Service, or a default vault configured through Microsoft.PowerShell.SecretManagement.
 
 ## SYNTAX
 
@@ -20,7 +20,7 @@ Set-PnPManagedAppId -Url <String> -AppId <String> [-Overwrite]
 ```
 
 ## DESCRIPTION
-Adds an App Id entry to the Windows Credential Manager or Mac OS Key Chain Entry. PnP PowerShell will check if an App Id is available when you connect using Connect-PnPOnline -Interactive. If it finds a matching URL it will use the associated App Id. You do not need to specify the -ClientId parameter then.
+Adds an App Id entry to the Windows Credential Manager, macOS Keychain, Linux Secret Service, or a default vault configured through Microsoft.PowerShell.SecretManagement. PnP PowerShell will check if an App Id is available when you connect using Connect-PnPOnline -Interactive. If it finds a matching URL it will use the associated App Id. You do not need to specify the -ClientId parameter then.
 
 If you add a Credential with a name of "https://yourtenant.sharepoint.com" it will find a match when you connect to "https://yourtenant.sharepoint.com" but also when you connect to "https://yourtenant.sharepoint.com/sites/demo1". Of course you can specify more granular entries, allow you to automatically provide App Ids for different URLs.
 
@@ -49,7 +49,7 @@ Accept wildcard characters: False
 ```
 
 ### -Overwrite
-Use parameter to overwrite existing Mac OS Key Chain Entry. Not required on Windows.
+Use parameter to overwrite existing macOS Keychain Entry. Not required on Windows or Linux.
 
 ```yaml
 Type: SwitchParameter

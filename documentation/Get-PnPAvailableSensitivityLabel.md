@@ -26,6 +26,8 @@ Get-PnPAvailableSensitivityLabel [-Identity <Guid>] [-User <EntraIDUserPipeBind>
 ## DESCRIPTION
 This cmdlet allows retrieval of the available Microsoft Purview sensitivity labels in the currently connected tenant. You can retrieve all the labels, a specific label or all the labels available to a specific user. When connected with a delegate token, it will return the Microsoft Purview sensitivity labels for the user you logged on with. When connecting with an application token, it will return all available Microsoft Purview sensitivity labels on the tenant.
 
+Microsoft Learn currently lists the Microsoft Graph beta sensitivity labels API used by this cmdlet as available only in the global service.
+
 For retrieval of the available classic Site Classification, use [Get-PnPAvailableSiteClassification](Get-PnPAvailableSiteClassification.md) instead.
 
 ## EXAMPLES
@@ -98,4 +100,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/informationprotectionpolicy-list-labels)
+[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/security-informationprotection-list-sensitivitylabels?view=graph-rest-beta)

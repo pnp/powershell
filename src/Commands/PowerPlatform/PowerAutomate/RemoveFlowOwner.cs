@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Base;
+﻿using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
@@ -8,6 +9,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
     [Cmdlet(VerbsCommon.Remove, "PnPFlowOwner")]
+    [RequiredApiApplicationPermissions("graph/User.Read.All")]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation", "graph/User.ReadBasic.All")]
     public class RemoveFlowOwner : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = false)]

@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
     [Cmdlet(VerbsData.Import, "PnPFlow")]
     [ApiNotAvailableUnderApplicationPermissions]
-    [RequiredApiDelegatedPermissions("azure/user_impersonation")]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation", "https://service.powerapps.com/user")]
     public class ImportFlow : PnPAzureManagementApiCmdlet
     {
         private const string ParameterSet_BYIDENTITY = "By Identity";
@@ -27,16 +27,20 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         public string Name;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
+        [ValidateRange(1, 100)]
         public int RetryCount;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
+        [ValidateRange(500, 300000)]
         public int Delay;
 
         protected override void ExecuteCmdlet()
         {
             var environmentName = GetEnvironmentName();
             string baseUrl = PowerPlatformUtility.GetBapEndpoint(Connection.AzureEnvironment);
-            var importStatus = ImportFlowUtility.ExecuteImportFlow(Connection.HttpClient, AccessToken, baseUrl, environmentName, PackagePath, Name, RetryCount, Delay);
+            int? retryCount = ParameterSpecified(nameof(RetryCount)) ? RetryCount : null;
+            int? delay = ParameterSpecified(nameof(Delay)) ? Delay : null;
+            var importStatus = ImportFlowUtility.ExecuteImportFlow(Connection.HttpClient, PowerAppsServiceAccessToken, baseUrl, environmentName, PackagePath, Name, retryCount, delay);
             WriteObject(importStatus);
         }
 

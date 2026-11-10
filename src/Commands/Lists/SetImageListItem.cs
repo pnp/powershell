@@ -138,8 +138,8 @@ namespace PnP.PowerShell.Commands.Lists
 
             ListItemHelper.UpdateListItem(item, UpdateType);
 
-            ClientContext.ExecuteQueryRetry();
             ClientContext.Load(item);
+            ClientContext.ExecuteQueryRetry();
             WriteObject(item);
         }
     }

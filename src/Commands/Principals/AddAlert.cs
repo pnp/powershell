@@ -10,6 +10,14 @@ namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Add, "PnPAlert")]
     [OutputType(typeof(AlertCreationInformation))]
+
+    // Creating an alert for yourself only needs the Create Alerts right, which the Read permission level already holds. Creating one for somebody else needs
+    // Manage Alerts, which only Full Control holds, so the rights needed follow from whether -User is provided.
+    [Attributes.ApiPermissionsDependOnResource(
+        ResourceType = Enums.ResourceTypeName.SharePoint,
+        ParameterName = nameof(User),
+        Remarks = "Creating an alert for the current user needs the Create Alerts right, which the Read permission level holds. Creating an alert for another user through -User needs the Manage Alerts right, which only Full Control holds.",
+        DocumentationUrl = "https://learn.microsoft.com/sharepoint/sites/user-permissions-and-permission-levels")]
     public class AddAlert : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

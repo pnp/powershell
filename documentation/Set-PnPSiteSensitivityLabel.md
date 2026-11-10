@@ -13,7 +13,8 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSiteSensitivityL
 
 **Required Permissions**
 
-  * Microsoft Graph API : Delegate token of Group.ReadWrite.All, Directory.ReadWrite.All (see description below)
+  * Microsoft Graph API: One of InformationProtectionPolicy.Read (delegated), InformationProtectionPolicy.Read.All (application) when resolving a label by name
+  * Microsoft Graph API: One of Group.ManageProtection.All (least privileged), Group.ReadWrite.All, Directory.ReadWrite.All (delegated) for a Microsoft 365 Group backed site
 
 Allows placing a Microsoft Purview sensitivity label on the current site
 
@@ -24,7 +25,9 @@ Set-PnPSiteSensitivityLabel -Identity <String> [-Connection <PnPConnection>] [-V
 ```
 
 ## DESCRIPTION
-This cmdlet allows for setting a Microsoft Purview sensitivity label on the currently connected to site. If the site has a Microsoft 365 Group behind it, the label will be placed on the Microsoft 365 Group and will require either Group.ReadWrite.All or Directory.ReadWrite.All delegate permissions on Microsoft Graph. This currently cannot be done using App Only permissions due to a limitation in Microsoft Graph. If it does not have a Microsoft 365 Group behind it, it will set the label on the SharePoint Online site and will not require Microsoft Graph permissions and will work with both delegate as well as app only logins. If you're looking to set a sensitivity label on a Microsoft 365 Group backed site in an App Only context, you can use [Set-PnPTenantSite -SensitivityLabel](Set-PnPTenantSite.md#-sensitivitylabel) instead to do so.  
+This cmdlet allows for setting a Microsoft Purview sensitivity label on the currently connected to site. When `Identity` is a label name, the cmdlet resolves it through Microsoft Graph and requires InformationProtectionPolicy.Read (delegated) or InformationProtectionPolicy.Read.All (application). Microsoft Learn currently lists the label API as available only in the global service, so provide a label Id in sovereign clouds.
+
+If the site has a Microsoft 365 Group behind it, the label will also be placed on the Microsoft 365 Group and requires Group.ManageProtection.All (least privileged), Group.ReadWrite.All, or Directory.ReadWrite.All delegated permission on Microsoft Graph. The signed-in user must also hold a [supported administrator role](https://learn.microsoft.com/purview/get-started-with-sensitivity-labels#permissions-required-to-create-and-manage-sensitivity-labels). This currently cannot be done using application permissions due to a limitation in Microsoft Graph. If it does not have a Microsoft 365 Group behind it, the cmdlet sets the label on the SharePoint Online site and supports both delegated and app-only logins. If you're looking to set a sensitivity label on a Microsoft 365 Group backed site in an app-only context, you can use [Set-PnPTenantSite -SensitivityLabel](Set-PnPTenantSite.md#-sensitivitylabel) instead.
 
 It may take up to a few minutes for a change to the sensitivity label to become visible in SharePoint Online and Entra ID / Azure Active Directory.  
 

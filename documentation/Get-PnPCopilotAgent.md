@@ -1,7 +1,7 @@
 ---
 document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-HelpUri: ''
+HelpUri: 'https://pnp.github.io/powershell/cmdlets/Get-PnPCopilotAgent.html'
 Locale: en-US
 Module Name: PnP.PowerShell
 ms.date: 12/06/2024

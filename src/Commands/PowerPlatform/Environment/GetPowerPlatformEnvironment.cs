@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Base;
+﻿using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using System.Linq;
 using PnP.PowerShell.Commands.Base.PipeBinds;
@@ -7,6 +8,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 {
     [Cmdlet(VerbsCommon.Get, "PnPPowerPlatformEnvironment", DefaultParameterSetName = ParameterSet_DEFAULT)]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation")]
     public class GetPowerPlatformEnvironment : PnPAzureManagementApiCmdlet
     {
         private const string ParameterSet_BYIDENTITY = "By Identity";

@@ -7,9 +7,9 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPlannerPlan", SupportsShouldProcess = true)]
-    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiDelegatedPermissions("graph/Tasks.ReadWrite")]
     [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite.All")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedPermissions("graph/Group.ReadWrite.All")]
     public class RemovePlannerPlan : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

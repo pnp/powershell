@@ -1,16 +1,16 @@
 ---
 Module Name: PnP.PowerShell
-title: Update-PnPVivaConnectionsDashboardACE
+title: Set-PnPVivaConnectionsDashboardACE
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Update-PnPVivaConnectionsDashboardACE.html
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPVivaConnectionsDashboardACE.html
 ---
  
 # Set-PnPVivaConnectionsDashboardACE
 
 ## SYNOPSIS
-Update the Adaptive card extension in the Viva Connections dashboard page. This requires that you connect to a SharePoint Home site and have configured the Viva Connections page.
+Update the Adaptive card extension in the Viva Connections dashboard page. This requires that you connect to a SharePoint Team site or Communication site and have configured the Viva Connections page.
 
 ## SYNTAX
 

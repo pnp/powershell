@@ -16,17 +16,17 @@ List subfolders in a folder
 
 ### Folder via url
 ```powershell
-Get-PnPFolderInFolder [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recurse] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFolderInFolder [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ### Folder via pipebind
 ```powershell
-Get-PnPFolderInFolder [-Identity <FolderPipeBind>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recurse] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFolderInFolder [-Identity <FolderPipeBind>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ### Folder via list pipebind
 ```powershell
-Get-PnPFolderInFolder [-List <ListPipeBind>] [-ItemType <String>] [-ItemName <String>] [-Includes <String[]>] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFolderInFolder [-List <ListPipeBind>] [-ItemName <String>] [-Includes <String[]>] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -86,6 +86,13 @@ Get-PnPFolderInFolder -FolderSiteRelativeUrl "SitePages" -Recurse
 
 Returns all folders, including those located in any subfolders, in the folder SitePages which is located in the root of the current web
 
+### EXAMPLE 8
+```powershell
+Get-PnPFolderInFolder -FolderSiteRelativeUrl "Shared Documents" -Includes ParentFolder
+```
+
+Returns all folders in the 'Shared Documents' folder with their ParentFolder property populated. Note that requesting additional properties this way increases the amount of data retrieved for every folder, so combining it with -Recurse on a large folder structure can become slow.
+
 ## PARAMETERS
 
 ### -Connection
@@ -107,7 +114,7 @@ When provided, all system folders will be excluded from the output. This paramet
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Folder via url, Folder via pipebind
 
 Required: False
 Position: Named
@@ -126,7 +133,7 @@ Parameter Sets: Folder via url
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -140,12 +147,12 @@ Parameter Sets: Folder via pipebind
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
 ### -Includes
-Optionally allows properties to be retrieved for the returned files which are not included in the response by default
+Optionally allows properties to be retrieved for the returned folders which are not included in the response by default, i.e. ParentFolder or Properties. Requesting additional properties increases the amount of data retrieved for every folder, which is especially noticeable when combined with -Recurse.
 
 ```yaml
 Type: String[]
@@ -182,19 +189,20 @@ Parameter Sets: Folder via list pipebind
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Recurse
-A switch parameter to include folders of all subfolders in the specified folder
+### -Recursive
+A switch parameter to include folders of all subfolders in the specified folder. Not available with -List, which always retrieves the folders of all subfolders.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Folder via url, Folder via pipebind
+Aliases: Recurse
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -31,12 +31,6 @@ namespace PnP.PowerShell.Commands.Base
                 Connection = PnPConnection.Current;
             }
 
-            // Track the execution of the cmdlet in Azure Application Insights
-            if (Connection != null && Connection.ApplicationInsights != null)
-            {
-                Connection.ApplicationInsights.TrackEvent(MyInvocation.MyCommand.Name);
-            }
-
             // Check if we should ensure that we are connected
             if (skipConnectedValidation) return;
 

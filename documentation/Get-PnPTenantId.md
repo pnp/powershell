@@ -80,7 +80,7 @@ The Azure environment to use for the tenant lookup. It defaults to 'Production' 
 ```yaml
 Type: AzureEnvironment
 Parameter Sets: By URL
-Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD
+Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD, BleuCloud, DelosCloud, GovSGCloud
 
 Required: False
 Position: Named

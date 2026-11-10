@@ -15,7 +15,9 @@ title: Remove-PnPPowerAppPermission
 
 * Azure: management.azure.com  
 * PowerApps: service.powerapps.com
-* Microsoft Graph: User.Read.All, Group.Read.All
+* Microsoft Graph with `-User`: User.ReadBasic.All (delegated) or User.Read.All (application)
+* Microsoft Graph with `-Group`: Group.Read.All
+* Microsoft Graph with `-Tenant`: no Microsoft Graph permission required
 
 Removes user, group and (Everyone in organization) permissions from a Power App
 

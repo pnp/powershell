@@ -242,8 +242,8 @@ namespace PnP.PowerShell.Commands.Lists
                 }
             }
 
-            ClientContext.ExecuteQueryRetry();
             ClientContext.Load(item);
+            ClientContext.ExecuteQueryRetry();
             WriteObject(item);
         }
     }

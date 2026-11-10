@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Add-PnPVivaConnectionsD
 # Add-PnPVivaConnectionsDashboardACE
 
 ## SYNOPSIS
-Add an Adaptive card extension in the Viva connections dashboard page. This requires that you connect to a SharePoint Home site and have configured the Viva connections page.
+Add an Adaptive card extension in the Viva connections dashboard page. This requires that you connect to a SharePoint Team site or Communication site and have configured the Viva connections page.
 
 ## SYNTAX
 
@@ -20,7 +20,7 @@ Add-PnPVivaConnectionsDashboardACE [-Identity <DefaultACE>] [-Title <string>] [-
 
 ## DESCRIPTION
 
-Allows to add a new an Adaptive card extension in the Viva Home dashboard page. Before running the command it is required you are connect to a SharePoint Home site and have configured the Viva connections page. 
+Allows you to add a new Adaptive card extension in the Viva Connections dashboard page. Before running the command, you must be connected to a SharePoint Team site or Communication site and have configured the Viva connections page.
 
 ## EXAMPLES
 

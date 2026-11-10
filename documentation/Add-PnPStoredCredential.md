@@ -10,7 +10,7 @@ title: Add-PnPStoredCredential
 # Add-PnPStoredCredential
 
 ## SYNOPSIS
-Adds a credential to the Windows Credential Manager or Mac OS Key Chain Entry.
+Adds a credential to a secret vault, the Windows Credential Manager, the macOS Keychain or the Linux Secret Service.
 
 ## SYNTAX
 
@@ -20,7 +20,9 @@ Add-PnPStoredCredential -Name <String> -Username <String> [-Password <SecureStri
 ```
 
 ## DESCRIPTION
-Adds an entry to the Windows Credential Manager or Mac OS Key Chain Entry. If you add an entry in the form of the URL of your tenant/server PnP PowerShell will check if that entry is available when you connect using Connect-PnPOnline. If it finds a matching URL it will use the associated credentials.
+Adds an entry to the credential store of your platform. If a default vault has been registered through `Microsoft.PowerShell.SecretManagement`, the credential is stored in that vault. If not, it is stored in the credential store native to the operating system: the Windows Credential Manager on Windows, the Keychain on macOS and the Secret Service on Linux. Storing a credential on Linux without a default vault requires a Secret Service provider such as GNOME Keyring or KWallet to be installed and unlocked; if none is available, the cmdlet will report that it could not store the credential rather than silently discarding it. See [Credential Management](https://pnp.github.io/powershell/articles/credentialmanagement.html) for the details.
+
+If you add an entry in the form of the URL of your tenant/server PnP PowerShell will check if that entry is available when you connect using Connect-PnPOnline. If it finds a matching URL it will use the associated credentials.
 
 If you add a Credential with a name of "https://yourtenant.sharepoint.com" it will find a match when you connect to "https://yourtenant.sharepoint.com" but also when you connect to "https://yourtenant.sharepoint.com/sites/demo1". Of course you can specify more granular entries, allow you to automatically provide credentials for different URLs.
 
@@ -65,7 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -Overwrite
-Use parameter to overwrite existing Mac OS Key Chain Entry. Not required on Windows.
+Use parameter to overwrite an existing macOS Keychain entry. Not required on Windows or Linux.
 
 ```yaml
 Type: SwitchParameter

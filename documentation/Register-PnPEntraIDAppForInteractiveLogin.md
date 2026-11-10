@@ -22,6 +22,8 @@ Register-PnPEntraIDAppForInteractiveLogin -ApplicationName <String>
                                        [-GraphDelegatePermissions <Permission[]>]
                                        [-SharePointApplicationPermissions <Permission[]>]
                                        [-SharePointDelegatePermissions <Permission[]>]
+                                       [-O365ManagementApplicationPermissions <Permission[]>]
+                                       [-O365ManagementDelegatePermissions <Permission[]>]
                                        [-LogoFilePath <string>]
                                        [-MicrosoftGraphEndPoint <string>]
                                        [-EntraIDLoginEndPoint <string>]
@@ -37,6 +39,8 @@ Register-PnPEntraIDAppForInteractiveLogin -ApplicationName <String>
                                        [-GraphDelegatePermissions <Permission[]>]
                                        [-SharePointApplicationPermissions <Permission[]>]
                                        [-SharePointDelegatePermissions <Permission[]>]
+                                       [-O365ManagementApplicationPermissions <Permission[]>]
+                                       [-O365ManagementDelegatePermissions <Permission[]>]
                                        [-LogoFilePath <string>]
                                        [-SignInAudience <EntraIDSignInAudience>]
 ```
@@ -127,7 +131,31 @@ Specify which Microsoft SharePoint Delegate permissions to request.
 
 ```yaml
 Type: Permission[]
-Parameter Sets: Generate Certificate
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -O365ManagementApplicationPermissions
+Specify which Office 365 Management APIs Application permissions to request.
+
+```yaml
+Type: Permission[]
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -O365ManagementDelegatePermissions
+Specify which Office 365 Management APIs Delegate permissions to request.
+
+```yaml
+Type: Permission[]
+Parameter Sets: (All)
 
 Required: False
 Position: 0
@@ -153,7 +181,7 @@ The Azure environment to use for authentication, the defaults to 'Production' wh
 Type: AzureEnvironment
 Parameter Sets: (All)
 Aliases:
-Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD, Custom
+Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD, BleuCloud, DelosCloud, GovSGCloud, Custom
 
 Required: False
 Position: Named

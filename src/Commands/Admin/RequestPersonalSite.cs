@@ -1,10 +1,13 @@
 ﻿using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsLifecycle.Request, "PnPPersonalSite")]
+    [RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl", "sharepoint/User.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("sharepoint/Sites.FullControl.All", "sharepoint/User.ReadWrite.All")]
     public class RequestPersonalSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -27,7 +30,7 @@ namespace PnP.PowerShell.Commands.Admin
             var operation = this.Tenant.RequestPersonalSites(UserEmails);
             AdminContext.Load(operation);
             AdminContext.ExecuteQueryRetry();
-            if (NoWait.IsPresent)
+            if (!NoWait.ToBool())
             {
                 PollOperation(operation);
             }

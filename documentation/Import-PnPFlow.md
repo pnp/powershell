@@ -14,6 +14,7 @@ title: Import-PnPFlow
 **Required Permissions**
 
 * Azure: management.azure.com
+* PowerApps: service.powerapps.com
 
 Imports a Microsoft Power Automate Flow.
 
@@ -28,7 +29,7 @@ Import-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] [-PackagePath <
 ## DESCRIPTION
 This cmdlet imports a Microsoft Power Automate Flow from a ZIP package. At present, only flows originating from the same tenant are supported.
 
-Many times Importing a Microsoft Power Automate Flow will not be possible due to various reasons such as connections having gone stale, SharePoint sites referenced no longer existing or other configuration errors in the Flow. To display these errors when trying to Import a Flow, provide the -Verbose flag with your Import request. If not provided, these errors will silently be ignored.
+Importing a Flow might fail due to stale connections, SharePoint sites that no longer exist, or other configuration errors in the Flow. A failed import raises a terminating error describing the cause, so the cmdlet no longer completes silently. Use `-Verbose` to display progress details while the package is processed.
 
 ## EXAMPLES
 
@@ -58,7 +59,7 @@ This will Import a flow to the default environment. The flow will be imported as
 Import-PnPFlow -PackagePath C:\Temp\Export-ReEnableFlow_20250414140636.zip -Name NewFlowName -Verbose
 ```
 
-This will Import a flow to the default environment. The flow will be imported as a zip package. The name of the flow will be set to NewFlowName. With the -Verbose flag, any errors that occur during the import process will be displayed in the console.
+This will Import a flow to the default environment. The flow will be imported as a zip package. The name of the flow will be set to NewFlowName. The `-Verbose` flag displays progress details during the import.
 
 ### Example 5
 ```powershell
@@ -85,6 +86,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Delay
+Delay in milliseconds between attempts to poll for the import parameters. Accepts a value between 500 and 300000. If omitted, the cmdlet uses its default delay policy which is 5000ms.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Environment
 The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
@@ -97,21 +113,6 @@ Required: False
 Position: Named
 Default value: The default environment
 Accept pipeline input: True
-Accept wildcard characters: False
-```
-
-### -PackagePath
-Local path of the .zip package to import. The path must be a valid path on the local file system.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: true
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -130,23 +131,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -RetryCount
-Number of times to poll for import operations to become available. If omitted, the cmdlet uses its default retry policy which is 10.
+### -PackagePath
+Local path of the .zip package to import. The path must be a valid path on the local file system.
 
 ```yaml
-Type: Int32
+Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: true
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Delay
-Delay in milliseconds between polling attempts. If omitted, the cmdlet uses its default delay policy which is 5000ms.
+### -RetryCount
+Number of times to poll for the import parameters to become available. Accepts a value between 1 and 100. If omitted, the cmdlet uses its default retry policy which is 10.
 
 ```yaml
 Type: Int32

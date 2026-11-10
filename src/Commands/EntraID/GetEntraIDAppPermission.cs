@@ -39,23 +39,30 @@ namespace PnP.PowerShell.Commands.EntraID
             }
         }
 
+        /// <summary>
+        /// The resources whose permissions can be reported by name, being the ones whose available permissions ship with the module.
+        /// </summary>
+        private static readonly (string ResourceAppId, string PropertyName)[] resources = new[]
+        {
+            (PermissionScopes.ResourceAppId_Graph, "MicrosoftGraph"),
+            (PermissionScopes.ResourceAppId_SPO, "SharePoint"),
+            (PermissionScopes.ResourceAppID_O365Management, "Office365Management")
+        };
+
+        private readonly PermissionScopes permissionScopes = new PermissionScopes();
+
         private PSObject ConvertToPSObject(AzureADApp app)
         {
-            var permissionScopes = new PermissionScopes();
             var o = new PSObject();
             o.Properties.Add(new PSNoteProperty("AppId", app.AppId));
             o.Properties.Add(new PSNoteProperty("DisplayName", app.DisplayName));
-            var graphPermissions = app.RequiredResourceAccess.FirstOrDefault(p => p.Id == PermissionScopes.ResourceAppId_Graph);
-            if (graphPermissions != null)
+            foreach (var (resourceAppId, propertyName) in resources)
             {
-                var p = graphPermissions.ResourceAccess.Select(p1 => permissionScopes.GetIdentifier(PermissionScopes.ResourceAppId_Graph, p1.Id, p1.Type)).ToArray();
-                o.Properties.Add(new PSNoteProperty("MicrosoftGraph", p));
-            }
-            var sharePointPermissions = app.RequiredResourceAccess.FirstOrDefault(p => p.Id == PermissionScopes.ResourceAppId_SPO);
-            if (sharePointPermissions != null)
-            {
-                var p = sharePointPermissions.ResourceAccess.Select(p2 => permissionScopes.GetIdentifier(PermissionScopes.ResourceAppId_SPO, p2.Id, p2.Type)).ToArray();
-                o.Properties.Add(new PSNoteProperty("SharePoint", p));
+                var resourcePermissions = app.RequiredResourceAccess?.FirstOrDefault(p => p.Id == resourceAppId);
+                if (resourcePermissions != null)
+                {
+                    o.Properties.Add(new PSNoteProperty(propertyName, resourcePermissions.ResourceAccess.Select(p => permissionScopes.GetIdentifier(resourceAppId, p.Id, p.Type)).ToArray()));
+                }
             }
             return o;
         }

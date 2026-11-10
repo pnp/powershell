@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsApp.html
 
 **Required Permissions**
 
-  * Microsoft Graph API : One of AppCatalog.Read.All, Directory.ReadWrite.All
+  * Microsoft Graph API: One of AppCatalog.Submit, AppCatalog.Read.All, AppCatalog.ReadWrite.All, Directory.Read.All, or Directory.ReadWrite.All (delegated), or one of AppCatalog.Read.All or AppCatalog.ReadWrite.All (application)
 
 Gets one Microsoft Teams App or a list of all apps.
 

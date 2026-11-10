@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 // Namespace modified for PnP PowerShell
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
@@ -98,6 +99,103 @@ namespace Microsoft.Identity.Client.Extensions.Msal
                 if (resultPtr != IntPtr.Zero)
                     CFRelease(resultPtr);
             }
+        }
+
+        /// <summary>Returns the service name of every generic password item. Only attributes are requested, never the data, so this
+        /// does not prompt the user for access to the secrets it enumerates.</summary>
+        public List<string> EnumerateServiceNames()
+        {
+            IntPtr query = IntPtr.Zero;
+            IntPtr resultPtr = IntPtr.Zero;
+
+            var serviceNames = new List<string>();
+
+            try
+            {
+                query = CFDictionaryCreateMutable(
+                    IntPtr.Zero,
+                    0,
+                    IntPtr.Zero, IntPtr.Zero);
+
+                CFDictionaryAddValue(query, kSecClass, kSecClassGenericPassword);
+                CFDictionaryAddValue(query, kSecMatchLimit, GetMatchLimitAll());
+                CFDictionaryAddValue(query, kSecReturnAttributes, kCFBooleanTrue);
+
+                int searchResult = SecItemCopyMatching(query, out resultPtr);
+
+                switch (searchResult)
+                {
+                case OK:
+                    break;
+
+                case ErrorSecItemNotFound:
+                    return serviceNames;
+
+                default:
+                    ThrowIfError(searchResult);
+                    return serviceNames;
+                }
+
+                if (resultPtr == IntPtr.Zero)
+                {
+                    return serviceNames;
+                }
+
+                int typeId = CFGetTypeID(resultPtr);
+                if (typeId == CFArrayGetTypeID())
+                {
+                    long count = CFArrayGetCount(resultPtr);
+                    for (long index = 0; index < count; index++)
+                    {
+                        IntPtr item = CFArrayGetValueAtIndex(resultPtr, index);
+                        if (item != IntPtr.Zero)
+                        {
+                            AddServiceName(serviceNames, item);
+                        }
+                    }
+                }
+                else if (typeId == CFDictionaryGetTypeID())
+                {
+                    // A keychain holding a single generic password hands back that item rather than an array of one
+                    AddServiceName(serviceNames, resultPtr);
+                }
+                else
+                {
+                    // Anything else means the query did not return what was asked for. Say so rather than report an empty keychain
+                    throw new InteropException($"Unexpected keychain search result type CFTypeID: {typeId}.", -1);
+                }
+
+                return serviceNames;
+            }
+            finally
+            {
+                if (query != IntPtr.Zero)
+                    CFRelease(query);
+                if (resultPtr != IntPtr.Zero)
+                    CFRelease(resultPtr);
+            }
+        }
+
+        private void AddServiceName(List<string> serviceNames, IntPtr attributes)
+        {
+            string service = GetStringAttribute(attributes, kSecAttrService);
+            if (string.IsNullOrWhiteSpace(service))
+            {
+                return;
+            }
+
+            // Undo the prefix CreateServiceName applies when this keychain is scoped to a namespace
+            if (!string.IsNullOrWhiteSpace(_namespace))
+            {
+                string prefix = $"{_namespace}:";
+                if (!service.StartsWith(prefix, StringComparison.Ordinal))
+                {
+                    return;
+                }
+                service = service.Substring(prefix.Length);
+            }
+
+            serviceNames.Add(service);
         }
 
         public void AddOrUpdate(string service, string account, byte[] secretBytes)
@@ -277,12 +375,13 @@ namespace Microsoft.Identity.Client.Extensions.Msal
                 {
                     if (CFGetTypeID(value) == CFStringGetTypeID())
                     {
-                        int stringLength = (int)CFStringGetLength(value);
-                        int bufferSize = stringLength + 1;
-                        buffer = Marshal.AllocHGlobal(bufferSize);
+                        // UTF-8 takes more than one byte per UTF-16 unit, so the buffer is sized for the encoding rather than
+                        // the length. Sizing it by the length makes CFStringGetCString fail on any non-ASCII name
+                        long bufferSize = CFStringGetMaximumSizeForEncoding(CFStringGetLength(value), CFStringEncoding.kCFStringEncodingUTF8) + 1;
+                        buffer = Marshal.AllocHGlobal((int)bufferSize);
                         if (CFStringGetCString(value, buffer, bufferSize, CFStringEncoding.kCFStringEncodingUTF8))
                         {
-                            return Marshal.PtrToStringAuto(buffer, stringLength);
+                            return Marshal.PtrToStringUTF8(buffer);
                         }
                     }
 

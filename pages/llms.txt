@@ -1,0 +1,45 @@
+# PnP PowerShell
+
+> Cross-platform PowerShell module for working with Microsoft 365 services, including SharePoint Online, Microsoft Teams, Microsoft Planner, Microsoft Power Platform, Microsoft Entra, Microsoft Purview, and Microsoft Search.
+
+This documentation site is the canonical public reference for installing, authenticating, and using PnP PowerShell cmdlets.
+
+## Start here
+
+- [Overview](https://pnp.github.io/powershell/): What PnP PowerShell is and how to start.
+- [Install PnP PowerShell](https://pnp.github.io/powershell/articles/installation.html): Install, update, and uninstall the module.
+- [Register an Entra ID application](https://pnp.github.io/powershell/articles/registerapplication.html): Create the required app registration for authentication.
+- [Authentication](https://pnp.github.io/powershell/articles/authentication.html): Choose an interactive, device login, certificate, managed identity, or other connection method.
+- [Determine permissions](https://pnp.github.io/powershell/articles/determinepermissions.html): Understand required delegated and application permissions.
+
+## Cmdlet reference
+
+- [Cmdlet index](https://pnp.github.io/powershell/cmdlets/index.html): Full cmdlet list.
+- [Connect-PnPOnline](https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html): Create a connection used by other PnP PowerShell cmdlets.
+- [Disconnect-PnPOnline](https://pnp.github.io/powershell/cmdlets/Disconnect-PnPOnline.html): Disconnect active sessions.
+- [Get-PnPConnection](https://pnp.github.io/powershell/cmdlets/Get-PnPConnection.html): Inspect the current connection.
+- [Register-PnPEntraIDApp](https://pnp.github.io/powershell/cmdlets/Register-PnPEntraIDApp.html): Register an Entra ID application for app-only access.
+- [Register-PnPEntraIDAppForInteractiveLogin](https://pnp.github.io/powershell/cmdlets/Register-PnPEntraIDAppForInteractiveLogin.html): Register an Entra ID application for interactive login.
+
+## Common scenarios
+
+- [Default Client ID](https://pnp.github.io/powershell/articles/defaultclientid.html): Configure a default app client ID for scripts.
+- [Environment variables](https://pnp.github.io/powershell/articles/environmentvariables.html): Configure module behavior with environment variables.
+- [Azure Functions](https://pnp.github.io/powershell/articles/azurefunctions.html): Use PnP PowerShell in Azure Functions.
+- [Azure Automation Runbooks](https://pnp.github.io/powershell/articles/azureautomationrunbook.html): Use PnP PowerShell in runbooks.
+- [Batching](https://pnp.github.io/powershell/articles/batching.html): Batch supported operations.
+- [Persisted logins](https://pnp.github.io/powershell/articles/persistedlogin.html): Work with persisted authentication.
+
+## Project and contribution docs
+
+- [Getting started contributing](https://pnp.github.io/powershell/articles/gettingstartedcontributing.html): Prepare a local development environment.
+- [Building the documentation site locally](https://pnp.github.io/powershell/articles/buildingdocumentation.html): Build and preview this documentation site.
+- [GitHub repository](https://github.com/pnp/powershell): Source code, issues, discussions, and pull requests.
+- [Changelog](https://github.com/pnp/powershell/blob/dev/CHANGELOG.md): Recent changes.
+
+## Notes for AI agents
+
+- Prefer pages under `https://pnp.github.io/powershell/` for current public documentation.
+- Use cmdlet reference pages for syntax, parameters, examples, outputs, and required permissions.
+- Most scripts need `Connect-PnPOnline` first. Authentication now requires using your own Entra ID application registration for common interactive flows.
+- Respect security guidance in the authentication and permissions articles. Do not suggest hardcoded credentials, broad permissions, or legacy authentication patterns when safer documented alternatives exist.

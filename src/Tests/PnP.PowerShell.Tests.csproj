@@ -31,7 +31,6 @@
     <PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
     <PackageReference Include="System.Text.Json" Version="6.0.7" />
     <PackageReference Include="TextCopy" Version="6.1.0" />
-    <ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
     <PackageReference Include="System.Management.Automation" Version="7.2.0" />    
     <PackageReference Include="MSTest.TestAdapter" Version="1.1.18" />
     <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />

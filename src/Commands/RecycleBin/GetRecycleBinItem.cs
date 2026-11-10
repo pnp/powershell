@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.RecycleBin
                             break;
                     }
 
-                    List<RecycleBinItem> recycleBinItemList = RecycleBinUtility.GetRecycleBinItems(ClientContext, RowLimit, recycleBinStage);
+                    List<RecycleBinItem> recycleBinItemList = RecycleBinUtility.GetRecycleBinItems(ClientContext, RowLimit, recycleBinStage, RetrievalExpressions);
                     WriteObject(recycleBinItemList, true);
                 }
                 else
@@ -67,15 +67,15 @@ namespace PnP.PowerShell.Commands.RecycleBin
                     switch (ParameterSetName)
                     {
                         case ParameterSet_FIRSTSTAGE:
-                            recycleBinItemList = RecycleBinUtility.GetRecycleBinItems(ClientContext, RowLimit, RecycleBinItemState.FirstStageRecycleBin);
+                            recycleBinItemList = RecycleBinUtility.GetRecycleBinItems(ClientContext, RowLimit, RecycleBinItemState.FirstStageRecycleBin, RetrievalExpressions);
                             WriteObject(recycleBinItemList, true);
                             break;
                         case ParameterSet_SECONDSTAGE:
-                            recycleBinItemList = RecycleBinUtility.GetRecycleBinItems(ClientContext, RowLimit, RecycleBinItemState.SecondStageRecycleBin);
+                            recycleBinItemList = RecycleBinUtility.GetRecycleBinItems(ClientContext, RowLimit, RecycleBinItemState.SecondStageRecycleBin, RetrievalExpressions);
                             WriteObject(recycleBinItemList, true);
                             break;
                         default:
-                            recycleBinItemList = RecycleBinUtility.GetRecycleBinItems(ClientContext, RowLimit);
+                            recycleBinItemList = RecycleBinUtility.GetRecycleBinItems(ClientContext, RowLimit, retrievals: RetrievalExpressions);
                             WriteObject(recycleBinItemList, true);
                             break;
                     }

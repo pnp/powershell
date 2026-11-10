@@ -16,7 +16,7 @@ Updates an existing term group.
 
 ```powershell
 Set-PnPTermGroup -Identity <TaxonomyTermGroupPipeBind> [-Name <String>] [-Description <String>] 
- [-TermStore <TaxonomyTermStorePipeBind>] [-Connection <PnPConnection>] [-Contributors <string []>] [-Managers <string []>]
+ [-TermStore <TaxonomyTermStorePipeBind>] [-Connection <PnPConnection>] [-Contributors <String[]>] [-Managers <String[]>]
 ```
 
 ## DESCRIPTION

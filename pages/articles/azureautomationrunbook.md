@@ -28,47 +28,19 @@ Now your Azure Automation Account has been created, proceed with the next paragr
 
 ### Add the PnP PowerShell module to the Azure Automation Account
 
+PnP PowerShell 3.x requires PowerShell 7.4 or later, so it runs on the PowerShell 7.4 and 7.6 runtime versions of Azure Automation. These are only available through a [Runtime environment](https://learn.microsoft.com/azure/automation/runtime-environment-overview). The PowerShell 7.1 and 7.2 runtime versions, which only run PnP PowerShell 2.12.0 or older, are no longer supported by Azure Automation since 30 September 2026. PowerShell 7.4 itself reaches end of support on 10 November 2026, so use 7.6 for new runbooks.
+
 To add PnP PowerShell to the Azure Automation Account, follow these steps:
 
-1. Navigate to `Modules` which is located the left side menu of the function app under the `Shared Resources` header.
-   
-   ![Navigate to modules](./../images/azureautomation/automationaccountmodulesmenu.png)
+1. In your Azure Automation Account, select **Runtime Environments** under **Process Automation**. If it is not there, first select **Try Runtime environment experience** on the **Overview** page.
 
-1. Click on **Add a module** at the top of the screen
+1. Select **Create**, enter a name for the Runtime environment, select **PowerShell** as the **Language** and **7.6** as the **Runtime version**, and select **Next**.
 
-   ![Add a module](../images/azureautomation/automationaddmodule.png)
+1. On the **Packages** tab, add PnP PowerShell using one of the following options, then select **Next** and **Create**. Importing the module can take several minutes.
 
-   Choose from the following options:
+#### Stable version
 
-#### Specific stable version
-
-   > [!Important]
-   > Currently the only stable PnP PowerShell version that works with Azure Automation 7.2 Runbooks is **2.12.0**. Later versions are currently not supported.
-   > If you would like to use a [latest nightly build](#latest-prerelease-version) instead, use the below instructions
-
-   Select **Browse from gallery**, Runtime version **7.2 (recommended)** and click on the **Click here to browse from gallery** link
-
-   ![Add a module](../images/azureautomation/addmodulefromgallery.png)
-
-   Search for PnP PowerShell and select the first result.
-
-   ![Add the PnP PowerShell module](../images/azureautomation/automationaddmodulepnpposh.png)
-
-   Click on **Select** to confirm.
-
-   ![Confirm adding the PnP PowerShell module](../images/azureautomation/automationaddmodulepnpposhconfirm.png)
-
-   Click on **Import** to start the download and importing process.
-
-   ![Start importing the PnP PowerShell module](../images/azureautomation/automationaddmodulepnpposhimport.png)
-
-   It will take up to 10 minutes for the import to complete. You can check the import status by changing the **Module type** filter to **Custom**.
-
-   ![Check the import status](../images/azureautomation/automationaddmodulepnpposhstatus.png)
-
-   Once it's done, it will show the status **Available**
-
-   ![Import done](../images/azureautomation/automationaddmodulepnpposhdone.png)
+   Select **Add from gallery**, search for **PnP.PowerShell** and select it.
 
 #### Latest prerelease version
 
@@ -78,25 +50,7 @@ To add PnP PowerShell to the Azure Automation Account, follow these steps:
    Save-Module PnP.PowerShell -AllowPrerelease -Path c:\temp
    ```
 
-   ![Download the PnP PowerShell package](../images/azureautomation/pwshdownloadcustombuild.png)
-
-   Using Windows File Explorer, go to the folder where you downloaded the PnP PowerShell package. You should see a folder called `PnP.PowerShell` in there. Right click on it and choose the option **Compress to ZIP file**.
-
-   ![Compress the PnP PowerShell package](../images/azureautomation/explorerzipcustombuild.png)
-
-   Select **Browse for file**, Runtime version **7.2 (recommended)** and click on the folder icon next to **Powershell module file** and select the zipped up PnP.PowerShell.zip file generated in the previous step.
-
-   ![Upload module file](../images/azureautomation/addmodulefromgallerycustombuild.png)
-
-   Click on **Import** to start the download and importing process.
-
-   It will take up to 10 minutes for the import to complete. You can check the import status by changing the **Module type** filter to **Custom**.
-
-   ![Check the import status](../images/azureautomation/automationaddmodulepnpposhcustombuildstatus.png)
-
-   Once it's done, it will show the status **Available**
-
-   ![Import done](../images/azureautomation/automationaddmodulepnpposhcustomdone.png)   
+   This creates a folder `c:\temp\PnP.PowerShell` holding a folder named after the version number. Rename that version folder to `PnP.PowerShell`, as Azure Automation only imports a module from a folder that has the name of the module, and compress it into a ZIP file. Select **Add a file** and select the ZIP file.
 
 ## Decide how you want to authenticate in your Azure Automation Runbooks
 
@@ -144,9 +98,7 @@ We're now ready to create a Runbook in which your PnP PowerShell script will run
 
    ![Create a Runbook](../images/azureautomation/azureportaladdrunbookoption.png)
 
-1. Give the Runbook a name, select the Runbook type **PowerShell** and for the Runtime version choose **7.2 (recommended)** and click on **Create** at the bottom left.
-
-   ![Provide Runbook creation paramters](../images/azureautomation/azureportalcreaterunbook.png)
+1. Give the Runbook a name, select the Runbook type **PowerShell**, select the Runtime environment you created in which PnP PowerShell has been added and click on **Create** at the bottom left.
 
 1. On the Edit PowerShell Runbook page, enter your PnP PowerShell code in the large white area, i.e.:
 

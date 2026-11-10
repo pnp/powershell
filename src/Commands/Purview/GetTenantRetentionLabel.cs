@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Purview
 
         protected override void ExecuteCmdlet()
         {
-            string url = "/beta/security/labels/retentionLabels";
+            string url = "/v1.0/security/labels/retentionLabels";
 
             if (ParameterSpecified(nameof(Identity)))
             {

@@ -13,7 +13,7 @@ title: Export-PnPPowerApp
 
 **Required Permissions**
 
-* Azure: management.azure.com
+* Both Azure Service Management API user_impersonation and Power Apps Service API user (delegated). Application permissions are not supported.
 
 Exports a Microsoft Power App
 
@@ -29,7 +29,9 @@ Export-PnPPowerApp [-Environment <PowerPlatformEnvironmentPipeBind>] -Identity <
 ## DESCRIPTION
 This cmdlet exports a Microsoft Power App as zip package.
 
-Many times exporting a Microsoft Power App will not be possible due to various reasons such as connections having gone stale, SharePoint sites referenced no longer existing or other configuration errors in the App. To display these errors when trying to export a App, provide the -Verbose flag with your export request. If not provided, these errors will silently be ignored.
+Export failures are written to the PowerShell error stream. By default, these errors are non-terminating so batch exports can continue. Use `-ErrorVariable` to capture them, or `-ErrorAction Stop` to handle a failed export with `try`/`catch`.
+
+Exporting a Power App is an asynchronous operation. The cmdlet waits for the service to finish preparing the package for up to 30 minutes, following the polling interval requested by the service where it provides one.
 
 ## EXAMPLES
 
@@ -86,21 +88,6 @@ Accept pipeline input: True
 Accept wildcard characters: False
 ```
 
-### -Identity
-The value of the Name property of a Microsoft Power App that you wish to export
-
-```yaml
-Type: PowerAppPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Force
 If specified and the file exported already exists it will be overwritten without confirmation.
 
@@ -116,8 +103,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Identity
+The value of the Name property of a Microsoft Power App that you wish to export
+
+```yaml
+Type: PowerAppPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -OutPath
-Optional file name of the file to export to. If not provided, it will store the ZIP package to the current location from where the cmdlet is being run.
+Optional file name of the file to export to. If not provided, it will store the ZIP package to the current location from where the cmdlet is being run, using the filename returned by the service. Either way, when a file with that name already exists you are asked to confirm the overwrite unless `-Force` is specified.
 
 ```yaml
 Type: String

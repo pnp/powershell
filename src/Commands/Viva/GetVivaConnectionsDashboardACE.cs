@@ -13,30 +13,29 @@ namespace PnP.PowerShell.Commands.Viva
         protected override void ExecuteCmdlet()
         {
             var pnpContext = Connection.PnPContext;
-            if (pnpContext.Site.IsHomeSite())
-            {
-                IVivaDashboard dashboard = pnpContext.Web.GetVivaDashboard();
 
-                if (ParameterSpecified(nameof(Identity)))
+            IVivaDashboard dashboard = pnpContext.Web.GetVivaDashboard();
+            if (dashboard == null)
+            {
+                LogError("Viva Connections dashboard not found. Create or configure the Viva Connections dashboard page (Dashboard.aspx) on the connected SharePoint Team site or Communication site.");
+                return;
+            }
+
+            if (ParameterSpecified(nameof(Identity)))
+            {
+                var aceToRetrieve = Identity.GetACE(dashboard, this);
+                if (aceToRetrieve != null)
                 {
-                    var aceToRetrieve = Identity.GetACE(dashboard, this);
-                    if (aceToRetrieve != null)
-                    {
-                        WriteObject(aceToRetrieve);
-                    }
-                    else
-                    {
-                        LogWarning("ACE with specified identifier not found");
-                    }
+                    WriteObject(aceToRetrieve);
                 }
                 else
                 {
-                    WriteObject(dashboard.ACEs, true);
+                    LogWarning("ACE with specified identifier not found");
                 }
             }
             else
             {
-                LogWarning("Connected site is not a home site");
+                WriteObject(dashboard.ACEs, true);
             }
         }
     }

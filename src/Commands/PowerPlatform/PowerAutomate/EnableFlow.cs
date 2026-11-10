@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Base;
+﻿using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
@@ -7,6 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
     [Cmdlet(VerbsLifecycle.Enable, "PnPFlow")]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation")]
     public class EnableFlow : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = false)]

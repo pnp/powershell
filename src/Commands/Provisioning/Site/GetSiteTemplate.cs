@@ -21,7 +21,7 @@ using PnP.Framework.Provisioning.Providers.Markdown;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteTemplate")]
-    public class GetSiteTemplate : PnPWebCmdlet
+    public partial class GetSiteTemplate : PnPWebCmdlet
     {
         //private readonly ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
         private readonly ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
@@ -112,14 +112,24 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         public List<string> ListsToExtract;
 
         [Parameter(Mandatory = false)]
+        [ValidateNotNull]
         public ExtractConfigurationPipeBind Configuration;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Experimental;
 
         protected override void ExecuteCmdlet()
         {
+            if (Experimental)
+            {
+                ExecuteCmdletExperimental();
+                return;
+            }
+
             ExtractConfiguration extractConfiguration = null;
             if (ParameterSpecified(nameof(Configuration)))
             {
-                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
+                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path, LogWarning);
             }
             if (PersistMultiLanguageResources == false && ResourceFilePrefix != null)
             {
@@ -170,7 +180,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
-                    if (!ExcludeHandlers.Has(handler) && handler != Handlers.All)
+                    if (!ExcludeHandlers.HasFlag(handler) && handler != Handlers.All)
                     {
                         Handlers = Handlers | handler;
                     }
@@ -195,7 +205,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             var fileSystemConnector = new FileSystemConnector(path, "");
             if (extension == ".pnp")
             {
-                creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector);
+                creationInformation.FileConnector = PnPPackageConnector.OpenFramework(packageName, fileSystemConnector);
             }
             else if (extension == ".md")
             {

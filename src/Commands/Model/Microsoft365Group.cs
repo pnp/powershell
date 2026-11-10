@@ -62,6 +62,8 @@ namespace PnP.PowerShell.Commands.Model
 
         public List<AssignedLabels> AssignedLabels { get; set; }
 
+        public OnPremisesExtensionAttributes OnPremisesExtensionAttributes { get; set; }
+
         [JsonIgnore]
         public bool HasTeam
         {

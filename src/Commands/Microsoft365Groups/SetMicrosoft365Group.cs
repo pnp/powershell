@@ -14,6 +14,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Set, "PnPMicrosoft365Group")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]
     public class SetMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -53,6 +54,10 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         [Parameter(Mandatory = false)]
         public string MailNickname;
+
+        [Parameter(Mandatory = false)]
+        [ArgumentCompleter(typeof(EnumAsStringArgumentCompleter<Framework.Enums.Office365Geography>))]
+        public string PreferredDataLocation;
 
         [Parameter(Mandatory = false)] // This is the name used in Microsoft Graph while the name RequireSenderAuthenticationEnabled is the one used within Exchange Online, but there its inversed, so we cannot easily add it as an alias here. They both are about the same feature.
         public bool? AllowExternalSenders;
@@ -94,6 +99,11 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                         MailNickname = MailNickname.Substring(0, 64);
                     }
                     group.MailNickname = MailNickname;
+                    changed = true;
+                }
+                if (ParameterSpecified(nameof(PreferredDataLocation)))
+                {
+                    group.PreferredDataLocation = PreferredDataLocation;
                     changed = true;
                 }
                 if (changed)

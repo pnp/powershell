@@ -166,6 +166,34 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return default(T);
         }
 
+        /// <summary>
+        /// Executes a GET request and reports the delay the service asked to wait for through its Retry-After response header.
+        /// Use when polling a long running operation so the polling interval can follow what the service asks for.
+        /// </summary>
+        /// <param name="retryAfter">The delay requested by the service, or null when it did not request one</param>
+        public static T Get<T>(HttpClient httpClient, string url, string accessToken, out TimeSpan? retryAfter, bool camlCasePolicy = true)
+        {
+            var message = GetMessage(url, HttpMethod.Get, accessToken);
+            var stringContent = SendMessage(httpClient, message, out retryAfter);
+            if (stringContent != null)
+            {
+                var options = new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+                if (camlCasePolicy)
+                {
+                    options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                }
+                try
+                {
+                    return JsonSerializer.Deserialize<T>(stringContent, options);
+                }
+                catch (Exception)
+                {
+                    return default(T);
+                }
+            }
+            return default(T);
+        }
+
         public static T Get<T>(HttpClient httpClient, string url, ClientContext clientContext, bool camlCasePolicy = true)
         {
             var stringContent = Get(httpClient, url, clientContext);
@@ -604,8 +632,14 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         private static string SendMessage(HttpClient httpClient, HttpRequestMessage message)
         {
+            return SendMessage(httpClient, message, out _);
+        }
+
+        private static string SendMessage(HttpClient httpClient, HttpRequestMessage message, out TimeSpan? retryAfter)
+        {
             HttpResponseMessage response = null;
             var retryAttempt = 0;
+            retryAfter = null;
             try
             {
                 response = httpClient.SendAsync(message).GetAwaiter().GetResult();
@@ -621,6 +655,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 }
                 if (response.IsSuccessStatusCode)
                 {
+                    retryAfter = GetRetryAfterDelay(response);
                     return response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 }
                 else
@@ -704,7 +739,10 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        private static TimeSpan GetRetryDelay(HttpResponseMessage response, int retryAttempt)
+        /// <summary>
+        /// Returns the delay the service asked to wait for through its Retry-After response header, or null when it did not ask for one
+        /// </summary>
+        private static TimeSpan? GetRetryAfterDelay(HttpResponseMessage response)
         {
             var retryAfter = response.Headers.RetryAfter;
             if (retryAfter?.Delta is TimeSpan delta && delta > TimeSpan.Zero)
@@ -719,6 +757,16 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 {
                     return dateDelay;
                 }
+            }
+
+            return null;
+        }
+
+        private static TimeSpan GetRetryDelay(HttpResponseMessage response, int retryAttempt)
+        {
+            if (GetRetryAfterDelay(response) is TimeSpan retryAfterDelay)
+            {
+                return retryAfterDelay;
             }
 
             var fallbackSeconds = Math.Min(Math.Pow(2, retryAttempt - 1), 30);

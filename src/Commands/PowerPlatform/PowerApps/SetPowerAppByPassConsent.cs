@@ -8,7 +8,8 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 {
     [Cmdlet(VerbsCommon.Set, "PnPPowerAppByPassConsent")]
-    [RequiredApiApplicationPermissions("https://management.azure.com/user_impersonation", "https://service.powerapps.com/user")]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation", "https://service.powerapps.com/user")]
+    [ApiNotAvailableUnderApplicationPermissions]
     public class PnPPowerAppByPassConsent : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

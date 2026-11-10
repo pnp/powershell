@@ -14,6 +14,7 @@ title: Get-PnPPowerPlatformSolution
 **Required Permissions**
 
 * Azure: management.azure.com
+* Dynamics CRM: user_impersonation
 
 Returns the Power Platform Solution/s for a given environment
 

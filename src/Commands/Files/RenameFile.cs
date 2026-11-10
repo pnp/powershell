@@ -1,7 +1,6 @@
 ﻿using System.Management.Automation;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using PnP.Framework.Utilities;
-using PnP.Core.Model.SharePoint;
+using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Files
 {
@@ -25,22 +24,29 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
+            string webUrl = null;
+            var url = ServerRelativeUrl;
+
             if (ParameterSetName == "SITE")
             {
-                var pnpWeb = Connection.PnPContext.Web;
-                pnpWeb.EnsureProperties(w => w.ServerRelativeUrl);
-
-                ServerRelativeUrl = UrlUtility.Combine(pnpWeb.ServerRelativeUrl, SiteRelativeUrl);
+                webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                url = SiteRelativeUrl;
             }
 
-            IFile file = Connection.PnPContext.Web.GetFileByServerRelativeUrl(ServerRelativeUrl);
-            file.EnsureProperties(f => f.Name, f => f.ServerRelativeUrl);
+            // Use the Url as provided when a file exists there, only fall back to its decoded form when it does not.
+            var serverRelativeUrl = Utilities.FileUrlResolver.Resolve(url, webUrl, ClientContext, CurrentWeb);
+
+            // Moved through CSOM, as PnP Core turns a %20 still held by the path into a space before calling SharePoint
+            var file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+            ClientContext.Load(file, f => f.Name);
+            ClientContext.ExecuteQueryRetry();
 
             if (Force || ShouldContinue(string.Format(Resources.RenameFile0To1, file.Name, TargetFileName), Resources.Confirm))
             {
-                var targetPath = string.Concat(file.ServerRelativeUrl.Remove(file.ServerRelativeUrl.Length - file.Name.Length), TargetFileName);
+                var targetPath = string.Concat(serverRelativeUrl.Substring(0, serverRelativeUrl.LastIndexOf('/') + 1), TargetFileName);
 
-                file.MoveTo(targetPath, OverwriteIfAlreadyExists ? MoveOperations.Overwrite : MoveOperations.None);
+                file.MoveToUsingPath(ResourcePath.FromDecodedUrl(targetPath), OverwriteIfAlreadyExists ? MoveOperations.Overwrite : MoveOperations.None);
+                ClientContext.ExecuteQueryRetry();
             }
         }
     }

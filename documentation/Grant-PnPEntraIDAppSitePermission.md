@@ -13,7 +13,7 @@ title: Grant-PnPEntraIDAppSitePermission
 
 **Required Permissions**
 
-  * Microsoft Graph API: Sites.FullControl.All (Delegated)
+  * Microsoft Graph API: Sites.FullControl.All (only works with delegated permissions, not with app permissions)
 
 Adds permissions for a given Entra ID application registration.
 

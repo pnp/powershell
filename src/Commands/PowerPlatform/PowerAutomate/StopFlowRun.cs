@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Base;
+﻿using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Utilities.REST;
@@ -8,6 +9,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
     [Cmdlet(VerbsLifecycle.Stop, "PnPFlowRun")]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation")]
     public class StopFlowRun : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = false)]

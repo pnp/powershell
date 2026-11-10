@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Management.Automation;
 using PnP.Framework;
 using PnP.PowerShell.Commands.Utilities.REST;
 
@@ -9,6 +10,21 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class PowerAppsUtility
     {
+        /// <summary>
+        /// How long to keep waiting for an export to complete. Exporting a large Power App takes a while, so this is generous.
+        /// </summary>
+        private static readonly TimeSpan ExportStatusMaxWaitTime = TimeSpan.FromMinutes(30);
+
+        /// <summary>
+        /// How long to wait between two export status checks when the service does not ask for a specific delay through a Retry-After header
+        /// </summary>
+        private static readonly TimeSpan ExportStatusPollingDelay = TimeSpan.FromSeconds(3);
+
+        /// <summary>
+        /// Upper bound on the delay taken from a Retry-After header, so one unexpected value cannot stall the export
+        /// </summary>
+        private static readonly TimeSpan ExportStatusMaxPollingDelay = TimeSpan.FromSeconds(60);
+
         internal static Model.PowerPlatform.PowerApp.PowerAppPackageWrapper GetWrapper(HttpClient connection, string environmentName, string accessToken, string appName, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var postData = new
@@ -45,52 +61,57 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static string GetPackageLink(HttpClient connection, string location, string accessToken)
         {
-            var status = Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Running;
-            var packageLink = "";
-            if (location != null)
+            if (string.IsNullOrWhiteSpace(location))
             {
-                do
+                throw new PSInvalidOperationException("The Power App export response did not include a status location.");
+            }
+
+            var deadline = DateTimeOffset.UtcNow.Add(ExportStatusMaxWaitTime);
+            while (true)
+            {
+                var runningResponse = RestHelper.Get<JsonElement>(connection, location, accessToken, out TimeSpan? retryAfter);
+                if (runningResponse.ValueKind != JsonValueKind.Object ||
+                    !runningResponse.TryGetProperty("properties", out JsonElement properties) ||
+                    !properties.TryGetProperty("status", out JsonElement statusElement) ||
+                    statusElement.ValueKind != JsonValueKind.String)
                 {
-                    var runningresponse = RestHelper.Get<JsonElement>(connection, location, accessToken);
+                    throw new PSInvalidOperationException("The Power App export status response was incomplete.");
+                }
 
-                    if (runningresponse.TryGetProperty("properties", out JsonElement properties))
+                var status = statusElement.GetString();
+                if (string.Equals(status, Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Succeeded.ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    if (properties.TryGetProperty("packageLink", out JsonElement packageLinkElement) &&
+                        packageLinkElement.ValueKind == JsonValueKind.Object &&
+                        packageLinkElement.TryGetProperty("value", out JsonElement valueElement) &&
+                        valueElement.ValueKind == JsonValueKind.String &&
+                        !string.IsNullOrWhiteSpace(valueElement.GetString()))
                     {
-                        if (properties.TryGetProperty("status", out JsonElement runningstatusElement))
-                        {
-                            if (runningstatusElement.GetString() == Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Succeeded.ToString())
-                            {
-                                status = Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Succeeded;
-                                if (properties.TryGetProperty("packageLink", out JsonElement packageLinkElement))
-                                {
-                                    if (packageLinkElement.TryGetProperty("value", out JsonElement valueElement))
-                                    {
-                                        packageLink = valueElement.GetString();
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                //if status is still running, sleep the thread for 3 seconds
-                                Thread.Sleep(3000);
-                            }
-                        }
+                        return valueElement.GetString();
                     }
-                } while (status == Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Running);
-            }
-            return packageLink;
-        }
 
-        internal static byte[] GetFileByteArray(HttpClient connection, string packageLink, string accessToken)
-        {
-            using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, packageLink))
-            {
-                requestMessage.Version = new Version(2, 0);
-                //requestMessage.Headers.Add("Authorization", $"Bearer {AccessToken}");
-                var fileresponse = connection.SendAsync(requestMessage).GetAwaiter().GetResult();
-                var byteArray = fileresponse.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
-                return byteArray;
-            }
+                    throw new PSInvalidOperationException("The Power App export completed without a package link.");
+                }
 
+                if (!string.Equals(status, Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Running.ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new PSInvalidOperationException($"The Power App export returned status '{status ?? "unknown"}'.");
+                }
+
+                // Follow the delay the service asks for, but never wait longer than the upper bound for a single check
+                var delay = retryAfter ?? ExportStatusPollingDelay;
+                if (delay > ExportStatusMaxPollingDelay)
+                {
+                    delay = ExportStatusMaxPollingDelay;
+                }
+
+                if (DateTimeOffset.UtcNow.Add(delay) >= deadline)
+                {
+                    throw new PSInvalidOperationException($"The Power App export did not complete within {ExportStatusMaxWaitTime.TotalMinutes:0} minutes.");
+                }
+
+                Thread.Sleep(delay);
+            }
         }
     }
 }

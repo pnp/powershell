@@ -13,8 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPlannerRosterPla
 
 **Required Permissions**
 
-  * Microsoft Graph API: Tasks.ReadWrite
-  * Microsoft Graph API: Tasks.Read
+  * Microsoft Graph API: One of Tasks.Read or Tasks.ReadWrite (delegated), or one of Tasks.Read.All or Tasks.ReadWrite.All (application)
   
 Returns Microsoft Planner roster plans for a specific Microsoft Planner Roster or a specific user
 
@@ -26,6 +25,8 @@ Get-PnPPlannerRosterPlan [-Identity <PlannerRosterPipeBind>] [-User <string>]
 
 ## DESCRIPTION
 This cmdlet returns Microsoft Planner roster plans for a specific Microsoft Planner Roster or a specific user
+
+The Microsoft Planner Roster APIs this cmdlet uses are only available through the beta endpoint of Microsoft Graph. Microsoft can change the permissions they require without notice, so verify the permissions above against Microsoft Learn if a call is unexpectedly denied.
 
 ## EXAMPLES
 

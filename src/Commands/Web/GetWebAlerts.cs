@@ -1,4 +1,5 @@
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.SharePoint;
@@ -12,6 +13,8 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPWebAlert", DefaultParameterSetName = ParameterSet_All)]
     [OutputType(typeof(WebAlert))]
+    [RequiredApiApplicationPermissions("graph/User.Read.All")]
+    [RequiredApiDelegatedPermissions("graph/User.ReadBasic.All")]
     public class GetWebAlert : PnPWebCmdlet
     {
         private const string ParameterSet_ByListId = "By List Id";
@@ -123,10 +126,7 @@ namespace PnP.PowerShell.Commands
         {
             try
             {
-                var result = RestHelper.Get(
-                    Connection.HttpClient,
-                    $"https://{Connection.GraphEndPoint}/v1.0/users/{userId}?$select=userPrincipalName",
-                    GraphAccessToken);  
+                var result = GraphRequestHelper.Get($"v1.0/users/{userId}?$select=userPrincipalName");
 
                 if (!string.IsNullOrEmpty(result))
                 {

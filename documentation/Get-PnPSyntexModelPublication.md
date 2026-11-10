@@ -9,6 +9,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSyntexModelPubli
  
 # Get-PnPSyntexModelPublication
 
+> [!WARNING]
+> This cmdlet is obsolete and no longer does anything, as SharePoint Syntex is no longer supported. It only writes a warning and will be removed in a future version.
+
 ## SYNOPSIS
 Returns the libraries to which a Microsoft Syntex model was published.
 
@@ -36,7 +39,7 @@ Gets the libraries to which the document processing model named "Invoice model" 
 ## PARAMETERS
 
 ### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+Ignored, as this cmdlet no longer performs any request. Kept for backwards compatibility with existing scripts.
 
 ```yaml
 Type: PnPConnection

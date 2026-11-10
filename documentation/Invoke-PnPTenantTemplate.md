@@ -25,17 +25,17 @@ Invoke-PnPTenantTemplate [-Path] <String> [-SequenceId <String>] [-ResourceFolde
  [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Parameters <Hashtable>]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
- [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration <ApplyConfigurationPipeBind>]
+ [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration <ApplyConfigurationPipeBind>] [-Experimental]
  [-Connection <PnPConnection>]   
 ```
 
 ### By Object
 ```powershell
-Invoke-PnPTenantTemplate [-Template] <ProvisioningHierarchy> [-SequenceId <String>] [-ResourceFolder <String>]
+Invoke-PnPTenantTemplate [-Template] <TenantTemplateInstancePipeBind> [-SequenceId <String>] [-ResourceFolder <String>]
  [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Parameters <Hashtable>]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
- [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration <ApplyConfigurationPipeBind>]
+ [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration <ApplyConfigurationPipeBind>] [-Experimental]
  [-Connection <PnPConnection>]   
 ```
 
@@ -68,6 +68,29 @@ Applies a tenant template to the current tenant. It will populate the parameter 
 
 For instance with the example above, specifying {parameter:ListTitle} in your template will translate to 'Projects' when applying the template. These tokens can be used in most string values in a template.
 
+### EXAMPLE 4
+```powershell
+@'
+{
+  "handlers": [ "Lists", "Fields" ],
+  "parameters": {
+    "ListTitle": "Projects"
+  }
+}
+'@ | Out-File apply.json
+
+Invoke-PnPTenantTemplate -Path myfile.pnp -Configuration apply.json
+```
+
+Applies only the lists and fields of the template, populating the {parameter:ListTitle} token with 'Projects'. The same JSON can be passed to `-Configuration` directly instead of through a file.
+
+### EXAMPLE 5
+```powershell
+Invoke-PnPTenantTemplate -Path myfile.pnp -Experimental
+```
+
+Applies the tenant template with the experimental PnP.Core.Provisioning engine instead of PnP Framework.
+
 ## PARAMETERS
 
 ### -ClearNavigation
@@ -85,7 +108,11 @@ Accept wildcard characters: False
 ```
 
 ### -Configuration
-Specify a JSON configuration file to configure the extraction progress.
+Specify a JSON configuration to configure the provisioning process. Accepts either the path to a file containing the JSON, or the JSON itself.
+
+A value that cannot be read, such as a path that does not exist or JSON that cannot be parsed, terminates the cmdlet. Earlier versions ignored such a value without reporting an error and applied the full template instead.
+
+See [The apply configuration](https://pnp.github.io/powershell/articles/apply-configuration.html) for the available properties and worked examples.
 
 ```yaml
 Type: ApplyConfigurationPipeBind
@@ -127,6 +154,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Experimental
+Runs this cmdlet on the experimental PnP.Core.Provisioning engine instead of PnP Framework. It needs more permissions than PnP Framework, and a .pnp package can only be opened by the engine that created it. See [The experimental PnP.Core.Provisioning engine](https://pnp.github.io/powershell/articles/experimental-provisioning.html).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ExtensibilityHandlers
 Allows you to specify ExtensibilityHandlers to execute while applying a template
 
@@ -142,7 +183,7 @@ Accept wildcard characters: False
 ```
 
 ### -Handlers
-Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying.
+Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what you're applying.
 
 ```yaml
 Type: Handlers
@@ -268,9 +309,10 @@ Accept wildcard characters: False
 ```
 
 ### -Template
+The tenant template to apply. Accepts a tenant template produced by either engine, so a template read with -Experimental can be applied with -Experimental.
 
 ```yaml
-Type: ProvisioningHierarchy
+Type: TenantTemplateInstancePipeBind
 Parameter Sets: By Object
 
 Required: True

@@ -6,6 +6,7 @@ on:
 jobs:
   build:
     name: Build and sign module
+    if: github.repository_owner == 'pnp'
     runs-on: windows-latest
     environment:
       name: gh_releases
@@ -115,9 +116,10 @@ jobs:
 
           # Generate external help
           Set-PSRepository PSGallery -InstallationPolicy Trusted
-          Install-Module -Name Microsoft.PowerShell.PlatyPS -AllowPrerelease -RequiredVersion 1.0.0-preview1
+          Install-Module -Name Microsoft.PowerShell.PlatyPS -RequiredVersion 1.0.3
           $mdFiles = Measure-PlatyPSMarkdown -Path ./documentation/*.md
           $mdFiles | Import-MarkdownCommandHelp -Path {$_.FilePath} | Export-MamlCommandHelp -OutputFolder ./module -Force
+          ./build/Assert-OnlineHelpLinks.ps1 -OutputFolder ./module -DocumentationPath ./documentation
 
           Write-Host "Module packaged at $moduleDir"
 
@@ -218,9 +220,9 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           path: output
 
@@ -233,7 +235,7 @@ jobs:
           "VERSION=$version" | Out-File $env:GITHUB_OUTPUT -Append
 
       - name: Release
-        uses: anton-yurchenko/git-release@v6
+        uses: anton-yurchenko/git-release@v7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRAFT_RELEASE: "false"

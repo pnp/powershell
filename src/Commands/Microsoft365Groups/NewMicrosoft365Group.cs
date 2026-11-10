@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.New, "PnPMicrosoft365Group", DefaultParameterSetName = ParameterSet_AssignedMembers)]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]
     public class NewPnPMicrosoft365Group : PnPGraphCmdlet
     {
         private const string ParameterSet_AssignedMembers = "Assigned membership";

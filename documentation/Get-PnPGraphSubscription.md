@@ -13,7 +13,8 @@ title: Get-PnPGraphSubscription
 
 **Required Permissions**
 
-  * Microsoft Graph API : Subscription.Read.All
+  * Microsoft Graph API : depends on the resource the subscription was created on. Reading a subscription back requires read permissions on that resource, i.e. `Mail.Read` for a subscription on messages or `Sites.ReadWrite.All` for one on a SharePoint list. Note that the permission is not always the same as the one needed to create the subscription, so use the table in [List subscriptions](https://learn.microsoft.com/graph/api/subscription-list?view=graph-rest-1.0#permissions) rather than the one for creating.
+  * Microsoft Graph API : `Subscription.Read.All` (delegated) is only required to also return subscriptions that were created by *other* applications. It is not needed to return the subscriptions created by this application.
 
 Gets subscriptions from Microsoft Graph.
 

@@ -32,10 +32,9 @@ namespace PnP.PowerShell.Commands.Viva
         protected override void ExecuteCmdlet()
         {
             var pnpContext = Connection.PnPContext;
-            if (pnpContext.Site.IsHomeSite())
+            IVivaDashboard dashboard = pnpContext.Web.GetVivaDashboard();
+            if (dashboard != null)
             {
-                IVivaDashboard dashboard = pnpContext.Web.GetVivaDashboard();
-
                 var cardDesignerACE = dashboard.NewACE(Identity, CardSize);
                 cardDesignerACE.Title = Title;
                 if (ParameterSpecified(nameof(PropertiesJSON)))
@@ -70,7 +69,7 @@ namespace PnP.PowerShell.Commands.Viva
             }
             else
             {
-                LogWarning("Connected site is not a home site");
+                LogError("Viva Connections dashboard not found. Create or configure the Viva Connections dashboard page (Dashboard.aspx) on the connected SharePoint Team site or Communication site.");
             }
         }
     }

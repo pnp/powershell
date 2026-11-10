@@ -11,7 +11,7 @@ permissions: read-all
 
 jobs:
   build:
-
+    if: github.repository_owner == 'pnp'
     runs-on: ubuntu-latest
 
     steps:

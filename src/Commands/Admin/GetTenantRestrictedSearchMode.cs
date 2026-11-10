@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 var results = Tenant.GetSPORestrictedSearchMode();
                 AdminContext.ExecuteQueryRetry();
-                WriteObject(results, true);
+                WriteObject(results.Value.ToString());
             }
             catch
             {

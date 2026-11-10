@@ -20,6 +20,14 @@ namespace PnP.PowerShell.Commands.Admin
     [OutputType(typeof(PSObject), ParameterSetName = new[] { PARAMETERSET_Parsed })]
     [OutputType(typeof(string), ParameterSetName = new[] { PARAMETERSET_Raw })]
     [OutputType(typeof(void), ParameterSetName = new[] { PARAMETERSET_Batch })]
+
+    // Deliberately not declaring RequiredApi*Permissions attributes: this cmdlet calls an arbitrary SharePoint REST endpoint, so the permissions required follow
+    // entirely from the url being called.
+    [Attributes.ApiPermissionsDependOnResource(
+        ResourceType = Enums.ResourceTypeName.SharePoint,
+        ParameterName = nameof(Url),
+        Remarks = "This cmdlet calls the SharePoint REST endpoint provided, so it requires whichever permissions that endpoint requires and the rights on the site that the operation itself needs.",
+        DocumentationUrl = "https://learn.microsoft.com/sharepoint/dev/sp-add-ins/sharepoint-net-server-csom-jsom-and-rest-api-index")]
     public class InvokeSPRestMethod : PnPSharePointCmdlet
     {
         public const string PARAMETERSET_Parsed = "Parsed";
