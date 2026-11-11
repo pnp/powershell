@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Sync-PnPBrandCenterOfficeFonts.html
+online version: https://pnp.github.io/powershell/cmdlets/Sync-PnPBrandCenterOfficeFont.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Sync-PnPBrandCenterOfficeFonts
+title: Sync-PnPBrandCenterOfficeFont
 ---
   
-# Sync-PnPBrandCenterOfficeFonts
+# Sync-PnPBrandCenterOfficeFont
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Makes the Office font library offer the Brand Center fonts, or the fonts in a lo
 ## SYNTAX
 
 ```powershell
-Sync-PnPBrandCenterOfficeFonts [-Source <OfficeFontSource>] [-LocalFolder <String>] [-RemoveMissing] [-KeepRegistration] [-Force]
+Sync-PnPBrandCenterOfficeFont [-Source <OfficeFontSource>] [-LocalFolder <String>] [-RemoveMissing] [-KeepRegistration] [-Force]
  [-WhatIf] [-Confirm] [-Connection <PnPConnection>] [-Verbose]
 ```
 
@@ -43,28 +43,28 @@ Fonts and their catalog are stored on the public CDN: anyone who has their URLs 
 
 ### EXAMPLE 1
 ```powershell
-Sync-PnPBrandCenterOfficeFonts -WhatIf
+Sync-PnPBrandCenterOfficeFont -WhatIf
 ```
 
 Shows which Brand Center fonts would be added to the Office font library, without changing anything.
 
 ### EXAMPLE 2
 ```powershell
-Sync-PnPBrandCenterOfficeFonts -Force
+Sync-PnPBrandCenterOfficeFont -Force
 ```
 
 Adds the Brand Center fonts that the Office font library does not have yet, without asking for confirmation.
 
 ### EXAMPLE 3
 ```powershell
-Sync-PnPBrandCenterOfficeFonts -RemoveMissing
+Sync-PnPBrandCenterOfficeFont -RemoveMissing
 ```
 
 Makes the Office font library offer exactly the Brand Center fonts: adds the missing ones, and removes the ones Brand Center no longer has.
 
 ### EXAMPLE 4
 ```powershell
-Sync-PnPBrandCenterOfficeFonts -Source Local -LocalFolder C:\Fonts -Verbose
+Sync-PnPBrandCenterOfficeFont -Source Local -LocalFolder C:\Fonts -Verbose
 ```
 
 Adds the fonts in C:\Fonts that the Office font library does not have. -Verbose lists the fonts found on each side and every file uploaded.

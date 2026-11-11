@@ -1,7 +1,7 @@
 # Office font catalog: maintainer notes
 
 These notes cover `OfficeFontCatalogBuilder`, `OfficeFontFace` and `CustomFontsCatalogPublisher`,
-used by `Set-PnPOfficeFontCatalog` and `Sync-PnPBrandCenterOfficeFonts`. Read them before changing
+used by `Set-PnPOfficeFontCatalog` and `Sync-PnPBrandCenterOfficeFont`. Read them before changing
 those files.
 
 ## Why this exists
@@ -172,7 +172,7 @@ and replaces the catalog. Whatever makes Office reload the library runs on the s
 the documented procedure instead of relying on the upload alone.
 
 `OfficeFontLibraryChecks.PublishAndRegister` (in `OfficeFontLibraryChecks.cs`) wraps the upload of both
-`Set-PnPOfficeFontCatalog` and `Sync-PnPBrandCenterOfficeFonts`:
+`Set-PnPOfficeFontCatalog` and `Sync-PnPBrandCenterOfficeFont`:
 
 1. `Tenant.RemoveFromOrgAssetsAndCdn(false, Public, library)`: removes the registration and keeps the CDN origin.
 2. The upload above.

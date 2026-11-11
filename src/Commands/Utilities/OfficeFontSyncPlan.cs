@@ -5,7 +5,7 @@ using System.Linq;
 namespace PnP.PowerShell.Commands.Utilities
 {
     /// <summary>
-    /// What Sync-PnPBrandCenterOfficeFonts changes in the Office font library, from file names only.
+    /// What Sync-PnPBrandCenterOfficeFont changes in the Office font library, from file names only.
     /// File names are compared case-insensitively.
     /// </summary>
     internal sealed class OfficeFontSyncPlan

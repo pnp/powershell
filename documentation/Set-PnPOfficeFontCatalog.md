@@ -28,7 +28,7 @@ Uploads the .ttf and .otf fonts in a folder to the Office font library (the orga
 
 It does the same as Set-SPOCustomFontCatalog, but works on a PnP connection (including access tokens), and builds the font catalog itself: it needs neither the SharePoint Online Management Shell module nor Windows.
 
-Like Set-SPOCustomFontCatalog, it replaces the previous upload: afterwards Office offers only the fonts in the folder. To add fonts without listing the existing ones again, use [Sync-PnPBrandCenterOfficeFonts](Sync-PnPBrandCenterOfficeFonts.md).
+Like Set-SPOCustomFontCatalog, it replaces the previous upload: afterwards Office offers only the fonts in the folder. To add fonts without listing the existing ones again, use [Sync-PnPBrandCenterOfficeFont](Sync-PnPBrandCenterOfficeFont.md).
 
 The cmdlet also removes and adds the Office font library registration around the upload, as Microsoft documents for changing a font library, and registers the library if it is not registered yet. See [Registration](#registration).
 
@@ -164,6 +164,6 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[Sync-PnPBrandCenterOfficeFonts](Sync-PnPBrandCenterOfficeFonts.md)
+[Sync-PnPBrandCenterOfficeFont](Sync-PnPBrandCenterOfficeFont.md)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

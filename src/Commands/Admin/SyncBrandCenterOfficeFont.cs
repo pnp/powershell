@@ -19,8 +19,8 @@ namespace PnP.PowerShell.Commands.Admin
     /// rebuilt catalog, replacing the previous upload as Set-SPOCustomFontCatalog does. -RemoveMissing
     /// also removes the Office fonts that are not in the source.
     /// </summary>
-    [Cmdlet(VerbsData.Sync, "PnPBrandCenterOfficeFonts", SupportsShouldProcess = true)]
-    public class SyncBrandCenterOfficeFonts : PnPSharePointOnlineAdminCmdlet
+    [Cmdlet(VerbsData.Sync, "PnPBrandCenterOfficeFont", SupportsShouldProcess = true)]
+    public class SyncBrandCenterOfficeFont : PnPSharePointOnlineAdminCmdlet
     {
         /// <summary>Where the fonts come from. Default: Brand Center.</summary>
         [Parameter(Mandatory = false)]

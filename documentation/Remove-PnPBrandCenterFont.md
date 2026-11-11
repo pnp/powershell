@@ -28,7 +28,7 @@ Removes a font file from the tenant's brand fonts library (Tenant.RemoveBrandFon
 
 Returns the results SharePoint reports, each with GeoLocation, Status and Message (on a multi-geo tenant, one per geo location).
 
-It does not change the Office font library. To stop Office apps offering a font, remove it from Brand Center, then run [Sync-PnPBrandCenterOfficeFonts](Sync-PnPBrandCenterOfficeFonts.md) -RemoveMissing.
+It does not change the Office font library. To stop Office apps offering a font, remove it from Brand Center, then run [Sync-PnPBrandCenterOfficeFont](Sync-PnPBrandCenterOfficeFont.md) -RemoveMissing.
 
 It asks for confirmation; use -Confirm:$false to skip it.
 
@@ -128,6 +128,6 @@ Accept wildcard characters: False
 
 [Get-PnPBrandCenterFont](Get-PnPBrandCenterFont.md)
 
-[Sync-PnPBrandCenterOfficeFonts](Sync-PnPBrandCenterOfficeFonts.md)
+[Sync-PnPBrandCenterOfficeFont](Sync-PnPBrandCenterOfficeFont.md)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
