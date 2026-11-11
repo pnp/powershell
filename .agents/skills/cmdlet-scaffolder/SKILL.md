@@ -16,7 +16,7 @@ existing sibling.
 Conventions live in [`new-cmdlet`](../new-cmdlet/SKILL.md); language rules in
 [`dotnet-standards`](../dotnet-standards/SKILL.md). This playbook is the procedure.
 
-> **Never commit, push, or open a PR.** Leave the work in the tree and hand it over — see
+> **Do not commit or push unless the user asks in that turn. Never open a PR.** Leave the work in the tree and hand it over — see
 > [Human in the loop](../../../AGENTS.md#human-in-the-loop).
 
 ## 1. Establish the request

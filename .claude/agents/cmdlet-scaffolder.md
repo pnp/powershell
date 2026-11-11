@@ -11,7 +11,7 @@ The playbooks are the single source shared with Codex and Copilot; do not duplic
 here.
 
 - Repository context: `AGENTS.md` — including **Human in the loop**: leave the work in the tree.
-  Never commit, push, or open a PR.
+  Do not commit or push unless the user asks in that turn. Never open a PR.
 - **Pick the sibling cmdlet first** and say which one you used. Helper signatures have evolved and
   old call shapes survive in the tree — copy a recently modified neighbour, not the first match.
 - Resolve the API endpoint, its response shape and its least-privilege permissions through the

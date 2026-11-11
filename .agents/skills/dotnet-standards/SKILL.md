@@ -58,9 +58,7 @@ These come from Microsoft's cmdlet development guidelines. Violations are user-f
 
   In the second form `-Force` short-circuits the `||`, `ShouldProcess` is never called, and
   `-Force -WhatIf` performs the operation instead of simulating it. Where both are wanted, gate on
-  `ShouldProcess` first and use `Force ||` only on the inner `ShouldContinue`. This is a live defect
-  in `src/Commands/Apps/RemoveEntraIDServicePrincipalAppRoleAssignment.cs:52` — flag it if you touch
-  that file, and never copy that line as a model.
+  `ShouldProcess` first and use `Force ||` only on the inner `ShouldContinue`.
 - Never hardcode credentials, tenant names or endpoints.
 
 **Errors**
@@ -69,7 +67,7 @@ These come from Microsoft's cmdlet development guidelines. Violations are user-f
   only style, it changes what the user receives:
   - `WriteError` and `ThrowTerminatingError` surface under `-ErrorAction Stop` as a pipeline stop,
     which `PnPConnectedCmdlet.ProcessRecord` rethrows untouched
-    (`src/Commands/Base/PnPConnectedCmdlet.cs:57-60`). Your `ErrorRecord`, its category and its
+    (`src/Commands/Base/PnPConnectedCmdlet.cs`). Your `ErrorRecord`, its category and its
     target object survive intact.
   - A raw `throw` reaches the generic catch. Under the default error action it becomes
     `PSInvalidOperationException` with the original as inner; under `-ErrorAction Stop` or
@@ -146,5 +144,6 @@ dotnet build src/PnP.PowerShell.sln
 
 Must be warning-clean. `src/Tests` is off limits — do not add or modify files there.
 
-A clean build is where your work stops. **Never commit, push, or open a PR** — see
+A clean build is where your work stops. **Do not commit or push unless the user asks in that turn, and never
+open a PR** — see
 [Human in the loop](../../../AGENTS.md#human-in-the-loop).

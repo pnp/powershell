@@ -107,7 +107,9 @@ src/Commands/            Cmdlet implementations, one folder per feature area
   Attributes/            Permission and behaviour attributes
   Enums/                 Enums (one per file)
   Model/                 Models (one type per file)
-src/ALC/                 Assembly load context isolating private dependencies
+resources/               RegisterPnPAssemblyResolver.ps1 bootstraps the assembly load context that
+                         isolates private dependencies; the context itself is
+                         src/Commands/Base/PnPAssemblyLoadContext.cs and PnPPowerShellModuleInitializer.cs
 src/Tests/               Off limits to agents — do not add or modify
 documentation/           One markdown reference page per cmdlet — this is the shipped product
 pages/articles/          Conceptual articles, registered in pages/articles/toc.yml
@@ -201,8 +203,8 @@ it; do not invent a `documentation/<Verb-PnPNoun>.md` for work that ships no cmd
 
 1. **Documentation** — `documentation/<Verb-PnPNoun>.md` created, updated or deleted alongside the
    code. Front matter, `## SYNOPSIS` with the **Required Permissions** block *where the cmdlet
-   declares API permissions* — a cmdlet carrying `ApiPermissionsNotRequired` must omit it, as all ten
-   such pages do today — `## SYNTAX`,
+   declares API permissions* — a cmdlet carrying `ApiPermissionsNotRequired` must omit it, as every
+   such page does today — `## SYNTAX`,
    `## DESCRIPTION`, `## EXAMPLES`, `## PARAMETERS`, `## RELATED LINKS`. Parameters listed
    **alphabetically**; `## PARAMETERS` contains ` ```yaml ` blocks and **nothing else fenced** —
    other fenced blocks there risk the external help build. Copy the structure from a sibling page.
@@ -261,6 +263,8 @@ breaking on the strength of a diff. See
 | [`dotnet-standards`](.agents/skills/dotnet-standards/SKILL.md) | Writing or reviewing C# / cmdlet design. |
 | [`new-cmdlet`](.agents/skills/new-cmdlet/SKILL.md) | Any cmdlet work — the conventions reference. |
 | [`cmdlet-scaffolder`](.agents/skills/cmdlet-scaffolder/SKILL.md) | Creating a new cmdlet. |
+| [`release-prep`](.agents/skills/release-prep/SKILL.md) | Checking versions and the changelog before a stable release. |
+| [`whatif-audit`](.agents/skills/whatif-audit/SKILL.md) | Sweeping for `-WhatIf`, `-Confirm` and `-Force` that do not do what they promise. |
 
 MCP servers (GitHub, Microsoft Learn), tool layout and how each tool invokes an agent:
 [`.agents/README.md`](.agents/README.md).

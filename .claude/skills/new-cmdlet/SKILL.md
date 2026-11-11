@@ -22,7 +22,7 @@ Supporting references:
   SharePoint scope
 - [`AGENTS.md`](../../../AGENTS.md) — repository context
 
-**Never commit, push, or open a PR** — leave the work in the tree and hand it over. See
+**Do not commit or push unless the user asks in that turn, and never open a PR** — leave the work in the tree and hand it over. See
 [Human in the loop](../../../AGENTS.md#human-in-the-loop).
 
 Remember the constraint: you cannot run these cmdlets. Anything calling an API you have not invoked

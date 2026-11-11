@@ -23,12 +23,17 @@ something, that is the authorization — do it, confirming each destructive comm
 ## Claude Code specifics
 
 - **Subagents**: `.claude/agents/` — `permissions-auditor`, `docs-sync`, `api-surface-diff`,
-  `issue-triage`, `cmdlet-scaffolder`. Each one is a thin wrapper delegating to its playbook.
+  `issue-triage`, `cmdlet-scaffolder`, `release-prep`, `whatif-audit`. Each one is a thin wrapper delegating to its playbook.
   The same set exists for Copilot (`.github/agents/*.agent.md`) and Codex (`.codex/agents/*.toml`),
   pointing at the same playbooks — keep the names in step when adding one.
 - **Skills**: `.claude/skills/` — `code-review`, `new-cmdlet`. Same arrangement.
 - **MCP**: `.mcp.json` configures the GitHub and Microsoft Learn servers. See
   [`.agents/README.md`](.agents/README.md).
 
-`docs-sync`, `permissions-auditor` and `api-surface-diff` are read-only and fan out well across the
-800+ cmdlets — run them in parallel over separate folders under `src/Commands/`.
+`docs-sync`, `permissions-auditor`, `whatif-audit` and `api-surface-diff` are read-only and fan out well across the
+800+ cmdlets. For a whole-repository or multi-folder sweep, run them in parallel over separate
+folders under `src/Commands/`. For one folder or a changed-file set, use a single agent or do the
+check inline — each subagent adds to the session's cost.
+
+`docs-sync` and `api-surface-diff` pin `model: sonnet` in their frontmatter because their work is
+mechanical extraction. The others inherit the session model.
