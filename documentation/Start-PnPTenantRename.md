@@ -10,6 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Start-PnPTenantRename.h
 # Start-PnPTenantRename
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+* SharePoint: Access to the SharePoint Tenant Administration site
+* SharePoint permissions: `Sites.FullControl.All` (application) or `AllSites.FullControl` (delegated)
+
 Schedules a rename of the SharePoint Online tenant domain name.
 
 ## SYNTAX
@@ -24,6 +30,8 @@ Schedules a tenant rename job to change the SharePoint Online domain name for th
 The new domain name must already have been added successfully to Microsoft Entra ID. Specify only the domain prefix, without `.sharepoint.com` or `.onmicrosoft.com`.
 
 The scheduled date and time must be at least 24 hours in the future and no more than 30 days in the future. Tenant rename can take several hours to days depending on the number of SharePoint sites and OneDrive accounts in the tenant.
+
+Scheduling can take a few minutes. If SharePoint Online does not respond within 5 minutes, or within the timeout set in the `SharePointPnPHttpTimeout` environment variable when that is longer, the cmdlet stops with an error, but the rename may still have been scheduled. Run `Get-PnPTenantRenameStatus` to check before running this cmdlet again. Use `Stop-PnPTenantRename` to cancel a scheduled rename.
 
 ## EXAMPLES
 
@@ -119,5 +127,9 @@ Accept wildcard characters: False
 Returns tenant rename warning and scheduling messages from SharePoint Online.
 
 ## RELATED LINKS
+
+[Get-PnPTenantRenameStatus](Get-PnPTenantRenameStatus.md)
+
+[Stop-PnPTenantRename](Stop-PnPTenantRename.md)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

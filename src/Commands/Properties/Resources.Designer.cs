@@ -61,6 +61,96 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized error for Enterprise Wiki capabilities without publishing page conversion.
+        /// </summary>
+        internal static string EnterpriseWikiCapabilitiesRequirePublishingPage {
+            get {
+                return ResourceManager.GetString("EnterpriseWikiCapabilitiesRequirePublishingPage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string describing an app-only token cache that could not be cleared.
+        /// </summary>
+        internal static string PersistedLoginCacheNotCleared {
+            get {
+                return ResourceManager.GetString("PersistedLoginCacheNotCleared", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string describing a failed persisted login cleanup and how to retry.
+        /// </summary>
+        internal static string PersistedLoginClearFailed {
+            get {
+                return ResourceManager.GetString("PersistedLoginClearFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized warning for a connection without a persisted login registration.
+        /// </summary>
+        internal static string PersistedLoginNotFound {
+            get {
+                return ResourceManager.GetString("PersistedLoginNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized warning for token data left after a registration could not be saved.
+        /// </summary>
+        internal static string PersistedLoginRollbackFailed {
+            get {
+                return ResourceManager.GetString("PersistedLoginRollbackFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized error for unavailable secure app-only token storage.
+        /// </summary>
+        internal static string PersistedLoginSecureStorageUnavailable {
+            get {
+                return ResourceManager.GetString("PersistedLoginSecureStorageUnavailable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized warning for connecting without unavailable secure token storage.
+        /// </summary>
+        internal static string PersistedLoginSecureStorageWarning {
+            get {
+                return ResourceManager.GetString("PersistedLoginSecureStorageWarning", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized error for invalid persisted login settings.
+        /// </summary>
+        internal static string PersistedLoginSettingsInvalid {
+            get {
+                return ResourceManager.GetString("PersistedLoginSettingsInvalid", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized error for an explicit persistence request with unreadable settings.
+        /// </summary>
+        internal static string PersistedLoginSettingsUnavailable {
+            get {
+                return ResourceManager.GetString("PersistedLoginSettingsUnavailable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized warning for continuing without unreadable persisted login settings.
+        /// </summary>
+        internal static string PersistedLoginSettingsWarning {
+            get {
+                return ResourceManager.GetString("PersistedLoginSettingsWarning", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to No URL specified nor does the provided access token contain an audience.
         /// </summary>
         internal static string AccessTokenConnectFailed {
@@ -183,6 +273,15 @@ namespace PnP.PowerShell.Commands.Properties {
         internal static string ContainerNotFound {
             get {
                 return ResourceManager.GetString("ContainerNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Container type &apos;{0}&apos; could not be found.
+        /// </summary>
+        internal static string ContainerTypeNotFound {
+            get {
+                return ResourceManager.GetString("ContainerTypeNotFound", resourceCulture);
             }
         }
         
@@ -546,6 +645,42 @@ namespace PnP.PowerShell.Commands.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to There are no existing SharePoint Online tenant rename jobs..
+        /// </summary>
+        internal static string TenantRenameJobNotFound {
+            get {
+                return ResourceManager.GetString("TenantRenameJobNotFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} The rename may still have been scheduled, so do not run Start-PnPTenantRename again yet. Run Get-PnPTenantRenameStatus to check whether the job exists. For more guidance, visit https://aka.ms/SPOTenantRename..
+        /// </summary>
+        internal static string TenantRenameScheduleTimedOut {
+            get {
+                return ResourceManager.GetString("TenantRenameScheduleTimedOut", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The request to stop the tenant rename job completed at {0} (UTC). Run Get-PnPTenantRenameStatus to check the state of the job..
+        /// </summary>
+        internal static string TenantRenameStopRequested {
+            get {
+                return ResourceManager.GetString("TenantRenameStopRequested", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The tenant rename job was returned, but the progress of its site renames could not be retrieved, so InProgress, Renamed and AttentionRequired are empty. {0}.
+        /// </summary>
+        internal static string TenantRenameSiteProgressUnavailable {
+            get {
+                return ResourceManager.GetString("TenantRenameSiteProgressUnavailable", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to SharePoint PnP PowerShell Library ({0}).
         /// </summary>

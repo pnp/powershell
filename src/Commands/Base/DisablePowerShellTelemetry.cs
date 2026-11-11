@@ -4,7 +4,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPPowerShellTelemetry")]
-    [Attributes.ApiPermissionsNotRequired(Remarks = "This cmdlet updates a local file, an environment variable and the telemetry setting of the current connection, and performs no request.")]
+    [Obsolete("Disable-PnPPowerShellTelemetry is deprecated and will be removed in the next release.")]
+    [Attributes.ApiPermissionsNotRequired(Remarks = "This cmdlet performs no request.")]
     public class DisablePowerShellTelemetry : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -12,27 +13,7 @@ namespace PnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
-            var userFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            var telemetryFile = System.IO.Path.Combine(userFolder, ".pnppowershelltelemetry");
-            if (Force || ShouldContinue("Do you want to disable telemetry for PnP PowerShell?", Properties.Resources.Confirm))
-            {
-                System.IO.File.WriteAllText(telemetryFile, "disallow");
-                Environment.SetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY", "true");
-                if (Connection != null)
-                {
-                    Connection.ApplicationInsights = null;
-                }
-                WriteObject("Telemetry disabled");
-            }
-            else
-            {
-                var enabled = false;
-                if (System.IO.File.Exists(telemetryFile))
-                {
-                    enabled = System.IO.File.ReadAllText(telemetryFile).ToLower() == "allow";
-                }
-                WriteObject($"Telemetry setting unchanged: currently {(enabled ? "enabled" : "disabled")}");
-            }
+            WriteObject("Telemetry disabled");
         }
     }
 }

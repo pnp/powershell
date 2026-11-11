@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchSettings.h
 # Get-PnPSearchSettings
 
 ## SYNOPSIS
-Retrieves search settings for a site
+Retrieves search settings for a site, including whether the site collection has opted out of Copilot Search.
 
 ## SYNTAX
 
@@ -20,7 +20,7 @@ Get-PnPSearchSettings [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 
-Allows to retrieve search settings for a site.
+Allows to retrieve search settings for a site. The returned object includes the site collection-level `CopilotSearchOptOut` setting. If the setting is not available yet on the tenant, its value is `$null` and a warning is shown.
 
 ## EXAMPLES
 
@@ -30,6 +30,13 @@ Get-PnPSearchSettings
 ```
 
 Retrieve search settings for the site
+
+### EXAMPLE 2
+```powershell
+(Get-PnPSearchSettings).CopilotSearchOptOut
+```
+
+Returns whether the current site collection has opted out of Copilot Search.
 
 ## PARAMETERS
 
@@ -52,4 +59,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

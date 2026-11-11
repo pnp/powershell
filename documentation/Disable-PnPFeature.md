@@ -33,13 +33,6 @@ This will disable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe"
 
 ### EXAMPLE 2
 ```powershell
-Disable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force
-```
-
-This will disable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe" with force.
-
-### EXAMPLE 3
-```powershell
 Disable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web
 ```
 
@@ -62,7 +55,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-Specifies whether to continue if an error occurs when deactivating the feature.
+**This parameter is obsolete and has no effect. It will be removed in a future version.**
 
 ```yaml
 Type: SwitchParameter

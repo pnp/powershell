@@ -42,7 +42,7 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-ReadOnlyForBlockDownloadPolicy]
  [-ListsShowHeaderAndNavigation <Boolean>]
  [-DefaultLinkToExistingAccessReset <SwitchParameter>] [-DefaultShareLinkRole <Role>]
- [-DefaultShareLinkScope <SharingScope>] [-LoopDefaultSharingLinkRole <Role>]
+ [-DefaultShareLinkScope <SharingScope>] [-DefaultMainLinkScope <MainLinkAudience>] [-LoopDefaultSharingLinkRole <Role>]
  [-LoopDefaultSharingLinkScope <SharingScope>] [-RestrictContentOrgWideSearch <Boolean>] [-ReadOnlyForUnmanagedDevices <Boolean>]
  [-RequestFilesLinkExpirationInDays <Int32>] [-RequestFilesLinkEnabled <Boolean>] [-OverrideSharingCapability <Boolean>]
  [-RestrictedAccessControl <Boolean>] [-ClearRestrictedAccessControl <SwitchParameter>] [-RestrictedAccessControlGroups <Guid[]>]
@@ -1050,6 +1050,21 @@ To reset the default link to existing access configuration for a site.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Set Properties
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultMainLinkScope
+To set the default audience of the main sharing link of items at the root of the document libraries of the site. Available values are `OnlyPeopleAdded`, `Organization` and `Anyone`. When not set, the effective value is `OnlyPeopleAdded`. `Anyone` is only available when anonymous links are allowed at the tenant level; if the site has Anyone links disabled, the next most restrictive value applies.
+
+```yaml
+Type: MainLinkAudience
+Parameter Sets: Set Properties
+Accepted values: OnlyPeopleAdded, Organization, Anyone
+
 Required: False
 Position: Named
 Default value: None

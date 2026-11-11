@@ -3,6 +3,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Identity.Client.Extensions.Msal;
+using PnP.PowerShell.Commands.Properties;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -36,19 +37,36 @@ namespace PnP.PowerShell.Commands.Model
             {
                 if (_settings == null)
                 {
-                    // try to load settings
                     var settingsFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "settings.json");
-                    if (System.IO.File.Exists(settingsFile))
-                    {
-                        _settings = JsonSerializer.Deserialize<Settings>(System.IO.File.ReadAllText(settingsFile)); ;
-                    }
-                    else
-                    {
-                        _settings = new Settings();
-                    }
+                    _settings = Load(settingsFile);
                 }
                 return _settings;
             }
+        }
+
+        /// <summary>Loads settings without treating unreadable or invalid files as empty configuration.</summary>
+        internal static Settings Load(string settingsFile)
+        {
+            string json;
+            try
+            {
+                json = File.ReadAllText(settingsFile);
+            }
+            catch (FileNotFoundException)
+            {
+                return new Settings();
+            }
+            catch (DirectoryNotFoundException)
+            {
+                return new Settings();
+            }
+
+            var settings = JsonSerializer.Deserialize<Settings>(json);
+            if (settings == null || settings.Cache.Contains(null))
+            {
+                throw new JsonException(Resources.PersistedLoginSettingsInvalid);
+            }
+            return settings;
         }
 
         public void Save()

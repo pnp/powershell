@@ -1,53 +1,19 @@
-﻿using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Model.Syntex;
-using System.Collections.Generic;
+﻿using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Syntex
 {
     [Cmdlet(VerbsCommon.Get, "PnPSyntexModel")]
-    [OutputType(typeof(SyntexModel))]
-    public class GetSyntexModel : PnPWebCmdlet
+    [Obsolete("It no longer does anything, as SharePoint Syntex is no longer supported, and will be removed in a future version.")]
+    [Attributes.ApiPermissionsNotRequired(Remarks = "This cmdlet performs no request.")]
+    public class GetSyntexModel : BasePSCmdlet
     {
-
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         public SyntexModelPipeBind Identity;
 
-        protected override void ExecuteCmdlet()
-        {
-            var ctx = Connection.PnPContext;
-
-            if (ctx.Web.IsSyntexContentCenter())
-            {
-                if (ParameterSpecified(nameof(Identity)) && Identity != null)
-                {
-                    WriteObject(Identity.GetSyntexModel(Connection));
-                }
-                else
-                {
-                    var syntexContentCenter = ctx.Web.AsSyntexContentCenter();
-                    var models = syntexContentCenter.GetSyntexModels();
-
-                    List<SyntexModel> modelsToOutput = new List<SyntexModel>();
-                    foreach(var model in models)
-                    {
-                        modelsToOutput.Add(new SyntexModel()
-                        {
-                            Id = model.Id,
-                            Description = model.Description,
-                            ModelLastTrained = model.ModelLastTrained,
-                            Name = model.Name,
-                            UniqueId = model.UniqueId
-                        }); 
-                    }
-
-                    WriteObject(modelsToOutput, true);
-                }
-            }
-            else
-            {
-                LogWarning("The connected site is not a Syntex Content Center site");
-            }
-        }
+        [Parameter(Mandatory = false, HelpMessage = "Ignored, as this cmdlet no longer performs any request. Kept for backwards compatibility with existing scripts.")]
+        public PnPConnection Connection = null;
     }
 }

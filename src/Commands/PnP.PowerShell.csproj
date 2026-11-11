@@ -53,23 +53,24 @@
 
 	<ItemGroup>		
 		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
-		<PackageReference Include="PnP.Framework" Version="1.21.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Framework" Version="1.21.*-*" Condition="'$(IsRelease)' == '1'" />
+		<PackageReference Include="PnP.Framework" Version="1.22.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Framework" Version="1.22.*-*" Condition="'$(IsRelease)' == '1'" />
 		
-		<PackageReference Include="PnP.Core" Version="1.18.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core" Version="1.18.*-*" Condition="'$(IsRelease)' == '1'" />
+		<PackageReference Include="PnP.Core" Version="1.19.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Core" Version="1.19.*-*" Condition="'$(IsRelease)' == '1'" />
 		
-		<PackageReference Include="PnP.Core.Auth" Version="1.18.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Auth" Version="1.18.*-*" Condition="'$(IsRelease)' == '1'" />
+		<PackageReference Include="PnP.Core.Auth" Version="1.19.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Core.Auth" Version="1.19.*-*" Condition="'$(IsRelease)' == '1'" />
 		
-		<PackageReference Include="PnP.Core.Admin" Version="1.18.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Admin" Version="1.18.*-*" Condition="'$(IsRelease)' == '1'" />
+		<PackageReference Include="PnP.Core.Admin" Version="1.19.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Core.Admin" Version="1.19.*-*" Condition="'$(IsRelease)' == '1'" />
+
+		<PackageReference Include="PnP.Core.Provisioning" Version="1.19.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Core.Provisioning" Version="1.19.*-*" Condition="'$(IsRelease)' == '1'" />
 
 		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.85.2" />
 		<PackageReference Include="Microsoft.Bcl.Cryptography" Version="9.0.5" />
 
-		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
-		
 	</ItemGroup>
 
 	<ItemGroup>
@@ -95,7 +96,12 @@
 			<HintPath>$(PnPCoreSdkPath)PnP.Core.Admin\bin\Debug\net8.0\PnP.Core.Admin.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
-		</Reference>		
+		</Reference>
+		<Reference Include="PnP.Core.Provisioning" Condition="'$(TargetFramework)' == 'net8.0'">
+			<HintPath>$(PnPCoreSdkPath)PnP.Core.Provisioning\bin\Debug\net8.0\PnP.Core.Provisioning.dll</HintPath>
+			<Private>true</Private>
+			<SpecificVersion>false</SpecificVersion>
+		</Reference>
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(PnPFrameworkPath)' != '' and '$(IsRelease)' != '1'">
@@ -137,4 +143,11 @@
 			<DependentUpon>Resources.resx</DependentUpon>
 		</Compile>
 	</ItemGroup>
+
+	<Target Name="RemoveApplicationInsightsAssets" BeforeTargets="ResolveLockFileCopyLocalFiles;GenerateBuildDependencyFile">
+		<ItemGroup>
+			<RuntimeCopyLocalItems Remove="@(RuntimeCopyLocalItems)" Condition="'%(RuntimeCopyLocalItems.NuGetPackageId)' == 'Microsoft.ApplicationInsights'" />
+			<ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Microsoft.ApplicationInsights'" />
+		</ItemGroup>
+	</Target>
 </Project>

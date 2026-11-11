@@ -1,17 +1,5 @@
-# Disable or Enable telemetry
+# Telemetry in PnP PowerShell
 
-By default PnP PowerShell will report its usage anonymously to the PnP team. We collection information about the **version of PnP PowerShell**, the **operation system version** and the **cmdlet** executed. Notice that we will *not* include parameters used and we will *not* include any values of parameters. We will also *not* be able to trace the execution back to the specific tenant it ran on, the organization it was used for or the person it was run by. Having telemtry in place allows us to get insight in the usage of cmdlets and thereby prioritize work towards the most popular cmdlets.
+Up to September 4th, 2026, PnP PowerShell reported its usage anonymously to the PnP team. We collected information about the **version of PnP PowerShell**, the **operation system version** and the **cmdlet** executed. Notice that we did *not* include parameters used and we did *not* include any values of parameters. We were also *not* be able to trace the execution back to the specific tenant it ran on, the organization it was used for or the person it was run by. Having had telemetry in place allowed us to get insight in the usage of cmdlets and thereby prioritize work towards the most popular cmdlets. Over the years the popularity of PnP PowerShell has grown to a level where the costs of collecting and storing all this data became a substantial amount. We have therefore decided to stop collecting this data as the costs no longer outweighed the advantages of us having insights into the usage. The endpoint for the telemetry collection has been removed. Starting with version 3.4.2 the sending of telemetry has been removed from the PowerShell module. Any prior versions will still try to submit telemetry, but submitting the telemetry will no longer succeed. It will not interfere with the normal execution of your PowerShell scripts.
 
-To query if in a connected PnP PowerShell session the telemetry is enabled, use [Get-PnPPowerShellTelemetryEnabled](../cmdlets/Get-PnPPowerShellTelemetryEnabled.md).
-
-If you wish to control telemetry to be sent, you can use one of the below options.
-
-## By using PnP PowerShell
-You can disable telemetry to be sent by using [Disable-PnPPowerShellTelemetry](../cmdlets/Disable-PnPPowerShellTelemetry.md).
-You can enable telemetry to be sent by using [Enable-PnPPowerShellTelemetry](../cmdlets/Enable-PnPPowerShellTelemetry.md).
-
-## By setting an environment variable
-To disable telemetry, set the `PNPPOWERSHELL_DISABLETELEMETRY` environment variable to `true`, i.e. by using `$env:PNPPOWERSHELL_DISABLETELEMETRY=$true`. Remove the entry again or set it to `false` to enable telemetry to be sent again. 
-
-## By adding a file in your user profile folder
-Alternatively, you can create an empty file called `.pnppowershelltelemetry` inside your home directory (`$env:UserProfile` on Windows, `$env:HOME` on Linux) not needing any content inside of the file to disable telemetry. Remove the file again to enable telemetry to be sent.
+The telemetry PnP PowerShell cmlets [Get-PnPPowerShellTelemetryEnabled](../cmdlets/Get-PnPPowerShellTelemetryEnabled.md), [Disable-PnPPowerShellTelemetry](../cmdlets/Disable-PnPPowerShellTelemetry.md) and [Enable-PnPPowerShellTelemetry](../cmdlets/Enable-PnPPowerShellTelemetry.md) have been marked as obsolete in version 3.4.2. They will throw a warning when used and will no longer function, but are being kept in the v3 releases for backwards compatibility so existing scripts using them will not break. In version 4.0.0 onwards, these cmdlets have been removed entirely as they no longer serve purpose.

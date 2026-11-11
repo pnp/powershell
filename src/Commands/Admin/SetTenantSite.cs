@@ -207,6 +207,9 @@ namespace PnP.PowerShell.Commands
         public SharingScope DefaultShareLinkScope;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public MainLinkAudience DefaultMainLinkScope;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public Role LoopDefaultSharingLinkRole;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
@@ -440,6 +443,11 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(DefaultShareLinkScope)))
             {
                 props.DefaultShareLinkScope = DefaultShareLinkScope;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(DefaultMainLinkScope)))
+            {
+                props.DefaultMainLinkScope = DefaultMainLinkScope;
                 updateRequired = true;
             }
             if (ParameterSpecified(nameof(DefaultShareLinkRole)))

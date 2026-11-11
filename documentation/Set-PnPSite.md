@@ -34,6 +34,7 @@ Set-PnPSite
  [-DefaultSharingLinkType <SharingLinkType>]
  [-DefaultLinkToExistingAccess <Boolean>]
  [-DefaultLinkToExistingAccessReset]
+ [-DefaultMainLinkScope <MainLinkAudience>]
  [-DisableAppViews <AppViewsPolicy>]
  [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>]
  [-DisableSharingForNonOwners]
@@ -399,6 +400,21 @@ Parameter Sets: Set Properties
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultMainLinkScope
+Specifies the default audience of the main sharing link of items at the root of the document libraries of the site. Available values are `OnlyPeopleAdded`, `Organization` and `Anyone`. When not set, the effective value is `OnlyPeopleAdded`. `Anyone` is only available when anonymous links are allowed at the tenant level; if the site has Anyone links disabled, the next most restrictive value applies.
+
+```yaml
+Type: MainLinkAudience
+Parameter Sets: Set Properties
+Accepted values: OnlyPeopleAdded, Organization, Anyone
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

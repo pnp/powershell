@@ -172,15 +172,15 @@ Connect-PnPOnline [yourtenant].sharepoint.com -ClientId <client id of your Entra
 
 ## Authentication to GCC or National Cloud environments
 
-In order to connect to a GCC or a national cloud environment, ensure you have followed the [specific steps for setting up the application registration for national clouds](#special-instructions-for-gcc-or-national-cloud-environments).
+In order to connect to a GCC or a national cloud environment, ensure you have followed the [specific steps for setting up the application registration for national clouds](registerapplication.md#special-instructions-for-gcc-or-national-cloud-environments).
 
 Connecting can be done using:
 
 ```powershell
-Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China|BleuCloud|DelosCloud|GovSGCloud]
+Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|China|BleuCloud|DelosCloud|GovSGCloud]
 ```
 
-The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.
+The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment. For what each value changes, the sign in methods it applies to, and how to provide the endpoints of another cloud with `Custom`, see [National and sovereign clouds](nationalclouds.md).
 
 ## Silent Authentication with Credentials for running in Pipelines
 

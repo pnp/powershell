@@ -9,6 +9,16 @@ namespace PnP.PowerShell.Commands.Model
 	public class TenantRenameJob
 	{
 		/// <summary>
+		/// Identifier of the tenant rename job.
+		/// </summary>
+		public Guid JobId { get; set; }
+
+		/// <summary>
+		/// The new domain prefix the tenant is being renamed to.
+		/// </summary>
+		public string TargetDomainPrefix { get; set; }
+
+		/// <summary>
 		/// Current state of the tenant rename job.
 		/// </summary>
 		public string JobState { get; set; }

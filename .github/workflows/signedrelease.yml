@@ -220,9 +220,9 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           path: output
 
@@ -235,7 +235,7 @@ jobs:
           "VERSION=$version" | Out-File $env:GITHUB_OUTPUT -Append
 
       - name: Release
-        uses: anton-yurchenko/git-release@v6
+        uses: anton-yurchenko/git-release@v7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRAFT_RELEASE: "false"

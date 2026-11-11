@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -7,10 +8,14 @@ using System.Runtime.Loader;
 namespace PnP.PowerShell.Commands.Base
 {
     /// <summary>
-    /// A dedicated <see cref="AssemblyLoadContext"/> that owns the complete private dependency
-    /// graph shipped with PnP PowerShell (PnP.Framework, PnP.Core, PnP.Core.Auth, PnP.Core.Admin,
-    /// the CSOM libraries, Microsoft.Extensions.*, Microsoft.Identity.*, Microsoft.ApplicationInsights,
-    /// PnP.PowerShell.ALC, Newtonsoft.Json, AngleSharp, and so on).
+    /// A dedicated <see cref="AssemblyLoadContext"/> that owns the private dependency graph shipped with
+    /// PnP PowerShell in the module's "Common" folder (PnP.Framework, PnP.Core, PnP.Core.Auth, PnP.Core.Admin,
+    /// Microsoft.Extensions.*, Microsoft.Identity.*, Newtonsoft.Json, and so on).
+    ///
+    /// The CSOM libraries are the exception: they ship in the "Core" folder next to PnP.PowerShell.dll and live
+    /// in the default context, so that PowerShell's [TypeName] resolver can find their types in user scripts. When
+    /// an assembly in this context needs one of them, <see cref="ResolveFromModuleAssemblyFolder"/> hands it the
+    /// copy in the default context. See that method for why this cannot be left to the runtime.
     ///
     /// The purpose of this context is <b>full isolation</b>. By overriding <see cref="Load"/> to probe
     /// our own dependency folder first, every assembly loaded here - and, crucially, every transitive
@@ -34,20 +39,39 @@ namespace PnP.PowerShell.Commands.Base
     internal sealed class PnPAssemblyLoadContext : AssemblyLoadContext
     {
         /// <summary>
+        /// Simple name of MSAL, the root of the Microsoft.Identity.Client assembly family.
+        /// </summary>
+        private const string IdentityClientAssemblyName = "Microsoft.Identity.Client";
+
+        /// <summary>
         /// Absolute path to the folder that holds the private dependency graph (the module's "Common" folder).
         /// </summary>
         private readonly string _dependencyPath;
+
+        /// <summary>
+        /// Absolute path to the folder that holds PnP.PowerShell.dll and the CSOM libraries (the module's "Core"
+        /// folder), whose assemblies are loaded into the default context.
+        /// </summary>
+        private readonly string _moduleAssemblyPath;
 
         /// <summary>
         /// Candidate runtime identifiers used to locate native (unmanaged) libraries, most specific first.
         /// </summary>
         private readonly string[] _nativeRuntimeIdentifiers;
 
-        public PnPAssemblyLoadContext(string dependencyPath)
+        /// <summary>
+        /// Versions of the assemblies in the dependency folder, keyed by simple name; <c>null</c> for assemblies we do
+        /// not ship.
+        /// </summary>
+        private readonly ConcurrentDictionary<string, Version> _shippedVersions = new(StringComparer.OrdinalIgnoreCase);
+
+        public PnPAssemblyLoadContext(string dependencyPath, string moduleAssemblyPath)
             : base(name: "PnP.PowerShell", isCollectible: false)
         {
             _dependencyPath = dependencyPath ?? throw new ArgumentNullException(nameof(dependencyPath));
+            _moduleAssemblyPath = moduleAssemblyPath ?? throw new ArgumentNullException(nameof(moduleAssemblyPath));
             _nativeRuntimeIdentifiers = BuildNativeRuntimeIdentifiers();
+            Resolving += ResolveFromModuleAssemblyFolder;
         }
 
         /// <summary>
@@ -69,13 +93,15 @@ namespace PnP.PowerShell.Commands.Base
 
             // Boundary assemblies are those whose types cross between the default context (where PnP.PowerShell.dll
             // and its cmdlets live) and this private context - so they must resolve to a single identity on both
-            // sides. If the host process already loaded one into the default context, reuse that copy (return null
-            // to defer to the default context) instead of loading our own, which would create two identities.
-            // The concrete failure this prevents is MSAL's MsalCacheHelper.RegisterCache throwing across contexts
-            // when a host (e.g. an Az module) preloaded Microsoft.Identity.Client. Assemblies NOT on this list -
-            // above all Microsoft.Extensions.* - are always isolated, so a mismatched host version cannot break us
-            // (that is the whole purpose of this context and the fix for issue #5350).
-            if (IsSharedBoundaryAssembly(assemblyName.Name) && IsLoadedInDefaultContext(assemblyName.Name))
+            // sides. If the host process already loaded one into the default context at a version that satisfies our
+            // references, reuse that copy (return null to defer to the default context) instead of loading our own,
+            // which would create two identities. The concrete failure this prevents is MSAL's
+            // MsalCacheHelper.RegisterCache throwing across contexts when a host (e.g. an Az module) preloaded
+            // Microsoft.Identity.Client. An older host copy cannot satisfy our references, for which we load our own
+            // copy and ResolveDependency routes PnP.PowerShell.dll's reference from the default context to it as well.
+            // Assemblies NOT on this list - above all Microsoft.Extensions.* - are always isolated, so a mismatched
+            // host version cannot break us (that is the whole purpose of this context and the fix for issue #5350).
+            if (DefersToDefaultContext(assemblyName.Name))
             {
                 return null;
             }
@@ -89,29 +115,127 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
-        /// True for assemblies whose types cross the boundary with the default context AND for which sharing the
-        /// host's already-loaded copy is safe/required (the MSAL family, and System.Text.Json which is always a
+        /// Loads a CSOM library that an assembly in this context needs from the module's "Core" folder into the default
+        /// context, and returns <c>null</c> for any assembly that is not in that folder.
+        ///
+        /// <see cref="Load"/> leaves the CSOM libraries to the default context, but the runtime's fallback to the default
+        /// context only finds an assembly that is already loaded there. PowerShell loads the CSOM libraries from "Core" only
+        /// when PnP.PowerShell.dll asks for them, as it resolves the dependencies of an assembly from that assembly's
+        /// folder for requests from the default context only. Microsoft.SharePoint.Client.UserProfiles, .Search and
+        /// .Search.Applications are not needed to import the module, so PnP.Framework failed to load them whenever
+        /// PnP.PowerShell.dll had not used them first, for instance when applying a template with localizations
+        /// (issue #5495).
+        ///
+        /// This handler runs only after the default context has no copy, so a copy that is already loaded is never
+        /// loaded twice. <see cref="Assembly.LoadFrom(string)"/> loads into the default context the way PowerShell loads
+        /// the other assemblies in "Core", so the dependencies of the loaded assembly resolve from "Core" as well.
+        /// </summary>
+        private Assembly ResolveFromModuleAssemblyFolder(AssemblyLoadContext context, AssemblyName assemblyName)
+        {
+            if (string.IsNullOrEmpty(assemblyName?.Name))
+            {
+                return null;
+            }
+
+            string candidate = Path.Combine(_moduleAssemblyPath, assemblyName.Name + ".dll");
+            return File.Exists(candidate) ? Assembly.LoadFrom(candidate) : null;
+        }
+
+        /// <summary>
+        /// True for assemblies whose types cross the boundary with the default context AND for which sharing a
+        /// host copy that is recent enough is safe/required (the MSAL family, and System.Text.Json which is always a
         /// shared framework assembly). Deliberately excludes Microsoft.Extensions.* so those stay strictly isolated.
         /// </summary>
         private static bool IsSharedBoundaryAssembly(string simpleName)
         {
-            return simpleName.StartsWith("Microsoft.Identity.Client", StringComparison.OrdinalIgnoreCase)
+            return simpleName.StartsWith(IdentityClientAssemblyName, StringComparison.OrdinalIgnoreCase)
                 || simpleName.Equals("System.Text.Json", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
-        /// Checks whether an assembly with the given simple name is already loaded in the default context.
+        /// Returns true when the default context provides a boundary assembly instead of this context. This is the
+        /// case when the default context already holds a copy that is at least the version we ship, or a copy of an
+        /// assembly we do not ship. A Microsoft.Identity.Client.* assembly only defers when Microsoft.Identity.Client
+        /// itself defers, so our own MSAL is never combined with an MSAL extension of the host.
         /// </summary>
-        private static bool IsLoadedInDefaultContext(string simpleName)
+        internal bool DefersToDefaultContext(string simpleName)
         {
-            foreach (Assembly assembly in Default.Assemblies)
+            if (!IsSharedBoundaryAssembly(simpleName))
+            {
+                return false;
+            }
+
+            if (simpleName.StartsWith(IdentityClientAssemblyName + ".", StringComparison.OrdinalIgnoreCase)
+                && !DefersToDefaultContext(IdentityClientAssemblyName))
+            {
+                return false;
+            }
+
+            Version loadedVersion = GetVersionLoadedInDefaultContext(simpleName);
+            if (loadedVersion == null)
+            {
+                return false;
+            }
+
+            Version shippedVersion = GetShippedVersion(simpleName);
+            return shippedVersion == null || loadedVersion >= shippedVersion;
+        }
+
+        /// <summary>
+        /// Returns the version of the assembly with the given simple name loaded in the default context, or
+        /// <c>null</c> when the default context has not loaded it.
+        /// </summary>
+        private static Version GetVersionLoadedInDefaultContext(string simpleName)
+        {
+            return FindAssembly(Default.Assemblies, simpleName)?.GetName().Version;
+        }
+
+        /// <summary>
+        /// Returns a loaded copy of a deferred boundary assembly for a request the default context could not bind.
+        /// The copy of this context is preferred. Otherwise the copy of the default context is used if it has at least
+        /// the requested version. Returns <c>null</c> when no loaded copy qualifies.
+        /// </summary>
+        internal Assembly ResolveDeferredAssembly(AssemblyName assemblyName)
+        {
+            Assembly ownCopy = FindAssembly(Assemblies, assemblyName.Name);
+            if (ownCopy != null)
+            {
+                return ownCopy;
+            }
+
+            Assembly hostCopy = FindAssembly(Default.Assemblies, assemblyName.Name);
+            if (hostCopy != null && (assemblyName.Version == null || hostCopy.GetName().Version >= assemblyName.Version))
+            {
+                return hostCopy;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Returns the assembly with the given simple name, or <c>null</c> when none of the assemblies has that name.
+        /// </summary>
+        private static Assembly FindAssembly(System.Collections.Generic.IEnumerable<Assembly> assemblies, string simpleName)
+        {
+            foreach (Assembly assembly in assemblies)
             {
                 if (string.Equals(assembly.GetName().Name, simpleName, StringComparison.OrdinalIgnoreCase))
                 {
-                    return true;
+                    return assembly;
                 }
             }
-            return false;
+            return null;
+        }
+
+        /// <summary>
+        /// Returns the version of the assembly we ship in the dependency folder, or <c>null</c> when we do not ship it.
+        /// </summary>
+        private Version GetShippedVersion(string simpleName)
+        {
+            return _shippedVersions.GetOrAdd(simpleName, name =>
+            {
+                string candidate = Path.Combine(_dependencyPath, name + ".dll");
+                return File.Exists(candidate) ? AssemblyName.GetAssemblyName(candidate).Version : null;
+            });
         }
 
         /// <summary>

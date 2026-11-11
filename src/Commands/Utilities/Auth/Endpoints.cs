@@ -26,6 +26,22 @@ namespace PnP.PowerShell.Commands.Utilities.Auth
         }
 
         /// <summary>
+        /// Returns the endpoint for the Office 365 Management API based on the current connection
+        /// </summary>
+        /// <param name="connection">Connection to base the proper API endpoint on</param>
+        /// <returns>The API endpoint</returns>
+        public static string GetOfficeManagementApiEndpoint(PnPConnection connection)
+        {
+            return connection.AzureEnvironment switch
+            {
+                Framework.AzureEnvironment.USGovernment => "https://manage-gcc.office.com",
+                Framework.AzureEnvironment.USGovernmentHigh => "https://manage.office365.us",
+                Framework.AzureEnvironment.USGovernmentDoD => "https://manage.protection.apps.mil",
+                _ => "https://manage.office.com",
+            };
+        }
+
+        /// <summary>
         /// Returns the endpoint for the Microsoft Graph API based on the current connection
         /// </summary>
         /// <param name="connection">Connection to base the proper API endpoint on</param>
