@@ -1,4 +1,4 @@
-$version = "3.4.1"
+$version = "3.5.0"
 
 Write-Host "Building PnP.PowerShell $version on PowerShell $($PSVersionTable.PSVersion.ToString())" -ForegroundColor Yellow
 

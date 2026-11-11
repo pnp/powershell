@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+
+## [3.5.0]
+
+### Added
 - Added `-Experimental` to `Get-PnPSiteTemplate`, `Invoke-PnPSiteTemplate`, `Get-PnPTenantTemplate`, `Invoke-PnPTenantTemplate`, `Read-PnPSiteTemplate`, `Save-PnPSiteTemplate`, `Read-PnPTenantTemplate`, `Save-PnPTenantTemplate`, `Convert-PnPSiteTemplate`, `Export-PnPListToSiteTemplate`, `Add-PnPDataRowsToSiteTemplate`, `Add-PnPListFoldersToSiteTemplate`, `Add-PnPFileToSiteTemplate`, `Remove-PnPFileFromSiteTemplate` and `Set-PnPSiteTemplateMetadata` to run them on the experimental PnP.Core.Provisioning engine instead of PnP Framework. [#5474](https://github.com/pnp/powershell/pull/5474)
 - Added `Get-PnPPersistedLogin` which lists the tenant url, client id and authentication type of every login registered to use the local token cache, so the cache can be inspected without reading it. [#5463](https://github.com/pnp/powershell/pull/5463)
 - Added `-PersistLogin` to the certificate based app only parameter sets of `Connect-PnPOnline`, so a connection made with `-CertificatePath`, `-CertificateBase64Encoded`, `-Thumbprint` or the environment variables can reuse its access token from the local cache. The certificate, tenant and client id are still required on each connection, as neither the certificate nor its password is stored. [#5463](https://github.com/pnp/powershell/pull/5463)
@@ -59,6 +63,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 
 - Fabien Tschanz [FabienTschanz]
+- Adam Wójcik [Adam-IT]
+- James May [fowl2]
+- Yifeng Mao [YifengMao]
+- maskoch_microsoft [3141592654]
 
 ## [3.4.1]
 
