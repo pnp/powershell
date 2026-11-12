@@ -1,11 +1,11 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContainerType.html
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContainerType.html
+tags: Available in the current Nightly Release only.
+title: Set-PnPContainerType
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
-title: Set-PnPContainerType
-tags: Available in the current Nightly Release only.
 ---
  
 # Set-PnPContainerType
