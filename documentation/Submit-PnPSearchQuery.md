@@ -88,15 +88,15 @@ Returns absolutely all items indexed by SharePoint Search which represent a docu
 
 ### EXAMPLE 6
 ```powershell
-Submit-PnPSearchQuery -Query "contentclass:STS_ListItem_DocumentLibrary" -SortList @{"filename" = "ascending"} -All
+Submit-PnPSearchQuery -Query "contentclass:STS_ListItem_DocumentLibrary" -SortList @{"filename" = "ascending"}
 ```
 
-Returns absolutely all items indexed by SharePoint Search which represent a document in a document library and sorts the items by file name in ascending order.
+Returns the top 500 items indexed by SharePoint Search which represent a document in a document library and sorts the items by file name in ascending order.
 
 ## PARAMETERS
 
 ### -All
-Automatically page results until the end to get more than 500. Use with caution!
+Automatically page results until the end to get more than 500. Each page contains up to 500 results, ordered by `docid` in ascending order. The cmdlet uses `IndexDocId` to retrieve the next page and ignores `-SortList`. Use with caution!
 
 ```yaml
 Type: SwitchParameter
@@ -391,6 +391,8 @@ Accept wildcard characters: False
 
 ### -SortList
 The list of properties by which the search results are ordered as a hashtable, i.e. each property needs to be a key and the associated value either "Ascending" or "Descending" based on the wanted sort order, or "FQLFormula" if you want to use a formula to define the sort order.
+
+When you specify `-All`, this parameter is ignored and results are ordered by `docid` in ascending order.
 
 ```yaml
 Type: Hashtable

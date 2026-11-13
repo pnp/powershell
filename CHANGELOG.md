@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+### Changed
+- Changed `Submit-PnPSearchQuery -All` to sort by lowercase `docid` without brackets.
+
 ## [3.5.0]
 
 ### Added
