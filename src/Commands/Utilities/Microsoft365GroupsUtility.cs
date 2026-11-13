@@ -427,19 +427,41 @@ namespace PnP.PowerShell.Commands.Utilities
             return GetGroupMembers(requestHelper, "owners", groupId);
         }
 
-        internal static IEnumerable<Microsoft365User> GetMembers(ApiRequestHelper requestHelper, Guid groupId)
+        internal static IEnumerable<Microsoft365User> GetMembers(ApiRequestHelper requestHelper, Guid groupId, string[] select = null, bool useBeta = false)
         {
-            return GetGroupMembers(requestHelper, "members", groupId);
-        }
-        
-        internal static IEnumerable<Microsoft365User> GetTransitiveMembers(ApiRequestHelper requestHelper, Guid groupId)
-        {
-            return GetGroupMembers(requestHelper, "transitiveMembers", groupId);
+            return GetGroupMembers(requestHelper, "members", groupId, select, useBeta);
         }
 
-        private static IEnumerable<Microsoft365User> GetGroupMembers(ApiRequestHelper requestHelper, string userType, Guid groupId)
+        internal static IEnumerable<Microsoft365User> GetTransitiveMembers(ApiRequestHelper requestHelper, Guid groupId, string[] select = null, bool useBeta = false)
         {
-            var results = requestHelper.GetResultCollection<Microsoft365User>($"v1.0/groups/{groupId}/{userType}?$select=*");
+            return GetGroupMembers(requestHelper, "transitiveMembers", groupId, select, useBeta);
+        }
+
+        /// <summary>
+        /// Properties of <see cref="Microsoft365User"/> requested from Microsoft Graph for group members and owners. They are requested explicitly because Microsoft Graph does not reliably honour $select=* on these endpoints and then only returns its default property set, which does not include userType, usageLocation and proxyAddresses
+        /// </summary>
+        private static readonly string[] DefaultUserProperties = { "id", "userPrincipalName", "displayName", "givenName", "surname", "mail", "mobilePhone", "preferredLanguage", "jobTitle", "businessPhones", "officeLocation", "userType", "usageLocation", "proxyAddresses" };
+
+        /// <summary>
+        /// Retrieves the users of a group collection
+        /// </summary>
+        /// <param name="requestHelper">Graph request helper</param>
+        /// <param name="userType">Group collection to retrieve, i.e. members, transitiveMembers or owners</param>
+        /// <param name="groupId">Id of the group</param>
+        /// <param name="select">Additional properties to request from Microsoft Graph, on top of the properties of <see cref="Microsoft365User"/></param>
+        /// <param name="useBeta">Indicates if the beta endpoint should be used instead of v1.0. When used without select, all properties are returned by Microsoft Graph.</param>
+        private static IEnumerable<Microsoft365User> GetGroupMembers(ApiRequestHelper requestHelper, string userType, Guid groupId, string[] select = null, bool useBeta = false)
+        {
+            var url = $"{(useBeta ? "beta" : "v1.0")}/groups/{groupId}/{userType}";
+
+            var hasSelect = select != null && select.Length > 0;
+            if (hasSelect || !useBeta)
+            {
+                var properties = DefaultUserProperties.Concat(hasSelect ? select : Array.Empty<string>()).Distinct(StringComparer.OrdinalIgnoreCase);
+                url += $"?$select={string.Join(",", properties)}";
+            }
+
+            var results = requestHelper.GetResultCollection<Microsoft365User>(url);
             return results;
         }
 
