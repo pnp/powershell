@@ -223,6 +223,7 @@ namespace PnP.PowerShell.Commands.Principals
                                         {
                                             LogWarning(string.Format("Error while enumerating listitem {0} in list {1} in site {2} with error {3}", listItem.Id, list.RootFolder.ServerRelativeUrl, CurrentWeb.Url, ex.Message));
                                         }
+                                    }
                                 }
                                 itemProgress.RecordType = ProgressRecordType.Completed;
                                 WriteProgress(itemProgress);
