@@ -22,8 +22,8 @@ Each tool has its own discovery location and its own format — none of them sha
 | `.github/agents/*.agent.md` | Copilot custom agents → playbook. Markdown + YAML frontmatter. |
 | `.codex/agents/*.toml` | Codex custom agents → playbook. **TOML**, not markdown. |
 
-The six agents — `permissions-auditor`, `docs-sync`, `api-surface-diff`, `issue-triage`,
-`cmdlet-scaffolder`, `code-review` — exist under all three tools with the same names. Only
+The eight agents — `permissions-auditor`, `docs-sync`, `api-surface-diff`, `issue-triage`,
+`cmdlet-scaffolder`, `release-prep`, `whatif-audit`, `code-review` — exist under all three tools with the same names. Only
 `code-review` differs: a *skill* in Claude Code, an agent elsewhere.
 
 ### Why the playbooks live in `.agents/skills/`
@@ -97,6 +97,8 @@ cannot do the job without a shell, and add `permissionMode: plan` when it does.*
 | Agent | Shell | Why |
 |---|---|---|
 | `docs-sync` | no | Read, Grep and Glob cover the whole sweep |
+| `whatif-audit` | no | Reads cmdlet classes and the helpers they delegate to; search tools cover it |
+| `release-prep` | **yes** | Needs `git log` and `git tag` to list what merged since the last release — plan mode compensates |
 | `permissions-auditor` | no | Reads attributes and call sites; Learn lookups go through MCP |
 | `api-surface-diff` | **yes** | `git diff origin/dev...HEAD` has no tool equivalent — plan mode compensates |
 | `issue-triage` | **no** | Its input is untrusted issue text; the read-only GitHub MCP server covers issues, comments and commit history without exposing a shell |
@@ -129,7 +131,7 @@ only because Learn is unauthenticated.
 
 Codex agents inherit the parent session's sandbox unless they set one, so "read-only" in a
 `description` enforces nothing on its own. Each profile declares it explicitly:
-`sandbox_mode = "read-only"` for the five read-only agents, `"workspace-write"` for
+`sandbox_mode = "read-only"` for the seven read-only agents, `"workspace-write"` for
 `cmdlet-scaffolder`.
 
 Read-only in Codex also means **no network for shell commands**, which is why `api-surface-diff`
@@ -145,7 +147,7 @@ instructions. MCP servers run outside the sandbox, so they keep working.
 | Tool | Invocation |
 |---|---|
 | **Claude Code** | Skills by slash: `/code-review`, `/new-cmdlet`. Subagents by name ("use docs-sync on src/Commands/Lists") or auto-delegated from the `description`. |
-| **VS Code Copilot** | Skills by slash: `/permissions-auditor`, `/docs-sync`, … — all eight, with optional context after (`/docs-sync for src/Commands/Lists`). Custom agents come from the **agent picker dropdown**, not a slash. Both are also model-delegated via `description`. |
+| **VS Code Copilot** | Skills by slash: `/permissions-auditor`, `/docs-sync`, … — all ten, with optional context after (`/docs-sync for src/Commands/Lists`). Custom agents come from the **agent picker dropdown**, not a slash. Both are also model-delegated via `description`. |
 | **Copilot CLI** | `/agents` lists and switches; skills are slash-invocable as in the editor. |
 | **Copilot cloud** | Assign an issue, or pick the agent in the agents panel on github.com. |
 | **Codex** | Name the agent in the sentence: *"Have issue-triage map the affected code paths."* No slash syntax; `/agent` only switches between already-running threads. |

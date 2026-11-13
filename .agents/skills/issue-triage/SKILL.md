@@ -98,13 +98,13 @@ From `ExecuteCmdlet()` forward. Check, in this order — these are the causes th
 
 Note the error path too, because "the error message tells me nothing" is a common report and usually
 has one cause. `PnPConnectedCmdlet.ProcessRecord` rethrows `PipelineStoppedException` untouched
-(`src/Commands/Base/PnPConnectedCmdlet.cs:57-60`), so anything raised through `WriteError` or
+(`src/Commands/Base/PnPConnectedCmdlet.cs`), so anything raised through `WriteError` or
 `ThrowTerminatingError` keeps its full `ErrorRecord`. A raw `throw`, however, reaches the generic
 catch, and under `-ErrorAction Stop` or `SilentlyContinue` is rebuilt as a bare `Exception` carrying
 only the message — type, inner exception, category and target object all discarded. If the reporter
 is missing detail that the underlying exception clearly had, that discard is your answer. Under
 `-ErrorAction Ignore` the error is not rebuilt but **suppressed entirely** and `$Error` stays empty
-(`PnPConnectedCmdlet.cs:112-119`); that is the explanation for "it silently did nothing", which is a
+— that is the explanation for "it silently did nothing", which is a
 different report from "the error is unhelpful".
 
 ## Step 5 — report
@@ -129,7 +129,7 @@ Proposed fix
   The smallest change that addresses the cause, and what it would break.
 
 Release classification
-  Fixed / Changed — see api-surface-diff.md. A behaviour change belongs under Changed
+  Fixed / Changed — see the api-surface-diff playbook. A behaviour change belongs under Changed
   even when it fixes a bug.
 
 Changelog entry

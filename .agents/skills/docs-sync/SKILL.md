@@ -88,6 +88,11 @@ Accept wildcard characters: False
   external help build. Examples belong under `## EXAMPLES` with ` ```powershell ` fences. This is a
   build-breaking rule, so report it as high severity.
 - `## RELATED LINKS` present.
+- Every YAML block carries all eight keys from the field mapping. A block with no `Aliases:` key is
+  malformed even when the values it does have agree with the code.
+- The **Required Permissions** block sits inside `## SYNOPSIS`, not above the heading.
+- A cmdlet declaring `SupportsShouldProcess = true` has `-Confirm` and `-WhatIf` sections. Report a
+  missing one as low severity: most such pages document both, but not all.
 
 **Per repository**
 

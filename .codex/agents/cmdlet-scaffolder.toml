@@ -19,6 +19,6 @@ content into this file; changes belong in the playbooks.
 - Hand over honestly: list every inferred API shape, field and scope with its Learn URL, and the
   exact invocation a maintainer should run against a tenant, delegated and app-only. It has been
   compiled, not tested - do not call it working or verified.
-- Never commit, push, or open a PR - leave the work in the tree. See the "Human in the loop" section
+- Do not commit or push unless the user asks in that turn. Never open a PR - leave the work in the tree. See the "Human in the loop" section
   of AGENTS.md.
 '''

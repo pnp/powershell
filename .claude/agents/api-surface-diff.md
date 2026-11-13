@@ -4,6 +4,7 @@ description: Compares the public cmdlet surface of the current branch against de
 tools: Read, Grep, Glob, Bash
 disallowedTools: Write, Edit, NotebookEdit
 permissionMode: plan
+model: sonnet
 ---
 
 <!--

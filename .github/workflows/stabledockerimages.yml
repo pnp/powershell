@@ -63,7 +63,7 @@ jobs:
         tags: ${{ secrets.DOCKER_ORG }}/powershell:${{ needs.compute-version.outputs.VERSION }}-stable-linux-arm32v7
         build-args: |
           PNP_VERSION=${{ needs.compute-version.outputs.VERSION }}
-        # Without attestations the tag is a single image manifest, which docker manifest create can amend
+        # Keeps the tag a single image manifest, without an attestation entry
         provenance: false
         sbom: false
 
@@ -110,25 +110,22 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ compute-version, publish-docker-linux-arm32v7, publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-amd64 ]
     steps:
+    - uses: docker/setup-buildx-action@v4
+    - uses: docker/login-action@v4
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    # imagetools accepts platform tags that are themselves image indexes, such as a build carrying a provenance
+    # attestation (3.5.0-stable-linux-amd64 was one); docker manifest create rejects them
     - name: Publish manifest
       run: |
+        IMAGE="${{ secrets.DOCKER_ORG }}/powershell"
         VERSION="${{ needs.compute-version.outputs.VERSION }}-stable"
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
-        docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:$VERSION \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm32v7 \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
-        docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION
-        docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:stable \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm32v7 \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
-        docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:stable
-        docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:latest \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm32v7 \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
-        docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:latest        
+        docker buildx imagetools create \
+          -t $IMAGE:$VERSION \
+          -t $IMAGE:stable \
+          -t $IMAGE:latest \
+          $IMAGE:$VERSION-linux-amd64 \
+          $IMAGE:$VERSION-linux-arm32v7 \
+          $IMAGE:$VERSION-linux-arm64 \
+          $IMAGE:$VERSION-windows-amd64

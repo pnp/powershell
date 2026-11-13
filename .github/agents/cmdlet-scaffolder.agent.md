@@ -27,5 +27,5 @@ here.
 - **Hand over honestly**: list every inferred API shape, field and scope with its Learn URL, and the
   exact invocation a maintainer should run against a tenant, delegated and app-only. It has been
   compiled, not tested — do not call it working or verified.
-- **Never commit, push, or open a PR** — leave the work in the tree. See
+- **Do not commit or push unless the user asks in that turn. Never open a PR** — leave the work in the tree. See
   [Human in the loop](../../AGENTS.md#human-in-the-loop).
