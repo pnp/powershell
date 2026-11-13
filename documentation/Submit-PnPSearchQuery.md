@@ -91,7 +91,7 @@ Returns absolutely all items indexed by SharePoint Search which represent a docu
 Submit-PnPSearchQuery -Query "contentclass:STS_ListItem_DocumentLibrary" -SortList @{"filename" = "ascending"} -All
 ```
 
-Returns absolutely all items indexed by SharePoint Search which represent a document in a document library. With `-All`, the cmdlet ignores `-SortList` and orders the results by `docid` in ascending order.
+Returns absolutely all items indexed by SharePoint Search which represent a document in a document library and sorts the items by file name in ascending order.
 
 ## PARAMETERS
 
