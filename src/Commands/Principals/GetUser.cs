@@ -40,31 +40,6 @@ namespace PnP.PowerShell.Commands.Principals
             public GroupCollection Groups { get; set; }
         }
 
-        private bool TryExecuteWithRetry(Action action, string operationDescription)
-        {
-            int MaxRetryAttempts = 5;
-            for (var attempt = 1; attempt <= MaxRetryAttempts; attempt++)
-            {
-                try
-                {
-                    action();
-                    return true;
-                }
-                catch (Exception ex)
-
-                {
-                    if (attempt == MaxRetryAttempts)
-                    {
-                        LogWarning($"{operationDescription} failed after {MaxRetryAttempts} attempts: {ex.Message}");
-                        return false;
-                    }
-
-                    LogWarning($"{operationDescription} failed on attempt {attempt} of {MaxRetryAttempts}. Retrying. Error: {ex.Message}");
-                }
-            }
-            return false;
-        }
-
         protected override void ExecuteCmdlet()
         {
             DefaultRetrievalExpressions = new Expression<Func<User, object>>[]
@@ -234,27 +209,20 @@ namespace PnP.PowerShell.Commands.Principals
                                                 string listItemUrl = listItem["FileRef"].ToString();
                                                 LogDebug(string.Format("List item {0} HasUniqueRoleAssignments", listItemUrl));
 
-                                                if (!TryExecuteWithRetry(() =>
-                                                {
-                                                    CurrentWeb.Context.Load(listItem.RoleAssignments, r => r.Include(
-                                                        ra => ra.RoleDefinitionBindings,
-                                                        ra => ra.Member.LoginName,
-                                                        ra => ra.Member.Title,
-                                                        ra => ra.Member.PrincipalType));
-                                                    CurrentWeb.Context.ExecuteQueryRetry();
-                                                }, $"Loading role assignments for list item {listItemUrl}"))
-                                                {
-                                                    continue;
-                                                }
+                                                CurrentWeb.Context.Load(listItem.RoleAssignments, r => r.Include(
+                                                    ra => ra.RoleDefinitionBindings,
+                                                    ra => ra.Member.LoginName,
+                                                    ra => ra.Member.Title,
+                                                    ra => ra.Member.PrincipalType));
+                                                CurrentWeb.Context.ExecuteQueryRetry();
 
                                                 users.AddRange(GetPermissions(listItem.RoleAssignments, listItemUrl));
                                             }
                                         }
                                         catch (Exception ex)
                                         {
-                                            LogWarning($"Failed to process list item {listItem.Id}: {ex.Message}");
+                                            LogWarning(string.Format("Error while enumerating listitem {0} in list {1} in site {2} with error {3}", listItem.Id, list.RootFolder.ServerRelativeUrl, CurrentWeb.Url, ex.Message));
                                         }
-                                    }
                                 }
                                 itemProgress.RecordType = ProgressRecordType.Completed;
                                 WriteProgress(itemProgress);
