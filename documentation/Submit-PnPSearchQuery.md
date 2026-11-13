@@ -88,10 +88,10 @@ Returns absolutely all items indexed by SharePoint Search which represent a docu
 
 ### EXAMPLE 6
 ```powershell
-Submit-PnPSearchQuery -Query "contentclass:STS_ListItem_DocumentLibrary" -SortList @{"filename" = "ascending"}
+Submit-PnPSearchQuery -Query "contentclass:STS_ListItem_DocumentLibrary" -SortList @{"filename" = "ascending"} -All
 ```
 
-Returns the top 500 items indexed by SharePoint Search which represent a document in a document library and sorts the items by file name in ascending order.
+Returns absolutely all items indexed by SharePoint Search which represent a document in a document library. With `-All`, the cmdlet ignores `-SortList` and orders the results by `docid` in ascending order.
 
 ## PARAMETERS
 
