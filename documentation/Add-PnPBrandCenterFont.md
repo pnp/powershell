@@ -21,6 +21,8 @@ Add-PnPBrandCenterFont -Path <String> [-Visible <Boolean>] [-Connection <PnPConn
 ## DESCRIPTION
 This cmdlet allows a font to be uploaded to the tenant Brand Center. The font will be available for use in the tenant and site collection Brand Center.
 
+For .ttf and .otf files, the font family name and font face (for example "Lato" and "Bold Italic") are read from the font file and set on the uploaded file, as the Brand Center page does. Brand Center and [Get-PnPBrandCenterFont](Get-PnPBrandCenterFont.md) only list fonts that have them. For other formats, such as .woff2, a warning is shown and they are not set.
+
 Use [Use-PnPBrandCenterFontPackage](Use-PnPBrandCenterFontPackage.md) to apply the font to the current site.  
 Use [Get-PnPBrandCenterFontPackage](Get-PnPBrandCenterFontPackage.md) to retrieve the available fonts.
 
