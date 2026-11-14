@@ -160,7 +160,7 @@
 <p>Returns absolutely all items indexed by SharePoint Search which represent a document in a document library and sorts the items by file name in ascending order.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-all">-All</h3>
-<p>Automatically page results until the end to get more than 500. Use with caution!</p>
+<p>Automatically page results until the end to get more than 500. Each page contains up to 500 results, ordered by <code>docid</code> in ascending order. The cmdlet uses <code>IndexDocId</code> to retrieve the next page and ignores <code>-SortList</code>. Use with caution!</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: All
 
@@ -392,6 +392,7 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-sortlist">-SortList</h3>
 <p>The list of properties by which the search results are ordered as a hashtable, i.e. each property needs to be a key and the associated value either &quot;Ascending&quot; or &quot;Descending&quot; based on the wanted sort order, or &quot;FQLFormula&quot; if you want to use a formula to define the sort order.</p>
+<p>When you specify <code>-All</code>, this parameter is ignored and results are ordered by <code>docid</code> in ascending order.</p>
 <pre><code class="lang-yaml">Type: Hashtable
 Parameter Sets: (All)
 
