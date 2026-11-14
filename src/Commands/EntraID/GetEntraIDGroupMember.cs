@@ -21,6 +21,12 @@ namespace PnP.PowerShell.Commands.EntraID
         [Parameter(Mandatory = false, ValueFromPipeline = false)]
         public SwitchParameter Transitive;
 
+        [Parameter(Mandatory = false, ValueFromPipeline = false)]
+        public string[] Select;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = false)]
+        public SwitchParameter UseBeta;
+
         protected override void ExecuteCmdlet()
         {
             Group group = null;
@@ -34,9 +40,9 @@ namespace PnP.PowerShell.Commands.EntraID
             {
                 // Get members of the group
                 var members = Transitive
-                    ? Microsoft365GroupsUtility.GetTransitiveMembers(GraphRequestHelper, new Guid(group.Id))
-                    : Microsoft365GroupsUtility.GetMembers(GraphRequestHelper, new Guid(group.Id));
-                    WriteObject(members?.OrderBy(m => m.DisplayName), true);
+                    ? Microsoft365GroupsUtility.GetTransitiveMembers(GraphRequestHelper, new Guid(group.Id), Select, UseBeta)
+                    : Microsoft365GroupsUtility.GetMembers(GraphRequestHelper, new Guid(group.Id), Select, UseBeta);
+                WriteObject(members?.OrderBy(m => m.DisplayName), true);
 
             }
         }
