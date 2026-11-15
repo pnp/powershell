@@ -1,6 +1,75 @@
 <Configuration>
   <ViewDefinitions>
     <View>
+      <Name>PnPConnection</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.PowerShell.Commands.Base.PnPConnection</TypeName>
+      </ViewSelectedBy>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <ExpressionBinding>
+                <ScriptBlock>
+                  $info = $_.Authentication
+                  $lines = @("Url              : $($_.Url)")
+                  if ($info.Method -in 'Browser', 'WAM', 'DeviceCode', 'UsernamePassword', 'Certificate', 'ClientSecret', 'FederatedIdentity') {
+                    $lines += "ClientId         : $($_.ClientId)"
+                  }
+                  $lines += @(
+                    "AzureEnvironment : $($_.AzureEnvironment)"
+                    'Authentication   :'
+                    "    Method                 : $($info.Method)"
+                    "    IdentityType           : $($info.IdentityType)"
+                  )
+                  if ($info.Username) {
+                    $lines += "    Username               : $($info.Username)"
+                  }
+                  if ($info.HomeTenantId -and $info.HomeTenantId -ne $info.AuthenticationTenantId) {
+                    $lines += "    HomeTenantId           : $($info.HomeTenantId)"
+                  }
+                  if ($info.AuthenticationTenantId) {
+                    $lines += "    AuthenticationTenantId : $($info.AuthenticationTenantId)"
+                  }
+                  $lines -join [Environment]::NewLine
+                </ScriptBlock>
+              </ExpressionBinding>
+              <NewLine />
+              <NewLine />
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </View>
+    <View>
+      <Name>AuthenticationInfo</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.Framework.AuthenticationInfo</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem><PropertyName>Method</PropertyName></ListItem>
+              <ListItem><PropertyName>IdentityType</PropertyName></ListItem>
+              <ListItem>
+                <ItemSelectionCondition><ScriptBlock>$null -ne $_.Username</ScriptBlock></ItemSelectionCondition>
+                <PropertyName>Username</PropertyName>
+              </ListItem>
+              <ListItem>
+                <ItemSelectionCondition><ScriptBlock>$_.HomeTenantId -and $_.HomeTenantId -ne $_.AuthenticationTenantId</ScriptBlock></ItemSelectionCondition>
+                <PropertyName>HomeTenantId</PropertyName>
+              </ListItem>
+              <ListItem>
+                <ItemSelectionCondition><ScriptBlock>$null -ne $_.AuthenticationTenantId</ScriptBlock></ItemSelectionCondition>
+                <PropertyName>AuthenticationTenantId</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+    <View>
       <Name>Feature</Name>
       <ViewSelectedBy>
         <TypeName>Microsoft.SharePoint.Client.Feature</TypeName>

@@ -151,6 +151,15 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public AzureEnvironment AzureEnvironment { get; set; } = AzureEnvironment.Production;
 
+        private Framework.AuthenticationInfo authenticationInfo = new Framework.AuthenticationInfo();
+
+        /// <summary>
+        /// Credential-free metadata from this connection's provider and latest successful MSAL acquisition.
+        /// Reading this property performs no authentication, account enumeration, or network requests.
+        /// It does not establish resource permissions or validate that the target site exists.
+        /// </summary>
+        public Framework.AuthenticationInfo Authentication => AuthenticationManager?.Authentication ?? authenticationInfo;
+
         internal PnP.Framework.AuthenticationManager AuthenticationManager { get; set; }
 
         internal AppOnlyTokenCache PersistedAppOnlyTokenCache { get; set; }
@@ -184,6 +193,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.Token);
                 connection.AzureEnvironment = azureEnvironment;
+                connection.authenticationInfo = new Framework.AuthenticationInfo(Framework.AuthenticationMethod.AccessToken);
                 // The token only AuthenticationManager backing this context carries no cloud, so its Graph endpoint would otherwise resolve to the commercial one.
                 connection._graphEndPoint = GetGraphEndPoint(azureEnvironment);
                 return connection;
@@ -248,6 +258,7 @@ namespace PnP.PowerShell.Commands.Base
             var spoConnection = new PnPConnection(context, connectionType, null, clientId, clientSecret, url?.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.ClientIDSecret)
             {
                 Tenant = realm,
+                authenticationInfo = new Framework.AuthenticationInfo(Framework.AuthenticationMethod.ClientSecret, Framework.AuthenticationIdentityType.Application),
                 AzureEnvironment = azureEnvironment
             };
 
@@ -516,6 +527,7 @@ namespace PnP.PowerShell.Commands.Base
                     UserAssignedManagedIdentityClientId = userAssignedManagedIdentityClientId,
                     UserAssignedManagedIdentityAzureResourceId = userAssignedManagedIdentityAzureResourceId,
                     ConnectionMethod = ConnectionMethod.ManagedIdentity,
+                    AuthenticationManager = authManager,
                     AzureEnvironment = azureEnvironment,
                     // Without a url there is no context to derive the Graph endpoint from, so it would otherwise resolve to the commercial one.
                     _graphEndPoint = GetGraphEndPoint(azureEnvironment),
@@ -639,6 +651,7 @@ namespace PnP.PowerShell.Commands.Base
                 spoConnection = new PnPConnection(context, ConnectionType.O365, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, initializationType)
                 {
                     ConnectionMethod = Model.ConnectionMethod.Credentials,
+                    authenticationInfo = new Framework.AuthenticationInfo(Framework.AuthenticationMethod.OnPremises, Framework.AuthenticationIdentityType.User),
                     AzureEnvironment = azureEnvironment,
                     ClientId = clientId
                 };
@@ -764,6 +777,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.AzureADWorkloadIdentity);
                 connection.AzureEnvironment = azureEnvironment;
+                connection.authenticationInfo = new Framework.AuthenticationInfo(Framework.AuthenticationMethod.WorkloadIdentity, Framework.AuthenticationIdentityType.Application);
                 // The token only AuthenticationManager backing this context carries no cloud, so its Graph endpoint would otherwise resolve to the commercial one.
                 connection._graphEndPoint = graphEndPoint;
                 return connection;
@@ -823,6 +837,7 @@ namespace PnP.PowerShell.Commands.Base
                 var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.FederatedIdentity);
                 connection.ClientId = appClientId ?? Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_CLIENT_ID");
                 connection.Tenant = tenantId ?? Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_TENANT_ID");
+                connection.authenticationInfo = new Framework.AuthenticationInfo(Framework.AuthenticationMethod.FederatedIdentity, Framework.AuthenticationIdentityType.Application);
                 connection.AzureEnvironment = azureEnvironment;
                 // The token only AuthenticationManager backing this context carries no cloud, so its Graph endpoint would otherwise resolve to the commercial one.
                 connection._graphEndPoint = graphEndPoint;

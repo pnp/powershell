@@ -121,6 +121,11 @@ Connect-PnPOnline [-Url <String>] [-Tenant <String>] -FederatedIdentity [-AzureE
 Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets.
 See https://pnp.github.io/powershell/articles/connecting.html for more information on the options to connect.
 
+Connections expose read-only provider and identity metadata through `.Authentication`. For example,
+`$connection.Authentication | Format-List *` inspects a connection returned with `-ReturnConnection`
+without acquiring another token. See [Get-PnPConnection](Get-PnPConnection.md) for the properties and
+their limitations. This metadata does not establish site access, Graph permissions, or token expiry.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

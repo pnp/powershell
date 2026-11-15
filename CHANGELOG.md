@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+- Added read-only authentication identity metadata and a compact default display to connections returned by `Connect-PnPOnline` and `Get-PnPConnection`, distinguishing browser, WAM, device code, credential, and application providers without acquiring tokens for inspection.
 
 ### Changed
 - Changed `Submit-PnPSearchQuery -All` to sort by lowercase `docid` without brackets.
