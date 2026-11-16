@@ -1,6 +1,6 @@
 ---
 name: cmdlet-scaffolder
-description: Generates a new PnP PowerShell cmdlet modelled on an existing sibling - class with the right base class and permission attributes, the documentation/*.md page, and the changelog entry. Use when adding a cmdlet for a Graph or CSOM API. Output is a DRAFT that needs verification against a real tenant; it is never tested.
+description: Generates a new PnP PowerShell cmdlet modelled on an existing sibling - class with the right base class and permission attributes, the documentation/*.md page, and the changelog entry. Use when adding a cmdlet for a Graph or CSOM API. Output is a DRAFT that needs verification against a real tenant.
 tools: Read, Grep, Glob, Bash, Edit, Write, WebFetch, WebSearch, mcp__microsoft-learn__*
 ---
 
@@ -10,8 +10,8 @@ Follow **`.agents/skills/cmdlet-scaffolder/SKILL.md`** — read it now and apply
 The playbooks are the single source shared with Codex and Copilot; do not duplicate their content
 here.
 
-- Repository context: `AGENTS.md` — including **Human in the loop**: leave the work in the tree.
-  Do not commit or push unless the user asks in that turn. Never open a PR.
+- Repository context: `AGENTS.md` — follow **Human in the loop** for human review, draft PRs, and
+  integration-test evidence.
 - **Pick the sibling cmdlet first** and say which one you used. Helper signatures have evolved and
   old call shapes survive in the tree — copy a recently modified neighbour, not the first match.
 - Resolve the API endpoint, its response shape and its least-privilege permissions through the
@@ -19,5 +19,5 @@ here.
 - Deliver all four artefacts: class, `documentation/<Verb-PnPNoun>.md`, `CHANGELOG.md` entry, clean
   `dotnet build src/PnP.PowerShell.sln`. Do not touch `src/Tests`.
 - **Hand over honestly.** List every inferred API shape, field and scope, and the exact invocation a
-  maintainer should run against a tenant — delegated and app-only both. It has been compiled, not
-  tested; do not call it working or verified.
+  maintainer should run against a tenant — delegated and app-only both. Report the checks actually
+  run and their results; do not claim tenant verification if no authorized tenant test was run.

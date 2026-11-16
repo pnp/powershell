@@ -11,16 +11,16 @@ here is invisible to the other tools.
 
 ## Read this before touching GitHub
 
-**Never create an issue. Never create a PR.** Never comment, approve, merge, or push unbidden, and
-never connect to a Microsoft 365 tenant on your own initiative. Draft the content, hand over the
-command, stop. Full rules: [Human in the loop](../AGENTS.md#human-in-the-loop).
+Follow [Human in the loop](../AGENTS.md#human-in-the-loop) before publishing or connecting to a
+tenant. Agents may open only draft PRs, after human review, an explicit request, and the required
+validation evidence.
 
 This is about acting unprompted. When the user asks you directly to connect to a tenant and run
 something, that is the authorization — see
 [Running against a tenant](../AGENTS.md#running-against-a-tenant).
 
-This applies to the Copilot coding agent as well: when assigned an issue, prepare the change in the
-working tree and stop before publishing.
+This applies to the Copilot coding agent as well: an issue assignment alone does not authorize
+publishing.
 
 ## Copilot specifics
 

@@ -22,8 +22,8 @@ Supporting references:
   SharePoint scope
 - [`AGENTS.md`](../../../AGENTS.md) — repository context
 
-**Do not commit or push unless the user asks in that turn, and never open a PR** — leave the work in the tree and hand it over. See
-[Human in the loop](../../../AGENTS.md#human-in-the-loop).
+Follow [Human in the loop](../../../AGENTS.md#human-in-the-loop) for human review, draft PRs, and
+the required integration-test evidence.
 
-Remember the constraint: you cannot run these cmdlets. Anything calling an API you have not invoked
-is a draft — list what you inferred rather than verified.
+Without authorization to use a test tenant, you cannot run tenant-dependent cmdlets. Anything
+calling an API you have not verified is a draft — list what you inferred rather than verified.

@@ -144,6 +144,6 @@ dotnet build src/PnP.PowerShell.sln
 
 Must be warning-clean. `src/Tests` is off limits — do not add or modify files there.
 
-A clean build is where your work stops. **Do not commit or push unless the user asks in that turn, and never
-open a PR** — see
-[Human in the loop](../../../AGENTS.md#human-in-the-loop).
+A clean build does not verify tenant behavior. Follow
+[Human in the loop](../../../AGENTS.md#human-in-the-loop) for human review, draft PRs, and
+integration-test evidence.

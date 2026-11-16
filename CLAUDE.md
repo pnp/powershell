@@ -11,10 +11,9 @@ here is invisible to the other tools.
 
 ## Read this before touching GitHub
 
-**Never create an issue. Never create a PR.** Never comment, approve, merge, or push unbidden, and
-never connect to a Microsoft 365 tenant on your own initiative. `gh` is authenticated here with
-`repo` scope, so all of that is one command away — draft the content, hand over the command, stop.
-Full rules: [Human in the loop](AGENTS.md#human-in-the-loop).
+Follow [Human in the loop](AGENTS.md#human-in-the-loop) before publishing or connecting to a
+tenant. Agents may open only draft PRs, after human review, an explicit request, and the required
+validation evidence.
 
 This is about acting unprompted. When the user asks you directly to connect to a tenant and run
 something, that is the authorization — do it, confirming each destructive command once. See

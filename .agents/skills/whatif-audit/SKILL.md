@@ -17,8 +17,8 @@ fails, in a pipeline with nobody there to answer.
 
 All of this is decidable from the source, across every cmdlet.
 
-> Read-only. Report findings in the session. **Never open an issue or PR for one** — see
-> [Human in the loop](../../../AGENTS.md#human-in-the-loop).
+> Read-only. Report findings in the session; the audit does not authorize publishing an issue or PR.
+> See [Human in the loop](../../../AGENTS.md#human-in-the-loop).
 
 The rules themselves are in [`dotnet-standards`](../dotnet-standards/SKILL.md) under **Safety**. This
 playbook is the sweep.
@@ -80,8 +80,8 @@ One row per finding, ordered by the table above:
 | Invocation | The command that misbehaves, and what it does — "`Remove-PnPPlannerRoster -WhatIf` deletes the roster" |
 | Fix | The smallest change, and whether it alters behaviour for a script that works today |
 
-You cannot run the cmdlets, so every row is a reading of the code. Say which delegated helpers you
-read and which you could not resolve.
+By default, you cannot run tenant-dependent cmdlets. Distinguish findings based on static reading
+from authorized test results. Say which delegated helpers you read and which you could not resolve.
 
 Finish with counts — cmdlets checked, clean, and findings per kind — so a partial sweep cannot be
 mistaken for a full one.

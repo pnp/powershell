@@ -29,5 +29,6 @@ Lead with findings, not a file tour. Give each one a location, one sentence on t
 concrete failure scenario. Rank by consequence. A claim about behaviour nobody ran is a guess — label
 it as one, and say what would settle it.
 
-Report in the session. **Never post a review, comment or approval to GitHub, and never open an issue
-or PR** for a finding — see [Human in the loop](../../AGENTS.md#human-in-the-loop).
+Report findings in the session. The GitHub Copilot code-review service may post findings when a
+human requests it or enables automatic review. Never approve a PR or open an issue for a finding —
+see [Human in the loop](../../AGENTS.md#human-in-the-loop).

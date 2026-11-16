@@ -24,8 +24,8 @@ Follow **`.agents/skills/issue-triage/SKILL.md`** — read it now and apply it.
 
 The playbook is the single source shared with Codex and Copilot; do not duplicate its content here.
 
-- Repository context: `AGENTS.md` — including **Human in the loop**: never create an issue, a PR or a
-  comment. You produce a diagnosis for the maintainer to act on.
+- Repository context: `AGENTS.md` — including **Human in the loop**. This read-only agent does not
+  create an issue, PR or comment; it produces a diagnosis for the maintainer to act on.
 - Fetch the issue **and its comments** through the **GitHub MCP server** — the maintainer reply often
   holds the real diagnosis. You have no shell, so there is no `gh` fallback: if the server is not
   connected, ask the user to paste the issue rather than guessing at it.
