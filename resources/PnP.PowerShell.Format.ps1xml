@@ -11,10 +11,15 @@
             <CustomItem>
               <ExpressionBinding>
                 <ScriptBlock>
+                  # Escape terminal controls and line separators for display only; retain raw property values.
+                  $displayValue = {
+                    param($value)
+                    [regex]::Replace([string]$value, '[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]', { param($match) '\u{0:x4}' -f [int][char]$match.Value })
+                  }
                   $info = $_.Authentication
-                  $lines = @("Url              : $($_.Url)")
-                  if ($info.Method -in 'Browser', 'WAM', 'DeviceCode', 'UsernamePassword', 'Certificate', 'ClientSecret', 'FederatedIdentity') {
-                    $lines += "ClientId         : $($_.ClientId)"
+                  $lines = @("Url              : $(&amp; $displayValue $_.Url)")
+                  if ($info.Method -in 'Browser', 'WAM', 'DeviceCode', 'UsernamePassword', 'Certificate', 'ClientSecret', 'FederatedIdentity', 'OnBehalfOf') {
+                    $lines += "ClientId         : $(&amp; $displayValue $_.ClientId)"
                   }
                   $lines += @(
                     "AzureEnvironment : $($_.AzureEnvironment)"
@@ -23,13 +28,13 @@
                     "    IdentityType           : $($info.IdentityType)"
                   )
                   if ($info.Username) {
-                    $lines += "    Username               : $($info.Username)"
+                    $lines += "    Username               : $(&amp; $displayValue $info.Username)"
                   }
                   if ($info.HomeTenantId -and $info.HomeTenantId -ne $info.AuthenticationTenantId) {
-                    $lines += "    HomeTenantId           : $($info.HomeTenantId)"
+                    $lines += "    HomeTenantId           : $(&amp; $displayValue $info.HomeTenantId)"
                   }
                   if ($info.AuthenticationTenantId) {
-                    $lines += "    AuthenticationTenantId : $($info.AuthenticationTenantId)"
+                    $lines += "    AuthenticationTenantId : $(&amp; $displayValue $info.AuthenticationTenantId)"
                   }
                   $lines -join [Environment]::NewLine
                 </ScriptBlock>
@@ -54,15 +59,18 @@
               <ListItem><PropertyName>IdentityType</PropertyName></ListItem>
               <ListItem>
                 <ItemSelectionCondition><ScriptBlock>$null -ne $_.Username</ScriptBlock></ItemSelectionCondition>
-                <PropertyName>Username</PropertyName>
+                <Label>Username</Label>
+                <ScriptBlock>[regex]::Replace([string]$_.Username, '[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]', { param($match) '\u{0:x4}' -f [int][char]$match.Value })</ScriptBlock>
               </ListItem>
               <ListItem>
                 <ItemSelectionCondition><ScriptBlock>$_.HomeTenantId -and $_.HomeTenantId -ne $_.AuthenticationTenantId</ScriptBlock></ItemSelectionCondition>
-                <PropertyName>HomeTenantId</PropertyName>
+                <Label>HomeTenantId</Label>
+                <ScriptBlock>[regex]::Replace([string]$_.HomeTenantId, '[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]', { param($match) '\u{0:x4}' -f [int][char]$match.Value })</ScriptBlock>
               </ListItem>
               <ListItem>
                 <ItemSelectionCondition><ScriptBlock>$null -ne $_.AuthenticationTenantId</ScriptBlock></ItemSelectionCondition>
-                <PropertyName>AuthenticationTenantId</PropertyName>
+                <Label>AuthenticationTenantId</Label>
+                <ScriptBlock>[regex]::Replace([string]$_.AuthenticationTenantId, '[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]', { param($match) '\u{0:x4}' -f [int][char]$match.Value })</ScriptBlock>
               </ListItem>
             </ListItems>
           </ListEntry>

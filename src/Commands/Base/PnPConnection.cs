@@ -127,6 +127,8 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public ClientContext Context { get; set; }
 
+        private ClientContext authenticationContext;
+
         /// <summary>
         /// Tenant name to which the connection exists
         /// </summary>
@@ -155,10 +157,21 @@ namespace PnP.PowerShell.Commands.Base
 
         /// <summary>
         /// Credential-free metadata from this connection's provider and latest successful MSAL acquisition.
+        /// If the context is replaced, reports the provider attached to the active context when available.
         /// Reading this property performs no authentication, account enumeration, or network requests.
         /// It does not establish resource permissions or validate that the target site exists.
         /// </summary>
-        public Framework.AuthenticationInfo Authentication => AuthenticationManager?.Authentication ?? authenticationInfo;
+        public Framework.AuthenticationInfo Authentication
+        {
+            get
+            {
+                if (Context != null && !ReferenceEquals(Context, authenticationContext))
+                {
+                    return Context.GetContextSettings()?.AuthenticationManager?.Authentication ?? new Framework.AuthenticationInfo();
+                }
+                return AuthenticationManager?.Authentication ?? authenticationInfo;
+            }
+        }
 
         internal PnP.Framework.AuthenticationManager AuthenticationManager { get; set; }
 
@@ -895,6 +908,7 @@ namespace PnP.PowerShell.Commands.Base
             if (context != null)
             {
                 Context = context;
+                authenticationContext = context;
             }
             ConnectionType = connectionType;
             TenantAdminUrl = tenantAdminUrl;
@@ -949,10 +963,15 @@ namespace PnP.PowerShell.Commands.Base
                 return;
             }
 
+            var isAuthenticationContext = ReferenceEquals(Context, authenticationContext);
             var context = Context.Clone(Context.Url);
             ReplaceCachedContext(context);
 
             Context = context;
+            if (isAuthenticationContext)
+            {
+                authenticationContext = context;
+            }
             _pnpContext = null;
         }
 

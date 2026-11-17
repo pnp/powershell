@@ -21,14 +21,17 @@ Get-PnPConnection [-Connection <PnPConnection>]
 ## DESCRIPTION
 Returns a PnP PowerShell Connection for use with the -Connection parameter on other cmdlets.
 
-The read-only `Authentication` property describes the connection's actual provider and the identity
-reported by its latest successful MSAL token acquisition. Reading it does not acquire a token,
-enumerate accounts, or make a network request. Reused providers retain their actual method even
-if a different login method was requested.
+The read-only `Authentication` property describes the provider and identity information from the
+latest successful MSAL acquisition by the authentication manager used for the active context. A manager
+can be shared across connections or resources, so identity fields are manager-wide and are not pinned
+to a site or connection. Reused providers retain their actual method even if a different login method
+was requested. If `Set-PnPContext` replaces the context, the property reports metadata from that context's
+provider when available, otherwise unknown metadata. Reading it does not acquire a token, enumerate
+accounts, or make a network request.
 
 | Property | Meaning |
 | --- | --- |
-| `Method` | Provider, such as `Browser`, `WAM`, `DeviceCode`, `UsernamePassword`, or `Certificate`. A cache hit does not change the method. |
+| `Method` | Provider, such as `Browser`, `WAM`, `DeviceCode`, `UsernamePassword`, `Certificate`, or `OnBehalfOf`. A cache hit does not change the method. |
 | `IdentityType` | `User`, `Application`, or `Unknown`. |
 | `AccountId` | MSAL home-account identifier, not the user's object ID in the target tenant. |
 | `Username` | Display username returned by MSAL; do not use it as an immutable identity. |
