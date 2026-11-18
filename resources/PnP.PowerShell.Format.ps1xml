@@ -1,6 +1,83 @@
 <Configuration>
   <ViewDefinitions>
     <View>
+      <Name>PnPConnection</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.PowerShell.Commands.Base.PnPConnection</TypeName>
+      </ViewSelectedBy>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <ExpressionBinding>
+                <ScriptBlock>
+                  # Escape terminal controls and line separators for display only; retain raw property values.
+                  $displayValue = {
+                    param($value)
+                    [regex]::Replace([string]$value, '[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]', { param($match) '\u{0:x4}' -f [int][char]$match.Value })
+                  }
+                  $info = $_.Authentication
+                  $lines = @("Url              : $(&amp; $displayValue $_.Url)")
+                  if ($info.Method -in 'Browser', 'WAM', 'DeviceCode', 'UsernamePassword', 'Certificate', 'ClientSecret', 'FederatedIdentity', 'OnBehalfOf') {
+                    $lines += "ClientId         : $(&amp; $displayValue $_.ClientId)"
+                  }
+                  $lines += @(
+                    "AzureEnvironment : $($_.AzureEnvironment)"
+                    'Authentication   :'
+                    "    Method                 : $($info.Method)"
+                    "    IdentityType           : $($info.IdentityType)"
+                  )
+                  if ($info.Username) {
+                    $lines += "    Username               : $(&amp; $displayValue $info.Username)"
+                  }
+                  if ($info.HomeTenantId -and $info.HomeTenantId -ne $info.AuthenticationTenantId) {
+                    $lines += "    HomeTenantId           : $(&amp; $displayValue $info.HomeTenantId)"
+                  }
+                  if ($info.AuthenticationTenantId) {
+                    $lines += "    AuthenticationTenantId : $(&amp; $displayValue $info.AuthenticationTenantId)"
+                  }
+                  $lines -join [Environment]::NewLine
+                </ScriptBlock>
+              </ExpressionBinding>
+              <NewLine />
+              <NewLine />
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </View>
+    <View>
+      <Name>AuthenticationInfo</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.Framework.AuthenticationInfo</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem><PropertyName>Method</PropertyName></ListItem>
+              <ListItem><PropertyName>IdentityType</PropertyName></ListItem>
+              <ListItem>
+                <ItemSelectionCondition><ScriptBlock>$null -ne $_.Username</ScriptBlock></ItemSelectionCondition>
+                <Label>Username</Label>
+                <ScriptBlock>[regex]::Replace([string]$_.Username, '[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]', { param($match) '\u{0:x4}' -f [int][char]$match.Value })</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <ItemSelectionCondition><ScriptBlock>$_.HomeTenantId -and $_.HomeTenantId -ne $_.AuthenticationTenantId</ScriptBlock></ItemSelectionCondition>
+                <Label>HomeTenantId</Label>
+                <ScriptBlock>[regex]::Replace([string]$_.HomeTenantId, '[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]', { param($match) '\u{0:x4}' -f [int][char]$match.Value })</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <ItemSelectionCondition><ScriptBlock>$null -ne $_.AuthenticationTenantId</ScriptBlock></ItemSelectionCondition>
+                <Label>AuthenticationTenantId</Label>
+                <ScriptBlock>[regex]::Replace([string]$_.AuthenticationTenantId, '[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]', { param($match) '\u{0:x4}' -f [int][char]$match.Value })</ScriptBlock>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+    <View>
       <Name>Feature</Name>
       <ViewSelectedBy>
         <TypeName>Microsoft.SharePoint.Client.Feature</TypeName>
