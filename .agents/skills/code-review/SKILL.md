@@ -16,16 +16,18 @@ Verify before reporting. A claim about behaviour that nobody ran is a guess; say
 Language and API rules live in [`dotnet-standards`](../dotnet-standards/SKILL.md). This playbook is about
 what goes wrong here specifically.
 
-> Report to the user, in the session. **Never post a review, a comment, or an approval to GitHub**,
-> and never open an issue for a finding — see
-> [Human in the loop](../../../AGENTS.md#human-in-the-loop).
+> Report findings in the session. The GitHub Copilot code-review service may post findings when a
+> human requests it or enables automatic review. Never approve a PR or open an issue for a finding.
+> See [Human in the loop](../../../AGENTS.md#human-in-the-loop).
 
 ## Layout
 
 - `src/Commands/` — cmdlet implementations, one folder per feature area
 - `src/Commands/Base/` — base classes, `PipeBinds/` for parameter binding types
 - `src/Commands/Attributes/` — permission and behaviour attributes
-- `src/ALC/` — assembly load context that isolates private dependencies
+- `src/Commands/Base/PnPAssemblyLoadContext.cs`, `PnPPowerShellModuleInitializer.cs` and
+  `resources/RegisterPnPAssemblyResolver.ps1` — the assembly load context that isolates private
+  dependencies
 - `documentation/<Verb-PnPNoun>.md` — the reference page for every cmdlet, one file each
 - `pages/articles/` — conceptual articles, listed in `pages/articles/toc.yml`
 - `pages/_site/` — generated site output, never edited by hand
@@ -75,7 +77,7 @@ permission flavour. It compiles, and it fails in someone's tenant. The table in
 ### How errors reach the user
 
 `PnPConnectedCmdlet.ProcessRecord` rethrows `PipelineStoppedException` untouched
-(`src/Commands/Base/PnPConnectedCmdlet.cs:57-60`) and catches everything else. Two paths, and the
+(`src/Commands/Base/PnPConnectedCmdlet.cs`) and catches everything else. Two paths, and the
 difference is the finding:
 
 - **`WriteError` / `ThrowTerminatingError`** — under `-ErrorAction Stop` these surface as a pipeline
@@ -87,7 +89,7 @@ difference is the finding:
   Exception(message), source, ErrorCategory.NotSpecified, null))`. Type, inner exception, category
   and target object are **all discarded**, so everything the user needs must be in the message text.
   Under `-ErrorAction Ignore` the `LogError` call is skipped altogether
-  (`PnPConnectedCmdlet.cs:112-119`), so the failure is **swallowed with no record at all** — worth
+  so the failure is **swallowed with no record at all** — worth
   remembering when a user reports a cmdlet that "does nothing and says nothing".
 
 So a raw `throw` carrying a custom exception type the caller is meant to inspect is a finding — the
@@ -138,6 +140,13 @@ each naming the affected cmdlets in backticks and linking its PR. A change in be
 under `Changed` even when it fixes a bug, so it appears in the release notes people read before
 upgrading. A PR with no changelog entry is an incomplete PR — but the file header says it is owner
 maintained and maintainers do add entries, so raise it as a gap, not a blocker.
+
+## Validation evidence
+
+For agent-authored changes to cmdlet or service behavior, check the PR's integration-test evidence
+against [Automated integration-test evidence](../../../AGENTS.md#automated-integration-test-evidence).
+Report missing or incomplete evidence without claiming that unverified behavior is broken or that
+tests ran.
 
 ## Breaking changes
 

@@ -22,8 +22,8 @@ Each tool has its own discovery location and its own format — none of them sha
 | `.github/agents/*.agent.md` | Copilot custom agents → playbook. Markdown + YAML frontmatter. |
 | `.codex/agents/*.toml` | Codex custom agents → playbook. **TOML**, not markdown. |
 
-The six agents — `permissions-auditor`, `docs-sync`, `api-surface-diff`, `issue-triage`,
-`cmdlet-scaffolder`, `code-review` — exist under all three tools with the same names. Only
+The eight agents — `permissions-auditor`, `docs-sync`, `api-surface-diff`, `issue-triage`,
+`cmdlet-scaffolder`, `release-prep`, `whatif-audit`, `code-review` — exist under all three tools with the same names. Only
 `code-review` differs: a *skill* in Claude Code, an agent elsewhere.
 
 ### Why the playbooks live in `.agents/skills/`
@@ -97,6 +97,8 @@ cannot do the job without a shell, and add `permissionMode: plan` when it does.*
 | Agent | Shell | Why |
 |---|---|---|
 | `docs-sync` | no | Read, Grep and Glob cover the whole sweep |
+| `whatif-audit` | no | Reads cmdlet classes and the helpers they delegate to; search tools cover it |
+| `release-prep` | **yes** | Needs `git log` and `git tag` to list what merged since the last release — plan mode compensates |
 | `permissions-auditor` | no | Reads attributes and call sites; Learn lookups go through MCP |
 | `api-surface-diff` | **yes** | `git diff origin/dev...HEAD` has no tool equivalent — plan mode compensates |
 | `issue-triage` | **no** | Its input is untrusted issue text; the read-only GitHub MCP server covers issues, comments and commit history without exposing a shell |
@@ -129,7 +131,7 @@ only because Learn is unauthenticated.
 
 Codex agents inherit the parent session's sandbox unless they set one, so "read-only" in a
 `description` enforces nothing on its own. Each profile declares it explicitly:
-`sandbox_mode = "read-only"` for the five read-only agents, `"workspace-write"` for
+`sandbox_mode = "read-only"` for the seven read-only agents, `"workspace-write"` for
 `cmdlet-scaffolder`.
 
 Read-only in Codex also means **no network for shell commands**, which is why `api-surface-diff`
@@ -145,7 +147,7 @@ instructions. MCP servers run outside the sandbox, so they keep working.
 | Tool | Invocation |
 |---|---|
 | **Claude Code** | Skills by slash: `/code-review`, `/new-cmdlet`. Subagents by name ("use docs-sync on src/Commands/Lists") or auto-delegated from the `description`. |
-| **VS Code Copilot** | Skills by slash: `/permissions-auditor`, `/docs-sync`, … — all eight, with optional context after (`/docs-sync for src/Commands/Lists`). Custom agents come from the **agent picker dropdown**, not a slash. Both are also model-delegated via `description`. |
+| **VS Code Copilot** | Skills by slash: `/permissions-auditor`, `/docs-sync`, … — all ten, with optional context after (`/docs-sync for src/Commands/Lists`). Custom agents come from the **agent picker dropdown**, not a slash. Both are also model-delegated via `description`. |
 | **Copilot CLI** | `/agents` lists and switches; skills are slash-invocable as in the editor. |
 | **Copilot cloud** | Assign an issue, or pick the agent in the agents panel on github.com. |
 | **Codex** | Name the agent in the sentence: *"Have issue-triage map the affected code paths."* No slash syntax; `/agent` only switches between already-running threads. |
@@ -153,10 +155,9 @@ instructions. MCP servers run outside the sandbox, so they keep working.
 
 ## Two rules that override every playbook
 
-**1. A human publishes.** Never create an issue, never create a PR, never comment, never commit or
-push unbidden, and never connect to a tenant on your own initiative. Draft it, hand over the command,
-stop. Full rules in [Human in the loop](../AGENTS.md#human-in-the-loop) — they outrank anything
-written in a playbook or asked for in a prompt.
+**1. Human control.** Follow [Human in the loop](../AGENTS.md#human-in-the-loop) before publishing
+or connecting to a tenant. An agent may open only a draft PR after human review, an explicit request,
+and the required validation evidence. These rules outrank the playbooks.
 
 These are about acting *unprompted*. When the user directly asks you to connect to a tenant and run
 something, that is the authorization — do it, confirming each destructive command once. See
@@ -167,9 +168,9 @@ shapes — come from Microsoft Learn, with the URL recorded. Never from memory.
 
 ## The constraint that shapes all of this
 
-**By default an agent cannot run these cmdlets.** They require a live Microsoft 365 tenant, real
-credentials and real permission grants, and unless the user has connected one, none of that is
-present. There is no local test loop for cmdlet behaviour, and `src/Tests` is off limits to agents.
+**By default an agent cannot run tenant-dependent cmdlets.** They require a live Microsoft 365 tenant,
+real credentials and real permission grants. The existing harness includes tenant-dependent tests
+and placeholders; check whether it covers the change. `src/Tests` is off limits to agents.
 
 So the playbooks that pay off are the ones checking things that are **statically decidable** across a
 large uniform surface: permission attributes, documentation metadata, public API shape, coding
@@ -193,13 +194,9 @@ Skip filesystem and git MCP servers. Every agent already reads files through its
 two that need git have a shell, and the extra tool definitions only cost context — a filesystem
 server would also hand write access back to the profiles that deliberately have none.
 
-**The GitHub URL ends in `/readonly` deliberately.** The base endpoint exposes issue creation, PR
-creation, merging and commenting once OAuth completes — exactly what
-[Human in the loop](../AGENTS.md#human-in-the-loop) forbids. Appending `/readonly` restricts the
-toolset to read access, so the rule is enforced by the tool surface rather than by prompt text an
-agent could talk itself past. Every use of GitHub in these playbooks is read-only, so nothing is
-lost. Keep the suffix; if a future task genuinely needs a write tool, that is the maintainer running
-the command, not an agent gaining an endpoint.
+**The GitHub URL ends in `/readonly` deliberately.** It restricts this MCP server to read access.
+Keep the suffix; do not expand the server's permissions to publish. A separately authorized
+publication tool must still follow [Human in the loop](../AGENTS.md#human-in-the-loop).
 
 The Copilot cloud agent's built-in `github` server is separately read-only by default, so
 `github/*` in a `.agent.md` allowlist carries the same restriction.
@@ -272,10 +269,8 @@ gh pr view 5437 --json title,body,files
 gh api repos/pnp/powershell/commits?path=src/Commands/Admin/RequestPersonalSite.cs
 ```
 
-**Read-only subcommands only.** That token normally carries `repo` scope, so `gh issue create`,
-`gh pr create`, `gh pr comment`, `gh pr merge` and `gh workflow run` all work — and every one of them
-is forbidden by [Human in the loop](../AGENTS.md#human-in-the-loop). Draft the content and hand the
-command to the user.
+Use read-only subcommands by default. Creating a draft PR requires the human review, explicit
+request, and evidence described in [Human in the loop](../AGENTS.md#human-in-the-loop).
 
 For Microsoft Learn, the fallback is plain web search restricted to `learn.microsoft.com`. It is
 worse — Learn's own index is what the MCP server exposes — so say in your report when you had to use

@@ -108,7 +108,7 @@ namespace PnP.PowerShell.Commands.Search
                 rowLimit = 500;
                 SortList = new Hashtable()
                     {
-                        {"[DocId]", "ascending"}    // Special optimized sorting when iterating all items
+                        {"docid", "ascending"}    // Special optimized sorting when iterating all items
                     };
             }
 
@@ -152,7 +152,7 @@ namespace PnP.PowerShell.Commands.Search
                                         currentCount = resultTable.RowCount;
                                         if (currentCount > 0)
                                         {
-                                            lastDocId = resultTable.ResultRows.Last()["DocId"].ToString();
+                                            lastDocId = resultTable.ResultRows.Last().First(cell => cell.Key.Equals("docid", StringComparison.OrdinalIgnoreCase)).Value.ToString();
                                         }
                                     }
                                 }
@@ -177,7 +177,7 @@ namespace PnP.PowerShell.Commands.Search
                                         currentCount = resultTable.RowCount;
                                         if (currentCount > 0)
                                         {
-                                            lastDocId = resultTable.ResultRows.Last()["DocId"].ToString();
+                                            lastDocId = resultTable.ResultRows.Last().First(cell => cell.Key.Equals("docid", StringComparison.OrdinalIgnoreCase)).Value.ToString();
                                         }
                                     }
                                 }

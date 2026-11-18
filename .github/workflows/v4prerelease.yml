@@ -95,11 +95,6 @@ jobs:
         Copy-Item -Path "./resources/*.ps1xml" -Destination $moduleDir
         Copy-Item -Path "./resources/RegisterPnPAssemblyResolver.ps1" -Destination $moduleDir
 
-        Get-ChildItem -Path "./src/ALC/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | ForEach-Object {
-          [void]$commonFiles.Add($_.Name)
-          Copy-Item -LiteralPath $_.FullName -Destination $commonPath
-        }
-
         Get-ChildItem -Path "./src/Commands/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | ForEach-Object {
           if ($moduleAssemblies -contains $_.Name -or $_.Name -like 'Microsoft.SharePoint.Client*' -or $_.Name -like 'Microsoft.Online.SharePoint.Client*') {
             Copy-Item -LiteralPath $_.FullName -Destination $corePath
@@ -222,7 +217,7 @@ jobs:
           Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Core.Admin.dll"
           Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Core.Auth.dll"
           Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Framework.dll"
-          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.PowerShell.ALC.dll"
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Core.Provisioning.dll"
         )
         $filesToSign += Get-ChildItem -LiteralPath ./module/PnP.PowerShell -Recurse -File | Where-Object { $_.Extension -in '.ps1', '.psm1', '.ps1xml', '.psd1' }
 
@@ -239,7 +234,7 @@ jobs:
           Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Core.Admin.dll"
           Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Core.Auth.dll"
           Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Framework.dll"
-          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.PowerShell.ALC.dll"
+          Get-Item -LiteralPath "./module/PnP.PowerShell/Common/PnP.Core.Provisioning.dll"
         )
         $signedFiles += Get-ChildItem -LiteralPath ./module/PnP.PowerShell -Recurse -File | Where-Object { $_.Extension -in '.ps1', '.psm1', '.ps1xml', '.psd1' }
         $invalidSignatures = $signedFiles | ForEach-Object {

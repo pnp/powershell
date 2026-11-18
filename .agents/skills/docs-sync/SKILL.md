@@ -17,7 +17,7 @@ sends the user into an error they cannot explain from the docs. Drift here is us
 There are ~849 documentation files and ~850 cmdlets. This is a fan-out job: mechanical, exact, and
 far too large to do by hand.
 
-> Report drift in the session. **Never open an issue or PR for it** — see
+> Report drift in the session. This audit does not authorize publishing an issue or PR — see
 > [Human in the loop](../../../AGENTS.md#human-in-the-loop). A sweep across 850 cmdlets could otherwise
 > produce a great many of them.
 
@@ -88,6 +88,11 @@ Accept wildcard characters: False
   external help build. Examples belong under `## EXAMPLES` with ` ```powershell ` fences. This is a
   build-breaking rule, so report it as high severity.
 - `## RELATED LINKS` present.
+- Every YAML block carries all eight keys from the field mapping. A block with no `Aliases:` key is
+  malformed even when the values it does have agree with the code.
+- The **Required Permissions** block sits inside `## SYNOPSIS`, not above the heading.
+- A cmdlet declaring `SupportsShouldProcess = true` has `-Confirm` and `-WhatIf` sections. Report a
+  missing one as low severity: most such pages document both, but not all.
 
 **Per repository**
 

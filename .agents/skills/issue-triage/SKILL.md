@@ -9,16 +9,15 @@ Take a GitHub issue, find the cmdlet that owns it, trace the code path, and prod
 
 ## What this produces
 
-**A hypothesis and a reading of the code — not a fix.** The bug reproduces against a live Microsoft
-365 tenant that you do not have. You can establish what the code does; you cannot establish that it
-is what the user hit. Say which is which, every time.
+**A hypothesis and a reading of the code — not a fix.** A reported bug may require a live Microsoft
+365 tenant to reproduce. Without an authorized reproduction, you can establish what the code does
+but not that it is what the user hit. Say which is which, every time.
 
 The work this saves is the search: mapping an issue to the ~15 lines that matter across 800 cmdlets.
 That is the genuine time sink, and it is fully doable statically.
 
-> **Never create an issue, a PR, or a comment** — see
-> [Human in the loop](../../../AGENTS.md#human-in-the-loop). This playbook reads GitHub and writes a
-> diagnosis. Everything that reaches the tracker is the maintainer's to post.
+> This playbook reads GitHub and writes a diagnosis; it does not authorize publishing an issue, PR,
+> or comment. See [Human in the loop](../../../AGENTS.md#human-in-the-loop).
 
 ## Step 1 — read the issue properly
 
@@ -98,13 +97,13 @@ From `ExecuteCmdlet()` forward. Check, in this order — these are the causes th
 
 Note the error path too, because "the error message tells me nothing" is a common report and usually
 has one cause. `PnPConnectedCmdlet.ProcessRecord` rethrows `PipelineStoppedException` untouched
-(`src/Commands/Base/PnPConnectedCmdlet.cs:57-60`), so anything raised through `WriteError` or
+(`src/Commands/Base/PnPConnectedCmdlet.cs`), so anything raised through `WriteError` or
 `ThrowTerminatingError` keeps its full `ErrorRecord`. A raw `throw`, however, reaches the generic
 catch, and under `-ErrorAction Stop` or `SilentlyContinue` is rebuilt as a bare `Exception` carrying
 only the message — type, inner exception, category and target object all discarded. If the reporter
 is missing detail that the underlying exception clearly had, that discard is your answer. Under
 `-ErrorAction Ignore` the error is not rebuilt but **suppressed entirely** and `$Error` stays empty
-(`PnPConnectedCmdlet.cs:112-119`); that is the explanation for "it silently did nothing", which is a
+— that is the explanation for "it silently did nothing", which is a
 different report from "the error is unhelpful".
 
 ## Step 5 — report
@@ -129,7 +128,7 @@ Proposed fix
   The smallest change that addresses the cause, and what it would break.
 
 Release classification
-  Fixed / Changed — see api-surface-diff.md. A behaviour change belongs under Changed
+  Fixed / Changed — see the api-surface-diff playbook. A behaviour change belongs under Changed
   even when it fixes a bug.
 
 Changelog entry

@@ -17,8 +17,8 @@ catches this; a human diff review reliably misses it.
 The output feeds two decisions: whether the change belongs in a major release, and what the
 `CHANGELOG.md` entry must say.
 
-> Read-only. Propose the changelog line and the release call; **never open the PR** — see
-> [Human in the loop](../../../AGENTS.md#human-in-the-loop).
+> This analysis is read-only. Propose the changelog line and release call; the analysis itself does
+> not authorize publishing a PR. See [Human in the loop](../../../AGENTS.md#human-in-the-loop).
 
 ## The surface
 

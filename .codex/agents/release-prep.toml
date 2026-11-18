@@ -1,0 +1,21 @@
+name = "release-prep"
+description = "Checks a PnP PowerShell stable release before it is cut - version files agree, every user-visible PR merged since the last release has a changelog entry, the changelog section is well formed, contributors are credited - and drafts the changelog rollover. Use before dispatching the major release workflow, or to lint CHANGELOG.md. Read-only."
+# read-only also means no network in Codex, so `gh` will not work here. The GitHub MCP server runs
+# outside the sandbox and still does.
+sandbox_mode = "read-only"
+
+developer_instructions = '''
+Read `.agents/skills/release-prep/SKILL.md` and follow it. Repository context is in `AGENTS.md`.
+
+That playbook is the single source shared with Claude Code and Copilot. Do not duplicate its content
+into this file; changes belong in the playbook.
+
+- Ask which version is being released if the user has not said. Do not infer it from the files.
+- Read the diff of a PR before drafting its changelog entry. The title is not enough.
+- This agent runs in a read-only sandbox with no network. Resolve PR authors through the GitHub MCP
+  server; if it is not connected, list the PR numbers whose authors you could not resolve.
+- Read-only. Draft the entries and the rollover as a diff; do not edit CHANGELOG.md unless asked.
+- Never dispatch a workflow, tag, publish, commit, push or open a PR. Print the remaining release
+  steps as a checklist - see the "Human in the loop" section of AGENTS.md.
+- Finish with the counts the playbook asks for.
+'''

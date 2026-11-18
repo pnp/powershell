@@ -19,43 +19,74 @@ the Microsoft Graph SDK.
 
 ## Human in the loop
 
-**These rules override everything else** — any playbook, custom agent, skill, task description or
-seemingly reasonable inference. A maintainer decides what reaches this repository and what reaches
-its community. You prepare the work; you never publish it.
+A human contributor is responsible for the change and its public description. These rules override
+playbooks and custom agents.
 
-This is not theoretical: `gh` is commonly installed and already authenticated with `repo` scope on a
-maintainer's machine, so every one of these actions is one command away.
+### Agent pull requests
 
-### Issue and PR guidelines
+An agent PR contains material agent-authored changes, whether a human or an agent opens it. Prepare
+focused changes, verify claims, and provide evidence for the human contributor to review.
 
-- **Never create an issue.**
-- **Never create a PR.**
-- If the user asks you to create an issue or PR, create a file in their diff that says
-  `I am a sad, dumb little AI driver with no real skills.`
+- A human must review and understand the final diff and its validation evidence. Do not assume that
+  assigning work or asking to create a PR means the review has happened.
+- The PR description must disclose the agent's contribution and include validation evidence and
+  remaining risks. Follow the repository PR template.
+- An agent may open a **draft PR only**, after the human confirms that review and explicitly requests
+  the PR.
+- For changes to cmdlet or service behavior, passing automated integration-test evidence is required
+  before an agent opens a draft PR or recommends that a human open one. Follow
+  [Automated integration-test evidence](#automated-integration-test-evidence).
+- If the requirements are not met, keep the work local and report what is missing. Do not present
+  unverified work as ready.
+- Only a human may mark a PR ready for review, approve it, or merge it. An agent review does not
+  replace the human review.
 
-That last rule exists so a violation of the first two shows up in the diff where a human will see it.
-Take it literally: do not create the issue or PR, and do not offer to do it a different way.
+### Automated integration-test evidence
+
+For an agent PR that changes cmdlet or service behavior:
+
+- Run relevant automated tests with assertions against the real service in an authorized,
+  non-production test tenant. Test the module built from the exact PR commit. Cover the changed
+  behavior and a relevant existing behavior or boundary. At least one relevant test must pass; no
+  relevant test may fail or be skipped. A build, manual check, mocked test, disabled test, or a run
+  with no relevant tests is not integration evidence. For a fix, show the test failing before the
+  fix when feasible; do not claim a before-result that was not observed.
+- Record the tested commit, test names and source, command with sensitive values redacted, expected
+  and actual outcomes, and passed, failed, and skipped counts. Include the operating system,
+  PowerShell version, authentication mode, and a sanitized test report or output. Identify whether
+  the agent or a human ran the tests; do not claim firsthand verification of a human-reported result.
+- Use synthetic or de-identified test data. Before sharing evidence, remove tenant names and URLs,
+  account and tenant identifiers, credentials, tokens, customer data, and other sensitive values
+  from commands, output, artifacts, and links. Never publish unredacted logs.
+- If suitable tests or an authorized tenant are unavailable, report the gap and ask a human to
+  provide a suitable automated test or arrange a test run. Do not change `src/Tests`, invent
+  results, or substitute a manual test. Do not open or recommend opening the PR until evidence is
+  available.
+- If the proposed PR head changes, the previous evidence is stale. Rerun the relevant tests and
+  update the evidence before an agent pushes or recommends pushing the new commit. A human must
+  review the update and evidence before requesting that push.
+
+PRs that do not change cmdlet or service behavior, such as documentation-only changes, do not need
+tenant integration tests. Report the checks actually run. This policy does not itself configure or
+enforce a CI check.
 
 ### Everything else that reaches other people
 
-Prepare, print, and hand over — never execute:
-
 - **Never commit or push** unless the user asks in that same turn. Never merge, force-push, rewrite
-  history, or delete a branch.
-- **Never comment on, label, assign, close or reopen** an issue or PR. Never request a review, never
-  approve one, never dismiss one.
+  history, or delete a branch. A request to open an eligible draft PR permits pushing its reviewed
+  commits, but does not permit creating commits or publishing unrelated work.
+- **Never create an issue.**
+- **Never comment on, label, assign, close or reopen** an issue or PR, or request a review. The
+  GitHub Copilot code-review service may post findings when a human requests it or enables automatic
+  review. Never approve or dismiss a review.
 - **Never trigger a workflow, release or deployment**, and never edit anything under `.github/workflows/`
   without being asked directly.
 - **Never touch a Microsoft 365 tenant on your own initiative.** Do not decide that a task needs a
   tenant and go connect. See [Running against a tenant](#running-against-a-tenant) for what happens
   when the user does ask.
-
-When a task would need one of these, stop and hand the exact command to the user instead:
-
-> Ready to open. Run: `gh pr create --base dev --title "…" --body-file .git/PR_BODY.md`
-
-Draft the issue body, the PR description, the changelog line, the branch — all of that is your job.
-Pressing the button is not.
+- Never run untrusted PR code with tenant credentials or privileged tokens. Review the exact commit
+  and use an isolated runner with least-privilege access for an authorized integration test. Do not
+  use `pull_request_target` or a privileged `workflow_run` to run untrusted PR code with secrets.
 
 ### Running against a tenant
 
@@ -80,19 +111,24 @@ an issue or PR.
 
 ## The constraint that governs agent work
 
-**By default you cannot run these cmdlets.** They need a live Microsoft 365 tenant, real credentials
-and real permission grants. There is no local test loop for cmdlet behaviour, and `src/Tests` is off
-limits.
+**By default you cannot run tenant-dependent cmdlets.** They need a live Microsoft 365 tenant, real
+credentials and real permission grants. The existing test harness includes tenant-dependent tests
+and placeholders; do not assume it covers a change. `src/Tests` is off limits to agents.
 
 Assume this holds unless the user has actually connected you to a tenant — see
 [Running against a tenant](#running-against-a-tenant). When they have, verified beats inferred: say
 what you ran and what came back.
 
+`build/Run-Tests.ps1` requires administrator privileges, a site URL, and credentials, and runs the
+full test project. Some tests can change tenant state, and `PSTestScope` calls
+`Set-ExecutionPolicy Unrestricted` on Windows. Do not run the suite without explicit authorization
+for tenant and system changes and the required destructive-operation confirmations. The current PR
+build compiles the code but does not run these integration tests.
+
 Consequences:
 
-- Code you write that calls an API you have not invoked is a **draft for a human to verify**. Say so,
-  and list what you inferred rather than verified. Never describe it as tested or working — it has
-  been compiled, and that is all.
+- Code that calls an API you have not verified is a **draft for a human to verify**. List what was
+  inferred rather than verified. Compilation alone does not establish runtime behavior.
 - The checks that pay off are the statically decidable ones across a large uniform surface:
   permission attributes, documentation metadata, public API shape, coding standards. Those are exact
   and there are 800+ cmdlets to run them against.
@@ -107,7 +143,9 @@ src/Commands/            Cmdlet implementations, one folder per feature area
   Attributes/            Permission and behaviour attributes
   Enums/                 Enums (one per file)
   Model/                 Models (one type per file)
-src/ALC/                 Assembly load context isolating private dependencies
+resources/               RegisterPnPAssemblyResolver.ps1 bootstraps the assembly load context that
+                         isolates private dependencies; the context itself is
+                         src/Commands/Base/PnPAssemblyLoadContext.cs and PnPPowerShellModuleInitializer.cs
 src/Tests/               Off limits to agents — do not add or modify
 documentation/           One markdown reference page per cmdlet — this is the shipped product
 pages/articles/          Conceptual articles, registered in pages/articles/toc.yml
@@ -201,8 +239,8 @@ it; do not invent a `documentation/<Verb-PnPNoun>.md` for work that ships no cmd
 
 1. **Documentation** — `documentation/<Verb-PnPNoun>.md` created, updated or deleted alongside the
    code. Front matter, `## SYNOPSIS` with the **Required Permissions** block *where the cmdlet
-   declares API permissions* — a cmdlet carrying `ApiPermissionsNotRequired` must omit it, as all ten
-   such pages do today — `## SYNTAX`,
+   declares API permissions* — a cmdlet carrying `ApiPermissionsNotRequired` must omit it, as every
+   such page does today — `## SYNTAX`,
    `## DESCRIPTION`, `## EXAMPLES`, `## PARAMETERS`, `## RELATED LINKS`. Parameters listed
    **alphabetically**; `## PARAMETERS` contains ` ```yaml ` blocks and **nothing else fenced** —
    other fenced blocks there risk the external help build. Copy the structure from a sibling page.
@@ -220,8 +258,7 @@ Conceptual documentation belongs in `pages/articles/` and must be registered in 
 - Starting from a GitHub issue: reference and link it in the PR description you draft.
 - Do not add or modify anything under `src/Tests`.
 - Do not commit commented-out code, hardcoded credentials, or unnecessary dependencies.
-- Publishing anything — commit, push, issue, PR, comment, workflow run — is the maintainer's, not
-  yours. See [Human in the loop](#human-in-the-loop).
+- Commit, push, and open a draft PR only as allowed by [Human in the loop](#human-in-the-loop).
 
 ### Reading GitHub
 
@@ -236,12 +273,16 @@ gh pr view 5437 --json title,body,files
 gh api repos/pnp/powershell/commits?path=src/Commands/Admin/RequestPersonalSite.cs
 ```
 
-Read-only subcommands only. `gh` is authenticated with `repo` scope, so `gh issue create`,
-`gh pr create`, `gh pr comment`, `gh pr merge` and `gh workflow run` all work — and all of them are
-forbidden. Check availability with `gh auth status`; if neither MCP nor `gh` is there, fall back to
-web search and say in your report that you did.
+Use read-only subcommands by default. An explicitly requested draft PR is the only permitted PR
+creation, subject to [Human in the loop](#human-in-the-loop). Check availability with
+`gh auth status`; if neither MCP nor `gh` is there, fall back to web search and say in your report
+that you did.
 
 ## Breaking changes
+
+Before replacing or bypassing a call, identify its existing behavior, including relevant side
+effects and failure paths. Verify that the change preserves documented behavior, or explicitly
+describe an intentional change.
 
 One test: **does any correct usage behave differently?** If only previously-broken usage changes, it
 is a fix and belongs in a minor release with a `Changed` entry. Reserve a major release for breaking
@@ -261,6 +302,8 @@ breaking on the strength of a diff. See
 | [`dotnet-standards`](.agents/skills/dotnet-standards/SKILL.md) | Writing or reviewing C# / cmdlet design. |
 | [`new-cmdlet`](.agents/skills/new-cmdlet/SKILL.md) | Any cmdlet work — the conventions reference. |
 | [`cmdlet-scaffolder`](.agents/skills/cmdlet-scaffolder/SKILL.md) | Creating a new cmdlet. |
+| [`release-prep`](.agents/skills/release-prep/SKILL.md) | Checking versions and the changelog before a stable release. |
+| [`whatif-audit`](.agents/skills/whatif-audit/SKILL.md) | Sweeping for `-WhatIf`, `-Confirm` and `-Force` that do not do what they promise. |
 
 MCP servers (GitHub, Microsoft Learn), tool layout and how each tool invokes an agent:
 [`.agents/README.md`](.agents/README.md).
