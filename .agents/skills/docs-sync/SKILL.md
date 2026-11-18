@@ -17,7 +17,7 @@ sends the user into an error they cannot explain from the docs. Drift here is us
 There are ~849 documentation files and ~850 cmdlets. This is a fan-out job: mechanical, exact, and
 far too large to do by hand.
 
-> Report drift in the session. **Never open an issue or PR for it** — see
+> Report drift in the session. This audit does not authorize publishing an issue or PR — see
 > [Human in the loop](../../../AGENTS.md#human-in-the-loop). A sweep across 850 cmdlets could otherwise
 > produce a great many of them.
 

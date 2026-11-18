@@ -9,16 +9,15 @@ Take a GitHub issue, find the cmdlet that owns it, trace the code path, and prod
 
 ## What this produces
 
-**A hypothesis and a reading of the code — not a fix.** The bug reproduces against a live Microsoft
-365 tenant that you do not have. You can establish what the code does; you cannot establish that it
-is what the user hit. Say which is which, every time.
+**A hypothesis and a reading of the code — not a fix.** A reported bug may require a live Microsoft
+365 tenant to reproduce. Without an authorized reproduction, you can establish what the code does
+but not that it is what the user hit. Say which is which, every time.
 
 The work this saves is the search: mapping an issue to the ~15 lines that matter across 800 cmdlets.
 That is the genuine time sink, and it is fully doable statically.
 
-> **Never create an issue, a PR, or a comment** — see
-> [Human in the loop](../../../AGENTS.md#human-in-the-loop). This playbook reads GitHub and writes a
-> diagnosis. Everything that reaches the tracker is the maintainer's to post.
+> This playbook reads GitHub and writes a diagnosis; it does not authorize publishing an issue, PR,
+> or comment. See [Human in the loop](../../../AGENTS.md#human-in-the-loop).
 
 ## Step 1 — read the issue properly
 

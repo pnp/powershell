@@ -8,16 +8,16 @@ description: Generate a new PnP PowerShell cmdlet modelled on an existing siblin
 Generate a new cmdlet — class, attributes, documentation page and changelog entry — modelled on an
 existing sibling.
 
-> **The output is a draft.** You cannot call the API or run the cmdlet. Everything about the request
-> shape, the response fields and the permission scopes is inferred. Hand it over labelled as such,
-> with the inferences listed. A plausible, well-formed, subtly wrong cmdlet is the specific failure
-> mode this playbook exists to avoid.
+> **The output is a draft until verified.** Without authorized tenant access, request shape,
+> response fields and permission scopes remain inferred. Hand it over labelled as such, with the
+> inferences listed. A plausible, well-formed, subtly wrong cmdlet is the specific failure mode this
+> playbook exists to avoid.
 
 Conventions live in [`new-cmdlet`](../new-cmdlet/SKILL.md); language rules in
 [`dotnet-standards`](../dotnet-standards/SKILL.md). This playbook is the procedure.
 
-> **Do not commit or push unless the user asks in that turn. Never open a PR.** Leave the work in the tree and hand it over — see
-> [Human in the loop](../../../AGENTS.md#human-in-the-loop).
+> Follow [Human in the loop](../../../AGENTS.md#human-in-the-loop) for human review, draft PRs, and
+> the required integration-test evidence.
 
 ## 1. Establish the request
 
@@ -113,4 +113,5 @@ Report:
   type (delegated and app-only both, where the cmdlet supports both)
 - Anything you could not resolve and what would settle it
 
-Do not describe the result as tested, working, or verified. It has been compiled, and that is all.
+Report the checks actually run and their results. Do not claim tenant verification if no authorized
+tenant test was run.

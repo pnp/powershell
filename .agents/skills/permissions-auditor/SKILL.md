@@ -24,7 +24,7 @@ running anything:
 
 Any disagreement between them is a finding.
 
-> Report findings in the session. **Never open an issue or PR for one** — see
+> Report findings in the session. This audit does not authorize publishing an issue or PR — see
 > [Human in the loop](../../../AGENTS.md#human-in-the-loop). A permission finding is security-adjacent;
 > a maintainer decides whether it goes on a public tracker.
 

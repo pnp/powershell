@@ -11,8 +11,8 @@ now and apply it.
 That playbook is the single source shared with Codex and Copilot. Do not duplicate its content here;
 changes belong in the playbook.
 
-Report in the session. **Never post a review, comment or approval to GitHub, and never open an issue
-or PR** for a finding — see [Human in the loop](../../../AGENTS.md#human-in-the-loop).
+Report in the session. The review does not authorize publishing an issue, PR, review, comment, or
+approval. See [Human in the loop](../../../AGENTS.md#human-in-the-loop).
 
 Supporting references, as the review needs them:
 
