@@ -83,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specify the id or display name of the tab
+Specify the id or display name of the app
 
 ```yaml
 Type: TeamsChannelAppPipeBind

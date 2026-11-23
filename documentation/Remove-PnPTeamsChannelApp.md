@@ -33,7 +33,7 @@ Allows to remove a app from shared channel.
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPTeamsChannelApp -Team 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel "SharedTest" -Identity SharePoint
+Remove-PnPTeamsChannelApp -Team MyTeam -Channel "SharedTest" -Identity SharePoint
 ```
 Removes the app with the display name 'SharePoint' from the SharedTest shared channel using display name.
 
@@ -49,7 +49,7 @@ Removes the app with the display name 'SharePoint' from the shared channel using
 Remove-PnPTeamsChannelApp -Team 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity 2a527703-1f6f-4559-a332-d8a7d288cd88
 ```
 
-Removes the app with the specified id from the channel
+Removes the app with the specified id from the shared channel
 
 ## PARAMETERS
 
@@ -85,7 +85,7 @@ Accept wildcard characters: False
 Specify the id of the app 
 
 ```yaml
-Type: TeamsTabPipeBind
+Type: TeamsChannelAppPipeBind
 Parameter Sets: (All)
 
 Required: True
