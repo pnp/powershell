@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
+using System.Threading.Channels;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 using Team = PnP.PowerShell.Commands.Model.Teams.Team;
 using TeamChannel = PnP.PowerShell.Commands.Model.Teams.TeamChannel;
@@ -1427,6 +1428,34 @@ namespace PnP.PowerShell.Commands.Utilities
             tab.TeamsAppOdataBind = $"https://{requestHelper.GraphEndPoint}/v1.0/appCatalogs/teamsApps/{tab.TeamsAppId}";
             return requestHelper.Post<TeamTab>($"v1.0/teams/{groupId}/channels/{channelId}/tabs", tab);
         }
+        #endregion
+
+        #region Enabled apps
+        public static TeamApp GetChannelApp(ApiRequestHelper requestHelper, string groupId, string channelId, string appId)
+        {
+            return requestHelper.Get<TeamApp>($"v1.0/teams/{groupId}/channels/{channelId}/enabledApps/{appId}");
+        }
+        public static IEnumerable<TeamApp> GetChannelApps(ApiRequestHelper requestHelper, string groupId, string channelId)
+        {
+            var collection = requestHelper.GetResultCollection<TeamApp>($"v1.0/teams/{groupId}/channels/{channelId}/enabledApps");
+            return collection;
+        }
+        public static void AddChannelApp(ApiRequestHelper requestHelper, string groupId, string channelId, string appId)
+        { 
+            var postData = new Dictionary<string, string>() {
+                {
+                    "@odata.id", $"https://{requestHelper.GraphEndPoint}/v1.0/appCatalogs/teamsApps/{appId}"
+                }
+            };
+
+             requestHelper.Post($"v1.0/teams/{groupId}/channels/{channelId}/enabledApps/$ref", postData);
+        }
+
+        public static void RemoveChannelApp(ApiRequestHelper requestHelper, string groupId, string channelId, string appId)
+        {
+            requestHelper.Delete($"v1.0/teams/{groupId}/channels/{channelId}/enabledApps/{appId}/$ref");
+        }
+
         #endregion
 
         #region Apps
