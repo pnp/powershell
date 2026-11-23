@@ -1451,9 +1451,9 @@ namespace PnP.PowerShell.Commands.Utilities
              requestHelper.Post($"v1.0/teams/{groupId}/channels/{channelId}/enabledApps/$ref", postData);
         }
 
-        public static void RemoveChannelApp(ApiRequestHelper requestHelper, string groupId, string channelId, string appId)
+        public static HttpResponseMessage DeleteChannelApp(ApiRequestHelper requestHelper, string groupId, string channelId, string appId)
         {
-            requestHelper.Delete($"v1.0/teams/{groupId}/channels/{channelId}/enabledApps/{appId}/$ref");
+            return requestHelper.Delete($"v1.0/teams/{groupId}/channels/{channelId}/enabledApps/{appId}/$ref");
         }
 
         #endregion

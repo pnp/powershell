@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Teams
         public TeamsChannelPipeBind Channel;
 
         [Parameter(Mandatory = true)]
-        public TeamsTabPipeBind Identity;
+        public TeamsChannelAppPipeBind Identity;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
@@ -33,12 +33,12 @@ namespace PnP.PowerShell.Commands.Teams
                 var channelId = Channel.GetId(GraphRequestHelper, groupId);
                 if (channelId != null)
                 {
-                    var app = Identity.GetTab(GraphRequestHelper, groupId, channelId);
+                    var app = Identity.Get(GraphRequestHelper, groupId, channelId);
                     if (app != null)
                     {
                         if (Force || ShouldContinue("Removing the app will remove any corresponding app settings.", Properties.Resources.Confirm))
                         {
-                            var response = TeamsUtility.DeleteTab(GraphRequestHelper, groupId, channelId, app.Id);
+                            var response = TeamsUtility.DeleteChannelApp(GraphRequestHelper, groupId, channelId, app.Id);
                             if (!response.IsSuccessStatusCode)
                             {
                                 if (GraphRequestHelper.TryGetGraphException(response, out GraphException ex))
