@@ -1,13 +1,12 @@
 ---
-schema: 2.0.0
 Module Name: PnP.PowerShell
+schema: 2.0.0
 applicable: SharePoint Online
-title: Move-PnPItemProxy
-external help file: PnP.PowerShell.dll-Help.xml
-tags: Available in the current Nightly Release only.
 online version: https://pnp.github.io/powershell/cmdlets/Move-PnPItemProxy.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Move-PnPItemProxy
 ---
-   
+  
 # Move-PnPItemProxy
 
 ## SYNOPSIS
@@ -240,4 +239,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
