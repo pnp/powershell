@@ -14,7 +14,7 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPSite.html
 **Required Permissions**
 
   * SharePoint : `Sites.FullControl.All` as an application permission, or `AllSites.FullControl` as a delegated permission. The account must be able to create site collections, which for a delegated connection means the SharePoint Administrator or Global Administrator role unless self service site creation is enabled.
-  * Microsoft Graph API : `Group.ReadWrite.All`, **only for `-Type TeamSite`**. In addition, if Owners or Members are provied, then `User.Read.All` is also required. The site type TeamSite creates a Microsoft 365 group behind the site, which goes through Microsoft Graph. A communication site and a team site without a Microsoft 365 group are created through SharePoint only and need no Microsoft Graph permissions.
+  * Microsoft Graph API : `Group.ReadWrite.All`, **only for `-Type TeamSite`**. In addition, if Owners or Members are provided, then `User.Read.All` is also required. The site type TeamSite creates a Microsoft 365 group behind the site, which goes through Microsoft Graph. A communication site and a team site without a Microsoft 365 group are created through SharePoint only and need no Microsoft Graph permissions.
 
 > [!NOTE]
 > Creating a team site with a Microsoft 365 group is not possible over an ACS app only connection, as an access token for Microsoft Graph cannot be acquired that way.
