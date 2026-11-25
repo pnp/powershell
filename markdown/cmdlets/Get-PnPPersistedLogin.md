@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
-applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPersistedLogin.html
 external help file: PnP.PowerShell.dll-Help.xml
+schema: 2.0.0
 title: Get-PnPPersistedLogin
+tags: Available in the current Nightly Release only.
+applicable: SharePoint Online
+Module Name: PnP.PowerShell
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPersistedLogin.html
 ---
-
+ 
 # Get-PnPPersistedLogin
 
 ## SYNOPSIS
@@ -53,3 +54,4 @@ Accept wildcard characters: False
 [Persisted Login](https://pnp.github.io/powershell/articles/persistedlogin.html)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

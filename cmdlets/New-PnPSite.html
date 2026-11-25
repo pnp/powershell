@@ -91,7 +91,7 @@
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>SharePoint : <code>Sites.FullControl.All</code> as an application permission, or <code>AllSites.FullControl</code> as a delegated permission. The account must be able to create site collections, which for a delegated connection means the SharePoint Administrator or Global Administrator role unless self service site creation is enabled.</li>
-<li>Microsoft Graph API : <code>Group.ReadWrite.All</code>, <strong>only for <code>-Type TeamSite</code></strong>. That site type creates a Microsoft 365 group behind the site, which goes through Microsoft Graph. A communication site and a team site without a Microsoft 365 group are created through SharePoint only and need no Microsoft Graph permissions.</li>
+<li>Microsoft Graph API : <code>Group.ReadWrite.All</code>, <strong>only for <code>-Type TeamSite</code></strong>. In addition, if Owners or Members are provided, then <code>User.Read.All</code> is also required. The site type TeamSite creates a Microsoft 365 group behind the site, which goes through Microsoft Graph. A communication site and a team site without a Microsoft 365 group are created through SharePoint only and need no Microsoft Graph permissions.</li>
 </ul>
 <div class="NOTE">
 <h5>Note</h5>
