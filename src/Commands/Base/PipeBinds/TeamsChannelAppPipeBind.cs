@@ -55,7 +55,17 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                     if (apps != null)
                     {
                         // find the app by id
-                        app = apps.FirstOrDefault(t => t.DisplayName.Equals(_displayName, System.StringComparison.OrdinalIgnoreCase));
+                        var enabledApps = apps.ToArray();
+                        app = enabledApps.FirstOrDefault(t => string.Equals(t.Id, _displayName, StringComparison.OrdinalIgnoreCase));
+                        if (app == null)
+                        {
+                            var matches = enabledApps.Where(t => string.Equals(t.DisplayName, _displayName, StringComparison.OrdinalIgnoreCase)).Take(2).ToArray();
+                            if (matches.Length > 1)
+                            {
+                                throw new PSArgumentException("Multiple enabled apps found with the same display name. Specify an app id instead.");
+                            }
+                            app = matches.SingleOrDefault();
+                        }
                     }
                 }
                 return app;

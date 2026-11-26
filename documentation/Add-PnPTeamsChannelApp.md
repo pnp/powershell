@@ -32,7 +32,7 @@ Allows to add an app to an existing shared Channel.
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPTeamsChannelApp -Team "My Team" -Channel "My Channel" -DisplayName "2a527703-1f6f-4559-a332-d8a7d288cd88"
+Add-PnPTeamsChannelApp -Team "My Team" -Channel "My Channel" -App "2a527703-1f6f-4559-a332-d8a7d288cd88"
 ```
 
 Adds the SharePoint app to the specified shared channel.

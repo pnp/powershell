@@ -20,6 +20,7 @@ namespace PnP.PowerShell.Commands.Teams
         public TeamsChannelPipeBind Channel;
 
         [Parameter(Mandatory = false)]
+        [ValidateNotNull]
         public TeamsChannelAppPipeBind Identity;
 
         protected override void ExecuteCmdlet()

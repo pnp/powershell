@@ -14,7 +14,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsChannelApp.
 **Required Permissions**
 
   * Microsoft Graph API : TeamsAppInstallation.ReadForTeam
-  * For application access use TeamsAppInstallation.ManageSelectedForTeam.All
+  * For application access use TeamsAppInstallation.Read.Group
 
 Gets one or all apps in a channel.
 

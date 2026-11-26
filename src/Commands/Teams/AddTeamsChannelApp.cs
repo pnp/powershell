@@ -12,10 +12,10 @@ namespace PnP.PowerShell.Commands.Teams
     [RequiredApiApplicationPermissions("graph/TeamsAppInstallation.ManageSelectedForTeam.All")]
     public class AddTeamsChannelApp : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true,ValueFromPipeline = true)]
         public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true,ValueFromPipeline = true)]
         public TeamsChannelPipeBind Channel;
 
         [Parameter(Mandatory = true)]
