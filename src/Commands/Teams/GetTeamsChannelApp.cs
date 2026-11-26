@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannelApp")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/TeamsAppInstallation.ReadForTeam")]
+    [RequiredApiDelegatedPermissions("graph/TeamsAppInstallation.ReadForTeam")]
     [RequiredApiApplicationPermissions("graph/TeamsAppInstallation.Read.Group")]
     public class GetTeamsChannelApp : PnPGraphCmdlet
     {
