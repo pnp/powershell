@@ -85,7 +85,7 @@ Accept wildcard characters: False
 Specify the id of the app 
 
 ```yaml
-Type: TeamsTabPipeBind
+Type: TeamsChannelAppPipeBind
 Parameter Sets: (All)
 
 Required: True
