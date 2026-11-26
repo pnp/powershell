@@ -1,13 +1,12 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
-schema: 2.0.0
-title: Set-PnPContainerType
-tags: Available in the current Nightly Release only.
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPContainerType.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPContainerType
 ---
- 
+
 # Set-PnPContainerType
 
 ## SYNOPSIS
@@ -143,4 +142,3 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [SharePoint Embedded Container Types](https://learn.microsoft.com/sharepoint/dev/embedded/concepts/app-concepts/containertypes)
-

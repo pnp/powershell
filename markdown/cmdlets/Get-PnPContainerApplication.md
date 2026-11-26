@@ -1,13 +1,12 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
-schema: 2.0.0
-title: Get-PnPContainerApplication
-tags: Available in the current Nightly Release only.
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPContainerApplication.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPContainerApplication
 ---
- 
+
 # Get-PnPContainerApplication
 
 ## SYNOPSIS
@@ -113,4 +112,3 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Manage containers with PowerShell](https://learn.microsoft.com/sharepoint/dev/embedded/admin/manage-containers-powershell)
-

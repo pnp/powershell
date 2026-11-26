@@ -1,13 +1,12 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
-schema: 2.0.0
-title: Set-PnPListVersionPolicy
-tags: Available in the current Nightly Release only.
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
+title: Set-PnPListVersionPolicy
+schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListVersionPolicy.html
 ---
- 
+
 # Set-PnPListVersionPolicy
 
 ## SYNOPSIS
@@ -286,4 +285,3 @@ Accept wildcard characters: False
 ```
 ## RELATED LINKS
 [Get-PnPListVersionPolicy](Get-PnPListVersionPolicy.md)
-

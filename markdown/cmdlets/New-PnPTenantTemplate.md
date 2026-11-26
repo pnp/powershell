@@ -1,13 +1,12 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
-schema: 2.0.0
-title: New-PnPTenantTemplate
-tags: Available in the current Nightly Release only.
-applicable: SharePoint Online
 Module Name: PnP.PowerShell
+title: New-PnPTenantTemplate
+schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/New-PnPTenantTemplate.html
 ---
-  
+ 
 # New-PnPTenantTemplate
 
 ## SYNOPSIS
@@ -90,5 +89,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
 
