@@ -200,21 +200,28 @@ namespace PnP.PowerShell.Commands.Principals
                                     foreach (var listItem in item)
                                     {
                                         LogDebug(string.Format("Enumerating though listitems"));
-                                        listItem.EnsureProperty(i => i.HasUniqueRoleAssignments);
-
-                                        if (listItem.HasUniqueRoleAssignments)
+                                        try
                                         {
-                                            string listItemUrl = listItem["FileRef"].ToString();
-                                            LogDebug(string.Format("List item {0} HasUniqueRoleAssignments", listItemUrl));
+                                            listItem.EnsureProperty(i => i.HasUniqueRoleAssignments);
 
-                                            CurrentWeb.Context.Load(listItem.RoleAssignments, r => r.Include(
-                                                ra => ra.RoleDefinitionBindings,
-                                                ra => ra.Member.LoginName,
-                                                ra => ra.Member.Title,
-                                                ra => ra.Member.PrincipalType));
-                                            CurrentWeb.Context.ExecuteQueryRetry();
+                                            if (listItem.HasUniqueRoleAssignments)
+                                            {
+                                                string listItemUrl = listItem["FileRef"].ToString();
+                                                LogDebug(string.Format("List item {0} HasUniqueRoleAssignments", listItemUrl));
 
-                                            users.AddRange(GetPermissions(listItem.RoleAssignments, listItemUrl));
+                                                CurrentWeb.Context.Load(listItem.RoleAssignments, r => r.Include(
+                                                    ra => ra.RoleDefinitionBindings,
+                                                    ra => ra.Member.LoginName,
+                                                    ra => ra.Member.Title,
+                                                    ra => ra.Member.PrincipalType));
+                                                CurrentWeb.Context.ExecuteQueryRetry();
+
+                                                users.AddRange(GetPermissions(listItem.RoleAssignments, listItemUrl));
+                                            }
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            LogWarning(string.Format("Error while enumerating listitem {0} in list {1} in site {2} with error {3}", listItem.Id, list.RootFolder.ServerRelativeUrl, CurrentWeb.Url, ex.Message));
                                         }
                                     }
                                 }
