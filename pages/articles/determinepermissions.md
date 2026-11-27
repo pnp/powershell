@@ -165,6 +165,25 @@ Grant-PnPAzureADAppSitePermission -AppId "<Client ID of your Entra ID applicario
 
 In order to be able to run this cmdlet, you will need to connect to PnP PowerShell using preferably another Entra ID application registration which will have the `AllSites.FullControl` permission on the delegate scope on SharePoint set to it and being logged on with a Global Administrator or SharePoint Administrator privileged account.
 
+### App-only writes to the tenant app catalog
+
+App-only uploads or replacements of packages in the tenant app catalog, such as [Add-PnPApp](../cmdlets/Add-PnPApp.md) with `-Scope Tenant` (the default), require `SharePointTenantSettings.ReadWrite.All` on **Office 365 SharePoint Online** for the tenant App Catalog write check. Direct additions or updates to the **Tenant-Wide Extensions** list and updates to package catalog items are also affected, including when using general-purpose file or list item cmdlets against these resources.
+
+Microsoft's planned cutoff for `Sites.ReadWrite.All` alone is **January 31, 2027**. Before that date:
+
+1. Add `SharePointTenantSettings.ReadWrite.All` as an **application** permission under **Office 365 SharePoint Online** on the application registration used by the workflow.
+2. Grant tenant administrator consent.
+3. Reconnect so the workflow acquires a new SharePoint access token.
+4. Retest the affected uploads and updates.
+
+The identically named **Microsoft Graph** permission is a separate application role and does not satisfy a SharePoint REST or CSOM authorization check. The new permission does not replace the other site or tenant permissions required by your workflow.
+
+This additional check does **not** apply to delegated authentication, read-only operations, delete operations, site collection app catalogs, or the runtime use of already deployed solutions. Do not grant this permission merely because a script uses SPFx or PnP PowerShell.
+
+[Get-PnPCommandPermission](../cmdlets/Get-PnPCommandPermission.md) reports the requirement for `Add-PnPApp` as resource-dependent, with guidance for `-Scope`. General-purpose file and list item cmdlets cannot determine this special requirement from their command name alone. A token permission check is not a substitute for retesting the affected operation.
+
+See [Configure app-only permissions for tenant App Catalog operations](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/tenant-app-catalog-app-only-permissions) for the current requirements and authorization troubleshooting.
+
 ## Adding additional permissions as needed
 
 Once you've se the minimum permissions as described above, you can go ahead and test using your Entra ID application registration to connect to SharePoint Online using [one of the available connect options](authentication.md). You can add `-ValidateConnection -Verbose` to your `Connect-PnPOnline` cmdlet to instruct it to test the connection once established.

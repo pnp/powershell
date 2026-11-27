@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Changed `Connect-PnPOnline` to allow authentication-only connections without `-Url` for non-SharePoint cmdlets. Omitting `-Url` no longer creates a SharePoint `ClientContext` or `PnPContext`.
+- Changed `Add-PnPApp` to report scope-dependent SharePoint permissions, documenting the app-only tenant App Catalog write requirement for `SharePointTenantSettings.ReadWrite.All`, and to propagate authorization failures when scripting is already enabled instead of silently returning. See [Microsoft's tenant App Catalog permission requirements](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/tenant-app-catalog-app-only-permissions).
 
 ### Fixed
 
