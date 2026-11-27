@@ -10,6 +10,11 @@ title: Add-PnPApp
 # Add-PnPApp
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+* SharePoint: depends on `-Scope` and the authentication mode. App-only uploads and replacements in the tenant app catalog require `SharePointTenantSettings.ReadWrite.All` on **Office 365 SharePoint Online** for the tenant App Catalog write check, in addition to the other permissions required by the workflow. This additional requirement does not apply to delegated authentication or `-Scope Site`. See [Microsoft's tenant App Catalog app-only permission requirements](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/tenant-app-catalog-app-only-permissions).
+
 Add/uploads an available app to the app catalog
 
 ## SYNTAX
@@ -21,6 +26,16 @@ Add-PnPApp [-Path] <String> [-Scope <AppCatalogScope>] [-Overwrite] [-Timeout <I
 ## DESCRIPTION
 
 Allows to upload an app to the app catalog at tenant or site collection level. By specifying `-Publish` option it is possible to deploy/trust it at the same time.
+
+### App-only tenant app catalog uploads
+
+Microsoft's planned cutoff for using `Sites.ReadWrite.All` alone for affected tenant app catalog writes is **January 31, 2027**. This affects both new uploads and replacements using `-Overwrite`, including packages that do not register a tenant-wide extension.
+
+Before the cutoff, add the **application** permission `SharePointTenantSettings.ReadWrite.All` under **Office 365 SharePoint Online** on the application registration, grant tenant administrator consent, reconnect to acquire a new SharePoint access token, and retest the upload. The permission with the same name under **Microsoft Graph** does not satisfy this SharePoint check. Retain the other site or tenant permissions required by your workflow.
+
+Delegated authentication and site collection app catalogs (`-Scope Site`) are not affected by this additional requirement. It does not apply to read-only or delete operations, or to the runtime use of already deployed solutions.
+
+If an app-only tenant upload is denied, verify the SharePoint resource, administrator consent, the new token's `roles` claim, and the existing workflow permissions. See [Configure app-only permissions for tenant App Catalog operations](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/tenant-app-catalog-app-only-permissions).
 
 ## EXAMPLES
 
@@ -161,5 +176,7 @@ Accept wildcard characters: False
 ```
 
 ## RELATED LINKS
+
+[Configure app-only permissions for tenant App Catalog operations](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/tenant-app-catalog-app-only-permissions)
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

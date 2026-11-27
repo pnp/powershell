@@ -2,6 +2,7 @@
 using Microsoft.SharePoint.Client;
 using PnP.Framework.ALM;
 using PnP.Framework.Enums;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
@@ -10,6 +11,11 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Add, "PnPApp")]
+    [ApiPermissionsDependOnResource(
+        ResourceType = Enums.ResourceTypeName.SharePoint,
+        ParameterName = nameof(Scope),
+        DocumentationUrl = "https://learn.microsoft.com/en-us/sharepoint/dev/spfx/tenant-app-catalog-app-only-permissions",
+        Remarks = "App-only uploads and replacements with -Scope Tenant require SharePointTenantSettings.ReadWrite.All on Office 365 SharePoint Online for the tenant App Catalog write check. The planned cutoff for Sites.ReadWrite.All alone is January 31, 2027. Retain other permissions required by the workflow. This additional requirement does not apply to delegated authentication or -Scope Site.")]
     public class AddApp : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
@@ -84,6 +90,10 @@ namespace PnP.PowerShell.Commands.Apps
                                 tenant.SetSiteProperties(ClientContext.Url, noScriptSite: true);
                             }
                         }
+                    }
+                    else
+                    {
+                        throw;
                     }
                 }
                 else

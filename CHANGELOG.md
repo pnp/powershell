@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Changed `Connect-PnPOnline` to allow authentication-only connections without `-Url` for non-SharePoint cmdlets. Omitting `-Url` no longer creates a SharePoint `ClientContext` or `PnPContext`.
+- Changed `Add-PnPApp` to report scope-dependent SharePoint permissions, documenting the app-only tenant App Catalog write requirement for `SharePointTenantSettings.ReadWrite.All`, and to propagate authorization failures when scripting is already enabled instead of silently returning. See [Microsoft's tenant App Catalog permission requirements](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/tenant-app-catalog-app-only-permissions).
 - Changed `-InputInstance` on `Invoke-PnPSiteTemplate` and `-Template` on `Invoke-PnPTenantTemplate` to accept a template produced by either provisioning engine, so a template extracted with `-Experimental` can be applied with `-Experimental`. Templates produced by PnP Framework keep binding to these parameters as before.
 - Changed `Connect-PnPOnline` to write verbose message on which stored credential it resolved for the url, as it previously picked one up from the credential manager without saying so. [#5463](https://github.com/pnp/powershell/pull/5463)
 - Changed `Disconnect-PnPOnline -ClearPersistedLogin` to write a warning when no persisted login exists for the current connection, instead of silently doing nothing. [#5463](https://github.com/pnp/powershell/pull/5463)
