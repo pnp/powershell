@@ -2,6 +2,7 @@
 using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.SharePoint;
+using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 
@@ -19,6 +20,9 @@ namespace PnP.PowerShell.Commands.Security
 
         [Parameter(Mandatory = false)]
         public ShareType ShareType = ShareType.View;
+
+        [Parameter(Mandatory = false)]
+        public DateTime ExpirationDateTime;
 
         protected override void ExecuteCmdlet()
         {
@@ -42,6 +46,11 @@ namespace PnP.PowerShell.Commands.Security
                 Recipients = driveRecipients,
                 Type = ShareType
             };
+
+            if (ParameterSpecified(nameof(ExpirationDateTime)))
+            {
+                shareLinkRequestOptions.ExpirationDateTime = ExpirationDateTime;
+            }
 
             var share = folder.CreateUserSharingLink(shareLinkRequestOptions);
 

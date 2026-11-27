@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
+using System.Threading;
 using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Base
@@ -70,11 +71,19 @@ namespace PnP.PowerShell.Commands.Base
             LogDebug($"Cmdlet execution done for {MyInvocation.Line}");
         }
 
+        private readonly CancellationTokenSource stopping = new();
+
+        /// <summary>
+        /// Cancelled when the cmdlet is stopped, for instance with Ctrl+C, so long running work can stop with it
+        /// </summary>
+        protected CancellationToken StoppingToken => stopping.Token;
+
         /// <summary>
         /// Triggered when the cmdlet is stopped
         /// </summary>
         protected override void StopProcessing()
         {
+            stopping.Cancel();
             base.StopProcessing();
         }
 

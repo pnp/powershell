@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Principals
             var site = Tenant.GetSiteByUrl(siteUrl);
             AdminContext.Load(site);
             AdminContext.ExecuteQueryRetry();
-            var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}");
+            var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}".Replace("'", "''"));
             RestResultCollection<ExportEntity> results = null;
             if (!ParameterSpecified(nameof(RedactName)))
             {
@@ -43,7 +43,8 @@ namespace PnP.PowerShell.Commands.Principals
             }
             else
             {
-                results = RestHelper.Post<RestResultCollection<ExportEntity>>(HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/RemoveSPUserInformation(accountName=@a,siteId=@b,redactName=@c)?@a='{normalizedUserName}'&@b='{site.Id}'&@c='{RedactName}'", this.AccessToken, false);
+                var redactName = UrlUtilities.UrlEncode(RedactName.Replace("'", "''"));
+                results = RestHelper.Post<RestResultCollection<ExportEntity>>(HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/RemoveSPUserInformation(accountName=@a,siteId=@b,redactName=@c)?@a='{normalizedUserName}'&@b='{site.Id}'&@c='{redactName}'", this.AccessToken, false);
             }
             var record = new PSObject();
             foreach (var item in results.Items)

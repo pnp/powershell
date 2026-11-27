@@ -11,9 +11,11 @@ namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPContainer")]
     [OutputType(typeof(SPContainerProperties))]
+    [OutputType(typeof(Model.SharePoint.SPConsumingTenantContainerByIdentity))]
     public class GetContainer : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
+        [ValidateNotNull]
         public ContainerPipeBind Identity { get; set; }
 
         [Parameter(Mandatory = false)]
@@ -37,44 +39,79 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 var containerProperties = Identity.GetContainer(Tenant);
                 WriteObject(containerProperties);
+                return;
             }
-            else if (OwningApplicationId != Guid.Empty)
+
+            if (ParameterSpecified(nameof(OwningApplicationId)) && OwningApplicationId == Guid.Empty)
             {
-                ClientResult<SPContainerCollection> clientResult;
-                if (SortByStorage.HasValue)
+                ThrowTerminatingError(new ErrorRecord(new PSArgumentException($"-{nameof(OwningApplicationId)} cannot be an empty GUID.", nameof(OwningApplicationId)), "EmptyOwningApplicationId", ErrorCategory.InvalidArgument, OwningApplicationId));
+            }
+
+            // Without -Paged, follows the paging token until every container has been written
+            var pagingToken = PagingToken;
+            var seenPagingTokens = new HashSet<string>(StringComparer.Ordinal);
+            while (!Stopping)
+            {
+                var containers = GetContainerPage(pagingToken);
+                var containerCollection = containers.ContainerCollection;
+                if (containerCollection == null || containerCollection.Count == 0)
                 {
-                    bool ascending = SortByStorage == SortOrder.Ascending;
-                    clientResult = Tenant.GetSortedSPOContainersByApplicationId(OwningApplicationId, ascending, Paged, PagingToken, ArchiveStatus);
+                    return;
                 }
-                else
+
+                foreach (SPContainerProperties item in containerCollection)
                 {
-                    clientResult = Tenant.GetSPOContainersByApplicationId(OwningApplicationId, Paged, PagingToken, ArchiveStatus);
+                    WriteObject(new Model.SharePoint.SPConsumingTenantContainerByIdentity(item));
                 }
-                AdminContext.ExecuteQueryRetry();
-                IList<SPContainerProperties> containerCollection = clientResult.Value.ContainerCollection;
-                if (containerCollection != null && containerCollection.Count > 0)
+
+                if (Paged)
                 {
-                    foreach (SPContainerProperties item in containerCollection)
-                    {
-                        WriteObject(new Model.SharePoint.SPConsumingTenantContainerByIdentity(item));
-                    }
-                    if (Paged)
-                    {
-                        if (!string.IsNullOrWhiteSpace(clientResult.Value.PagingToken))
-                        {
-                            WriteObject($"Retrieve remaining containers with token: {clientResult.Value.PagingToken}");
-                        }
-                        else
-                        {
-                            WriteObject("End of containers view.");
-                        }
-                    }
+                    WriteObject(string.IsNullOrWhiteSpace(containers.PagingToken) ? "End of containers view." : $"Retrieve remaining containers with token: {containers.PagingToken}");
+                    return;
                 }
+
+                if (string.IsNullOrWhiteSpace(containers.PagingToken) || !seenPagingTokens.Add(containers.PagingToken))
+                {
+                    return;
+                }
+                pagingToken = containers.PagingToken;
+            }
+        }
+
+        private SPContainerCollection GetContainerPage(string pagingToken)
+        {
+            ClientResult<SPContainerCollection> clientResult;
+            if (ParameterSpecified(nameof(OwningApplicationId)))
+            {
+                clientResult = SortByStorage.HasValue
+                    ? Tenant.GetSortedSPOContainersByApplicationId(OwningApplicationId, SortByStorage == SortOrder.Ascending, true, pagingToken, ArchiveStatus)
+                    : Tenant.GetSPOContainersByApplicationId(OwningApplicationId, true, pagingToken, ArchiveStatus);
             }
             else
             {
-                throw new PSArgumentException($"Please specify the parameter {nameof(OwningApplicationId)} or {nameof(Identity)} when invoking this cmdlet");
+                clientResult = Tenant.GetAllSPOContainersFromAdminList(new SPOContainerQueryParams
+                {
+                    FilterByColumnsList =
+                    [
+                        new()
+                        {
+                            FilteringField = SPContainerFilterProperties.ArchiveStatus,
+                            ArchiveStatus = ArchiveStatus
+                        }
+                    ],
+                    OrderByColumnsList =
+                    [
+                        new()
+                        {
+                            SortingField = SortByStorage.HasValue ? SPContainerSortProperties.StorageUsed : SPContainerSortProperties.CreationDateTime,
+                            Ascending = SortByStorage == SortOrder.Ascending
+                        }
+                    ],
+                    PagingToken = pagingToken
+                });
             }
+            AdminContext.ExecuteQueryRetry();
+            return clientResult.Value;
         }
     }
 }

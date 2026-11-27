@@ -80,6 +80,7 @@ namespace PnP.PowerShell.Commands.Model
         public int? RequestFilesLinkExpirationInDays { set; get; }
         public Role LoopDefaultSharingLinkRole { get; set; }
         public SharingScope DefaultShareLinkScope { get; set; }
+        public MainLinkAudience DefaultMainLinkScope { get; set; }
         public Role DefaultShareLinkRole { get; set; }
         public SharingScope LoopDefaultSharingLinkScope { get; set; }
         public string ArchiveStatus { get; set; }
@@ -186,6 +187,7 @@ namespace PnP.PowerShell.Commands.Model
             RequestFilesLinkExpirationInDays = props.RequestFilesLinkExpirationInDays;
             LoopDefaultSharingLinkRole = props.LoopDefaultSharingLinkRole;
             DefaultShareLinkScope = props.DefaultShareLinkScope;
+            DefaultMainLinkScope = props.DefaultMainLinkScope;
             DefaultShareLinkRole = props.DefaultShareLinkRole;
             LoopDefaultSharingLinkScope = props.LoopDefaultSharingLinkScope;
             ArchiveStatus = props.ArchiveStatus;

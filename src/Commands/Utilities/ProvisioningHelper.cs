@@ -72,7 +72,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 XMLTemplateProvider provider;
                 if (isOpenOfficeFile)
                 {
-                    var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
+                    var openXmlConnector = PnPPackageConnector.OpenFramework(templateFileName, fileConnector);
                     provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
                     if (!String.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
                     {
@@ -145,7 +145,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     return new List<ProvisioningTemplate> { LoadSiteTemplateFromString(xml, templateProviderExtensions, exceptionHandler) };
                 }
 
-                var openXmlConnector = new OpenXMLConnector(memoryStream);
+                var openXmlConnector = PnPPackageConnector.OpenFramework(memoryStream);
                 var provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
 
                 try
@@ -213,7 +213,7 @@ namespace PnP.PowerShell.Commands.Utilities
             if (isOpenOfficeFile)
             {
                 // OpenXMLConnector eagerly unpacks the package, so disposing this buffer after loading is safe.
-                var openXmlConnector = new OpenXMLConnector(memoryStream);
+                var openXmlConnector = PnPPackageConnector.OpenFramework(memoryStream);
                 provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
                 var primaryTemplateFile = openXmlConnector.Info?.Properties?.TemplateFileName;
                 templateFiles = FindTemplateFiles(openXmlConnector, primaryTemplateFile, templateProviderExtensions);
@@ -615,7 +615,7 @@ namespace PnP.PowerShell.Commands.Utilities
             XMLTemplateProvider provider;
             if (isOpenOfficeFile)
             {
-                var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
+                var openXmlConnector = PnPPackageConnector.OpenFramework(templateFileName, fileConnector);
                 provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
                 if (!string.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
                 {
@@ -693,7 +693,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 return new List<ProvisioningHierarchy> { LoadTenantTemplateFromString(xml, exceptionHandler) };
             }
 
-            var openXmlConnector = new OpenXMLConnector(memoryStream);
+            var openXmlConnector = PnPPackageConnector.OpenFramework(memoryStream);
             var provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
 
             try

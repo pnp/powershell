@@ -25,7 +25,7 @@ Get-PnPTenant [-Verbose] [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 Returns organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
-ResourceQuotaAllocated, and SiteCreationMode. The returned object also includes newer tenant settings and telemetry-backed values when available, such as OneDrive organization sharing link expiration settings, block download configuration, request digest enforcement, notification subscription support, content type sync templates, external sharing restrictions, and file version policy overrides.
+ResourceQuotaAllocated, and SiteCreationMode. The returned object also includes newer tenant settings and telemetry-backed values when available, such as the Copilot Search opt-in, OneDrive organization sharing link expiration settings, block download configuration, request digest enforcement, notification subscription support, content type sync templates, external sharing restrictions, and file version policy overrides.
 
 If one or more properties cannot be retrieved, such as when a property is not available yet on the tenant due to a new feature rollout, a warning will be shown. Use -Verbose to see detailed information on properties that could not be retrieved.
 
@@ -53,6 +53,13 @@ $tenant | Select-Object OneDriveOrganizationSharingLinkMaxExpirationInDays, OneD
 ```
 
 This example inspects OneDrive sharing link expiration settings together with list-based tenant restrictions and version policy overrides.
+
+### EXAMPLE 4
+```powershell
+(Get-PnPTenant).CopilotSearchOptIn
+```
+
+Returns whether the tenant has opted in to Copilot Search.
 
 ## PARAMETERS
 

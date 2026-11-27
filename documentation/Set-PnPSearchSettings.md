@@ -15,7 +15,7 @@ Sets search settings for a site.
 ## SYNTAX
 
 ```powershell
-Set-PnPSearchSettings [-SearchBoxInNavBar <SearchBoxInNavBarType>] [-SearchPageUrl <String>]
+Set-PnPSearchSettings [-CopilotSearchOptOut <Boolean>] [-SearchBoxInNavBar <SearchBoxInNavBarType>] [-SearchPageUrl <String>]
  [-SearchBoxPlaceholderText <String>] [-SearchScope <SearchScopeType>] [-Scope <SearchSettingsScope>] [-Force]
  [-Connection <PnPConnection>] 
 ```
@@ -75,6 +75,13 @@ Set-PnPSearchSettings -SearchScope Hub
 
 Sets default behavior of the suite bar search box to show hub results instead of site results on an associated hub site.
 
+### EXAMPLE 8
+```powershell
+Set-PnPSearchSettings -CopilotSearchOptOut $true
+```
+
+Opts the current site collection out of Copilot Search. The setting is stored on the site collection regardless of the value of `-Scope`.
+
 ## PARAMETERS
 
 ### -Connection
@@ -82,6 +89,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CopilotSearchOptOut
+Specifies whether the current site collection is opted out of Copilot Search. The setting is stored on the site collection and requires `ManageWeb` permission.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
@@ -181,4 +202,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

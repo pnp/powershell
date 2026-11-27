@@ -1,6 +1,7 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Sharing;
 using PnP.Framework;
 using PnP.Framework.Entities;
 using PnP.PowerShell.Commands.Utilities;
@@ -73,6 +74,9 @@ namespace PnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter DefaultLinkToExistingAccessReset;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public MainLinkAudience? DefaultMainLinkScope;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public AppViewsPolicy? DisableAppViews;
@@ -412,6 +416,11 @@ namespace PnP.PowerShell.Commands.Site
                     siteProperties.DefaultLinkToExistingAccessReset = true;
                     executeQueryRequired = true;
                 }
+                if (DefaultMainLinkScope.HasValue)
+                {
+                    siteProperties.DefaultMainLinkScope = DefaultMainLinkScope.Value;
+                    executeQueryRequired = true;
+                }
                 if (DisableAppViews.HasValue)
                 {
                     siteProperties.DisableAppViews = DisableAppViews.Value;
@@ -642,6 +651,7 @@ namespace PnP.PowerShell.Commands.Site
                 DefaultSharingLinkType.HasValue ||
                 ParameterSpecified(nameof(DefaultLinkToExistingAccess)) ||
                 ParameterSpecified(nameof(DefaultLinkToExistingAccessReset)) ||
+                DefaultMainLinkScope.HasValue ||
                 DisableAppViews.HasValue ||
                 DisableFlows.HasValue ||
                 DisableSharingForNonOwners.IsPresent ||

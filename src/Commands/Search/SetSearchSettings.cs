@@ -21,6 +21,9 @@ namespace PnP.PowerShell.Commands.Search
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SearchScopeType? SearchScope;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public bool? CopilotSearchOptOut;
+
         [Parameter(Mandatory = false)]
         public SearchSettingsScope Scope = SearchSettingsScope.Web;
 
@@ -66,6 +69,16 @@ namespace PnP.PowerShell.Commands.Search
 
                 if (!shouldContinue)
                 {
+                    return;
+                }
+            }
+
+            if (CopilotSearchOptOut.HasValue)
+            {
+                ClientContext.Site.CopilotSearchOptOut = CopilotSearchOptOut.Value;
+                if (!SearchBoxInNavBar.HasValue && !hasSearchPageUrl && !hasSearchPlaceholderText && !SearchScope.HasValue)
+                {
+                    ClientContext.ExecuteQueryRetry();
                     return;
                 }
             }

@@ -336,8 +336,10 @@ namespace PnP.PowerShell.Commands.Model
 
         public List<string> DenySelectSGsInODBListInTenant { private set; get; }
 
+        [CsomToModelConverter("WhoCanShareAllowListInTenantByGroupId")]
         public List<string> WhoCanShareAnonymousAllowList { private set; get; }
 
+        [CsomToModelConverter("GuestSharingGroupAllowListInTenantByGroupId")]
         public List<string> WhoCanShareAuthenticatedGuestAllowList { private set; get; }
         public bool? EnableSensitivityLabelForOneNote { private set; get; }
         public bool? EnableSensitivityLabelForVideoFiles { private set; get; }
@@ -362,6 +364,9 @@ namespace PnP.PowerShell.Commands.Model
         public bool? ResyncContentSecurityPolicyConfigurationEntries { get; private set; }
 
         public bool? ContentSecurityPolicyConfigSynced { get; private set; }
+
+        [CsomToModelConverter(Skip = true)]
+        public bool? CopilotSearchOptIn { get; private set; }
 
         public bool? CoreDefaultLinkToExistingAccess { get; private set; }
 
@@ -411,6 +416,11 @@ namespace PnP.PowerShell.Commands.Model
         public bool? AllowLegacyAuthProtocolsEnabledSetting { get; private set; }
 
         public bool? AllowLegacyBrowserAuthProtocolsEnabledSetting { get; private set; }
+
+        public Guid[] AppAccessInformationBarriersAllowList { get; private set; }
+
+        public BlockDownloadLinksFileTypes? BlockDownloadLinksFileType { get; private set; }
+
         public bool? BlockDownloadOfAllFilesForGuests { get; private set; }
 
         public bool? BlockDownloadOfAllFilesOnUnmanagedDevices { get; private set; }
@@ -431,6 +441,10 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? CommentsOnListItemsDisabled { get; private set; }
 
+        public int? CoreAnyoneSharingLinkMaxExpirationInDays { get; private set; }
+
+        public int? CoreAnyoneSharingLinkRecommendedExpirationInDays { get; private set; }
+
         public SharingState? CoreBlockGuestsAsSiteAdmin { get; private set; }
 
         public int? CoreOrganizationSharingLinkMaxExpirationInDays { get; private set; }
@@ -441,13 +455,23 @@ namespace PnP.PowerShell.Commands.Model
 
         public SiteInfoForSitePicker DefaultContentCenterSite { get; private set; }
 
+        public string DefaultLanguageForSiteCreation { get; private set; }
+
         public bool? DelegateRestrictedAccessControlConfiguration { get; private set; }
 
         public bool? DelegateRestrictedContentDiscoveryConfiguration { get; private set; }
 
         public bool? DisableOutlookPSTVersionTrimming { get; private set; }
 
+        public bool? DisableSpfxTopBottomPlaceholdersInElevatedContent { get; private set; }
+
+        public bool? DisableTeamsMeetingRecordingDeletedNotification { get; private set; }
+
         public SyntexSiteScopeContentCenterMode? DocumentUnderstandingEnabledInContentCenter { get; private set; }
+
+        public bool? EnableAgentWorkerSharingDisclaimer { get; private set; }
+
+        public string FilePreviewAllowedDomainList { get; private set; }
 
         public string GuestSharingGroupAllowListInTenant { private set; get; }
 
@@ -459,6 +483,8 @@ namespace PnP.PowerShell.Commands.Model
         public bool? IncludeAtAGlanceInShareEmails { private set; get; }
 
         public bool? IsAppBarTemporarilyDisabled { private set; get; }
+
+        public bool? IsFilePreviewDomainRestrictionEnabled { private set; get; }
 
         public bool? IsHubSitesMultiGeoFlightEnabled { private set; get; }
 
@@ -500,6 +526,10 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? MobileFriendlyUrlEnabledInTenant { private set; get; }
 
+        public int? OneDriveAnyoneSharingLinkMaxExpirationInDays { private set; get; }
+
+        public int? OneDriveAnyoneSharingLinkRecommendedExpirationInDays { private set; get; }
+
         public string OrgNewsSiteUrl { private set; get; }
 
         public bool? PrebuiltEnabled { private set; get; }
@@ -525,9 +555,14 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? StopNew2010Workflows { private set; get; }
 
+        public bool? SyncPrivacyProfileProperties { private set; get; }
+
         public bool? TaxonomyTaggingEnabled { private set; get; }
 
         public bool? TranslationEnabled { private set; get; }
+
+        [CsomToModelConverter("UnlicensedOdbActiveStorageRetentionPeriod")]
+        public int? UnlicensedOneDriveAccountsActiveStoragePeriod { private set; get; }
  
         public bool? EnforceRequestDigest { private set; get; }
          
@@ -648,6 +683,16 @@ namespace PnP.PowerShell.Commands.Model
             {
                 failedProperties++;
                 cmdlet.LogDebug($"Property ContentTypeSyncSiteTemplatesList not loaded due to error '{e.Message}'");
+            }
+
+            try
+            {
+                CopilotSearchOptIn = tenant.EnsureProperty(t => t.CopilotSearchOptIn);
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property CopilotSearchOptIn not loaded due to error '{e.Message}'");
             }
 
             ResyncContentSecurityPolicyConfigurationEntries = ContentSecurityPolicyConfigSynced.HasValue

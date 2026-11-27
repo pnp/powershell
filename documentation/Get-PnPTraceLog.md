@@ -26,7 +26,7 @@ Get-PnPTraceLog [-Verbose]
 ```
 
 ## DESCRIPTION
-This cmdlet returns the logged messages during the execution of PnP PowerShell cmdlets. It can return the messages from an in memory log stream or from a file. Note that you cannot read from a log file if it is currently in use to write to. In this case, you would first have to stop logging to it using [Stop-PnPTraceLog](Stop-PnPTraceLog.md) and then read the log file. The in memory log stream is always available.
+This cmdlet returns the logged messages during the execution of PnP PowerShell cmdlets. It can return the messages from an in memory log stream or from a file. Note that you cannot read from a log file if it is currently in use to write to. In this case, you would first have to stop logging to it using [Stop-PnPTraceLog](Stop-PnPTraceLog.md) and then read the log file. The in memory log stream is only available after starting it with `Start-PnPTraceLog -WriteToLogStream`.
 
 You can use [Start-PnPTraceLog](Start-PnPTraceLog.md) to start logging to a file and/or to an in memory stream.
 
