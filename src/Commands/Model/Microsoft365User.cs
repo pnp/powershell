@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model
@@ -84,6 +87,18 @@ namespace PnP.PowerShell.Commands.Model
         /// Aliases set on the mailbox of this user
         /// </summary>
         [JsonPropertyName("proxyAddresses")]
-        public string[] ProxyAddresses { get; set; }       
+        public string[] ProxyAddresses { get; set; }
+
+        /// <summary>
+        /// User's office location
+        /// </summary>
+        [JsonPropertyName("officeLocation")]
+        public string OfficeLocation { get; set; }
+
+        /// <summary>
+        /// Additional properties returned by Microsoft Graph which are not mapped to a property above, i.e. when requested through -Select or when using the beta endpoint
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; set; } = new Dictionary<string, JsonElement>(StringComparer.OrdinalIgnoreCase);
     }
 }
